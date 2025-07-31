@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Takt Time Calculator - IE Toolkit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-blue-900 text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">IE Toolkit</h1>
+            <a href="index.html" class="hover:underline">Home</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto py-8 px-4">
+        <section class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-3xl font-semibold mb-4">Takt Time Calculator</h2>
+            <p class="text-gray-600 mb-6">Calculate takt time to align production pace with customer demand, with visual insights into production capacity.</p>
+
+            <!-- Takt Time Method Selection -->
+            <div class="mb-6">
+                <label for="tt-method" class="block text-sm font-medium text-gray-700">Select Takt Time Method</label>
+                <select id="tt-method" class="mt-1 p-2 w-full border rounded-md" onchange="toggleInputs()">
+                    <option value="standard">Standard Takt Time</option>
+                    <option value="shift-adjustments">Takt Time with Shift Adjustments</option>
+                    <option value="variable-demand">Takt Time with Variable Demand</option>
+                </select>
+            </div>
+
+            <!-- Input Form -->
+            <div id="input-form" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Common Inputs -->
+                <div>
+                    <label for="available-time" class="block text-sm font-medium text-gray-700">Available Time (minutes/shift)</label>
+                    <input type="number" id="available-time" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 480" required>
+                </div>
+                <div>
+                    <label for="demand" class="block text-sm font-medium text-gray-700">Customer Demand (units/shift)</label>
+                    <input type="number" id="demand" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 100" required>
+                </div>
+                <!-- Shift Adjustments Inputs -->
+                <div id="shift-adjustments-inputs" class="hidden">
+                    <div>
+                        <label for="break-time" class="block text-sm font-medium text-gray-700">Break Time (minutes/shift)</label>
+                        <input type="number" id="break-time" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 30">
+                    </div>
+                    <div>
+                        <label for="downtime" class="block text-sm font-medium text-gray-700">Planned Downtime (minutes/shift)</label>
+                        <input type="number" id="downtime" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 15">
+                    </div>
+                </div>
+                <!-- Variable Demand Inputs -->
+                <div id="variable-demand-inputs" class="hidden">
+                    <div>
+                        <label for="demand-std" class="block text-sm font-medium text-gray-700">Standard Deviation of Demand (units/shift)</label>
+                        <input type="number" id="demand-std" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 20">
+                    </div>
+                    <div>
+                        <label for="service-level" class="block text-sm font-medium text-gray-700">Service Level (%)</label>
+                        <input type="number" id="service-level" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 95">
+                    </div>
+                </div>
+            </div>
+            <button onclick="calculateTaktTime()" class="mt-6 bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-800">Calculate</button>
+
+            <!-- Results -->
+            <div id="results" class="mt-6 hidden">
+                <h3 class="text-xl font-semibold mb-2">Results</h3>
+                <div id="calculation-results" class="mb-4"></div>
+                <div class="mb-4">
+                    <h4 class="text-lg font-semibold">Production Pace Visualization</h4>
+                    <canvas id="takt-time-chart" class="w-full h-64"></canvas>
+                </div>
+                <div id="interpretation" class="mt-4">
+                    <h4 class="text-lg font-semibold">Interpretation</h4>
+                    <p id="interpretation-text" class="text-gray-600"></p>
+                </div>
+                <div id="recommendation" class="mt-4">
+                    <h4 class="text-lg font-semibold">Recommendation</h4>
+                    <p id="recommendation-text" class="text-gray-600"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Takt Time Methods Explanation -->
+        <section class="mt-8">
+            <h3 class="text-2xl font-semibold mb-4">Takt Time Methods and When to Use Them</h3>
+            <div class="space-y-4">
+                <div>
+                    <h4 class="text-lg font-semibold">Standard Takt Time</h4>
+                    <p class="text-gray-600">Use for basic takt time calculation with total available time and demand. Formula: Takt Time = Available Time / Demand (seconds/unit).</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold">Takt Time with Shift Adjustments</h4>
+                    <p class="text-gray-600">Use when breaks and planned downtime reduce available time. Formula: Takt Time = (Available Time - Breaks - Downtime) / Demand.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold">Takt Time with Variable Demand</h4>
+                    <p class="text-gray-600">Use when demand fluctuates, incorporating a buffer for variability. Formula: Takt Time = Available Time / (Mean Demand + Z * σ_d).</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-blue-900 text-white text-center p-4">
+        <p>&copy; 2025 IE Toolkit. All rights reserved.</p>
+    </footer>
+
+    <script>
+        let chartInstance = null;
+
+        function toggleInputs() {
+            const method = document.getElementById('tt-method').value;
+            document.getElementById('shift-adjustments-inputs').classList.add('hidden');
+            document.getElementById('variable-demand-inputs').classList.add('hidden');
+            if (method === 'shift-adjustments') {
+                document.getElementById('shift-adjustments-inputs').classList.remove('hidden');
+            } else if (method === 'variable-demand') {
+                document.getElementById('variable-demand-inputs').classList.remove('hidden');
+            }
+            document.getElementById('results').classList.add('hidden');
+        }
+
+        function calculateTaktTime() {
+            const method = document.getElementById('tt-method').value;
+            const availableTime = parseFloat(document.getElementById('available-time').value);
+            const demand = parseFloat(document.getElementById('demand').value);
+
+            if (isNaN(availableTime) || isNaN(demand) || availableTime <= 0 || demand <= 0) {
+                alert('Please enter valid positive numbers for available time and customer demand.');
+                return;
+            }
+
+            let results = '';
+            let interpretation = '';
+            let recommendation = '';
+            let taktTime = 0;
+            let effectiveDemand = demand;
+
+            if (method === 'standard') {
+                // Standard Takt Time: Takt Time = Available Time / Demand
+                taktTime = (availableTime * 60) / demand; // Convert to seconds
+                results = `
+                    <p>Takt Time: ${taktTime.toFixed(2)} seconds/unit</p>
+                    <p>Production Rate: ${(3600 / taktTime).toFixed(2)} units/hour</p>
+                `;
+                interpretation = `The Standard Takt Time is ${taktTime.toFixed(2)} seconds per unit, meaning one unit must be produced every ${taktTime.toFixed(2)} seconds to meet a demand of ${demand} units in ${availableTime} minutes. This translates to a production rate of ${(3600 / taktTime).toFixed(2)} units per hour.`;
+                recommendation = `Align production to complete one unit every ${taktTime.toFixed(2)} seconds. Ensure processes are streamlined to meet this pace without bottlenecks, ideal for stable demand scenarios.`;
+
+            } else if (method === 'shift-adjustments') {
+                const breakTime = parseFloat(document.getElementById('break-time').value) || 0;
+                const downtime = parseFloat(document.getElementById('downtime').value) || 0;
+                if (isNaN(breakTime) || isNaN(downtime) || breakTime < 0 || downtime < 0 || breakTime + downtime >= availableTime) {
+                    alert('Please enter valid non-negative numbers for break time and downtime, ensuring their sum is less than available time.');
+                    return;
+                }
+                // Takt Time with Shift Adjustments: Takt Time = (Available Time - Breaks - Downtime) / Demand
+                const effectiveTime = availableTime - breakTime - downtime;
+                taktTime = (effectiveTime * 60) / demand; // Convert to seconds
+                results = `
+                    <p>Takt Time: ${taktTime.toFixed(2)} seconds/unit</p>
+                    <p>Production Rate: ${(3600 / taktTime).toFixed(2)} units/hour</p>
+                    <p>Effective Available Time: ${effectiveTime.toFixed(2)} minutes (Breaks: ${breakTime.toFixed(2)} min, Downtime: ${downtime.toFixed(2)} min)</p>
+                `;
+                interpretation = `The Takt Time with Shift Adjustments is ${taktTime.toFixed(2)} seconds per unit, based on an effective available time of ${effectiveTime.toFixed(2)} minutes after accounting for ${breakTime.toFixed(2)} minutes of breaks and ${downtime.toFixed(2)} minutes of planned downtime. This supports a production rate of ${(3600 / taktTime).toFixed(2)} units per hour to meet a demand of ${demand} units.`;
+                recommendation = `Set production to complete one unit every ${taktTime.toFixed(2)} seconds. Minimize breaks (${breakTime.toFixed(2)} min) and downtime (${downtime.toFixed(2)} min) to maximize effective time and avoid overworking stations.`;
+
+            } else if (method === 'variable-demand') {
+                const demandStd = parseFloat(document.getElementById('demand-std').value) || 0;
+                const serviceLevel = parseFloat(document.getElementById('service-level').value) || 95;
+                if (isNaN(demandStd) || isNaN(serviceLevel) || demandStd < 0 || serviceLevel <= 0 || serviceLevel >= 100) {
+                    alert('Please enter a valid non-negative standard deviation of demand and service level (0-99.99%).');
+                    return;
+                }
+                // Z-score approximation for service level
+                const zScores = { 90: 1.2816, 95: 1.6449, 99: 2.3263 };
+                const zScore = zScores[Math.round(serviceLevel)] || 1.6449; // Default to 95%
+                // Takt Time with Variable Demand: Takt Time = Available Time / (Mean Demand + Z * σ_d)
+                effectiveDemand = demand + zScore * demandStd;
+                taktTime = (availableTime * 60) / effectiveDemand; // Convert to seconds
+                results = `
+                    <p>Takt Time: ${taktTime.toFixed(2)} seconds/unit</p>
+                    <p>Production Rate: ${(3600 / taktTime).toFixed(2)} units/hour</p>
+                    <p>Effective Demand: ${effectiveDemand.toFixed(2)} units (Mean: ${demand}, Buffer: ${(zScore * demandStd).toFixed(2)})</p>
+                `;
+                interpretation = `The Takt Time with Variable Demand is ${taktTime.toFixed(2)} seconds per unit, based on an effective demand of ${effectiveDemand.toFixed(2)} units (mean demand of ${demand} plus a buffer of ${(zScore * demandStd).toFixed(2)} units for variability at ${serviceLevel}% service level). This supports a production rate of ${(3600 / taktTime).toFixed(2)} units per hour.`;
+                recommendation = `Plan production to complete one unit every ${taktTime.toFixed(2)} seconds to handle demand variability. Build capacity to meet up to ${effectiveDemand.toFixed(2)} units per shift, and monitor demand fluctuations to adjust processes.`;
+            }
+
+            // Render Chart
+            if (chartInstance) chartInstance.destroy();
+            const ctx = document.getElementById('takt-time-chart').getContext('2d');
+            chartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Takt Time', 'Available Time per Unit'],
+                    datasets: [{
+                        label: 'Time (seconds/unit)',
+                        data: [taktTime, (availableTime * 60) / demand],
+                        backgroundColor: ['rgba(59, 130, 246, 0.5)', 'rgba(75, 192, 192, 0.5)'],
+                        borderColor: ['rgba(59, 130, 246, 1)', 'rgba(75, 192, 192, 1)'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Time (seconds/unit)' }
+                        },
+                        x: {
+                            title: { display: true, text: 'Metrics' }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: true },
+                        title: { display: true, text: 'Takt Time vs. Available Time per Unit' }
+                    }
+                }
+            });
+
+            document.getElementById('calculation-results').innerHTML = results;
+            document.getElementById('interpretation-text').innerText = interpretation;
+            document.getElementById('recommendation-text').innerText = recommendation;
+            document.getElementById('results').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
