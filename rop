@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reorder Point Calculator - IE Toolkit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-blue-900 text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">IE Toolkit</h1>
+            <a href="index.html" class="hover:underline">Home</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto py-8 px-4">
+        <section class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-3xl font-semibold mb-4">Reorder Point Calculator</h2>
+            <p class="text-gray-600 mb-6">Calculate the reorder point to determine when to place a new order, accounting for demand and lead time variability to maintain desired service levels.</p>
+
+            <!-- Reorder Point Method Selection -->
+            <div class="mb-6">
+                <label for="rop-method" class="block text-sm font-medium text-gray-700">Select Reorder Point Method</label>
+                <select id="rop-method" class="mt-1 p-2 w-full border rounded-md" onchange="toggleInputs()">
+                    <option value="constant">Constant Demand, Constant Lead Time</option>
+                    <option value="variable-demand">Variable Demand, Constant Lead Time</option>
+                    <option value="variable-leadtime">Constant Demand, Variable Lead Time</option>
+                </select>
+            </div>
+
+            <!-- Input Form -->
+            <div id="input-form" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Common Inputs -->
+                <div>
+                    <label for="demand-mean" class="block text-sm font-medium text-gray-700">Average Demand (units/day)</label>
+                    <input type="number" id="demand-mean" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 100" required>
+                </div>
+                <div id="demand-std-input" class="hidden">
+                    <label for="demand-std" class="block text-sm font-medium text-gray-700">Standard Deviation of Demand (units/day)</label>
+                    <input type="number" id="demand-std" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 20">
+                </div>
+                <div>
+                    <label for="lead-time-mean" class="block text-sm font-medium text-gray-700">Average Lead Time (days)</label>
+                    <input type="number" id="lead-time-mean" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 5" required>
+                </div>
+                <div id="lead-time-std-input" class="hidden">
+                    <label for="lead-time-std" class="block text-sm font-medium text-gray-700">Standard Deviation of Lead Time (days)</label>
+                    <input type="number" id="lead-time-std" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 1">
+                </div>
+                <div id="service-level-input" class="hidden">
+                    <label for="service-level" class="block text-sm font-medium text-gray-700">Service Level (%)</label>
+                    <input type="number" id="service-level" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 95">
+                </div>
+            </div>
+            <button onclick="calculateReorderPoint()" class="mt-6 bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-800">Calculate</button>
+
+            <!-- Results -->
+            <div id="results" class="mt-6 hidden">
+                <h3 class="text-xl font-semibold mb-2">Results</h3>
+                <div id="calculation-results"></div>
+                <div id="interpretation" class="mt-4">
+                    <h4 class="text-lg font-semibold">Interpretation</h4>
+                    <p id="interpretation-text" class="text-gray-600"></p>
+                </div>
+                <div id="recommendation" class="mt-4">
+                    <h4 class="text-lg font-semibold">Recommendation</h4>
+                    <p id="recommendation-text" class="text-gray-600"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reorder Point Methods Explanation -->
+        <section class="mt-8">
+            <h3 class="text-2xl font-semibold mb-4">Reorder Point Methods and When to Use Them</h3>
+            <div class="space-y-4">
+                <div>
+                    <h4 class="text-lg font-semibold">Constant Demand, Constant Lead Time</h4>
+                    <p class="text-gray-600">Use when both demand and lead time are stable and predictable. No safety stock is needed. Formula: ROP = D * L</p>
+                    <p class="text-gray-600">Where: D = Average demand, L = Average lead time</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold">Variable Demand, Constant Lead Time</h4>
+                    <p class="text-gray-600">Use when demand fluctuates but lead time is fixed. Includes safety stock for demand variability. Formula: ROP = D * L + Z * σ_d * √L</p>
+                    <p class="text-gray-600">Where: Z = Z-score for service level, σ_d = Standard deviation of demand</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold">Constant Demand, Variable Lead Time</h4>
+                    <p class="text-gray-600">Use when demand is stable but lead time varies. Includes safety stock for lead time variability. Formula: ROP = D * L + Z * D * σ_L</p>
+                    <p class="text-gray-600">Where: σ_L = Standard deviation of lead time</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-blue-900 text-white text-center p-4">
+        <p>&copy; 2025 IE Toolkit. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function toggleInputs() {
+            const method = document.getElementById('rop-method').value;
+            document.getElementById('demand-std-input').classList.add('hidden');
+            document.getElementById('lead-time-std-input').classList.add('hidden');
+            document.getElementById('service-level-input').classList.add('hidden');
+            if (method === 'variable-demand') {
+                document.getElementById('demand-std-input').classList.remove('hidden');
+                document.getElementById('service-level-input').classList.remove('hidden');
+            } else if (method === 'variable-leadtime') {
+                document.getElementById('lead-time-std-input').classList.remove('hidden');
+                document.getElementById('service-level-input').classList.remove('hidden');
+            }
+            document.getElementById('results').classList.add('hidden');
+        }
+
+        function calculateReorderPoint() {
+            const method = document.getElementById('rop-method').value;
+            const demandMean = parseFloat(document.getElementById('demand-mean').value);
+            const leadTimeMean = parseFloat(document.getElementById('lead-time-mean').value);
+
+            if (isNaN(demandMean) || isNaN(leadTimeMean) || demandMean <= 0 || leadTimeMean <= 0) {
+                alert('Please enter valid positive numbers for average demand and lead time.');
+                return;
+            }
+
+            let results = '';
+            let interpretation = '';
+            let recommendation = '';
+
+            if (method === 'constant') {
+                // Constant Demand, Constant Lead Time: ROP = D * L
+                const reorderPoint = demandMean * leadTimeMean;
+
+                results = `
+                    <p>Reorder Point: ${reorderPoint.toFixed(2)} units</p>
+                    <p>Safety Stock: 0 units</p>
+                `;
+                interpretation = `With constant demand and lead time, the reorder point is ${reorderPoint.toFixed(2)} units, calculated as the average demand during lead time. No safety stock is needed due to the predictable nature of both demand and lead time.`;
+                recommendation = `Place a new order when inventory reaches ${reorderPoint.toFixed(2)} units. This approach is suitable for highly stable systems, but consider a small buffer for unexpected disruptions.`;
+
+            } else if (method === 'variable-demand') {
+                const demandStd = parseFloat(document.getElementById('demand-std').value);
+                const serviceLevel = parseFloat(document.getElementById('service-level').value);
+                if (isNaN(demandStd) || isNaN(serviceLevel) || demandStd < 0 || serviceLevel <= 0 || serviceLevel >= 100) {
+                    alert('Please enter a valid non-negative standard deviation of demand and service level (0-99.99%).');
+                    return;
+                }
+                // Z-score approximation for service level
+                const zScores = {
+                    90: 1.2816,
+                    95: 1.6449,
+                    99: 2.3263
+                };
+                const zScore = zScores[Math.round(serviceLevel)] || 1.6449; // Default to 95%
+                // Variable Demand, Constant Lead Time: ROP = D * L + Z * σ_d * √L
+                const safetyStock = zScore * demandStd * Math.sqrt(leadTimeMean);
+                const reorderPoint = demandMean * leadTimeMean + safetyStock;
+
+                results = `
+                    <p>Reorder Point: ${reorderPoint.toFixed(2)} units</p>
+                    <p>Safety Stock: ${safetyStock.toFixed(2)} units</p>
+                `;
+                interpretation = `The reorder point of ${reorderPoint.toFixed(2)} units includes a safety stock of ${safetyStock.toFixed(2)} units to cover demand variability during a fixed lead time, ensuring a ${serviceLevel}% service level.`;
+                recommendation = `Reorder when inventory reaches ${reorderPoint.toFixed(2)} units, maintaining a safety stock of ${safetyStock.toFixed(2)} units. This is ideal for stable lead times with fluctuating demand.`;
+
+            } else if (method === 'variable-leadtime') {
+                const leadTimeStd = parseFloat(document.getElementById('lead-time-std').value);
+                const serviceLevel = parseFloat(document.getElementById('service-level').value);
+                if (isNaN(leadTimeStd) || isNaN(serviceLevel) || leadTimeStd < 0 || serviceLevel <= 0 || serviceLevel >= 100) {
+                    alert('Please enter a valid non-negative standard deviation of lead time and service level (0-99.99%).');
+                    return;
+                }
+                // Z-score approximation for service level
+                const zScores = {
+                    90: 1.2816,
+                    95: 1.6449,
+                    99: 2.3263
+                };
+                const zScore = zScores[Math.round(serviceLevel)] || 1.6449; // Default to 95%
+                // Constant Demand, Variable Lead Time: ROP = D * L + Z * D * σ_L
+                const safetyStock = zScore * demandMean * leadTimeStd;
+                const reorderPoint = demandMean * leadTimeMean + safetyStock;
+
+                results = `
+                    <p>Reorder Point: ${reorderPoint.toFixed(2)} units</p>
+                    <p>Safety Stock: ${safetyStock.toFixed(2)} units</p>
+                `;
+                interpretation = `The reorder point of ${reorderPoint.toFixed(2)} units includes a safety stock of ${safetyStock.toFixed(2)} units to account for lead time variability with constant demand, ensuring a ${serviceLevel}% service level.`;
+                recommendation = `Reorder when inventory reaches ${reorderPoint.toFixed(2)} units, maintaining a safety stock of ${safetyStock.toFixed(2)} units. This is suitable for consistent demand with variable supplier lead times.`;
+            }
+
+            document.getElementById('calculation-results').innerHTML = results;
+            document.getElementById('interpretation-text').innerText = interpretation;
+            document.getElementById('recommendation-text').innerText = recommendation;
+            document.getElementById('results').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
