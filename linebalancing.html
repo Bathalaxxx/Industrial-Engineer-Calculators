@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Line Balancing Calculator - IE Toolkit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-blue-900 text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">IE Toolkit</h1>
+            <a href="index.html" class="hover:underline">Home</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto py-8 px-4">
+        <section class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-3xl font-semibold mb-4">Line Balancing Calculator</h2>
+            <p class="text-gray-600 mb-6">Optimize task assignments to workstations to minimize idle time and meet production goals, with visual task distribution.</p>
+
+            <!-- Line Balancing Method Selection -->
+            <div class="mb-6">
+                <label for="lb-method" class="block text-sm font-medium text-gray-700">Select Line Balancing Method</label>
+                <select id="lb-method" class="mt-1 p-2 w-full border rounded-md" onchange="toggleInputs()">
+                    <option value="basic">Basic Line Balancing</option>
+                    <option value="precedence">Line Balancing with Precedence Constraints</option>
+                    <option value="variable">Line Balancing with Variable Task Times</option>
+                </select>
+            </div>
+
+            <!-- Input Form -->
+            <div id="input-form" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Common Inputs -->
+                <div>
+                    <label for="cycle-time" class="block text-sm font-medium text-gray-700">Desired Cycle Time (seconds/unit)</label>
+                    <input type="number" id="cycle-time" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 60" required>
+                </div>
+                <div>
+                    <label for="tasks" class="block text-sm font-medium text-gray-700">Task Times (comma-separated, seconds, e.g., 20,30,40)</label>
+                    <input type="text" id="tasks" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 20,30,40" required oninput="updatePrecedenceTable()">
+                </div>
+                <!-- Precedence Constraints Inputs -->
+                <div id="precedence-inputs" class="hidden col-span-1 md:col-span-2">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Precedence Constraints (select task and its predecessors)</label>
+                    <table id="precedence-table" class="w-full border-collapse border border-gray-300">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="border border-gray-300 p-2">Task</th>
+                                <th class="border border-gray-300 p-2">Predecessors</th>
+                            </tr>
+                        </thead>
+                        <tbody id="precedence-table-body"></tbody>
+                    </table>
+                    <button type="button" onclick="addPrecedenceRow()" class="mt-2 bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600">Add Precedence</button>
+                </div>
+                <!-- Variable Task Times Inputs -->
+                <div id="variable-inputs" class="hidden">
+                    <label for="task-std" class="block text-sm font-medium text-gray-700">Task Time Standard Deviations (comma-separated, seconds, e.g., 2,3,4)</label>
+                    <input type="text" id="task-std" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 2,3,4">
+                </div>
+            </div>
+            <button onclick="calculateLineBalance()" class="mt-6 bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-800">Calculate</button>
+
+            <!-- Results -->
+            <div id="results" class="mt-6 hidden">
+                <h3 class="text-xl font-semibold mb-2">Results</h3>
+                <div id="calculation-results" class="mb-4"></div>
+                <div class="mb-4">
+                    <h4 class="text-lg font-semibold">Workstation Task Distribution</h4>
+                    <canvas id="workstation-chart" class="w-full h-64"></canvas>
+                </div>
+                <div id="interpretation" class="mt-4">
+                    <h4 class="text-lg font-semibold">Interpretation</h4>
+                    <p id="interpretation-text" class="text-gray-600"></p>
+                </div>
+                <div id="recommendation" class="mt-4">
+                    <h4 class="text-lg font-semibold">Recommendation</h4>
+                    <p id="recommendation-text" class="text-gray-600"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Line Balancing Methods Explanation -->
+        <section class="mt-8">
+            <h3 class="text-2xl font-semibold mb-4">Line Balancing Methods and When to Use Them</h3>
+            <div class="space-y-4">
+                <div>
+                    <h4 class="text-lg font-semibold">Basic Line Balancing</h4>
+                    <p class="text-gray-600">Use for simple assembly lines with no task dependencies. Assigns tasks to workstations to minimize idle time. Algorithm: Greedy assignment to fit within cycle time.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold">Line Balancing with Precedence Constraints</h4>
+                    <p class="text-gray-600">Use when tasks have dependencies (e.g., task 2 must follow task 1). Ensures feasible task sequences within cycle time. Algorithm: Ranked positional weight with precedence.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold">Line Balancing with Variable Task Times</h4>
+                    <p class="text-gray-600">Use when task times vary (e.g., due to operator variability). Includes buffer time based on variability. Algorithm: Greedy assignment with safety buffer.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-blue-900 text-white text-center p-4">
+        <p>&copy; 2025 IE Toolkit. All rights reserved.</p>
+    </footer>
+
+    <script>
+        let chartInstance = null;
+
+        function toggleInputs() {
+            const method = document.getElementById('lb-method').value;
+            document.getElementById('precedence-inputs').classList.add('hidden');
+            document.getElementById('variable-inputs').classList.add('hidden');
+            if (method === 'precedence') {
+                document.getElementById('precedence-inputs').classList.remove('hidden');
+                updatePrecedenceTable();
+            } else if (method === 'variable') {
+                document.getElementById('variable-inputs').classList.remove('hidden');
+            }
+            document.getElementById('results').classList.add('hidden');
+        }
+
+        function updatePrecedenceTable() {
+            const taskTimes = document.getElementById('tasks').value.split(',').map(t => parseFloat(t.trim())).filter(t => !isNaN(t) && t > 0);
+            const tableBody = document.getElementById('precedence-table-body');
+            tableBody.innerHTML = '';
+            if (taskTimes.length === 0) return;
+
+            taskTimes.forEach((_, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="border border-gray-300 p-2">Task ${index + 1}</td>
+                    <td class="border border-gray-300 p-2">
+                        <select multiple class="precedence-select w-full p-1 border rounded-md" data-task="${index + 1}">
+                            <option value="0">None</option>
+                            ${taskTimes.map((_, i) => `<option value="${i + 1}">${i + 1}</option>`).join('')}
+                        </select>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function addPrecedenceRow() {
+            const taskTimes = document.getElementById('tasks').value.split(',').map(t => parseFloat(t.trim())).filter(t => !isNaN(t) && t > 0);
+            if (taskTimes.length === 0) {
+                alert('Please enter valid task times first.');
+                return;
+            }
+            const tableBody = document.getElementById('precedence-table-body');
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td class="border border-gray-300 p-2">
+                    <select class="task-select w-full p-1 border rounded-md">
+                        ${taskTimes.map((_, i) => `<option value="${i + 1}">Task ${i + 1}</option>`).join('')}
+                    </select>
+                </td>
+                <td class="border border-gray-300 p-2">
+                    <select multiple class="precedence-select w-full p-1 border rounded-md">
+                        <option value="0">None</option>
+                        ${taskTimes.map((_, i) => `<option value="${i + 1}">${i + 1}</option>`).join('')}
+                    </select>
+                </td>
+            `;
+            tableBody.appendChild(row);
+        }
+
+        function calculateLineBalance() {
+            const method = document.getElementById('lb-method').value;
+            const cycleTime = parseFloat(document.getElementById('cycle-time').value);
+            const taskTimes = document.getElementById('tasks').value.split(',').map(t => parseFloat(t.trim())).filter(t => !isNaN(t));
+
+            if (isNaN(cycleTime) || cycleTime <= 0 || taskTimes.some(t => isNaN(t) || t <= 0)) {
+                alert('Please enter a valid positive cycle time and positive task times (comma-separated).');
+                return;
+            }
+
+            let results = '';
+            let interpretation = '';
+            let recommendation = '';
+            let workstations = [];
+
+            if (method === 'basic') {
+                // Basic Line Balancing: Greedy assignment
+                workstations = [];
+                let currentStation = { tasks: [], totalTime: 0 };
+                taskTimes.forEach((time, index) => {
+                    if (currentStation.totalTime + time <= cycleTime) {
+                        currentStation.tasks.push({ id: index + 1, time });
+                        currentStation.totalTime += time;
+                    } else {
+                        workstations.push(currentStation);
+                        currentStation = { tasks: [{ id: index + 1, time }], totalTime: time };
+                    }
+                });
+                if (currentStation.tasks.length > 0) workstations.push(currentStation);
+
+                const totalTime = taskTimes.reduce((sum, time) => sum + time, 0);
+                const balanceEfficiency = (totalTime / (workstations.length * cycleTime)) * 100;
+
+                results = `
+                    <p>Number of Workstations: ${workstations.length}</p>
+                    <p>Balance Efficiency: ${balanceEfficiency.toFixed(2)}%</p>
+                    <p>Workstation Assignments:</p>
+                    <ul class="list-disc pl-5">
+                        ${workstations.map((ws, i) => `<li>Workstation ${i + 1}: Tasks ${ws.tasks.map(t => t.id).join(', ')} (${ws.totalTime.toFixed(2)} sec)</li>`).join('')}
+                    </ul>
+                `;
+                interpretation = `The Basic Line Balancing assigns tasks to ${workstations.length} workstations with a balance efficiency of ${balanceEfficiency.toFixed(2)}%. Each workstation's total task time is kept within the cycle time of ${cycleTime} seconds.`;
+                recommendation = `Use ${workstations.length} workstations with the shown task assignments. Aim to improve efficiency (currently ${balanceEfficiency.toFixed(2)}%) by redistributing tasks or reducing cycle time if possible.`;
+
+            } else if (method === 'precedence') {
+                // Collect precedence constraints from table
+                const selects = document.querySelectorAll('.precedence-select');
+                const precedence = [];
+                selects.forEach(select => {
+                    const taskId = parseInt(select.dataset.task || select.closest('tr').querySelector('.task-select').value);
+                    const predecessors = Array.from(select.selectedOptions).map(opt => parseInt(opt.value)).filter(v => v !== 0);
+                    predecessors.forEach(pred => precedence.push([pred, taskId]));
+                });
+
+                if (precedence.some(([pred, succ]) => pred < 1 || succ < 1 || pred > taskTimes.length || succ > taskTimes.length || pred === succ)) {
+                    alert('Please ensure valid precedence constraints (task IDs within range and no self-dependencies).');
+                    return;
+                }
+
+                // Line Balancing with Precedence Constraints: Ranked Positional Weight
+                const tasks = taskTimes.map((time, i) => ({ id: i + 1, time, predecessors: [], successors: [] }));
+                precedence.forEach(([pred, succ]) => {
+                    tasks[succ - 1].predecessors.push(pred);
+                    tasks[pred - 1].successors.push(succ);
+                });
+                const rankedTasks = tasks.slice().sort((a, b) => {
+                    const weightA = a.time + tasks.filter(t => t.predecessors.includes(a.id)).reduce((sum, t) => sum + t.time, 0);
+                    const weightB = b.time + tasks.filter(t => t.predecessors.includes(b.id)).reduce((sum, t) => sum + t.time, 0);
+                    return weightB - weightA;
+                });
+
+                workstations = [];
+                let currentStation = { tasks: [], totalTime: 0 };
+                const assigned = new Set();
+                rankedTasks.forEach(task => {
+                    if (!assigned.has(task.id) && task.predecessors.every(pred => assigned.has(pred))) {
+                        if (currentStation.totalTime + task.time <= cycleTime) {
+                            currentStation.tasks.push(task);
+                            currentStation.totalTime += task.time;
+                            assigned.add(task.id);
+                        } else {
+                            workstations.push(currentStation);
+                            currentStation = { tasks: [task], totalTime: task.time };
+                            assigned.add(task.id);
+                        }
+                    }
+                });
+                if (currentStation.tasks.length > 0) workstations.push(currentStation);
+
+                const totalTime = taskTimes.reduce((sum, time) => sum + time, 0);
+                const balanceEfficiency = (totalTime / (workstations.length * cycleTime)) * 100;
+
+                results = `
+                    <p>Number of Workstations: ${workstations.length}</p>
+                    <p>Balance Efficiency: ${balanceEfficiency.toFixed(2)}%</p>
+                    <p>Workstation Assignments:</p>
+                    <ul class="list-disc pl-5">
+                        ${workstations.map((ws, i) => `<li>Workstation ${i + 1}: Tasks ${ws.tasks.map(t => t.id).join(', ')} (${ws.totalTime.toFixed(2)} sec)</li>`).join('')}
+                    </ul>
+                `;
+                interpretation = `The Line Balancing with Precedence Constraints assigns tasks to ${workstations.length} workstations, respecting task dependencies, with a balance efficiency of ${balanceEfficiency.toFixed(2)}%. Tasks are sequenced to fit within the ${cycleTime}-second cycle time.`;
+                recommendation = `Implement ${workstations.length} workstations with the shown task assignments, respecting precedence constraints. Improve efficiency (currently ${balanceEfficiency.toFixed(2)}%) by optimizing task sequences or reducing cycle time.`;
+
+            } else if (method === 'variable') {
+                const taskStd = document.getElementById('task-std').value.split(',').map(s => parseFloat(s.trim()));
+                if (taskStd.length !== taskTimes.length || taskStd.some(isNaN) || taskStd.some(s => s < 0)) {
+                    alert('Please enter valid non-negative standard deviations for each task time (same number as tasks).');
+                    return;
+                }
+                // Line Balancing with Variable Task Times: Greedy with safety buffer
+                const zScore = 1.6449; // 95% service level for variability
+                workstations = [];
+                let currentStation = { tasks: [], totalTime: 0 };
+                taskTimes.forEach((time, index) => {
+                    const bufferTime = zScore * taskStd[index];
+                    if (currentStation.totalTime + time + bufferTime <= cycleTime) {
+                        currentStation.tasks.push({ id: index + 1, time, buffer: bufferTime });
+                        currentStation.totalTime += time + bufferTime;
+                    } else {
+                        workstations.push(currentStation);
+                        currentStation = { tasks: [{ id: index + 1, time, buffer: bufferTime }], totalTime: time + bufferTime };
+                    }
+                });
+                if (currentStation.tasks.length > 0) workstations.push(currentStation);
+
+                const totalTime = taskTimes.reduce((sum, time) => sum + time, 0);
+                const balanceEfficiency = (totalTime / (workstations.length * cycleTime)) * 100;
+
+                results = `
+                    <p>Number of Workstations: ${workstations.length}</p>
+                    <p>Balance Efficiency: ${balanceEfficiency.toFixed(2)}%</p>
+                    <p>Workstation Assignments:</p>
+                    <ul class="list-disc pl-5">
+                        ${workstations.map((ws, i) => `<li>Workstation ${i + 1}: Tasks ${ws.tasks.map(t => t.id).join(', ')} (${ws.totalTime.toFixed(2)} sec, incl. buffers)</li>`).join('')}
+                    </ul>
+                `;
+                interpretation = `The Line Balancing with Variable Task Times assigns tasks to ${workstations.length} workstations, including buffers for task time variability, with a balance efficiency of ${balanceEfficiency.toFixed(2)}%. Total time per workstation includes a safety buffer to ensure the ${cycleTime}-second cycle time is met.`;
+                recommendation = `Use ${workstations.length} workstations with the shown task assignments, including buffers for variability. Enhance efficiency (currently ${balanceEfficiency.toFixed(2)}%) by reducing task time variability or adjusting cycle time.`;
+            }
+
+            // Render Chart
+            if (chartInstance) chartInstance.destroy();
+            const ctx = document.getElementById('workstation-chart').getContext('2d');
+            chartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: workstations.map((_, i) => `Workstation ${i + 1}`),
+                    datasets: [{
+                        label: 'Task Time (sec)',
+                        data: workstations.map(ws => ws.totalTime),
+                        backgroundColor: 'rgba(59, 130, 246, 0.5)',
+                        borderColor: 'rgba(59, 130, 246, 1)',
+                        borderWidth: 1
+                    }, {
+                        label: 'Cycle Time',
+                        data: workstations.map(() => cycleTime),
+                        type: 'line',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 2,
+                        fill: false,
+                        pointRadius: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Time (seconds)' }
+                        },
+                        x: {
+                            title: { display: true, text: 'Workstations' }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: true },
+                        title: { display: true, text: 'Workstation Task Time Distribution' }
+                    }
+                }
+            });
+
+            document.getElementById('calculation-results').innerHTML = results;
+            document.getElementById('interpretation-text').innerText = interpretation;
+            document.getElementById('recommendation-text').innerText = recommendation;
+            document.getElementById('results').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
