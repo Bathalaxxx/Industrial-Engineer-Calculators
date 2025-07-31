@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Industrial Engineering Toolkit | Process Optimization Tools</title>
+    <title>Industrial Engineering Toolkit | Professional Calculators</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Playfair+Display:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-color: #005f73;
             --secondary-color: #0a9396;
             --accent-color: #ee9b00;
+            --danger-color: #ae2012;
+            --success-color: #4caf50;
             --light-bg: #f8f9fa;
             --dark-bg: #001219;
             --text-light: #e9ecef;
@@ -18,8 +20,6 @@
             --border-radius: 8px;
             --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             --transition: all 0.2s ease;
-            --success-color: #4caf50;
-            --warning-color: #ff9800;
         }
         
         body {
@@ -34,7 +34,7 @@
         }
         
         .sidebar {
-            width: 260px;
+            width: 280px;
             background: var(--dark-bg);
             padding: 20px 0;
             box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
@@ -65,6 +65,24 @@
             content: "⚙️";
             margin-right: 10px;
             font-size: 1.2rem;
+        }
+        
+        .search-box {
+            padding: 0 20px 15px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 8px 12px;
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.1);
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .search-box input::placeholder {
+            color: rgba(255,255,255,0.5);
         }
         
         .menu-category {
@@ -107,6 +125,7 @@
         
         .sidebar ul li {
             margin: 2px 0;
+            position: relative;
         }
         
         .sidebar ul li a {
@@ -114,7 +133,7 @@
             align-items: center;
             color: var(--text-light);
             text-decoration: none;
-            padding: 10px 20px;
+            padding: 8px 20px 8px 30px;
             border-left: 3px solid transparent;
             transition: var(--transition);
             font-size: 0.9rem;
@@ -125,21 +144,22 @@
             border-left: 3px solid var(--accent-color);
         }
         
-        .sidebar ul li a::before {
-            content: "•";
-            color: var(--secondary-color);
-            margin-right: 10px;
-            font-size: 1.2rem;
-            line-height: 0;
-        }
-        
         .sidebar ul li.popular a::before {
             content: "★";
             color: var(--accent-color);
+            position: absolute;
+            left: 10px;
+        }
+        
+        .sidebar ul li.new a::before {
+            content: "🆕";
+            position: absolute;
+            left: 10px;
+            font-size: 0.7rem;
         }
         
         .container {
-            margin-left: 260px;
+            margin-left: 280px;
             padding: 40px;
             max-width: 1200px;
             width: 100%;
@@ -196,6 +216,35 @@
             font-size: 0.9rem;
         }
         
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .stat-card h3 {
+            margin: 0 0 10px;
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .stat-card p {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
         .tool-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -215,8 +264,28 @@
             height: 100%;
         }
         
-        .tool-card.featured {
-            border-top-color: var(--accent-color);
+        .tool-card.inventory {
+            border-top-color: #2a9d8f;
+        }
+        
+        .tool-card.production {
+            border-top-color: #e9c46a;
+        }
+        
+        .tool-card.quality {
+            border-top-color: #f4a261;
+        }
+        
+        .tool-card.analysis {
+            border-top-color: #e76f51;
+        }
+        
+        .tool-card.financial {
+            border-top-color: #264653;
+        }
+        
+        .tool-card.ergonomics {
+            border-top-color: #6a4c93;
         }
         
         .tool-card:hover {
@@ -237,31 +306,6 @@
             margin-top: 0;
             margin-bottom: 12px;
             font-size: 1.25rem;
-            display: flex;
-            align-items: center;
-        }
-        
-        .tool-card h3::before {
-            content: "";
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            background-color: var(--secondary-color);
-            mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>');
-            mask-repeat: no-repeat;
-            margin-right: 10px;
-        }
-        
-        .tool-card.featured h3::after {
-            content: "Popular";
-            background: var(--accent-color);
-            color: white;
-            font-size: 0.6rem;
-            padding: 2px 8px;
-            border-radius: 10px;
-            margin-left: 10px;
-            font-family: 'Roboto', sans-serif;
-            font-weight: 700;
         }
         
         .tool-card p {
@@ -358,6 +402,10 @@
             .tool-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
         }
         
         @media (max-width: 480px) {
@@ -367,6 +415,10 @@
             
             .header h1 {
                 font-size: 1.6rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -379,160 +431,286 @@
             <h2>IE Toolkit</h2>
         </div>
         
+        <div class="search-box">
+            <input type="text" placeholder="Search calculators...">
+        </div>
+        
+        <!-- Inventory Management -->
         <div class="menu-category collapsed">Inventory Management</div>
         <ul class="collapsed">
             <li class="popular"><a href="eoq.html">EOQ Calculator</a></li>
-            <li><a href="safetystock.html">Safety Stock Calculator</a></li>
-            <li><a href="rop.html">Reorder Point Calculator</a></li>
+            <li><a href="safetystock.html">Safety Stock</a></li>
+            <li><a href="rop.html">Reorder Point</a></li>
             <li><a href="kanban.html">Kanban Calculator</a></li>
+            <li><a href="newsvendor.html">Newsvendor Model</a></li>
+            <li><a href="batchsizing.html">Batch Sizing</a></li>
         </ul>
         
+        <!-- Production Systems -->
         <div class="menu-category collapsed">Production Systems</div>
         <ul class="collapsed">
             <li class="popular"><a href="oee.html">OEE Calculator</a></li>
             <li><a href="linebalancing.html">Line Balancing</a></li>
-            <li><a href="takttime.html">Takt Time Calculator</a></li>
-            <li><a href="littleslaw.html">Little's Law Calculator</a></li>
+            <li><a href="takttime.html">Takt Time</a></li>
+            <li><a href="littleslaw.html">Little's Law</a></li>
+            <li><a href="learningcurve.html">Learning Curve</a></li>
+            <li><a href="learningcurvewithmultipleproducts.html">Multi-Product Learning</a></li>
         </ul>
         
-        <div class="menu-category collapsed">Work Measurement</div>
-        <ul class="collapsed">
-            <li class="popular"><a href="timestudy.html">Time Study Calculator</a></li>
-            <li><a href="samplesize.html">Sample Size Calculator</a></li>
-            <li><a href="worksampling.html">Work Sampling Calculator</a></li>
-        </ul>
-        
-        <div class="menu-category collapsed">Ergonomics</div>
-        <ul class="collapsed">
-            <li><a href="niosh.html">NIOSH Lifting Calculator</a></li>
-            <li><a href="rulareba.html">RULA/REBA Calculator</a></li>
-        </ul>
-        
-        <div class="menu-category collapsed">Facility Planning</div>
-        <ul class="collapsed">
-            <li><a href="traveldistance.html">Travel Distance Matrix</a></li>
-            <li><a href="loaddistance.html">Load-Distance Score</a></li>
-        </ul>
-        
+        <!-- Quality Control -->
         <div class="menu-category collapsed">Quality Control</div>
         <ul class="collapsed">
             <li class="popular"><a href="processcapability.html">Process Capability</a></li>
-            <li><a href="pchartnpchart.html">P-Chart/NP-Chart</a></li>
-            <li><a href="xrbarchart.html">X̄-R Chart</a></li>
-            <li><a href="sigmalavel.html">Sigma Level</a></li>
             <li><a href="gagerr.html">Gage R&R</a></li>
+            <li><a href="sigmalavel.html">Sigma Level</a></li>
+            <li class="new"><a href="xbarandschart.html">X̄-s Chart</a></li>
+            <li><a href="xbarandrangechart.html">X̄-R Chart</a></li>
+            <li><a href="rchart.html">R Chart</a></li>
+            <li><a href="schart.html">s Chart</a></li>
+            <li><a href="mrchart.html">MR Chart</a></li>
+            <li><a href="pchart.html">p Chart</a></li>
+            <li><a href="npchart.html">np Chart</a></li>
+            <li><a href="uchart.html">u Chart</a></li>
+            <li><a href="cchart.html">c Chart</a></li>
         </ul>
         
+        <!-- Work Measurement -->
+        <div class="menu-category collapsed">Work Measurement</div>
+        <ul class="collapsed">
+            <li class="popular"><a href="timestudy.html">Time Study</a></li>
+            <li><a href="samplesize.html">Sample Size</a></li>
+            <li><a href="worksampling.html">Work Sampling</a></li>
+            <li><a href="mtm.html">MTM Analysis</a></li>
+            <li><a href="most.html">MOST Analysis</a></li>
+        </ul>
+        
+        <!-- Facility Planning -->
+        <div class="menu-category collapsed">Facility Planning</div>
+        <ul class="collapsed">
+            <li><a href="traveldistance.html">Travel Distance</a></li>
+            <li><a href="loaddistance.html">Load-Distance</a></li>
+            <li><a href="networkdiagram.html">Network Diagram</a></li>
+            <li><a href="criticalpathmethod.html">Critical Path Method</a></li>
+        </ul>
+        
+        <!-- Ergonomics -->
+        <div class="menu-category collapsed">Ergonomics</div>
+        <ul class="collapsed">
+            <li><a href="niosh.html">NIOSH Lifting</a></li>
+            <li><a href="rulareba.html">RULA/REBA</a></li>
+        </ul>
+        
+        <!-- Operations Research -->
         <div class="menu-category collapsed">Operations Research</div>
         <ul class="collapsed">
-            <li><a href="queueing.html">Queueing Models</a></li>
             <li><a href="linearprogramming.html">Linear Programming</a></li>
+            <li><a href="queueing.html">Queueing Models</a></li>
+            <li><a href="transportation.html">Transportation</a></li>
+            <li><a href="johnsonsnequal2.html">Johnson's Algorithm (n=2)</a></li>
+            <li><a href="sequencingn>2.html">Sequencing (n>2)</a></li>
+            <li><a href="flowshopsequencing.html">Flow Shop Sequencing</a></li>
+            <li><a href="jobshopsequencing.html">Job Shop Sequencing</a></li>
+        </ul>
+        
+        <!-- Financial Analysis -->
+        <div class="menu-category collapsed">Financial Analysis</div>
+        <ul class="collapsed">
+            <li><a href="breakeven.html">Breakeven Analysis</a></li>
+            <li><a href="costbenefitanalysis.html">Cost-Benefit</a></li>
+            <li><a href="presentvalue.html">Present Value</a></li>
+            <li><a href="futurevalue.html">Future Value</a></li>
+            <li><a href="depreciation.html">Depreciation</a></li>
+        </ul>
+        
+        <!-- Statistical Analysis -->
+        <div class="menu-category collapsed">Statistical Analysis</div>
+        <ul class="collapsed">
+            <li><a href="decisionmatrix.html">Decision Matrix</a></li>
+            <li><a href="ztest.html">Z-Test</a></li>
+            <li><a href="ttest.html">T-Test</a></li>
+            <li><a href="anova.html">ANOVA</a></li>
+            <li><a href="regression.html">Regression</a></li>
+            <li><a href="correlation.html">Correlation</a></li>
+            <li><a href="latinsquare.html">Latin Square</a></li>
+        </ul>
+        
+        <!-- Forecasting -->
+        <div class="menu-category collapsed">Forecasting</div>
+        <ul class="collapsed">
+            <li><a href="simplemovingaverage.html">Simple MA</a></li>
+            <li><a href="weightedmovingaverage.html">Weighted MA</a></li>
+            <li><a href="exponentialmovingaverage.html">Exponential MA</a></li>
+            <li><a href="holtswinter.html">Holt-Winter</a></li>
+            <li><a href="mad.html">MAD</a></li>
+            <li><a href="mape.html">MAPE</a></li>
+            <li><a href="rmse.html">RMSE</a></li>
+        </ul>
+        
+        <!-- Reliability -->
+        <div class="menu-category collapsed">Reliability</div>
+        <ul class="collapsed">
+            <li><a href="mtbf.html">MTBF</a></li>
+            <li><a href="mttr.html">MTTR</a></li>
+            <li><a href="reliabilityanalysis.html">Reliability Analysis</a></li>
         </ul>
     </div>
 
     <div class="container">
         <div class="header">
             <h1>Industrial Engineering Toolkit</h1>
-            <p>A comprehensive collection of specialized calculators and tools designed to optimize processes, improve efficiency, and solve complex industrial engineering challenges across all domains.</p>
+            <p>Your comprehensive collection of 50+ specialized calculators for optimizing processes, improving efficiency, and solving complex industrial engineering challenges across all domains.</p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Calculators</h3>
+                    <p>50+</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Categories</h3>
+                    <p>10</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Most Popular</h3>
+                    <p>OEE</p>
+                </div>
+                <div class="stat-card">
+                    <h3>New Tools</h3>
+                    <p>5</p>
+                </div>
+            </div>
             
             <div class="quick-access">
                 <a href="eoq.html">EOQ Calculator</a>
                 <a href="oee.html">OEE Calculator</a>
-                <a href="timestudy.html">Time Study</a>
                 <a href="processcapability.html">Process Capability</a>
+                <a href="timestudy.html">Time Study</a>
                 <a href="niosh.html">NIOSH Lifting</a>
+                <a href="breakeven.html">Breakeven Analysis</a>
             </div>
         </div>
 
         <div class="tool-grid">
-            <div class="tool-card featured">
+            <div class="tool-card inventory">
                 <div class="tool-card-content">
                     <h3>Inventory Management</h3>
-                    <p>Optimize inventory levels and reduce carrying costs with these essential tools:</p>
+                    <p>Optimize inventory levels, calculate reorder points, and implement efficient inventory control systems.</p>
                     <ul class="tools-list">
-                        <li>Economic Order Quantity (EOQ)</li>
+                        <li>Economic Order Quantity</li>
                         <li>Safety Stock Calculations</li>
-                        <li>Reorder Point Determination</li>
-                        <li>Kanban System Design</li>
+                        <li>Kanban Systems</li>
+                        <li>Newsvendor Model</li>
                     </ul>
                     <a href="eoq.html">Access Inventory Tools</a>
                 </div>
             </div>
             
-            <div class="tool-card featured">
+            <div class="tool-card production">
                 <div class="tool-card-content">
                     <h3>Production Systems</h3>
-                    <p>Measure and improve your production efficiency with these key metrics:</p>
+                    <p>Analyze and optimize production efficiency with OEE, line balancing, and learning curve analysis.</p>
                     <ul class="tools-list">
                         <li>Overall Equipment Effectiveness</li>
-                        <li>Assembly Line Balancing</li>
-                        <li>Takt Time Calculation</li>
-                        <li>Little's Law Applications</li>
+                        <li>Line Balancing</li>
+                        <li>Takt Time</li>
+                        <li>Learning Curves</li>
                     </ul>
                     <a href="oee.html">Access Production Tools</a>
                 </div>
             </div>
             
-            <div class="tool-card">
-                <div class="tool-card-content">
-                    <h3>Work Measurement</h3>
-                    <p>Standardize work processes and establish time standards:</p>
-                    <ul class="tools-list">
-                        <li>Time Study Analysis</li>
-                        <li>Sample Size Determination</li>
-                        <li>Work Sampling Studies</li>
-                    </ul>
-                    <a href="timestudy.html">Access Measurement Tools</a>
-                </div>
-            </div>
-            
-            <div class="tool-card">
-                <div class="tool-card-content">
-                    <h3>Ergonomics</h3>
-                    <p>Assess and improve workplace safety and ergonomics:</p>
-                    <ul class="tools-list">
-                        <li>NIOSH Lifting Equation</li>
-                        <li>RULA/REBA Assessments</li>
-                    </ul>
-                    <a href="niosh.html">Access Ergonomics Tools</a>
-                </div>
-            </div>
-            
-            <div class="tool-card">
-                <div class="tool-card-content">
-                    <h3>Facility Planning</h3>
-                    <p>Optimize your facility layout and material flow:</p>
-                    <ul class="tools-list">
-                        <li>Travel Distance Matrix</li>
-                        <li>Load-Distance Scoring</li>
-                    </ul>
-                    <a href="traveldistance.html">Access Facility Tools</a>
-                </div>
-            </div>
-            
-            <div class="tool-card featured">
+            <div class="tool-card quality">
                 <div class="tool-card-content">
                     <h3>Quality Control</h3>
-                    <p>Monitor and improve your process quality with SPC tools:</p>
+                    <p>Statistical process control tools including capability analysis and control chart generators.</p>
                     <ul class="tools-list">
-                        <li>Process Capability Analysis</li>
-                        <li>Control Chart Generators</li>
-                        <li>Sigma Level Calculation</li>
-                        <li>Gage R&R Studies</li>
+                        <li>Process Capability</li>
+                        <li>Gage R&R</li>
+                        <li>Control Charts (12 types)</li>
+                        <li>Sigma Level</li>
                     </ul>
                     <a href="processcapability.html">Access Quality Tools</a>
                 </div>
             </div>
             
-            <div class="tool-card">
+            <div class="tool-card analysis">
+                <div class="tool-card-content">
+                    <h3>Statistical Analysis</h3>
+                    <p>Comprehensive statistical tools for hypothesis testing and experimental design.</p>
+                    <ul class="tools-list">
+                        <li>Z-Test & T-Test</li>
+                        <li>ANOVA</li>
+                        <li>Regression Analysis</li>
+                        <li>Decision Matrix</li>
+                    </ul>
+                    <a href="ztest.html">Access Analysis Tools</a>
+                </div>
+            </div>
+            
+            <div class="tool-card financial">
+                <div class="tool-card-content">
+                    <h3>Financial Analysis</h3>
+                    <p>Tools for cost analysis, investment evaluation, and financial decision making.</p>
+                    <ul class="tools-list">
+                        <li>Breakeven Analysis</li>
+                        <li>Cost-Benefit</li>
+                        <li>Present/Future Value</li>
+                        <li>Depreciation</li>
+                    </ul>
+                    <a href="breakeven.html">Access Financial Tools</a>
+                </div>
+            </div>
+            
+            <div class="tool-card ergonomics">
+                <div class="tool-card-content">
+                    <h3>Ergonomics</h3>
+                    <p>Workplace safety assessments and ergonomic risk evaluation tools.</p>
+                    <ul class="tools-list">
+                        <li>NIOSH Lifting Equation</li>
+                        <li>RULA/REBA Methods</li>
+                    </ul>
+                    <a href="niosh.html">Access Ergonomics Tools</a>
+                </div>
+            </div>
+            
+            <div class="tool-card production">
+                <div class="tool-card-content">
+                    <h3>Work Measurement</h3>
+                    <p>Time study analysis and predetermined motion time systems.</p>
+                    <ul class="tools-list">
+                        <li>Time Study</li>
+                        <li>Work Sampling</li>
+                        <li>MTM Analysis</li>
+                        <li>MOST Analysis</li>
+                    </ul>
+                    <a href="timestudy.html">Access Measurement Tools</a>
+                </div>
+            </div>
+            
+            <div class="tool-card analysis">
+                <div class="tool-card-content">
+                    <h3>Forecasting</h3>
+                    <p>Time series forecasting methods and error measurement tools.</p>
+                    <ul class="tools-list">
+                        <li>Moving Averages</li>
+                        <li>Exponential Smoothing</li>
+                        <li>Holt-Winter's</li>
+                        <li>MAD/MAPE/RMSE</li>
+                    </ul>
+                    <a href="simplemovingaverage.html">Access Forecasting Tools</a>
+                </div>
+            </div>
+            
+            <div class="tool-card financial">
                 <div class="tool-card-content">
                     <h3>Operations Research</h3>
-                    <p>Solve complex operational problems mathematically:</p>
+                    <p>Mathematical optimization and sequencing algorithms.</p>
                     <ul class="tools-list">
-                        <li>Queueing Theory Models</li>
                         <li>Linear Programming</li>
+                        <li>Queueing Models</li>
+                        <li>Johnson's Algorithm</li>
+                        <li>Sequencing Methods</li>
                     </ul>
-                    <a href="queueing.html">Access OR Tools</a>
+                    <a href="linearprogramming.html">Access OR Tools</a>
                 </div>
             </div>
         </div>
