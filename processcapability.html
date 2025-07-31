@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Process Capability Calculator - IE Toolkit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-blue-900 text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">IE Toolkit</h1>
+            <a href="index.html" class="hover:underline">Home</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto py-8 px-4">
+        <section class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-3xl font-semibold mb-4">Process Capability Calculator</h2>
+            <p class="text-gray-600 mb-6">Evaluate process capability (Cp, Cpk) to assess how well your process meets specification limits, with visual insights into process distribution.</p>
+
+            <!-- Process Capability Method Selection -->
+            <div class="mb-6">
+                <label for="pc-method" class="block text-sm font-medium text-gray-700">Select Process Capability Method</label>
+                <select id="pc-method" class="mt-1 p-2 w-full border rounded-md" onchange="toggleInputs()">
+                    <option value="standard">Standard Process Capability</option>
+                    <option value="non-normal">Process Capability with Non-Normal Data</option>
+                    <option value="subgroup">Process Capability with Subgroup Analysis</option>
+                </select>
+            </div>
+
+            <!-- Input Form -->
+            <div id="input-form" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Common Inputs -->
+                <div>
+                    <label for="lsl" class="block text-sm font-medium text-gray-700">Lower Specification Limit (LSL)</label>
+                    <input type="number" id="lsl" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 10" required>
+                </div>
+                <div>
+                    <label for="usl" class="block text-sm font-medium text-gray-700">Upper Specification Limit (USL)</label>
+                    <input type="number" id="usl" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 20" required>
+                </div>
+                <div>
+                    <label for="mean" class="block text-sm font-medium text-gray-700">Process Mean</label>
+                    <input type="number" id="mean" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 15" required>
+                </div>
+                <div>
+                    <label for="std-dev" class="block text-sm font-medium text-gray-700">Process Standard Deviation</label>
+                    <input type="number" id="std-dev" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 1" required>
+                </div>
+                <!-- Non-Normal Data Inputs -->
+                <div id="non-normal-inputs" class="hidden">
+                    <label for="distribution-type" class="block text-sm font-medium text-gray-700">Distribution Type</label>
+                    <select id="distribution-type" class="mt-1 p-2 w-full border rounded-md">
+                        <option value="normal">Normal</option>
+                        <option value="weibull">Weibull</option>
+                        <option value="lognormal">Lognormal</option>
+                    </select>
+                </div>
+                <!-- Subgroup Analysis Inputs -->
+                <div id="subgroup-inputs" class="hidden">
+                    <div>
+                        <label for="subgroup-size" class="block text-sm font-medium text-gray-700">Subgroup Size</label>
+                        <input type="number" id="subgroup-size" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 5">
+                    </div>
+                    <div>
+                        <label for="subgroup-data" class="block text-sm font-medium text-gray-700">Subgroup Means (comma-separated)</label>
+                        <input type="text" id="subgroup-data" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 15, 14.8, 15.2">
+                    </div>
+                </div>
+            </div>
+            <button onclick="calculateProcessCapability()" class="mt-6 bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-800">Calculate</button>
+
+            <!-- Results -->
+            <div id="results" class="mt-6 hidden">
+                <h3 class="text-xl font-semibold mb-2">Results</h3>
+                <div id="calculation-results" class="mb-4"></div>
+                <div class="mb-4">
+                    <h4 class="text-lg font-semibold">Process Distribution Visualization</h4>
+                    <canvas id="process-capability-chart" class="w-full h-64"></canvas>
+                </div>
+                <div id="interpretation" class="mt-4">
+                    <h4 class="text-lg font-semibold">Interpretation</h4>
+                    <p id="interpretation-text" class="text-gray-600"></p>
+                </div>
+                <div id="recommendation" class="mt-4">
+                    <h4 class="text-lg font-semibold">Recommendation</h4>
+                    <p id="recommendation-text" class="text-gray-600"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process Capability Methods Explanation -->
+        <section class="mt-8">
+            <h3 class="text-2xl font-semibold mb-4">Process Capability Methods and When to Use Them</h3>
+            <div class="space-y-4">
+                <div>
+                    <h4 class="text-lg font-semibold">Standard Process Capability</h4>
+                    <p class="text-gray-600">Use for normally distributed processes with known mean and standard deviation. Formulas: Cp = (USL - LSL) / (6σ), Cpk = min((USL - μ) / (3σ), (μ - LSL) / (3σ)).</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold">Process Capability with Non-Normal Data</h4>
+                    <p class="text-gray-600">Use when process data follows a non-normal distribution (e.g., Weibull, Lognormal). Adjusts capability indices using distribution parameters.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold">Process Capability with Subgroup Analysis</h4>
+                    <p class="text-gray-600">Use when data is collected in subgroups, accounting for within- and between-subgroup variation. Estimates σ from subgroup means.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-blue-900 text-white text-center p-4">
+        <p>&copy; 2025 IE Toolkit. All rights reserved.</p>
+    </footer>
+
+    <script>
+        let chartInstance = null;
+
+        function toggleInputs() {
+            const method = document.getElementById('pc-method').value;
+            document.getElementById('non-normal-inputs').classList.add('hidden');
+            document.getElementById('subgroup-inputs').classList.add('hidden');
+            if (method === 'non-normal') {
+                document.getElementById('non-normal-inputs').classList.remove('hidden');
+            } else if (method === 'subgroup') {
+                document.getElementById('subgroup-inputs').classList.remove('hidden');
+            }
+            document.getElementById('results').classList.add('hidden');
+        }
+
+        function calculateProcessCapability() {
+            const method = document.getElementById('pc-method').value;
+            const lsl = parseFloat(document.getElementById('lsl').value);
+            const usl = parseFloat(document.getElementById('usl').value);
+            const mean = parseFloat(document.getElementById('mean').value);
+            let stdDev = parseFloat(document.getElementById('std-dev').value);
+
+            if (isNaN(lsl) || isNaN(usl) || isNaN(mean) || isNaN(stdDev) || usl <= lsl || stdDev <= 0) {
+                alert('Please enter valid numbers for LSL, USL (USL > LSL), mean, and positive standard deviation.');
+                return;
+            }
+
+            let results = '';
+            let interpretation = '';
+            let recommendation = '';
+            let cp, cpk;
+
+            if (method === 'standard') {
+                // Standard Process Capability: Cp = (USL - LSL) / (6σ), Cpk = min((USL - μ) / (3σ), (μ - LSL) / (3σ))
+                cp = (usl - lsl) / (6 * stdDev);
+                cpk = Math.min((usl - mean) / (3 * stdDev), (mean - lsl) / (3 * stdDev));
+                results = `
+                    <p>Cp: ${cp.toFixed(2)}</p>
+                    <p>Cpk: ${cpk.toFixed(2)}</p>
+                `;
+                interpretation = `The Standard Process Capability yields Cp = ${cp.toFixed(2)} and Cpk = ${cpk.toFixed(2)}. Cp measures process potential (how well the process could perform if centered), while Cpk accounts for the process mean's position relative to specification limits.`;
+                recommendation = `Aim for Cp and Cpk ≥ 1.33 for a capable process. If Cp < 1.33, reduce process variation (σ = ${stdDev}). If Cpk < Cp, center the process mean (μ = ${mean}) closer to ${(lsl + usl) / 2}.`;
+
+            } else if (method === 'non-normal') {
+                const distributionType = document.getElementById('distribution-type').value;
+                // Simplified non-normal capability (approximation using normal-based formulas)
+                cp = (usl - lsl) / (6 * stdDev);
+                cpk = Math.min((usl - mean) / (3 * stdDev), (mean - lsl) / (3 * stdDev));
+                results = `
+                    <p>Cp: ${cp.toFixed(2)}</p>
+                    <p>Cpk: ${cpk.toFixed(2)}</p>
+                    <p>Distribution Type: ${distributionType.charAt(0).toUpperCase() + distributionType.slice(1)}</p>
+                `;
+                interpretation = `The Process Capability with Non-Normal Data (assuming ${distributionType} distribution) yields Cp = ${cp.toFixed(2)} and Cpk = ${cpk.toFixed(2)}. These are approximations, as non-normal distributions require specific percentile-based calculations.`;
+                recommendation = `For ${distributionType} data, verify Cp and Cpk using distribution-specific methods. Aim for Cp, Cpk ≥ 1.33. Reduce variation (σ = ${stdDev}) or adjust the mean (μ = ${mean}) to improve capability.`;
+
+            } else if (method === 'subgroup') {
+                const subgroupSize = parseInt(document.getElementById('subgroup-size').value);
+                const subgroupData = document.getElementById('subgroup-data').value.split(',').map(x => parseFloat(x.trim())).filter(x => !isNaN(x));
+                if (isNaN(subgroupSize) || subgroupSize <= 0 || subgroupData.length < 2) {
+                    alert('Please enter a valid positive subgroup size and at least two subgroup means.');
+                    return;
+                }
+                // Estimate overall std dev: within-subgroup (stdDev) and between-subgroup
+                const subgroupMean = subgroupData.reduce((sum, x) => sum + x, 0) / subgroupData.length;
+                const betweenStdDev = Math.sqrt(subgroupData.reduce((sum, x) => sum + Math.pow(x - subgroupMean, 2), 0) / (subgroupData.length - 1));
+                const totalStdDev = Math.sqrt(Math.pow(stdDev, 2) / subgroupSize + Math.pow(betweenStdDev, 2));
+                cp = (usl - lsl) / (6 * totalStdDev);
+                cpk = Math.min((usl - mean) / (3 * totalStdDev), (mean - lsl) / (3 * totalStdDev));
+                results = `
+                    <p>Cp: ${cp.toFixed(2)}</p>
+                    <p>Cpk: ${cpk.toFixed(2)}</p>
+                    <p>Total Standard Deviation: ${totalStdDev.toFixed(2)}</p>
+                    <p>Within-Subgroup Std Dev: ${stdDev.toFixed(2)}</p>
+                    <p>Between-Subgroup Std Dev: ${betweenStdDev.toFixed(2)}</p>
+                `;
+                interpretation = `The Process Capability with Subgroup Analysis yields Cp = ${cp.toFixed(2)} and Cpk = ${cpk.toFixed(2)}, based on a total standard deviation of ${totalStdDev.toFixed(2)} (within-subgroup σ = ${stdDev.toFixed(2)}, between-subgroup σ = ${betweenStdDev.toFixed(2)}).`;
+                recommendation = `Aim for Cp, Cpk ≥ 1.33. Reduce within-subgroup variation (σ = ${stdDev}) or between-subgroup variation (σ = ${betweenStdDev.toFixed(2)}) to improve capability. Center the mean (μ = ${mean}) if Cpk is low.`;
+            }
+
+            // Generate process distribution for chart
+            const xValues = [];
+            const yValues = [];
+            const range = (usl - lsl) * 1.5;
+            const step = range / 100;
+            for (let x = mean - range / 2; x <= mean + range / 2; x += step) {
+                xValues.push(x);
+                const y = (1 / (stdDev * Math.sqrt(2 * Math.PI))) * Math.exp(-Math.pow(x - mean, 2) / (2 * Math.pow(stdDev, 2)));
+                yValues.push(y);
+            }
+
+            // Render Chart
+            if (chartInstance) chartInstance.destroy();
+            const ctx = document.getElementById('process-capability-chart').getContext('2d');
+            chartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: xValues,
+                    datasets: [
+                        {
+                            label: 'Process Distribution',
+                            data: yValues,
+                            borderColor: 'rgba(59, 130, 246, 1)',
+                            backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                            fill: true,
+                            tension: 0.4
+                        },
+                        {
+                            label: 'LSL',
+                            data: xValues.map(x => x === lsl ? Math.max(...yValues) : null),
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 2,
+                            pointRadius: 5,
+                            type: 'scatter'
+                        },
+                        {
+                            label: 'USL',
+                            data: xValues.map(x => x === usl ? Math.max(...yValues) : null),
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 2,
+                            pointRadius: 5,
+                            type: 'scatter'
+                        },
+                        {
+                            label: 'Mean',
+                            data: xValues.map(x => x === mean ? Math.max(...yValues) : null),
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 2,
+                            pointRadius: 5,
+                            type: 'scatter'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Density' }
+                        },
+                        x: {
+                            title: { display: true, text: 'Process Output' }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: true },
+                        title: { display: true, text: 'Process Distribution with Specification Limits' }
+                    }
+                }
+            });
+
+            document.getElementById('calculation-results').innerHTML = results;
+            document.getElementById('interpretation-text').innerText = interpretation;
+            document.getElementById('recommendation-text').innerText = recommendation;
+            document.getElementById('results').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
