@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MTBF and MTTR Calculator - IE Toolkit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-blue-900 text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">IE Toolkit</h1>
+            <a href="index.html" class="hover:underline">Home</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto py-8 px-4">
+        <section class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-3xl font-semibold mb-4">MTBF and MTTR Calculator</h2>
+            <p class="text-gray-600 mb-6">Calculate reliability metrics for equipment.</p>
+
+            <!-- Input Form -->
+            <div id="input-form" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="operating-time" class="block text-sm font-medium text-gray-700">Total Operating Time (hours)</label>
+                    <input type="number" id="operating-time" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 1000" step="1" required>
+                </div>
+                <div>
+                    <label for="num-failures" class="block text-sm font-medium text-gray-700">Number of Failures</label>
+                    <input type="number" id="num-failures" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 5" step="1" min="1" required>
+                </div>
+                <div>
+                    <label for="total-downtime" class="block text-sm font-medium text-gray-700">Total Downtime (hours, optional)</label>
+                    <input type="number" id="total-downtime" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 50" step="1">
+                </div>
+            </div>
+            <button onclick="calculateMTBFMTTR()" class="mt-6 bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-800">Calculate</button>
+
+            <!-- Results -->
+            <div id="results" class="mt-6 hidden">
+                <h3 class="text-xl font-semibold mb-2">Results</h3>
+                <div id="calculation-results" class="mb-4"></div>
+                <div id="interpretation" class="mt-4">
+                    <h4 class="text-lg font-semibold">Interpretation</h4>
+                    <p id="interpretation-text" class="text-gray-600"></p>
+                </div>
+                <div id="recommendation" class="mt-4">
+                    <h4 class="text-lg font-semibold">Recommendation</h4>
+                    <p id="recommendation-text" class="text-gray-600"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Explanation -->
+        <section class="mt-8">
+            <h3 class="text-2xl font-semibold mb-4">MTBF and MTTR Overview</h3>
+            <div class="space-y-4">
+                <div>
+                    <h4 class="text-lg font-semibold">Purpose</h4>
+                    <p class="text-gray-600">Measures equipment reliability and maintainability.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold">Key Metrics</h4>
+                    <p class="text-gray-600">MTBF, MTTR, Availability.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-blue-900 text-white text-center p-4">
+        <p>&copy; 2025 IE Toolkit. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function calculateMTBFMTTR() {
+            const operatingTime = parseFloat(document.getElementById('operating-time').value) || 0;
+            const numFailures = parseInt(document.getElementById('num-failures').value) || 0;
+            const totalDowntime = parseFloat(document.getElementById('total-downtime').value) || 0;
+
+            if (operatingTime <= 0 || numFailures < 1) {
+                alert('Please enter valid operating time (>0) and number of failures (>=1).');
+                return;
+            }
+
+            const mtbf = operatingTime / numFailures;
+            let mttr = 0, availability = 1;
+            if (totalDowntime > 0 && numFailures > 0) {
+                mttr = totalDowntime / numFailures;
+                availability = mtbf / (mtbf + mttr);
+            }
+
+            let results = `<p>MTBF: ${mtbf.toFixed(2)} hours</p>`;
+            if (mttr > 0) results += `<p>MTTR: ${mttr.toFixed(2)} hours</p><p>Availability: ${(availability * 100).toFixed(2)}%</p>`;
+            document.getElementById('calculation-results').innerHTML = results;
+
+            let interpretation = `MTBF indicates average time between failures. `;
+            let recommendation = '';
+            if (mtbf < 100) recommendation += 'Consider maintenance or equipment upgrades. ';
+            if (availability < 0.9 && mttr > 0) recommendation += 'Reduce downtime to improve availability. ';
+
+            document.getElementById('interpretation-text').textContent = interpretation;
+            document.getElementById('recommendation-text').textContent = recommendation;
+            document.getElementById('results').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
