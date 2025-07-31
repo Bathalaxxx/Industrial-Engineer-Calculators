@@ -4,367 +4,212 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EOQ Calculator - IE Toolkit</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/mathjs@10.6.4/lib/browser/math.min.js"></script>
-    <style>
-        .sidebar {
-            transition: transform 0.3s ease-in-out;
-        }
-        .sidebar-hidden {
-            transform: translateX(-100%);
-        }
-        .fade-in {
-            animation: fadeIn 0.5s ease-in;
-        }
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 font-sans">
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <div class="sidebar-header">
-            <h2>IE Toolkit</h2>
+    <!-- Navigation -->
+    <nav class="bg-blue-900 text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">IE Toolkit</h1>
+            <a href="index.html" class="hover:underline">Home</a>
         </div>
-        
-        <div class="search-box">
-            <input type="text" placeholder="Search calculators...">
-        </div>
-        
-        <!-- Inventory Management -->
-        <div class="menu-category collapsed">Inventory Management</div>
-        <ul class="collapsed">
-            <li class="popular"><a href="eoq.html">EOQ Calculator</a></li>
-            <li><a href="safetystock.html">Safety Stock</a></li>
-            <li><a href="rop.html">Reorder Point</a></li>
-            <li><a href="kanban.html">Kanban Calculator</a></li>
-            <li><a href="newsvendor.html">Newsvendor Model</a></li>
-            <li><a href="batchsizing.html">Batch Sizing</a></li>
-        </ul>
-        
-        <!-- Production Systems -->
-        <div class="menu-category collapsed">Production Systems</div>
-        <ul class="collapsed">
-            <li class="popular"><a href="oee.html">OEE Calculator</a></li>
-            <li><a href="linebalancing.html">Line Balancing</a></li>
-            <li><a href="takttime.html">Takt Time</a></li>
-            <li><a href="littleslaw.html">Little's Law</a></li>
-            <li><a href="learningcurve.html">Learning Curve</a></li>
-            <li><a href="learningcurvewithmultipleproducts.html">Multi-Product Learning</a></li>
-        </ul>
-        
-        <!-- Quality Control -->
-        <div class="menu-category collapsed">Quality Control</div>
-        <ul class="collapsed">
-            <li class="popular"><a href="processcapability.html">Process Capability</a></li>
-            <li><a href="gagerr.html">Gage R&R</a></li>
-            <li><a href="sigmalavel.html">Sigma Level</a></li>
-            <li class="new"><a href="xbarandschart.html">X̄-s Chart</a></li>
-            <li><a href="xbarandrangechart.html">X̄-R Chart</a></li>
-            <li><a href="rchart.html">R Chart</a></li>
-            <li><a href="schart.html">s Chart</a></li>
-            <li><a href="mrchart.html">MR Chart</a></li>
-            <li><a href="pchart.html">p Chart</a></li>
-            <li><a href="npchart.html">np Chart</a></li>
-            <li><a href="uchart.html">u Chart</a></li>
-            <li><a href="cchart.html">c Chart</a></li>
-        </ul>
-        
-        <!-- Work Measurement -->
-        <div class="menu-category collapsed">Work Measurement</div>
-        <ul class="collapsed">
-            <li class="popular"><a href="timestudy.html">Time Study</a></li>
-            <li><a href="samplesize.html">Sample Size</a></li>
-            <li><a href="worksampling.html">Work Sampling</a></li>
-            <li><a href="mtm.html">MTM Analysis</a></li>
-            <li><a href="most.html">MOST Analysis</a></li>
-        </ul>
-        
-        <!-- Facility Planning -->
-        <div class="menu-category collapsed">Facility Planning</div>
-        <ul class="collapsed">
-            <li><a href="traveldistance.html">Travel Distance</a></li>
-            <li><a href="loaddistance.html">Load-Distance</a></li>
-            <li><a href="networkdiagram.html">Network Diagram</a></li>
-            <li><a href="criticalpathmethod.html">Critical Path Method</a></li>
-        </ul>
-        
-        <!-- Ergonomics -->
-        <div class="menu-category collapsed">Ergonomics</div>
-        <ul class="collapsed">
-            <li><a href="niosh.html">NIOSH Lifting</a></li>
-            <li><a href="rulareba.html">RULA/REBA</a></li>
-        </ul>
-        
-        <!-- Operations Research -->
-        <div class="menu-category collapsed">Operations Research</div>
-        <ul class="collapsed">
-            <li><a href="linearprogramming.html">Linear Programming</a></li>
-            <li><a href="queueing.html">Queueing Models</a></li>
-            <li><a href="transportation.html">Transportation</a></li>
-            <li><a href="johnsonsnequal2.html">Johnson's Algorithm (n=2)</a></li>
-            <li><a href="sequencingn>2.html">Sequencing (n>2)</a></li>
-            <li><a href="flowshopsequencing.html">Flow Shop Sequencing</a></li>
-            <li><a href="jobshopsequencing.html">Job Shop Sequencing</a></li>
-        </ul>
-        
-        <!-- Financial Analysis -->
-        <div class="menu-category collapsed">Financial Analysis</div>
-        <ul class="collapsed">
-            <li><a href="breakeven.html">Breakeven Analysis</a></li>
-            <li><a href="costbenefitanalysis.html">Cost-Benefit</a></li>
-            <li><a href="presentvalue.html">Present Value</a></li>
-            <li><a href="futurevalue.html">Future Value</a></li>
-            <li><a href="depreciation.html">Depreciation</a></li>
-        </ul>
-        
-        <!-- Statistical Analysis -->
-        <div class="menu-category collapsed">Statistical Analysis</div>
-        <ul class="collapsed">
-            <li><a href="decisionmatrix.html">Decision Matrix</a></li>
-            <li><a href="ztest.html">Z-Test</a></li>
-            <li><a href="ttest.html">T-Test</a></li>
-            <li><a href="anova.html">ANOVA</a></li>
-            <li><a href="regression.html">Regression</a></li>
-            <li><a href="correlation.html">Correlation</a></li>
-            <li><a href="latinsquare.html">Latin Square</a></li>
-        </ul>
-        
-        <!-- Forecasting -->
-        <div class="menu-category collapsed">Forecasting</div>
-        <ul class="collapsed">
-            <li><a href="simplemovingaverage.html">Simple MA</a></li>
-            <li><a href="weightedmovingaverage.html">Weighted MA</a></li>
-            <li><a href="exponentialmovingaverage.html">Exponential MA</a></li>
-            <li><a href="holtswinter.html">Holt-Winter</a></li>
-            <li><a href="mad.html">MAD</a></li>
-            <li><a href="mape.html">MAPE</a></li>
-            <li><a href="rmse.html">RMSE</a></li>
-        </ul>
-        
-        <!-- Reliability -->
-        <div class="menu-category collapsed">Reliability</div>
-        <ul class="collapsed">
-            <li><a href="mtbf.html">MTBF</a></li>
-            <li><a href="mttr.html">MTTR</a></li>
-            <li><a href="reliabilityanalysis.html">Reliability Analysis</a></li>
-        </ul>
-    </div>
+    </nav>
+
     <!-- Main Content -->
-    <div class="ml-0 md:ml-64 p-6">
-        <button id="menu-toggle" class="md:hidden text-2xl p-2">☰</button>
-        <div class="max-w-4xl mx-auto">
-            <h1 class="text-3xl font-bold mb-4 fade-in">Economic Order Quantity (EOQ) Calculator</h1>
-            
-            <!-- Description -->
-            <section class="mb-6">
-                <h2 class="text-xl font-semibold mb-2">About the EOQ Calculator</h2>
-                <p class="text-gray-700">
-                    The Economic Order Quantity (EOQ) Calculator determines the optimal order quantity that minimizes total inventory costs, including ordering and holding costs. This tool supports three variations: Basic EOQ, EOQ with Backorders, and EOQ with Quantity Discounts. Use this calculator to optimize inventory management for cost efficiency.
-                </p>
-            </section>
+    <main class="container mx-auto py-8 px-4">
+        <section class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-3xl font-semibold mb-4">Economic Order Quantity (EOQ) Calculator</h2>
+            <p class="text-gray-600 mb-6">Calculate the optimal order quantity to minimize inventory costs. Select an EOQ variation based on your inventory scenario.</p>
 
-            <!-- Calculator Form -->
-            <section class="mb-6 bg-white p-6 rounded-lg shadow-md">
-                <h2 class="text-xl font-semibold mb-4">EOQ Calculator</h2>
-                <div class="mb-4">
-                    <label for="variation" class="block text-gray-700 mb-2">Select EOQ Variation:</label>
-                    <select id="variation" class="w-full p-2 border rounded">
-                        <option value="basic">Basic EOQ</option>
-                        <option value="backorders">EOQ with Backorders</option>
-                        <option value="discounts">EOQ with Quantity Discounts</option>
-                    </select>
+            <!-- EOQ Variation Selection -->
+            <div class="mb-6">
+                <label for="eoq-variation" class="block text-sm font-medium text-gray-700">Select EOQ Variation</label>
+                <select id="eoq-variation" class="mt-1 p-2 w-full border rounded-md" onchange="toggleInputs()">
+                    <option value="basic">Basic EOQ</option>
+                    <option value="backordering">EOQ with Backordering</option>
+                    <option value="discounts">EOQ with Quantity Discounts</option>
+                </select>
+            </div>
+
+            <!-- Input Form -->
+            <div id="input-form" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Common Inputs -->
+                <div>
+                    <label for="demand" class="block text-sm font-medium text-gray-700">Annual Demand (units/year)</label>
+                    <input type="number" id="demand" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 1000" required>
                 </div>
-
-                <!-- Basic EOQ Inputs -->
-                <div id="basic-inputs" class="variation-inputs">
-                    <div class="mb-4">
-                        <label for="demand" class="block text-gray-700">Annual Demand (D):</label>
-                        <input type="number" id="demand" class="w-full p-2 border rounded" placeholder="e.g., 1000 units" required>
-                    </div>
-                    <div class="mb-4">
-                        <label for="ordering-cost" class="block text-gray-700">Ordering Cost per Order (S):</label>
-                        <input type="number" id="ordering-cost" class="w-full p-2 border rounded" placeholder="e.g., $50" required>
-                    </div>
-                    <div class="mb-4">
-                        <label for="holding-cost" class="block text-gray-700">Holding Cost per Unit per Year (H):</label>
-                        <input type="number" id="holding-cost" class="w-full p-2 border rounded" placeholder="e.g., $2" required>
+                <div>
+                    <label for="ordering-cost" class="block text-sm font-medium text-gray-700">Ordering Cost ($/order)</label>
+                    <input type="number" id="ordering-cost" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 50" required>
+                </div>
+                <div>
+                    <label for="holding-cost" class="block text-sm font-medium text-gray-700">Holding Cost ($/unit/year)</label>
+                    <input type="number" id="holding-cost" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 2" required>
+                </div>
+                <!-- Backordering Inputs -->
+                <div id="backordering-inputs" class="hidden">
+                    <div>
+                        <label for="backordering-cost" class="block text-sm font-medium text-gray-700">Backordering Cost ($/unit/year)</label>
+                        <input type="number" id="backordering-cost" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 10">
                     </div>
                 </div>
-
-                <!-- Backorders Inputs -->
-                <div id="backorders-inputs" class="variation-inputs hidden">
-                    <div class="mb-4">
-                        <label for="demand-back" class="block text-gray-700">Annual Demand (D):</label>
-                        <input type="number" id="demand-back" class="w-full p-2 border rounded" placeholder="e.g., 1000 units">
-                    </div>
-                    <div class="mb-4">
-                        <label for="ordering-cost-back" class="block text-gray-700">Ordering Cost per Order (S):</label>
-                        <input type="number" id="ordering-cost-back" class="w-full p-2 border rounded" placeholder="e.g., $50">
-                    </div>
-                    <div class="mb-4">
-                        <label for="holding-cost-back" class="block text-gray-700">Holding Cost per Unit per Year (H):</label>
-                        <input type="number" id="holding-cost-back" class="w-full p-2 border rounded" placeholder="e.g., $2">
-                    </div>
-                    <div class="mb-4">
-                        <label for="backorder-cost" class="block text-gray-700">Backorder Cost per Unit (B):</label>
-                        <input type="number" id="backorder-cost" class="w-full p-2 border rounded" placeholder="e.g., $10">
-                    </div>
-                </div>
-
                 <!-- Quantity Discounts Inputs -->
-                <div id="discounts-inputs" class="variation-inputs hidden">
-                    <div class="mb-4">
-                        <label for="demand-disc" class="block text-gray-700">Annual Demand (D):</label>
-                        <input type="number" id="demand-disc" class="w-full p-2 border rounded" placeholder="e.g., 1000 units">
+                <div id="discounts-inputs" class="hidden">
+                    <div>
+                        <label for="unit-cost" class="block text-sm font-medium text-gray-700">Unit Cost ($/unit)</label>
+                        <input type="number" id="unit-cost" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 20">
                     </div>
-                    <div class="mb-4">
-                        <label for="ordering-cost-disc" class="block text-gray-700">Ordering Cost per Order (S):</label>
-                        <input type="number" id="ordering-cost-disc" class="w-full p-2 border rounded" placeholder="e.g., $50">
+                    <div>
+                        <label for="discount-quantity" class="block text-sm font-medium text-gray-700">Discount Quantity (units)</label>
+                        <input type="number" id="discount-quantity" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 500">
                     </div>
-                    <div class="mb-4">
-                        <label for="holding-cost-disc" class="block text-gray-700">Holding Cost per Unit per Year (H):</label>
-                        <input type="number" id="holding-cost-disc" class="w-full p-2 border rounded" placeholder="e.g., $2">
-                    </div>
-                    <div class="mb-4">
-                        <label for="discount-levels" class="block text-gray-700">Discount Levels (Quantity, Price per Unit):</label>
-                        <textarea id="discount-levels" class="w-full p-2 border rounded" placeholder="e.g., 500,10;1000,9;2000,8" rows="4"></textarea>
+                    <div>
+                        <label for="discount-price" class="block text-sm font-medium text-gray-700">Discounted Unit Price ($/unit)</label>
+                        <input type="number" id="discount-price" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 18">
                     </div>
                 </div>
+            </div>
+            <button onclick="calculateEOQ()" class="mt-6 bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-800">Calculate</button>
 
-                <button id="calculate-btn" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Calculate</button>
-                <div id="results" class="mt-4 hidden">
-                    <h3 class="text-lg font-semibold mb-2">Results</h3>
-                    <p id="eoq-result" class="text-gray-700"></p>
-                    <p id="total-cost-result" class="text-gray-700"></p>
-                    <p id="interpretation" class="text-gray-700 mt-2"></p>
+            <!-- Results -->
+            <div id="results" class="mt-6 hidden">
+                <h3 class="text-xl font-semibold mb-2">Results</h3>
+                <div id="calculation-results"></div>
+                <div id="interpretation" class="mt-4">
+                    <h4 class="text-lg font-semibold">Interpretation</h4>
+                    <p id="interpretation-text" class="text-gray-600"></p>
                 </div>
-            </section>
+                <div id="recommendation" class="mt-4">
+                    <h4 class="text-lg font-semibold">Recommendation</h4>
+                    <p id="recommendation-text" class="text-gray-600"></p>
+                </div>
+            </div>
+        </section>
 
-            <!-- Real-World Examples -->
-            <section class="mb-6">
-                <h2 class="text-xl font-semibold mb-2">When to Use Each Variation</h2>
-                <div class="space-y-4">
-                    <div>
-                        <h3 class="text-lg font-medium">Basic EOQ</h3>
-                        <p class="text-gray-700">
-                            <strong>Use Case:</strong> Ideal for businesses with stable demand and no backorders or discounts, such as a retailer ordering a consistent product like canned goods.<br>
-                            <strong>Example:</strong> A grocery store orders 1000 cans of soda annually, with an ordering cost of $50 per order and a holding cost of $2 per can per year. The Basic EOQ helps determine the optimal order size to minimize costs.
-                        </p>
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-medium">EOQ with Backorders</h3>
-                        <p class="text-gray-700">
-                            <strong>Use Case:</strong> Suitable for scenarios where stockouts are acceptable, and backorders are fulfilled later, such as in manufacturing with flexible delivery schedules.<br>
-                            <strong>Example:</strong> A car parts manufacturer allows backorders for a component, with an annual demand of 2000 units, ordering cost of $100, holding cost of $5, and backorder cost of $20 per unit. This model balances stockout costs with inventory costs.
-                        </p>
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-medium">EOQ with Quantity Discounts</h3>
-                        <p class="text-gray-700">
-                            <strong>Use Case:</strong> Best for situations where suppliers offer price discounts for larger order quantities, such as bulk purchasing in wholesale.<br>
-                            <strong>Example:</strong> A wholesaler orders 5000 units annually, with an ordering cost of $75, holding cost of $3, and discounts at 500 units ($10/unit), 1000 units ($9/unit), and 2000 units ($8/unit). This model finds the cost-effective order quantity considering discounts.
-                        </p>
-                    </div>
+        <!-- EOQ Variations Explanation -->
+        <section class="mt-8">
+            <h3 class="text-2xl font-semibold mb-4">EOQ Variations and When to Use Them</h3>
+            <div class="space-y-4">
+                <div>
+                    <h4 class="text-lg font-semibold">Basic EOQ</h4>
+                    <p class="text-gray-600">Use when inventory is replenished instantly, and no shortages or discounts are allowed. Formula: EOQ = √(2DS/H)</p>
+                    <p class="text-gray-600">Where: D = Annual Demand, S = Ordering Cost, H = Holding Cost</p>
                 </div>
-            </section>
-        </div>
-    </div>
+                <div>
+                    <h4 class="text-lg font-semibold">EOQ with Backordering</h4>
+                    <p class="text-gray-600">Use when shortages are allowed, and backorders are fulfilled later. Incorporates backordering costs. Formula: EOQ = √(2DS/H) * √((H + B)/B), where B = Backordering Cost</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold">EOQ with Quantity Discounts</h4>
+                    <p class="text-gray-600">Use when suppliers offer price discounts for ordering larger quantities. Compares total costs with and without discounts.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-blue-900 text-white text-center p-4">
+        <p>&copy; 2025 IE Toolkit. All rights reserved.</p>
+    </footer>
 
     <script>
-        // Sidebar Toggle
-        document.getElementById('menu-toggle').addEventListener('click', () => {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('sidebar-hidden');
-        });
-
-        // Variation Selection
-        document.getElementById('variation').addEventListener('change', function() {
-            document.getElementById('basic-inputs').classList.add('hidden');
-            document.getElementById('backorders-inputs').classList.add('hidden');
+        function toggleInputs() {
+            const variation = document.getElementById('eoq-variation').value;
+            document.getElementById('backordering-inputs').classList.add('hidden');
             document.getElementById('discounts-inputs').classList.add('hidden');
-            document.getElementById(this.value + '-inputs').classList.remove('hidden');
-            document.getElementById('results').classList.add('hidden');
-        });
-
-        // Calculate EOQ
-        document.getElementById('calculate-btn').addEventListener('click', () => {
-            const variation = document.getElementById('variation').value;
-            let eoq, totalCost, interpretation;
-
-            if (variation === 'basic') {
-                const D = parseFloat(document.getElementById('demand').value);
-                const S = parseFloat(document.getElementById('ordering-cost').value);
-                const H = parseFloat(document.getElementById('holding-cost').value);
-                
-                if (isNaN(D) || isNaN(S) || isNaN(H) || D <= 0 || S <= 0 || H <= 0) {
-                    alert('Please enter valid positive numbers for all inputs.');
-                    return;
-                }
-
-                eoq = Math.round(Math.sqrt((2 * D * S) / H));
-                totalCost = (D / eoq) * S + (eoq / 2) * H;
-                interpretation = `The optimal order quantity is ${eoq} units, minimizing total inventory costs to $${totalCost.toFixed(2)} per year. Order ${eoq} units each time to balance ordering and holding costs. Consider adjusting if demand fluctuates significantly.`;
-            } else if (variation === 'backorders') {
-                const D = parseFloat(document.getElementById('demand-back').value);
-                const S = parseFloat(document.getElementById('ordering-cost-back').value);
-                const H = parseFloat(document.getElementById('holding-cost-back').value);
-                const B = parseFloat(document.getElementById('backorder-cost').value);
-
-                if (isNaN(D) || isNaN(S) || isNaN(H) || isNaN(B) || D <= 0 || S <= 0 || H <= 0 || B <= 0) {
-                    alert('Please enter valid positive numbers for all inputs.');
-                    return;
-                }
-
-                eoq = Math.round(Math.sqrt((2 * D * S * (H + B)) / (H * B)));
-                const backorderQty = eoq * (H / (H + B));
-                totalCost = (D / eoq) * S + (eoq / 2) * H * (B / (H + B)) + (D * B * backorderQty) / eoq;
-                interpretation = `The optimal order quantity is ${eoq} units, with a backorder quantity of ${Math.round(backorderQty)} units, resulting in a total cost of $${totalCost.toFixed(2)} per year. This allows some stockouts to reduce holding costs, but monitor customer satisfaction due to backorders.`;
+            if (variation === 'backordering') {
+                document.getElementById('backordering-inputs').classList.remove('hidden');
             } else if (variation === 'discounts') {
-                const D = parseFloat(document.getElementById('demand-disc').value);
-                const S = parseFloat(document.getElementById('ordering-cost-disc').value);
-                const H = parseFloat(document.getElementById('holding-cost-disc').value);
-                const discounts = document.getElementById('discount-levels').value.split(';').map(d => {
-                    const [qty, price] = d.split(',').map(Number);
-                    return { qty, price };
-                });
+                document.getElementById('discounts-inputs').classList.remove('hidden');
+            }
+            document.getElementById('results').classList.add('hidden');
+        }
 
-                if (isNaN(D) || isNaN(S) || isNaN(H) || D <= 0 || S <= 0 || H <= 0 || discounts.some(d => isNaN(d.qty) || isNaN(d.price))) {
-                    alert('Please enter valid positive numbers for all inputs and discount levels (format: qty,price;qty,price).');
-                    return;
-                }
+        function calculateEOQ() {
+            const variation = document.getElementById('eoq-variation').value;
+            const demand = parseFloat(document.getElementById('demand').value);
+            const orderingCost = parseFloat(document.getElementById('ordering-cost').value);
+            const holdingCost = parseFloat(document.getElementById('holding-cost').value);
 
-                eoq = Math.round(Math.sqrt((2 * D * S) / H));
-                let minCost = Infinity;
-                let optimalQty = eoq;
-
-                discounts.forEach(discount => {
-                    if (discount.qty >= eoq) {
-                        const totalCost = (D / discount.qty) * S + (discount.qty / 2) * H + D * discount.price;
-                        if (totalCost < minCost) {
-                            minCost = totalCost;
-                            optimalQty = discount.qty;
-                        }
-                    }
-                });
-
-                const basicCost = (D / eoq) * S + (eoq / 2) * H + D * discounts[0].price;
-                if (basicCost < minCost) {
-                    minCost = basicCost;
-                    optimalQty = eoq;
-                }
-
-                totalCost = minCost;
-                interpretation = `The optimal order quantity is ${optimalQty} units, with a total cost of $${totalCost.toFixed(2)} per year, considering quantity discounts. Order at this quantity to take advantage of the best discount while minimizing costs.`;
+            if (isNaN(demand) || isNaN(orderingCost) || isNaN(holdingCost) || demand <= 0 || orderingCost <= 0 || holdingCost <= 0) {
+                alert('Please enter valid positive numbers for demand, ordering cost, and holding cost.');
+                return;
             }
 
-            document.getElementById('eoq-result').textContent = `Optimal Order Quantity: ${eoq || optimalQty} units`;
-            document.getElementById('total-cost-result').textContent = `Total Annual Cost: $${totalCost.toFixed(2)}`;
-            document.getElementById('interpretation').textContent = interpretation;
+            let results = '';
+            let interpretation = '';
+            let recommendation = '';
+
+            if (variation === 'basic') {
+                // Basic EOQ
+                const eoq = Math.sqrt((2 * demand * orderingCost) / holdingCost);
+                const totalCost = (demand / eoq) * orderingCost + (eoq / 2) * holdingCost;
+                const orderFrequency = demand / eoq;
+
+                results = `
+                    <p>Optimal Order Quantity (EOQ): ${eoq.toFixed(2)} units</p>
+                    <p>Total Inventory Cost: $${totalCost.toFixed(2)} per year</p>
+                    <p>Order Frequency: ${orderFrequency.toFixed(2)} orders per year</p>
+                `;
+                interpretation = `The Basic EOQ model indicates an order quantity of ${eoq.toFixed(2)} units, balancing ordering and holding costs. The total cost of $${totalCost.toFixed(2)} per year assumes instant replenishment and no shortages.`;
+                recommendation = `Order ${eoq.toFixed(2)} units approximately ${orderFrequency.toFixed(2)} times per year to minimize costs. Ensure inventory systems support instant replenishment to align with this model.`;
+
+            } else if (variation === 'backordering') {
+                const backorderingCost = parseFloat(document.getElementById('backordering-cost').value);
+                if (isNaN(backorderingCost) || backorderingCost <= 0) {
+                    alert('Please enter a valid positive backordering cost.');
+                    return;
+                }
+                // EOQ with Backordering
+                const eoq = Math.sqrt((2 * demand * orderingCost) / holdingCost) * Math.sqrt((holdingCost + backorderingCost) / backorderingCost);
+                const maxInventory = eoq * Math.sqrt(backorderingCost / (holdingCost + backorderingCost));
+                const totalCost = (demand / eoq) * orderingCost + (maxInventory / 2) * holdingCost + ((demand - maxInventory) / 2) * backorderingCost;
+                const orderFrequency = demand / eoq;
+
+                results = `
+                    <p>Optimal Order Quantity (EOQ): ${eoq.toFixed(2)} units</p>
+                    <p>Maximum Inventory Level: ${maxInventory.toFixed(2)} units</p>
+                    <p>Total Inventory Cost: $${totalCost.toFixed(2)} per year</p>
+                    <p>Order Frequency: ${orderFrequency.toFixed(2)} orders per year</p>
+                `;
+                interpretation = `The EOQ with Backordering model accounts for shortages, yielding an order quantity of ${eoq.toFixed(2)} units and a maximum inventory of ${maxInventory.toFixed(2)} units. The total cost of $${totalCost.toFixed(2)} includes backordering costs.`;
+                recommendation = `Order ${eoq.toFixed(2)} units ${orderFrequency.toFixed(2)} times per year, allowing backorders up to ${maxInventory.toFixed(2)} units. Ensure customer tolerance for delays aligns with backordering costs.`;
+
+            } else if (variation === 'discounts') {
+                const unitCost = parseFloat(document.getElementById('unit-cost').value);
+                const discountQuantity = parseFloat(document.getElementById('discount-quantity').value);
+                const discountPrice = parseFloat(document.getElementById('discount-price').value);
+                if (isNaN(unitCost) || isNaN(discountQuantity) || isNaN(discountPrice) || unitCost <= 0 || discountQuantity <= 0 || discountPrice <= 0) {
+                    alert('Please enter valid positive numbers for unit cost, discount quantity, and discounted price.');
+                    return;
+                }
+                // EOQ without discount
+                const eoq = Math.sqrt((2 * demand * orderingCost) / holdingCost);
+                const holdingCostNoDiscount = holdingCost + unitCost * 0.2; // Assuming holding cost is 20% of unit cost
+                const totalCostNoDiscount = (demand / eoq) * orderingCost + (eoq / 2) * holdingCostNoDiscount + demand * unitCost;
+
+                // Cost with discount
+                const holdingCostDiscount = holdingCost + discountPrice * 0.2;
+                const totalCostDiscount = (demand / discountQuantity) * orderingCost + (discountQuantity / 2) * holdingCostDiscount + demand * discountPrice;
+
+                const chosenQuantity = totalCostNoDiscount <= totalCostDiscount ? eoq : discountQuantity;
+                const chosenTotalCost = Math.min(totalCostNoDiscount, totalCostDiscount);
+                const orderFrequency = demand / chosenQuantity;
+
+                results = `
+                    <p>Optimal Order Quantity: ${chosenQuantity.toFixed(2)} units</p>
+                    <p>Total Inventory Cost: $${chosenTotalCost.toFixed(2)} per year</p>
+                    <p>Order Frequency: ${orderFrequency.toFixed(2)} orders per year</p>
+                `;
+                interpretation = `The EOQ with Quantity Discounts model compares the standard EOQ (${eoq.toFixed(2)} units, total cost $${totalCostNoDiscount.toFixed(2)}) with the discount quantity (${discountQuantity.toFixed(2)} units, total cost $${totalCostDiscount.toFixed(2)}). The optimal quantity is ${chosenQuantity.toFixed(2)} units, minimizing total costs.`;
+                recommendation = `Order ${chosenQuantity.toFixed(2)} units ${orderFrequency.toFixed(2)} times per year. ${chosenQuantity === discountQuantity ? 'Take advantage of the discount, as it reduces total costs.' : 'Stick with the standard EOQ, as the discount does not justify the increased holding costs.'}`;
+            }
+
+            document.getElementById('calculation-results').innerHTML = results;
+            document.getElementById('interpretation-text').innerText = interpretation;
+            document.getElementById('recommendation-text').innerText = recommendation;
             document.getElementById('results').classList.remove('hidden');
-        });
+        }
     </script>
 </body>
 </html>
