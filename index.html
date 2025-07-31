@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Industrial Engineering Toolkit | Process Optimization Tools</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Playfair+Display:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #005f73;
+            --secondary-color: #0a9396;
+            --accent-color: #ee9b00;
+            --light-bg: #f8f9fa;
+            --dark-bg: #001219;
+            --text-light: #e9ecef;
+            --text-dark: #212529;
+            --card-bg: #ffffff;
+            --border-radius: 8px;
+            --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --transition: all 0.2s ease;
+            --success-color: #4caf50;
+            --warning-color: #ff9800;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 260px;
+            background: var(--dark-bg);
+            padding: 20px 0;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            position: fixed;
+            height: 100vh;
+            transition: var(--transition);
+            z-index: 100;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 20px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .sidebar-header h2 {
+            color: var(--text-light);
+            font-family: 'Playfair Display', serif;
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .sidebar-header h2::before {
+            content: "⚙️";
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .menu-category {
+            color: var(--accent-color);
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            padding: 15px 20px 5px;
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .menu-category::after {
+            content: "▼";
+            font-size: 0.6rem;
+            transition: var(--transition);
+        }
+        
+        .menu-category.collapsed::after {
+            transform: rotate(-90deg);
+        }
+        
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            max-height: 500px;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar ul.collapsed {
+            max-height: 0;
+        }
+        
+        .sidebar ul li {
+            margin: 2px 0;
+        }
+        
+        .sidebar ul li a {
+            display: flex;
+            align-items: center;
+            color: var(--text-light);
+            text-decoration: none;
+            padding: 10px 20px;
+            border-left: 3px solid transparent;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+        
+        .sidebar ul li a:hover {
+            background: rgba(255,255,255,0.05);
+            border-left: 3px solid var(--accent-color);
+        }
+        
+        .sidebar ul li a::before {
+            content: "•";
+            color: var(--secondary-color);
+            margin-right: 10px;
+            font-size: 1.2rem;
+            line-height: 0;
+        }
+        
+        .sidebar ul li.popular a::before {
+            content: "★";
+            color: var(--accent-color);
+        }
+        
+        .container {
+            margin-left: 260px;
+            padding: 40px;
+            max-width: 1200px;
+            width: 100%;
+        }
+        
+        .header {
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+        
+        .header p {
+            font-size: 1.05rem;
+            color: var(--text-dark);
+            max-width: 800px;
+            line-height: 1.7;
+        }
+        
+        .quick-access {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 25px 0 40px;
+        }
+        
+        .quick-access a {
+            background: var(--secondary-color);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .quick-access a:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        
+        .quick-access a::after {
+            content: "→";
+            margin-left: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .tool-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            transition: var(--transition);
+            border-top: 4px solid var(--secondary-color);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .tool-card.featured {
+            border-top-color: var(--accent-color);
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tool-card-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .tool-card h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 12px;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .tool-card h3::before {
+            content: "";
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background-color: var(--secondary-color);
+            mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>');
+            mask-repeat: no-repeat;
+            margin-right: 10px;
+        }
+        
+        .tool-card.featured h3::after {
+            content: "Popular";
+            background: var(--accent-color);
+            color: white;
+            font-size: 0.6rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 10px;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 700;
+        }
+        
+        .tool-card p {
+            color: #555;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+        
+        .tool-card .tools-list {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 15px;
+            padding-left: 20px;
+        }
+        
+        .tool-card .tools-list li {
+            margin-bottom: 5px;
+            position: relative;
+        }
+        
+        .tool-card .tools-list li::before {
+            content: "→";
+            position: absolute;
+            left: -15px;
+            color: var(--secondary-color);
+        }
+        
+        .tool-card a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            transition: var(--transition);
+            margin-top: auto;
+        }
+        
+        .tool-card a:hover {
+            color: var(--primary-color);
+        }
+        
+        .tool-card a::after {
+            content: '→';
+            margin-left: 5px;
+            transition: var(--transition);
+        }
+        
+        .tool-card a:hover::after {
+            transform: translateX(3px);
+        }
+        
+        /* Mobile responsiveness */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+                width: 280px;
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .container {
+                margin-left: 0;
+                padding: 20px;
+            }
+            
+            .menu-toggle {
+                display: block;
+                position: fixed;
+                top: 15px;
+                left: 15px;
+                z-index: 99;
+                background: var(--primary-color);
+                color: white;
+                border: none;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                font-size: 1.2rem;
+                cursor: pointer;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+                margin-top: 40px;
+            }
+            
+            .tool-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+    
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>IE Toolkit</h2>
+        </div>
+        
+        <div class="menu-category collapsed">Inventory Management</div>
+        <ul class="collapsed">
+            <li class="popular"><a href="eoq.html">EOQ Calculator</a></li>
+            <li><a href="safetystock.html">Safety Stock Calculator</a></li>
+            <li><a href="rop.html">Reorder Point Calculator</a></li>
+            <li><a href="kanban.html">Kanban Calculator</a></li>
+        </ul>
+        
+        <div class="menu-category collapsed">Production Systems</div>
+        <ul class="collapsed">
+            <li class="popular"><a href="oee.html">OEE Calculator</a></li>
+            <li><a href="linebalancing.html">Line Balancing</a></li>
+            <li><a href="takttime.html">Takt Time Calculator</a></li>
+            <li><a href="littleslaw.html">Little's Law Calculator</a></li>
+        </ul>
+        
+        <div class="menu-category collapsed">Work Measurement</div>
+        <ul class="collapsed">
+            <li class="popular"><a href="timestudy.html">Time Study Calculator</a></li>
+            <li><a href="samplesize.html">Sample Size Calculator</a></li>
+            <li><a href="worksampling.html">Work Sampling Calculator</a></li>
+        </ul>
+        
+        <div class="menu-category collapsed">Ergonomics</div>
+        <ul class="collapsed">
+            <li><a href="niosh.html">NIOSH Lifting Calculator</a></li>
+            <li><a href="rulareba.html">RULA/REBA Calculator</a></li>
+        </ul>
+        
+        <div class="menu-category collapsed">Facility Planning</div>
+        <ul class="collapsed">
+            <li><a href="traveldistance.html">Travel Distance Matrix</a></li>
+            <li><a href="loaddistance.html">Load-Distance Score</a></li>
+        </ul>
+        
+        <div class="menu-category collapsed">Quality Control</div>
+        <ul class="collapsed">
+            <li class="popular"><a href="processcapability.html">Process Capability</a></li>
+            <li><a href="pchartnpchart.html">P-Chart/NP-Chart</a></li>
+            <li><a href="xrbarchart.html">X̄-R Chart</a></li>
+            <li><a href="sigmalavel.html">Sigma Level</a></li>
+            <li><a href="gagerr.html">Gage R&R</a></li>
+        </ul>
+        
+        <div class="menu-category collapsed">Operations Research</div>
+        <ul class="collapsed">
+            <li><a href="queueing.html">Queueing Models</a></li>
+            <li><a href="linearprogramming.html">Linear Programming</a></li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>Industrial Engineering Toolkit</h1>
+            <p>A comprehensive collection of specialized calculators and tools designed to optimize processes, improve efficiency, and solve complex industrial engineering challenges across all domains.</p>
+            
+            <div class="quick-access">
+                <a href="eoq.html">EOQ Calculator</a>
+                <a href="oee.html">OEE Calculator</a>
+                <a href="timestudy.html">Time Study</a>
+                <a href="processcapability.html">Process Capability</a>
+                <a href="niosh.html">NIOSH Lifting</a>
+            </div>
+        </div>
+
+        <div class="tool-grid">
+            <div class="tool-card featured">
+                <div class="tool-card-content">
+                    <h3>Inventory Management</h3>
+                    <p>Optimize inventory levels and reduce carrying costs with these essential tools:</p>
+                    <ul class="tools-list">
+                        <li>Economic Order Quantity (EOQ)</li>
+                        <li>Safety Stock Calculations</li>
+                        <li>Reorder Point Determination</li>
+                        <li>Kanban System Design</li>
+                    </ul>
+                    <a href="eoq.html">Access Inventory Tools</a>
+                </div>
+            </div>
+            
+            <div class="tool-card featured">
+                <div class="tool-card-content">
+                    <h3>Production Systems</h3>
+                    <p>Measure and improve your production efficiency with these key metrics:</p>
+                    <ul class="tools-list">
+                        <li>Overall Equipment Effectiveness</li>
+                        <li>Assembly Line Balancing</li>
+                        <li>Takt Time Calculation</li>
+                        <li>Little's Law Applications</li>
+                    </ul>
+                    <a href="oee.html">Access Production Tools</a>
+                </div>
+            </div>
+            
+            <div class="tool-card">
+                <div class="tool-card-content">
+                    <h3>Work Measurement</h3>
+                    <p>Standardize work processes and establish time standards:</p>
+                    <ul class="tools-list">
+                        <li>Time Study Analysis</li>
+                        <li>Sample Size Determination</li>
+                        <li>Work Sampling Studies</li>
+                    </ul>
+                    <a href="timestudy.html">Access Measurement Tools</a>
+                </div>
+            </div>
+            
+            <div class="tool-card">
+                <div class="tool-card-content">
+                    <h3>Ergonomics</h3>
+                    <p>Assess and improve workplace safety and ergonomics:</p>
+                    <ul class="tools-list">
+                        <li>NIOSH Lifting Equation</li>
+                        <li>RULA/REBA Assessments</li>
+                    </ul>
+                    <a href="niosh.html">Access Ergonomics Tools</a>
+                </div>
+            </div>
+            
+            <div class="tool-card">
+                <div class="tool-card-content">
+                    <h3>Facility Planning</h3>
+                    <p>Optimize your facility layout and material flow:</p>
+                    <ul class="tools-list">
+                        <li>Travel Distance Matrix</li>
+                        <li>Load-Distance Scoring</li>
+                    </ul>
+                    <a href="traveldistance.html">Access Facility Tools</a>
+                </div>
+            </div>
+            
+            <div class="tool-card featured">
+                <div class="tool-card-content">
+                    <h3>Quality Control</h3>
+                    <p>Monitor and improve your process quality with SPC tools:</p>
+                    <ul class="tools-list">
+                        <li>Process Capability Analysis</li>
+                        <li>Control Chart Generators</li>
+                        <li>Sigma Level Calculation</li>
+                        <li>Gage R&R Studies</li>
+                    </ul>
+                    <a href="processcapability.html">Access Quality Tools</a>
+                </div>
+            </div>
+            
+            <div class="tool-card">
+                <div class="tool-card-content">
+                    <h3>Operations Research</h3>
+                    <p>Solve complex operational problems mathematically:</p>
+                    <ul class="tools-list">
+                        <li>Queueing Theory Models</li>
+                        <li>Linear Programming</li>
+                    </ul>
+                    <a href="queueing.html">Access OR Tools</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple JavaScript for collapsible menus (will work even if JS fails)
+        document.addEventListener('DOMContentLoaded', function() {
+            const categories = document.querySelectorAll('.menu-category');
+            const menuToggle = document.querySelector('.menu-toggle');
+            const sidebar = document.querySelector('.sidebar');
+            
+            // Toggle sidebar on mobile
+            if (menuToggle) {
+                menuToggle.addEventListener('click', function() {
+                    sidebar.classList.toggle('active');
+                });
+            }
+            
+            // Collapsible menu functionality
+            categories.forEach(category => {
+                category.addEventListener('click', function() {
+                    this.classList.toggle('collapsed');
+                    const ul = this.nextElementSibling;
+                    ul.classList.toggle('collapsed');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
