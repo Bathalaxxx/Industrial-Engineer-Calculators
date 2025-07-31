@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Curve Calculator - IE Toolkit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-blue-900 text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">IE Toolkit</h1>
+            <a href="index.html" class="hover:underline">Home</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto py-8 px-4">
+        <section class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-3xl font-semibold mb-4">Learning Curve Calculator</h2>
+            <p class="text-gray-600 mb-6">Calculate unit production time or cost based on learning curve effects, with visual insights into performance improvement over time.</p>
+
+            <!-- Learning Curve Method Selection -->
+            <div class="mb-6">
+                <label for="lc-method" class="block text-sm font-medium text-gray-700">Select Learning Curve Method</label>
+                <select id="lc-method" class="mt-1 p-2 w-full border rounded-md" onchange="toggleInputs()">
+                    <option value="standard">Standard Learning Curve</option>
+                    <option value="plateau">Learning Curve with Plateau</option>
+                    <option value="variable-rates">Learning Curve with Variable Learning Rates</option>
+                </select>
+            </div>
+
+            <!-- Input Form -->
+            <div id="input-form" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Common Inputs -->
+                <div>
+                    <label for="first-unit-time" class="block text-sm font-medium text-gray-700">First Unit Time (hours/unit)</label>
+                    <input type="number" id="first-unit-time" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 10" required>
+                </div>
+                <div>
+                    <label for="learning-rate" class="block text-sm font-medium text-gray-700">Learning Rate (%)</label>
+                    <input type="number" id="learning-rate" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 80" required>
+                </div>
+                <div>
+                    <label for="units" class="block text-sm font-medium text-gray-700">Number of Units to Analyze</label>
+                    <input type="number" id="units" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 100" required>
+                </div>
+                <!-- Plateau Inputs -->
+                <div id="plateau-inputs" class="hidden">
+                    <div>
+                        <label for="plateau-time" class="block text-sm font-medium text-gray-700">Plateau Time (hours/unit)</label>
+                        <input type="number" id="plateau-time" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 2">
+                    </div>
+                </div>
+                <!-- Variable Learning Rates Inputs -->
+                <div id="variable-rates-inputs" class="hidden">
+                    <div>
+                        <label for="early-learning-rate" class="block text-sm font-medium text-gray-700">Early Learning Rate (% for first 50% of units)</label>
+                        <input type="number" id="early-learning-rate" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 70">
+                    </div>
+                    <div>
+                        <label for="mature-learning-rate" class="block text-sm font-medium text-gray-700">Mature Learning Rate (% for remaining units)</label>
+                        <input type="number" id="mature-learning-rate" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 90">
+                    </div>
+                </div>
+            </div>
+            <button onclick="calculateLearningCurve()" class="mt-6 bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-800">Calculate</button>
+
+            <!-- Results -->
+            <div id="results" class="mt-6 hidden">
+                <h3 class="text-xl font-semibold mb-2">Results</h3>
+                <div id="calculation-results" class="mb-4"></div>
+                <div class="mb-4">
+                    <h4 class="text-lg font-semibold">Learning Curve Visualization</h4>
+                    <canvas id="learning-curve-chart" class="w-full h-64"></canvas>
+                </div>
+                <div id="interpretation" class="mt-4">
+                    <h4 class="text-lg font-semibold">Interpretation</h4>
+                    <p id="interpretation-text" class="text-gray-600"></p>
+                </div>
+                <div id="recommendation" class="mt-4">
+                    <h4 class="text-lg font-semibold">Recommendation</h4>
+                    <p id="recommendation-text" class="text-gray-600"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Learning Curve Methods Explanation -->
+        <section class="mt-8">
+            <h3 class="text-2xl font-semibold mb-4">Learning Curve Methods and When to Use Them</h3>
+            <div class="space-y-4">
+                <div>
+                    <h4 class="text-lg font-semibold">Standard Learning Curve</h4>
+                    <p class="text-gray-600">Use for basic learning curve analysis with a constant learning rate. Formula: T_n = T_1 * n^b, where T_n is time for the nth unit, T_1 is first unit time, b = log(learning rate)/log(2).</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold">Learning Curve with Plateau</h4>
+                    <p class="text-gray-600">Use when performance stabilizes at a minimum time. Formula: T_n = max(T_1 * n^b, Plateau Time).</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold">Learning Curve with Variable Learning Rates</h4>
+                    <p class="text-gray-600">Use when learning rates differ between early and mature production phases. Formula: Applies different learning rates for first 50% and remaining units.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-blue-900 text-white text-center p-4">
+        <p>&copy; 2025 IE Toolkit. All rights reserved.</p>
+    </footer>
+
+    <script>
+        let chartInstance = null;
+
+        function toggleInputs() {
+            const method = document.getElementById('lc-method').value;
+            document.getElementById('plateau-inputs').classList.add('hidden');
+            document.getElementById('variable-rates-inputs').classList.add('hidden');
+            if (method === 'plateau') {
+                document.getElementById('plateau-inputs').classList.remove('hidden');
+            } else if (method === 'variable-rates') {
+                document.getElementById('variable-rates-inputs').classList.remove('hidden');
+            }
+            document.getElementById('results').classList.add('hidden');
+        }
+
+        function calculateLearningCurve() {
+            const method = document.getElementById('lc-method').value;
+            const firstUnitTime = parseFloat(document.getElementById('first-unit-time').value);
+            const learningRate = parseFloat(document.getElementById('learning-rate').value);
+            const units = parseInt(document.getElementById('units').value);
+
+            if (isNaN(firstUnitTime) || isNaN(learningRate) || isNaN(units) || firstUnitTime <= 0 || learningRate <= 0 || learningRate > 100 || units <= 0) {
+                alert('Please enter valid positive numbers for first unit time, units, and a learning rate (0-100%).');
+                return;
+            }
+
+            let results = '';
+            let interpretation = '';
+            let recommendation = '';
+            let unitTimes = [];
+
+            // Calculate learning curve exponent
+            const b = Math.log(learningRate / 100) / Math.log(2);
+
+            if (method === 'standard') {
+                // Standard Learning Curve: T_n = T_1 * n^b
+                unitTimes = Array.from({ length: units }, (_, i) => firstUnitTime * Math.pow(i + 1, b));
+                const totalTime = unitTimes.reduce((sum, time) => sum + time, 0);
+                const avgTime = totalTime / units;
+
+                results = `
+                    <p>First Unit Time: ${firstUnitTime.toFixed(2)} hours</p>
+                    <p>Last Unit Time (Unit ${units}): ${unitTimes[units - 1].toFixed(2)} hours</p>
+                    <p>Average Unit Time: ${avgTime.toFixed(2)} hours/unit</p>
+                    <p>Total Production Time: ${totalTime.toFixed(2)} hours</p>
+                `;
+                interpretation = `The Standard Learning Curve shows that the time to produce the first unit is ${firstUnitTime.toFixed(2)} hours, reducing to ${unitTimes[units - 1].toFixed(2)} hours by unit ${units} with a ${learningRate}% learning rate. The average unit time is ${avgTime.toFixed(2)} hours, reflecting efficiency gains.`;
+                recommendation = `Plan production expecting a ${learningRate}% learning rate, with unit times decreasing to ${unitTimes[units - 1].toFixed(2)} hours by unit ${units}. Optimize training to maintain or enhance the learning rate.`;
+
+            } else if (method === 'plateau') {
+                const plateauTime = parseFloat(document.getElementById('plateau-time').value) || 0;
+                if (isNaN(plateauTime) || plateauTime < 0 || plateauTime > firstUnitTime) {
+                    alert('Please enter a valid non-negative plateau time, not exceeding the first unit time.');
+                    return;
+                }
+                // Learning Curve with Plateau: T_n = max(T_1 * n^b, Plateau Time)
+                unitTimes = Array.from({ length: units }, (_, i) => Math.max(firstUnitTime * Math.pow(i + 1, b), plateauTime));
+                const totalTime = unitTimes.reduce((sum, time) => sum + time, 0);
+                const avgTime = totalTime / units;
+
+                results = `
+                    <p>First Unit Time: ${firstUnitTime.toFixed(2)} hours</p>
+                    <p>Last Unit Time (Unit ${units}): ${unitTimes[units - 1].toFixed(2)} hours</p>
+                    <p>Average Unit Time: ${avgTime.toFixed(2)} hours/unit</p>
+                    <p>Total Production Time: ${totalTime.toFixed(2)} hours</p>
+                    <p>Plateau Time: ${plateauTime.toFixed(2)} hours/unit</p>
+                `;
+                interpretation = `The Learning Curve with Plateau shows the time per unit starts at ${firstUnitTime.toFixed(2)} hours, reducing to ${unitTimes[units - 1].toFixed(2)} hours by unit ${units}, but not below the plateau of ${plateauTime.toFixed(2)} hours, with a ${learningRate}% learning rate. The average unit time is ${avgTime.toFixed(2)} hours.`;
+                recommendation = `Account for a plateau at ${plateauTime.toFixed(2)} hours/unit in production planning. Enhance training to maintain the ${learningRate}% learning rate or lower the plateau through process improvements.`;
+
+            } else if (method === 'variable-rates') {
+                const earlyLearningRate = parseFloat(document.getElementById('early-learning-rate').value) || learningRate;
+                const matureLearningRate = parseFloat(document.getElementById('mature-learning-rate').value) || learningRate;
+                if (isNaN(earlyLearningRate) || isNaN(matureLearningRate) || earlyLearningRate <= 0 || earlyLearningRate > 100 || matureLearningRate <= 0 || matureLearningRate > 100) {
+                    alert('Please enter valid learning rates (0-100%) for early and mature phases.');
+                    return;
+                }
+                // Learning Curve with Variable Learning Rates: Different rates for first 50% and remaining units
+                const earlyUnits = Math.ceil(units / 2);
+                const bEarly = Math.log(earlyLearningRate / 100) / Math.log(2);
+                const bMature = Math.log(matureLearningRate / 100) / Math.log(2);
+                unitTimes = Array.from({ length: units }, (_, i) => {
+                    const n = i + 1;
+                    if (n <= earlyUnits) {
+                        return firstUnitTime * Math.pow(n, bEarly);
+                    } else {
+                        const timeAtEarlyEnd = firstUnitTime * Math.pow(earlyUnits, bEarly);
+                        return timeAtEarlyEnd * Math.pow(n - earlyUnits + 1, bMature);
+                    }
+                });
+                const totalTime = unitTimes.reduce((sum, time) => sum + time, 0);
+                const avgTime = totalTime / units;
+
+                results = `
+                    <p>First Unit Time: ${firstUnitTime.toFixed(2)} hours</p>
+                    <p>Last Unit Time (Unit ${units}): ${unitTimes[units - 1].toFixed(2)} hours</p>
+                    <p>Average Unit Time: ${avgTime.toFixed(2)} hours/unit</p>
+                    <p>Total Production Time: ${totalTime.toFixed(2)} hours</p>
+                    <p>Early Learning Rate (First ${earlyUnits} units): ${earlyLearningRate}%</p>
+                    <p>Mature Learning Rate (Remaining units): ${matureLearningRate}%</p>
+                `;
+                interpretation = `The Learning Curve with Variable Learning Rates shows the time per unit starts at ${firstUnitTime.toFixed(2)} hours, reducing to ${unitTimes[units - 1].toFixed(2)} hours by unit ${units}. The first ${earlyUnits} units follow a ${earlyLearningRate}% learning rate, while later units follow a ${matureLearningRate}% rate. The average unit time is ${avgTime.toFixed(2)} hours.`;
+                recommendation = `Plan for faster learning (${earlyLearningRate}%) in the first ${earlyUnits} units, transitioning to ${matureLearningRate}% for later units. Enhance training to maintain or improve early learning, and optimize processes to sustain efficiency in the mature phase.`;
+            }
+
+            // Render Chart
+            if (chartInstance) chartInstance.destroy();
+            const ctx = document.getElementById('learning-curve-chart').getContext('2d');
+            chartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: Array.from({ length: units }, (_, i) => i + 1),
+                    datasets: [{
+                        label: 'Unit Time (hours)',
+                        data: unitTimes,
+                        borderColor: 'rgba(59, 130, 246, 1)',
+                        backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                        fill: false,
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Time (hours/unit)' }
+                        },
+                        x: {
+                            title: { display: true, text: 'Cumulative Units' }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: true },
+                        title: { display: true, text: 'Learning Curve: Unit Time vs. Cumulative Units' }
+                    }
+                }
+            });
+
+            document.getElementById('calculation-results').innerHTML = results;
+            document.getElementById('interpretation-text').innerText = interpretation;
+            document.getElementById('recommendation-text').innerText = recommendation;
+            document.getElementById('results').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
