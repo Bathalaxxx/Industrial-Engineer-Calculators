@@ -1,96 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EOQ Calculator | Industrial Engineering Toolkit</title>
-    <link rel="stylesheet" href="../styles.css">
-    <script src="eoq.js" defer></script>
+    <div id="header-placeholder"></div>
+    <style>
+        /* Calculator-specific styles */
+        .calculator-container {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border-radius: var(--border-radius);
+            border: 1px solid #ddd;
+            font-size: 1rem;
+            max-width: 300px;
+        }
+        
+        button {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        button:hover {
+            background: var(--primary-color);
+        }
+        
+        .results {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 25px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .info-section {
+            background: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+    </style>
 </head>
 <body>
-    <div class="calculator-container">
-        <a href="../index.html" class="back-button">Back to Main</a>
-        
-        <h1>EOQ Calculator</h1>
-        
-        <div class="tool-description">
-            <p>The Economic Order Quantity (EOQ) model determines the optimal order quantity to minimize total inventory costs (holding + ordering costs).</p>
+    <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+    <div id="sidebar-placeholder"></div>
+
+    <div class="container">
+        <div class="header">
+            <h1>EOQ Calculator</h1>
+            <p>Calculate the optimal order quantity to minimize total inventory costs</p>
         </div>
-        
-        <div class="calculator-form">
-            <div class="variation-selector">
-                <label for="calculation-type">Select EOQ Variation:</label>
+
+        <div class="info-section">
+            <h2>About the EOQ Model</h2>
+            <p>The Economic Order Quantity (EOQ) model determines the optimal order quantity that minimizes the total inventory costs, which include ordering costs and holding costs. This calculator helps you find the most cost-effective quantity to order based on your specific inventory parameters.</p>
+        </div>
+
+        <div class="calculator-container">
+            <h2>EOQ Calculator</h2>
+            
+            <div class="form-group">
+                <label for="calculation-type">EOQ Variation:</label>
                 <select id="calculation-type">
                     <option value="basic">Basic EOQ</option>
                     <option value="discount">Quantity Discount EOQ</option>
-                    <option value="production">Production Order Quantity</option>
+                    <option value="backorder">EOQ with Backorders</option>
                 </select>
             </div>
-            
-            <div id="basic-inputs" class="input-section">
-                <div class="input-group">
+
+            <div id="basic-fields">
+                <div class="form-group">
                     <label for="demand">Annual Demand (units):</label>
-                    <input type="number" id="demand" min="1" required>
+                    <input type="number" id="demand" placeholder="e.g., 10000">
                 </div>
-                <div class="input-group">
-                    <label for="setup-cost">Ordering/Setup Cost ($):</label>
-                    <input type="number" id="setup-cost" min="0.01" step="0.01" required>
+                <div class="form-group">
+                    <label for="ordering-cost">Ordering Cost per Order ($):</label>
+                    <input type="number" id="ordering-cost" placeholder="e.g., 50" step="0.01">
                 </div>
-                <div class="input-group">
-                    <label for="holding-cost">Holding Cost per Unit ($/unit/year):</label>
-                    <input type="number" id="holding-cost" min="0.01" step="0.01" required>
+                <div class="form-group">
+                    <label for="holding-cost">Holding Cost per Unit per Year ($):</label>
+                    <input type="number" id="holding-cost" placeholder="e.g., 2.50" step="0.01">
                 </div>
             </div>
-            
-            <div id="discount-inputs" class="input-section" style="display:none;">
-                <div class="input-group">
-                    <label for="discount-quantity">Discount Quantity Threshold:</label>
-                    <input type="number" id="discount-quantity" min="1">
+
+            <div id="discount-fields" style="display: none;">
+                <div class="form-group">
+                    <label for="unit-cost">Unit Cost ($):</label>
+                    <input type="number" id="unit-cost" placeholder="e.g., 10.00" step="0.01">
                 </div>
-                <div class="input-group">
+                <div class="form-group">
                     <label for="discount-rate">Discount Rate (%):</label>
-                    <input type="number" id="discount-rate" min="0" max="100" step="0.1">
+                    <input type="number" id="discount-rate" placeholder="e.g., 5" step="0.1">
+                </div>
+                <div class="form-group">
+                    <label for="min-quantity">Minimum Quantity for Discount:</label>
+                    <input type="number" id="min-quantity" placeholder="e.g., 500">
                 </div>
             </div>
-            
-            <div id="production-inputs" class="input-section" style="display:none;">
-                <div class="input-group">
-                    <label for="production-rate">Daily Production Rate:</label>
-                    <input type="number" id="production-rate" min="1">
-                </div>
-                <div class="input-group">
-                    <label for="demand-rate">Daily Demand Rate:</label>
-                    <input type="number" id="demand-rate" min="1">
+
+            <div id="backorder-fields" style="display: none;">
+                <div class="form-group">
+                    <label for="backorder-cost">Backorder Cost per Unit ($):</label>
+                    <input type="number" id="backorder-cost" placeholder="e.g., 5.00" step="0.01">
                 </div>
             </div>
-            
-            <button id="calculate" class="calculate-button">Calculate EOQ</button>
-        </div>
-        
-        <div id="results" class="results" style="display:none;">
-            <h3>Results</h3>
-            <div id="result-values"></div>
-            <div class="interpretation">
-                <h4>Interpretation & Recommendation</h4>
-                <p id="interpretation-text"></p>
+
+            <button id="calculate-btn">Calculate EOQ</button>
+
+            <div id="results" class="results">
+                <h3>Results</h3>
+                <div id="result-content"></div>
             </div>
         </div>
-        
-        <div class="examples">
-            <h3>When to Use Each Variation:</h3>
-            <div class="example" id="basic-example">
-                <h4>Basic EOQ</h4>
-                <p>Use for standard inventory items with constant demand and no quantity discounts. Example: Office supplies ordered monthly.</p>
-            </div>
-            <div class="example" id="discount-example" style="display:none;">
-                <h4>Quantity Discount EOQ</h4>
-                <p>Use when suppliers offer price breaks for larger orders. Example: Bulk purchasing of raw materials where unit cost decreases after 500 units.</p>
-            </div>
-            <div class="example" id="production-example" style="display:none;">
-                <h4>Production Order Quantity</h4>
-                <p>Use when items are produced internally rather than ordered. Example: Manufacturing batches where production rate exceeds demand rate.</p>
-            </div>
+
+        <div class="info-section" id="example-section">
+            <h3>When to Use Basic EOQ</h3>
+            <p>Use the basic EOQ model when:</p>
+            <ul>
+                <li>You're ordering from suppliers with no quantity discounts</li>
+                <li>Stockouts are not allowed or are extremely costly</li>
+                <li>Demand is constant and known</li>
+                <li>Lead time is constant and known</li>
+            </ul>
+            <p><strong>Example:</strong> A retail store ordering standard items with consistent pricing where running out of stock would mean lost sales.</p>
+        </div>
+
+        <div class="info-section" id="interpretation-section" style="display: none;">
+            <h3>Interpretation & Recommendations</h3>
+            <div id="interpretation-content"></div>
         </div>
     </div>
+
+    <script src="js/eoq-calculator.js"></script>
+    <script src="common/scripts.js"></script>
 </body>
 </html>
