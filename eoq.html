@@ -5,194 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EOQ Calculator - IE Toolkit</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .hamburger-menu {
-            cursor: pointer;
-            font-size: 1.5rem;
-        }
-        .sidebar {
-            transition: transform 0.3s ease-in-out;
-        }
-        .sidebar.hidden {
-            transform: translateX(-100%);
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body class="bg-gray-100">
-    <!-- Sidebar Menu -->
-    <div class="flex">
-        <div id="sidebar" class="sidebar hidden fixed inset-y-0 left-0 w-64 bg-white shadow-lg p-4 overflow-y-auto">
-            <h2 class="text-xl font-bold mb-4">IE Toolkit</h2>
-            <nav>
-                <ul class="space-y-2">
-                    <li><a href="index.html" class="text-blue-600 hover:underline">IE Calculators</a></li>
-                    <li>
-                        <strong>Inventory Management</strong>
-                        <ul class="ml-4 space-y-1">
-                            <li><a href="eoq-calculator.html" class="text-blue-600 hover:underline">EOQ Calculator</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">Safety Stock</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">Reorder Point</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">Kanban Calculator</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">Newsvendor Model</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">Batch Sizing</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <strong>Production Systems</strong>
-                        <ul class="ml-4 space-y-1">
-                            <li><a href="#" class="text-blue-600 hover:underline">OEE Calculator</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">Line Balancing</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">Takt Time</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">Little's Law</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">Learning Curve</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">Multi-Product Learning</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <strong>Quality Control</strong>
-                        <ul class="ml-4 space-y-1">
-                            <li><a href="#" class="text-blue-600 hover:underline">Process Capability</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">Gage R&R</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">Sigma Level</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">X̄-s Chart</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">X̄-R Chart</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">R Chart</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">s Chart</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">MR Chart</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">p Chart</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">np Chart</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">u Chart</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">c Chart</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <strong>Work Measurement</strong>
-                        <ul class="ml-4 space-y-1">
-                            <li><a href="#" class="text-blue-600 hover:underline">Time Study</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">Sample Size</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">Work Sampling</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">MTM Analysis</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">MOST Analysis</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <strong>Facility Planning</strong>
-                        <ul class="ml-4 space-y-1">
-                            <li><a href="#" class="text-blue-600 hover:underline">Travel Distance</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">Load-Distance</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">Network Diagram</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">Critical Path Method</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <strong>Ergonomics</strong>
-                        <ul class="ml-4 space-y-1">
-                            <li><a href="#" class="text-blue-600 hover:underline">NIOSH Lifting</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">RULA/REBA</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <strong>Operations Research</strong>
-                        <ul class="ml-4 space-y-1">
-                            <li><a href="#" class="text-blue-600 hover:underline">Linear Programming</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">Queueing Models</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">Transportation</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">Johnson's Algorithm (n=2)</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">Sequencing (n>2)</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">Flow Shop Sequencing</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">Job Shop Sequencing</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <strong>Financial Analysis</strong>
-                        <ul class="ml-4 space-y-1">
-                            <li><a href="#" class="text-blue-600 hover:underline">Breakeven Analysis</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">Cost-Benefit</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">Present Value</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">Future Value</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">Depreciation</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <strong>Statistical Analysis</strong>
-                        <ul class="ml-4 space-y-1">
-                            <li><a href="#" class="text-blue-600 hover:underline">Decision Matrix</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">Z-Test</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">T-Test</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">ANOVA</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">Regression</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">Correlation</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">Latin Square</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <strong>Forecasting</strong>
-                        <ul class="ml-4 space-y-1">
-                            <li><a href="#" class="text-blue-600 hover:underline">Simple MA</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">Weighted MA</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">Exponential MA</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">Holt-Winter</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">MAD</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">MAPE</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">RMSE</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <strong>Reliability</strong>
-                        <ul class="ml-4 space-y-1">
-                            <li><a href="#" class="text-blue-600 hover:underline">MTBF</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">MTTR</a></li>
-                            <li><a href="#" class="text-blue-600 hover:underline">Reliability Analysis</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
+    <!-- Sidebar (loaded dynamically) -->
+    <div id="sidebar-container"></div>
+    <!-- Main Content -->
+    <div class="flex-1 p-6">
+        <div class="hamburger-menu">☰</div>
+        <h1 class="text-3xl font-bold mb-4">Economic Order Quantity (EOQ) Calculator</h1>
+        <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+            <h2 class="text-xl font-semibold mb-2">About EOQ Calculator</h2>
+            <p class="mb-4">The Economic Order Quantity (EOQ) Calculator helps determine the optimal order quantity that minimizes total inventory costs, including ordering and holding costs. It supports multiple variations to suit different scenarios, such as basic EOQ, EOQ with shortages, and EOQ with quantity discounts.</p>
         </div>
-        <!-- Main Content -->
-        <div class="flex-1 p-6">
-            <div class="hamburger-menu">☰</div>
-            <h1 class="text-3xl font-bold mb-4">Economic Order Quantity (EOQ) Calculator</h1>
-            <div class="bg-white p-6 rounded-lg shadow-md mb-6">
-                <h2 class="text-xl font-semibold mb-2">About EOQ Calculator</h2>
-                <p class="mb-4">The Economic Order Quantity (EOQ) Calculator helps determine the optimal order quantity that minimizes total inventory costs, including ordering and holding costs. It supports multiple variations to suit different scenarios, such as basic EOQ, EOQ with shortages, and EOQ with quantity discounts.</p>
-            </div>
-            <!-- Calculator Selection -->
-            <div class="mb-6">
-                <label for="eoqType" class="block text-lg font-medium mb-2">Select EOQ Variation</label>
-                <select id="eoqType" class="border rounded p-2 w-full max-w-xs">
-                    <option value="basic">Basic EOQ</option>
-                    <option value="shortages">EOQ with Shortages</option>
-                    <option value="discounts">EOQ with Quantity Discounts</option>
-                </select>
-            </div>
-            <!-- Input Form -->
-            <div id="inputForm" class="bg-white p-6 rounded-lg shadow-md mb-6">
-                <!-- Form fields will be dynamically updated based on EOQ variation -->
-            </div>
-            <!-- Result Display -->
-            <div id="result" class="bg-white p-6 rounded-lg shadow-md hidden">
-                <h2 class="text-xl font-semibold mb-2">Results</h2>
-                <div id="resultContent"></div>
-            </div>
-            <!-- Real-World Examples -->
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <h2 class="text-xl font-semibold mb-2">Real-World Applications</h2>
-                <ul class="list-disc ml-6">
-                    <li><strong>Basic EOQ:</strong> Used by a retail store to determine the optimal order size for a product with stable demand, like canned goods, to balance ordering and holding costs.</li>
-                    <li><strong>EOQ with Shortages:</strong> Applied in a manufacturing plant where backordering is allowed, such as for machine parts, to account for stockouts while minimizing costs.</li>
-                    <li><strong>EOQ with Quantity Discounts:</strong> Utilized by a wholesaler purchasing bulk items, like electronics, where suppliers offer discounts for larger order quantities.</li>
-                </ul>
-            </div>
+        <!-- Calculator Selection -->
+        <div class="mb-6">
+            <label for="eoqType" class="block text-lg font-medium mb-2">Select EOQ Variation</label>
+            <select id="eoqType" class="border rounded p-2 w-full max-w-xs">
+                <option value="basic">Basic EOQ</option>
+                <option value="shortages">EOQ with Shortages</option>
+                <option value="discounts">EOQ with Quantity Discounts</option>
+            </select>
+        </div>
+        <!-- Input Form -->
+        <div id="inputForm" class="bg-white p-6 rounded-lg shadow-md mb-6">
+            <!-- Form fields will be dynamically updated based on EOQ variation -->
+        </div>
+        <!-- Result Display -->
+        <div id="result" class="bg-white p-6 rounded-lg shadow-md hidden">
+            <h2 class="text-xl font-semibold mb-2">Results</h2>
+            <div id="resultContent"></div>
+        </div>
+        <!-- Real-World Examples -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-semibold mb-2">Real-World Applications</h2>
+            <ul class="list-disc ml-6">
+                <li><strong>Basic EOQ:</strong> Used by a retail store to determine the optimal order size for a product with stable demand, like canned goods, to balance ordering and holding costs.</li>
+                <li><strong>EOQ with Shortages:</strong> Applied in a manufacturing plant where backordering is allowed, such as for machine parts, to account for stockouts while minimizing costs.</li>
+                <li><strong>EOQ with Quantity Discounts:</strong> Utilized by a wholesaler purchasing bulk items, like electronics, where suppliers offer discounts for larger order quantities.</li>
+            </ul>
         </div>
     </div>
+    <script src="common.js"></script>
     <script>
-        // Sidebar toggle functionality
-        document.querySelector('.hamburger-menu').addEventListener('click', () => {
-            document.getElementById('sidebar').classList.toggle('hidden');
-        });
+        // Load sidebar dynamically
+        fetch('sidebar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('sidebar-container').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading sidebar:', error));
 
         // Form templates for different EOQ variations
         const formTemplates = {
