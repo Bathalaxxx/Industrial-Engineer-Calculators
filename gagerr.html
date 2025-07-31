@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gage R&R Calculator - IE Toolkit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-blue-900 text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">IE Toolkit</h1>
+            <a href="index.html" class="hover:underline">Home</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto py-8 px-4">
+        <section class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-3xl font-semibold mb-4">Gage R&R Calculator</h2>
+            <p class="text-gray-600 mb-6">Evaluate measurement system reliability by calculating Gage Repeatability and Reproducibility (R&R), with visual insights into variance components.</p>
+
+            <!-- Gage R&R Method Selection -->
+            <div class="mb-6">
+                <label for="grr-method" class="block text-sm font-medium text-gray-700">Select Gage R&R Method</label>
+                <select id="grr-method" class="mt-1 p-2 w-full border rounded-md" onchange="toggleInputs()">
+                    <option value="anova">ANOVA Gage R&R</option>
+                    <option value="xbar-r">Xbar-R Gage R&R</option>
+                </select>
+            </div>
+
+            <!-- Input Form -->
+            <div id="input-form" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Common Inputs -->
+                <div>
+                    <label for="num-parts" class="block text-sm font-medium text-gray-700">Number of Parts</label>
+                    <input type="number" id="num-parts" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 10" required oninput="updateDataTable()">
+                </div>
+                <div>
+                    <label for="num-operators" class="block text-sm font-medium text-gray-700">Number of Operators</label>
+                    <input type="number" id="num-operators" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 3" required oninput="updateDataTable()">
+                </div>
+                <div>
+                    <label for="num-trials" class="block text-sm font-medium text-gray-700">Number of Trials per Operator</label>
+                    <input type="number" id="num-trials" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 3" required oninput="updateDataTable()">
+                </div>
+                <div>
+                    <label for="spec-range" class="block text-sm font-medium text-gray-700">Specification Range (USL - LSL)</label>
+                    <input type="number" id="spec-range" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 10" required>
+                </div>
+                <!-- Data Input Table -->
+                <div id="data-input" class="col-span-1 md:col-span-2">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Measurement Data</label>
+                    <div id="data-table" class="overflow-x-auto"></div>
+                </div>
+            </div>
+            <button onclick="calculateGageRR()" class="mt-6 bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-800">Calculate</button>
+
+            <!-- Results -->
+            <div id="results" class="mt-6 hidden">
+                <h3 class="text-xl font-semibold mb-2">Results</h3>
+                <div id="calculation-results" class="mb-4"></div>
+                <div class="mb-4">
+                    <h4 class="text-lg font-semibold">Variance Components Visualization</h4>
+                    <canvas id="gage-rr-chart" class="w-full h-64"></canvas>
+                </div>
+                <div id="interpretation" class="mt-4">
+                    <h4 class="text-lg font-semibold">Interpretation</h4>
+                    <p id="interpretation-text" class="text-gray-600"></p>
+                </div>
+                <div id="recommendation" class="mt-4">
+                    <h4 class="text-lg font-semibold">Recommendation</h4>
+                    <p id="recommendation-text" class="text-gray-600"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gage R&R Methods Explanation -->
+        <section class="mt-8">
+            <h3 class="text-2xl font-semibold mb-4">Gage R&R Methods and When to Use Them</h3>
+            <div class="space-y-4">
+                <div>
+                    <h4 class="text-lg font-semibold">ANOVA Gage R&R</h4>
+                    <p class="text-gray-600">Use for detailed variance decomposition, including part-operator interactions. Provides precise estimates of repeatability, reproducibility, and part-to-part variation.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold">Xbar-R Gage R&R</h4>
+                    <p class="text-gray-600">Use for simpler, range-based analysis when computational resources are limited or data is less complex. Estimates repeatability and reproducibility using averages and ranges.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-blue-900 text-white text-center p-4">
+        <p>&copy; 2025 IE Toolkit. All rights reserved.</p>
+    </footer>
+
+    <script>
+        let chartInstance = null;
+
+        function toggleInputs() {
+            updateDataTable();
+            document.getElementById('results').classList.add('hidden');
+        }
+
+        function updateDataTable() {
+            const numParts = parseInt(document.getElementById('num-parts').value) || 0;
+            const numOperators = parseInt(document.getElementById('num-operators').value) || 0;
+            const numTrials = parseInt(document.getElementById('num-trials').value) || 0;
+            const dataTable = document.getElementById('data-table');
+
+            if (numParts <= 0 || numOperators <= 0 || numTrials <= 0) {
+                dataTable.innerHTML = '';
+                return;
+            }
+
+            let tableHTML = '<table class="w-full border-collapse border border-gray-300"><thead><tr class="bg-gray-100"><th class="border border-gray-300 p-2">Part</th>';
+            for (let op = 1; op <= numOperators; op++) {
+                for (let tr = 1; tr <= numTrials; tr++) {
+                    tableHTML += `<th class="border border-gray-300 p-2">Op ${op} Trial ${tr}</th>`;
+                }
+            }
+            tableHTML += '</tr></thead><tbody>';
+            for (let part = 1; part <= numParts; part++) {
+                tableHTML += `<tr><td class="border border-gray-300 p-2">Part ${part}</td>`;
+                for (let op = 1; op <= numOperators; op++) {
+                    for (let tr = 1; tr <= numTrials; tr++) {
+                        tableHTML += `<td class="border border-gray-300 p-2"><input type="number" id="data-${part}-${op}-${tr}" class="p-1 w-full border rounded-md" placeholder="e.g., 15"></td>`;
+                    }
+                }
+                tableHTML += '</tr>';
+            }
+            tableHTML += '</tbody></table>';
+            dataTable.innerHTML = tableHTML;
+        }
+
+        function calculateGageRR() {
+            const method = document.getElementById('grr-method').value;
+            const numParts = parseInt(document.getElementById('num-parts').value);
+            const numOperators = parseInt(document.getElementById('num-operators').value);
+            const numTrials = parseInt(document.getElementById('num-trials').value);
+            const specRange = parseFloat(document.getElementById('spec-range').value);
+
+            if (isNaN(numParts) || isNaN(numOperators) || isNaN(numTrials) || isNaN(specRange) || numParts <= 0 || numOperators <= 0 || numTrials <= 0 || specRange <= 0) {
+                alert('Please enter valid positive numbers for parts, operators, trials, and specification range.');
+                return;
+            }
+
+            // Collect measurement data
+            const data = [];
+            let allValid = true;
+            for (let part = 1; part <= numParts; part++) {
+                const partData = [];
+                for (let op = 1; op <= numOperators; op++) {
+                    const opData = [];
+                    for (let tr = 1; tr <= numTrials; tr++) {
+                        const value = parseFloat(document.getElementById(`data-${part}-${op}-${tr}`).value);
+                        if (isNaN(value)) {
+                            allValid = false;
+                            break;
+                        }
+                        opData.push(value);
+                    }
+                    if (!allValid) break;
+                    partData.push(opData);
+                }
+                if (!allValid) break;
+                data.push(partData);
+            }
+            if (!allValid) {
+                alert('Please enter valid measurement data for all parts, operators, and trials.');
+                return;
+            }
+
+            let results = '';
+            let interpretation = '';
+            let recommendation = '';
+            let repeatability, reproducibility, partVariation, totalVariation, gageRRPercent;
+
+            if (method === 'anova') {
+                // ANOVA Gage R&R: Simplified variance components
+                // Calculate means and variances
+                const partMeans = data.map(part => part.flat().reduce((sum, x) => sum + x, 0) / (numOperators * numTrials));
+                const operatorMeans = Array(numOperators).fill().map((_, op) => 
+                    data.reduce((sum, part) => sum + part[op].reduce((sum2, x) => sum2 + x, 0), 0) / (numParts * numTrials)
+                );
+                const grandMean = partMeans.reduce((sum, x) => sum + x, 0) / numParts;
+
+                // Repeatability (within-operator variation)
+                const repeatabilityVar = data.reduce((sum, part) => 
+                    sum + part.reduce((sum2, opData) => {
+                        const opMean = opData.reduce((sum3, x) => sum3 + x, 0) / numTrials;
+                        return sum2 + opData.reduce((sum3, x) => sum3 + Math.pow(x - opMean, 2), 0);
+                    }, 0), 0) / (numParts * numOperators * (numTrials - 1));
+                repeatability = Math.sqrt(repeatabilityVar);
+
+                // Reproducibility (between-operator variation)
+                const reproducibilityVar = operatorMeans.reduce((sum, x) => sum + Math.pow(x - grandMean, 2), 0) * numTrials / (numOperators - 1);
+                reproducibility = Math.sqrt(Math.max(0, reproducibilityVar - repeatabilityVar / numTrials));
+
+                // Part-to-part variation
+                const partVar = partMeans.reduce((sum, x) => sum + Math.pow(x - grandMean, 2), 0) / (numParts - 1);
+                partVariation = Math.sqrt(Math.max(0, partVar));
+
+                // Total variation
+                totalVariation = Math.sqrt(repeatabilityVar + reproducibilityVar + partVar);
+
+                // Gage R&R percentage
+                gageRRPercent = ((repeatabilityVar + reproducibilityVar) / (totalVariation * totalVariation)) * 100;
+
+                results = `
+                    <p>Repeatability (EV): ${repeatability.toFixed(2)}</p>
+                    <p>Reproducibility (AV): ${reproducibility.toFixed(2)}</p>
+                    <p>Part-to-Part Variation: ${partVariation.toFixed(2)}</p>
+                    <p>Total Variation: ${totalVariation.toFixed(2)}</p>
+                    <p>Gage R&R (% of Total Variance): ${gageRRPercent.toFixed(2)}%</p>
+                    <p>%GRR of Specification Range: ${((repeatability + reproducibility) / specRange * 100).toFixed(2)}%</p>
+                `;
+                interpretation = `The ANOVA Gage R&R shows repeatability (EV = ${repeatability.toFixed(2)}) and reproducibility (AV = ${reproducibility.toFixed(2)}) contributing ${gageRRPercent.toFixed(2)}% to total variance, with part-to-part variation at ${partVariation.toFixed(2)}. The measurement system variability is ${(repeatability + reproducibility).toFixed(2)} relative to a specification range of ${specRange}.`;
+                recommendation = `Aim for Gage R&R < 10% of total variance for an excellent system, or < 30% for acceptability. If %GRR (${gageRRPercent.toFixed(2)}%) is high, improve repeatability by standardizing measurement tools or reproducibility by training operators.`;
+
+            } else if (method === 'xbar-r') {
+                // Xbar-R Gage R&R: Range-based method
+                const ranges = data.map(part => part.map(opData => {
+                    const max = Math.max(...opData);
+                    const min = Math.min(...opData);
+                    return max - min;
+                }));
+                const avgRanges = ranges.map(partRanges => partRanges.reduce((sum, x) => sum + x, 0) / numOperators);
+                const overallAvgRange = avgRanges.reduce((sum, x) => sum + x, 0) / numParts;
+
+                // Repeatability: Use range control chart constant d2 (approximated for simplicity)
+                const d2 = numTrials === 2 ? 1.128 : numTrials === 3 ? 1.693 : 2.059; // For n=2,3,4
+                repeatability = overallAvgRange / d2;
+
+                // Reproducibility: Variation between operator means
+                const operatorMeans = Array(numOperators).fill().map((_, op) => 
+                    data.reduce((sum, part) => sum + part[op].reduce((sum2, x) => sum2 + x, 0) / numTrials, 0) / numParts
+                );
+                const opRange = Math.max(...operatorMeans) - Math.min(...operatorMeans);
+                reproducibility = opRange / d2;
+
+                // Part-to-part variation
+                const partMeans = data.map(part => part.flat().reduce((sum, x) => sum + x, 0) / (numOperators * numTrials));
+                const partRange = Math.max(...partMeans) - Math.min(...partMeans);
+                partVariation = partRange / d2;
+
+                // Total variation and Gage R&R percentage
+                totalVariation = Math.sqrt(Math.pow(repeatability, 2) + Math.pow(reproducibility, 2) + Math.pow(partVariation, 2));
+                gageRRPercent = ((Math.pow(repeatability, 2) + Math.pow(reproducibility, 2)) / Math.pow(totalVariation, 2)) * 100;
+
+                results = `
+                    <p>Repeatability (EV): ${repeatability.toFixed(2)}</p>
+                    <p>Reproducibility (AV): ${reproducibility.toFixed(2)}</p>
+                    <p>Part-to-Part Variation: ${partVariation.toFixed(2)}</p>
+                    <p>Total Variation: ${totalVariation.toFixed(2)}</p>
+                    <p>Gage R&R (% of Total Variance): ${gageRRPercent.toFixed(2)}%</p>
+                    <p>%GRR of Specification Range: ${((repeatability + reproducibility) / specRange * 100).toFixed(2)}%</p>
+                `;
+                interpretation = `The Xbar-R Gage R&R estimates repeatability (EV = ${repeatability.toFixed(2)}) and reproducibility (AV = ${reproducibility.toFixed(2)}) contributing ${gageRRPercent.toFixed(2)}% to total variance, with part-to-part variation at ${partVariation.toFixed(2)}. The measurement system variability is ${(repeatability + reproducibility).toFixed(2)} relative to a specification range of ${specRange}.`;
+                recommendation = `Aim for Gage R&R < 10% for an excellent system, or < 30% for acceptability. If %GRR (${gageRRPercent.toFixed(2)}%) is high, standardize measurement procedures to reduce repeatability or train operators to reduce reproducibility.`;
+            }
+
+            // Render Chart
+            if (chartInstance) chartInstance.destroy();
+            const ctx = document.getElementById('gage-rr-chart').getContext('2d');
+            chartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Repeatability', 'Reproducibility', 'Part-to-Part', 'Total Variation'],
+                    datasets: [{
+                        label: 'Variance Components',
+                        data: [repeatability, reproducibility, partVariation, totalVariation],
+                        backgroundColor: [
+                            'rgba(59, 130, 246, 0.5)', // Repeatability
+                            'rgba(75, 192, 192, 0.5)', // Reproducibility
+                            'rgba(255, 159, 64, 0.5)', // Part-to-Part
+                            'rgba(255, 99, 132, 0.5)'  // Total Variation
+                        ],
+                        borderColor: [
+                            'rgba(59, 130, 246, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(255, 99, 132, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Standard Deviation' }
+                        },
+                        x: {
+                            title: { display: true, text: 'Components' }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: true },
+                        title: { display: true, text: 'Gage R&R Variance Components' }
+                    }
+                }
+            });
+
+            document.getElementById('calculation-results').innerHTML = results;
+            document.getElementById('interpretation-text').innerText = interpretation;
+            document.getElementById('recommendation-text').innerText = recommendation;
+            document.getElementById('results').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
