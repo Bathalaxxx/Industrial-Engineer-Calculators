@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EOQ Calculator | Industrial Engineering Toolkit</title>
+    <link rel="stylesheet" href="../styles.css">
+    <script src="eoq.js" defer></script>
+</head>
+<body>
+    <div class="calculator-container">
+        <a href="../index.html" class="back-button">Back to Main</a>
+        
+        <h1>EOQ Calculator</h1>
+        
+        <div class="tool-description">
+            <p>The Economic Order Quantity (EOQ) model determines the optimal order quantity to minimize total inventory costs (holding + ordering costs).</p>
+        </div>
+        
+        <div class="calculator-form">
+            <div class="variation-selector">
+                <label for="calculation-type">Select EOQ Variation:</label>
+                <select id="calculation-type">
+                    <option value="basic">Basic EOQ</option>
+                    <option value="discount">Quantity Discount EOQ</option>
+                    <option value="production">Production Order Quantity</option>
+                </select>
+            </div>
+            
+            <div id="basic-inputs" class="input-section">
+                <div class="input-group">
+                    <label for="demand">Annual Demand (units):</label>
+                    <input type="number" id="demand" min="1" required>
+                </div>
+                <div class="input-group">
+                    <label for="setup-cost">Ordering/Setup Cost ($):</label>
+                    <input type="number" id="setup-cost" min="0.01" step="0.01" required>
+                </div>
+                <div class="input-group">
+                    <label for="holding-cost">Holding Cost per Unit ($/unit/year):</label>
+                    <input type="number" id="holding-cost" min="0.01" step="0.01" required>
+                </div>
+            </div>
+            
+            <div id="discount-inputs" class="input-section" style="display:none;">
+                <div class="input-group">
+                    <label for="discount-quantity">Discount Quantity Threshold:</label>
+                    <input type="number" id="discount-quantity" min="1">
+                </div>
+                <div class="input-group">
+                    <label for="discount-rate">Discount Rate (%):</label>
+                    <input type="number" id="discount-rate" min="0" max="100" step="0.1">
+                </div>
+            </div>
+            
+            <div id="production-inputs" class="input-section" style="display:none;">
+                <div class="input-group">
+                    <label for="production-rate">Daily Production Rate:</label>
+                    <input type="number" id="production-rate" min="1">
+                </div>
+                <div class="input-group">
+                    <label for="demand-rate">Daily Demand Rate:</label>
+                    <input type="number" id="demand-rate" min="1">
+                </div>
+            </div>
+            
+            <button id="calculate" class="calculate-button">Calculate EOQ</button>
+        </div>
+        
+        <div id="results" class="results" style="display:none;">
+            <h3>Results</h3>
+            <div id="result-values"></div>
+            <div class="interpretation">
+                <h4>Interpretation & Recommendation</h4>
+                <p id="interpretation-text"></p>
+            </div>
+        </div>
+        
+        <div class="examples">
+            <h3>When to Use Each Variation:</h3>
+            <div class="example" id="basic-example">
+                <h4>Basic EOQ</h4>
+                <p>Use for standard inventory items with constant demand and no quantity discounts. Example: Office supplies ordered monthly.</p>
+            </div>
+            <div class="example" id="discount-example" style="display:none;">
+                <h4>Quantity Discount EOQ</h4>
+                <p>Use when suppliers offer price breaks for larger orders. Example: Bulk purchasing of raw materials where unit cost decreases after 500 units.</p>
+            </div>
+            <div class="example" id="production-example" style="display:none;">
+                <h4>Production Order Quantity</h4>
+                <p>Use when items are produced internally rather than ordered. Example: Manufacturing batches where production rate exceeds demand rate.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
