@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Study Calculator - IE Toolkit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-blue-900 text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">IE Toolkit</h1>
+            <a href="index.html" class="hover:underline">Home</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto py-8 px-4">
+        <section class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-3xl font-semibold mb-4">Time Study Calculator</h2>
+            <p class="text-gray-600 mb-6">Analyze task performance by calculating observed, normal, and standard times, with cycle time visualization and process efficiency insights.</p>
+
+            <!-- Input Form -->
+            <div id="input-form" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="num-cycles" class="block text-sm font-medium text-gray-700">Number of Cycles</label>
+                    <input type="number" id="num-cycles" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 10" required min="1" oninput="updateCycleTable()">
+                </div>
+                <div>
+                    <label for="rating" class="block text-sm font-medium text-gray-700">Performance Rating (%)</label>
+                    <input type="number" id="rating" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 100" required min="0" max="200">
+                </div>
+                <div>
+                    <label for="allowance" class="block text-sm font-medium text-gray-700">Allowance (%)</label>
+                    <input type="number" id="allowance" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 15" required min="0" max="100">
+                </div>
+                <div>
+                    <label for="takt-time" class="block text-sm font-medium text-gray-700">Takt Time (seconds, optional)</label>
+                    <input type="number" id="takt-time" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 30">
+                </div>
+                <!-- Cycle Time Input Table -->
+                <div id="cycle-input" class="col-span-1 md:col-span-2">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Cycle Times (seconds)</label>
+                    <div id="cycle-table" class="overflow-x-auto"></div>
+                </div>
+            </div>
+            <button onclick="calculateTimeStudy()" class="mt-6 bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-800">Calculate</button>
+
+            <!-- Results -->
+            <div id="results" class="mt-6 hidden">
+                <h3 class="text-xl font-semibold mb-2">Results</h3>
+                <div id="calculation-results" class="mb-4"></div>
+                <div class="mb-4">
+                    <h4 class="text-lg font-semibold">Cycle Time Analysis</h4>
+                    <canvas id="cycle-time-chart" class="w-full h-64"></canvas>
+                </div>
+                <div id="interpretation" class="mt-4">
+                    <h4 class="text-lg font-semibold">Interpretation</h4>
+                    <p id="interpretation-text" class="text-gray-600"></p>
+                </div>
+                <div id="recommendation" class="mt-4">
+                    <h4 class="text-lg font-semibold">Recommendation</h4>
+                    <p id="recommendation-text" class="text-gray-600"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Time Study Explanation -->
+        <section class="mt-8">
+            <h3 class="text-2xl font-semibold mb-4">Time Study and When to Use It</h3>
+            <div class="space-y-4">
+                <div>
+                    <h4 class="text-lg font-semibold">Purpose</h4>
+                    <p class="text-gray-600">Measures task duration to establish standard times, assess operator performance, and identify inefficiencies. Used for process design, capacity planning, and cost estimation.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold">Key Metrics</h4>
+                    <p class="text-gray-600">Observed Time (average cycle time), Normal Time (adjusted for performance), Standard Time (includes allowances). Compare with takt time to evaluate process efficiency.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-blue-900 text-white text-center p-4">
+        <p>&copy; 2025 IE Toolkit. All rights reserved.</p>
+    </footer>
+
+    <script>
+        let chartInstance = null;
+
+        function updateCycleTable() {
+            const numCycles = parseInt(document.getElementById('num-cycles').value) || 0;
+            const cycleTable = document.getElementById('cycle-table');
+
+            if (numCycles <= 0) {
+                cycleTable.innerHTML = '';
+                return;
+            }
+
+            let tableHTML = '<table class="w-full border-collapse border border-gray-300"><thead><tr class="bg-gray-100"><th class="border border-gray-300 p-2">Cycle</th><th class="border border-gray-300 p-2">Time (seconds)</th></tr></thead><tbody>';
+            for (let i = 1; i <= numCycles; i++) {
+                tableHTML += `<tr><td class="border border-gray-300 p-2">${i}</td><td class="border border-gray-300 p-2"><input type="number" id="cycle-time-${i}" class="p-1 w-full border rounded-md" placeholder="e.g., 30" step="0.01" required></td></tr>`;
+            }
+            tableHTML += '</tbody></table>';
+            cycleTable.innerHTML = tableHTML;
+        }
+
+        function calculateTimeStudy() {
+            const numCycles = parseInt(document.getElementById('num-cycles').value);
+            const rating = parseFloat(document.getElementById('rating').value) / 100;
+            const allowance = parseFloat(document.getElementById('allowance').value) / 100;
+            const taktTime = parseFloat(document.getElementById('takt-time').value) || null;
+
+            if (isNaN(numCycles) || numCycles <= 0) {
+                alert('Please enter a valid positive number for cycles.');
+                return;
+            }
+            if (isNaN(rating) || rating <= 0 || rating > 2) {
+                alert('Please enter a valid performance rating (0–200%).');
+                return;
+            }
+            if (isNaN(allowance) || allowance < 0 || allowance > 1) {
+                alert('Please enter a valid allowance percentage (0–100%).');
+                return;
+            }
+            if (taktTime !== null && (isNaN(taktTime) || taktTime <= 0)) {
+                alert('Please enter a valid positive takt time or leave it blank.');
+                return;
+            }
+
+            // Collect cycle times
+            const cycleTimes = [];
+            let allValid = true;
+            for (let i = 1; i <= numCycles; i++) {
+                const time = parseFloat(document.getElementById(`cycle-time-${i}`).value);
+                if (isNaN(time) || time <= 0) {
+                    allValid = false;
+                    break;
+                }
+                cycleTimes.push(time);
+            }
+            if (!allValid) {
+                alert('Please enter valid positive cycle times for all cycles.');
+                return;
+            }
+
+            // Calculate time study metrics
+            const observedTime = cycleTimes.reduce((sum, time) => sum + time, 0) / numCycles;
+            const normalTime = observedTime * rating;
+            const standardTime = normalTime * (1 + allowance);
+            const stdDev = Math.sqrt(cycleTimes.reduce((sum, time) => sum + Math.pow(time - observedTime, 2), 0) / (numCycles - 1)) || 0;
+            const variability = stdDev / observedTime * 100; // Coefficient of variation (%)
+
+            // Results table
+            let resultsTable = '<table class="w-full border-collapse border border-gray-300"><thead><tr class="bg-gray-100"><th class="border border-gray-300 p-2">Cycle</th><th class="border border-gray-300 p-2">Time (seconds)</th></tr></thead><tbody>';
+            cycleTimes.forEach((time, i) => {
+                resultsTable += `<tr><td class="border border-gray-300 p-2">${i + 1}</td><td class="border border-gray-300 p-2">${time.toFixed(2)}</td></tr>`;
+            });
+            resultsTable += '</tbody></table>';
+
+            // Results summary
+            let results = `
+                <p>Observed Time: ${observedTime.toFixed(2)} seconds</p>
+                <p>Normal Time: ${normalTime.toFixed(2)} seconds</p>
+                <p>Standard Time: ${standardTime.toFixed(2)} seconds</p>
+                <p>Standard Deviation: ${stdDev.toFixed(2)} seconds</p>
+                <p>Variability (Coefficient of Variation): ${variability.toFixed(2)}%</p>
+            `;
+            if (taktTime !== null) {
+                results += `<p>Takt Time: ${taktTime.toFixed(2)} seconds</p>`;
+            }
+            results += resultsTable;
+
+            // Interpretation
+            let interpretation = `The observed time is ${observedTime.toFixed(2)} seconds, adjusted to a normal time of ${normalTime.toFixed(2)} seconds based on a ${rating * 100}% performance rating. The standard time, including a ${allowance * 100}% allowance, is ${standardTime.toFixed(2)} seconds. The process has a variability of ${variability.toFixed(2)}% (standard deviation = ${stdDev.toFixed(2)} seconds).`;
+            if (taktTime !== null) {
+                interpretation += ` The standard time ${standardTime > taktTime ? 'exceeds' : 'meets or is below'} the takt time of ${taktTime.toFixed(2)} seconds, indicating ${standardTime > taktTime ? 'potential capacity issues' : 'sufficient process speed'}.`;
+            }
+
+            // Recommendation
+            let recommendation = `The standard time of ${standardTime.toFixed(2)} seconds is the expected task duration under normal conditions. `;
+            if (variability > 20) {
+                recommendation += `High variability (${variability.toFixed(2)}%) suggests inconsistent performance. Investigate causes (e.g., operator training, equipment issues) to reduce variation. `;
+            } else {
+                recommendation += `Low variability (${variability.toFixed(2)}%) indicates consistent performance. `;
+            }
+            if (taktTime !== null) {
+                if (standardTime > taktTime) {
+                    recommendation += `The standard time exceeds takt time, risking production delays. Consider process improvements (e.g., streamlining tasks, adding resources) to meet demand.`;
+                } else {
+                    recommendation += `The standard time meets or is below takt time, supporting current demand. Continue monitoring for efficiency.`;
+                }
+            } else {
+                recommendation += `Provide takt time to assess process alignment with demand.`;
+            }
+
+            // Render Cycle Time Chart
+            if (chartInstance) chartInstance.destroy();
+            const ctx = document.getElementById('cycle-time-chart').getContext('2d');
+            const datasets = [
+                {
+                    label: 'Cycle Times',
+                    data: cycleTimes,
+                    backgroundColor: 'rgba(59, 130, 246, 0.5)',
+                    borderColor: 'rgba(59, 130, 246, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Observed Time',
+                    data: Array(cycleTimes.length).fill(observedTime),
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderDash: [5, 5],
+                    pointRadius: 0,
+                    type: 'line'
+                },
+                {
+                    label: 'Normal Time',
+                    data: Array(cycleTimes.length).fill(normalTime),
+                    borderColor: 'rgba(255, 206, 86, 1)',
+                    borderDash: [5, 5],
+                    pointRadius: 0,
+                    type: 'line'
+                },
+                {
+                    label: 'Standard Time',
+                    data: Array(cycleTimes.length).fill(standardTime),
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderDash: [5, 5],
+                    pointRadius: 0,
+                    type: 'line'
+                }
+            ];
+            if (taktTime !== null) {
+                datasets.push({
+                    label: 'Takt Time',
+                    data: Array(cycleTimes.length).fill(taktTime),
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    borderDash: [5, 5],
+                    pointRadius: 0,
+                    type: 'line'
+                });
+            }
+            chartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Array.from({ length: cycleTimes.length }, (_, i) => i + 1),
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            title: { display: true, text: 'Time (seconds)' },
+                            suggestedMin: 0,
+                            suggestedMax: Math.max(...cycleTimes, standardTime, taktTime || 0) * 1.1
+                        },
+                        x: {
+                            title: { display: true, text: 'Cycle' }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: true },
+                        title: { display: true, text: 'Cycle Time Analysis' }
+                    }
+                }
+            });
+
+            document.getElementById('calculation-results').innerHTML = results;
+            document.getElementById('interpretation-text').innerText = interpretation;
+            document.getElementById('recommendation-text').innerText = recommendation;
+            document.getElementById('results').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
