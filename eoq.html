@@ -24,101 +24,134 @@
 </head>
 <body class="bg-gray-100 font-sans">
     <!-- Sidebar -->
-    <div id="sidebar" class="fixed inset-y-0 left-0 w-64 bg-white shadow-lg sidebar z-50">
-        <div class="p-4">
-            <h1 class="text-2xl font-bold text-center"><a href="index.html">IE Toolkit</a></h1>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>IE Toolkit</h2>
         </div>
-        <nav class="mt-4">
-            <ul class="space-y-2">
-                <li class="px-4 py-2 font-semibold">Inventory Management</li>
-                <li class="px-4 py-1"><a href="eoq.html" class="text-blue-600 hover:underline">EOQ Calculator</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Safety Stock</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Reorder Point</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Kanban Calculator</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Newsvendor Model</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Batch Sizing</a></li>
-                
-                <li class="px-4 py-2 font-semibold">Production Systems</li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">OEE Calculator</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Line Balancing</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Takt Time</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Little's Law</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Learning Curve</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Multi-Product Learning</a></li>
-                
-                <li class="px-4 py-2 font-semibold">Quality Control</li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Process Capability</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Gage R&R</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Sigma Level</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">X̄-s Chart</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">X̄-R Chart</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">R Chart</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">s Chart</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">MR Chart</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">p Chart</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">np Chart</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">u Chart</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">c Chart</a></li>
-                
-                <li class="px-4 py-2 font-semibold">Work Measurement</li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Time Study</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Sample Size</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Work Sampling</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">MTM Analysis</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">MOST Analysis</a></li>
-                
-                <li class="px-4 py-2 font-semibold">Facility Planning</li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Travel Distance</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Load-Distance</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Network Diagram</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Critical Path Method</a></li>
-                
-                <li class="px-4 py-2 font-semibold">Ergonomics</li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">NIOSH Lifting</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">RULA/REBA</a></li>
-                
-                <li class="px-4 py-2 font-semibold">Operations Research</li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Linear Programming</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Queueing Models</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Transportation</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Johnson's Algorithm (n=2)</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Sequencing (n>2)</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Flow Shop Sequencing</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Job Shop Sequencing</a></li>
-                
-                <li class="px-4 py-2 font-semibold">Financial Analysis</li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Breakeven Analysis</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Cost-Benefit</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Present Value</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Future Value</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Depreciation</a></li>
-                
-                <li class="px-4 py-2 font-semibold">Statistical Analysis</li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Decision Matrix</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Z-Test</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">T-Test</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">ANOVA</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Regression</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Correlation</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Latin Square</a></li>
-                
-                <li class="px-4 py-2 font-semibold">Forecasting</li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Simple MA</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Weighted MA</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Exponential MA</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Holt-Winter</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">MAD</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">MAPE</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">RMSE</a></li>
-                
-                <li class="px-4 py-2 font-semibold">Reliability</li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">MTBF</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">MTTR</a></li>
-                <li class="px-4 py-1"><a href="#" class="text-gray-600 hover:underline">Reliability Analysis</a></li>
-            </ul>
-        </nav>
+        
+        <div class="search-box">
+            <input type="text" placeholder="Search calculators...">
+        </div>
+        
+        <!-- Inventory Management -->
+        <div class="menu-category collapsed">Inventory Management</div>
+        <ul class="collapsed">
+            <li class="popular"><a href="eoq.html">EOQ Calculator</a></li>
+            <li><a href="safetystock.html">Safety Stock</a></li>
+            <li><a href="rop.html">Reorder Point</a></li>
+            <li><a href="kanban.html">Kanban Calculator</a></li>
+            <li><a href="newsvendor.html">Newsvendor Model</a></li>
+            <li><a href="batchsizing.html">Batch Sizing</a></li>
+        </ul>
+        
+        <!-- Production Systems -->
+        <div class="menu-category collapsed">Production Systems</div>
+        <ul class="collapsed">
+            <li class="popular"><a href="oee.html">OEE Calculator</a></li>
+            <li><a href="linebalancing.html">Line Balancing</a></li>
+            <li><a href="takttime.html">Takt Time</a></li>
+            <li><a href="littleslaw.html">Little's Law</a></li>
+            <li><a href="learningcurve.html">Learning Curve</a></li>
+            <li><a href="learningcurvewithmultipleproducts.html">Multi-Product Learning</a></li>
+        </ul>
+        
+        <!-- Quality Control -->
+        <div class="menu-category collapsed">Quality Control</div>
+        <ul class="collapsed">
+            <li class="popular"><a href="processcapability.html">Process Capability</a></li>
+            <li><a href="gagerr.html">Gage R&R</a></li>
+            <li><a href="sigmalavel.html">Sigma Level</a></li>
+            <li class="new"><a href="xbarandschart.html">X̄-s Chart</a></li>
+            <li><a href="xbarandrangechart.html">X̄-R Chart</a></li>
+            <li><a href="rchart.html">R Chart</a></li>
+            <li><a href="schart.html">s Chart</a></li>
+            <li><a href="mrchart.html">MR Chart</a></li>
+            <li><a href="pchart.html">p Chart</a></li>
+            <li><a href="npchart.html">np Chart</a></li>
+            <li><a href="uchart.html">u Chart</a></li>
+            <li><a href="cchart.html">c Chart</a></li>
+        </ul>
+        
+        <!-- Work Measurement -->
+        <div class="menu-category collapsed">Work Measurement</div>
+        <ul class="collapsed">
+            <li class="popular"><a href="timestudy.html">Time Study</a></li>
+            <li><a href="samplesize.html">Sample Size</a></li>
+            <li><a href="worksampling.html">Work Sampling</a></li>
+            <li><a href="mtm.html">MTM Analysis</a></li>
+            <li><a href="most.html">MOST Analysis</a></li>
+        </ul>
+        
+        <!-- Facility Planning -->
+        <div class="menu-category collapsed">Facility Planning</div>
+        <ul class="collapsed">
+            <li><a href="traveldistance.html">Travel Distance</a></li>
+            <li><a href="loaddistance.html">Load-Distance</a></li>
+            <li><a href="networkdiagram.html">Network Diagram</a></li>
+            <li><a href="criticalpathmethod.html">Critical Path Method</a></li>
+        </ul>
+        
+        <!-- Ergonomics -->
+        <div class="menu-category collapsed">Ergonomics</div>
+        <ul class="collapsed">
+            <li><a href="niosh.html">NIOSH Lifting</a></li>
+            <li><a href="rulareba.html">RULA/REBA</a></li>
+        </ul>
+        
+        <!-- Operations Research -->
+        <div class="menu-category collapsed">Operations Research</div>
+        <ul class="collapsed">
+            <li><a href="linearprogramming.html">Linear Programming</a></li>
+            <li><a href="queueing.html">Queueing Models</a></li>
+            <li><a href="transportation.html">Transportation</a></li>
+            <li><a href="johnsonsnequal2.html">Johnson's Algorithm (n=2)</a></li>
+            <li><a href="sequencingn>2.html">Sequencing (n>2)</a></li>
+            <li><a href="flowshopsequencing.html">Flow Shop Sequencing</a></li>
+            <li><a href="jobshopsequencing.html">Job Shop Sequencing</a></li>
+        </ul>
+        
+        <!-- Financial Analysis -->
+        <div class="menu-category collapsed">Financial Analysis</div>
+        <ul class="collapsed">
+            <li><a href="breakeven.html">Breakeven Analysis</a></li>
+            <li><a href="costbenefitanalysis.html">Cost-Benefit</a></li>
+            <li><a href="presentvalue.html">Present Value</a></li>
+            <li><a href="futurevalue.html">Future Value</a></li>
+            <li><a href="depreciation.html">Depreciation</a></li>
+        </ul>
+        
+        <!-- Statistical Analysis -->
+        <div class="menu-category collapsed">Statistical Analysis</div>
+        <ul class="collapsed">
+            <li><a href="decisionmatrix.html">Decision Matrix</a></li>
+            <li><a href="ztest.html">Z-Test</a></li>
+            <li><a href="ttest.html">T-Test</a></li>
+            <li><a href="anova.html">ANOVA</a></li>
+            <li><a href="regression.html">Regression</a></li>
+            <li><a href="correlation.html">Correlation</a></li>
+            <li><a href="latinsquare.html">Latin Square</a></li>
+        </ul>
+        
+        <!-- Forecasting -->
+        <div class="menu-category collapsed">Forecasting</div>
+        <ul class="collapsed">
+            <li><a href="simplemovingaverage.html">Simple MA</a></li>
+            <li><a href="weightedmovingaverage.html">Weighted MA</a></li>
+            <li><a href="exponentialmovingaverage.html">Exponential MA</a></li>
+            <li><a href="holtswinter.html">Holt-Winter</a></li>
+            <li><a href="mad.html">MAD</a></li>
+            <li><a href="mape.html">MAPE</a></li>
+            <li><a href="rmse.html">RMSE</a></li>
+        </ul>
+        
+        <!-- Reliability -->
+        <div class="menu-category collapsed">Reliability</div>
+        <ul class="collapsed">
+            <li><a href="mtbf.html">MTBF</a></li>
+            <li><a href="mttr.html">MTTR</a></li>
+            <li><a href="reliabilityanalysis.html">Reliability Analysis</a></li>
+        </ul>
     </div>
-
     <!-- Main Content -->
     <div class="ml-0 md:ml-64 p-6">
         <button id="menu-toggle" class="md:hidden text-2xl p-2">☰</button>
