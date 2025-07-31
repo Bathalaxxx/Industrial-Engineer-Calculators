@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample Size Calculator - IE Toolkit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-blue-900 text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">IE Toolkit</h1>
+            <a href="index.html" class="hover:underline">Home</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto py-8 px-4">
+        <section class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-3xl font-semibold mb-4">Sample Size Calculator</h2>
+            <p class="text-gray-600 mb-6">Calculate the required sample size for Time Studies or Work Sampling to ensure reliable estimates of task times or activity proportions.</p>
+
+            <!-- Calculation Type Selection -->
+            <div class="mb-6">
+                <label for="calc-type" class="block text-sm font-medium text-gray-700">Calculation Type</label>
+                <select id="calc-type" class="mt-1 p-2 w-full border rounded-md" onchange="updateInputs()">
+                    <option value="time-study">Time Study</option>
+                    <option value="work-sampling">Work Sampling</option>
+                </select>
+            </div>
+
+            <!-- Input Form -->
+            <div id="input-form" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Time Study Inputs -->
+                <div id="time-study-inputs" class="grid grid-cols-1 gap-6">
+                    <div>
+                        <label for="num-observations" class="block text-sm font-medium text-gray-700">Number of Preliminary Observations</label>
+                        <input type="number" id="num-observations" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 10" required min="2" oninput="updateObservationTable()">
+                    </div>
+                    <div>
+                        <label for="ts-confidence" class="block text-sm font-medium text-gray-700">Confidence Level (%)</label>
+                        <input type="number" id="ts-confidence" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 95" required min="50" max="99.9" step="0.1">
+                    </div>
+                    <div>
+                        <label for="ts-precision" class="block text-sm font-medium text-gray-700">Precision (% of mean)</label>
+                        <input type="number" id="ts-precision" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 5" required min="1" max="50" step="0.1">
+                    </div>
+                    <div id="ts-data-input" class="col-span-1 md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Preliminary Observed Times (seconds)</label>
+                        <div id="observation-table" class="overflow-x-auto"></div>
+                    </div>
+                </div>
+                <!-- Work Sampling Inputs -->
+                <div id="work-sampling-inputs" class="grid grid-cols-1 gap-6 hidden">
+                    <div>
+                        <label for="proportion" class="block text-sm font-medium text-gray-700">Estimated Proportion (%)</label>
+                        <input type="number" id="proportion" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 30" required min="0" max="100" step="0.1">
+                    </div>
+                    <div>
+                        <label for="ws-confidence" class="block text-sm font-medium text-gray-700">Confidence Level (%)</label>
+                        <input type="number" id="ws-confidence" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 95" required min="50" max="99.9" step="0.1">
+                    </div>
+                    <div>
+                        <label for="ws-precision" class="block text-sm font-medium text-gray-700">Precision (% of proportion)</label>
+                        <input type="number" id="ws-precision" class="mt-1 p-2 w-full border rounded-md" placeholder="e.g., 5" required min="1" max="50" step="0.1">
+                    </div>
+                </div>
+            </div>
+            <button onclick="calculateSampleSize()" class="mt-6 bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-800">Calculate</button>
+
+            <!-- Results -->
+            <div id="results" class="mt-6 hidden">
+                <h3 class="text-xl font-semibold mb-2">Results</h3>
+                <div id="calculation-results" class="mb-4"></div>
+                <div class="mb-4">
+                    <h4 class="text-lg font-semibold">Sample Size Analysis</h4>
+                    <canvas id="sample-size-chart" class="w-full h-64"></canvas>
+                </div>
+                <div id="interpretation" class="mt-4">
+                    <h4 class="text-lg font-semibold">Interpretation</h4>
+                    <p id="interpretation-text" class="text-gray-600"></p>
+                </div>
+                <div id="recommendation" class="mt-4">
+                    <h4 class="text-lg font-semibold">Recommendation</h4>
+                    <p id="recommendation-text" class="text-gray-600"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sample Size Explanation -->
+        <section class="mt-8">
+            <h3 class="text-2xl font-semibold mb-4">Sample Size for Time Studies and Work Sampling</h3>
+            <div class="space-y-4">
+                <div>
+                    <h4 class="text-lg font-semibold">Time Study Sample Size</h4>
+                    <p class="text-gray-600">Calculates the number of cycles needed to estimate task time with specified confidence and precision. Requires preliminary data to estimate variability.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold">Work Sampling Sample Size</h4>
+                    <p class="text-gray-600">Calculates the number of observations needed to estimate the proportion of time spent on an activity. Uses estimated proportion and desired precision.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-blue-900 text-white text-center p-4">
+        <p>&copy; 2025 IE Toolkit. All rights reserved.</p>
+    </footer>
+
+    <script>
+        let chartInstance = null;
+
+        function updateInputs() {
+            const calcType = document.getElementById('calc-type').value;
+            document.getElementById('time-study-inputs').classList.toggle('hidden', calcType !== 'time-study');
+            document.getElementById('work-sampling-inputs').classList.toggle('hidden', calcType !== 'work-sampling');
+            document.getElementById('observation-table').innerHTML = '';
+            document.getElementById('results').classList.add('hidden');
+            if (calcType === 'time-study') {
+                updateObservationTable();
+            }
+        }
+
+        function updateObservationTable() {
+            const numObservations = parseInt(document.getElementById('num-observations').value) || 0;
+            const observationTable = document.getElementById('observation-table');
+
+            if (numObservations < 2) {
+                observationTable.innerHTML = '';
+                return;
+            }
+
+            let tableHTML = '<table class="w-full border-collapse border border-gray-300"><thead><tr class="bg-gray-100"><th class="border border-gray-300 p-2">Observation</th><th class="border border-gray-300 p-2">Time (seconds)</th></tr></thead><tbody>';
+            for (let i = 1; i <= numObservations; i++) {
+                tableHTML += `<tr><td class="border border-gray-300 p-2">${i}</td><td class="border border-gray-300 p-2"><input type="number" id="obs-time-${i}" class="p-1 w-full border rounded-md" placeholder="e.g., 30" step="0.01" required></td></tr>`;
+            }
+            tableHTML += '</tbody></table>';
+            observationTable.innerHTML = tableHTML;
+        }
+
+        function calculateSampleSize() {
+            const calcType = document.getElementById('calc-type').value;
+            let results = '', interpretation = '', recommendation = '';
+            let sampleSize, chartData;
+
+            // Z-scores for common confidence levels
+            const zScores = {
+                90: 1.645,
+                95: 1.96,
+                99: 2.576
+            };
+
+            if (calcType === 'time-study') {
+                const numObservations = parseInt(document.getElementById('num-observations').value);
+                const confidence = parseFloat(document.getElementById('ts-confidence').value);
+                const precision = parseFloat(document.getElementById('ts-precision').value) / 100;
+
+                if (isNaN(numObservations) || numObservations < 2) {
+                    alert('Please enter a valid number of preliminary observations (≥2).');
+                    return;
+                }
+                if (isNaN(confidence) || confidence < 50 || confidence > 99.9) {
+                    alert('Please enter a valid confidence level (50–99.9%).');
+                    return;
+                }
+                if (isNaN(precision) || precision <= 0 || precision > 0.5) {
+                    alert('Please enter a valid precision (1–50%).');
+                    return;
+                }
+
+                // Collect preliminary times
+                const times = [];
+                let allValid = true;
+                for (let i = 1; i <= numObservations; i++) {
+                    const time = parseFloat(document.getElementById(`obs-time-${i}`).value);
+                    if (isNaN(time) || time <= 0) {
+                        allValid = false;
+                        break;
+                    }
+                    times.push(time);
+                }
+                if (!allValid) {
+                    alert('Please enter valid positive times for all observations.');
+                    return;
+                }
+
+                // Calculate mean and standard deviation
+                const meanTime = times.reduce((sum, time) => sum + time, 0) / numObservations;
+                const stdDev = Math.sqrt(times.reduce((sum, time) => sum + Math.pow(time - meanTime, 2), 0) / (numObservations - 1)) || 0;
+
+                // Interpolate z-score for confidence level
+                const confidenceKeys = Object.keys(zScores).map(Number).sort((a, b) => a - b);
+                let zScore;
+                if (zScores[confidence]) {
+                    zScore = zScores[confidence];
+                } else {
+                    const lower = confidenceKeys.find(k => k <= confidence) || confidenceKeys[0];
+                    const upper = confidenceKeys.find(k => k > confidence) || confidenceKeys[confidenceKeys.length - 1];
+                    const ratio = (confidence - lower) / (upper - lower);
+                    zScore = zScores[lower] + ratio * (zScores[upper] - zScores[lower]);
+                }
+
+                // Calculate sample size
+                sampleSize = Math.ceil(Math.pow((zScore * stdDev) / (precision * meanTime), 2));
+
+                // Results table
+                let resultsTable = '<table class="w-full border-collapse border border-gray-300"><thead><tr class="bg-gray-100"><th class="border border-gray-300 p-2">Observation</th><th class="border border-gray-300 p-2">Time (seconds)</th></tr></thead><tbody>';
+                times.forEach((time, i) => {
+                    resultsTable += `<tr><td class="border border-gray-300 p-2">${i + 1}</td><td class="border border-gray-300 p-2">${time.toFixed(2)}</td></tr>`;
+                });
+                resultsTable += '</tbody></table>';
+
+                results = `
+                    <p>Mean Time: ${meanTime.toFixed(2)} seconds</p>
+                    <p>Standard Deviation: ${stdDev.toFixed(2)} seconds</p>
+                    <p>Confidence Level: ${confidence}%</p>
+                    <p>Precision: ±${(precision * 100).toFixed(1)}% of mean</p>
+                    <p><strong>Required Sample Size: ${sampleSize} cycles</strong></p>
+                    ${resultsTable}
+                `;
+
+                interpretation = `To estimate the task time (mean = ${meanTime.toFixed(2)} seconds) with ${confidence}% confidence and ±${(precision * 100).toFixed(1)}% precision, you need ${sampleSize} cycles. The preliminary data shows a variability of ${stdDev.toFixed(2)} seconds.`;
+                recommendation = `Collect at least ${sampleSize} cycles for the time study to achieve the desired precision. ${numObservations >= sampleSize ? 'Your preliminary sample size is sufficient.' : 'Your preliminary sample is too small; collect additional observations.'} ${stdDev / meanTime > 0.2 ? 'High variability suggests inconsistent task performance; consider standardizing the process.' : 'Low variability indicates consistent performance.'}`;
+
+                // Chart data for different precision levels
+                const precisionLevels = [0.05, 0.10, 0.15, 0.20];
+                chartData = precisionLevels.map(p => ({
+                    precision: p * 100,
+                    sampleSize: Math.ceil(Math.pow((zScore * stdDev) / (p * meanTime), 2))
+                }));
+            } else {
+                const proportion = parseFloat(document.getElementById('proportion').value) / 100;
+                const confidence = parseFloat(document.getElementById('ws-confidence').value);
+                const precision = parseFloat(document.getElementById('ws-precision').value) / 100;
+
+                if (isNaN(proportion) || proportion <= 0 || proportion >= 1) {
+                    alert('Please enter a valid estimated proportion (0–100%).');
+                    return;
+                }
+                if (isNaN(confidence) || confidence < 50 || confidence > 99.9) {
+                    alert('Please enter a valid confidence level (50–99.9%).');
+                    return;
+                }
+                if (isNaN(precision) || precision <= 0 || precision > 0.5) {
+                    alert('Please enter a valid precision (1–50%).');
+                    return;
+                }
+
+                // Interpolate z-score
+                const confidenceKeys = Object.keys(zScores).map(Number).sort((a, b) => a - b);
+                let zScore;
+                if (zScores[confidence]) {
+                    zScore = zScores[confidence];
+                } else {
+                    const lower = confidenceKeys.find(k => k <= confidence) || confidenceKeys[0];
+                    const upper = confidenceKeys.find(k => k > confidence) || confidenceKeys[confidenceKeys.length - 1];
+                    const ratio = (confidence - lower) / (upper - lower);
+                    zScore = zScores[lower] + ratio * (zScores[upper] - zScores[lower]);
+                }
+
+                // Calculate sample size
+                sampleSize = Math.ceil((zScore * zScore * proportion * (1 - proportion)) / (precision * precision));
+
+                results = `
+                    <p>Estimated Proportion: ${(proportion * 100).toFixed(1)}%</p>
+                    <p>Confidence Level: ${confidence}%</p>
+                    <p>Precision: ±${(precision * 100).toFixed(1)}%</p>
+                    <p><strong>Required Sample Size: ${sampleSize} observations</strong></p>
+                `;
+
+                interpretation = `To estimate the proportion of time spent on the activity (${(proportion * 100).toFixed(1)}%) with ${confidence}% confidence and ±${(precision * 100).toFixed(1)}% precision, you need ${sampleSize} observations.`;
+                recommendation = `Collect at least ${sampleSize} observations for work sampling. ${proportion < 0.1 || proportion > 0.9 ? 'The estimated proportion is extreme; consider collecting preliminary data to refine the estimate.' : 'The estimated proportion is reasonable; proceed with sampling.'}`;
+
+                // Chart data for different precision levels
+                const precisionLevels = [0.05, 0.10, 0.15, 0.20];
+                chartData = precisionLevels.map(p => ({
+                    precision: p * 100,
+                    sampleSize: Math.ceil((zScore * zScore * proportion * (1 - proportion)) / (p * p))
+                }));
+            }
+
+            // Render Sample Size Chart
+            if (chartInstance) chartInstance.destroy();
+            const ctx = document.getElementById('sample-size-chart').getContext('2d');
+            chartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: chartData.map(d => `±${d.precision}%`),
+                    datasets: [{
+                        label: 'Required Sample Size',
+                        data: chartData.map(d => d.sampleSize),
+                        backgroundColor: 'rgba(59, 130, 246, 0.5)',
+                        borderColor: 'rgba(59, 130, 246, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            title: { display: true, text: 'Sample Size' },
+                            suggestedMin: 0,
+                            suggestedMax: Math.max(...chartData.map(d => d.sampleSize)) * 1.1
+                        },
+                        x: {
+                            title: { display: true, text: 'Precision (% of mean/proportion)' }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: true },
+                        title: { display: true, text: 'Sample Size vs. Precision' }
+                    }
+                }
+            });
+
+            document.getElementById('calculation-results').innerHTML = results;
+            document.getElementById('interpretation-text').innerText = interpretation;
+            document.getElementById('recommendation-text').innerText = recommendation;
+            document.getElementById('results').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
