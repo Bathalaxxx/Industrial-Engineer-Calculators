@@ -1,0 +1,88 @@
+/* Reset & basic layout */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background-color: #f9f9f9;
+  color: #333;
+  padding: 0 1rem;
+}
+
+header {
+  background-color: #004080;
+  color: white;
+  padding: 1rem 0;
+  text-align: center;
+}
+
+header h1 {
+  margin-bottom: 0.5rem;
+}
+
+nav a {
+  color: #ffd700;
+  text-decoration: none;
+  margin: 0 0.5rem;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+main {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+ul li {
+  margin: 0.5rem 0;
+}
+
+ul li a {
+  text-decoration: none;
+  color: #004080;
+  font-weight: bold;
+}
+
+ul li a:hover {
+  color: #ff4500;
+}
+
+#donations {
+  margin-top: 2rem;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f0f8ff;
+}
+
+footer {
+  text-align: center;
+  margin: 2rem 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+#adsense-top, #adsense-bottom {
+  text-align: center;
+  margin: 1rem 0;
+  min-height: 90px; /* placeholder for ads */
+  background-color: #e0e0e0;
+  border-radius: 8px;
+  line-height: 90px;
+  color: #555;
+}
