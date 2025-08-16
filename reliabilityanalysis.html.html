@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Reliability Analysis Calculator - Calculate MTBF, failure rate, reliability, and more">
+    <title>Reliability Analysis Calculator | Industrial Engineering Calculators</title>
+    <style>
+        /* Same CSS as landing page */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .scenario-selector {
+            margin-bottom: 2rem;
+        }
+        
+        .scenario-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .scenario-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            margin-right: 0.5rem;
+            border-radius: 5px 5px 0 0;
+            background-color: #f1f1f1;
+            transition: all 0.3s;
+            margin-bottom: 0.5rem;
+        }
+        
+        .scenario-tab.active {
+            background-color: white;
+            border-color: #ddd;
+            border-bottom-color: white;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        
+        .scenario-tab:hover:not(.active) {
+            background-color: #e9e9e9;
+        }
+        
+        .scenario-content {
+            display: none;
+        }
+        
+        .scenario-content.active {
+            display: block;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .scenario-tabs {
+                flex-direction: column;
+            }
+            
+            .scenario-tab {
+                border-radius: 0;
+                margin-right: 0;
+                border-bottom: 1px solid #ddd;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">Industrial <span>Engineering</span> Calculators</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Reliability Analysis Calculator</h1>
+            <p>Calculate MTBF, failure rate, system reliability, and more for engineering systems</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Reliability Analysis</h2>
+                <p>Reliability engineering deals with the ability of a system or component to perform its required functions under given conditions for a specified period of time. These calculators help you analyze and predict system reliability.</p>
+                
+                <div class="formula-box">
+                    Reliability R(t) = e^(-λt)
+                </div>
+                
+                <p>Where:</p>
+                <ul>
+                    <li><strong>R(t)</strong> = Reliability at time t (probability of success)</li>
+                    <li><strong>λ</strong> = Failure rate (failures per unit time)</li>
+                    <li><strong>t</strong> = Mission time (time period of interest)</li>
+                    <li><strong>MTBF</strong> = Mean Time Between Failures = 1/λ</li>
+                </ul>
+            </div>
+            
+            <div class="scenario-selector">
+                <h3>Calculation Scenario</h3>
+                <p>Select what you want to calculate:</p>
+                
+                <div class="scenario-tabs">
+                    <div class="scenario-tab active" data-scenario="reliability">Reliability</div>
+                    <div class="scenario-tab" data-scenario="failure-rate">Failure Rate</div>
+                    <div class="scenario-tab" data-scenario="mtbf">MTBF</div>
+                    <div class="scenario-tab" data-scenario="system-reliability">System Reliability</div>
+                    <div class="scenario-tab" data-scenario="mission-time">Mission Time</div>
+                </div>
+                
+                <!-- Reliability Calculation -->
+                <div class="scenario-content active" id="reliability-scenario">
+                    <h3>Calculate Reliability</h3>
+                    <p>Calculate the reliability (probability of success) given the failure rate and mission time.</p>
+                    
+                    <form id="reliability-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="reliability-failure-rate">Failure Rate (λ) - failures per unit time:</label>
+                                <input type="number" id="reliability-failure-rate" step="0.000001" min="0" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="reliability-mission-time">Mission Time (t):</label>
+                                <input type="number" id="reliability-mission-time" step="0.01" min="0" required>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate Reliability</button>
+                    </form>
+                    
+                    <div class="result-box" id="reliability-result">
+                        <h3>Result</h3>
+                        <p>Reliability R(t): <span class="result-value" id="reliability-result-value"></span></p>
+                        <p>Probability of failure: <span class="result-value" id="reliability-failure-result-value"></span></p>
+                    </div>
+                </div>
+                
+                <!-- Failure Rate Calculation -->
+                <div class="scenario-content" id="failure-rate-scenario">
+                    <h3>Calculate Failure Rate</h3>
+                    <p>Calculate the failure rate (λ) given the reliability and mission time.</p>
+                    
+                    <form id="failure-rate-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="failure-rate-reliability">Reliability R(t) (0-1):</label>
+                                <input type="number" id="failure-rate-reliability" step="0.001" min="0" max="1" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="failure-rate-mission-time">Mission Time (t):</label>
+                                <input type="number" id="failure-rate-mission-time" step="0.01" min="0" required>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate Failure Rate</button>
+                    </form>
+                    
+                    <div class="result-box" id="failure-rate-result">
+                        <h3>Result</h3>
+                        <p>Failure Rate (λ): <span class="result-value" id="failure-rate-result-value"></span> failures per unit time</p>
+                        <p>MTBF: <span class="result-value" id="failure-rate-mtbf-result-value"></span> time units</p>
+                    </div>
+                </div>
+                
+                <!-- MTBF Calculation -->
+                <div class="scenario-content" id="mtbf-scenario">
+                    <h3>Calculate MTBF</h3>
+                    <p>Calculate the Mean Time Between Failures (MTBF) given total operating time and number of failures.</p>
+                    
+                    <form id="mtbf-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="mtbf-total-time">Total Operating Time:</label>
+                                <input type="number" id="mtbf-total-time" step="0.01" min="0" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="mtbf-failures">Number of Failures:</label>
+                                <input type="number" id="mtbf-failures" step="1" min="0" required>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate MTBF</button>
+                    </form>
+                    
+                    <div class="result-box" id="mtbf-result">
+                        <h3>Result</h3>
+                        <p>MTBF: <span class="result-value" id="mtbf-result-value"></span> time units</p>
+                        <p>Failure Rate (λ): <span class="result-value" id="mtbf-failure-rate-result-value"></span> failures per unit time</p>
+                    </div>
+                </div>
+                
+                <!-- System Reliability Calculation -->
+                <div class="scenario-content" id="system-reliability-scenario">
+                    <h3>Calculate System Reliability</h3>
+                    <p>Calculate the overall system reliability for series or parallel configurations.</p>
+                    
+                    <form id="system-reliability-form">
+                        <div class="input-group">
+                            <label for="system-config">System Configuration:</label>
+                            <select id="system-config" required>
+                                <option value="series">Series</option>
+                                <option value="parallel">Parallel</option>
+                                <option value="k-out-of-n">k-out-of-n</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-group" id="k-out-of-n-group" style="display: none;">
+                            <label for="k-value">k (minimum components needed):</label>
+                            <input type="number" id="k-value" step="1" min="1" value="1">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="component-reliabilities">Component Reliabilities (comma separated, 0-1):</label>
+                            <input type="text" id="component-reliabilities" placeholder="0.95, 0.92, 0.98" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="system-mission-time">Mission Time (t) - optional for failure rate calculation:</label>
+                            <input type="number" id="system-mission-time" step="0.01" min="0">
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate System Reliability</button>
+                    </form>
+                    
+                    <div class="result-box" id="system-reliability-result">
+                        <h3>Result</h3>
+                        <p>System Reliability: <span class="result-value" id="system-reliability-result-value"></span></p>
+                        <p>System Failure Rate (λ): <span class="result-value" id="system-failure-rate-result-value"></span></p>
+                        <p>System MTBF: <span class="result-value" id="system-mtbf-result-value"></span></p>
+                    </div>
+                </div>
+                
+                <!-- Mission Time Calculation -->
+                <div class="scenario-content" id="mission-time-scenario">
+                    <h3>Calculate Mission Time</h3>
+                    <p>Calculate the maximum mission time to achieve a target reliability given the failure rate.</p>
+                    
+                    <form id="mission-time-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="mission-time-reliability">Target Reliability (0-1):</label>
+                                <input type="number" id="mission-time-reliability" step="0.001" min="0" max="1" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="mission-time-failure-rate">Failure Rate (λ) - failures per unit time:</label>
+                                <input type="number" id="mission-time-failure-rate" step="0.000001" min="0" required>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate Mission Time</button>
+                    </form>
+                    
+                    <div class="result-box" id="mission-time-result">
+                        <h3>Result</h3>
+                        <p>Maximum Mission Time: <span class="result-value" id="mission-time-result-value"></span> time units</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Practical Examples</h3>
+                
+                <div class="example">
+                    <h4>Component Reliability</h4>
+                    <p>A component has a failure rate of 0.0002 failures per hour. What is its reliability for a 1000-hour mission?</p>
+                    <p>R(1000) = e^(-0.0002 × 1000) = e^(-0.2) ≈ 0.8187 (81.87%)</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Series System</h4>
+                    <p>A system has three components in series with reliabilities 0.95, 0.92, and 0.98. The system reliability is:</p>
+                    <p>R_system = 0.95 × 0.92 × 0.98 ≈ 0.857 (85.7%)</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Parallel System</h4>
+                    <p>A system has two identical components in parallel, each with reliability 0.90. The system reliability is:</p>
+                    <p>R_system = 1 - (1 - 0.90) × (1 - 0.90) = 1 - 0.01 = 0.99 (99%)</p>
+                </div>
+                
+                <div class="example">
+                    <h4>MTBF Calculation</h4>
+                    <p>A machine operates for 10,000 hours with 4 failures. The MTBF is:</p>
+                    <p>MTBF = 10,000 hours / 4 failures = 2,500 hours</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <p class="copyright">&copy; 2023 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Scenario tab switching
+        const tabs = document.querySelectorAll('.scenario-tab');
+        const contents = document.querySelectorAll('.scenario-content');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                tabs.forEach(t => t.classList.remove('active'));
+                contents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                const scenario = tab.getAttribute('data-scenario');
+                document.getElementById(`${scenario}-scenario`).classList.add('active');
+            });
+        });
+        
+        // Show/hide k-out-of-n field based on selection
+        document.getElementById('system-config').addEventListener('change', function() {
+            const kGroup = document.getElementById('k-out-of-n-group');
+            kGroup.style.display = this.value === 'k-out-of-n' ? 'block' : 'none';
+        });
+        
+        // Reliability calculation
+        document.getElementById('reliability-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const failureRate = parseFloat(document.getElementById('reliability-failure-rate').value);
+            const missionTime = parseFloat(document.getElementById('reliability-mission-time').value);
+            
+            if (isNaN(failureRate) || isNaN(missionTime)) {
+                alert('Please enter valid numbers');
+                return;
+            }
+            
+            const reliability = Math.exp(-failureRate * missionTime);
+            document.getElementById('reliability-result-value').textContent = reliability.toFixed(6);
+            document.getElementById('reliability-failure-result-value').textContent = (1 - reliability).toFixed(6);
+            document.getElementById('reliability-result').style.display = 'block';
+        });
+        
+        // Failure rate calculation
+        document.getElementById('failure-rate-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const reliability = parseFloat(document.getElementById('failure-rate-reliability').value);
+            const missionTime = parseFloat(document.getElementById('failure-rate-mission-time').value);
+            
+            if (isNaN(reliability) || isNaN(missionTime) || missionTime === 0 || reliability <= 0) {
+                alert('Please enter valid numbers (mission time cannot be zero, reliability must be positive)');
+                return;
+            }
+            
+            const failureRate = -Math.log(reliability) / missionTime;
+            const mtbf = 1 / failureRate;
+            
+            document.getElementById('failure-rate-result-value').textContent = failureRate.toFixed(6);
+            document.getElementById('failure-rate-mtbf-result-value').textContent = mtbf.toFixed(2);
+            document.getElementById('failure-rate-result').style.display = 'block';
+        });
+        
+        // MTBF calculation
+        document.getElementById('mtbf-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const totalTime = parseFloat(document.getElementById('mtbf-total-time').value);
+            const failures = parseFloat(document.getElementById('mtbf-failures').value);
+            
+            if (isNaN(totalTime) || isNaN(failures) || failures === 0) {
+                alert('Please enter valid numbers (number of failures cannot be zero)');
+                return;
+            }
+            
+            const mtbf = totalTime / failures;
+            const failureRate = 1 / mtbf;
+            
+            document.getElementById('mtbf-result-value').textContent = mtbf.toFixed(2);
+            document.getElementById('mtbf-failure-rate-result-value').textContent = failureRate.toFixed(6);
+            document.getElementById('mtbf-result').style.display = 'block';
+        });
+        
+        // System reliability calculation
+        document.getElementById('system-reliability-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const config = document.getElementById('system-config').value;
+            const reliabilitiesText = document.getElementById('component-reliabilities').value;
+            const missionTime = parseFloat(document.getElementById('system-mission-time').value) || 0;
+            
+            // Parse component reliabilities
+            const componentRs = reliabilitiesText.split(',')
+                .map(s => parseFloat(s.trim()))
+                .filter(r => !isNaN(r) && r >= 0 && r <= 1);
+                
+            if (componentRs.length === 0) {
+                alert('Please enter valid component reliabilities (comma separated, values between 0 and 1)');
+                return;
+            }
+            
+            let systemR = 0;
+            let failureRate = 0;
+            
+            if (config === 'series') {
+                // Series system: product of all reliabilities
+                systemR = componentRs.reduce((product, r) => product * r, 1);
+                
+                // For series system with constant failure rates
+                if (missionTime > 0) {
+                    const componentLambdas = componentRs.map(r => -Math.log(r) / missionTime);
+                    const systemLambda = componentLambdas.reduce((sum, lambda) => sum + lambda, 0);
+                    failureRate = systemLambda;
+                }
+            } 
+            else if (config === 'parallel') {
+                // Parallel system: 1 - product of (1 - Ri)
+                systemR = 1 - componentRs.reduce((product, r) => product * (1 - r), 1);
+                
+                // For parallel system, failure rate calculation is more complex
+                // We'll approximate it based on system reliability and mission time
+                if (missionTime > 0) {
+                    failureRate = -Math.log(systemR) / missionTime;
+                }
+            }
+            else if (config === 'k-out-of-n') {
+                const k = parseInt(document.getElementById('k-value').value) || 1;
+                const n = componentRs.length;
+                
+                if (k > n) {
+                    alert('k cannot be greater than the number of components');
+                    return;
+                }
+                
+                // k-out-of-n system reliability calculation
+                // This is a simplified version assuming identical components
+                // For different component reliabilities, we'd need a more complex calculation
+                const avgR = componentRs.reduce((sum, r) => sum + r, 0) / n;
+                
+                // Binomial probability calculation
+                systemR = 0;
+                for (let i = k; i <= n; i++) {
+                    systemR += binomialCoefficient(n, i) * Math.pow(avgR, i) * Math.pow(1 - avgR, n - i);
+                }
+                
+                if (missionTime > 0) {
+                    failureRate = -Math.log(systemR) / missionTime;
+                }
+            }
+            
+            const mtbf = failureRate > 0 ? (1 / failureRate) : 0;
+            
+            document.getElementById('system-reliability-result-value').textContent = systemR.toFixed(6);
+            document.getElementById('system-failure-rate-result-value').textContent = 
+                failureRate > 0 ? failureRate.toFixed(6) : 'N/A (enter mission time)';
+            document.getElementById('system-mtbf-result-value').textContent = 
+                mtbf > 0 ? mtbf.toFixed(2) : 'N/A (enter mission time)';
+            document.getElementById('system-reliability-result').style.display = 'block';
+        });
+        
+        // Mission time calculation
+        document.getElementById('mission-time-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const reliability = parseFloat(document.getElementById('mission-time-reliability').value);
+            const failureRate = parseFloat(document.getElementById('mission-time-failure-rate').value);
+            
+            if (isNaN(reliability) || isNaN(failureRate) || failureRate === 0 || reliability <= 0) {
+                alert('Please enter valid numbers (failure rate cannot be zero, reliability must be positive)');
+                return;
+            }
+            
+            const missionTime = -Math.log(reliability) / failureRate;
+            
+            document.getElementById('mission-time-result-value').textContent = missionTime.toFixed(2);
+            document.getElementById('mission-time-result').style.display = 'block';
+        });
+        
+        // Helper function for binomial coefficient (n choose k)
+        function binomialCoefficient(n, k) {
+            if (k < 0 || k > n) return 0;
+            if (k === 0 || k === n) return 1;
+            
+            k = Math.min(k, n - k); // Take advantage of symmetry
+            let res = 1;
+            
+            for (let i = 1; i <= k; i++) {
+                res = res * (n - k + i) / i;
+            }
+            
+            return res;
+        }
+    </script>
+</body>
+</html>
