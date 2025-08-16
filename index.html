@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Industrial Engineering Calculators</title>
   <link rel="stylesheet" href="css/style.css">
-  <!-- Placeholder for Google AdSense -->
-  <!-- <script data-ad-client="ca-pub-XXXXXX" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
 </head>
 <body>
   <header>
@@ -16,40 +14,51 @@
       <a href="contact.html">Contact</a> |
       <a href="terms.html">Terms</a>
     </nav>
+    <button id="theme-toggle">Toggle Light/Dark Theme</button>
   </header>
 
-  <!-- Optional top AdSense banner -->
-  <section id="adsense-top">
-    <!-- Paste AdSense code here -->
-  </section>
+  <section id="adsense-top">AdSense Placeholder</section>
 
   <main>
     <h2>Subjects</h2>
-    <ul>
-      <li><a href="calculators/facility-layout-logistics/index.html">Facility Layout & Logistics</a></li>
-      <li><a href="calculators/inventory-management/index.html">Inventory Management</a></li>
-      <li><a href="calculators/maintenance-reliability/index.html">Maintenance & Reliability</a></li>
-      <li><a href="calculators/operations-research/index.html">Operations Research</a></li>
-      <li><a href="calculators/production-scheduling/index.html">Production & Scheduling</a></li>
-      <li><a href="calculators/quality-control/index.html">Quality Control</a></li>
-      <li><a href="calculators/statistics/index.html">Statistics</a></li>
-      <li><a href="calculators/work-measurement/index.html">Work Measurement</a></li>
-    </ul>
 
-    <!-- Optional donation section -->
+    <div class="subject">
+      <div class="subject-header">Facility Layout & Logistics</div>
+      <div class="subject-content">
+        <a href="calculators/facility-layout-logistics/center-of-gravity.html">Center of Gravity</a>
+        <a href="calculators/facility-layout-logistics/distance-matrix.html">Distance Matrix</a>
+        <a href="calculators/facility-layout-logistics/oee.html">OEE</a>
+      </div>
+    </div>
+
+    <div class="subject">
+      <div class="subject-header">Inventory Management</div>
+      <div class="subject-content">
+        <a href="calculators/inventory-management/eoq.html">EOQ</a>
+        <a href="calculators/inventory-management/inventory-turnover.html">Inventory Turnover</a>
+        <a href="calculators/inventory-management/newsvendor.html">Newsvendor</a>
+        <a href="calculators/inventory-management/rop.html">ROP</a>
+        <a href="calculators/inventory-management/safety-stock.html">Safety Stock</a>
+      </div>
+    </div>
+
+    <!-- Add other subjects similarly -->
+
     <section id="donations">
       <h3>Support This Site</h3>
       <p>If you find these calculators useful, consider supporting us via PayPal:</p>
-      <!-- Paste PayPal donation button code here -->
+      <form action="https://www.paypal.com/donate" method="post" target="_top">
+        <input type="hidden" name="hosted_button_id" value="YOUR_PAYPAL_BUTTON_ID" />
+        <input type="submit" value="Donate with PayPal" />
+      </form>
     </section>
   </main>
 
   <footer>
     <p>&copy; 2025 Industrial Engineering Calculators</p>
-    <!-- Optional bottom AdSense -->
-    <section id="adsense-bottom">
-      <!-- Paste AdSense code here -->
-    </section>
+    <section id="adsense-bottom">AdSense Placeholder</section>
   </footer>
+
+  <script src="js/scripts.js"></script>
 </body>
 </html>
