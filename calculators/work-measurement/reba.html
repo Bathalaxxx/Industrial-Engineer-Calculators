@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>REBA Assessment Tool — Industrial Engineering</title>
+  <link rel="stylesheet" href="/assets/css/styles.css" />
+</head>
+<body>
+<header>
+  <h1>REBA Assessment Tool</h1>
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/calculators/">All Calculators</a></li>
+      <li><a href="/about.html">About</a></li>
+      <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+      <li><a href="/contact.html">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+<main>
+  <form id="calc-form">
+    <fieldset>
+      <legend>Calculator Inputs</legend>
+      <label for="input1">Input 1:</label>
+      <input type="number" id="input1" name="input1" required step="any" />
+      <label for="input2">Input 2:</label>
+      <input type="number" id="input2" name="input2" step="any" />
+    </fieldset>
+    <button type="submit">Calculate</button>
+  </form>
+  <div id="results" aria-live="polite"></div>
+</main>
+<footer>
+  <p>&copy; <span id="year"></span> Industrial Engineering Calculators</p>
+</footer>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script type="module" src="/assets/js/calculators/reba.js"></script>
+</body>
+</html>
