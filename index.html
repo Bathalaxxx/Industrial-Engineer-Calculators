@@ -1,114 +1,244 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Industrial Engineering Calculators</title>
-    <link rel="stylesheet" href="/css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Star Wars themed Industrial Engineering Calculators for facility layout, inventory, and more.">
+  <title>Industrial Engineering Calculators</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Header Injection -->
-    <header></header>
+  <style>
+    body {
+      background: url('/assets/images/space-bg.jpg') no-repeat center center fixed #000;
+      background-size: cover;
+      color: #fff;
+      font-family: 'Orbitron', sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    header {
+      width: 100%;
+      text-align: center;
+      padding: 20px;
+      border-bottom: 2px solid silver;
+      box-shadow: 0 0 10px silver;
+      background: rgba(0, 0, 0, 0.7);
+    }
+    h1 {
+      font-size: 2.5em;
+      text-shadow: 0 0 10px #00f;
+      margin: 0;
+    }
+    .sidebar {
+      width: 250px;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      border-right: 1px solid silver;
+    }
+    details {
+      margin: 10px 0;
+      transition: all 0.3s ease;
+    }
+    summary {
+      cursor: pointer;
+      padding: 10px;
+      background: #222;
+      border: 1px solid silver;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+    }
+    summary:hover {
+      box-shadow: 0 0 10px #00f;
+      color: #00f;
+    }
+    .icon {
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+    }
+    details[open] {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; height: 0; }
+      to { opacity: 1; height: auto; }
+    }
+    ul {
+      list-style: none;
+      padding: 10px;
+      margin: 0;
+      background: #111;
+      border-radius: 5px;
+    }
+    li a {
+      color: #fff;
+      text-decoration: none;
+      display: block;
+      padding: 5px;
+    }
+    li a:hover {
+      color: #00f;
+      box-shadow: 0 0 5px #00f;
+    }
+    .main-content {
+      flex-grow: 1;
+      padding: 20px;
+    }
+    .ad-placeholder {
+      width: 300px;
+      height: 250px;
+      background: gray;
+      text-align: center;
+      line-height: 250px;
+      margin: 20px auto;
+      border: 1px solid silver;
+      border-radius: 5px;
+    }
+    .donation-button {
+      display: inline-block;
+      background: #00f;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      border: 1px solid silver;
+    }
+    .donation-button:hover {
+      box-shadow: 0 0 10px #00f;
+    }
+    footer {
+      width: 100%;
+      text-align: center;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.7);
+      border-top: 2px solid silver;
+    }
+    footer a {
+      color: #fff;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+    footer a:hover {
+      color: #00f;
+    }
+    @media (max-width: 600px) {
+      .container { flex-direction: column; }
+      .sidebar { width: 100%; }
+      h1 { font-size: 1.8em; }
+      .ad-placeholder { width: 100%; max-width: 300px; }
+    }
+  </style>
 
-    <div class="container">
-        <!-- Intro Section -->
-        <section id="intro" class="card">
-            <h1>Industrial Engineering Calculators</h1>
-            <p>Welcome to the ultimate repository of Industrial Engineering calculators! Explore tools for Facility Layout, Inventory Management, Maintenance & Reliability, Operations Research, Production Scheduling, Quality Control, Statistics, and Work Measurement. All calculators are designed to simplify complex calculations, making your workflow faster and more efficient. Whether you're a student, professional, or enthusiast, our calculators are your gateway to smarter engineering decisions.</p>
-        </section>
+  <header>
+    <h1>Industrial Engineering Calculators</h1>
+    <div class="ad-placeholder">Google AdSense Placeholder</div>
+  </header>
 
-        <!-- Subjects Section -->
-        <section id="subjects">
-            <h2>Explore Subjects</h2>
-            <div class="card">
-                <h3>Facility Layout & Logistics</h3>
-                <ul>
-                    <li><a href="/calculators/facility-layout-logistics/center-of-gravity.html">Center of Gravity</a></li>
-                    <li><a href="/calculators/facility-layout-logistics/distance-matrix.html">Distance Matrix</a></li>
-                    <li><a href="/calculators/facility-layout-logistics/oee.html">OEE</a></li>
-                </ul>
-            </div>
-
-            <div class="card">
-                <h3>Inventory Management</h3>
-                <ul>
-                    <li><a href="/calculators/inventory-management/eoq.html">EOQ</a></li>
-                    <li><a href="/calculators/inventory-management/inventory-turnover.html">Inventory Turnover</a></li>
-                    <li><a href="/calculators/inventory-management/newsvendor.html">Newsvendor</a></li>
-                    <li><a href="/calculators/inventory-management/rop.html">ROP</a></li>
-                    <li><a href="/calculators/inventory-management/safety-stock.html">Safety Stock</a></li>
-                </ul>
-            </div>
-
-            <div class="card">
-                <h3>Maintenance & Reliability</h3>
-                <ul>
-                    <li><a href="/calculators/maintenance-reliability/mtbf.html">MTBF</a></li>
-                    <li><a href="/calculators/maintenance-reliability/mttf.html">MTTF</a></li>
-                    <li><a href="/calculators/maintenance-reliability/reliability-series-parallel.html">Series/Parallel Reliability</a></li>
-                </ul>
-            </div>
-
-            <div class="card">
-                <h3>Operations Research</h3>
-                <ul>
-                    <li><a href="/calculators/operations-research/assignment-problem.html">Assignment Problem</a></li>
-                    <li><a href="/calculators/operations-research/linear-programming.html">Linear Programming</a></li>
-                    <li><a href="/calculators/operations-research/queueing-models.html">Queueing Models</a></li>
-                    <li><a href="/calculators/operations-research/transportation-problem.html">Transportation Problem</a></li>
-                </ul>
-            </div>
-
-            <div class="card">
-                <h3>Production Scheduling</h3>
-                <ul>
-                    <li><a href="/calculators/production-scheduling/johnsons-rule.html">Johnson's Rule</a></li>
-                    <li><a href="/calculators/production-scheduling/kanban.html">Kanban</a></li>
-                    <li><a href="/calculators/production-scheduling/line-balancing.html">Line Balancing</a></li>
-                    <li><a href="/calculators/production-scheduling/takt-time.html">Takt Time</a></li>
-                    <li><a href="/calculators/production-scheduling/theory-of-constraints.html">Theory of Constraints</a></li>
-                </ul>
-            </div>
-
-            <div class="card">
-                <h3>Quality Control</h3>
-                <ul>
-                    <li><a href="/calculators/quality-control/control-charts.html">Control Charts</a></li>
-                    <li><a href="/calculators/quality-control/gage-rr.html">Gage R&R</a></li>
-                    <li><a href="/calculators/quality-control/process-capability.html">Process Capability</a></li>
-                    <li><a href="/calculators/quality-control/six-sigma-dpmo.html">Six Sigma DPMO</a></li>
-                </ul>
-            </div>
-
-            <div class="card">
-                <h3>Statistics</h3>
-                <ul>
-                    <li><a href="/calculators/statistics/anova.html">ANOVA</a></li>
-                    <li><a href="/calculators/statistics/design-of-experiments.html">Design of Experiments</a></li>
-                    <li><a href="/calculators/statistics/regression.html">Regression</a></li>
-                    <li><a href="/calculators/statistics/sample-size.html">Sample Size</a></li>
-                    <li><a href="/calculators/statistics/t-test.html">T-Test</a></li>
-                </ul>
-            </div>
-
-            <div class="card">
-                <h3>Work Measurement</h3>
-                <ul>
-                    <li><a href="/calculators/work-measurement/learning-curve.html">Learning Curve</a></li>
-                    <li><a href="/calculators/work-measurement/niosh-lifting.html">NIOSH Lifting</a></li>
-                    <li><a href="/calculators/work-measurement/reba.html">REBA</a></li>
-                    <li><a href="/calculators/work-measurement/rula.html">RULA</a></li>
-                    <li><a href="/calculators/work-measurement/time-study.html">Time Study</a></li>
-                </ul>
-            </div>
-        </section>
+  <div class="container">
+    <div class="sidebar">
+      <details>
+        <summary><img src="/assets/images/rebel.svg" alt="Rebel Icon" class="icon">Facility Layout & Logistics</summary>
+        <ul>
+          <li><a href="/facility-layout-logistics/center-of-gravity.html">Center of Gravity</a></li>
+          <li><a href="/facility-layout-logistics/distance-matrix.html">Distance Matrix</a></li>
+          <li><a href="/facility-layout-logistics/oee.html">OEE</a></li>
+        </ul>
+      </details>
+      <details>
+        <summary><img src="/assets/images/imperial.svg" alt="Imperial Icon" class="icon">Inventory Management</summary>
+        <ul>
+          <li><a href="/inventory-management/eoq.html">EOQ</a></li>
+          <li><a href="/inventory-management/inventory-turnover.html">Inventory Turnover</a></li>
+          <li><a href="/inventory-management/newsvendor.html">Newsvendor</a></li>
+          <li><a href="/inventory-management/rop.html">ROP</a></li>
+          <li><a href="/inventory-management/safety-stock.html">Safety Stock</a></li>
+        </ul>
+      </details>
+      <details>
+        <summary><img src="/assets/images/rebel.svg" alt="Rebel Icon" class="icon">Maintenance & Reliability</summary>
+        <ul>
+          <li><a href="/maintenance-reliability/mtsea.html">MTBF</a></li>
+          <li><a href="/maintenance-reliability/mttf.html">MTTF</a></li>
+          <li><a href="/maintenance-reliability/reliability-series-parallel.html">Reliability Series-Parallel</a></li>
+        </ul>
+      </details>
+      <details>
+        <summary><img src="/assets/images/imperial.svg" alt="Imperial Icon" class="icon">Operations Research</summary>
+        <ul>
+          <li><a href="/operations-research/assignment-problem.html">Assignment Problem</a></li>
+          <li><a href="/operations-research/linear-programming.html">Linear Programming</a></li>
+          <li><a href="/operations-research/queueing-models.html">Queueing Models</a></li>
+          <li><a href="/operations-research/transportation-problem.html">Transportation Problem</a></li>
+        </ul>
+      </details>
+      <details>
+        <summary><img src="/assets/images/rebel.svg" alt="Rebel Icon" class="icon">Production Scheduling</summary>
+        <ul>
+          <li><a href="/production-scheduling/johnsons-rule.html">Johnson's Rule</a></li>
+          <li><a href="/production-scheduling/kanban.html">Kanban</a></li>
+          <li><a href="/production-scheduling/line-balancing.html">Line Balancing</a></li>
+          <li><a href="/production-scheduling/takt-time.html">Takt Time</a></li>
+          <li><a href="/production-scheduling/theory-of-constraints.html">Theory of Constraints</a></li>
+        </ul>
+      </details>
+      <details>
+        <summary><img src="/assets/images/imperial.svg" alt="Imperial Icon" class="icon">Quality Control</summary>
+        <ul>
+          <li><a href="/quality-control/control-charts.html">Control Charts</a></li>
+          <li><a href="/quality-control/gage-rr.html">Gage R&R</a></li>
+          <li><a href="/quality-control/process-capability.html">Process Capability</a></li>
+          <li><a href="/quality-control/six-sigma-dpmo.html">Six Sigma DPMO</a></li>
+        </ul>
+      </details>
+      <details>
+        <summary><img src="/assets/images/rebel.svg" alt="Rebel Icon" class="icon">Statistics</summary>
+        <ul>
+          <li><a href="/statistics/anova.html">ANOVA</a></li>
+          <li><a href="/statistics/design-of-experiments.html">Design of Experiments</a></li>
+          <li><a href="/statistics/regression.html">Regression</a></li>
+          <li><a href="/statistics/sample-size.html">Sample Size</a></li>
+          <li><a href="/statistics/t-test.html">T-Test</a></li>
+        </ul>
+      </details>
+      <details>
+        <summary><img src="/assets/images/imperial.svg" alt="Imperial Icon" class="icon">Work Measurement</summary>
+        <ul>
+          <li><a href="/work-measurement/learning-curve.html">Learning Curve</a></li>
+          <li><a href="/work-measurement/niosh-lifting.html">NIOSH Lifting</a></li>
+          <li><a href="/work-measurement/reba.html">REBA</a></li>
+          <li><a href="/work-measurement/rula.html">RULA</a></li>
+          <li><a href="/work-measurement/time-study.html">Time Study</a></li>
+        </ul>
+      </details>
     </div>
 
-    <!-- Footer Injection -->
-    <footer></footer>
+    <div class="main-content">
+      <h2>Welcome to the Industrial Engineering Calculators</h2>
+      <p>Explore our collection of calculators designed for Industrial Engineering professionals, inspired by the Star Wars universe. Select a category from the sidebar to access tools for facility layout, inventory management, and more.</p>
+      <div class="ad-placeholder">Google AdSense Placeholder</div>
+    </div>
+  </div>
 
-    <!-- JS Scripts -->
-    <script src="/js/include.js"></script>
-    <script src="/js/script.js"></script>
+  <footer>
+    <a href="/about.html">About</a> |
+    <a href="/contact.html">Contact</a> |
+    <a href="/terms.html">Terms</a> |
+    <a href="/privacy.html">Privacy Policy</a> |
+    <a href="/sitemap.xml">Sitemap</a>
+    <br>
+    <a href="https://www.paypal.com/donate?business=YOUR_EMAIL" class="donation-button">Donate via PayPal</a>
+  </footer>
 </body>
 </html>
