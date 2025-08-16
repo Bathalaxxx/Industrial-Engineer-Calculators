@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Newsvendor Model Calculator - Determine optimal order quantity for perishable goods with probabilistic demand">
+    <title>Newsvendor Model Calculator | Industrial Engineering Calculators</title>
+    <style>
+        /* Consistent with existing style */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .metric-results {
+            display: flex;
+            justify-content: space-between;
+            margin: 1.5rem 0;
+        }
+        
+        .metric-card {
+            flex: 1;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 0 0.5rem;
+            text-align: center;
+        }
+        
+        .metric-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-card .metric-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .metric-card.cost .metric-value {
+            color: #e74c3c;
+        }
+        
+        .metric-card.price .metric-value {
+            color: #2ecc71;
+        }
+        
+        .metric-card.ratio .metric-value {
+            color: #3498db;
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        .demand-distribution {
+            width: 100%;
+            height: 300px;
+            margin: 1.5rem 0;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            position: relative;
+        }
+        
+        .optimal-quantity-line {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: var(--accent-color);
+        }
+        
+        .optimal-quantity-label {
+            position: absolute;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            transform: translateX(-50%);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .metric-results {
+                flex-direction: column;
+            }
+            
+            .metric-card {
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">Industrial <span>Engineering</span> Calculators</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Newsvendor Model Calculator</h1>
+            <p>Determine optimal order quantity for perishable goods with probabilistic demand</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Newsvendor Model</h2>
+                <p>The Newsvendor Model helps determine the optimal order quantity for perishable goods when demand is uncertain. It balances the costs of overordering (excess inventory) and underordering (lost sales).</p>
+                
+                <div class="formula-box">
+                    Critical Ratio = Cu / (Cu + Co)
+                </div>
+                
+                <p>Where:</p>
+                <ul>
+                    <li><strong>Cu</strong> = Cost of underordering (profit per unit)</li>
+                    <li><strong>Co</strong> = Cost of overordering (loss per unsold unit)</li>
+                    <li><strong>Optimal Quantity</strong> = Smallest quantity where cumulative probability ≥ Critical Ratio</li>
+                </ul>
+            </div>
+            
+            <form id="newsvendor-form">
+                <h3>Cost Parameters</h3>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="unit-cost">Unit Cost ($):</label>
+                        <input type="number" id="unit-cost" min="0" step="0.01" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="selling-price">Selling Price ($):</label>
+                        <input type="number" id="selling-price" min="0" step="0.01" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="salvage-value">Salvage Value ($):</label>
+                        <input type="number" id="salvage-value" min="0" step="0.01" value="0">
+                    </div>
+                </div>
+                
+                <h3>Demand Distribution</h3>
+                <div class="input-group">
+                    <label for="distribution-type">Demand Distribution:</label>
+                    <select id="distribution-type">
+                        <option value="discrete">Discrete (Manual Input)</option>
+                        <option value="normal">Normal Distribution</option>
+                        <option value="uniform">Uniform Distribution</option>
+                    </select>
+                </div>
+                
+                <!-- Discrete Distribution Inputs -->
+                <div id="discrete-inputs">
+                    <div class="input-group">
+                        <label>Enter demand values and probabilities (comma separated):</label>
+                        <textarea id="discrete-values" placeholder="Demand values (e.g., 100, 150, 200)"></textarea>
+                    </div>
+                    <div class="input-group">
+                        <textarea id="discrete-probabilities" placeholder="Probabilities (e.g., 0.3, 0.5, 0.2)"></textarea>
+                    </div>
+                </div>
+                
+                <!-- Normal Distribution Inputs -->
+                <div id="normal-inputs" style="display: none;">
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="normal-mean">Mean Demand:</label>
+                            <input type="number" id="normal-mean" min="0" step="1">
+                        </div>
+                        <div class="input-group">
+                            <label for="normal-stddev">Standard Deviation:</label>
+                            <input type="number" id="normal-stddev" min="0" step="1">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Uniform Distribution Inputs -->
+                <div id="uniform-inputs" style="display: none;">
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="uniform-min">Minimum Demand:</label>
+                            <input type="number" id="uniform-min" min="0" step="1">
+                        </div>
+                        <div class="input-group">
+                            <label for="uniform-max">Maximum Demand:</label>
+                            <input type="number" id="uniform-max" min="0" step="1">
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="calculate-btn">Calculate Optimal Order Quantity</button>
+            </form>
+            
+            <div class="result-box" id="newsvendor-result">
+                <h3>Results</h3>
+                
+                <p>Optimal Order Quantity: <span class="result-value" id="optimal-quantity"></span> units</p>
+                
+                <div class="metric-results">
+                    <div class="metric-card cost">
+                        <h4>Cost of Underordering (Cu)</h4>
+                        <div class="metric-value" id="underorder-cost"></div>
+                        <p>Profit per unit</p>
+                    </div>
+                    
+                    <div class="metric-card price">
+                        <h4>Cost of Overordering (Co)</h4>
+                        <div class="metric-value" id="overorder-cost"></div>
+                        <p>Loss per unsold unit</p>
+                    </div>
+                    
+                    <div class="metric-card ratio">
+                        <h4>Critical Ratio</h4>
+                        <div class="metric-value" id="critical-ratio"></div>
+                        <p>Target service level</p>
+                    </div>
+                </div>
+                
+                <div class="demand-distribution" id="demand-distribution">
+                    <!-- Visualization will be added here by JavaScript -->
+                </div>
+                
+                <h4>Calculation Details</h4>
+                <table id="probability-table">
+                    <thead>
+                        <tr>
+                            <th>Demand</th>
+                            <th>Probability</th>
+                            <th>Cumulative Probability</th>
+                            <th>Optimal?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Rows will be added by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Practical Examples</h3>
+                
+                <div class="example">
+                    <h4>Example 1: Newspaper Sales</h4>
+                    <p>Cost: $0.50 | Price: $2.00 | Salvage: $0.10</p>
+                    <p>Discrete Demand: 100(0.2), 150(0.5), 200(0.3)</p>
+                    <p>Cu: $1.50 | Co: $0.40 | Critical Ratio: 0.789</p>
+                    <p>Optimal Quantity: 200 units</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 2: Bakery Goods</h4>
+                    <p>Cost: $1.00 | Price: $3.00 | Salvage: $0.50</p>
+                    <p>Normal Demand: μ=200, σ=30</p>
+                    <p>Cu: $2.00 | Co: $0.50 | Critical Ratio: 0.8</p>
+                    <p>Optimal Quantity: ~215 units</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 3: Seasonal Fashion</h4>
+                    <p>Cost: $20 | Price: $50 | Salvage: $5</p>
+                    <p>Uniform Demand: 100-300 units</p>
+                    <p>Cu: $30 | Co: $15 | Critical Ratio: 0.667</p>
+                    <p>Optimal Quantity: ~233 units</p>
+                </div>
+            </div>
+            
+            <div class="calculator-intro">
+                <h3>Newsvendor Model Interpretation</h3>
+                <table>
+                    <tr>
+                        <th>Critical Ratio Range</th>
+                        <th>Interpretation</th>
+                        <th>Business Implication</th>
+                    </tr>
+                    <tr>
+                        <td>Below 0.5</td>
+                        <td>High cost of overordering</td>
+                        <td>Conservative ordering strategy</td>
+                    </tr>
+                    <tr>
+                        <td>0.5</td>
+                        <td>Equal costs</td>
+                        <td>Median demand is optimal</td>
+                    </tr>
+                    <tr>
+                        <td>Above 0.5</td>
+                        <td>High cost of underordering</td>
+                        <td>Aggressive ordering strategy</td>
+                    </tr>
+                    <tr>
+                        <td>Approaching 1.0</td>
+                        <td>Very high cost of underordering</td>
+                        <td>Order to meet nearly all possible demand</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <p class="copyright">&copy; 2023 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Handle distribution type change
+        document.getElementById('distribution-type').addEventListener('change', function() {
+            const type = this.value;
+            document.getElementById('discrete-inputs').style.display = 'none';
+            document.getElementById('normal-inputs').style.display = 'none';
+            document.getElementById('uniform-inputs').style.display = 'none';
+            
+            document.getElementById(`${type}-inputs`).style.display = 'block';
+        });
+        
+        // Calculate Newsvendor solution
+        document.getElementById('newsvendor-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get cost parameters
+            const unitCost = parseFloat(document.getElementById('unit-cost').value);
+            const sellingPrice = parseFloat(document.getElementById('selling-price').value);
+            const salvageValue = parseFloat(document.getElementById('salvage-value').value) || 0;
+            
+            // Validate inputs
+            if (isNaN(unitCost) || isNaN(sellingPrice) || isNaN(salvageValue)) {
+                alert('Please enter valid cost parameters');
+                return;
+            }
+            if (sellingPrice <= unitCost) {
+                alert('Selling price must be greater than unit cost');
+                return;
+            }
+            if (salvageValue > unitCost) {
+                alert('Salvage value cannot exceed unit cost');
+                return;
+            }
+            
+            // Calculate costs and critical ratio
+            const Cu = sellingPrice - unitCost; // Cost of underordering (profit per unit)
+            const Co = unitCost - salvageValue; // Cost of overordering (loss per unsold unit)
+            const criticalRatio = Cu / (Cu + Co);
+            
+            // Display cost metrics
+            document.getElementById('underorder-cost').textContent = '$' + Cu.toFixed(2);
+            document.getElementById('overorder-cost').textContent = '$' + Co.toFixed(2);
+            document.getElementById('critical-ratio').textContent = (criticalRatio * 100).toFixed(1) + '%';
+            
+            // Get demand distribution
+            const distributionType = document.getElementById('distribution-type').value;
+            let demandDistribution = [];
+            
+            if (distributionType === 'discrete') {
+                // Parse discrete distribution
+                const valuesText = document.getElementById('discrete-values').value;
+                const probsText = document.getElementById('discrete-probabilities').value;
+                
+                const values = valuesText.split(',').map(v => parseFloat(v.trim()));
+                const probs = probsText.split(',').map(p => parseFloat(p.trim()));
+                
+                if (values.length !== probs.length || values.some(isNaN) || probs.some(isNaN)) {
+                    alert('Please enter valid demand values and probabilities');
+                    return;
+                }
+                
+                const totalProb = probs.reduce((sum, p) => sum + p, 0);
+                if (Math.abs(totalProb - 1) > 0.001) {
+                    alert('Probabilities must sum to 1');
+                    return;
+                }
+                
+                // Combine and sort by demand
+                for (let i = 0; i < values.length; i++) {
+                    demandDistribution.push({
+                        demand: values[i],
+                        probability: probs[i]
+                    });
+                }
+                
+                demandDistribution.sort((a, b) => a.demand - b.demand);
+            }
+            else if (distributionType === 'normal') {
+                const mean = parseFloat(document.getElementById('normal-mean').value);
+                const stddev = parseFloat(document.getElementById('normal-stddev').value);
+                
+                if (isNaN(mean) || isNaN(stddev) || stddev <= 0) {
+                    alert('Please enter valid mean and standard deviation');
+                    return;
+                }
+                
+                // Create a discrete approximation of the normal distribution
+                const min = Math.max(0, Math.round(mean - 3 * stddev));
+                const max = Math.round(mean + 3 * stddev);
+                const step = Math.max(1, Math.round((max - min) / 20));
+                
+                let totalProb = 0;
+                for (let x = min; x <= max; x += step) {
+                    // Simple approximation of normal PDF (for demo purposes)
+                    const z = (x - mean) / stddev;
+                    const prob = Math.exp(-0.5 * z * z) / (stddev * Math.sqrt(2 * Math.PI)) * step;
+                    if (prob > 0.0001) {
+                        demandDistribution.push({
+                            demand: x,
+                            probability: prob
+                        });
+                        totalProb += prob;
+                    }
+                }
+                
+                // Normalize probabilities
+                demandDistribution.forEach(item => {
+                    item.probability /= totalProb;
+                });
+            }
+            else if (distributionType === 'uniform') {
+                const min = parseFloat(document.getElementById('uniform-min').value);
+                const max = parseFloat(document.getElementById('uniform-max').value);
+                
+                if (isNaN(min) || isNaN(max) || min >= max) {
+                    alert('Please enter valid min and max values');
+                    return;
+                }
+                
+                // Create discrete uniform distribution
+                const step = Math.max(1, Math.round((max - min) / 20));
+                const prob = 1 / (Math.floor((max - min) / step) + 1);
+                
+                for (let x = min; x <= max; x += step) {
+                    demandDistribution.push({
+                        demand: x,
+                        probability: prob
+                    });
+                }
+            }
+            
+            // Calculate cumulative probabilities and find optimal quantity
+            let cumulativeProb = 0;
+            let optimalQuantity = 0;
+            const tableBody = document.querySelector('#probability-table tbody');
+            tableBody.innerHTML = '';
+            
+            for (let i = 0; i < demandDistribution.length; i++) {
+                const item = demandDistribution[i];
+                cumulativeProb += item.probability;
+                
+                const isOptimal = !optimalQuantity && cumulativeProb >= criticalRatio;
+                if (isOptimal) {
+                    optimalQuantity = item.demand;
+                }
+                
+                // Add row to table
+                const row = document.createElement('tr');
+                if (isOptimal) {
+                    row.style.backgroundColor = 'rgba(46, 204, 113, 0.1)';
+                    row.style.fontWeight = 'bold';
+                }
+                
+                row.innerHTML = `
+                    <td>${item.demand}</td>
+                    <td>${(item.probability * 100).toFixed(1)}%</td>
+                    <td>${(cumulativeProb * 100).toFixed(1)}%</td>
+                    <td>${isOptimal ? '✓' : ''}</td>
+                `;
+                
+                tableBody.appendChild(row);
+            }
+            
+            // Display results
+            document.getElementById('optimal-quantity').textContent = optimalQuantity;
+            
+            // Simple visualization
+            const distributionEl = document.getElementById('demand-distribution');
+            distributionEl.innerHTML = '';
+            
+            if (demandDistribution.length > 0) {
+                const maxDemand = demandDistribution[demandDistribution.length - 1].demand;
+                const scale = 100 / maxDemand;
+                
+                // Draw bars for each demand point
+                demandDistribution.forEach(item => {
+                    const bar = document.createElement('div');
+                    bar.style.position = 'absolute';
+                    bar.style.bottom = '0';
+                    bar.style.left = `${(item.demand / maxDemand) * 100}%`;
+                    bar.style.width = `${Math.max(2, scale)}%`;
+                    bar.style.height = `${item.probability * 1000}px`;
+                    bar.style.backgroundColor = 'rgba(52, 152, 219, 0.7)';
+                    distributionEl.appendChild(bar);
+                });
+                
+                // Draw optimal quantity line
+                const line = document.createElement('div');
+                line.className = 'optimal-quantity-line';
+                line.style.left = `${(optimalQuantity / maxDemand) * 100}%`;
+                distributionEl.appendChild(line);
+                
+                const label = document.createElement('div');
+                label.className = 'optimal-quantity-label';
+                label.textContent = `Optimal: ${optimalQuantity}`;
+                label.style.left = `${(optimalQuantity / maxDemand) * 100}%`;
+                label.style.top = '10px';
+                distributionEl.appendChild(label);
+            }
+            
+            // Show results
+            document.getElementById('newsvendor-result').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
