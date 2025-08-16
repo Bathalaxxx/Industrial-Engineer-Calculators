@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online calculators for industrial engineering professionals and students. Tools for batch sizing, break-even analysis, EOQ, control charts, and more.">
+    <title>Industrial Engineering Calculators - Tools for Professionals</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+            
+            /* Subject area colors */
+            --production-color: #3498db;
+            --quality-color: #2ecc71;
+            --inventory-color: #9b59b6;
+            --workstudy-color: #e67e22;
+            --facilities-color: #1abc9c;
+            --reliability-color: #e74c3c;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+        
+        .donate-btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .donate-btn:hover {
+            background-color: #c0392b;
+        }
+        
+        .subject-section {
+            padding: 3rem 0;
+        }
+        
+        .subject-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid;
+        }
+        
+        .subject-title {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+        
+        .subject-icon {
+            font-size: 2rem;
+            margin-right: 1rem;
+        }
+        
+        /* Subject-specific colors */
+        .production {
+            border-color: var(--production-color);
+        }
+        .production .subject-title {
+            color: var(--production-color);
+        }
+        
+        .quality {
+            border-color: var(--quality-color);
+        }
+        .quality .subject-title {
+            color: var(--quality-color);
+        }
+        
+        .inventory {
+            border-color: var(--inventory-color);
+        }
+        .inventory .subject-title {
+            color: var(--inventory-color);
+        }
+        
+        .workstudy {
+            border-color: var(--workstudy-color);
+        }
+        .workstudy .subject-title {
+            color: var(--workstudy-color);
+        }
+        
+        .facilities {
+            border-color: var(--facilities-color);
+        }
+        .facilities .subject-title {
+            color: var(--facilities-color);
+        }
+        
+        .reliability {
+            border-color: var(--reliability-color);
+        }
+        .reliability .subject-title {
+            color: var(--reliability-color);
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .tool-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 4px solid;
+        }
+        
+        /* Tool card colors by subject */
+        .tool-card.production {
+            border-top-color: var(--production-color);
+        }
+        .tool-card.quality {
+            border-top-color: var(--quality-color);
+        }
+        .tool-card.inventory {
+            border-top-color: var(--inventory-color);
+        }
+        .tool-card.workstudy {
+            border-top-color: var(--workstudy-color);
+        }
+        .tool-card.facilities {
+            border-top-color: var(--facilities-color);
+        }
+        .tool-card.reliability {
+            border-top-color: var(--reliability-color);
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .tool-card h3 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .tool-card.production h3 {
+            color: var(--production-color);
+        }
+        .tool-card.quality h3 {
+            color: var(--quality-color);
+        }
+        .tool-card.inventory h3 {
+            color: var(--inventory-color);
+        }
+        .tool-card.workstudy h3 {
+            color: var(--workstudy-color);
+        }
+        .tool-card.facilities h3 {
+            color: var(--facilities-color);
+        }
+        .tool-card.reliability h3 {
+            color: var(--reliability-color);
+        }
+        
+        .tool-card p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .tool-link {
+            display: inline-block;
+            background-color: var(--light-color);
+            color: var(--primary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .tool-link:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .about-section {
+            background-color: var(--light-color);
+            padding: 3rem 0;
+        }
+        
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .about-content h2 {
+            margin-bottom: 1.5rem;
+            color: var(--dark-color);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .tools-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            
+            .subject-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .subject-icon {
+                margin-right: 0;
+                margin-bottom: 0.5rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">Industrial <span>Engineering</span> Calculators</div>
+            <nav>
+                <ul>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <h1>Essential Tools for Industrial Engineers</h1>
+            <p>Free online calculators to help with production planning, quality control, operations management, and more. Perfect for professionals and students.</p>
+            <form action="https://www.paypal.com/donate" method="post" target="_top" style="margin-top: 20px;">
+                <input type="hidden" name="business" value="YOUR_PAYPAL_EMAIL@example.com">
+                <input type="hidden" name="currency_code" value="USD">
+                <button type="submit" class="donate-btn">Support This Project</button>
+            </form>
+        </div>
+    </section>
+    
+    <!-- Production Planning Calculators -->
+    <section class="subject-section">
+        <div class="container">
+            <div class="subject-header production">
+                <i class="fas fa-cogs subject-icon"></i>
+                <h2 class="subject-title">Production Planning</h2>
+            </div>
+            <div class="tools-grid">
+                <div class="tool-card production">
+                    <h3>Batch Sizing</h3>
+                    <p>Calculate optimal batch sizes for production runs to minimize costs.</p>
+                    <a href="batchsizing.html" class="tool-link">Use Calculator</a>
+                </div>
+                
+                <div class="tool-card production">
+                    <h3>Flow Shop Sequencing</h3>
+                    <p>Determine optimal job sequences in flow shop environments.</p>
+                    <a href="flowshopsequencing.html" class="tool-link">Use Calculator</a>
+                </div>
+                
+                <div class="tool-card production">
+                    <h3>Job Shop Sequencing</h3>
+                    <p>Optimize job sequences in job shop production systems.</p>
+                    <a href="jobshopsequencing.html" class="tool-link">Use Calculator</a>
+                </div>
+                
+                <div class="tool-card production">
+                    <h3>Line Balancing</h3>
+                    <p>Balance assembly lines for optimal efficiency and throughput.</p>
+                    <a href="linebalancing.html" class="tool-link">Use Calculator</a>
+                </div>
+                
+                <div class="tool-card production">
+                    <h3>Takt Time</h3>
+                    <p>Calculate production pace to match customer demand.</p>
+                    <a href="takttime.html" class="tool-link">Use Calculator</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Quality Control Calculators -->
+    <section class="subject-section">
+        <div class="container">
+            <div class="subject-header quality">
+                <i class="fas fa-chart-line subject-icon"></i>
+                <h2 class="subject-title">Quality Control</h2>
+            </div>
+            <div class="tools-grid">
+                <div class="tool-card quality">
+                    <h3>Control Charts</h3>
+                    <p>Create statistical process control charts for quality management.</p>
+                    <a href="controlcharts.html" class="tool-link">Use Calculator</a>
+                </div>
+                
+                <div class="tool-card quality">
+                    <h3>Gage R&R</h3>
+                    <p>Analyze measurement system repeatability and reproducibility.</p>
+                    <a href="gagerr.html" class="tool-link">Use Calculator</a>
+                </div>
+                
+                <div class="tool-card quality">
+                    <h3>Process Capability</h3>
+                    <p>Calculate Cp, Cpk and other process capability indices.</p>
+                    <a href="processcapability.html" class="tool-link">Use Calculator</a>
+                </div>
+                
+                <div class="tool-card quality">
+                    <h3>Sample Size</h3>
+                    <p>Calculate required sample sizes for quality control.</p>
+                    <a href="samplesize.html" class="tool-link">Use Calculator</a>
+                </div>
+                
+                <div class="tool-card quality">
+                    <h3>OEE Calculator</h3>
+                    <p>Calculate Overall Equipment Effectiveness for manufacturing.</p>
+                    <a href="oee.html" class="tool-link">Use Calculator</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Inventory Management Calculators -->
+    <section class="subject-section">
+        <div class="container">
+            <div class="subject-header inventory">
+                <i class="fas fa-boxes subject-icon"></i>
+                <h2 class="subject-title">Inventory Management</h2>
+            </div>
+            <div class="tools-grid">
+                <div class="tool-card inventory">
+                    <h3>Economic Order Quantity</h3>
+                    <p>Calculate optimal order quantity to minimize inventory costs.</p>
+                    <a href="eoq.html" class="tool-link">Use Calculator</a>
+                </div>
+                
+                <div class="tool-card inventory">
+                    <h3>Reorder Point</h3>
+                    <p>Calculate optimal reorder points for inventory management.</p>
+                    <a href="rop.html" class="tool-link">Use Calculator</a>
+                </div>
+                
+                <div class="tool-card inventory">
+                    <h3>Safety Stock</h3>
+                    <p>Determine appropriate safety stock levels for inventory.</p>
+                    <a href="safetystock.html" class="tool-link">Use Calculator</a>
+                </div>
+                
+                <div class="tool-card inventory">
+                    <h3>Kanban Calculator</h3>
+                    <p>Determine optimal number of kanban cards for lean systems.</p>
+                    <a href="kanban.html" class="tool-link">Use Calculator</a>
+                </div>
+                
+                <div class="tool-card inventory">
+                    <h3>Newsvendor Model</h3>
+                    <p>Solve single-period inventory problems with probabilistic demand.</p>
+                    <a href="newsvendor.html" class="tool-link">Use Calculator</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Work Study Calculators -->
+    <section class="subject-section">
+        <div class="container">
+            <div class="subject-header workstudy">
+                <i class="fas fa-stopwatch subject-icon"></i>
+                <h2 class="subject-title">Work Study</h2>
+            </div>
+            <div class="tools-grid">
+                <div class="tool-card workstudy">
+                    <h3>Time Study</h3>
+                    <p>Perform time study calculations for work measurement.</p>
+                    <a href="timestudy.html" class="tool-link">Use Calculator</a>
+                </div>
+                
+                <div class="tool-card workstudy">
+                    <h3>PMTS Calculator</h3>
+                    <p>Predetermined Motion Time Systems analysis for work measurement.</p>
+                    <a href="predeterminedmotiontimesystems.html" class="tool-link">Use Calculator</a>
+                </div>
+                
+                <div class="tool-card workstudy">
+                    <h3>Learning Curve</h3>
+                    <p>Calculate time reductions based on learning curve theory.</p>
+                    <a href="learningcurve.html" class="tool-link">Use Calculator</a>
+                </div>
+                
+                <div class="tool-card workstudy">
+                    <h3>Little's Law</h3>
+                    <p>Apply Little's Law to queuing systems and inventory.</p>
+                    <a href="littleslaw.html" class="tool-link">Use Calculator</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Facilities Planning Calculators -->
+    <section class="subject-section">
+        <div class="container">
+            <div class="subject-header facilities">
+                <i class="fas fa-industry subject-icon"></i>
+                <h2 class="subject-title">Facilities Planning</h2>
+            </div>
+            <div class="tools-grid">
+                <div class="tool-card facilities">
+                    <h3>Center of Gravity</h3>
+                    <p>Find the optimal location for facilities based on weighted distances.</p>
+                    <a href="centerofgravity.html" class="tool-link">Use Calculator</a>
+                </div>
+                
+                <div class="tool-card facilities">
+                    <h3>Break-even Analysis</h3>
+                    <p>Determine the point at which revenue equals costs.</p>
+                    <a href="breakeven.html" class="tool-link">Use Calculator</a>
+                </div>
+                
+                <div class="tool-card facilities">
+                    <h3>Index Numbers</h3>
+                    <p>Calculate various industrial and economic index numbers.</p>
+                    <a href="index.html" class="tool-link">Use Calculator</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Reliability & Maintenance Calculators -->
+    <section class="subject-section">
+        <div class="container">
+            <div class="subject-header reliability">
+                <i class="fas fa-shield-alt subject-icon"></i>
+                <h2 class="subject-title">Reliability & Maintenance</h2>
+            </div>
+            <div class="tools-grid">
+                <div class="tool-card reliability">
+                    <h3>MTBF Calculator</h3>
+                    <p>Calculate Mean Time Between Failures for reliability analysis.</p>
+                    <a href="mtbf.html" class="tool-link">Use Calculator</a>
+                </div>
+                
+                <div class="tool-card reliability">
+                    <h3>Reliability Analysis</h3>
+                    <p>Perform reliability calculations for systems and components.</p>
+                    <a href="reliabilityanalysis.html" class="tool-link">Use Calculator</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="about-section">
+        <div class="container about-content">
+            <h2>About Industrial Engineering Calculators</h2>
+            <p>Our mission is to provide free, easy-to-use calculators for industrial engineering professionals and students. All our tools are organized by subject area to help you quickly find what you need.</p>
+            <p>This project is maintained by industrial engineering professionals who understand the challenges of production planning, quality control, and operations management.</p>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <p class="copyright">&copy; 2023 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
