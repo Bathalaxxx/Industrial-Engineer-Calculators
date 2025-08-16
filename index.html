@@ -1,66 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Industrial Engineering Calculators</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Industrial Engineering Calculators</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <header>
-    <h1>Industrial Engineering Calculators</h1>
-    <nav>
-      <a href="about.html">About</a> |
-      <a href="contact.html">Contact</a> |
-      <a href="terms.html">Terms</a>
-      <a href="privacy-policy.html">Privacy Policy</a>
-      
-    </nav>
-    <button id="theme-toggle">Toggle Light/Dark Theme</button>
-  </header>
+    <!-- Header Injection -->
+    <header></header>
 
-  <section id="adsense-top">AdSense Placeholder</section>
+    <div class="container">
+        <!-- Intro Section -->
+        <section id="intro" class="card">
+            <h1>Industrial Engineering Calculators</h1>
+            <p>Welcome to the ultimate repository of Industrial Engineering calculators! Explore tools for Facility Layout, Inventory Management, Maintenance & Reliability, Operations Research, Production Scheduling, Quality Control, Statistics, and Work Measurement. All calculators are designed to simplify complex calculations, making your workflow faster and more efficient. Whether you're a student, professional, or enthusiast, our calculators are your gateway to smarter engineering decisions.</p>
+        </section>
 
-  <main>
-    <h2>Subjects</h2>
+        <!-- Subjects Section -->
+        <section id="subjects">
+            <h2>Explore Subjects</h2>
+            <div class="card">
+                <h3>Facility Layout & Logistics</h3>
+                <ul>
+                    <li><a href="/calculators/facility-layout-logistics/center-of-gravity.html">Center of Gravity</a></li>
+                    <li><a href="/calculators/facility-layout-logistics/distance-matrix.html">Distance Matrix</a></li>
+                    <li><a href="/calculators/facility-layout-logistics/oee.html">OEE</a></li>
+                </ul>
+            </div>
 
-    <div class="subject">
-      <div class="subject-header">Facility Layout & Logistics</div>
-      <div class="subject-content">
-        <a href="calculators/facility-layout-logistics/center-of-gravity.html">Center of Gravity</a>
-        <a href="calculators/facility-layout-logistics/distance-matrix.html">Distance Matrix</a>
-        <a href="calculators/facility-layout-logistics/oee.html">OEE</a>
-      </div>
+            <div class="card">
+                <h3>Inventory Management</h3>
+                <ul>
+                    <li><a href="/calculators/inventory-management/eoq.html">EOQ</a></li>
+                    <li><a href="/calculators/inventory-management/inventory-turnover.html">Inventory Turnover</a></li>
+                    <li><a href="/calculators/inventory-management/newsvendor.html">Newsvendor</a></li>
+                    <li><a href="/calculators/inventory-management/rop.html">ROP</a></li>
+                    <li><a href="/calculators/inventory-management/safety-stock.html">Safety Stock</a></li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Maintenance & Reliability</h3>
+                <ul>
+                    <li><a href="/calculators/maintenance-reliability/mtbf.html">MTBF</a></li>
+                    <li><a href="/calculators/maintenance-reliability/mttf.html">MTTF</a></li>
+                    <li><a href="/calculators/maintenance-reliability/reliability-series-parallel.html">Series/Parallel Reliability</a></li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Operations Research</h3>
+                <ul>
+                    <li><a href="/calculators/operations-research/assignment-problem.html">Assignment Problem</a></li>
+                    <li><a href="/calculators/operations-research/linear-programming.html">Linear Programming</a></li>
+                    <li><a href="/calculators/operations-research/queueing-models.html">Queueing Models</a></li>
+                    <li><a href="/calculators/operations-research/transportation-problem.html">Transportation Problem</a></li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Production Scheduling</h3>
+                <ul>
+                    <li><a href="/calculators/production-scheduling/johnsons-rule.html">Johnson's Rule</a></li>
+                    <li><a href="/calculators/production-scheduling/kanban.html">Kanban</a></li>
+                    <li><a href="/calculators/production-scheduling/line-balancing.html">Line Balancing</a></li>
+                    <li><a href="/calculators/production-scheduling/takt-time.html">Takt Time</a></li>
+                    <li><a href="/calculators/production-scheduling/theory-of-constraints.html">Theory of Constraints</a></li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Quality Control</h3>
+                <ul>
+                    <li><a href="/calculators/quality-control/control-charts.html">Control Charts</a></li>
+                    <li><a href="/calculators/quality-control/gage-rr.html">Gage R&R</a></li>
+                    <li><a href="/calculators/quality-control/process-capability.html">Process Capability</a></li>
+                    <li><a href="/calculators/quality-control/six-sigma-dpmo.html">Six Sigma DPMO</a></li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Statistics</h3>
+                <ul>
+                    <li><a href="/calculators/statistics/anova.html">ANOVA</a></li>
+                    <li><a href="/calculators/statistics/design-of-experiments.html">Design of Experiments</a></li>
+                    <li><a href="/calculators/statistics/regression.html">Regression</a></li>
+                    <li><a href="/calculators/statistics/sample-size.html">Sample Size</a></li>
+                    <li><a href="/calculators/statistics/t-test.html">T-Test</a></li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Work Measurement</h3>
+                <ul>
+                    <li><a href="/calculators/work-measurement/learning-curve.html">Learning Curve</a></li>
+                    <li><a href="/calculators/work-measurement/niosh-lifting.html">NIOSH Lifting</a></li>
+                    <li><a href="/calculators/work-measurement/reba.html">REBA</a></li>
+                    <li><a href="/calculators/work-measurement/rula.html">RULA</a></li>
+                    <li><a href="/calculators/work-measurement/time-study.html">Time Study</a></li>
+                </ul>
+            </div>
+        </section>
     </div>
 
-    <div class="subject">
-      <div class="subject-header">Inventory Management</div>
-      <div class="subject-content">
-        <a href="calculators/inventory-management/eoq.html">EOQ</a>
-        <a href="calculators/inventory-management/inventory-turnover.html">Inventory Turnover</a>
-        <a href="calculators/inventory-management/newsvendor.html">Newsvendor</a>
-        <a href="calculators/inventory-management/rop.html">ROP</a>
-        <a href="calculators/inventory-management/safety-stock.html">Safety Stock</a>
-      </div>
-    </div>
+    <!-- Footer Injection -->
+    <footer></footer>
 
-    <!-- Add other subjects similarly -->
-
-    <section id="donations">
-      <h3>Support This Site</h3>
-      <p>If you find these calculators useful, consider supporting us via PayPal:</p>
-      <form action="https://www.paypal.com/donate" method="post" target="_top">
-        <input type="hidden" name="hosted_button_id" value="YOUR_PAYPAL_BUTTON_ID" />
-        <input type="submit" value="Donate with PayPal" />
-      </form>
-    </section>
-  </main>
-
-  <footer>
-    <p>&copy; 2025 Industrial Engineering Calculators</p>
-    <section id="adsense-bottom">AdSense Placeholder</section>
-  </footer>
-
-  <script src="js/scripts.js"></script>
+    <!-- JS Scripts -->
+    <script src="/js/include.js"></script>
+    <script src="/js/script.js"></script>
 </body>
 </html>
