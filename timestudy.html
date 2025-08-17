@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Time Study Calculator - Calculate standard times, performance ratings, and allowances for work measurement">
+    <title>Time Study Calculator | Industrial Engineering Calculators</title>
+    <style>
+        /* Consistent with existing style */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select, .input-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .observation-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        .observation-table, .observation-table th, .observation-table td {
+            border: 1px solid #ddd;
+        }
+        
+        .observation-table th, .observation-table td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        .observation-table th {
+            background-color: #f2f2f2;
+        }
+        
+        .add-observation-btn {
+            background-color: var(--light-color);
+            color: var(--primary-color);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        .add-observation-btn:hover {
+            background-color: #d5dbdb;
+        }
+        
+        .remove-observation-btn {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: none;
+            padding: 0.3rem 0.6rem;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        
+        .remove-observation-btn:hover {
+            background-color: #f5c6cb;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .metric-results {
+            display: flex;
+            justify-content: space-between;
+            margin: 1.5rem 0;
+        }
+        
+        .metric-card {
+            flex: 1;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 0 0.5rem;
+            text-align: center;
+        }
+        
+        .metric-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-card .metric-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .metric-card.observed .metric-value {
+            color: #3498db;
+        }
+        
+        .metric-card.normal .metric-value {
+            color: #2ecc71;
+        }
+        
+        .metric-card.standard .metric-value {
+            color: #e74c3c;
+        }
+        
+        .time-distribution {
+            width: 100%;
+            height: 300px;
+            margin: 1.5rem 0;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            position: relative;
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .metric-results {
+                flex-direction: column;
+            }
+            
+            .metric-card {
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">Industrial <span>Engineering</span> Calculators</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Time Study Calculator</h1>
+            <p>Calculate standard times, performance ratings, and allowances for work measurement</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Time Study Analysis</h2>
+                <p>Time study is a work measurement technique for recording the times of performing a task's elements, with the objective of determining the time required to perform the task at a defined standard of performance.</p>
+                
+                <div class="formula-box">
+                    Standard Time = (Normal Time) × (1 + Allowance Factor)
+                    <br>Normal Time = (Observed Time) × (Performance Rating)
+                </div>
+                
+                <p>Where:</p>
+                <ul>
+                    <li><strong>Observed Time</strong> = Average of recorded times for the task</li>
+                    <li><strong>Performance Rating</strong> = Assessment of worker's pace (typically 80-120%)</li>
+                    <li><strong>Normal Time</strong> = Time required at standard performance</li>
+                    <li><strong>Allowance Factor</strong> = Additional time for rest, delays, etc. (as percentage)</li>
+                </ul>
+            </div>
+            
+            <form id="time-study-form">
+                <h3>Task Information</h3>
+                <div class="input-group">
+                    <label for="task-name">Task Name/Description:</label>
+                    <input type="text" id="task-name" required>
+                </div>
+                
+                <h3>Time Observations</h3>
+                <button type="button" class="add-observation-btn" id="add-observation">+ Add Observation</button>
+                
+                <table class="observation-table" id="observation-table">
+                    <thead>
+                        <tr>
+                            <th>Observation</th>
+                            <th>Time (minutes)</th>
+                            <th>Performance Rating (%)</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="observation-rows">
+                        <!-- Initial row -->
+                        <tr>
+                            <td>Observation 1</td>
+                            <td><input type="number" class="observation-time" min="0" step="0.01" required></td>
+                            <td><input type="number" class="performance-rating" min="50" max="150" value="100" required></td>
+                            <td><button type="button" class="remove-observation-btn">Remove</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h3>Allowances</h3>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="fatigue-allowance">Fatigue Allowance (%):</label>
+                        <input type="number" id="fatigue-allowance" min="0" max="50" value="5" step="0.1">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="delay-allowance">Delay Allowance (%):</label>
+                        <input type="number" id="delay-allowance" min="0" max="50" value="3" step="0.1">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="personal-allowance">Personal Allowance (%):</label>
+                        <input type="number" id="personal-allowance" min="0" max="50" value="2" step="0.1">
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="other-allowance">Other Allowance (%):</label>
+                    <input type="number" id="other-allowance" min="0" max="50" value="0" step="0.1">
+                </div>
+                
+                <button type="submit" class="calculate-btn">Calculate Standard Time</button>
+            </form>
+            
+            <div class="result-box" id="time-study-result">
+                <h3>Results for <span id="result-task-name"></span></h3>
+                
+                <div class="metric-results">
+                    <div class="metric-card observed">
+                        <h4>Avg Observed Time</h4>
+                        <div class="metric-value" id="avg-observed-time"></div>
+                        <p>Mean of all observations</p>
+                    </div>
+                    
+                    <div class="metric-card normal">
+                        <h4>Normal Time</h4>
+                        <div class="metric-value" id="normal-time"></div>
+                        <p>At 100% performance</p>
+                    </div>
+                    
+                    <div class="metric-card standard">
+                        <h4>Standard Time</h4>
+                        <div class="metric-value" id="standard-time"></div>
+                        <p>Including allowances</p>
+                    </div>
+                </div>
+                
+                <h4>Time Distribution</h4>
+                <div class="time-distribution" id="time-distribution">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+                
+                <h4>Calculation Details</h4>
+                <table>
+                    <tr>
+                        <th>Component</th>
+                        <th>Calculation</th>
+                        <th>Value</th>
+                    </tr>
+                    <tr>
+                        <td>Average Observed Time</td>
+                        <td>Sum of times / Number of observations</td>
+                        <td id="observed-time-calculation"></td>
+                    </tr>
+                    <tr>
+                        <td>Average Performance Rating</td>
+                        <td>Sum of ratings / Number of observations</td>
+                        <td id="rating-calculation"></td>
+                    </tr>
+                    <tr>
+                        <td>Normal Time</td>
+                        <td>Observed Time × (Rating / 100)</td>
+                        <td id="normal-time-calculation"></td>
+                    </tr>
+                    <tr>
+                        <td>Total Allowance</td>
+                        <td>Sum of all allowances</td>
+                        <td id="allowance-calculation"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Standard Time</strong></td>
+                        <td>Normal Time × (1 + Allowance)</td>
+                        <td id="standard-time-calculation"></td>
+                    </tr>
+                </table>
+                
+                <h4>Production Capacity</h4>
+                <table>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Per Hour</th>
+                        <th>Per 8-Hour Shift</th>
+                    </tr>
+                    <tr>
+                        <td>Maximum Cycles</td>
+                        <td id="cycles-hour"></td>
+                        <td id="cycles-shift"></td>
+                    </tr>
+                    <tr>
+                        <td>Realistic Capacity (85%)</td>
+                        <td id="realistic-hour"></td>
+                        <td id="realistic-shift"></td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Practical Examples</h3>
+                
+                <div class="example">
+                    <h4>Example 1: Assembly Task</h4>
+                    <p>Observations: 2.1, 2.3, 2.0, 2.2 minutes | Ratings: 110%, 105%, 115%, 110%</p>
+                    <p>Allowances: Fatigue 5%, Delay 3%, Personal 2%</p>
+                    <p>Normal Time: 2.37 min | Standard Time: 2.61 min | Capacity: 23 units/hour</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 2: Machining Operation</h4>
+                    <p>Observations: 4.5, 4.7, 4.6 minutes | Ratings: 90%, 95%, 92%</p>
+                    <p>Allowances: Fatigue 8%, Delay 5%, Personal 3%</p>
+                    <p>Normal Time: 4.35 min | Standard Time: 5.05 min | Capacity: 12 units/hour</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 3: Packaging Task</h4>
+                    <p>Observations: 0.8, 0.9, 0.85, 0.82, 0.88 minutes | Ratings: 100% for all</p>
+                    <p>Allowances: Fatigue 3%, Delay 2%, Personal 2%</p>
+                    <p>Normal Time: 0.85 min | Standard Time: 0.91 min | Capacity: 66 units/hour</p>
+                </div>
+            </div>
+            
+            <div class="calculator-intro">
+                <h3>Performance Rating Guidelines</h3>
+                <table>
+                    <tr>
+                        <th>Rating</th>
+                        <th>Description</th>
+                        <th>Work Pace</th>
+                    </tr>
+                    <tr>
+                        <td>80-90%</td>
+                        <td>Slow, deliberate pace</td>
+                        <td>Below standard</td>
+                    </tr>
+                    <tr>
+                        <td>90-100%</td>
+                        <td>Steady, comfortable pace</td>
+                        <td>Slightly below standard</td>
+                    </tr>
+                    <tr>
+                        <td>100%</td>
+                        <td>Standard performance</td>
+                        <td>Normal work pace</td>
+                    </tr>
+                    <tr>
+                        <td>100-110%</td>
+                        <td>Brisk, purposeful pace</td>
+                        <td>Above standard</td>
+                    </tr>
+                    <tr>
+                        <td>110-120%</td>
+                        <td>Very fast pace</td>
+                        <td>Substantially above standard</td>
+                    </tr>
+                </table>
+                
+                <h4>Typical Allowance Percentages</h4>
+                <table>
+                    <tr>
+                        <th>Allowance Type</th>
+                        <th>Range</th>
+                        <th>Typical Value</th>
+                    </tr>
+                    <tr>
+                        <td>Personal</td>
+                        <td>2-5%</td>
+                        <td>3%</td>
+                    </tr>
+                    <tr>
+                        <td>Fatigue (light work)</td>
+                        <td>2-5%</td>
+                        <td>4%</td>
+                    </tr>
+                    <tr>
+                        <td>Fatigue (heavy work)</td>
+                        <td>5-20%</td>
+                        <td>10%</td>
+                    </tr>
+                    <tr>
+                        <td>Delay (machine-paced)</td>
+                        <td>2-10%</td>
+                        <td>5%</td>
+                    </tr>
+                    <tr>
+                        <td>Delay (operator-paced)</td>
+                        <td>0-5%</td>
+                        <td>3%</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <p class="copyright">&copy; 2023 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add observation row
+        let observationCount = 1;
+        
+        document.getElementById('add-observation').addEventListener('click', function() {
+            observationCount++;
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>Observation ${observationCount}</td>
+                <td><input type="number" class="observation-time" min="0" step="0.01" required></td>
+                <td><input type="number" class="performance-rating" min="50" max="150" value="100" required></td>
+                <td><button type="button" class="remove-observation-btn">Remove</button></td>
+            `;
+            document.getElementById('observation-rows').appendChild(row);
+            
+            // Add event listener to new remove button
+            row.querySelector('.remove-observation-btn').addEventListener('click', function() {
+                row.remove();
+                // Renumber remaining observations
+                const observations = document.querySelectorAll('#observation-rows tr');
+                observations.forEach((obs, index) => {
+                    obs.cells[0].textContent = `Observation ${index + 1}`;
+                });
+                observationCount = observations.length;
+            });
+        });
+        
+        // Add event listener to initial remove button
+        document.querySelector('.remove-observation-btn').addEventListener('click', function() {
+            const row = this.closest('tr');
+            if (document.querySelectorAll('#observation-rows tr').length > 1) {
+                row.remove();
+                // Renumber remaining observations
+                const observations = document.querySelectorAll('#observation-rows tr');
+                observations.forEach((obs, index) => {
+                    obs.cells[0].textContent = `Observation ${index + 1}`;
+                });
+                observationCount = observations.length;
+            } else {
+                alert('You need at least one observation');
+            }
+        });
+        
+        // Calculate time study
+        document.getElementById('time-study-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const taskName = document.getElementById('task-name').value;
+            if (!taskName) {
+                alert('Please enter a task name');
+                return;
+            }
+            
+            // Get all observation data
+            const observations = [];
+            const rows = document.querySelectorAll('#observation-rows tr');
+            
+            rows.forEach(row => {
+                const time = parseFloat(row.querySelector('.observation-time').value);
+                const rating = parseFloat(row.querySelector('.performance-rating').value);
+                
+                if (isNaN(time) || isNaN(rating)) {
+                    alert('Please enter valid values for all observations');
+                    return;
+                }
+                
+                observations.push({
+                    time,
+                    rating
+                });
+            });
+            
+            if (observations.length === 0) {
+                alert('Please enter at least one observation');
+                return;
+            }
+            
+            // Calculate average observed time and rating
+            const totalTime = observations.reduce((sum, obs) => sum + obs.time, 0);
+            const totalRating = observations.reduce((sum, obs) => sum + obs.rating, 0);
+            const avgObservedTime = totalTime / observations.length;
+            const avgRating = totalRating / observations.length;
+            
+            // Calculate normal time
+            const normalTime = avgObservedTime * (avgRating / 100);
+            
+            // Calculate total allowance
+            const fatigueAllowance = parseFloat(document.getElementById('fatigue-allowance').value) || 0;
+            const delayAllowance = parseFloat(document.getElementById('delay-allowance').value) || 0;
+            const personalAllowance = parseFloat(document.getElementById('personal-allowance').value) || 0;
+            const otherAllowance = parseFloat(document.getElementById('other-allowance').value) || 0;
+            const totalAllowance = (fatigueAllowance + delayAllowance + personalAllowance + otherAllowance) / 100;
+            
+            // Calculate standard time
+            const standardTime = normalTime * (1 + totalAllowance);
+            
+            // Calculate production capacity
+            const cyclesPerHour = 60 / standardTime;
+            const cyclesPerShift = cyclesPerHour * 8;
+            const realisticPerHour = Math.floor(cyclesPerHour * 0.85);
+            const realisticPerShift = Math.floor(cyclesPerShift * 0.85);
+            
+            // Display results
+            document.getElementById('result-task-name').textContent = taskName;
+            document.getElementById('avg-observed-time').textContent = avgObservedTime.toFixed(2) + ' min';
+            document.getElementById('normal-time').textContent = normalTime.toFixed(2) + ' min';
+            document.getElementById('standard-time').textContent = standardTime.toFixed(2) + ' min';
+            
+            // Show calculation details
+            document.getElementById('observed-time-calculation').textContent = 
+                `${totalTime.toFixed(2)} / ${observations.length} = ${avgObservedTime.toFixed(2)} min`;
+            document.getElementById('rating-calculation').textContent = 
+                `${totalRating.toFixed(1)} / ${observations.length} = ${avgRating.toFixed(1)}%`;
+            document.getElementById('normal-time-calculation').textContent = 
+                `${avgObservedTime.toFixed(2)} × (${avgRating.toFixed(1)} / 100) = ${normalTime.toFixed(2)} min`;
+            document.getElementById('allowance-calculation').textContent = 
+                `${fatigueAllowance}% + ${delayAllowance}% + ${personalAllowance}% + ${otherAllowance}% = ${(totalAllowance * 100).toFixed(1)}%`;
+            document.getElementById('standard-time-calculation').textContent = 
+                `${normalTime.toFixed(2)} × (1 + ${totalAllowance.toFixed(3)}) = ${standardTime.toFixed(2)} min`;
+            
+            // Show production capacity
+            document.getElementById('cycles-hour').textContent = Math.round(cyclesPerHour * 10) / 10;
+            document.getElementById('cycles-shift').textContent = Math.round(cyclesPerShift * 10) / 10;
+            document.getElementById('realistic-hour').textContent = realisticPerHour;
+            document.getElementById('realistic-shift').textContent = realisticPerShift;
+            
+            // Create time distribution visualization
+            createTimeDistribution(observations.map(obs => obs.time));
+            
+            // Show results
+            document.getElementById('time-study-result').style.display = 'block';
+        });
+        
+        // Create time distribution visualization
+        function createTimeDistribution(times) {
+            const container = document.getElementById('time-distribution');
+            container.innerHTML = '';
+            
+            if (times.length === 0) return;
+            
+            const minTime = Math.min(...times);
+            const maxTime = Math.max(...times);
+            const range = maxTime - minTime;
+            const bucketCount = Math.min(10, times.length);
+            const bucketSize = range / bucketCount;
+            
+            // Create buckets
+            const buckets = new Array(bucketCount).fill(0);
+            times.forEach(time => {
+                let bucketIndex = Math.floor((time - minTime) / bucketSize);
+                bucketIndex = Math.min(bucketIndex, bucketCount - 1); // Ensure we don't go out of bounds
+                buckets[bucketIndex]++;
+            });
+            
+            const maxFreq = Math.max(...buckets);
+            const containerHeight = 300;
+            const containerWidth = container.offsetWidth;
+            const barWidth = (containerWidth - 20) / bucketCount;
+            
+            // Create bars
+            for (let i = 0; i < bucketCount; i++) {
+                const barHeight = (buckets[i] / maxFreq) * (containerHeight - 40);
+                const bar = document.createElement('div');
+                bar.style.position = 'absolute';
+                bar.style.bottom = '30px';
+                bar.style.left = `${10 + (i * barWidth)}px`;
+                bar.style.width = `${barWidth - 2}px`;
+                bar.style.height = `${barHeight}px`;
+                bar.style.backgroundColor = '#3498db';
+                
+                // Add label
+                const label = document.createElement('div');
+                label.style.position = 'absolute';
+                label.style.bottom = '10px';
+                label.style.left = `${10 + (i * barWidth)}px`;
+                label.style.width = `${barWidth}px`;
+                label.style.textAlign = 'center';
+                label.style.fontSize = '0.8rem';
+                label.textContent = (minTime + (i * bucketSize)).toFixed(2);
+                
+                // Add frequency label
+                const freqLabel = document.createElement('div');
+                freqLabel.style.position = 'absolute';
+                freqLabel.style.bottom = `${30 + barHeight}px`;
+                freqLabel.style.left = `${10 + (i * barWidth)}px`;
+                freqLabel.style.width = `${barWidth}px`;
+                freqLabel.style.textAlign = 'center';
+                freqLabel.style.fontSize = '0.8rem';
+                freqLabel.textContent = buckets[i];
+                
+                container.appendChild(bar);
+                container.appendChild(label);
+                container.appendChild(freqLabel);
+            }
+            
+            // Add axis labels
+            const yAxis = document.createElement('div');
+            yAxis.style.position = 'absolute';
+            yAxis.style.left = '5px';
+            yAxis.style.top = '10px';
+            yAxis.style.fontSize = '0.8rem';
+            yAxis.textContent = 'Frequency';
+            container.appendChild(yAxis);
+            
+            const xAxis = document.createElement('div');
+            xAxis.style.position = 'absolute';
+            xAxis.style.bottom = '10px';
+            xAxis.style.left = '50%';
+            xAxis.style.transform = 'translateX(-50%)';
+            xAxis.style.fontSize = '0.8rem';
+            xAxis.textContent = 'Time (minutes)';
+            container.appendChild(xAxis);
+        }
+    </script>
+</body>
+</html>
