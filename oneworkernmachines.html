@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Worker-Machine Assignment Calculator - Determine optimal machine allocation for one worker">
+    <title>1 Worker - M Machines Calculator | Industrial Engineering Calculators</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, 
+        .input-group select, 
+        .input-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group textarea {
+            min-height: 100px;
+            font-family: monospace;
+        }
+        
+        .input-group input:focus, 
+        .input-group select:focus, 
+        .input-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .machine-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            align-items: center;
+        }
+        
+        .machine-row .input-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        
+        .remove-machine {
+            color: var(--accent-color);
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .add-machine {
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            color: var(--secondary-color);
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .chart-container {
+            width: 100%;
+            height: 400px;
+            margin: 2rem 0;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 1rem;
+            position: relative;
+        }
+        
+        .chart-placeholder {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            color: var(--text-light);
+            font-style: italic;
+        }
+        
+        .time-breakdown {
+            margin-top: 1.5rem;
+        }
+        
+        .time-breakdown h4 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        .machine-utilization {
+            background-color: #e3f2fd;
+            border-left: 4px solid #3498db;
+            padding: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .worker-utilization {
+            background-color: #e8f5e9;
+            border-left: 4px solid #2ecc71;
+            padding: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .machine-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">Industrial <span>Engineering</span> Calculators</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>1 Worker - M Machines Calculator</h1>
+            <p>Determine optimal machine allocation and utilization for one worker operating multiple machines</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Worker-Machine Assignment</h2>
+                <p>This calculator determines how many machines one worker can effectively operate based on machine cycle times and worker service times.</p>
+                
+                <div class="formula-box">
+                    N = (L + m) / (L + w)<br>
+                    Where:<br>
+                    N = Number of machines assigned<br>
+                    L = Loading/unloading time (worker time)<br>
+                    m = Machine running time (automatic time)<br>
+                    w = Worker walking time between machines
+                </div>
+                
+                <p>Key metrics:</p>
+                <ul>
+                    <li><strong>Machine Utilization</strong>: Percentage of time machines are productive</li>
+                    <li><strong>Worker Utilization</strong>: Percentage of time worker is busy</li>
+                    <li><strong>Total Output</strong>: Production rate of the system</li>
+                </ul>
+            </div>
+            
+            <form id="worker-machine-form">
+                <h3>System Parameters</h3>
+                
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="walking-time">Worker Walking Time Between Machines (w):</label>
+                        <input type="number" id="walking-time" min="0" step="0.1" value="0.5" required>
+                        <p class="input-hint">Time in minutes to move between machines</p>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="worker-wage">Worker Wage Rate ($/hr):</label>
+                        <input type="number" id="worker-wage" min="0" step="0.1" value="20" required>
+                    </div>
+                </div>
+                
+                <h3>Machine Specifications</h3>
+                <p>Add each machine's loading/unloading and running times:</p>
+                
+                <div id="machines-container">
+                    <!-- Machine rows will be added here -->
+                    <div class="machine-row" data-machine="1">
+                        <div class="input-group">
+                            <label>Machine 1 Loading/Unloading Time (L):</label>
+                            <input type="number" class="loading-time" min="0" step="0.1" value="2" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>Machine Running Time (m):</label>
+                            <input type="number" class="running-time" min="0" step="0.1" value="10" required>
+                        </div>
+                        
+                        <span class="remove-machine" onclick="removeMachine(1)">×</span>
+                    </div>
+                </div>
+                
+                <span class="add-machine" onclick="addMachine()">+ Add Another Machine</span>
+                
+                <button type="submit" class="calculate-btn">Calculate Assignment</button>
+            </form>
+            
+            <div class="result-box" id="worker-machine-result">
+                <h3>Assignment Results</h3>
+                
+                <div class="machine-utilization">
+                    <h4>Optimal Assignment</h4>
+                    <div class="result-value" id="optimal-assignment-value"></div>
+                    <p id="assignment-explanation"></p>
+                </div>
+                
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>Total System Output:</label>
+                        <div class="result-value" id="output-value"></div>
+                        <p>Units per hour</p>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Cost per Unit:</label>
+                        <div class="result-value" id="cost-value"></div>
+                        <p>Including labor cost</p>
+                    </div>
+                </div>
+                
+                <div class="worker-utilization">
+                    <h4>Worker Utilization</h4>
+                    <div class="result-value" id="worker-util-value"></div>
+                    <p>Percentage of time worker is busy</p>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="utilization-chart"></canvas>
+                    <div class="chart-placeholder" id="chart-placeholder">
+                        Utilization chart will appear here
+                    </div>
+                </div>
+                
+                <div class="time-breakdown">
+                    <h4>Time Breakdown per Cycle</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Machine</th>
+                                <th>Loading/Unloading (L)</th>
+                                <th>Running Time (m)</th>
+                                <th>Cycle Time</th>
+                                <th>Utilization</th>
+                            </tr>
+                        </thead>
+                        <tbody id="time-breakdown-body">
+                            <!-- Filled by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="time-breakdown">
+                    <h4>Worker Activity Sequence</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Activity</th>
+                                <th>Machine</th>
+                            </tr>
+                        </thead>
+                        <tbody id="activity-sequence-body">
+                            <!-- Filled by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Practical Examples</h3>
+                
+                <div class="example">
+                    <h4>Example 1: Balanced System</h4>
+                    <p>Walking Time: 0.5 min | Loading: 2 min | Running: 10 min (3 identical machines)</p>
+                    <p>Optimal Assignment: 3 machines | Worker Utilization: 78% | Machine Utilization: 83%</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 2: Worker-Limited System</h4>
+                    <p>Walking Time: 1 min | Loading: 3 min | Running: 8 min (2 machines)</p>
+                    <p>Optimal Assignment: 2 machines | Worker Utilization: 92% | Machine Utilization: 73%</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 3: Machine-Limited System</h4>
+                    <p>Walking Time: 0.5 min | Loading: 1 min | Running: 15 min (4 machines)</p>
+                    <p>Optimal Assignment: 4 machines | Worker Utilization: 31% | Machine Utilization: 94%</p>
+                </div>
+            </div>
+            
+            <div class="calculator-intro">
+                <h3>Worker-Machine Assignment Guidelines</h3>
+                <table>
+                    <tr>
+                        <th>Scenario</th>
+                        <th>Characteristics</th>
+                        <th>Recommendations</th>
+                    </tr>
+                    <tr>
+                        <td>Worker-Limited</td>
+                        <td>Worker utilization > 85%</td>
+                        <td>Consider adding helper or reducing machines</td>
+                    </tr>
+                    <tr>
+                        <td>Machine-Limited</td>
+                        <td>Machine utilization > 90%</td>
+                        <td>Consider adding machines if possible</td>
+                    </tr>
+                    <tr>
+                        <td>Balanced</td>
+                        <td>Both utilizations 70-90%</td>
+                        <td>Optimal configuration</td>
+                    </tr>
+                    <tr>
+                        <td>Underutilized</td>
+                        <td>Both utilizations < 60%</td>
+                        <td>Worker can handle more machines</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <p class="copyright">&copy; 2023 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize chart
+        let utilizationChart = null;
+        const utilCtx = document.getElementById('utilization-chart').getContext('2d');
+        
+        // Machine counter
+        let machineCounter = 1;
+        
+        // Add machine row
+        function addMachine() {
+            machineCounter++;
+            const machinesContainer = document.getElementById('machines-container');
+            
+            const newRow = document.createElement('div');
+            newRow.className = 'machine-row';
+            newRow.setAttribute('data-machine', machineCounter);
+            
+            newRow.innerHTML = `
+                <div class="input-group">
+                    <label>Machine ${machineCounter} Loading/Unloading Time (L):</label>
+                    <input type="number" class="loading-time" min="0" step="0.1" value="2" required>
+                </div>
+                
+                <div class="input-group">
+                    <label>Machine Running Time (m):</label>
+                    <input type="number" class="running-time" min="0" step="0.1" value="10" required>
+                </div>
+                
+                <span class="remove-machine" onclick="removeMachine(${machineCounter})">×</span>
+            `;
+            
+            machinesContainer.appendChild(newRow);
+        }
+        
+        // Remove machine row
+        function removeMachine(machineNum) {
+            if (document.querySelectorAll('.machine-row').length <= 1) {
+                alert('You must have at least one machine');
+                return;
+            }
+            
+            const row = document.querySelector(`[data-machine="${machineNum}"]`);
+            row.remove();
+            
+            // Renumber remaining machines
+            const rows = document.querySelectorAll('.machine-row');
+            rows.forEach((row, index) => {
+                const newNum = index + 1;
+                row.setAttribute('data-machine', newNum);
+                row.querySelector('.input-group:first-child label').textContent = `Machine ${newNum} Loading/Unloading Time (L):`;
+            });
+            
+            machineCounter = rows.length;
+        }
+        
+        // Calculate worker-machine assignment
+        document.getElementById('worker-machine-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const walkingTime = parseFloat(document.getElementById('walking-time').value);
+            const workerWage = parseFloat(document.getElementById('worker-wage').value);
+            
+            // Get all machine data
+            const machines = [];
+            const machineRows = document.querySelectorAll('.machine-row');
+            
+            machineRows.forEach(row => {
+                const loadingTime = parseFloat(row.querySelector('.loading-time').value);
+                const runningTime = parseFloat(row.querySelector('.running-time').value);
+                
+                machines.push({
+                    loadingTime,
+                    runningTime,
+                    // Calculate theoretical N for this machine type
+                    theoreticalN: (loadingTime + runningTime) / (loadingTime + walkingTime)
+                });
+            });
+            
+            // Calculate total theoretical N
+            const totalTheoreticalN = machines.reduce((sum, machine) => sum + machine.theoreticalN, 0);
+            const optimalAssignment = Math.floor(totalTheoreticalN);
+            const fractionalPart = totalTheoreticalN - optimalAssignment;
+            
+            // Calculate utilizations and output
+            let workerBusyTime = 0;
+            let totalCycleTime = 0;
+            let totalOutput = 0;
+            
+            machines.forEach(machine => {
+                workerBusyTime += machine.loadingTime * optimalAssignment;
+                totalCycleTime = Math.max(totalCycleTime, machine.loadingTime + machine.runningTime);
+                totalOutput += (optimalAssignment * 60) / (machine.loadingTime + machine.runningTime);
+            });
+            
+            workerBusyTime += walkingTime * (optimalAssignment - 1);
+            const workerUtilization = (workerBusyTime / totalCycleTime * 100).toFixed(1);
+            
+            // Calculate machine utilizations
+            const machineUtils = machines.map(machine => {
+                return ((machine.loadingTime + machine.runningTime) / totalCycleTime * 100).toFixed(1);
+            });
+            
+            // Calculate cost per unit
+            const laborCostPerHour = workerWage;
+            const laborCostPerUnit = laborCostPerHour / totalOutput;
+            
+            // Display results
+            document.getElementById('optimal-assignment-value').textContent = optimalAssignment + ' machines';
+            
+            let explanation = '';
+            if (fractionalPart < 0.3) {
+                explanation = `Worker can fully operate ${optimalAssignment} machines with ${workerUtilization}% utilization`;
+            } else {
+                explanation = `Worker can operate ${optimalAssignment} machines (${workerUtilization}% utilization) with potential to partially operate ${optimalAssignment + 1} machines`;
+            }
+            document.getElementById('assignment-explanation').textContent = explanation;
+            
+            document.getElementById('output-value').textContent = totalOutput.toFixed(2);
+            document.getElementById('cost-value').textContent = '$' + laborCostPerUnit.toFixed(4);
+            document.getElementById('worker-util-value').textContent = workerUtilization + '%';
+            
+            // Fill time breakdown table
+            const timeBreakdownBody = document.getElementById('time-breakdown-body');
+            timeBreakdownBody.innerHTML = '';
+            
+            machines.forEach((machine, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>Machine ${index + 1}</td>
+                    <td>${machine.loadingTime.toFixed(1)} min</td>
+                    <td>${machine.runningTime.toFixed(1)} min</td>
+                    <td>${(machine.loadingTime + machine.runningTime).toFixed(1)} min</td>
+                    <td>${machineUtils[index]}%</td>
+                `;
+                timeBreakdownBody.appendChild(row);
+            });
+            
+            // Fill activity sequence (simplified)
+            const activityBody = document.getElementById('activity-sequence-body');
+            activityBody.innerHTML = '';
+            
+            // Simplified sequence for first machine
+            let time = 0;
+            machines.forEach((machine, index) => {
+                // Loading
+                activityBody.innerHTML += `
+                    <tr>
+                        <td>${time.toFixed(1)} - ${(time + machine.loadingTime).toFixed(1)}</td>
+                        <td>Loading/Unloading</td>
+                        <td>Machine ${index + 1}</td>
+                    </tr>
+                `;
+                time += machine.loadingTime;
+                
+                // Walking (except last machine)
+                if (index < machines.length - 1) {
+                    activityBody.innerHTML += `
+                        <tr>
+                            <td>${time.toFixed(1)} - ${(time + walkingTime).toFixed(1)}</td>
+                            <td>Walking</td>
+                            <td>Machine ${index + 1} → Machine ${index + 2}</td>
+                        </tr>
+                    `;
+                    time += walkingTime;
+                }
+            });
+            
+            // Create utilization chart
+            createUtilizationChart(machines, workerUtilization);
+            
+            // Show results
+            document.getElementById('worker-machine-result').style.display = 'block';
+        });
+        
+        // Create utilization chart
+        function createUtilizationChart(machines, workerUtilization) {
+            const chartPlaceholder = document.getElementById('chart-placeholder');
+            chartPlaceholder.style.display = 'none';
+            
+            // Destroy previous chart if it exists
+            if (utilizationChart) {
+                utilizationChart.destroy();
+            }
+            
+            // Prepare data
+            const labels = ['Worker'].concat(machines.map((_, i) => `Machine ${i + 1}`));
+            const utilData = [workerUtilization].concat(machines.map((machine, i) => {
+                return ((machine.loadingTime + machine.runningTime) / 
+                       (machines.reduce((max, m) => Math.max(max, m.loadingTime + m.runningTime), 0)) * 100).toFixed(1);
+            }));
+            
+            // Create new chart
+            utilizationChart = new Chart(utilCtx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Utilization Rate',
+                        data: utilData,
+                        backgroundColor: [
+                            '#2ecc71',
+                            ...machines.map(() => '#3498db')
+                        ],
+                        borderColor: [
+                            '#27ae60',
+                            ...machines.map(() => '#2980b9')
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Utilization (%)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Worker and Machine Utilization',
+                            font: {
+                                size: 16
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.parsed.y + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
