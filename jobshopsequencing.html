@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Job Shop Scheduling Calculator - Compare dispatching rules including SPT, EDD, Critical Ratio, and Slack per Operation">
+    <title>Job Shop Scheduling Calculator | Industrial Engineering Calculators</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .add-job-btn {
+            background-color: var(--light-color);
+            color: var(--primary-color);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 1.5rem;
+        }
+        
+        .add-job-btn:hover {
+            background-color: #d5dbdb;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 1rem;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .jobs-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        .jobs-table th, .jobs-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        
+        .jobs-table th {
+            background-color: #f2f2f2;
+            font-weight: 500;
+        }
+        
+        .remove-job {
+            color: var(--accent-color);
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .results-section {
+            margin-top: 2rem;
+            display: none;
+        }
+        
+        .results-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+        }
+        
+        .results-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            margin-right: 0.5rem;
+            border-radius: 5px 5px 0 0;
+            background-color: #f1f1f1;
+            transition: all 0.3s;
+        }
+        
+        .results-tab.active {
+            background-color: white;
+            border-color: #ddd;
+            border-bottom-color: white;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        
+        .results-tab:hover:not(.active) {
+            background-color: #e9e9e9;
+        }
+        
+        .results-content {
+            display: none;
+        }
+        
+        .results-content.active {
+            display: block;
+        }
+        
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        .schedule-table th, .schedule-table td {
+            padding: 0.75rem;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        
+        .schedule-table th {
+            background-color: #f2f2f2;
+            font-weight: 500;
+        }
+        
+        .performance-metrics {
+            margin-top: 2rem;
+        }
+        
+        .metrics-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        .metrics-table th, .metrics-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        
+        .metrics-table th {
+            background-color: #f2f2f2;
+            font-weight: 500;
+        }
+        
+        .gantt-chart {
+            width: 100%;
+            height: 200px;
+            margin: 2rem 0;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 1rem;
+            position: relative;
+            overflow-x: auto;
+        }
+        
+        .gantt-container {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        .gantt-scale {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .gantt-bars {
+            position: absolute;
+            top: 40px;
+            left: 0;
+            width: 100%;
+        }
+        
+        .gantt-bar {
+            height: 30px;
+            margin-bottom: 5px;
+            border-radius: 3px;
+            position: relative;
+        }
+        
+        .gantt-label {
+            position: absolute;
+            left: 5px;
+            top: 5px;
+            color: white;
+            font-weight: 500;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .results-tabs {
+                flex-wrap: wrap;
+            }
+            
+            .results-tab {
+                margin-bottom: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">Industrial <span>Engineering</span> Calculators</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Job Shop Scheduling Calculator</h1>
+            <p>Compare dispatching rules including SPT, EDD, Critical Ratio, and Slack per Operation</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Job Shop Dispatching Rules</h2>
+                <p>Dispatching rules are used to determine the sequence of jobs in a job shop environment. Different rules optimize for different performance measures.</p>
+                
+                <div class="formula-box">
+                    Common Dispatching Rules:
+                    - SPT (Shortest Processing Time): Select job with shortest processing time
+                    - EDD (Earliest Due Date): Select job with earliest due date
+                    - CR (Critical Ratio): (Due Date - Current Time) / Processing Time
+                    - S/O (Slack per Operation): (Due Date - Current Time - Remaining Processing Time) / Number of Remaining Operations
+                </div>
+                
+                <p>Key performance measures:</p>
+                <ul>
+                    <li><strong>Makespan</strong>: Total time to complete all jobs</li>
+                    <li><strong>Average Flow Time</strong>: Average time jobs spend in the system</li>
+                    <li><strong>Average Tardiness</strong>: Average amount of time jobs are late</li>
+                    <li><strong>Number of Tardy Jobs</strong>: Count of jobs completed after their due date</li>
+                </ul>
+            </div>
+            
+            <form id="scheduling-form">
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="current-time">Current Time (for CR and S/O calculations):</label>
+                        <input type="number" id="current-time" min="0" value="0" required>
+                    </div>
+                </div>
+                
+                <h3>Jobs</h3>
+                <table class="jobs-table" id="jobs-table">
+                    <thead>
+                        <tr>
+                            <th>Job ID</th>
+                            <th>Processing Time</th>
+                            <th>Due Date</th>
+                            <th>Remaining Processing Time</th>
+                            <th>Remaining Operations</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="jobs-body">
+                        <!-- Jobs will be added here -->
+                    </tbody>
+                </table>
+                
+                <button type="button" class="add-job-btn" id="add-job-btn">Add Job</button>
+                <button type="submit" class="calculate-btn">Calculate Schedules</button>
+            </form>
+            
+            <div class="results-section" id="results-section">
+                <h3>Scheduling Results</h3>
+                
+                <div class="results-tabs">
+                    <div class="results-tab active" data-rule="spt">SPT</div>
+                    <div class="results-tab" data-rule="edd">EDD</div>
+                    <div class="results-tab" data-rule="cr">Critical Ratio</div>
+                    <div class="results-tab" data-rule="so">Slack per Operation</div>
+                </div>
+                
+                <!-- SPT Results -->
+                <div class="results-content active" id="spt-results">
+                    <h4>Shortest Processing Time (SPT)</h4>
+                    <div class="gantt-chart" id="spt-gantt">
+                        <div class="gantt-container">
+                            <div class="gantt-scale" id="spt-scale"></div>
+                            <div class="gantt-bars" id="spt-bars"></div>
+                        </div>
+                    </div>
+                    
+                    <table class="schedule-table">
+                        <thead>
+                            <tr>
+                                <th>Sequence</th>
+                                <th>Job ID</th>
+                                <th>Start Time</th>
+                                <th>Completion Time</th>
+                                <th>Flow Time</th>
+                                <th>Tardiness</th>
+                            </tr>
+                        </thead>
+                        <tbody id="spt-schedule">
+                            <!-- Filled by JavaScript -->
+                        </tbody>
+                    </table>
+                    
+                    <div class="performance-metrics">
+                        <h4>Performance Metrics</h4>
+                        <table class="metrics-table">
+                            <tbody id="spt-metrics">
+                                <!-- Filled by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- EDD Results -->
+                <div class="results-content" id="edd-results">
+                    <h4>Earliest Due Date (EDD)</h4>
+                    <div class="gantt-chart" id="edd-gantt">
+                        <div class="gantt-container">
+                            <div class="gantt-scale" id="edd-scale"></div>
+                            <div class="gantt-bars" id="edd-bars"></div>
+                        </div>
+                    </div>
+                    
+                    <table class="schedule-table">
+                        <thead>
+                            <tr>
+                                <th>Sequence</th>
+                                <th>Job ID</th>
+                                <th>Start Time</th>
+                                <th>Completion Time</th>
+                                <th>Flow Time</th>
+                                <th>Tardiness</th>
+                            </tr>
+                        </thead>
+                        <tbody id="edd-schedule">
+                            <!-- Filled by JavaScript -->
+                        </tbody>
+                    </table>
+                    
+                    <div class="performance-metrics">
+                        <h4>Performance Metrics</h4>
+                        <table class="metrics-table">
+                            <tbody id="edd-metrics">
+                                <!-- Filled by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Critical Ratio Results -->
+                <div class="results-content" id="cr-results">
+                    <h4>Critical Ratio (CR)</h4>
+                    <div class="gantt-chart" id="cr-gantt">
+                        <div class="gantt-container">
+                            <div class="gantt-scale" id="cr-scale"></div>
+                            <div class="gantt-bars" id="cr-bars"></div>
+                        </div>
+                    </div>
+                    
+                    <table class="schedule-table">
+                        <thead>
+                            <tr>
+                                <th>Sequence</th>
+                                <th>Job ID</th>
+                                <th>Start Time</th>
+                                <th>Completion Time</th>
+                                <th>Flow Time</th>
+                                <th>Tardiness</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cr-schedule">
+                            <!-- Filled by JavaScript -->
+                        </tbody>
+                    </table>
+                    
+                    <div class="performance-metrics">
+                        <h4>Performance Metrics</h4>
+                        <table class="metrics-table">
+                            <tbody id="cr-metrics">
+                                <!-- Filled by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Slack per Operation Results -->
+                <div class="results-content" id="so-results">
+                    <h4>Slack per Operation (S/O)</h4>
+                    <div class="gantt-chart" id="so-gantt">
+                        <div class="gantt-container">
+                            <div class="gantt-scale" id="so-scale"></div>
+                            <div class="gantt-bars" id="so-bars"></div>
+                        </div>
+                    </div>
+                    
+                    <table class="schedule-table">
+                        <thead>
+                            <tr>
+                                <th>Sequence</th>
+                                <th>Job ID</th>
+                                <th>Start Time</th>
+                                <th>Completion Time</th>
+                                <th>Flow Time</th>
+                                <th>Tardiness</th>
+                            </tr>
+                        </thead>
+                        <tbody id="so-schedule">
+                            <!-- Filled by JavaScript -->
+                        </tbody>
+                    </table>
+                    
+                    <div class="performance-metrics">
+                        <h4>Performance Metrics</h4>
+                        <table class="metrics-table">
+                            <tbody id="so-metrics">
+                                <!-- Filled by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Practical Examples</h3>
+                
+                <div class="example">
+                    <h4>Example 1: Comparing Rules</h4>
+                    <p>Jobs: A (PT=5, DD=10), B (PT=3, DD=8), C (PT=8, DD=15)</p>
+                    <p>SPT Sequence: B, A, C | Makespan: 16 | Avg Tardiness: 1.33</p>
+                    <p>EDD Sequence: B, A, C | Makespan: 16 | Avg Tardiness: 1.33</p>
+                    <p>CR Sequence (at t=0): B, A, C | Makespan: 16 | Avg Tardiness: 1.33</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 2: Different Outcomes</h4>
+                    <p>Jobs: X (PT=4, DD=6), Y (PT=2, DD=12), Z (PT=6, DD=8)</p>
+                    <p>SPT Sequence: Y, X, Z | Makespan: 12 | Avg Tardiness: 2.67</p>
+                    <p>EDD Sequence: X, Z, Y | Makespan: 12 | Avg Tardiness: 2.0</p>
+                    <p>CR Sequence (at t=0): X, Y, Z | Makespan: 12 | Avg Tardiness: 2.67</p>
+                </div>
+            </div>
+            
+            <div class="calculator-intro">
+                <h3>When to Use Each Rule</h3>
+                <table>
+                    <tr>
+                        <th>Rule</th>
+                        <th>Best For</th>
+                        <th>Weakness</th>
+                    </tr>
+                    <tr>
+                        <td>SPT</td>
+                        <td>Minimizing average flow time</td>
+                        <td>May cause long jobs to be excessively delayed</td>
+                    </tr>
+                    <tr>
+                        <td>EDD</td>
+                        <td>Meeting due dates, minimizing maximum tardiness</td>
+                        <td>Doesn't consider processing times</td>
+                    </tr>
+                    <tr>
+                        <td>CR</td>
+                        <td>Dynamic scheduling, balancing urgency and processing time</td>
+                        <td>Can be unstable when due dates are tight</td>
+                    </tr>
+                    <tr>
+                        <td>S/O</td>
+                        <td>Operations with multiple remaining steps</td>
+                        <td>More complex to calculate</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <p class="copyright">&copy; 2023 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Job counter
+        let jobIdCounter = 1;
+        
+        // Add job button functionality
+        document.getElementById('add-job-btn').addEventListener('click', function() {
+            const jobsBody = document.getElementById('jobs-body');
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>J${jobIdCounter}</td>
+                <td><input type="number" class="processing-time" min="1" value="5" required></td>
+                <td><input type="number" class="due-date" min="0" value="${10 + jobIdCounter}" required></td>
+                <td><input type="number" class="remaining-time" min="1" value="5" required></td>
+                <td><input type="number" class="remaining-ops" min="1" value="1" required></td>
+                <td><span class="remove-job">×</span></td>
+            `;
+            jobsBody.appendChild(newRow);
+            jobIdCounter++;
+            
+            // Add event listener to remove button
+            newRow.querySelector('.remove-job').addEventListener('click', function() {
+                jobsBody.removeChild(newRow);
+            });
+        });
+        
+        // Results tab switching
+        const resultsTabs = document.querySelectorAll('.results-tab');
+        const resultsContents = document.querySelectorAll('.results-content');
+        
+        resultsTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                resultsTabs.forEach(t => t.classList.remove('active'));
+                resultsContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                const rule = tab.getAttribute('data-rule');
+                document.getElementById(`${rule}-results`).classList.add('active');
+            });
+        });
+        
+        // Form submission
+        document.getElementById('scheduling-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const currentTime = parseInt(document.getElementById('current-time').value);
+            const jobs = [];
+            
+            // Collect job data
+            const jobRows = document.getElementById('jobs-body').querySelectorAll('tr');
+            jobRows.forEach(row => {
+                jobs.push({
+                    id: row.cells[0].textContent,
+                    processingTime: parseInt(row.querySelector('.processing-time').value),
+                    dueDate: parseInt(row.querySelector('.due-date').value),
+                    remainingTime: parseInt(row.querySelector('.remaining-time').value),
+                    remainingOps: parseInt(row.querySelector('.remaining-ops').value)
+                });
+            });
+            
+            if (jobs.length === 0) {
+                alert('Please add at least one job');
+                return;
+            }
+            
+            // Calculate schedules for each rule
+            calculateSPT(jobs);
+            calculateEDD(jobs);
+            calculateCR(jobs, currentTime);
+            calculateSO(jobs, currentTime);
+            
+            // Show results section
+            document.getElementById('results-section').style.display = 'block';
+        });
+        
+        // Calculate SPT schedule
+        function calculateSPT(jobs) {
+            // Sort jobs by processing time (ascending)
+            const sortedJobs = [...jobs].sort((a, b) => a.processingTime - b.processingTime);
+            
+            // Calculate schedule
+            let currentTime = 0;
+            let totalFlowTime = 0;
+            let totalTardiness = 0;
+            let tardyJobs = 0;
+            let makespan = 0;
+            
+            const scheduleTable = document.getElementById('spt-schedule');
+            scheduleTable.innerHTML = '';
+            
+            sortedJobs.forEach((job, index) => {
+                const startTime = currentTime;
+                const completionTime = currentTime + job.processingTime;
+                const flowTime = completionTime;
+                const tardiness = Math.max(0, completionTime - job.dueDate);
+                
+                // Update totals
+                totalFlowTime += flowTime;
+                totalTardiness += tardiness;
+                if (tardiness > 0) tardyJobs++;
+                makespan = completionTime;
+                currentTime = completionTime;
+                
+                // Add to table
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${job.id}</td>
+                    <td>${startTime}</td>
+                    <td>${completionTime}</td>
+                    <td>${flowTime}</td>
+                    <td>${tardiness}</td>
+                `;
+                scheduleTable.appendChild(row);
+            });
+            
+            // Update metrics
+            const metricsTable = document.getElementById('spt-metrics');
+            metricsTable.innerHTML = `
+                <tr>
+                    <td>Makespan</td>
+                    <td>${makespan}</td>
+                </tr>
+                <tr>
+                    <td>Average Flow Time</td>
+                    <td>${(totalFlowTime / jobs.length).toFixed(2)}</td>
+                </tr>
+                <tr>
+                    <td>Average Tardiness</td>
+                    <td>${(totalTardiness / jobs.length).toFixed(2)}</td>
+                </tr>
+                <tr>
+                    <td>Number of Tardy Jobs</td>
+                    <td>${tardyJobs}</td>
+                </tr>
+            `;
+            
+            // Create Gantt chart
+            createGanttChart('spt', sortedJobs);
+        }
+        
+        // Calculate EDD schedule
+        function calculateEDD(jobs) {
+            // Sort jobs by due date (ascending)
+            const sortedJobs = [...jobs].sort((a, b) => a.dueDate - b.dueDate);
+            
+            // Calculate schedule
+            let currentTime = 0;
+            let totalFlowTime = 0;
+            let totalTardiness = 0;
+            let tardyJobs = 0;
+            let makespan = 0;
+            
+            const scheduleTable = document.getElementById('edd-schedule');
+            scheduleTable.innerHTML = '';
+            
+            sortedJobs.forEach((job, index) => {
+                const startTime = currentTime;
+                const completionTime = currentTime + job.processingTime;
+                const flowTime = completionTime;
+                const tardiness = Math.max(0, completionTime - job.dueDate);
+                
+                // Update totals
+                totalFlowTime += flowTime;
+                totalTardiness += tardiness;
+                if (tardiness > 0) tardyJobs++;
+                makespan = completionTime;
+                currentTime = completionTime;
+                
+                // Add to table
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${job.id}</td>
+                    <td>${startTime}</td>
+                    <td>${completionTime}</td>
+                    <td>${flowTime}</td>
+                    <td>${tardiness}</td>
+                `;
+                scheduleTable.appendChild(row);
+            });
+            
+            // Update metrics
+            const metricsTable = document.getElementById('edd-metrics');
+            metricsTable.innerHTML = `
+                <tr>
+                    <td>Makespan</td>
+                    <td>${makespan}</td>
+                </tr>
+                <tr>
+                    <td>Average Flow Time</td>
+                    <td>${(totalFlowTime / jobs.length).toFixed(2)}</td>
+                </tr>
+                <tr>
+                    <td>Average Tardiness</td>
+                    <td>${(totalTardiness / jobs.length).toFixed(2)}</td>
+                </tr>
+                <tr>
+                    <td>Number of Tardy Jobs</td>
+                    <td>${tardyJobs}</td>
+                </tr>
+            `;
+            
+            // Create Gantt chart
+            createGanttChart('edd', sortedJobs);
+        }
+        
+        // Calculate Critical Ratio schedule
+        function calculateCR(jobs, currentTime) {
+            // Calculate CR for each job and sort
+            const jobsWithCR = jobs.map(job => {
+                const cr = (job.dueDate - currentTime) / job.processingTime;
+                return { ...job, cr };
+            });
+            
+            // Sort by CR (ascending)
+            const sortedJobs = [...jobsWithCR].sort((a, b) => a.cr - b.cr);
+            
+            // Calculate schedule
+            let totalFlowTime = 0;
+            let totalTardiness = 0;
+            let tardyJobs = 0;
+            let makespan = 0;
+            
+            const scheduleTable = document.getElementById('cr-schedule');
+            scheduleTable.innerHTML = '';
+            
+            let time = currentTime;
+            sortedJobs.forEach((job, index) => {
+                const startTime = time;
+                const completionTime = time + job.processingTime;
+                const flowTime = completionTime - currentTime;
+                const tardiness = Math.max(0, completionTime - job.dueDate);
+                
+                // Update totals
+                totalFlowTime += flowTime;
+                totalTardiness += tardiness;
+                if (tardiness > 0) tardyJobs++;
+                makespan = completionTime - currentTime;
+                time = completionTime;
+                
+                // Add to table
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${job.id}</td>
+                    <td>${startTime}</td>
+                    <td>${completionTime}</td>
+                    <td>${flowTime}</td>
+                    <td>${tardiness}</td>
+                `;
+                scheduleTable.appendChild(row);
+            });
+            
+            // Update metrics
+            const metricsTable = document.getElementById('cr-metrics');
+            metricsTable.innerHTML = `
+                <tr>
+                    <td>Makespan</td>
+                    <td>${makespan}</td>
+                </tr>
+                <tr>
+                    <td>Average Flow Time</td>
+                    <td>${(totalFlowTime / jobs.length).toFixed(2)}</td>
+                </tr>
+                <tr>
+                    <td>Average Tardiness</td>
+                    <td>${(totalTardiness / jobs.length).toFixed(2)}</td>
+                </tr>
+                <tr>
+                    <td>Number of Tardy Jobs</td>
+                    <td>${tardyJobs}</td>
+                </tr>
+            `;
+            
+            // Create Gantt chart
+            createGanttChart('cr', sortedJobs, currentTime);
+        }
+        
+        // Calculate Slack per Operation schedule
+        function calculateSO(jobs, currentTime) {
+            // Calculate S/O for each job and sort
+            const jobsWithSO = jobs.map(job => {
+                const slack = job.dueDate - currentTime - job.remainingTime;
+                const so = slack / job.remainingOps;
+                return { ...job, so };
+            });
+            
+            // Sort by S/O (ascending)
+            const sortedJobs = [...jobsWithSO].sort((a, b) => a.so - b.so);
+            
+            // Calculate schedule
+            let totalFlowTime = 0;
+            let totalTardiness = 0;
+            let tardyJobs = 0;
+            let makespan = 0;
+            
+            const scheduleTable = document.getElementById('so-schedule');
+            scheduleTable.innerHTML = '';
+            
+            let time = currentTime;
+            sortedJobs.forEach((job, index) => {
+                const startTime = time;
+                const completionTime = time + job.processingTime;
+                const flowTime = completionTime - currentTime;
+                const tardiness = Math.max(0, completionTime - job.dueDate);
+                
+                // Update totals
+                totalFlowTime += flowTime;
+                totalTardiness += tardiness;
+                if (tardiness > 0) tardyJobs++;
+                makespan = completionTime - currentTime;
+                time = completionTime;
+                
+                // Add to table
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${job.id}</td>
+                    <td>${startTime}</td>
+                    <td>${completionTime}</td>
+                    <td>${flowTime}</td>
+                    <td>${tardiness}</td>
+                `;
+                scheduleTable.appendChild(row);
+            });
+            
+            // Update metrics
+            const metricsTable = document.getElementById('so-metrics');
+            metricsTable.innerHTML = `
+                <tr>
+                    <td>Makespan</td>
+                    <td>${makespan}</td>
+                </tr>
+                <tr>
+                    <td>Average Flow Time</td>
+                    <td>${(totalFlowTime / jobs.length).toFixed(2)}</td>
+                </tr>
+                <tr>
+                    <td>Average Tardiness</td>
+                    <td>${(totalTardiness / jobs.length).toFixed(2)}</td>
+                </tr>
+                <tr>
+                    <td>Number of Tardy Jobs</td>
+                    <td>${tardyJobs}</td>
+                </tr>
+            `;
+            
+            // Create Gantt chart
+            createGanttChart('so', sortedJobs, currentTime);
+        }
+        
+        // Create Gantt chart
+        function createGanttChart(prefix, jobs, startTime = 0) {
+            const scale = document.getElementById(`${prefix}-scale`);
+            const bars = document.getElementById(`${prefix}-bars`);
+            
+            // Clear previous content
+            scale.innerHTML = '';
+            bars.innerHTML = '';
+            
+            // Calculate makespan
+            const makespan = jobs.reduce((sum, job) => sum + job.processingTime, 0);
+            
+            // Create time scale
+            for (let i = 0; i <= makespan; i++) {
+                const tick = document.createElement('div');
+                tick.style.position = 'absolute';
+                tick.style.left = `${(i / makespan) * 100}%`;
+                tick.style.width = '1px';
+                tick.style.height = '100%';
+                tick.style.backgroundColor = '#ddd';
+                
+                const label = document.createElement('div');
+                label.style.position = 'absolute';
+                label.style.left = `${(i / makespan) * 100}%`;
+                label.style.top = '100%';
+                label.style.transform = 'translateX(-50%)';
+                label.style.fontSize = '0.8rem';
+                label.textContent = i + startTime;
+                
+                scale.appendChild(tick);
+                scale.appendChild(label);
+            }
+            
+            // Create bars
+            let currentTime = 0;
+            jobs.forEach((job, index) => {
+                const bar = document.createElement('div');
+                bar.className = 'gantt-bar';
+                bar.style.width = `${(job.processingTime / makespan) * 100}%`;
+                bar.style.left = `${(currentTime / makespan) * 100}%`;
+                
+                // Different colors for each job
+                const hue = (index * 360 / jobs.length) % 360;
+                bar.style.backgroundColor = `hsl(${hue}, 70%, 50%)`;
+                
+                const label = document.createElement('div');
+                label.className = 'gantt-label';
+                label.textContent = `${job.id} (${job.processingTime})`;
+                
+                bar.appendChild(label);
+                bars.appendChild(bar);
+                
+                currentTime += job.processingTime;
+            });
+        }
+        
+        // Add initial job
+        document.getElementById('add-job-btn').click();
+    </script>
+</body>
+</html>
