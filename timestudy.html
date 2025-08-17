@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Time Study Calculator - Sample Size Determination and Observation Analysis with Outlier Detection">
+    <title>Time Study Calculator | Industrial Engineering Calculators</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .study-phase {
+            margin-bottom: 2rem;
+        }
+        
+        .phase-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+        }
+        
+        .phase-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            margin-right: 0.5rem;
+            border-radius: 5px 5px 0 0;
+            background-color: #f1f1f1;
+            transition: all 0.3s;
+        }
+        
+        .phase-tab.active {
+            background-color: white;
+            border-color: #ddd;
+            border-bottom-color: white;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        
+        .phase-tab:hover:not(.active) {
+            background-color: #e9e9e9;
+        }
+        
+        .phase-content {
+            display: none;
+        }
+        
+        .phase-content.active {
+            display: block;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, 
+        .input-group select, 
+        .input-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group textarea {
+            min-height: 100px;
+            font-family: monospace;
+        }
+        
+        .input-group input:focus, 
+        .input-group select:focus, 
+        .input-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .chart-container {
+            width: 100%;
+            height: 400px;
+            margin: 2rem 0;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 1rem;
+            position: relative;
+        }
+        
+        .chart-placeholder {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            color: var(--text-light);
+            font-style: italic;
+        }
+        
+        .time-data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            max-height: 300px;
+            overflow-y: auto;
+            display: block;
+        }
+        
+        .time-data-table th, 
+        .time-data-table td {
+            padding: 0.5rem;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        
+        .time-data-table th {
+            background-color: #f2f2f2;
+            font-weight: 500;
+            position: sticky;
+            top: 0;
+        }
+        
+        .outlier {
+            background-color: #ffebee;
+            color: #c62828;
+            font-weight: bold;
+        }
+        
+        .performance-rating {
+            margin-top: 1.5rem;
+        }
+        
+        .performance-rating h4 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .normal-time-box {
+            background-color: #e8f5e9;
+            border-left: 4px solid #2ecc71;
+            padding: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .standard-time-box {
+            background-color: #e3f2fd;
+            border-left: 4px solid #3498db;
+            padding: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .phase-tabs {
+                flex-direction: column;
+            }
+            
+            .phase-tab {
+                border-radius: 0;
+                margin-right: 0;
+                border-bottom: 1px solid #ddd;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">Industrial <span>Engineering</span> Calculators</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Time Study Calculator</h1>
+            <p>Determine required sample size and analyze time observations with outlier detection</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Time Study Analysis</h2>
+                <p>Time study is a work measurement technique for recording the times of performing a task's elements, with the objective of determining the time required at a defined level of performance.</p>
+                
+                <div class="formula-box">
+                    Normal Time = (Average Observed Time) × (Performance Rating)<br>
+                    Standard Time = Normal Time × (1 + Allowance Factor)
+                </div>
+                
+                <p>Key steps:</p>
+                <ol>
+                    <li>Determine required number of observations</li>
+                    <li>Record observed times</li>
+                    <li>Check for and remove outliers</li>
+                    <li>Calculate normal and standard times</li>
+                </ol>
+            </div>
+            
+            <div class="study-phase">
+                <div class="phase-tabs">
+                    <div class="phase-tab active" data-phase="sample-size">1. Sample Size</div>
+                    <div class="phase-tab" data-phase="time-study">2. Time Study</div>
+                </div>
+                
+                <!-- Sample Size Phase -->
+                <div class="phase-content active" id="sample-size-phase">
+                    <h3>Determine Required Sample Size</h3>
+                    <p>Calculate the number of observations needed for a desired confidence level and accuracy.</p>
+                    
+                    <form id="sample-size-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="confidence-level">Confidence Level:</label>
+                                <select id="confidence-level" required>
+                                    <option value="90">90%</option>
+                                    <option value="95" selected>95%</option>
+                                    <option value="99">99%</option>
+                                </select>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="accuracy">Desired Accuracy (± %):</label>
+                                <input type="number" id="accuracy" min="1" max="20" value="5" step="0.5" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="pilot-times">Enter pilot study times (comma separated):</label>
+                            <input type="text" id="pilot-times" placeholder="Example: 12.5, 13.2, 11.8, 12.9, 12.3" required>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate Sample Size</button>
+                    </form>
+                    
+                    <div class="result-box" id="sample-size-result">
+                        <h3>Sample Size Results</h3>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label>Mean Time:</label>
+                                <div class="result-value" id="mean-time-value"></div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Standard Deviation:</label>
+                                <div class="result-value" id="std-dev-value"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label>Required Observations:</label>
+                                <div class="result-value" id="sample-size-value"></div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Current Observations:</label>
+                                <div class="result-value" id="current-obs-value"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="chart-container">
+                            <canvas id="pilot-chart"></canvas>
+                            <div class="chart-placeholder" id="pilot-chart-placeholder">
+                                Pilot study distribution will appear here
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Time Study Phase -->
+                <div class="phase-content" id="time-study-phase">
+                    <h3>Time Study Analysis</h3>
+                    <p>Analyze your time observations, detect outliers, and calculate normal and standard times.</p>
+                    
+                    <form id="time-study-form">
+                        <div class="input-group">
+                            <label for="observed-times">Enter observed times (comma separated):</label>
+                            <input type="text" id="observed-times" placeholder="Example: 12.5, 13.2, 11.8, 12.9, 12.3, 15.7, 12.1" required>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="performance-rating">Performance Rating (%):</label>
+                                <input type="number" id="performance-rating" min="70" max="130" value="100" step="1" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="allowance-factor">Allowance Factor (%):</label>
+                                <input type="number" id="allowance-factor" min="0" max="50" value="15" step="0.5" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="outlier-method">Outlier Detection Method:</label>
+                            <select id="outlier-method" required>
+                                <option value="iqr">IQR (Interquartile Range)</option>
+                                <option value="stddev">Standard Deviation (3σ)</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Analyze Time Study</button>
+                    </form>
+                    
+                    <div class="result-box" id="time-study-result">
+                        <h3>Time Study Results</h3>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label>Mean Time:</label>
+                                <div class="result-value" id="observed-mean-value"></div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Standard Deviation:</label>
+                                <div class="result-value" id="observed-std-dev-value"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label>Outliers Detected:</label>
+                                <div class="result-value" id="outliers-value"></div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Valid Observations:</label>
+                                <div class="result-value" id="valid-obs-value"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="chart-container">
+                            <canvas id="time-study-chart"></canvas>
+                            <div class="chart-placeholder" id="time-chart-placeholder">
+                                Time study distribution will appear here
+                            </div>
+                        </div>
+                        
+                        <table class="time-data-table" id="time-data-table">
+                            <thead>
+                                <tr>
+                                    <th>Observation</th>
+                                    <th>Time</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Filled by JavaScript -->
+                            </tbody>
+                        </table>
+                        
+                        <div class="performance-rating">
+                            <h4>Performance Calculations</h4>
+                            
+                            <div class="normal-time-box">
+                                <h4>Normal Time</h4>
+                                <p>Average Time × Performance Rating</p>
+                                <div class="result-value" id="normal-time-value"></div>
+                            </div>
+                            
+                            <div class="standard-time-box">
+                                <h4>Standard Time</h4>
+                                <p>Normal Time × (1 + Allowance Factor)</p>
+                                <div class="result-value" id="standard-time-value"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Practical Examples</h3>
+                
+                <div class="example">
+                    <h4>Example 1: Sample Size Determination</h4>
+                    <p>Pilot Times: 12.5, 13.2, 11.8, 12.9, 12.3</p>
+                    <p>Confidence: 95% | Accuracy: ±5%</p>
+                    <p>Mean: 12.54 | Std Dev: 0.52 | Required Samples: 11</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 2: Time Study Analysis</h4>
+                    <p>Observed Times: 12.5, 13.2, 11.8, 12.9, 12.3, 15.7, 12.1</p>
+                    <p>Performance Rating: 110% | Allowance: 15%</p>
+                    <p>Outlier: 15.7 (IQR method) | Normal Time: 13.75 | Standard Time: 15.81</p>
+                </div>
+            </div>
+            
+            <div class="calculator-intro">
+                <h3>Time Study Methods</h3>
+                <table>
+                    <tr>
+                        <th>Method</th>
+                        <th>Description</th>
+                        <th>When to Use</th>
+                    </tr>
+                    <tr>
+                        <td>Continuous Timing</td>
+                        <td>Recording all elements continuously with a stopwatch</td>
+                        <td>Short cycles, high accuracy needed</td>
+                    </tr>
+                    <tr>
+                        <td>Snapback Timing</td>
+                        <td>Stopwatch is reset after each element</td>
+                        <td>Long cycles, distinct elements</td>
+                    </tr>
+                    <tr>
+                        <td>Work Sampling</td>
+                        <td>Random observations to determine time proportions</td>
+                        <td>Long, irregular cycles</td>
+                    </tr>
+                    <tr>
+                        <td>Predetermined Time Systems</td>
+                        <td>Using standard time data for basic motions</td>
+                        <td>When direct measurement isn't possible</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <p class="copyright">&copy; 2023 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Phase tab switching
+        const phaseTabs = document.querySelectorAll('.phase-tab');
+        const phaseContents = document.querySelectorAll('.phase-content');
+        
+        phaseTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                phaseTabs.forEach(t => t.classList.remove('active'));
+                phaseContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                const phase = tab.getAttribute('data-phase');
+                document.getElementById(`${phase}-phase`).classList.add('active');
+            });
+        });
+        
+        // Initialize charts
+        let pilotChart = null;
+        let timeStudyChart = null;
+        const pilotCtx = document.getElementById('pilot-chart').getContext('2d');
+        const timeStudyCtx = document.getElementById('time-study-chart').getContext('2d');
+        
+        // Sample Size Calculation
+        document.getElementById('sample-size-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const confidenceLevel = parseInt(document.getElementById('confidence-level').value);
+            const accuracy = parseFloat(document.getElementById('accuracy').value);
+            const pilotTimesInput = document.getElementById('pilot-times').value;
+            
+            // Parse times
+            const pilotTimes = pilotTimesInput.split(',').map(time => parseFloat(time.trim())).filter(time => !isNaN(time));
+            
+            if (pilotTimes.length < 3) {
+                alert('Please enter at least 3 valid time observations');
+                return;
+            }
+            
+            // Calculate statistics
+            const mean = pilotTimes.reduce((sum, time) => sum + time, 0) / pilotTimes.length;
+            const stdDev = Math.sqrt(pilotTimes.reduce((sum, time) => sum + Math.pow(time - mean, 2), 0) / pilotTimes.length);
+            
+            // Get z-score based on confidence level
+            let zScore;
+            switch (confidenceLevel) {
+                case 90: zScore = 1.645; break;
+                case 95: zScore = 1.96; break;
+                case 99: zScore = 2.576; break;
+                default: zScore = 1.96;
+            }
+            
+            // Calculate required sample size
+            const requiredSampleSize = Math.ceil(Math.pow((zScore * stdDev) / (mean * (accuracy / 100)), 2));
+            
+            // Display results
+            document.getElementById('mean-time-value').textContent = mean.toFixed(2) + ' sec';
+            document.getElementById('std-dev-value').textContent = stdDev.toFixed(2) + ' sec';
+            document.getElementById('sample-size-value').textContent = requiredSampleSize;
+            document.getElementById('current-obs-value').textContent = pilotTimes.length;
+            
+            // Create pilot study chart
+            createHistogramChart(pilotCtx, pilotTimes, 'Pilot Study Time Distribution', 'pilot-chart-placeholder');
+            
+            // Show results
+            document.getElementById('sample-size-result').style.display = 'block';
+            
+            // Enable time study phase
+            document.querySelector('[data-phase="time-study"]').classList.remove('disabled');
+        });
+        
+        // Time Study Analysis
+        document.getElementById('time-study-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const observedTimesInput = document.getElementById('observed-times').value;
+            const performanceRating = parseFloat(document.getElementById('performance-rating').value) / 100;
+            const allowanceFactor = parseFloat(document.getElementById('allowance-factor').value) / 100;
+            const outlierMethod = document.getElementById('outlier-method').value;
+            
+            // Parse times
+            let observedTimes = observedTimesInput.split(',').map(time => parseFloat(time.trim())).filter(time => !isNaN(time));
+            
+            if (observedTimes.length < 3) {
+                alert('Please enter at least 3 valid time observations');
+                return;
+            }
+            
+            // Detect and remove outliers
+            const { cleanTimes, outliers } = detectOutliers(observedTimes, outlierMethod);
+            
+            // Calculate statistics
+            const mean = cleanTimes.reduce((sum, time) => sum + time, 0) / cleanTimes.length;
+            const stdDev = Math.sqrt(cleanTimes.reduce((sum, time) => sum + Math.pow(time - mean, 2), 0) / cleanTimes.length);
+            
+            // Calculate normal and standard times
+            const normalTime = mean * performanceRating;
+            const standardTime = normalTime * (1 + allowanceFactor);
+            
+            // Display results
+            document.getElementById('observed-mean-value').textContent = mean.toFixed(2) + ' sec';
+            document.getElementById('observed-std-dev-value').textContent = stdDev.toFixed(2) + ' sec';
+            document.getElementById('outliers-value').textContent = outliers.length;
+            document.getElementById('valid-obs-value').textContent = cleanTimes.length;
+            document.getElementById('normal-time-value').textContent = normalTime.toFixed(2) + ' sec';
+            document.getElementById('standard-time-value').textContent = standardTime.toFixed(2) + ' sec';
+            
+            // Create time study chart
+            createHistogramChart(timeStudyCtx, cleanTimes, 'Time Study Distribution (Outliers Removed)', 'time-chart-placeholder');
+            
+            // Populate time data table
+            const timeDataTable = document.getElementById('time-data-table').querySelector('tbody');
+            timeDataTable.innerHTML = '';
+            
+            observedTimes.forEach((time, index) => {
+                const row = document.createElement('tr');
+                if (outliers.includes(time)) {
+                    row.classList.add('outlier');
+                }
+                
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${time.toFixed(2)}</td>
+                    <td>${outliers.includes(time) ? 'Outlier' : 'Valid'}</td>
+                `;
+                
+                timeDataTable.appendChild(row);
+            });
+            
+            // Show results
+            document.getElementById('time-study-result').style.display = 'block';
+        });
+        
+        // Outlier detection function
+        function detectOutliers(times, method = 'iqr') {
+            if (method === 'iqr') {
+                // IQR method
+                const sortedTimes = [...times].sort((a, b) => a - b);
+                const q1 = calculatePercentile(sortedTimes, 25);
+                const q3 = calculatePercentile(sortedTimes, 75);
+                const iqr = q3 - q1;
+                const lowerBound = q1 - 1.5 * iqr;
+                const upperBound = q3 + 1.5 * iqr;
+                
+                const outliers = times.filter(time => time < lowerBound || time > upperBound);
+                const cleanTimes = times.filter(time => time >= lowerBound && time <= upperBound);
+                
+                return { cleanTimes, outliers };
+            } else {
+                // Standard deviation method (3σ)
+                const mean = times.reduce((sum, time) => sum + time, 0) / times.length;
+                const stdDev = Math.sqrt(times.reduce((sum, time) => sum + Math.pow(time - mean, 2), 0) / times.length);
+                
+                const lowerBound = mean - 3 * stdDev;
+                const upperBound = mean + 3 * stdDev;
+                
+                const outliers = times.filter(time => time < lowerBound || time > upperBound);
+                const cleanTimes = times.filter(time => time >= lowerBound && time <= upperBound);
+                
+                return { cleanTimes, outliers };
+            }
+        }
+        
+        // Helper function to calculate percentile
+        function calculatePercentile(sortedArray, percentile) {
+            const index = percentile / 100 * (sortedArray.length - 1);
+            const lower = Math.floor(index);
+            const fraction = index - lower;
+            
+            if (lower + 1 < sortedArray.length) {
+                return sortedArray[lower] + fraction * (sortedArray[lower + 1] - sortedArray[lower]);
+            } else {
+                return sortedArray[lower];
+            }
+        }
+        
+        // Function to create histogram chart
+        function createHistogramChart(ctx, data, title, placeholderId) {
+            const placeholder = document.getElementById(placeholderId);
+            placeholder.style.display = 'none';
+            
+            // Destroy previous chart if it exists
+            if (ctx === pilotCtx && pilotChart) {
+                pilotChart.destroy();
+            } else if (ctx === timeStudyCtx && timeStudyChart) {
+                timeStudyChart.destroy();
+            }
+            
+            // Calculate optimal number of bins (Freedman-Diaconis rule)
+            const sortedData = [...data].sort((a, b) => a - b);
+            const iqr = calculatePercentile(sortedData, 75) - calculatePercentile(sortedData, 25);
+            const binWidth = 2 * iqr * Math.pow(data.length, -1/3);
+            const range = Math.max(...data) - Math.min(...data);
+            const binCount = Math.ceil(range / binWidth) || 1;
+            
+            // Create bins
+            const min = Math.min(...data);
+            const max = Math.max(...data);
+            const step = (max - min) / binCount;
+            
+            const bins = Array(binCount).fill().map((_, i) => min + i * step);
+            const counts = Array(binCount).fill(0);
+            
+            data.forEach(value => {
+                let binIndex = Math.floor((value - min) / step);
+                binIndex = Math.min(binIndex, binCount - 1); // Ensure we don't go out of bounds
+                counts[binIndex]++;
+            });
+            
+            // Create new chart
+            const newChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: bins.map((bin, i) => {
+                        const nextBin = i < bins.length - 1 ? bins[i + 1] : max;
+                        return `${bin.toFixed(1)}-${nextBin.toFixed(1)}`;
+                    }),
+                    datasets: [{
+                        label: 'Frequency',
+                        data: counts,
+                        backgroundColor: '#3498db',
+                        borderColor: '#2980b9',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Frequency'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Time Range (seconds)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: title,
+                            font: {
+                                size: 16
+                            }
+                        },
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+            
+            // Save chart reference
+            if (ctx === pilotCtx) {
+                pilotChart = newChart;
+            } else {
+                timeStudyChart = newChart;
+            }
+        }
+    </script>
+</body>
+</html>
