@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Flow Shop Scheduling Calculator - Johnson's Rule, NEH Heuristic, Makespan Calculation">
+    <title>Flow Shop Scheduling Calculator | Industrial Engineering Calculators</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .algorithm-selector {
+            margin-bottom: 2rem;
+        }
+        
+        .algorithm-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .algorithm-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            margin-right: 0.5rem;
+            border-radius: 5px 5px 0 0;
+            background-color: #f1f1f1;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .algorithm-tab.active {
+            background-color: white;
+            border-color: #ddd;
+            border-bottom-color: white;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        
+        .algorithm-tab:hover:not(.active) {
+            background-color: #e9e9e9;
+        }
+        
+        .algorithm-content {
+            display: none;
+        }
+        
+        .algorithm-content.active {
+            display: block;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, 
+        .input-group select, 
+        .input-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group textarea {
+            min-height: 100px;
+            font-family: monospace;
+        }
+        
+        .input-group input:focus, 
+        .input-group select:focus, 
+        .input-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-section {
+            margin-top: 2rem;
+            display: none;
+        }
+        
+        .chart-container {
+            width: 100%;
+            height: 400px;
+            margin: 2rem 0;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 1rem;
+            position: relative;
+        }
+        
+        .chart-placeholder {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            color: var(--text-light);
+            font-style: italic;
+        }
+        
+        .schedule-results {
+            margin-top: 1.5rem;
+        }
+        
+        .schedule-results h4 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        .result-metrics {
+            display: flex;
+            justify-content: space-between;
+            margin: 1.5rem 0;
+        }
+        
+        .metric-card {
+            flex: 1;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 0 0.5rem;
+            text-align: center;
+        }
+        
+        .metric-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-card .metric-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .metric-card.makespan .metric-value {
+            color: #3498db;
+        }
+        
+        .metric-card.utilization .metric-value {
+            color: #f39c12;
+        }
+        
+        .metric-card.idle-time .metric-value {
+            color: #2ecc71;
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .algorithm-tabs {
+                flex-direction: column;
+            }
+            
+            .algorithm-tab {
+                border-radius: 0;
+                margin-right: 0;
+                border-bottom: 1px solid #ddd;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .result-metrics {
+                flex-direction: column;
+            }
+            
+            .metric-card {
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">Industrial <span>Engineering</span> Calculators</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Flow Shop Scheduling Calculator</h1>
+            <p>Calculate optimal schedules using Johnson's Rule, NEH Heuristic, and other algorithms</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Flow Shop Scheduling</h2>
+                <p>Flow shop scheduling involves sequencing jobs through a series of machines where each job must follow the same machine order. The goal is typically to minimize the makespan (total completion time).</p>
+                
+                <div class="formula-box">
+                    Makespan = max(C_i) where C_i is completion time of job i
+                </div>
+                
+                <p>Key algorithms:</p>
+                <ul>
+                    <li><strong>Johnson's Rule</strong>: Optimal for 2-machine flow shops</li>
+                    <li><strong>NEH Heuristic</strong>: Effective heuristic for m-machine problems</li>
+                    <li><strong>CDS Heuristic</strong>: Extension of Johnson's rule to m machines</li>
+                    <li><strong>Palmer Heuristic</strong>: Uses slope indices to prioritize jobs</li>
+                </ul>
+            </div>
+            
+            <div class="algorithm-selector">
+                <h3>Select Algorithm</h3>
+                <p>Choose the appropriate algorithm for your problem:</p>
+                
+                <div class="algorithm-tabs">
+                    <div class="algorithm-tab active" data-algorithm="johnson">Johnson's Rule (2 machines)</div>
+                    <div class="algorithm-tab" data-algorithm="neh">NEH Heuristic</div>
+                    <div class="algorithm-tab" data-algorithm="cds">CDS Heuristic</div>
+                    <div class="algorithm-tab" data-algorithm="palmer">Palmer Heuristic</div>
+                </div>
+                
+                <!-- Johnson's Rule -->
+                <div class="algorithm-content active" id="johnson-algorithm">
+                    <h3>Johnson's Rule (2-Machine Flow Shop)</h3>
+                    <p>Optimal algorithm for minimizing makespan in 2-machine flow shops. Jobs are sequenced based on processing times on the two machines.</p>
+                    
+                    <form id="johnson-form">
+                        <div class="input-group">
+                            <label for="johnson-jobs">Enter job processing times (Machine 1, Machine 2) as JSON:</label>
+                            <textarea id="johnson-jobs" placeholder='Example: [{"id":"Job1","times":[5,8]},{"id":"Job2","times":[4,6]}]'></textarea>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate Optimal Sequence</button>
+                    </form>
+                </div>
+                
+                <!-- NEH Heuristic -->
+                <div class="algorithm-content" id="neh-algorithm">
+                    <h3>NEH Heuristic (Nawaz-Enscore-Ham)</h3>
+                    <p>Effective heuristic for m-machine flow shops. Jobs are ordered by total processing time, then inserted to minimize makespan.</p>
+                    
+                    <form id="neh-form">
+                        <div class="input-group">
+                            <label for="neh-jobs">Enter job processing times as JSON (array of arrays):</label>
+                            <textarea id="neh-jobs" placeholder='Example: [{"id":"Job1","times":[5,8,4]},{"id":"Job2","times":[4,6,7]}]'></textarea>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="neh-machines">Number of Machines:</label>
+                            <input type="number" id="neh-machines" min="2" value="3" required>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate NEH Sequence</button>
+                    </form>
+                </div>
+                
+                <!-- CDS Heuristic -->
+                <div class="algorithm-content" id="cds-algorithm">
+                    <h3>CDS Heuristic (Campbell-Dudek-Smith)</h3>
+                    <p>Extension of Johnson's rule to m machines by creating m-1 artificial 2-machine problems.</p>
+                    
+                    <form id="cds-form">
+                        <div class="input-group">
+                            <label for="cds-jobs">Enter job processing times as JSON (array of arrays):</label>
+                            <textarea id="cds-jobs" placeholder='Example: [{"id":"Job1","times":[5,8,4]},{"id":"Job2","times":[4,6,7]}]'></textarea>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="cds-machines">Number of Machines:</label>
+                            <input type="number" id="cds-machines" min="2" value="3" required>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate CDS Sequence</button>
+                    </form>
+                </div>
+                
+                <!-- Palmer Heuristic -->
+                <div class="algorithm-content" id="palmer-algorithm">
+                    <h3>Palmer Heuristic</h3>
+                    <p>Uses slope indices to prioritize jobs based on processing times across machines.</p>
+                    
+                    <form id="palmer-form">
+                        <div class="input-group">
+                            <label for="palmer-jobs">Enter job processing times as JSON (array of arrays):</label>
+                            <textarea id="palmer-jobs" placeholder='Example: [{"id":"Job1","times":[5,8,4]},{"id":"Job2","times":[4,6,7]}]'></textarea>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="palmer-machines">Number of Machines:</label>
+                            <input type="number" id="palmer-machines" min="2" value="3" required>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate Palmer Sequence</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="result-section" id="result-section">
+                <h3>Scheduling Results</h3>
+                
+                <div class="result-metrics">
+                    <div class="metric-card makespan">
+                        <h4>Makespan</h4>
+                        <div class="metric-value" id="makespan-value"></div>
+                        <p>Total completion time</p>
+                    </div>
+                    
+                    <div class="metric-card utilization">
+                        <h4>Average Utilization</h4>
+                        <div class="metric-value" id="utilization-value"></div>
+                        <p>Machine busy time</p>
+                    </div>
+                    
+                    <div class="metric-card idle-time">
+                        <h4>Total Idle Time</h4>
+                        <div class="metric-value" id="idle-time-value"></div>
+                        <p>Across all machines</p>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="gantt-chart"></canvas>
+                    <div class="chart-placeholder" id="chart-placeholder">
+                        Gantt chart will appear here after calculation
+                    </div>
+                </div>
+                
+                <div class="schedule-results">
+                    <h4>Optimal Sequence</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Position</th>
+                                <th>Job ID</th>
+                                <th>Processing Times</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sequence-body">
+                            <!-- Filled by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="schedule-results">
+                    <h4>Machine Completion Times</h4>
+                    <table id="completion-times-table">
+                        <!-- Filled by JavaScript -->
+                    </table>
+                </div>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Practical Examples</h3>
+                
+                <div class="example">
+                    <h4>Example 1: Johnson's Rule</h4>
+                    <p>Jobs: [{"id":"A","times":[3,6]},{"id":"B","times":[5,2]},{"id":"C","times":[1,8]}]</p>
+                    <p>Optimal Sequence: C → A → B | Makespan: 13</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 2: NEH Heuristic</h4>
+                    <p>Jobs: [{"id":"X","times":[5,4,3]},{"id":"Y","times":[2,3,4]},{"id":"Z","times":[4,1,2]}]</p>
+                    <p>NEH Sequence: X → Z → Y | Makespan: 14</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 3: CDS Heuristic</h4>
+                    <p>Jobs: [{"id":"J1","times":[3,4,6]},{"id":"J2","times":[5,2,4]},{"id":"J3","times":[2,3,1]}]</p>
+                    <p>CDS Sequence: J3 → J1 → J2 | Makespan: 15</p>
+                </div>
+            </div>
+            
+            <div class="calculator-intro">
+                <h3>Algorithm Comparison</h3>
+                <table>
+                    <tr>
+                        <th>Algorithm</th>
+                        <th>Machines</th>
+                        <th>Optimality</th>
+                        <th>Complexity</th>
+                        <th>Best For</th>
+                    </tr>
+                    <tr>
+                        <td>Johnson's Rule</td>
+                        <td>2</td>
+                        <td>Optimal</td>
+                        <td>O(n log n)</td>
+                        <td>Simple 2-machine problems</td>
+                    </tr>
+                    <tr>
+                        <td>NEH Heuristic</td>
+                        <td>m ≥ 2</td>
+                        <td>Heuristic</td>
+                        <td>O(n³)</td>
+                        <td>General flow shops</td>
+                    </tr>
+                    <tr>
+                        <td>CDS Heuristic</td>
+                        <td>m ≥ 2</td>
+                        <td>Heuristic</td>
+                        <td>O(mn log n)</td>
+                        <td>When Johnson-like results desired</td>
+                    </tr>
+                    <tr>
+                        <td>Palmer Heuristic</td>
+                        <td>m ≥ 2</td>
+                        <td>Heuristic</td>
+                        <td>O(mn)</td>
+                        <td>Quick approximation</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <p class="copyright">&copy; 2023 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Algorithm tab switching
+        const algoTabs = document.querySelectorAll('.algorithm-tab');
+        const algoContents = document.querySelectorAll('.algorithm-content');
+        
+        algoTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                algoTabs.forEach(t => t.classList.remove('active'));
+                algoContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                const algorithm = tab.getAttribute('data-algorithm');
+                document.getElementById(`${algorithm}-algorithm`).classList.add('active');
+            });
+        });
+        
+        // Initialize Gantt chart
+        let ganttChart = null;
+        const ganttCtx = document.getElementById('gantt-chart').getContext('2d');
+        
+        // Johnson's Rule calculation
+        document.getElementById('johnson-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            try {
+                const jobs = JSON.parse(document.getElementById('johnson-jobs').value);
+                
+                // Validate input
+                if (!Array.isArray(jobs) || jobs.length === 0) {
+                    alert('Please enter valid job data');
+                    return;
+                }
+                
+                // Check all jobs have exactly 2 processing times
+                for (const job of jobs) {
+                    if (!Array.isArray(job.times) || job.times.length !== 2) {
+                        alert(`Job ${job.id} must have exactly 2 processing times for Johnson's Rule`);
+                        return;
+                    }
+                }
+                
+                // Implement Johnson's Rule
+                const sequence = applyJohnsonsRule(jobs);
+                
+                // Calculate schedule and metrics
+                const { makespan, utilization, idleTime, completionTimes } = calculateScheduleMetrics(sequence, 2);
+                
+                // Display results
+                displayResults(sequence, makespan, utilization, idleTime, completionTimes);
+                
+            } catch (error) {
+                alert('Error parsing input: ' + error.message);
+            }
+        });
+        
+        // NEH Heuristic calculation
+        document.getElementById('neh-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            try {
+                const jobs = JSON.parse(document.getElementById('neh-jobs').value);
+                const machines = parseInt(document.getElementById('neh-machines').value);
+                
+                // Validate input
+                if (!Array.isArray(jobs) || jobs.length === 0) {
+                    alert('Please enter valid job data');
+                    return;
+                }
+                
+                // Check all jobs have correct number of processing times
+                for (const job of jobs) {
+                    if (!Array.isArray(job.times) || job.times.length !== machines) {
+                        alert(`Job ${job.id} must have exactly ${machines} processing times`);
+                        return;
+                    }
+                }
+                
+                // Implement NEH Heuristic
+                const sequence = applyNEHHeuristic(jobs, machines);
+                
+                // Calculate schedule and metrics
+                const { makespan, utilization, idleTime, completionTimes } = calculateScheduleMetrics(sequence, machines);
+                
+                // Display results
+                displayResults(sequence, makespan, utilization, idleTime, completionTimes);
+                
+            } catch (error) {
+                alert('Error parsing input: ' + error.message);
+            }
+        });
+        
+        // CDS Heuristic calculation
+        document.getElementById('cds-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            try {
+                const jobs = JSON.parse(document.getElementById('cds-jobs').value);
+                const machines = parseInt(document.getElementById('cds-machines').value);
+                
+                // Validate input
+                if (!Array.isArray(jobs) || jobs.length === 0) {
+                    alert('Please enter valid job data');
+                    return;
+                }
+                
+                if (machines < 2) {
+                    alert('CDS requires at least 2 machines');
+                    return;
+                }
+                
+                // Check all jobs have correct number of processing times
+                for (const job of jobs) {
+                    if (!Array.isArray(job.times) || job.times.length !== machines) {
+                        alert(`Job ${job.id} must have exactly ${machines} processing times`);
+                        return;
+                    }
+                }
+                
+                // Implement CDS Heuristic
+                const sequence = applyCDSHeuristic(jobs, machines);
+                
+                // Calculate schedule and metrics
+                const { makespan, utilization, idleTime, completionTimes } = calculateScheduleMetrics(sequence, machines);
+                
+                // Display results
+                displayResults(sequence, makespan, utilization, idleTime, completionTimes);
+                
+            } catch (error) {
+                alert('Error parsing input: ' + error.message);
+            }
+        });
+        
+        // Palmer Heuristic calculation
+        document.getElementById('palmer-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            try {
+                const jobs = JSON.parse(document.getElementById('palmer-jobs').value);
+                const machines = parseInt(document.getElementById('palmer-machines').value);
+                
+                // Validate input
+                if (!Array.isArray(jobs) || jobs.length === 0) {
+                    alert('Please enter valid job data');
+                    return;
+                }
+                
+                // Check all jobs have correct number of processing times
+                for (const job of jobs) {
+                    if (!Array.isArray(job.times) || job.times.length !== machines) {
+                        alert(`Job ${job.id} must have exactly ${machines} processing times`);
+                        return;
+                    }
+                }
+                
+                // Implement Palmer Heuristic
+                const sequence = applyPalmerHeuristic(jobs, machines);
+                
+                // Calculate schedule and metrics
+                const { makespan, utilization, idleTime, completionTimes } = calculateScheduleMetrics(sequence, machines);
+                
+                // Display results
+                displayResults(sequence, makespan, utilization, idleTime, completionTimes);
+                
+            } catch (error) {
+                alert('Error parsing input: ' + error.message);
+            }
+        });
+        
+        // Johnson's Rule implementation
+        function applyJohnsonsRule(jobs) {
+            // Step 1: Divide jobs into two sets
+            const set1 = [];
+            const set2 = [];
+            
+            for (const job of jobs) {
+                if (job.times[0] <= job.times[1]) {
+                    set1.push(job);
+                } else {
+                    set2.push(job);
+                }
+            }
+            
+            // Step 2: Sort set1 by increasing order of Machine 1 times
+            set1.sort((a, b) => a.times[0] - b.times[0]);
+            
+            // Step 3: Sort set2 by decreasing order of Machine 2 times
+            set2.sort((a, b) => b.times[1] - a.times[1]);
+            
+            // Step 4: Concatenate set1 and set2
+            return [...set1, ...set2];
+        }
+        
+        // NEH Heuristic implementation
+        function applyNEHHeuristic(jobs, machines) {
+            // Step 1: Order jobs by decreasing sums of processing times
+            const jobsWithTotal = jobs.map(job => ({
+                ...job,
+                total: job.times.reduce((sum, time) => sum + time, 0)
+            }));
+            
+            jobsWithTotal.sort((a, b) => b.total - a.total);
+            
+            // Step 2: Take first two jobs and schedule them to minimize makespan
+            let sequence = [jobsWithTotal[0]];
+            
+            if (jobsWithTotal.length > 1) {
+                const job1 = jobsWithTotal[0];
+                const job2 = jobsWithTotal[1];
+                
+                // Try both orders and keep the better one
+                const makespan1 = calculateMakespan([job1, job2], machines);
+                const makespan2 = calculateMakespan([job2, job1], machines);
+                
+                sequence = makespan1 <= makespan2 ? [job1, job2] : [job2, job1];
+            }
+            
+            // Step 3: Insert remaining jobs at the position that minimizes makespan
+            for (let i = 2; i < jobsWithTotal.length; i++) {
+                const currentJob = jobsWithTotal[i];
+                let bestPosition = 0;
+                let bestMakespan = Infinity;
+                
+                // Try inserting at every possible position
+                for (let pos = 0; pos <= sequence.length; pos++) {
+                    const newSequence = [...sequence];
+                    newSequence.splice(pos, 0, currentJob);
+                    const makespan = calculateMakespan(newSequence, machines);
+                    
+                    if (makespan < bestMakespan) {
+                        bestMakespan = makespan;
+                        bestPosition = pos;
+                    }
+                }
+                
+                // Insert at best position
+                sequence.splice(bestPosition, 0, currentJob);
+            }
+            
+            return sequence;
+        }
+        
+        // CDS Heuristic implementation
+        function applyCDSHeuristic(jobs, machines) {
+            // Create m-1 artificial 2-machine problems
+            const sequences = [];
+            
+            for (let k = 1; k < machines; k++) {
+                // Create artificial processing times
+                const artificialJobs = jobs.map(job => ({
+                    id: job.id,
+                    times: [
+                        job.times.slice(0, k).reduce((sum, time) => sum + time, 0),
+                        job.times.slice(k).reduce((sum, time) => sum + time, 0)
+                    ]
+                }));
+                
+                // Apply Johnson's rule to artificial problem
+                const sequence = applyJohnsonsRule(artificialJobs);
+                sequences.push(sequence);
+            }
+            
+            // Evaluate each sequence on original problem
+            let bestSequence = [];
+            let bestMakespan = Infinity;
+            
+            for (const seq of sequences) {
+                const makespan = calculateMakespan(seq, machines);
+                if (makespan < bestMakespan) {
+                    bestMakespan = makespan;
+                    bestSequence = seq;
+                }
+            }
+            
+            return bestSequence;
+        }
+        
+        // Palmer Heuristic implementation
+        function applyPalmerHeuristic(jobs, machines) {
+            // Calculate slope index for each job
+            const jobsWithSlope = jobs.map(job => {
+                let slope = 0;
+                for (let i = 0; i < machines; i++) {
+                    slope += (machines - 1 - 2 * i) * job.times[i];
+                }
+                return {
+                    ...job,
+                    slope: slope
+                };
+            });
+            
+            // Sort by decreasing slope index
+            jobsWithSlope.sort((a, b) => b.slope - a.slope);
+            return jobsWithSlope;
+        }
+        
+        // Calculate makespan for a given sequence
+        function calculateMakespan(sequence, machines) {
+            const completionTimes = Array(machines).fill(0);
+            
+            for (const job of sequence) {
+                // First machine
+                completionTimes[0] += job.times[0];
+                
+                // Subsequent machines
+                for (let m = 1; m < machines; m++) {
+                    completionTimes[m] = Math.max(completionTimes[m], completionTimes[m-1]) + job.times[m];
+                }
+            }
+            
+            return completionTimes[machines-1];
+        }
+        
+        // Calculate schedule metrics
+        function calculateScheduleMetrics(sequence, machines) {
+            const completionTimes = Array(machines).fill().map(() => []);
+            let currentTime = Array(machines).fill(0);
+            let totalProcessingTime = 0;
+            
+            // Calculate completion times for each job on each machine
+            for (const job of sequence) {
+                // First machine
+                currentTime[0] += job.times[0];
+                completionTimes[0].push({ job: job.id, start: currentTime[0] - job.times[0], end: currentTime[0] });
+                
+                // Subsequent machines
+                for (let m = 1; m < machines; m++) {
+                    currentTime[m] = Math.max(currentTime[m], currentTime[m-1]) + job.times[m];
+                    completionTimes[m].push({ job: job.id, start: currentTime[m] - job.times[m], end: currentTime[m] });
+                }
+                
+                // Sum processing times for utilization calculation
+                totalProcessingTime += job.times.reduce((sum, time) => sum + time, 0);
+            }
+            
+            const makespan = currentTime[machines-1];
+            const totalMachineTime = makespan * machines;
+            const utilization = (totalProcessingTime / totalMachineTime * 100).toFixed(1);
+            const idleTime = totalMachineTime - totalProcessingTime;
+            
+            return { makespan, utilization, idleTime, completionTimes };
+        }
+        
+        // Display results
+        function displayResults(sequence, makespan, utilization, idleTime, completionTimes) {
+            // Update metrics
+            document.getElementById('makespan-value').textContent = makespan;
+            document.getElementById('utilization-value').textContent = utilization + '%';
+            document.getElementById('idle-time-value').textContent = idleTime;
+            
+            // Update sequence table
+            const sequenceBody = document.getElementById('sequence-body');
+            sequenceBody.innerHTML = '';
+            
+            sequence.forEach((job, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${job.id}</td>
+                    <td>${job.times.join(', ')}</td>
+                `;
+                sequenceBody.appendChild(row);
+            });
+            
+            // Update completion times table
+            const completionTable = document.getElementById('completion-times-table');
+            completionTable.innerHTML = '';
+            
+            // Create header
+            const headerRow = document.createElement('tr');
+            headerRow.innerHTML = '<th>Machine</th>';
+            
+            sequence.forEach((job, index) => {
+                headerRow.innerHTML += `<th>${job.id}</th>`;
+            });
+            
+            completionTable.appendChild(headerRow);
+            
+            // Add rows for each machine
+            completionTimes.forEach((machineTimes, machineIndex) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td>M${machineIndex + 1}</td>`;
+                
+                machineTimes.forEach(jobTime => {
+                    row.innerHTML += `<td>${jobTime.start}-${jobTime.end}</td>`;
+                });
+                
+                completionTable.appendChild(row);
+            });
+            
+            // Create Gantt chart
+            createGanttChart(sequence, completionTimes);
+            
+            // Show results section
+            document.getElementById('result-section').style.display = 'block';
+        }
+        
+        // Create Gantt chart
+        function createGanttChart(sequence, completionTimes) {
+            const chartPlaceholder = document.getElementById('chart-placeholder');
+            chartPlaceholder.style.display = 'none';
+            
+            // Destroy previous chart if it exists
+            if (ganttChart) {
+                ganttChart.destroy();
+            }
+            
+            // Prepare datasets for each machine
+            const datasets = completionTimes.map((machineTimes, machineIndex) => {
+                // Generate random color for each job
+                const jobColors = {};
+                sequence.forEach(job => {
+                    jobColors[job.id] = `#${Math.floor(Math.random()*16777215).toString(16)}`;
+                });
+                
+                return {
+                    label: `Machine ${machineIndex + 1}`,
+                    data: machineTimes.map(jobTime => ({
+                        x: [jobTime.start, jobTime.end],
+                        y: `M${machineIndex + 1}`
+                    })),
+                    backgroundColor: machineTimes.map(jobTime => jobColors[jobTime.job]),
+                    borderColor: machineTimes.map(jobTime => jobColors[jobTime.job]),
+                    borderWidth: 1,
+                    borderRadius: 2,
+                    borderSkipped: false
+                };
+            });
+            
+            // Create new chart
+            ganttChart = new Chart(ganttCtx, {
+                type: 'bar',
+                data: {
+                    labels: completionTimes.map((_, i) => `M${i + 1}`),
+                    datasets: datasets
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            title: {
+                                display: true,
+                                text: 'Time'
+                            },
+                            min: 0
+                        },
+                        y: {
+                            stacked: true,
+                            title: {
+                                display: true,
+                                text: 'Machines'
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Flow Shop Gantt Chart',
+                            font: {
+                                size: 16
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const data = context.raw;
+                                    const job = sequence[context.dataIndex].id;
+                                    return `${job}: ${data.x[0]} to ${data.x[1]} (Duration: ${data.x[1] - data.x[0]})`;
+                                }
+                            }
+                        },
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
