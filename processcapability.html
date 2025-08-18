@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Process Capability Calculator - Calculate Cp, Cpk, Pp, Ppk and other capability indices">
+    <title>Process Capability Calculator | Industrial Engineering Calculators</title>
+    <style>
+        /* Consistent with existing style */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select, .input-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        /* Process Capability specific styles */
+        .data-entry-method {
+            margin-bottom: 2rem;
+        }
+        
+        .method-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+        }
+        
+        .method-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            margin-right: 0.5rem;
+            border-radius: 5px 5px 0 0;
+            background-color: #f1f1f1;
+            transition: all 0.3s;
+        }
+        
+        .method-tab.active {
+            background-color: white;
+            border-color: #ddd;
+            border-bottom-color: white;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        
+        .method-tab:hover:not(.active) {
+            background-color: #e9e9e9;
+        }
+        
+        .method-content {
+            display: none;
+        }
+        
+        .method-content.active {
+            display: block;
+        }
+        
+        .data-grid {
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .data-table th, .data-table td {
+            border: 1px solid #ddd;
+            padding: 0.5rem;
+            text-align: center;
+        }
+        
+        .data-table th {
+            background-color: #f2f2f2;
+            font-weight: 500;
+        }
+        
+        .data-table input {
+            width: 100px;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            text-align: center;
+        }
+        
+        .data-table input:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+        }
+        
+        .add-row-btn {
+            background-color: var(--light-color);
+            color: var(--primary-color);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 1rem;
+        }
+        
+        .add-row-btn:hover {
+            background-color: #d6e4f0;
+        }
+        
+        .metric-results {
+            display: flex;
+            justify-content: space-between;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .metric-card {
+            flex: 1;
+            min-width: 200px;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 0.5rem;
+            text-align: center;
+        }
+        
+        .metric-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-card .metric-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .metric-card.cp .metric-value {
+            color: #3498db;
+        }
+        
+        .metric-card.cpk .metric-value {
+            color: #f39c12;
+        }
+        
+        .metric-card.pp .metric-value {
+            color: #9b59b6;
+        }
+        
+        .metric-card.ppk .metric-value {
+            color: #2ecc71;
+        }
+        
+        .metric-card.sigma .metric-value {
+            color: #e74c3c;
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        .interpretation-table {
+            width: 100%;
+            margin-top: 1.5rem;
+        }
+        
+        .interpretation-table th {
+            background-color: var(--light-color);
+        }
+        
+        .good {
+            background-color: rgba(46, 204, 113, 0.2);
+        }
+        
+        .marginal {
+            background-color: rgba(241, 196, 15, 0.2);
+        }
+        
+        .poor {
+            background-color: rgba(231, 76, 60, 0.2);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .method-tabs {
+                flex-direction: column;
+            }
+            
+            .method-tab {
+                border-radius: 0;
+                margin-right: 0;
+                border-bottom: 1px solid #ddd;
+            }
+            
+            .metric-results {
+                flex-direction: column;
+            }
+            
+            .metric-card {
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">Industrial <span>Engineering</span> Calculators</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Process Capability Calculator</h1>
+            <p>Calculate Cp, Cpk, Pp, Ppk and other capability indices</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Process Capability Analysis</h2>
+                <p>Process capability indices measure how well a process meets specifications. They compare the spread of the process variation to the width of the specification limits.</p>
+                
+                <div class="formula-box">
+                    Cp = (USL - LSL) / (6σ)  &nbsp;&nbsp; Cpk = min[(USL - μ) / (3σ), (μ - LSL) / (3σ)]
+                    <br>
+                    Pp = (USL - LSL) / (6s)  &nbsp;&nbsp; Ppk = min[(USL - μ) / (3s), (μ - LSL) / (3s)]
+                </div>
+                
+                <p>Where:</p>
+                <ul>
+                    <li><strong>USL</strong> = Upper Specification Limit</li>
+                    <li><strong>LSL</strong> = Lower Specification Limit</li>
+                    <li><strong>μ</strong> = Process mean</li>
+                    <li><strong>σ</strong> = Within-subgroup standard deviation (estimates short-term variation)</li>
+                    <li><strong>s</strong> = Overall standard deviation (estimates long-term variation)</li>
+                </ul>
+            </div>
+            
+            <div class="data-entry-method">
+                <h3>Data Entry Method</h3>
+                <p>Select how you want to enter your process data:</p>
+                
+                <div class="method-tabs">
+                    <div class="method-tab active" data-method="summary">Summary Statistics</div>
+                    <div class="method-tab" data-method="individual">Individual Values</div>
+                    <div class="method-tab" data-method="subgroups">Subgroup Data</div>
+                </div>
+                
+                <!-- Summary Statistics Method -->
+                <div class="method-content active" id="summary-method">
+                    <h3>Enter Summary Statistics</h3>
+                    <p>Calculate capability indices using pre-calculated statistics.</p>
+                    
+                    <form id="summary-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="usl">Upper Specification Limit (USL):</label>
+                                <input type="number" id="usl" step="0.001" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="lsl">Lower Specification Limit (LSL):</label>
+                                <input type="number" id="lsl" step="0.001" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="process-mean">Process Mean (μ):</label>
+                                <input type="number" id="process-mean" step="0.001" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="within-stddev">Within Subgroup Std Dev (σ):</label>
+                                <input type="number" id="within-stddev" min="0" step="0.001" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="overall-stddev">Overall Std Dev (s):</label>
+                                <input type="number" id="overall-stddev" min="0" step="0.001" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="sample-size">Sample Size (n):</label>
+                                <input type="number" id="sample-size" min="2" step="1" value="30" required>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate Capability</button>
+                    </form>
+                </div>
+                
+                <!-- Individual Values Method -->
+                <div class="method-content" id="individual-method">
+                    <h3>Enter Individual Values</h3>
+                    <p>Calculate capability indices from raw measurement data.</p>
+                    
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="individual-usl">Upper Specification Limit (USL):</label>
+                            <input type="number" id="individual-usl" step="0.001" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="individual-lsl">Lower Specification Limit (LSL):</label>
+                            <input type="number" id="individual-lsl" step="0.001" required>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="individual-data">Enter measurements (comma or space separated):</label>
+                        <textarea id="individual-data" rows="4" placeholder="e.g., 10.2, 10.5, 10.3, 10.1, 10.4" required></textarea>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="subgroup-size-individual">Subgroup Size (for within variation calculation):</label>
+                        <input type="number" id="subgroup-size-individual" min="2" max="10" value="5" required>
+                    </div>
+                    
+                    <button type="button" id="calculate-individual" class="calculate-btn">Calculate Capability</button>
+                </div>
+                
+                <!-- Subgroup Data Method -->
+                <div class="method-content" id="subgroups-method">
+                    <h3>Enter Subgroup Data</h3>
+                    <p>Calculate capability indices from subgrouped data (e.g., for control charts).</p>
+                    
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="subgroup-usl">Upper Specification Limit (USL):</label>
+                            <input type="number" id="subgroup-usl" step="0.001" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="subgroup-lsl">Lower Specification Limit (LSL):</label>
+                            <input type="number" id="subgroup-lsl" step="0.001" required>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="subgroup-size">Subgroup Size:</label>
+                        <input type="number" id="subgroup-size" min="2" max="10" value="5" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="subgroup-data">Enter subgroup data (one subgroup per line, values comma separated):</label>
+                        <textarea id="subgroup-data" rows="6" placeholder="e.g., 10.2, 10.5, 10.3, 10.1, 10.4
+10.3, 10.4, 10.2, 10.5, 10.3
+10.1, 10.2, 10.4, 10.3, 10.5" required></textarea>
+                    </div>
+                    
+                    <button type="button" id="calculate-subgroups" class="calculate-btn">Calculate Capability</button>
+                </div>
+            </div>
+            
+            <div class="result-box" id="capability-result">
+                <h3>Process Capability Results</h3>
+                
+                <div class="metric-results">
+                    <div class="metric-card cp">
+                        <h4>Cp</h4>
+                        <div class="metric-value" id="cp-value"></div>
+                        <p>Potential Capability</p>
+                    </div>
+                    
+                    <div class="metric-card cpk">
+                        <h4>Cpk</h4>
+                        <div class="metric-value" id="cpk-value"></div>
+                        <p>Actual Capability</p>
+                    </div>
+                    
+                    <div class="metric-card pp">
+                        <h4>Pp</h4>
+                        <div class="metric-value" id="pp-value"></div>
+                        <p>Overall Potential</p>
+                    </div>
+                    
+                    <div class="metric-card ppk">
+                        <h4>Ppk</h4>
+                        <div class="metric-value" id="ppk-value"></div>
+                        <p>Overall Performance</p>
+                    </div>
+                    
+                    <div class="metric-card sigma">
+                        <h4>Sigma Level</h4>
+                        <div class="metric-value" id="sigma-value"></div>
+                        <p>Process Sigma</p>
+                    </div>
+                </div>
+                
+                <h4>Process Statistics</h4>
+                <table>
+                    <tr>
+                        <th>Statistic</th>
+                        <th>Value</th>
+                    </tr>
+                    <tr>
+                        <td>Mean (μ)</td>
+                        <td id="result-mean"></td>
+                    </tr>
+                    <tr>
+                        <td>Within Subgroup Std Dev (σ)</td>
+                        <td id="result-within-stddev"></td>
+                    </tr>
+                    <tr>
+                        <td>Overall Std Dev (s)</td>
+                        <td id="result-overall-stddev"></td>
+                    </tr>
+                    <tr>
+                        <td>Sample Size (n)</td>
+                        <td id="result-sample-size"></td>
+                    </tr>
+                </table>
+                
+                <h4>Capability Interpretation</h4>
+                <table class="interpretation-table">
+                    <tr>
+                        <th>Index</th>
+                        <th>Value</th>
+                        <th>Interpretation</th>
+                    </tr>
+                    <tr id="cp-interpretation">
+                        <td>Cp</td>
+                        <td id="cp-interpret-value"></td>
+                        <td id="cp-interpret-text"></td>
+                    </tr>
+                    <tr id="cpk-interpretation">
+                        <td>Cpk</td>
+                        <td id="cpk-interpret-value"></td>
+                        <td id="cpk-interpret-text"></td>
+                    </tr>
+                    <tr id="pp-interpretation">
+                        <td>Pp</td>
+                        <td id="pp-interpret-value"></td>
+                        <td id="pp-interpret-text"></td>
+                    </tr>
+                    <tr id="ppk-interpretation">
+                        <td>Ppk</td>
+                        <td id="ppk-interpret-value"></td>
+                        <td id="ppk-interpret-text"></td>
+                    </tr>
+                </table>
+                
+                <h4>Estimated Defect Rates</h4>
+                <table>
+                    <tr>
+                        <th>Defect Type</th>
+                        <th>Estimated Rate</th>
+                        <th>Defects Per Million (DPMO)</th>
+                    </tr>
+                    <tr>
+                        <td>Below LSL</td>
+                        <td id="defect-below"></td>
+                        <td id="dpmo-below"></td>
+                    </tr>
+                    <tr>
+                        <td>Above USL</td>
+                        <td id="defect-above"></td>
+                        <td id="dpmo-above"></td>
+                    </tr>
+                    <tr>
+                        <td>Total</td>
+                        <td id="defect-total"></td>
+                        <td id="dpmo-total"></td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Practical Examples</h3>
+                
+                <div class="example">
+                    <h4>Example 1: Excellent Capability</h4>
+                    <p>USL = 10.5, LSL = 9.5, μ = 10.0, σ = 0.1, s = 0.12</p>
+                    <p>Cp = 1.67, Cpk = 1.67, Pp = 1.39, Ppk = 1.39</p>
+                    <p>This process is excellent with very low defect rates.</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 2: Marginal Capability</h4>
+                    <p>USL = 10.5, LSL = 9.5, μ = 10.2, σ = 0.15, s = 0.18</p>
+                    <p>Cp = 1.11, Cpk = 0.89, Pp = 0.93, Ppk = 0.74</p>
+                    <p>This process is marginal and may produce some defects.</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 3: Poor Capability</h4>
+                    <p>USL = 10.5, LSL = 9.5, μ = 10.3, σ = 0.25, s = 0.28</p>
+                    <p>Cp = 0.67, Cpk = 0.44, Pp = 0.60, Ppk = 0.39</p>
+                    <p>This process is not capable and needs improvement.</p>
+                </div>
+            </div>
+            
+            <div class="calculator-intro">
+                <h3>Process Capability Guidelines</h3>
+                <table class="interpretation-table">
+                    <tr>
+                        <th>Capability Index</th>
+                        <th>&lt; 1.0</th>
+                        <th>1.0 - 1.33</th>
+                        <th>1.33 - 1.67</th>
+                        <th>&gt; 1.67</th>
+                    </tr>
+                    <tr>
+                        <td>Cp, Pp</td>
+                        <td class="poor">Not capable</td>
+                        <td class="marginal">Marginal</td>
+                        <td class="good">Capable</td>
+                        <td class="good">Excellent</td>
+                    </tr>
+                    <tr>
+                        <td>Cpk, Ppk</td>
+                        <td class="poor">Not capable</td>
+                        <td class="marginal">Marginal</td>
+                        <td class="good">Capable</td>
+                        <td class="good">Excellent</td>
+                    </tr>
+                </table>
+                
+                <h4>Six Sigma Quality Levels</h4>
+                <table>
+                    <tr>
+                        <th>Sigma Level</th>
+                        <th>Defects Per Million (DPMO)</th>
+                        <th>Cpk Equivalent</th>
+                    </tr>
+                    <tr>
+                        <td>1σ</td>
+                        <td>691,462</td>
+                        <td>0.33</td>
+                    </tr>
+                    <tr>
+                        <td>2σ</td>
+                        <td>308,538</td>
+                        <td>0.67</td>
+                    </tr>
+                    <tr>
+                        <td>3σ</td>
+                        <td>66,807</td>
+                        <td>1.00</td>
+                    </tr>
+                    <tr>
+                        <td>4σ</td>
+                        <td>6,210</td>
+                        <td>1.33</td>
+                    </tr>
+                    <tr>
+                        <td>5σ</td>
+                        <td>233</td>
+                        <td>1.67</td>
+                    </tr>
+                    <tr>
+                        <td>6σ</td>
+                        <td>3.4</td>
+                        <td>2.00</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <p class="copyright">&copy; 2023 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Method tab switching
+        const methodTabs = document.querySelectorAll('.method-tab');
+        const methodContents = document.querySelectorAll('.method-content');
+        
+        methodTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                methodTabs.forEach(t => t.classList.remove('active'));
+                methodContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                const method = tab.getAttribute('data-method');
+                document.getElementById(`${method}-method`).classList.add('active');
+            });
+        });
+        
+        // Calculate from summary statistics
+        document.getElementById('summary-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            calculateFromSummary();
+        });
+        
+        // Calculate from individual values
+        document.getElementById('calculate-individual').addEventListener('click', function() {
+            calculateFromIndividual();
+        });
+        
+        // Calculate from subgroups
+        document.getElementById('calculate-subgroups').addEventListener('click', function() {
+            calculateFromSubgroups();
+        });
+        
+        function calculateFromSummary() {
+            const usl = parseFloat(document.getElementById('usl').value);
+            const lsl = parseFloat(document.getElementById('lsl').value);
+            const processMean = parseFloat(document.getElementById('process-mean').value);
+            const withinStdDev = parseFloat(document.getElementById('within-stddev').value);
+            const overallStdDev = parseFloat(document.getElementById('overall-stddev').value);
+            const sampleSize = parseInt(document.getElementById('sample-size').value);
+            
+            if (isNaN(usl) || isNaN(lsl) || isNaN(processMean) || isNaN(withinStdDev) || isNaN(overallStdDev) || isNaN(sampleSize)) {
+                alert('Please enter valid numbers in all fields');
+                return;
+            }
+            
+            if (withinStdDev <= 0 || overallStdDev <= 0) {
+                alert('Standard deviations must be greater than zero');
+                return;
+            }
+            
+            if (sampleSize < 2) {
+                alert('Sample size must be at least 2');
+                return;
+            }
+            
+            calculateCapability(usl, lsl, processMean, withinStdDev, overallStdDev, sampleSize);
+        }
+        
+        function calculateFromIndividual() {
+            const usl = parseFloat(document.getElementById('individual-usl').value);
+            const lsl = parseFloat(document.getElementById('individual-lsl').value);
+            const subgroupSize = parseInt(document.getElementById('subgroup-size-individual').value);
+            const dataInput = document.getElementById('individual-data').value.trim();
+            
+            if (isNaN(usl) || isNaN(lsl) || isNaN(subgroupSize) || !dataInput) {
+                alert('Please enter valid numbers in all fields');
+                return;
+            }
+            
+            if (subgroupSize < 2) {
+                alert('Subgroup size must be at least 2');
+                return;
+            }
+            
+            // Parse individual data
+            const data = dataInput.split(/[\s,]+/).map(Number).filter(n => !isNaN(n));
+            
+            if (data.length < 2) {
+                alert('Please enter at least 2 valid measurements');
+                return;
+            }
+            
+            // Calculate statistics
+            const processMean = calculateMean(data);
+            const overallStdDev = calculateStdDev(data);
+            
+            // Calculate within subgroup variation (average of subgroup ranges)
+            const subgroups = createSubgroups(data, subgroupSize);
+            const ranges = subgroups.map(subgroup => calculateRange(subgroup));
+            const averageRange = calculateMean(ranges);
+            
+            // Get d2 constant based on subgroup size
+            const d2Values = {2: 1.128, 3: 1.693, 4: 2.059, 5: 2.326, 6: 2.534, 7: 2.704, 8: 2.847, 9: 2.970, 10: 3.078};
+            const d2 = d2Values[subgroupSize] || subgroupSize;
+            
+            const withinStdDev = averageRange / d2;
+            
+            calculateCapability(usl, lsl, processMean, withinStdDev, overallStdDev, data.length);
+        }
+        
+        function calculateFromSubgroups() {
+            const usl = parseFloat(document.getElementById('subgroup-usl').value);
+            const lsl = parseFloat(document.getElementById('subgroup-lsl').value);
+            const subgroupSize = parseInt(document.getElementById('subgroup-size').value);
+            const dataInput = document.getElementById('subgroup-data').value.trim();
+            
+            if (isNaN(usl) || isNaN(lsl) || isNaN(subgroupSize) || !dataInput) {
+                alert('Please enter valid numbers in all fields');
+                return;
+            }
+            
+            if (subgroupSize < 2) {
+                alert('Subgroup size must be at least 2');
+                return;
+            }
+            
+            // Parse subgroup data
+            const subgroups = dataInput.split('\n')
+                .map(line => line.trim())
+                .filter(line => line)
+                .map(line => line.split(/[\s,]+/).map(Number).filter(n => !isNaN(n)))
+                .filter(subgroup => subgroup.length > 0);
+            
+            if (subgroups.length < 2) {
+                alert('Please enter at least 2 valid subgroups');
+                return;
+            }
+            
+            // Check subgroup sizes
+            for (const subgroup of subgroups) {
+                if (subgroup.length !== subgroupSize) {
+                    alert(`All subgroups must have exactly ${subgroupSize} values`);
+                    return;
+                }
+            }
+            
+            // Flatten subgroups for overall calculations
+            const allData = subgroups.flat();
+            
+            // Calculate statistics
+            const processMean = calculateMean(allData);
+            const overallStdDev = calculateStdDev(allData);
+            
+            // Calculate within subgroup variation (average of subgroup std devs)
+            const subgroupStdDevs = subgroups.map(subgroup => calculateStdDev(subgroup));
+            const averageSubgroupStdDev = calculateMean(subgroupStdDevs);
+            
+            // Apply correction factor for unbiased estimator
+            const c4Values = {2: 0.7979, 3: 0.8862, 4: 0.9213, 5: 0.9400, 6: 0.9515, 7: 0.9594, 8: 0.9650, 9: 0.9693, 10: 0.9727};
+            const c4 = c4Values[subgroupSize] || 1;
+            
+            const withinStdDev = averageSubgroupStdDev / c4;
+            
+            calculateCapability(usl, lsl, processMean, withinStdDev, overallStdDev, allData.length);
+        }
+        
+        function calculateCapability(usl, lsl, processMean, withinStdDev, overallStdDev, sampleSize) {
+            // Calculate capability indices
+            const Cp = (usl - lsl) / (6 * withinStdDev);
+            const Cpu = (usl - processMean) / (3 * withinStdDev);
+            const Cpl = (processMean - lsl) / (3 * withinStdDev);
+            const Cpk = Math.min(Cpu, Cpl);
+            
+            const Pp = (usl - lsl) / (6 * overallStdDev);
+            const Ppu = (usl - processMean) / (3 * overallStdDev);
+            const Ppl = (processMean - lsl) / (3 * overallStdDev);
+            const Ppk = Math.min(Ppu, Ppl);
+            
+            // Calculate sigma level (using long-term variation)
+            const sigmaLevel = Math.min(
+                Math.abs(usl - processMean) / overallStdDev,
+                Math.abs(processMean - lsl) / overallStdDev
+            );
+            
+            // Calculate defect rates (using long-term variation)
+            const zLower = (lsl - processMean) / overallStdDev;
+            const zUpper = (usl - processMean) / overallStdDev;
+            
+            const pBelow = cumulativeStdNormal(zLower);
+            const pAbove = 1 - cumulativeStdNormal(zUpper);
+            const pTotal = pBelow + pAbove;
+            
+            // Display results
+            document.getElementById('cp-value').textContent = Cp.toFixed(3);
+            document.getElementById('cpk-value').textContent = Cpk.toFixed(3);
+            document.getElementById('pp-value').textContent = Pp.toFixed(3);
+            document.getElementById('ppk-value').textContent = Ppk.toFixed(3);
+            document.getElementById('sigma-value').textContent = sigmaLevel.toFixed(2) + 'σ';
+            
+            document.getElementById('result-mean').textContent = processMean.toFixed(4);
+            document.getElementById('result-within-stddev').textContent = withinStdDev.toFixed(4);
+            document.getElementById('result-overall-stddev').textContent = overallStdDev.toFixed(4);
+            document.getElementById('result-sample-size').textContent = sampleSize;
+            
+            // Interpretation
+            interpretCapability('cp', Cp);
+            interpretCapability('cpk', Cpk);
+            interpretCapability('pp', Pp);
+            interpretCapability('ppk', Ppk);
+            
+            // Defect rates
+            document.getElementById('defect-below').textContent = (pBelow * 100).toFixed(4) + '%';
+            document.getElementById('defect-above').textContent = (pAbove * 100).toFixed(4) + '%';
+            document.getElementById('defect-total').textContent = (pTotal * 100).toFixed(4) + '%';
+            
+            document.getElementById('dpmo-below').textContent = Math.round(pBelow * 1000000);
+            document.getElementById('dpmo-above').textContent = Math.round(pAbove * 1000000);
+            document.getElementById('dpmo-total').textContent = Math.round(pTotal * 1000000);
+            
+            // Show results
+            document.getElementById('capability-result').style.display = 'block';
+        }
+        
+        function interpretCapability(prefix, value) {
+            document.getElementById(`${prefix}-interpret-value`).textContent = value.toFixed(3);
+            
+            let interpretation = '';
+            let rowClass = '';
+            
+            if (value < 1.0) {
+                interpretation = 'Not capable - process needs improvement';
+                rowClass = 'poor';
+            } else if (value < 1.33) {
+                interpretation = 'Marginal - process may need improvement';
+                rowClass = 'marginal';
+            } else if (value < 1.67) {
+                interpretation = 'Capable - process meets requirements';
+                rowClass = 'good';
+            } else {
+                interpretation = 'Excellent - process exceeds requirements';
+                rowClass = 'good';
+            }
+            
+            document.getElementById(`${prefix}-interpret-text`).textContent = interpretation;
+            document.getElementById(`${prefix}-interpretation`).className = rowClass;
+        }
+        
+        // Helper functions
+        function calculateMean(data) {
+            return data.reduce((sum, x) => sum + x, 0) / data.length;
+        }
+        
+        function calculateStdDev(data) {
+            const mean = calculateMean(data);
+            const variance = data.reduce((sum, x) => sum + Math.pow(x - mean, 2), 0) / data.length;
+            return Math.sqrt(variance);
+        }
+        
+        function calculateRange(data) {
+            return Math.max(...data) - Math.min(...data);
+        }
+        
+        function createSubgroups(data, subgroupSize) {
+            const subgroups = [];
+            for (let i = 0; i < data.length; i += subgroupSize) {
+                subgroups.push(data.slice(i, i + subgroupSize));
+            }
+            return subgroups;
+        }
+        
+        // Standard normal cumulative distribution function
+        function cumulativeStdNormal(z) {
+            // Abramowitz & Stegun approximation
+            const t = 1 / (1 + 0.2316419 * Math.abs(z));
+            const d = 0.3989423 * Math.exp(-z * z / 2);
+            let p = d * t * (0.3193815 + t * (-0.3565638 + t * (1.781478 + t * (-1.821256 + t * 1.330274))));
+            
+            if (z > 0) {
+                p = 1 - p;
+            }
+            
+            return p;
+        }
+    </script>
+</body>
+</html>
