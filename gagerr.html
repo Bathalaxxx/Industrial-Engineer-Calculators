@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gage R&R Calculator - Analyze measurement system repeatability and reproducibility">
+    <title>Gage R&R Calculator | Industrial Engineering Calculators</title>
+    <style>
+        /* Consistent with existing style */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        /* Gage R&R specific styles */
+        .data-entry-section {
+            margin-bottom: 2rem;
+        }
+        
+        .data-entry-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .data-entry-controls .input-group {
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .data-grid {
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .data-table th, .data-table td {
+            border: 1px solid #ddd;
+            padding: 0.5rem;
+            text-align: center;
+        }
+        
+        .data-table th {
+            background-color: #f2f2f2;
+            font-weight: 500;
+        }
+        
+        .data-table input {
+            width: 80px;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            text-align: center;
+        }
+        
+        .data-table input:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+        }
+        
+        .add-row-btn {
+            background-color: var(--light-color);
+            color: var(--primary-color);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 1rem;
+        }
+        
+        .add-row-btn:hover {
+            background-color: #d6e4f0;
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        .metric-results {
+            display: flex;
+            justify-content: space-between;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .metric-card {
+            flex: 1;
+            min-width: 200px;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 0.5rem;
+            text-align: center;
+        }
+        
+        .metric-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-card .metric-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .metric-card.repeatability .metric-value {
+            color: #3498db;
+        }
+        
+        .metric-card.reproducibility .metric-value {
+            color: #f39c12;
+        }
+        
+        .metric-card.total-grr .metric-value {
+            color: #e74c3c;
+        }
+        
+        .metric-card.part-variation .metric-value {
+            color: #2ecc71;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .data-entry-controls {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .metric-results {
+                flex-direction: column;
+            }
+            
+            .metric-card {
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">Industrial <span>Engineering</span> Calculators</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Gage R&R Calculator</h1>
+            <p>Analyze measurement system repeatability and reproducibility</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Gage Repeatability and Reproducibility (R&R)</h2>
+                <p>Gage R&R is a statistical tool that measures the amount of variation in the measurement system arising from the measurement device and the operators.</p>
+                
+                <div class="formula-box">
+                    %GRR = (σ_GRR / σ_Total) × 100
+                </div>
+                
+                <p>Where:</p>
+                <ul>
+                    <li><strong>Repeatability</strong> - Variation from the measurement device (same operator, same part)</li>
+                    <li><strong>Reproducibility</strong> - Variation from different operators (different operators, same part)</li>
+                    <li><strong>Total GRR</strong> - Combined repeatability and reproducibility variation</li>
+                    <li><strong>Part Variation</strong> - Variation between different parts being measured</li>
+                </ul>
+            </div>
+            
+            <div class="data-entry-section">
+                <h3>Study Setup</h3>
+                <div class="data-entry-controls">
+                    <div class="input-group">
+                        <label for="num-parts">Number of Parts:</label>
+                        <input type="number" id="num-parts" min="2" max="20" value="5" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="num-operators">Number of Operators:</label>
+                        <input type="number" id="num-operators" min="2" max="5" value="3" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="num-trials">Trials per Part:</label>
+                        <input type="number" id="num-trials" min="2" max="5" value="3" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="tolerance">Tolerance (if known):</label>
+                        <input type="number" id="tolerance" step="0.001" placeholder="Optional">
+                    </div>
+                </div>
+                
+                <button id="setup-study" class="calculate-btn">Setup Data Table</button>
+            </div>
+            
+            <div id="data-entry-area" style="display: none;">
+                <h3>Measurement Data Entry</h3>
+                <p>Enter measurements for each operator and trial. Part numbers will be automatically generated.</p>
+                
+                <div class="data-grid">
+                    <table class="data-table" id="measurement-table">
+                        <thead>
+                            <tr>
+                                <th>Part</th>
+                                <!-- Operator headers will be added by JavaScript -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Data rows will be added by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <button type="button" id="calculate-grr" class="calculate-btn">Calculate Gage R&R</button>
+            </div>
+            
+            <div class="result-box" id="grr-result">
+                <h3>Gage R&R Results</h3>
+                
+                <div class="metric-results">
+                    <div class="metric-card repeatability">
+                        <h4>Repeatability (EV)</h4>
+                        <div class="metric-value" id="repeatability-value"></div>
+                        <p>Equipment Variation</p>
+                    </div>
+                    
+                    <div class="metric-card reproducibility">
+                        <h4>Reproducibility (AV)</h4>
+                        <div class="metric-value" id="reproducibility-value"></div>
+                        <p>Appraiser Variation</p>
+                    </div>
+                    
+                    <div class="metric-card total-grr">
+                        <h4>Total GRR</h4>
+                        <div class="metric-value" id="total-grr-value"></div>
+                        <p>Combined Variation</p>
+                    </div>
+                    
+                    <div class="metric-card part-variation">
+                        <h4>Part Variation (PV)</h4>
+                        <div class="metric-value" id="part-variation-value"></div>
+                        <p>Part-to-Part Variation</p>
+                    </div>
+                </div>
+                
+                <h4>Percentage of Variation</h4>
+                <table>
+                    <tr>
+                        <th>Source</th>
+                        <th>% Contribution</th>
+                        <th>% Tolerance (if provided)</th>
+                    </tr>
+                    <tr>
+                        <td>Repeatability (EV)</td>
+                        <td id="repeatability-pct"></td>
+                        <td id="repeatability-tol"></td>
+                    </tr>
+                    <tr>
+                        <td>Reproducibility (AV)</td>
+                        <td id="reproducibility-pct"></td>
+                        <td id="reproducibility-tol"></td>
+                    </tr>
+                    <tr>
+                        <td>GRR (EV + AV)</td>
+                        <td id="grr-pct"></td>
+                        <td id="grr-tol"></td>
+                    </tr>
+                    <tr>
+                        <td>Part Variation (PV)</td>
+                        <td id="part-variation-pct"></td>
+                        <td id="part-variation-tol"></td>
+                    </tr>
+                    <tr>
+                        <td>Total Variation</td>
+                        <td id="total-variation-pct">100%</td>
+                        <td id="total-variation-tol"></td>
+                    </tr>
+                </table>
+                
+                <h4>Interpretation Guidelines</h4>
+                <table>
+                    <tr>
+                        <th>%GRR</th>
+                        <th>Measurement System Evaluation</th>
+                    </tr>
+                    <tr>
+                        <td>&lt; 10%</td>
+                        <td>Excellent - Measurement system is acceptable</td>
+                    </tr>
+                    <tr>
+                        <td>10% - 30%</td>
+                        <td>Marginal - May be acceptable based on importance of application</td>
+                    </tr>
+                    <tr>
+                        <td>&gt; 30%</td>
+                        <td>Unacceptable - Needs improvement</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Practical Examples</h3>
+                
+                <div class="example">
+                    <h4>Example 1: Excellent Measurement System</h4>
+                    <p>%GRR = 8%, %Tolerance = 15%</p>
+                    <p>This measurement system is excellent and more than adequate for process control and analysis.</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 2: Marginal Measurement System</h4>
+                    <p>%GRR = 22%, %Tolerance = 45%</p>
+                    <p>This system may be acceptable for some applications but should be improved where possible.</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 3: Unacceptable Measurement System</h4>
+                    <p>%GRR = 42%, %Tolerance = 85%</p>
+                    <p>This system needs immediate improvement before it can be used for process control.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <p class="copyright">&copy; 2023 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('setup-study').addEventListener('click', function() {
+            const numParts = parseInt(document.getElementById('num-parts').value);
+            const numOperators = parseInt(document.getElementById('num-operators').value);
+            const numTrials = parseInt(document.getElementById('num-trials').value);
+            
+            if (isNaN(numParts) || isNaN(numOperators) || isNaN(numTrials) || 
+                numParts < 2 || numOperators < 2 || numTrials < 2) {
+                alert('Please enter valid numbers (minimum 2 for all fields)');
+                return;
+            }
+            
+            // Generate the measurement table
+            const table = document.getElementById('measurement-table');
+            table.innerHTML = '';
+            
+            // Create header row
+            const headerRow = document.createElement('tr');
+            const partHeader = document.createElement('th');
+            partHeader.textContent = 'Part';
+            headerRow.appendChild(partHeader);
+            
+            for (let op = 1; op <= numOperators; op++) {
+                const opHeader = document.createElement('th');
+                opHeader.colSpan = numTrials;
+                opHeader.textContent = `Operator ${op}`;
+                headerRow.appendChild(opHeader);
+            }
+            table.appendChild(headerRow);
+            
+            // Create sub-header row for trials
+            const subHeaderRow = document.createElement('tr');
+            subHeaderRow.appendChild(document.createElement('th')); // Empty cell for part column
+            
+            for (let op = 1; op <= numOperators; op++) {
+                for (let trial = 1; trial <= numTrials; trial++) {
+                    const trialHeader = document.createElement('th');
+                    trialHeader.textContent = `Trial ${trial}`;
+                    subHeaderRow.appendChild(trialHeader);
+                }
+            }
+            table.appendChild(subHeaderRow);
+            
+            // Create data rows for each part
+            for (let part = 1; part <= numParts; part++) {
+                const row = document.createElement('tr');
+                
+                // Part number cell
+                const partCell = document.createElement('td');
+                partCell.textContent = `Part ${part}`;
+                row.appendChild(partCell);
+                
+                // Measurement cells for each operator and trial
+                for (let op = 1; op <= numOperators; op++) {
+                    for (let trial = 1; trial <= numTrials; trial++) {
+                        const cell = document.createElement('td');
+                        const input = document.createElement('input');
+                        input.type = 'number';
+                        input.step = '0.001';
+                        input.dataset.part = part;
+                        input.dataset.operator = op;
+                        input.dataset.trial = trial;
+                        cell.appendChild(input);
+                        row.appendChild(cell);
+                    }
+                }
+                
+                table.appendChild(row);
+            }
+            
+            // Show the data entry area
+            document.getElementById('data-entry-area').style.display = 'block';
+        });
+        
+        document.getElementById('calculate-grr').addEventListener('click', function() {
+            const numParts = parseInt(document.getElementById('num-parts').value);
+            const numOperators = parseInt(document.getElementById('num-operators').value);
+            const numTrials = parseInt(document.getElementById('num-trials').value);
+            const tolerance = parseFloat(document.getElementById('tolerance').value) || null;
+            
+            // Collect all measurement data
+            const measurements = [];
+            const inputs = document.querySelectorAll('#measurement-table input');
+            
+            inputs.forEach(input => {
+                const part = parseInt(input.dataset.part);
+                const operator = parseInt(input.dataset.operator);
+                const trial = parseInt(input.dataset.trial);
+                const value = parseFloat(input.value);
+                
+                if (!isNaN(value)) {
+                    measurements.push({
+                        part,
+                        operator,
+                        trial,
+                        value
+                    });
+                }
+            });
+            
+            if (measurements.length === 0) {
+                alert('Please enter at least some measurement data');
+                return;
+            }
+            
+            // Calculate averages for each part-operator combination
+            const partOperatorAverages = {};
+            measurements.forEach(m => {
+                const key = `p${m.part}o${m.operator}`;
+                if (!partOperatorAverages[key]) {
+                    partOperatorAverages[key] = { sum: 0, count: 0 };
+                }
+                partOperatorAverages[key].sum += m.value;
+                partOperatorAverages[key].count++;
+            });
+            
+            // Calculate overall averages
+            for (const key in partOperatorAverages) {
+                partOperatorAverages[key].average = partOperatorAverages[key].sum / partOperatorAverages[key].count;
+            }
+            
+            // Calculate part averages
+            const partAverages = {};
+            measurements.forEach(m => {
+                if (!partAverages[m.part]) {
+                    partAverages[m.part] = { sum: 0, count: 0 };
+                }
+                partAverages[m.part].sum += m.value;
+                partAverages[m.part].count++;
+            });
+            
+            for (const part in partAverages) {
+                partAverages[part].average = partAverages[part].sum / partAverages[part].count;
+            }
+            
+            // Calculate operator averages
+            const operatorAverages = {};
+            measurements.forEach(m => {
+                if (!operatorAverages[m.operator]) {
+                    operatorAverages[m.operator] = { sum: 0, count: 0 };
+                }
+                operatorAverages[m.operator].sum += m.value;
+                operatorAverages[m.operator].count++;
+            });
+            
+            for (const op in operatorAverages) {
+                operatorAverages[op].average = operatorAverages[op].sum / operatorAverages[op].count;
+            }
+            
+            // Calculate overall average
+            const overallAverage = measurements.reduce((sum, m) => sum + m.value, 0) / measurements.length;
+            
+            // Calculate ranges for each part-operator combination
+            const ranges = {};
+            measurements.forEach(m => {
+                const key = `p${m.part}o${m.operator}`;
+                if (!ranges[key]) {
+                    ranges[key] = { min: Infinity, max: -Infinity };
+                }
+                ranges[key].min = Math.min(ranges[key].min, m.value);
+                ranges[key].max = Math.max(ranges[key].max, m.value);
+            });
+            
+            // Calculate average range (for repeatability)
+            const rangeValues = Object.values(ranges).map(r => r.max - r.min);
+            const averageRange = rangeValues.reduce((sum, r) => sum + r, 0) / rangeValues.length;
+            
+            // Calculate K1 constant (depends on number of trials)
+            const k1Values = { 2: 4.56, 3: 3.05, 4: 2.50, 5: 2.21 };
+            const K1 = k1Values[numTrials] || 2.08; // Default for >5 trials
+            
+            // Calculate repeatability (Equipment Variation)
+            const EV = averageRange * K1;
+            
+            // Calculate operator ranges (for reproducibility)
+            const operatorRanges = {};
+            for (const op in operatorAverages) {
+                const opParts = measurements.filter(m => m.operator === parseInt(op))
+                    .map(m => partOperatorAverages[`p${m.part}o${op}`].average);
+                
+                operatorRanges[op] = {
+                    min: Math.min(...opParts),
+                    max: Math.max(...opParts),
+                    range: Math.max(...opParts) - Math.min(...opParts)
+                };
+            }
+            
+            const operatorRangeValues = Object.values(operatorRanges).map(r => r.range);
+            const averageOperatorRange = operatorRangeValues.reduce((sum, r) => sum + r, 0) / operatorRangeValues.length;
+            
+            // Calculate K2 constant (depends on number of operators)
+            const k2Values = { 2: 3.65, 3: 2.70, 4: 2.30, 5: 2.08 };
+            const K2 = k2Values[numOperators] || 1.93; // Default for >5 operators
+            
+            // Calculate reproducibility (Appraiser Variation)
+            const AV = Math.sqrt(Math.pow(averageOperatorRange * K2, 2) - Math.pow(EV, 2) / (numParts * numTrials));
+            
+            // Calculate part ranges
+            const partRangeValues = Object.values(partAverages).map(p => p.average);
+            const partRange = Math.max(...partRangeValues) - Math.min(...partRangeValues);
+            
+            // Calculate K3 constant (depends on number of parts)
+            const k3Values = { 2: 3.65, 3: 2.70, 4: 2.30, 5: 2.08, 6: 1.93, 7: 1.82, 8: 1.74, 9: 1.67, 10: 1.62 };
+            const K3 = k3Values[numParts] || 1.41; // Default for >10 parts
+            
+            // Calculate part variation
+            const PV = partRange * K3;
+            
+            // Calculate total GRR
+            const GRR = Math.sqrt(Math.pow(EV, 2) + Math.pow(AV, 2));
+            
+            // Calculate total variation
+            const TV = Math.sqrt(Math.pow(GRR, 2) + Math.pow(PV, 2));
+            
+            // Calculate percentages
+            const EV_pct = (EV / TV) * 100;
+            const AV_pct = (AV / TV) * 100;
+            const GRR_pct = (GRR / TV) * 100;
+            const PV_pct = (PV / TV) * 100;
+            
+            // Calculate % of tolerance if provided
+            let EV_tol = '', AV_tol = '', GRR_tol = '', PV_tol = '', TV_tol = '';
+            if (tolerance) {
+                EV_tol = (EV / tolerance) * 100;
+                AV_tol = (AV / tolerance) * 100;
+                GRR_tol = (GRR / tolerance) * 100;
+                PV_tol = (PV / tolerance) * 100;
+                TV_tol = (TV / tolerance) * 100;
+            }
+            
+            // Display results
+            document.getElementById('repeatability-value').textContent = EV.toFixed(4);
+            document.getElementById('reproducibility-value').textContent = AV.toFixed(4);
+            document.getElementById('total-grr-value').textContent = GRR.toFixed(4);
+            document.getElementById('part-variation-value').textContent = PV.toFixed(4);
+            
+            document.getElementById('repeatability-pct').textContent = EV_pct.toFixed(2) + '%';
+            document.getElementById('reproducibility-pct').textContent = AV_pct.toFixed(2) + '%';
+            document.getElementById('grr-pct').textContent = GRR_pct.toFixed(2) + '%';
+            document.getElementById('part-variation-pct').textContent = PV_pct.toFixed(2) + '%';
+            
+            if (tolerance) {
+                document.getElementById('repeatability-tol').textContent = EV_tol.toFixed(2) + '%';
+                document.getElementById('reproducibility-tol').textContent = AV_tol.toFixed(2) + '%';
+                document.getElementById('grr-tol').textContent = GRR_tol.toFixed(2) + '%';
+                document.getElementById('part-variation-tol').textContent = PV_tol.toFixed(2) + '%';
+                document.getElementById('total-variation-tol').textContent = TV_tol.toFixed(2) + '%';
+            } else {
+                document.getElementById('repeatability-tol').textContent = 'N/A';
+                document.getElementById('reproducibility-tol').textContent = 'N/A';
+                document.getElementById('grr-tol').textContent = 'N/A';
+                document.getElementById('part-variation-tol').textContent = 'N/A';
+                document.getElementById('total-variation-tol').textContent = 'N/A';
+            }
+            
+            // Show results
+            document.getElementById('grr-result').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
