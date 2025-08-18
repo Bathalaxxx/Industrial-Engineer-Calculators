@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Work Sampling Calculator - Determine activity percentages and required sample size">
+    <title>Work Sampling Calculator | Industrial Engineering Calculators</title>
+    <style>
+        /* Consistent with existing style */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select, .input-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        /* Work Sampling specific styles */
+        .data-entry-method {
+            margin-bottom: 2rem;
+        }
+        
+        .method-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+        }
+        
+        .method-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            margin-right: 0.5rem;
+            border-radius: 5px 5px 0 0;
+            background-color: #f1f1f1;
+            transition: all 0.3s;
+        }
+        
+        .method-tab.active {
+            background-color: white;
+            border-color: #ddd;
+            border-bottom-color: white;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        
+        .method-tab:hover:not(.active) {
+            background-color: #e9e9e9;
+        }
+        
+        .method-content {
+            display: none;
+        }
+        
+        .method-content.active {
+            display: block;
+        }
+        
+        .activity-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        .activity-table th, .activity-table td {
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        .activity-table th {
+            background-color: #f2f2f2;
+        }
+        
+        .activity-table input {
+            width: 80px;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            text-align: center;
+        }
+        
+        .add-activity-btn {
+            background-color: var(--light-color);
+            color: var(--primary-color);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 1rem;
+        }
+        
+        .add-activity-btn:hover {
+            background-color: #d6e4f0;
+        }
+        
+        .metric-results {
+            display: flex;
+            justify-content: space-between;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .metric-card {
+            flex: 1;
+            min-width: 200px;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 0.5rem;
+            text-align: center;
+        }
+        
+        .metric-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-card .metric-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .metric-card.percentage .metric-value {
+            color: #3498db;
+        }
+        
+        .metric-card.samples .metric-value {
+            color: #f39c12;
+        }
+        
+        .metric-card.confidence .metric-value {
+            color: #2ecc71;
+        }
+        
+        .metric-card.error .metric-value {
+            color: #e74c3c;
+        }
+        
+        .chart-container {
+            width: 100%;
+            height: 300px;
+            margin: 2rem 0;
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .method-tabs {
+                flex-direction: column;
+            }
+            
+            .method-tab {
+                border-radius: 0;
+                margin-right: 0;
+                border-bottom: 1px solid #ddd;
+            }
+            
+            .metric-results {
+                flex-direction: column;
+            }
+            
+            .metric-card {
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+    <!-- Include Chart.js for visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">Industrial <span>Engineering</span> Calculators</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Work Sampling Calculator</h1>
+            <p>Determine activity percentages and required sample size for work measurement studies</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Work Sampling Study</h2>
+                <p>Work sampling is a technique used to estimate the percentage of time spent on various activities without continuous observation.</p>
+                
+                <div class="formula-box">
+                    Sample Size (n) = (Z² × p × (1 - p)) / E²
+                </div>
+                
+                <p>Where:</p>
+                <ul>
+                    <li><strong>Z</strong> = Z-value for desired confidence level (1.96 for 95%)</li>
+                    <li><strong>p</strong> = Estimated proportion of time spent on activity</li>
+                    <li><strong>E</strong> = Desired margin of error (e.g., 0.05 for ±5%)</li>
+                </ul>
+            </div>
+            
+            <div class="data-entry-method">
+                <h3>Study Parameters</h3>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="confidence-level">Confidence Level:</label>
+                        <select id="confidence-level">
+                            <option value="1.96">95% (Most Common)</option>
+                            <option value="2.58">99%</option>
+                            <option value="1.645">90%</option>
+                            <option value="1.282">80%</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="margin-error">Margin of Error (±%):</label>
+                        <input type="number" id="margin-error" min="0.1" max="20" step="0.1" value="5" required>
+                    </div>
+                </div>
+                
+                <h3>Activities</h3>
+                <p>Enter the activities you want to measure and their observed frequencies:</p>
+                
+                <table class="activity-table" id="activities-table">
+                    <thead>
+                        <tr>
+                            <th>Activity</th>
+                            <th>Observed Count</th>
+                            <th>Total Observations</th>
+                            <th>Percentage</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="text" class="activity-name" placeholder="e.g., Working" value="Working"></td>
+                            <td><input type="number" class="activity-count" min="0" step="1" value="75"></td>
+                            <td><input type="number" id="total-observations" min="1" step="1" value="100"></td>
+                            <td class="activity-percentage">75.0%</td>
+                            <td><button type="button" class="remove-activity-btn">Remove</button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="activity-name" placeholder="e.g., Idle" value="Idle"></td>
+                            <td><input type="number" class="activity-count" min="0" step="1" value="25"></td>
+                            <td><input type="number" class="total-obs-ref" min="1" step="1" value="100" disabled></td>
+                            <td class="activity-percentage">25.0%</td>
+                            <td><button type="button" class="remove-activity-btn">Remove</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <button type="button" id="add-activity" class="add-activity-btn">+ Add Activity</button>
+                
+                <button type="button" id="calculate-ws" class="calculate-btn">Calculate Work Sampling</button>
+            </div>
+            
+            <div class="result-box" id="ws-result">
+                <h3>Work Sampling Results</h3>
+                
+                <div class="metric-results">
+                    <div class="metric-card percentage">
+                        <h4>Total Observations</h4>
+                        <div class="metric-value" id="total-obs-value"></div>
+                        <p>Samples Collected</p>
+                    </div>
+                    
+                    <div class="metric-card samples">
+                        <h4>Required Samples</h4>
+                        <div class="metric-value" id="required-samples-value"></div>
+                        <p>For Desired Accuracy</p>
+                    </div>
+                    
+                    <div class="metric-card confidence">
+                        <h4>Confidence Level</h4>
+                        <div class="metric-value" id="confidence-value"></div>
+                        <p>Study Reliability</p>
+                    </div>
+                    
+                    <div class="metric-card error">
+                        <h4>Margin of Error</h4>
+                        <div class="metric-value" id="error-value"></div>
+                        <p>± Percentage Points</p>
+                    </div>
+                </div>
+                
+                <h4>Activity Breakdown</h4>
+                <table class="activity-table">
+                    <thead>
+                        <tr>
+                            <th>Activity</th>
+                            <th>Count</th>
+                            <th>Percentage</th>
+                            <th>Confidence Interval</th>
+                            <th>Required Samples</th>
+                        </tr>
+                    </thead>
+                    <tbody id="results-table-body">
+                        <!-- Results will be added here -->
+                    </tbody>
+                </table>
+                
+                <div class="chart-container">
+                    <canvas id="activityChart"></canvas>
+                </div>
+                
+                <h4>Interpretation Guidelines</h4>
+                <table>
+                    <tr>
+                        <th>Sample Size</th>
+                        <th>Reliability</th>
+                    </tr>
+                    <tr>
+                        <td>&lt; 100</td>
+                        <td>Preliminary estimate only</td>
+                    </tr>
+                    <tr>
+                        <td>100 - 500</td>
+                        <td>Fair reliability for most applications</td>
+                    </tr>
+                    <tr>
+                        <td>500 - 1000</td>
+                        <td>Good reliability for important decisions</td>
+                    </tr>
+                    <tr>
+                        <td>&gt; 1000</td>
+                        <td>High reliability for critical applications</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Practical Examples</h3>
+                
+                <div class="example">
+                    <h4>Example 1: Machine Utilization</h4>
+                    <p>Confidence: 95%, Error: ±5%, Working: 75/100, Idle: 25/100</p>
+                    <p>Results: Working 75% (±8.5%), Required samples: 289</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 2: Office Work</h4>
+                    <p>Confidence: 95%, Error: ±3%, Email: 30/100, Meetings: 20/100, Focus Work: 50/100</p>
+                    <p>Results: Focus Work 50% (±4.9%), Required samples: 1067</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 3: Hospital Nurse</h4>
+                    <p>Confidence: 99%, Error: ±2%, Patient Care: 65/100, Documentation: 25/100, Other: 10/100</p>
+                    <p>Results: Patient Care 65% (±3.8%), Required samples: 5417</p>
+                </div>
+            </div>
+            
+            <div class="calculator-intro">
+                <h3>Work Sampling Methodology</h3>
+                <table>
+                    <tr>
+                        <th>Step</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>1. Define Activities</td>
+                        <td>Identify all possible activities to be measured</td>
+                    </tr>
+                    <tr>
+                        <td>2. Preliminary Study</td>
+                        <td>Conduct 50-100 observations to estimate proportions</td>
+                    </tr>
+                    <tr>
+                        <td>3. Calculate Sample Size</td>
+                        <td>Determine required observations for desired accuracy</td>
+                    </tr>
+                    <tr>
+                        <td>4. Schedule Observations</td>
+                        <td>Randomly distribute observations over time</td>
+                    </tr>
+                    <tr>
+                        <td>5. Conduct Study</td>
+                        <td>Record activities at observation points</td>
+                    </tr>
+                    <tr>
+                        <td>6. Analyze Results</td>
+                        <td>Calculate percentages and confidence intervals</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <p class="copyright">&copy; 2023 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize activity chart
+        let activityChart = null;
+        
+        // Add activity row
+        document.getElementById('add-activity').addEventListener('click', function() {
+            const tbody = document.querySelector('#activities-table tbody');
+            const firstRow = tbody.querySelector('tr');
+            const newRow = firstRow.cloneNode(true);
+            
+            // Clear values in new row
+            newRow.querySelector('.activity-name').value = '';
+            newRow.querySelector('.activity-count').value = '';
+            newRow.querySelector('.activity-percentage').textContent = '0.0%';
+            
+            tbody.appendChild(newRow);
+            
+            // Add event listeners to new inputs
+            addActivityInputListeners(newRow);
+        });
+        
+        // Remove activity row
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('remove-activity-btn')) {
+                const row = e.target.closest('tr');
+                if (document.querySelectorAll('#activities-table tbody tr').length > 1) {
+                    row.remove();
+                    updateActivityPercentages();
+                } else {
+                    alert('You must have at least one activity');
+                }
+            }
+        });
+        
+        // Add event listeners to initial rows
+        document.querySelectorAll('#activities-table tbody tr').forEach(row => {
+            addActivityInputListeners(row);
+        });
+        
+        function addActivityInputListeners(row) {
+            const countInput = row.querySelector('.activity-count');
+            const totalInput = row.querySelector('#total-observations') || row.querySelector('.total-obs-ref');
+            
+            countInput.addEventListener('input', updateActivityPercentages);
+            if (totalInput && totalInput.id === 'total-observations') {
+                totalInput.addEventListener('input', updateActivityPercentages);
+            }
+        }
+        
+        // Update activity percentages when inputs change
+        function updateActivityPercentages() {
+            const totalObservations = parseInt(document.getElementById('total-observations').value) || 1;
+            
+            document.querySelectorAll('#activities-table tbody tr').forEach(row => {
+                const countInput = row.querySelector('.activity-count');
+                const count = parseInt(countInput.value) || 0;
+                const percentageCell = row.querySelector('.activity-percentage');
+                
+                const percentage = (count / totalObservations) * 100;
+                percentageCell.textContent = percentage.toFixed(1) + '%';
+                
+                // Update the disabled total observations reference in other rows
+                if (row.querySelector('.total-obs-ref')) {
+                    row.querySelector('.total-obs-ref').value = totalObservations;
+                }
+            });
+        }
+        
+        // Calculate work sampling results
+        document.getElementById('calculate-ws').addEventListener('click', function() {
+            const confidenceZ = parseFloat(document.getElementById('confidence-level').value);
+            const marginError = parseFloat(document.getElementById('margin-error').value) / 100;
+            const totalObservations = parseInt(document.getElementById('total-observations').value);
+            
+            if (isNaN(confidenceZ) || isNaN(marginError) || isNaN(totalObservations) || totalObservations < 1) {
+                alert('Please enter valid parameters');
+                return;
+            }
+            
+            // Get all activities
+            const activities = [];
+            let totalCount = 0;
+            
+            document.querySelectorAll('#activities-table tbody tr').forEach(row => {
+                const name = row.querySelector('.activity-name').value || 'Unnamed Activity';
+                const count = parseInt(row.querySelector('.activity-count').value) || 0;
+                
+                activities.push({
+                    name,
+                    count,
+                    percentage: (count / totalObservations) * 100
+                });
+                
+                totalCount += count;
+            });
+            
+            // Validate counts match total
+            if (totalCount !== totalObservations) {
+                alert(`Total counts (${totalCount}) do not match total observations (${totalObservations}). Please correct.`);
+                return;
+            }
+            
+            // Calculate confidence level text
+            let confidenceText = '';
+            if (confidenceZ === 1.96) confidenceText = '95%';
+            else if (confidenceZ === 2.58) confidenceText = '99%';
+            else if (confidenceZ === 1.645) confidenceText = '90%';
+            else if (confidenceZ === 1.282) confidenceText = '80%';
+            else confidenceText = 'Custom';
+            
+            // Display summary metrics
+            document.getElementById('total-obs-value').textContent = totalObservations;
+            document.getElementById('confidence-value').textContent = confidenceText;
+            document.getElementById('error-value').textContent = (marginError * 100).toFixed(1) + '%';
+            
+            // Calculate required sample size for each activity and overall
+            let maxRequiredSamples = 0;
+            const resultsBody = document.getElementById('results-table-body');
+            resultsBody.innerHTML = '';
+            
+            activities.forEach(activity => {
+                const p = activity.percentage / 100;
+                const requiredSamples = calculateSampleSize(confidenceZ, p, marginError);
+                maxRequiredSamples = Math.max(maxRequiredSamples, requiredSamples);
+                
+                // Calculate confidence interval
+                const stdError = Math.sqrt((p * (1 - p)) / totalObservations);
+                const margin = confidenceZ * stdError;
+                const ciLow = Math.max(0, (p - margin) * 100);
+                const ciHigh = Math.min(100, (p + margin) * 100);
+                
+                // Add to results table
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${activity.name}</td>
+                    <td>${activity.count}</td>
+                    <td>${activity.percentage.toFixed(1)}%</td>
+                    <td>${ciLow.toFixed(1)}% to ${ciHigh.toFixed(1)}%</td>
+                    <td>${requiredSamples}</td>
+                `;
+                resultsBody.appendChild(row);
+            });
+            
+            document.getElementById('required-samples-value').textContent = maxRequiredSamples;
+            
+            // Update chart
+            updateChart(activities);
+            
+            // Show results
+            document.getElementById('ws-result').style.display = 'block';
+        });
+        
+        function calculateSampleSize(z, p, e) {
+            if (p <= 0) p = 0.01; // Avoid division by zero for 0% activities
+            if (p >= 1) p = 0.99; // Avoid division by zero for 100% activities
+            
+            const n = (Math.pow(z, 2) * p * (1 - p)) / Math.pow(e, 2);
+            return Math.ceil(n);
+        }
+        
+        function updateChart(activities) {
+            const ctx = document.getElementById('activityChart').getContext('2d');
+            
+            // Destroy previous chart if it exists
+            if (activityChart) {
+                activityChart.destroy();
+            }
+            
+            // Prepare data for chart
+            const labels = activities.map(a => a.name);
+            const data = activities.map(a => a.percentage);
+            const backgroundColors = [
+                'rgba(52, 152, 219, 0.7)',
+                'rgba(241, 196, 15, 0.7)',
+                'rgba(46, 204, 113, 0.7)',
+                'rgba(155, 89, 182, 0.7)',
+                'rgba(231, 76, 60, 0.7)',
+                'rgba(26, 188, 156, 0.7)',
+                'rgba(230, 126, 34, 0.7)'
+            ];
+            
+            activityChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: backgroundColors,
+                        borderColor: '#fff',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.label}: ${context.raw.toFixed(1)}%`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Initialize with default values
+        updateActivityPercentages();
+    </script>
+</body>
+</html>
