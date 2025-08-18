@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Facility Location Calculator - Determine optimal locations using Center of Gravity, Load-Distance, and other methods">
+    <title>Facility Location Calculator | Industrial Engineering Calculators</title>
+    <style>
+        /* Consistent with existing style */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .scenario-selector {
+            margin-bottom: 2rem;
+        }
+        
+        .scenario-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+        }
+        
+        .scenario-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            margin-right: 0.5rem;
+            border-radius: 5px 5px 0 0;
+            background-color: #f1f1f1;
+            transition: all 0.3s;
+        }
+        
+        .scenario-tab.active {
+            background-color: white;
+            border-color: #ddd;
+            border-bottom-color: white;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        
+        .scenario-tab:hover:not(.active) {
+            background-color: #e9e9e9;
+        }
+        
+        .scenario-content {
+            display: none;
+        }
+        
+        .scenario-content.active {
+            display: block;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .location-points {
+            margin-bottom: 1.5rem;
+        }
+        
+        .location-point {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            align-items: center;
+        }
+        
+        .location-point input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .remove-point {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .add-point {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 1rem;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .map-container {
+            width: 100%;
+            height: 400px;
+            margin: 1.5rem 0;
+            border-radius: 5px;
+            overflow: hidden;
+            border: 1px solid #ddd;
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .scenario-tabs {
+                flex-direction: column;
+            }
+            
+            .scenario-tab {
+                border-radius: 0;
+                margin-right: 0;
+                border-bottom: 1px solid #ddd;
+            }
+            
+            .location-point {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .location-point input {
+                width: 100%;
+            }
+        }
+
+    </style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">Industrial <span>Engineering</span> Calculators</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Facility Location Calculator</h1>
+            <p>Determine optimal facility locations using multiple methods including Center of Gravity and Load-Distance</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Facility Location Methods</h2>
+                <p>This calculator helps determine the optimal location for a new facility based on different methodologies. Choose the method that best fits your scenario.</p>
+                
+                <div class="formula-box">
+                    Center of Gravity: (X,Y) = (∑(wᵢxᵢ)/∑wᵢ, ∑(wᵢyᵢ)/∑wᵢ)
+                </div>
+                
+                <div class="formula-box">
+                    Load-Distance Score: LD = ∑(wᵢ × dᵢ)
+                </div>
+                
+                <p>Where:</p>
+                <ul>
+                    <li><strong>Center of Gravity</strong>: Finds the location that minimizes transportation costs based on weights (shipment volumes, demand, etc.)</li>
+                    <li><strong>Load-Distance</strong>: Evaluates potential locations based on distance to demand points weighted by importance</li>
+                    <li><strong>Single Facility Location</strong>: Determines the best location for one new facility</li>
+                    <li><strong>Multi-Facility Location</strong>: Helps allocate demand points to multiple facilities</li>
+                </ul>
+            </div>
+            
+            <div class="scenario-selector">
+                <h3>Calculation Method</h3>
+                <p>Select the facility location method you want to use:</p>
+                
+                <div class="scenario-tabs">
+                    <div class="scenario-tab active" data-scenario="cog">Center of Gravity</div>
+                    <div class="scenario-tab" data-scenario="load-distance">Load-Distance</div>
+                    <div class="scenario-tab" data-scenario="single-facility">Single Facility</div>
+                    <div class="scenario-tab" data-scenario="multi-facility">Multi-Facility</div>
+                </div>
+                
+                <!-- Center of Gravity Method -->
+                <div class="scenario-content active" id="cog-scenario">
+                    <h3>Center of Gravity Method</h3>
+                    <p>This method finds the location that minimizes transportation costs based on weights (shipment volumes, demand, etc.). Add your demand points with their coordinates and weights below.</p>
+                    
+                    <div class="location-points" id="cog-points">
+                        <div class="location-point">
+                            <input type="text" placeholder="Location Name" class="point-name">
+                            <input type="number" placeholder="X Coordinate" class="point-x" step="0.0001">
+                            <input type="number" placeholder="Y Coordinate" class="point-y" step="0.0001">
+                            <input type="number" placeholder="Weight (Volume)" class="point-weight" min="0" step="1">
+                            <button class="remove-point">Remove</button>
+                        </div>
+                    </div>
+                    
+                    <button class="add-point" id="add-cog-point">Add Location</button>
+                    
+                    <button class="calculate-btn" id="calculate-cog">Calculate Center of Gravity</button>
+                    
+                    <div class="result-box" id="cog-result">
+                        <h3>Result</h3>
+                        <p>Optimal Location (Center of Gravity): 
+                            <span class="result-value" id="cog-result-value"></span>
+                        </p>
+                        
+                        <div class="map-container" id="cog-map"></div>
+                        
+                        <h4>Input Points</h4>
+                        <table id="cog-points-table">
+                            <thead>
+                                <tr>
+                                    <th>Location</th>
+                                    <th>X Coordinate</th>
+                                    <th>Y Coordinate</th>
+                                    <th>Weight</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Load-Distance Method -->
+                <div class="scenario-content" id="load-distance-scenario">
+                    <h3>Load-Distance Method</h3>
+                    <p>This method evaluates potential locations based on distance to demand points weighted by importance. Add your demand points and potential facility locations below.</p>
+                    
+                    <h4>Demand Points</h4>
+                    <div class="location-points" id="ld-demand-points">
+                        <div class="location-point">
+                            <input type="text" placeholder="Location Name" class="point-name">
+                            <input type="number" placeholder="X Coordinate" class="point-x" step="0.0001">
+                            <input type="number" placeholder="Y Coordinate" class="point-y" step="0.0001">
+                            <input type="number" placeholder="Weight (Importance)" class="point-weight" min="0" step="1">
+                            <button class="remove-point">Remove</button>
+                        </div>
+                    </div>
+                    <button class="add-point" id="add-ld-demand-point">Add Demand Point</button>
+                    
+                    <h4>Potential Facility Locations</h4>
+                    <div class="location-points" id="ld-facility-points">
+                        <div class="location-point">
+                            <input type="text" placeholder="Location Name" class="point-name">
+                            <input type="number" placeholder="X Coordinate" class="point-x" step="0.0001">
+                            <input type="number" placeholder="Y Coordinate" class="point-y" step="0.0001">
+                            <button class="remove-point">Remove</button>
+                        </div>
+                    </div>
+                    <button class="add-point" id="add-ld-facility-point">Add Facility Location</button>
+                    
+                    <div class="input-group">
+                        <label for="distance-metric">Distance Metric:</label>
+                        <select id="distance-metric">
+                            <option value="euclidean">Euclidean (Straight Line)</option>
+                            <option value="manhattan">Manhattan (Rectilinear)</option>
+                        </select>
+                    </div>
+                    
+                    <button class="calculate-btn" id="calculate-ld">Calculate Load-Distance Scores</button>
+                    
+                    <div class="result-box" id="ld-result">
+                        <h3>Result</h3>
+                        <p>Best Facility Location: <span class="result-value" id="ld-best-location"></span></p>
+                        <p>Lowest Load-Distance Score: <span class="result-value" id="ld-best-score"></span></p>
+                        
+                        <div class="map-container" id="ld-map"></div>
+                        
+                        <h4>Load-Distance Scores</h4>
+                        <table id="ld-scores-table">
+                            <thead>
+                                <tr>
+                                    <th>Facility Location</th>
+                                    <th>Coordinates</th>
+                                    <th>Load-Distance Score</th>
+                                    <th>Rank</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Single Facility Location -->
+                <div class="scenario-content" id="single-facility-scenario">
+                    <h3>Single Facility Location</h3>
+                    <p>This method determines the best location for one new facility based on demand points and transportation costs.</p>
+                    
+                    <div class="input-group">
+                        <label for="sf-method">Optimization Method:</label>
+                        <select id="sf-method">
+                            <option value="cog">Center of Gravity</option>
+                            <option value="median">Median Method</option>
+                            <option value="minimax">Minimax (Worst-case)</option>
+                        </select>
+                    </div>
+                    
+                    <h4>Demand Points</h4>
+                    <div class="location-points" id="sf-demand-points">
+                        <div class="location-point">
+                            <input type="text" placeholder="Location Name" class="point-name">
+                            <input type="number" placeholder="X Coordinate" class="point-x" step="0.0001">
+                            <input type="number" placeholder="Y Coordinate" class="point-y" step="0.0001">
+                            <input type="number" placeholder="Weight (Demand)" class="point-weight" min="0" step="1">
+                            <button class="remove-point">Remove</button>
+                        </div>
+                    </div>
+                    <button class="add-point" id="add-sf-demand-point">Add Demand Point</button>
+                    
+                    <button class="calculate-btn" id="calculate-sf">Find Optimal Location</button>
+                    
+                    <div class="result-box" id="sf-result">
+                        <h3>Result</h3>
+                        <p>Optimal Facility Location: <span class="result-value" id="sf-result-value"></span></p>
+                        <p>Method Used: <span id="sf-method-used"></span></p>
+                        
+                        <div class="map-container" id="sf-map"></div>
+                        
+                        <h4>Demand Points</h4>
+                        <table id="sf-points-table">
+                            <thead>
+                                <tr>
+                                    <th>Location</th>
+                                    <th>Coordinates</th>
+                                    <th>Demand</th>
+                                    <th>Distance to Facility</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Multi-Facility Location -->
+                <div class="scenario-content" id="multi-facility-scenario">
+                    <h3>Multi-Facility Location</h3>
+                    <p>This method helps allocate demand points to multiple facilities to minimize total transportation costs.</p>
+                    
+                    <div class="input-group">
+                        <label for="mf-num-facilities">Number of Facilities:</label>
+                        <input type="number" id="mf-num-facilities" min="2" max="10" value="2">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="mf-method">Allocation Method:</label>
+                        <select id="mf-method">
+                            <option value="kmeans">K-Means Clustering</option>
+                            <option value="gravity">Modified Gravity</option>
+                        </select>
+                    </div>
+                    
+                    <h4>Demand Points</h4>
+                    <div class="location-points" id="mf-demand-points">
+                        <div class="location-point">
+                            <input type="text" placeholder="Location Name" class="point-name">
+                            <input type="number" placeholder="X Coordinate" class="point-x" step="0.0001">
+                            <input type="number" placeholder="Y Coordinate" class="point-y" step="0.0001">
+                            <input type="number" placeholder="Weight (Demand)" class="point-weight" min="0" step="1">
+                            <button class="remove-point">Remove</button>
+                        </div>
+                    </div>
+                    <button class="add-point" id="add-mf-demand-point">Add Demand Point</button>
+                    
+                    <button class="calculate-btn" id="calculate-mf">Allocate Facilities</button>
+                    
+                    <div class="result-box" id="mf-result">
+                        <h3>Result</h3>
+                        <p>Optimal Facility Locations:</p>
+                        <ul id="mf-facility-list"></ul>
+                        
+                        <div class="map-container" id="mf-map"></div>
+                        
+                        <h4>Demand Allocation</h4>
+                        <table id="mf-allocation-table">
+                            <thead>
+                                <tr>
+                                    <th>Facility</th>
+                                    <th>Coordinates</th>
+                                    <th>Assigned Demand Points</th>
+                                    <th>Total Assigned Demand</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Practical Examples</h3>
+                
+                <div class="example">
+                    <h4>Example 1: Warehouse Location</h4>
+                    <p>Using Center of Gravity to locate a new warehouse serving 5 retail stores with coordinates and weekly shipment volumes:</p>
+                    <ul>
+                        <li>Store A: (10, 20) - 200 units</li>
+                        <li>Store B: (30, 40) - 150 units</li>
+                        <li>Store C: (50, 10) - 300 units</li>
+                        <li>Store D: (20, 30) - 250 units</li>
+                        <li>Store E: (40, 50) - 100 units</li>
+                    </ul>
+                    <p>Optimal Warehouse Location: (29.0, 26.5)</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 2: Emergency Facility</h4>
+                    <p>Using Load-Distance method to choose between 3 potential locations for a fire station serving 4 neighborhoods with different population sizes:</p>
+                    <p>Neighborhoods: (5,5)-2000, (10,15)-3000, (15,5)-1500, (20,10)-2500</p>
+                    <p>Potential locations: (8,8), (12,10), (15,12)</p>
+                    <p>Best location: (12,10) with lowest load-distance score</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 3: Distribution Centers</h4>
+                    <p>Using Multi-Facility method to locate 2 distribution centers for 8 retail stores in a region.</p>
+                    <p>Optimal solution assigns 4 stores to each DC based on proximity and demand.</p>
+                </div>
+            </div>
+            
+            <div class="calculator-intro">
+                <h3>Facility Location Methods Comparison</h3>
+                <table>
+                    <tr>
+                        <th>Method</th>
+                        <th>Best For</th>
+                        <th>Advantages</th>
+                        <th>Limitations</th>
+                    </tr>
+                    <tr>
+                        <td>Center of Gravity</td>
+                        <td>Single facility with weighted demand points</td>
+                        <td>Minimizes transportation costs, simple calculation</td>
+                        <td>Assumes straight-line distances, may not be on road network</td>
+                    </tr>
+                    <tr>
+                        <td>Load-Distance</td>
+                        <td>Choosing between predefined locations</td>
+                        <td>Flexible, can use different distance metrics</td>
+                        <td>Requires predefined alternatives</td>
+                    </tr>
+                    <tr>
+                        <td>Median</td>
+                        <td>Urban locations with grid layouts</td>
+                        <td>Works well with rectilinear distances</td>
+                        <td>Less accurate for non-grid areas</td>
+                    </tr>
+                    <tr>
+                        <td>Multi-Facility</td>
+                        <td>Network of facilities</td>
+                        <td>Optimizes entire system, good for large territories</td>
+                        <td>More complex, may require iterative solutions</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <p class="copyright">&copy; 2023 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Scenario tab switching
+            const tabs = document.querySelectorAll('.scenario-tab');
+            const contents = document.querySelectorAll('.scenario-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active class from all tabs and contents
+                    tabs.forEach(t => t.classList.remove('active'));
+                    contents.forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked tab and corresponding content
+                    tab.classList.add('active');
+                    const scenario = tab.getAttribute('data-scenario');
+                    document.getElementById(`${scenario}-scenario`).classList.add('active');
+                });
+            });
+            
+            // Point management functions
+            function addPoint(containerId, hasWeight = true) {
+                const container = document.getElementById(containerId);
+                const pointDiv = document.createElement('div');
+                pointDiv.className = 'location-point';
+                
+                pointDiv.innerHTML = `
+                    <input type="text" placeholder="Location Name" class="point-name">
+                    <input type="number" placeholder="X Coordinate" class="point-x" step="0.0001">
+                    <input type="number" placeholder="Y Coordinate" class="point-y" step="0.0001">
+                    ${hasWeight ? '<input type="number" placeholder="Weight (Volume)" class="point-weight" min="0" step="1">' : ''}
+                    <button class="remove-point">Remove</button>
+                `;
+                
+                container.appendChild(pointDiv);
+                
+                // Add remove event
+                pointDiv.querySelector('.remove-point').addEventListener('click', () => {
+                    pointDiv.remove();
+                });
+            }
+            
+            // Initialize maps
+            let cogMap, ldMap, sfMap, mfMap;
+            
+            function initMap(mapId) {
+                const map = L.map(mapId).setView([0, 0], 2);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
+                return map;
+            }
+            
+            // Initialize all maps when their containers are shown
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.attributeName === 'class') {
+                        const target = mutation.target;
+                        if (target.id === 'cog-map' && target.classList.contains('active') && !cogMap) {
+                            cogMap = initMap('cog-map');
+                        }
+                        if (target.id === 'ld-map' && target.classList.contains('active') && !ldMap) {
+                            ldMap = initMap('ld-map');
+                        }
+                        if (target.id === 'sf-map' && target.classList.contains('active') && !sfMap) {
+                            sfMap = initMap('sf-map');
+                        }
+                        if (target.id === 'mf-map' && target.classList.contains('active') && !mfMap) {
+                            mfMap = initMap('mf-map');
+                        }
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.map-container').forEach(container => {
+                observer.observe(container, { attributes: true });
+            });
+            
+            // Add point buttons - moved inside DOMContentLoaded
+            document.getElementById('add-cog-point')?.addEventListener('click', () => addPoint('cog-points', true));
+            document.getElementById('add-ld-demand-point')?.addEventListener('click', () => addPoint('ld-demand-points', true));
+            document.getElementById('add-ld-facility-point')?.addEventListener('click', () => addPoint('ld-facility-points', false));
+            document.getElementById('add-sf-demand-point')?.addEventListener('click', () => addPoint('sf-demand-points', true));
+            document.getElementById('add-mf-demand-point')?.addEventListener('click', () => addPoint('mf-demand-points', true));
+            
+            // Calculation functions
+            function calculateDistance(x1, y1, x2, y2, metric = 'euclidean') {
+                if (metric === 'euclidean') {
+                    return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+                } else { // manhattan
+                    return Math.abs(x2 - x1) + Math.abs(y2 - y1);
+                }
+            }
+            
+            // Center of Gravity calculation - fixed event listener
+            document.getElementById('calculate-cog')?.addEventListener('click', function(e) {
+                e.preventDefault();
+                const points = [];
+                const pointElements = document.querySelectorAll('#cog-points .location-point');
+                
+                if (pointElements.length === 0) {
+                    alert('Please add at least one location point');
+                    return;
+                }
+                
+                pointElements.forEach(pointEl => {
+                    const name = pointEl.querySelector('.point-name').value || 'Unnamed';
+                    const x = parseFloat(pointEl.querySelector('.point-x').value);
+                    const y = parseFloat(pointEl.querySelector('.point-y').value);
+                    const weight = parseFloat(pointEl.querySelector('.point-weight').value);
+                    
+                    if (isNaN(x) || isNaN(y) || isNaN(weight)) {
+                        alert('Please enter valid numbers for all point coordinates and weights');
+                        return;
+                    }
+                    
+                    points.push({ name, x, y, weight });
+                });
+                
+                // Calculate center of gravity
+                let sumWx = 0, sumWy = 0, sumW = 0;
+                
+                points.forEach(point => {
+                    sumWx += point.x * point.weight;
+                    sumWy += point.y * point.weight;
+                    sumW += point.weight;
+                });
+                
+                const cogX = sumWx / sumW;
+                const cogY = sumWy / sumW;
+                
+                // Display result
+                document.getElementById('cog-result-value').textContent = `(${cogX.toFixed(2)}, ${cogY.toFixed(2)})`;
+                
+                // Update map
+                if (cogMap) {
+                    cogMap.eachLayer(layer => {
+                        if (layer instanceof L.Marker || layer instanceof L.Circle) {
+                            cogMap.removeLayer(layer);
+                        }
+                    });
+                    
+                    // Add demand points
+                    points.forEach(point => {
+                        L.circleMarker([point.y, point.x], {
+                            radius: 5 + (point.weight / Math.max(...points.map(p => p.weight)) * 10),
+                            fillColor: 'blue',
+                            color: '#000',
+                            weight: 1,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        }).addTo(cogMap).bindPopup(`${point.name}<br>Weight: ${point.weight}`);
+                    });
+                    
+                    // Add center of gravity
+                    L.circleMarker([cogY, cogX], {
+                        radius: 10,
+                        fillColor: 'red',
+                        color: '#000',
+                        weight: 1,
+                        opacity: 1,
+                        fillOpacity: 0.8
+                    }).addTo(cogMap).bindPopup(`Center of Gravity<br>(${cogX.toFixed(2)}, ${cogY.toFixed(2)})`);
+                    
+                    // Fit bounds to show all points
+                    const bounds = points.map(p => [p.y, p.x]);
+                    bounds.push([cogY, cogX]);
+                    cogMap.fitBounds(bounds);
+                }
+                
+                // Update points table
+                const tableBody = document.querySelector('#cog-points-table tbody');
+                if (tableBody) {
+                    tableBody.innerHTML = '';
+                    
+                    points.forEach(point => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${point.name}</td>
+                            <td>${point.x.toFixed(2)}</td>
+                            <td>${point.y.toFixed(2)}</td>
+                            <td>${point.weight}</td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                }
+                
+                // Show result
+                document.getElementById('cog-result').style.display = 'block';
+            });
+            
+            // Load-Distance calculation - fixed event listener
+            document.getElementById('calculate-ld')?.addEventListener('click', function(e) {
+                e.preventDefault();
+                const demandPoints = [];
+                const facilityPoints = [];
+                const distanceMetric = document.getElementById('distance-metric').value;
+                
+                // Get demand points
+                const demandElements = document.querySelectorAll('#ld-demand-points .location-point');
+                if (demandElements.length === 0) {
+                    alert('Please add at least one demand point');
+                    return;
+                }
+                
+                demandElements.forEach(pointEl => {
+                    const name = pointEl.querySelector('.point-name').value || 'Unnamed';
+                    const x = parseFloat(pointEl.querySelector('.point-x').value);
+                    const y = parseFloat(pointEl.querySelector('.point-y').value);
+                    const weight = parseFloat(pointEl.querySelector('.point-weight').value);
+                    
+                    if (isNaN(x) || isNaN(y) || isNaN(weight)) {
+                        alert('Please enter valid numbers for all demand point coordinates and weights');
+                        return;
+                    }
+                    
+                    demandPoints.push({ name, x, y, weight });
+                });
+                
+                // Get facility points
+                const facilityElements = document.querySelectorAll('#ld-facility-points .location-point');
+                if (facilityElements.length === 0) {
+                    alert('Please add at least one potential facility location');
+                    return;
+                }
+                
+                facilityElements.forEach(pointEl => {
+                    const name = pointEl.querySelector('.point-name').value || 'Unnamed';
+                    const x = parseFloat(pointEl.querySelector('.point-x').value);
+                    const y = parseFloat(pointEl.querySelector('.point-y').value);
+                    
+                    if (isNaN(x) || isNaN(y)) {
+                        alert('Please enter valid numbers for all facility coordinates');
+                        return;
+                    }
+                    
+                    facilityPoints.push({ name, x, y });
+                });
+                
+                // Calculate load-distance scores
+                const scores = facilityPoints.map(facility => {
+                    let totalScore = 0;
+                    
+                    demandPoints.forEach(demand => {
+                        const distance = calculateDistance(facility.x, facility.y, demand.x, demand.y, distanceMetric);
+                        totalScore += demand.weight * distance;
+                    });
+                    
+                    return {
+                        ...facility,
+                        score: totalScore
+                    };
+                });
+                
+                // Sort by score (ascending)
+                scores.sort((a, b) => a.score - b.score);
+                
+                // Display results
+                document.getElementById('ld-best-location').textContent = `${scores[0].name} (${scores[0].x.toFixed(2)}, ${scores[0].y.toFixed(2)})`;
+                document.getElementById('ld-best-score').textContent = scores[0].score.toFixed(2);
+                
+                // Update map
+                if (ldMap) {
+                    ldMap.eachLayer(layer => {
+                        if (layer instanceof L.Marker || layer instanceof L.Circle) {
+                            ldMap.removeLayer(layer);
+                        }
+                    });
+                    
+                    // Add demand points
+                    demandPoints.forEach(point => {
+                        L.circleMarker([point.y, point.x], {
+                            radius: 5 + (point.weight / Math.max(...demandPoints.map(p => p.weight)) * 10),
+                            fillColor: 'blue',
+                            color: '#000',
+                            weight: 1,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        }).addTo(ldMap).bindPopup(`${point.name}<br>Weight: ${point.weight}`);
+                    });
+                    
+                    // Add facility points with color coding by score
+                    const maxScore = Math.max(...scores.map(s => s.score));
+                    
+                    scores.forEach((facility, index) => {
+                        // Color from green (best) to red (worst)
+                        const hue = (1 - (facility.score / maxScore)) * 120;
+                        const color = `hsl(${hue}, 100%, 50%)`;
+                        
+                        L.circleMarker([facility.y, facility.x], {
+                            radius: 8,
+                            fillColor: color,
+                            color: '#000',
+                            weight: 1,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        }).addTo(ldMap).bindPopup(`${facility.name}<br>Score: ${facility.score.toFixed(2)}`);
+                        
+                        // Add lines to demand points if not too many
+                        if (demandPoints.length <= 10) {
+                            demandPoints.forEach(demand => {
+                                L.polyline([[demand.y, demand.x], [facility.y, facility.x]], {
+                                    color: color,
+                                    weight: 1,
+                                    opacity: 0.5,
+                                    dashArray: '5,5'
+                                }).addTo(ldMap);
+                            });
+                        }
+                    });
+                    
+                    // Fit bounds to show all points
+                    const bounds = demandPoints.map(p => [p.y, p.x]).concat(facilityPoints.map(p => [p.y, p.x]));
+                    ldMap.fitBounds(bounds);
+                }
+                
+                // Update scores table
+                const tableBody = document.querySelector('#ld-scores-table tbody');
+                if (tableBody) {
+                    tableBody.innerHTML = '';
+                    
+                    scores.forEach((facility, index) => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${facility.name}</td>
+                            <td>(${facility.x.toFixed(2)}, ${facility.y.toFixed(2)})</td>
+                            <td>${facility.score.toFixed(2)}</td>
+                            <td>${index + 1}</td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                }
+                
+                // Show result
+                document.getElementById('ld-result').style.display = 'block';
+            });
+            
+            // Single Facility calculation - fixed event listener
+            document.getElementById('calculate-sf')?.addEventListener('click', function(e) {
+                e.preventDefault();
+                const method = document.getElementById('sf-method').value;
+                const demandPoints = [];
+                
+                // Get demand points
+                const demandElements = document.querySelectorAll('#sf-demand-points .location-point');
+                if (demandElements.length === 0) {
+                    alert('Please add at least one demand point');
+                    return;
+                }
+                
+                demandElements.forEach(pointEl => {
+                    const name = pointEl.querySelector('.point-name').value || 'Unnamed';
+                    const x = parseFloat(pointEl.querySelector('.point-x').value);
+                    const y = parseFloat(pointEl.querySelector('.point-y').value);
+                    const weight = parseFloat(pointEl.querySelector('.point-weight').value);
+                    
+                    if (isNaN(x) || isNaN(y) || isNaN(weight)) {
+                        alert('Please enter valid numbers for all demand point coordinates and weights');
+                        return;
+                    }
+                    
+                    demandPoints.push({ name, x, y, weight });
+                });
+                
+                let resultX, resultY;
+                
+                if (method === 'cog') {
+                    // Center of Gravity
+                    let sumWx = 0, sumWy = 0, sumW = 0;
+                    
+                    demandPoints.forEach(point => {
+                        sumWx += point.x * point.weight;
+                        sumWy += point.y * point.weight;
+                        sumW += point.weight;
+                    });
+                    
+                    resultX = sumWx / sumW;
+                    resultY = sumWy / sumW;
+                } else if (method === 'median') {
+                    // Median method (for rectilinear distances)
+                    // Find median weight along x and y axes
+                    const sortedX = [...demandPoints].sort((a, b) => a.x - b.x);
+                    const sortedY = [...demandPoints].sort((a, b) => a.y - b.y);
+                    
+                    let cumWeight = 0;
+                    const totalWeight = demandPoints.reduce((sum, p) => sum + p.weight, 0);
+                    
+                    // Find x median
+                    for (const point of sortedX) {
+                        cumWeight += point.weight;
+                        if (cumWeight >= totalWeight / 2) {
+                            resultX = point.x;
+                            break;
+                        }
+                    }
+                    
+                    // Find y median
+                    cumWeight = 0;
+                    for (const point of sortedY) {
+                        cumWeight += point.weight;
+                        if (cumWeight >= totalWeight / 2) {
+                            resultY = point.y;
+                            break;
+                        }
+                    }
+                } else { // minimax
+                    // Minimax method - find location that minimizes maximum distance
+                    // This is a simplified approach - exact solution would be more complex
+                    
+                    // Start with center of gravity as initial point
+                    let sumWx = 0, sumWy = 0, sumW = 0;
+                    demandPoints.forEach(point => {
+                        sumWx += point.x * point.weight;
+                        sumWy += point.y * point.weight;
+                        sumW += point.weight;
+                    });
+                    
+                    let currentX = sumWx / sumW;
+                    let currentY = sumWy / sumW;
+                    
+                    // Simple iterative improvement (gradient descent-like)
+                    const stepSize = 0.1;
+                    let improved = true;
+                    let iterations = 0;
+                    const maxIterations = 1000;
+                    
+                    while (improved && iterations < maxIterations) {
+                        iterations++;
+                        improved = false;
+                        
+                        // Calculate current maximum distance
+                        let maxDist = 0;
+                        demandPoints.forEach(point => {
+                            const dist = calculateDistance(currentX, currentY, point.x, point.y, 'euclidean');
+                            if (dist > maxDist) maxDist = dist;
+                        });
+                        
+                        // Try small steps in each direction
+                        const directions = [
+                            { dx: stepSize, dy: 0 },
+                            { dx: -stepSize, dy: 0 },
+                            { dx: 0, dy: stepSize },
+                            { dx: 0, dy: -stepSize }
+                        ];
+                        
+                        for (const dir of directions) {
+                            const newX = currentX + dir.dx;
+                            const newY = currentY + dir.dy;
+                            
+                            let newMaxDist = 0;
+                            demandPoints.forEach(point => {
+                                const dist = calculateDistance(newX, newY, point.x, point.y, 'euclidean');
+                                if (dist > newMaxDist) newMaxDist = dist;
+                            });
+                            
+                            if (newMaxDist < maxDist) {
+                                currentX = newX;
+                                currentY = newY;
+                                improved = true;
+                                break;
+                            }
+                        }
+                    }
+                    
+                    resultX = currentX;
+                    resultY = currentY;
+                }
+                
+                // Display results
+                document.getElementById('sf-result-value').textContent = `(${resultX.toFixed(2)}, ${resultY.toFixed(2)})`;
+                document.getElementById('sf-method-used').textContent = 
+                    method === 'cog' ? 'Center of Gravity' : 
+                    method === 'median' ? 'Median Method' : 'Minimax Method';
+                
+                // Update map
+                if (sfMap) {
+                    sfMap.eachLayer(layer => {
+                        if (layer instanceof L.Marker || layer instanceof L.Circle) {
+                            sfMap.removeLayer(layer);
+                        }
+                    });
+                    
+                    // Add demand points
+                    demandPoints.forEach(point => {
+                        L.circleMarker([point.y, point.x], {
+                            radius: 5 + (point.weight / Math.max(...demandPoints.map(p => p.weight)) * 10),
+                            fillColor: 'blue',
+                            color: '#000',
+                            weight: 1,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        }).addTo(sfMap).bindPopup(`${point.name}<br>Weight: ${point.weight}`);
+                    });
+                    
+                    // Add facility location
+                    L.circleMarker([resultY, resultX], {
+                        radius: 10,
+                        fillColor: 'red',
+                        color: '#000',
+                        weight: 1,
+                        opacity: 1,
+                        fillOpacity: 0.8
+                    }).addTo(sfMap).bindPopup(`Optimal Facility Location<br>(${resultX.toFixed(2)}, ${resultY.toFixed(2)})`);
+                    
+                    // Add lines to demand points
+                    demandPoints.forEach(demand => {
+                        L.polyline([[demand.y, demand.x], [resultY, resultX]], {
+                            color: 'red',
+                            weight: 1,
+                            opacity: 0.5,
+                            dashArray: '5,5'
+                        }).addTo(sfMap);
+                    });
+                    
+                    // Fit bounds to show all points
+                    const bounds = demandPoints.map(p => [p.y, p.x]);
+                    bounds.push([resultY, resultX]);
+                    sfMap.fitBounds(bounds);
+                }
+                
+                // Update points table
+                const tableBody = document.querySelector('#sf-points-table tbody');
+                if (tableBody) {
+                    tableBody.innerHTML = '';
+                    
+                    demandPoints.forEach(point => {
+                        const distance = calculateDistance(resultX, resultY, point.x, point.y, 'euclidean');
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${point.name}</td>
+                            <td>(${point.x.toFixed(2)}, ${point.y.toFixed(2)})</td>
+                            <td>${point.weight}</td>
+                            <td>${distance.toFixed(2)}</td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                }
+                
+                // Show result
+                document.getElementById('sf-result').style.display = 'block';
+            });
+            
+            // Multi-Facility calculation - fixed event listener
+            document.getElementById('calculate-mf')?.addEventListener('click', function(e) {
+                e.preventDefault();
+                const numFacilities = parseInt(document.getElementById('mf-num-facilities').value);
+                const method = document.getElementById('mf-method').value;
+                const demandPoints = [];
+                
+                // Get demand points
+                const demandElements = document.querySelectorAll('#mf-demand-points .location-point');
+                if (demandElements.length === 0) {
+                    alert('Please add at least one demand point');
+                    return;
+                }
+                
+                demandElements.forEach(pointEl => {
+                    const name = pointEl.querySelector('.point-name').value || 'Unnamed';
+                    const x = parseFloat(pointEl.querySelector('.point-x').value);
+                    const y = parseFloat(pointEl.querySelector('.point-y').value);
+                    const weight = parseFloat(pointEl.querySelector('.point-weight').value);
+                    
+                    if (isNaN(x) || isNaN(y) || isNaN(weight)) {
+                        alert('Please enter valid numbers for all demand point coordinates and weights');
+                        return;
+                    }
+                    
+                    demandPoints.push({ name, x, y, weight });
+                });
+                
+                if (numFacilities < 1 || numFacilities > 10) {
+                    alert('Number of facilities must be between 1 and 10');
+                    return;
+                }
+                
+                // Simple k-means clustering implementation
+                function kMeansClustering(points, k, weights) {
+                    // Initialize centroids randomly
+                    let centroids = [];
+                    const shuffled = [...points];
+                    for (let i = shuffled.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+                    }
+                    centroids = shuffled.slice(0, k).map(p => ({ x: p.x, y: p.y }));
+                    
+                    let clusters = Array(k).fill().map(() => []);
+                    let changed = true;
+                    let iterations = 0;
+                    const maxIterations = 100;
+                    
+                    while (changed && iterations < maxIterations) {
+                        iterations++;
+                        changed = false;
+                        
+                        // Assign each point to nearest centroid
+                        const newClusters = Array(k).fill().map(() => []);
+                        
+                        points.forEach((point, i) => {
+                            let minDist = Infinity;
+                            let bestCluster = 0;
+                            
+                            centroids.forEach((centroid, j) => {
+                                const dist = calculateDistance(point.x, point.y, centroid.x, centroid.y, 'euclidean');
+                                if (dist < minDist) {
+                                    minDist = dist;
+                                    bestCluster = j;
+                                }
+                            });
+                            
+                            newClusters[bestCluster].push(point);
+                        });
+                        
+                        // Check if any point changed cluster
+                        if (iterations > 1) {
+                            for (let i = 0; i < k; i++) {
+                                if (clusters[i].length !== newClusters[i].length) {
+                                    changed = true;
+                                    break;
+                                }
+                            }
+                        } else {
+                            changed = true;
+                        }
+                        
+                        clusters = newClusters;
+                        
+                        // Update centroids (weighted by demand)
+                        centroids = clusters.map(cluster => {
+                            if (cluster.length === 0) {
+                                // If cluster is empty, keep centroid where it is
+                                return centroids[clusters.indexOf(cluster)];
+                            }
+                            
+                            let sumWx = 0, sumWy = 0, sumW = 0;
+                            
+                            cluster.forEach(point => {
+                                sumWx += point.x * point.weight;
+                                sumWy += point.y * point.weight;
+                                sumW += point.weight;
+                            });
+                            
+                            return {
+                                x: sumWx / sumW,
+                                y: sumWy / sumW
+                            };
+                        });
+                    }
+                    
+                    return { centroids, clusters };
+                }
+                
+                // Calculate facility locations
+                let facilities = [];
+                let assignments = [];
+                
+                if (method === 'kmeans') {
+                    const result = kMeansClustering(demandPoints, numFacilities);
+                    facilities = result.centroids.map((centroid, i) => ({
+                        x: centroid.x,
+                        y: centroid.y,
+                        points: result.clusters[i]
+                    }));
+                    
+                    assignments = result.clusters;
+                } else { // modified gravity
+                    // Start with k-means result then adjust based on weights
+                    const kmeansResult = kMeansClustering(demandPoints, numFacilities);
+                    facilities = kmeansResult.centroids.map((centroid, i) => ({
+                        x: centroid.x,
+                        y: centroid.y,
+                        points: kmeansResult.clusters[i]
+                    }));
+                    
+                    // Simple adjustment - could be more sophisticated
+                    facilities.forEach(facility => {
+                        if (facility.points.length > 0) {
+                            let sumWx = 0, sumWy = 0, sumW = 0;
+                            
+                            facility.points.forEach(point => {
+                                sumWx += point.x * point.weight;
+                                sumWy += point.y * point.weight;
+                                sumW += point.weight;
+                            });
+                            
+                            facility.x = sumWx / sumW;
+                            facility.y = sumWy / sumW;
+                        }
+                    });
+                    
+                    // Reassign points based on new facility locations
+                    assignments = Array(numFacilities).fill().map(() => []);
+                    
+                    demandPoints.forEach(point => {
+                        let minDist = Infinity;
+                        let bestFacility = 0;
+                        
+                        facilities.forEach((facility, j) => {
+                            const dist = calculateDistance(point.x, point.y, facility.x, facility.y, 'euclidean');
+                            if (dist < minDist) {
+                                minDist = dist;
+                                bestFacility = j;
+                            }
+                        });
+                        
+                        assignments[bestFacility].push(point);
+                    });
+                    
+                    // Update facilities with new assignments
+                    facilities.forEach((facility, i) => {
+                        facility.points = assignments[i];
+                    });
+                }
+                
+                // Display results
+                const facilityList = document.getElementById('mf-facility-list');
+                if (facilityList) {
+                    facilityList.innerHTML = '';
+                    
+                    facilities.forEach((facility, i) => {
+                        const li = document.createElement('li');
+                        li.innerHTML = `<strong>Facility ${i+1}:</strong> (${facility.x.toFixed(2)}, ${facility.y.toFixed(2)}) - 
+                                       ${facility.points.length} demand points assigned`;
+                        facilityList.appendChild(li);
+                    });
+                }
+                
+                // Update map
+                if (mfMap) {
+                    mfMap.eachLayer(layer => {
+                        if (layer instanceof L.Marker || layer instanceof L.Circle) {
+                            mfMap.removeLayer(layer);
+                        }
+                    });
+                    
+                    // Color palette for facilities
+                    const colors = [
+                        'red', 'blue', 'green', 'purple', 'orange', 
+                        'darkred', 'darkblue', 'darkgreen', 'cadetblue', 'pink'
+                    ];
+                    
+                    // Add demand points with facility colors
+                    facilities.forEach((facility, i) => {
+                        facility.points.forEach(point => {
+                            L.circleMarker([point.y, point.x], {
+                                radius: 5 + (point.weight / Math.max(...demandPoints.map(p => p.weight)) * 10),
+                                fillColor: colors[i % colors.length],
+                                color: '#000',
+                                weight: 1,
+                                opacity: 1,
+                                fillOpacity: 0.8
+                            }).addTo(mfMap).bindPopup(`${point.name}<br>Assigned to Facility ${i+1}`);
+                        });
+                    });
+                    
+                    // Add facility locations
+                    facilities.forEach((facility, i) => {
+                        L.circleMarker([facility.y, facility.x], {
+                            radius: 10,
+                            fillColor: colors[i % colors.length],
+                            color: '#000',
+                            weight: 2,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        }).addTo(mfMap).bindPopup(`Facility ${i+1}<br>(${facility.x.toFixed(2)}, ${facility.y.toFixed(2)})`);
+                    });
+                    
+                    // Fit bounds to show all points
+                    const bounds = demandPoints.map(p => [p.y, p.x]).concat(facilities.map(f => [f.y, f.x]));
+                    mfMap.fitBounds(bounds);
+                }
+                
+                // Update allocation table
+                const tableBody = document.querySelector('#mf-allocation-table tbody');
+                if (tableBody) {
+                    tableBody.innerHTML = '';
+                    
+                    facilities.forEach((facility, i) => {
+                        const totalDemand = facility.points.reduce((sum, p) => sum + p.weight, 0);
+                        const row = document.createElement('tr');
+                        
+                        const pointsList = facility.points.map(p => p.name).join(', ') || 'None';
+                        
+                        row.innerHTML = `
+                            <td>Facility ${i+1}</td>
+                            <td>(${facility.x.toFixed(2)}, ${facility.y.toFixed(2)})</td>
+                            <td>${pointsList}</td>
+                            <td>${totalDemand}</td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                }
+                
+                // Show result
+                document.getElementById('mf-result').style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>
