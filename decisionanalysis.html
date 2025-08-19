@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Decision Analysis Calculator - Evaluate alternatives under certainty, risk, and uncertainty using multiple criteria">
+    <title>Decision Analysis Calculator | Industrial Engineering Calculators</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        /* Decision matrix specific styles */
+        .matrix-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .matrix-btn {
+            background-color: var(--light-color);
+            color: var(--primary-color);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .matrix-btn:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .decision-matrix {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            overflow-x: auto;
+            display: block;
+        }
+        
+        .decision-matrix th, .decision-matrix td {
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            text-align: center;
+        }
+        
+        .decision-matrix th {
+            background-color: #f2f2f2;
+            font-weight: 500;
+        }
+        
+        .decision-matrix input {
+            width: 80px;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .decision-matrix input:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .criteria-results {
+            margin-top: 2rem;
+        }
+        
+        .criteria-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        .criteria-table th, .criteria-table td {
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            text-align: center;
+        }
+        
+        .criteria-table th {
+            background-color: #f2f2f2;
+        }
+        
+        .best-option {
+            background-color: rgba(46, 204, 113, 0.2);
+            font-weight: bold;
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .matrix-controls {
+                flex-direction: column;
+            }
+            
+            .decision-matrix {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">Industrial <span>Engineering</span> Calculators</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Decision Analysis Calculator</h1>
+            <p>Evaluate alternatives under certainty, risk, and uncertainty using multiple criteria</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Decision Making Under Certainty, Risk, and Uncertainty</h2>
+                <p>This calculator helps evaluate decision alternatives using various criteria for different decision environments:</p>
+                
+                <div class="formula-box">
+                    <strong>Expected Value</strong>: ∑(Probability × Outcome)<br>
+                    <strong>Maximax</strong>: Maximum of maximum payoffs (optimistic)<br>
+                    <strong>Maximin</strong>: Maximum of minimum payoffs (pessimistic)<br>
+                    <strong>Hurwicz</strong>: α × (Best) + (1-α) × (Worst)<br>
+                    <strong>Laplace</strong>: Average of all payoffs (equal probability)
+                </div>
+            </div>
+            
+            <form id="decision-form">
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="alternatives">Number of Alternatives:</label>
+                        <input type="number" id="alternatives" min="2" max="10" value="3" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="states">Number of States of Nature:</label>
+                        <input type="number" id="states" min="2" max="10" value="3" required>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="decision-type">Decision Environment:</label>
+                    <select id="decision-type" required>
+                        <option value="certainty">Certainty (Known outcomes)</option>
+                        <option value="risk" selected>Risk (Known probabilities)</option>
+                        <option value="uncertainty">Uncertainty (Unknown probabilities)</option>
+                    </select>
+                </div>
+                
+                <div id="probability-inputs" class="input-group">
+                    <label>Probabilities for States of Nature (must sum to 1):</label>
+                    <div id="probability-fields" class="input-row"></div>
+                </div>
+                
+                <div class="input-group" id="hurwicz-input" style="display: none;">
+                    <label for="alpha">Hurwicz α Coefficient (0-1):</label>
+                    <input type="number" id="alpha" min="0" max="1" step="0.01" value="0.5">
+                    <p style="font-size: 0.8rem; color: var(--text-light);">α represents optimism (1 = completely optimistic, 0 = completely pessimistic)</p>
+                </div>
+                
+                <h3>Decision Matrix</h3>
+                <div class="matrix-controls">
+                    <button type="button" id="fill-example" class="matrix-btn">Fill Example</button>
+                    <button type="button" id="clear-matrix" class="matrix-btn">Clear Matrix</button>
+                </div>
+                
+                <table class="decision-matrix" id="decision-matrix">
+                    <thead>
+                        <tr>
+                            <th>Alternatives \ States</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Will be filled by JavaScript -->
+                    </tbody>
+                </table>
+                
+                <button type="submit" class="calculate-btn">Evaluate Decisions</button>
+            </form>
+            
+            <div class="result-box" id="decision-result">
+                <h3>Results</h3>
+                <div id="results-content">
+                    <!-- Will be filled by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Practical Examples</h3>
+                
+                <div class="example">
+                    <h4>Example 1: Product Launch (Risk)</h4>
+                    <p>Alternatives: Launch now, Improve then launch, Don't launch</p>
+                    <p>States: Strong demand (0.3), Moderate demand (0.5), Weak demand (0.2)</p>
+                    <p>Payoffs (in $M): [50, 20, -10], [40, 30, 5], [0, 0, 0]</p>
+                    <p>Expected Values: 22, 27.5, 0 → Best: Improve then launch</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 2: Vendor Selection (Uncertainty)</h4>
+                    <p>Alternatives: Vendor A, Vendor B, Vendor C</p>
+                    <p>States: Best case, Average case, Worst case</p>
+                    <p>Payoffs (in days): [5, 7, 10], [6, 6, 8], [8, 8, 8]</p>
+                    <p>Maximin: 7, 6, 8 → Best: Vendor C (guarantees ≤8 days)</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 3: Investment (Hurwicz Criterion)</h4>
+                    <p>Alternatives: Stocks, Bonds, Savings</p>
+                    <p>States: Boom, Normal, Recession</p>
+                    <p>Payoffs (in % return): [15, 5, -5], [8, 6, 4], [3, 3, 3]</p>
+                    <p>With α=0.7: 9, 7.2, 3 → Best: Stocks (optimistic investor)</p>
+                </div>
+            </div>
+            
+            <div class="calculator-intro">
+                <h3>Decision Criteria Guidelines</h3>
+                <table class="criteria-table">
+                    <tr>
+                        <th>Criterion</th>
+                        <th>Best Used When</th>
+                        <th>Advantages</th>
+                        <th>Limitations</th>
+                    </tr>
+                    <tr>
+                        <td>Expected Value</td>
+                        <td>Probabilities are known (Risk)</td>
+                        <td>Mathematically sound, considers all outcomes</td>
+                        <td>Requires accurate probabilities</td>
+                    </tr>
+                    <tr>
+                        <td>Maximax</td>
+                        <td>Optimistic outlook, low risk aversion</td>
+                        <td>Seeks best possible outcome</td>
+                        <td>Ignores potential losses</td>
+                    </tr>
+                    <tr>
+                        <td>Maximin</td>
+                        <td>Pessimistic outlook, high risk aversion</td>
+                        <td>Protects against worst case</td>
+                        <td>May miss good opportunities</td>
+                    </tr>
+                    <tr>
+                        <td>Hurwicz</td>
+                        <td>Balance between optimism and pessimism</td>
+                        <td>Adjustable risk preference</td>
+                        <td>Subjective α selection</td>
+                    </tr>
+                    <tr>
+                        <td>Laplace</td>
+                        <td>No probability information (Uncertainty)</td>
+                        <td>Simple, treats all states equally</td>
+                        <td>May not reflect reality</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <p class="copyright">&copy; 2023 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const alternativesInput = document.getElementById('alternatives');
+            const statesInput = document.getElementById('states');
+            const decisionType = document.getElementById('decision-type');
+            const probabilityInputs = document.getElementById('probability-inputs');
+            const hurwiczInput = document.getElementById('hurwicz-input');
+            const matrixBody = document.querySelector('#decision-matrix tbody');
+            const fillExampleBtn = document.getElementById('fill-example');
+            const clearMatrixBtn = document.getElementById('clear-matrix');
+            const form = document.getElementById('decision-form');
+            const resultsContent = document.getElementById('results-content');
+            
+            // Initialize matrix
+            updateMatrix();
+            
+            // Event listeners
+            alternativesInput.addEventListener('change', updateMatrix);
+            statesInput.addEventListener('change', updateMatrix);
+            decisionType.addEventListener('change', updateDecisionType);
+            fillExampleBtn.addEventListener('click', fillExample);
+            clearMatrixBtn.addEventListener('click', clearMatrix);
+            form.addEventListener('submit', evaluateDecisions);
+            
+            function updateMatrix() {
+                const numAlternatives = parseInt(alternativesInput.value);
+                const numStates = parseInt(statesInput.value);
+                
+                // Update probability fields
+                updateProbabilityFields(numStates);
+                
+                // Clear existing matrix
+                matrixBody.innerHTML = '';
+                
+                // Create header row with state names
+                let headerRow = '<tr><th>Alternatives \\ States</th>';
+                for (let s = 1; s <= numStates; s++) {
+                    headerRow += `<th>State ${s}</th>`;
+                }
+                headerRow += '</tr>';
+                matrixBody.innerHTML = headerRow;
+                
+                // Create rows for each alternative
+                for (let a = 1; a <= numAlternatives; a++) {
+                    let row = `<tr><td>Alternative ${a}</td>`;
+                    for (let s = 1; s <= numStates; s++) {
+                        row += `<td><input type="number" class="payoff" data-alt="${a}" data-state="${s}" placeholder="0"></td>`;
+                    }
+                    row += '</tr>';
+                    matrixBody.innerHTML += row;
+                }
+            }
+            
+            function updateProbabilityFields(numStates) {
+                const probabilityFields = document.getElementById('probability-fields');
+                probabilityFields.innerHTML = '';
+                
+                if (decisionType.value !== 'risk') {
+                    probabilityInputs.style.display = 'none';
+                    return;
+                }
+                
+                probabilityInputs.style.display = 'block';
+                
+                for (let s = 1; s <= numStates; s++) {
+                    const div = document.createElement('div');
+                    div.className = 'input-group';
+                    div.style.flex = '1';
+                    div.innerHTML = `
+                        <label for="prob-state-${s}">State ${s}:</label>
+                        <input type="number" id="prob-state-${s}" class="probability" min="0" max="1" step="0.01" value="${(1/numStates).toFixed(2)}">
+                    `;
+                    probabilityFields.appendChild(div);
+                }
+            }
+            
+            function updateDecisionType() {
+                if (decisionType.value === 'risk') {
+                    probabilityInputs.style.display = 'block';
+                    hurwiczInput.style.display = 'none';
+                } else if (decisionType.value === 'uncertainty') {
+                    probabilityInputs.style.display = 'none';
+                    hurwiczInput.style.display = 'block';
+                } else {
+                    probabilityInputs.style.display = 'none';
+                    hurwiczInput.style.display = 'none';
+                }
+                
+                updateProbabilityFields(parseInt(statesInput.value));
+            }
+            
+            function fillExample() {
+                const numAlternatives = parseInt(alternativesInput.value);
+                const numStates = parseInt(statesInput.value);
+                
+                // Example data
+                const examples = [
+                    [[50, 20, -10], [40, 30, 5], [0, 0, 0]], // Product launch
+                    [[5, 7, 10], [6, 6, 8], [8, 8, 8]],      // Vendor selection
+                    [[15, 5, -5], [8, 6, 4], [3, 3, 3]]      // Investment
+                ];
+                
+                const exampleIndex = Math.min(numAlternatives - 2, examples.length - 1);
+                const exampleData = examples[exampleIndex];
+                
+                // Fill probabilities if risk
+                if (decisionType.value === 'risk') {
+                    const probs = [0.3, 0.5, 0.2];
+                    for (let s = 1; s <= numStates; s++) {
+                        const probInput = document.getElementById(`prob-state-${s}`);
+                        if (probInput) {
+                            probInput.value = s <= probs.length ? probs[s-1] : (1/numStates).toFixed(2);
+                        }
+                    }
+                }
+                
+                // Fill payoffs
+                const payoffInputs = document.querySelectorAll('.payoff');
+                payoffInputs.forEach(input => {
+                    const alt = parseInt(input.dataset.alt) - 1;
+                    const state = parseInt(input.dataset.state) - 1;
+                    
+                    if (alt < exampleData.length && state < exampleData[alt].length) {
+                        input.value = exampleData[alt][state];
+                    } else {
+                        input.value = Math.floor(Math.random() * 20) - 5; // Random value if beyond example
+                    }
+                });
+            }
+            
+            function clearMatrix() {
+                const payoffInputs = document.querySelectorAll('.payoff');
+                payoffInputs.forEach(input => {
+                    input.value = '';
+                });
+                
+                const probInputs = document.querySelectorAll('.probability');
+                probInputs.forEach(input => {
+                    input.value = (1/parseInt(statesInput.value)).toFixed(2);
+                });
+                
+                document.getElementById('decision-result').style.display = 'none';
+            }
+            
+            function evaluateDecisions(e) {
+                e.preventDefault();
+                
+                const numAlternatives = parseInt(alternativesInput.value);
+                const numStates = parseInt(statesInput.value);
+                const env = decisionType.value;
+                
+                // Get payoffs
+                const payoffs = [];
+                const payoffInputs = document.querySelectorAll('.payoff');
+                
+                for (let a = 1; a <= numAlternatives; a++) {
+                    const altPayoffs = [];
+                    for (let s = 1; s <= numStates; s++) {
+                        const input = document.querySelector(`.payoff[data-alt="${a}"][data-state="${s}"]`);
+                        const value = parseFloat(input.value) || 0;
+                        altPayoffs.push(value);
+                    }
+                    payoffs.push(altPayoffs);
+                }
+                
+                // Get probabilities if risk
+                let probabilities = [];
+                if (env === 'risk') {
+                    for (let s = 1; s <= numStates; s++) {
+                        const input = document.getElementById(`prob-state-${s}`);
+                        probabilities.push(parseFloat(input.value) || 0);
+                    }
+                    
+                    // Normalize probabilities if they don't sum to 1
+                    const sum = probabilities.reduce((a, b) => a + b, 0);
+                    if (sum <= 0) {
+                        alert('Probabilities must sum to a positive number');
+                        return;
+                    }
+                    probabilities = probabilities.map(p => p / sum);
+                }
+                
+                // Get alpha if uncertainty
+                const alpha = env === 'uncertainty' ? parseFloat(document.getElementById('alpha').value) || 0.5 : 0;
+                
+                // Calculate all criteria
+                const results = {
+                    alternatives: Array.from({length: numAlternatives}, (_, i) => `Alternative ${i+1}`),
+                    states: Array.from({length: numStates}, (_, i) => `State ${i+1}`),
+                    payoffs: payoffs,
+                    expectedValues: env === 'risk' ? calculateExpectedValues(payoffs, probabilities) : null,
+                    maximax: calculateMaximax(payoffs),
+                    maximin: calculateMaximin(payoffs),
+                    hurwicz: env === 'uncertainty' ? calculateHurwicz(payoffs, alpha) : null,
+                    laplace: env === 'uncertainty' ? calculateLaplace(payoffs) : null
+                };
+                
+                // Display results
+                displayResults(results, env);
+                document.getElementById('decision-result').style.display = 'block';
+            }
+            
+            function calculateExpectedValues(payoffs, probabilities) {
+                return payoffs.map(alt => 
+                    alt.reduce((sum, payoff, i) => sum + payoff * probabilities[i], 0)
+                );
+            }
+            
+            function calculateMaximax(payoffs) {
+                return payoffs.map(alt => Math.max(...alt));
+            }
+            
+            function calculateMaximin(payoffs) {
+                return payoffs.map(alt => Math.min(...alt));
+            }
+            
+            function calculateHurwicz(payoffs, alpha) {
+                return payoffs.map(alt => 
+                    alpha * Math.max(...alt) + (1 - alpha) * Math.min(...alt)
+                );
+            }
+            
+            function calculateLaplace(payoffs) {
+                return payoffs.map(alt => 
+                    alt.reduce((sum, payoff) => sum + payoff, 0) / alt.length
+                );
+            }
+            
+            function displayResults(results, env) {
+                let html = `
+                    <h4>Decision Matrix</h4>
+                    <div style="overflow-x: auto;">
+                        <table class="criteria-table">
+                            <tr>
+                                <th>Alternatives</th>
+                                ${results.states.map(s => `<th>${s}</th>`).join('')}
+                            </tr>
+                            ${results.alternatives.map((alt, a) => `
+                                <tr>
+                                    <td>${alt}</td>
+                                    ${results.payoffs[a].map(p => `<td>${p.toFixed(2)}</td>`).join('')}
+                                </tr>
+                            `).join('')}
+                        </table>
+                    </div>
+                `;
+                
+                if (env === 'risk') {
+                    html += `
+                        <h4>Expected Value Criterion</h4>
+                        <table class="criteria-table">
+                            <tr>
+                                <th>Alternative</th>
+                                <th>Expected Value</th>
+                            </tr>
+                            ${results.alternatives.map((alt, a) => `
+                                <tr class="${results.expectedValues[a] === Math.max(...results.expectedValues) ? 'best-option' : ''}">
+                                    <td>${alt}</td>
+                                    <td>${results.expectedValues[a].toFixed(2)}</td>
+                                </tr>
+                            `).join('')}
+                        </table>
+                        <p>Recommended decision: <strong>${results.alternatives[results.expectedValues.indexOf(Math.max(...results.expectedValues))]}</strong></p>
+                    `;
+                }
+                
+                html += `
+                    <h4>Maximax Criterion (Optimistic)</h4>
+                    <table class="criteria-table">
+                        <tr>
+                            <th>Alternative</th>
+                            <th>Best Possible Outcome</th>
+                        </tr>
+                        ${results.alternatives.map((alt, a) => `
+                            <tr class="${results.maximax[a] === Math.max(...results.maximax) ? 'best-option' : ''}">
+                                <td>${alt}</td>
+                                <td>${results.maximax[a].toFixed(2)}</td>
+                            </tr>
+                        `).join('')}
+                    </table>
+                    <p>Recommended decision: <strong>${results.alternatives[results.maximax.indexOf(Math.max(...results.maximax))]}</strong></p>
+                    
+                    <h4>Maximin Criterion (Pessimistic)</h4>
+                    <table class="criteria-table">
+                        <tr>
+                            <th>Alternative</th>
+                            <th>Worst Possible Outcome</th>
+                        </tr>
+                        ${results.alternatives.map((alt, a) => `
+                            <tr class="${results.maximin[a] === Math.max(...results.maximin) ? 'best-option' : ''}">
+                                <td>${alt}</td>
+                                <td>${results.maximin[a].toFixed(2)}</td>
+                            </tr>
+                        `).join('')}
+                    </table>
+                    <p>Recommended decision: <strong>${results.alternatives[results.maximin.indexOf(Math.max(...results.maximin))]}</strong></p>
+                `;
+                
+                if (env === 'uncertainty') {
+                    html += `
+                        <h4>Hurwicz Criterion (α = ${document.getElementById('alpha').value})</h4>
+                        <table class="criteria-table">
+                            <tr>
+                                <th>Alternative</th>
+                                <th>Weighted Value</th>
+                            </tr>
+                            ${results.alternatives.map((alt, a) => `
+                                <tr class="${results.hurwicz[a] === Math.max(...results.hurwicz) ? 'best-option' : ''}">
+                                    <td>${alt}</td>
+                                    <td>${results.hurwicz[a].toFixed(2)}</td>
+                                </tr>
+                            `).join('')}
+                        </table>
+                        <p>Recommended decision: <strong>${results.alternatives[results.hurwicz.indexOf(Math.max(...results.hurwicz))]}</strong></p>
+                        
+                        <h4>Laplace Criterion (Equal Probability)</h4>
+                        <table class="criteria-table">
+                            <tr>
+                                <th>Alternative</th>
+                                <th>Average Outcome</th>
+                            </tr>
+                            ${results.alternatives.map((alt, a) => `
+                                <tr class="${results.laplace[a] === Math.max(...results.laplace) ? 'best-option' : ''}">
+                                    <td>${alt}</td>
+                                    <td>${results.laplace[a].toFixed(2)}</td>
+                                </tr>
+                            `).join('')}
+                        </table>
+                        <p>Recommended decision: <strong>${results.alternatives[results.laplace.indexOf(Math.max(...results.laplace))]}</strong></p>
+                    `;
+                }
+                
+                resultsContent.innerHTML = html;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ergonomics Posture Calculator - Assess workplace ergonomics using RULA, REBA, and OWAS methods">
+    <title>Posture Assessment Calculator | Industrial Engineering Calculators</title>
+    <style>
+        /* Consistent with existing style */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+            
+            /* Method-specific colors */
+            --rula-color: #e74c3c;
+            --reba-color: #3498db;
+            --owas-color: #2ecc71;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .method-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+        }
+        
+        .method-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            margin-right: 0.5rem;
+            border-radius: 5px 5px 0 0;
+            background-color: #f1f1f1;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .method-tab.active {
+            background-color: white;
+            border-color: #ddd;
+            border-bottom-color: white;
+        }
+        
+        .method-tab.rula {
+            color: var(--rula-color);
+        }
+        
+        .method-tab.reba {
+            color: var(--reba-color);
+        }
+        
+        .method-tab.owas {
+            color: var(--owas-color);
+        }
+        
+        .method-tab:hover:not(.active) {
+            background-color: #e9e9e9;
+        }
+        
+        .method-content {
+            display: none;
+        }
+        
+        .method-content.active {
+            display: block;
+        }
+        
+        .posture-section {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border: 1px solid #eee;
+            border-radius: 5px;
+        }
+        
+        .posture-section h3 {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .posture-section h3 i {
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group select, .input-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group select:focus, .input-group input:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .posture-diagram {
+            max-width: 100%;
+            height: auto;
+            margin: 1rem 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 1rem;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .score-display {
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 5px;
+        }
+        
+        .rula-score {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: var(--rula-color);
+            border: 2px solid var(--rula-color);
+        }
+        
+        .reba-score {
+            background-color: rgba(52, 152, 219, 0.1);
+            color: var(--reba-color);
+            border: 2px solid var(--reba-color);
+        }
+        
+        .owas-score {
+            background-color: rgba(46, 204, 113, 0.1);
+            color: var(--owas-color);
+            border: 2px solid var(--owas-color);
+        }
+        
+        .interpretation {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .action-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        .action-table th, .action-table td {
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        .action-table th {
+            background-color: #f2f2f2;
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .method-tabs {
+                flex-direction: column;
+            }
+            
+            .method-tab {
+                border-radius: 0;
+                margin-right: 0;
+                border-bottom: 1px solid #ddd;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">Industrial <span>Engineering</span> Calculators</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Posture Assessment Calculator</h1>
+            <p>Evaluate workplace ergonomics using RULA, REBA, and OWAS methods</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Ergonomics Assessment Methods</h2>
+                <p>These tools help identify risky postures and determine the need for ergonomic interventions in the workplace.</p>
+                
+                <div class="method-tabs">
+                    <div class="method-tab rula active" data-method="rula">RULA</div>
+                    <div class="method-tab reba" data-method="reba">REBA</div>
+                    <div class="method-tab owas" data-method="owas">OWAS</div>
+                </div>
+                
+                <!-- RULA Method -->
+                <div class="method-content active" id="rula-method">
+                    <h3>Rapid Upper Limb Assessment (RULA)</h3>
+                    <p>RULA assesses posture, muscle use, and force requirements of the upper limbs to identify risk factors for musculoskeletal disorders.</p>
+                    
+                    <div class="posture-section">
+                        <h3><i class="fas fa-user"></i> Upper Arm Position</h3>
+                        <img src="https://ergo-plus.com/wp-content/uploads/rula-upper-arm.png" alt="Upper Arm Positions" class="posture-diagram">
+                        <div class="input-group">
+                            <label for="rula-upper-arm">Select upper arm position:</label>
+                            <select id="rula-upper-arm">
+                                <option value="1">Arm at side, elbow flexed 0-20°</option>
+                                <option value="2">Arm elevated 20-45°</option>
+                                <option value="2">Arm abducted or elevated 20-45°</option>
+                                <option value="3">Arm elevated 45-90°</option>
+                                <option value="3">Arm abducted or elevated 45-90°</option>
+                                <option value="4">Arm elevated >90°</option>
+                                <option value="4">Arm abducted or elevated >90°</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="posture-section">
+                        <h3><i class="fas fa-hand-paper"></i> Lower Arm Position</h3>
+                        <img src="https://ergo-plus.com/wp-content/uploads/rula-lower-arm.png" alt="Lower Arm Positions" class="posture-diagram">
+                        <div class="input-group">
+                            <label for="rula-lower-arm">Select lower arm position:</label>
+                            <select id="rula-lower-arm">
+                                <option value="1">Between 60-100° flexion</option>
+                                <option value="2"><60° or >100° flexion</option>
+                                <option value="2">Arm extended (all other positions)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="posture-section">
+                        <h3><i class="fas fa-hand-point-up"></i> Wrist Position</h3>
+                        <img src="https://ergo-plus.com/wp-content/uploads/rula-wrist.png" alt="Wrist Positions" class="posture-diagram">
+                        <div class="input-group">
+                            <label for="rula-wrist">Select wrist position:</label>
+                            <select id="rula-wrist">
+                                <option value="1">Mid-range (neutral)</option>
+                                <option value="2">Deviation or extension 0-15°</option>
+                                <option value="2">Flexion 0-15°</option>
+                                <option value="3">Extension >15°</option>
+                                <option value="3">Flexion >15°</option>
+                                <option value="4">Deviation in any direction</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="posture-section">
+                        <h3><i class="fas fa-hand-rock"></i> Wrist Twist</h3>
+                        <div class="input-group">
+                            <label for="rula-wrist-twist">Select wrist twist:</label>
+                            <select id="rula-wrist-twist">
+                                <option value="1">Mid-range (neutral)</option>
+                                <option value="2">Twisted or bent away from midline</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="posture-section">
+                        <h3><i class="fas fa-weight"></i> Force/Load</h3>
+                        <div class="input-group">
+                            <label for="rula-force">Select force/load level:</label>
+                            <select id="rula-force">
+                                <option value="0">0 kg (no load)</option>
+                                <option value="1">1-2 kg</option>
+                                <option value="2">2-10 kg</option>
+                                <option value="3">>10 kg</option>
+                                <option value="3">Shock or sudden forces</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="posture-section">
+                        <h3><i class="fas fa-sync-alt"></i> Activity</h3>
+                        <div class="input-group">
+                            <label for="rula-activity">Select activity type:</label>
+                            <select id="rula-activity">
+                                <option value="0">Static or repeated</option>
+                                <option value="1">Repeated >4x per minute</option>
+                                <option value="1">Held >1 min continuously</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button type="button" id="calculate-rula" class="calculate-btn">Calculate RULA Score</button>
+                    
+                    <div class="result-box" id="rula-result">
+                        <h3>RULA Assessment Results</h3>
+                        <div class="score-display rula-score" id="rula-score-value">Score: 0</div>
+                        
+                        <div class="interpretation">
+                            <h4>Interpretation</h4>
+                            <table class="action-table">
+                                <tr>
+                                    <th>Score</th>
+                                    <th>Risk Level</th>
+                                    <th>Action Required</th>
+                                </tr>
+                                <tr>
+                                    <td>1-2</td>
+                                    <td>Acceptable</td>
+                                    <td>No action required</td>
+                                </tr>
+                                <tr>
+                                    <td>3-4</td>
+                                    <td>Low risk</td>
+                                    <td>Further investigation, change may be needed</td>
+                                </tr>
+                                <tr>
+                                    <td>5-6</td>
+                                    <td>Medium risk</td>
+                                    <td>Further investigation, change soon</td>
+                                </tr>
+                                <tr>
+                                    <td>7+</td>
+                                    <td>High risk</td>
+                                    <td>Implement change immediately</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- REBA Method -->
+                <div class="method-content" id="reba-method">
+                    <h3>Rapid Entire Body Assessment (REBA)</h3>
+                    <p>REBA evaluates full-body postures to identify risks for musculoskeletal disorders across all body regions.</p>
+                    
+                    <div class="posture-section">
+                        <h3><i class="fas fa-user"></i> Neck Position</h3>
+                        <img src="https://ergo-plus.com/wp-content/uploads/reba-neck.png" alt="Neck Positions" class="posture-diagram">
+                        <div class="input-group">
+                            <label for="reba-neck">Select neck position:</label>
+                            <select id="reba-neck">
+                                <option value="1">Neutral (0° flexion/extension)</option>
+                                <option value="2">Flexion 0-20°</option>
+                                <option value="2">Extension 0-20°</option>
+                                <option value="3">Flexion >20°</option>
+                                <option value="3">Extension >20°</option>
+                                <option value="3">Side bending or rotation</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="posture-section">
+                        <h3><i class="fas fa-user"></i> Trunk Position</h3>
+                        <img src="https://ergo-plus.com/wp-content/uploads/reba-trunk.png" alt="Trunk Positions" class="posture-diagram">
+                        <div class="input-group">
+                            <label for="reba-trunk">Select trunk position:</label>
+                            <select id="reba-trunk">
+                                <option value="1">Neutral (upright)</option>
+                                <option value="2">Flexion 0-20°</option>
+                                <option value="3">Flexion 20-60°</option>
+                                <option value="4">Flexion >60°</option>
+                                <option value="3">Extension or rotation</option>
+                                <option value="4">Side bending</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="posture-section">
+                        <h3><i class="fas fa-running"></i> Leg Position</h3>
+                        <div class="input-group">
+                            <label for="reba-legs">Select leg position:</label>
+                            <select id="reba-legs">
+                                <option value="1">Sitting with back support</option>
+                                <option value="1">Standing balanced</option>
+                                <option value="2">Standing unbalanced</option>
+                                <option value="3">Walking</option>
+                                <option value="4">Kneeling or squatting</option>
+                                <option value="5">One leg weight bearing</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="posture-section">
+                        <h3><i class="fas fa-weight"></i> Load/Force</h3>
+                        <div class="input-group">
+                            <label for="reba-force">Select load/force level:</label>
+                            <select id="reba-force">
+                                <option value="0">0 kg (no load)</option>
+                                <option value="1">1-5 kg</option>
+                                <option value="2">5-10 kg</option>
+                                <option value="3">>10 kg</option>
+                                <option value="3">Shock or sudden forces</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="posture-section">
+                        <h3><i class="fas fa-sync-alt"></i> Activity</h3>
+                        <div class="input-group">
+                            <label for="reba-activity">Select activity type:</label>
+                            <select id="reba-activity">
+                                <option value="0">Static or repeated</option>
+                                <option value="1">Repeated >4x per minute</option>
+                                <option value="1">Held >1 min continuously</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button type="button" id="calculate-reba" class="calculate-btn">Calculate REBA Score</button>
+                    
+                    <div class="result-box" id="reba-result">
+                        <h3>REBA Assessment Results</h3>
+                        <div class="score-display reba-score" id="reba-score-value">Score: 0</div>
+                        
+                        <div class="interpretation">
+                            <h4>Interpretation</h4>
+                            <table class="action-table">
+                                <tr>
+                                    <th>Score</th>
+                                    <th>Risk Level</th>
+                                    <th>Action Required</th>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Negligible</td>
+                                    <td>No action required</td>
+                                </tr>
+                                <tr>
+                                    <td>2-3</td>
+                                    <td>Low</td>
+                                    <td>Change may be needed</td>
+                                </tr>
+                                <tr>
+                                    <td>4-7</td>
+                                    <td>Medium</td>
+                                    <td>Further investigation, change soon</td>
+                                </tr>
+                                <tr>
+                                    <td>8-10</td>
+                                    <td>High</td>
+                                    <td>Implement change as soon as possible</td>
+                                </tr>
+                                <tr>
+                                    <td>11+</td>
+                                    <td>Very high</td>
+                                    <td>Implement change immediately</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- OWAS Method -->
+                <div class="method-content" id="owas-method">
+                    <h3>Ovako Working Posture Analysis System (OWAS)</h3>
+                    <p>OWAS identifies harmful working postures and suggests corrective actions for the back, arms, legs, and load.</p>
+                    
+                    <div class="posture-section">
+                        <h3><i class="fas fa-user"></i> Back Position</h3>
+                        <img src="https://ergo-plus.com/wp-content/uploads/owas-back.png" alt="Back Positions" class="posture-diagram">
+                        <div class="input-group">
+                            <label for="owas-back">Select back position:</label>
+                            <select id="owas-back">
+                                <option value="1">Straight</option>
+                                <option value="2">Bent forward or backward</option>
+                                <option value="3">Twisted</option>
+                                <option value="4">Bent and twisted</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="posture-section">
+                        <h3><i class="fas fa-arms"></i> Arms Position</h3>
+                        <img src="https://ergo-plus.com/wp-content/uploads/owas-arms.png" alt="Arm Positions" class="posture-diagram">
+                        <div class="input-group">
+                            <label for="owas-arms">Select arms position:</label>
+                            <select id="owas-arms">
+                                <option value="1">Both below shoulder level</option>
+                                <option value="2">One at or above shoulder level</option>
+                                <option value="3">Both at or above shoulder level</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="posture-section">
+                        <h3><i class="fas fa-running"></i> Leg Position</h3>
+                        <img src="https://ergo-plus.com/wp-content/uploads/owas-legs.png" alt="Leg Positions" class="posture-diagram">
+                        <div class="input-group">
+                            <label for="owas-legs">Select leg position:</label>
+                            <select id="owas-legs">
+                                <option value="1">Sitting</option>
+                                <option value="2">Standing on both legs</option>
+                                <option value="3">Standing on one leg</option>
+                                <option value="4">Standing or squatting on both legs</option>
+                                <option value="5">Standing or squatting on one leg</option>
+                                <option value="6">Kneeling</option>
+                                <option value="7">Walking or moving</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="posture-section">
+                        <h3><i class="fas fa-weight"></i> Load/Force</h3>
+                        <div class="input-group">
+                            <label for="owas-force">Select load/force level:</label>
+                            <select id="owas-force">
+                                <option value="1">0 kg (no load)</option>
+                                <option value="2">1-10 kg</option>
+                                <option value="3">>10 kg</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button type="button" id="calculate-owas" class="calculate-btn">Calculate OWAS Score</button>
+                    
+                    <div class="result-box" id="owas-result">
+                        <h3>OWAS Assessment Results</h3>
+                        <div class="score-display owas-score" id="owas-score-value">Category: 1</div>
+                        
+                        <div class="interpretation">
+                            <h4>Action Category</h4>
+                            <table class="action-table">
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Action Required</th>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>No corrective actions needed</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Corrective actions needed in near future</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Corrective actions needed as soon as possible</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Corrective actions needed immediately</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Practical Examples</h3>
+                
+                <div class="example">
+                    <h4>Office Worker</h4>
+                    <p><strong>RULA:</strong> Score 3 (Low risk) - Monitor posture and take regular breaks</p>
+                    <p><strong>REBA:</strong> Score 2 (Low risk) - Ensure proper workstation setup</p>
+                    <p><strong>OWAS:</strong> Category 1 - No immediate action needed</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Assembly Line Worker</h4>
+                    <p><strong>RULA:</strong> Score 6 (Medium risk) - Implement ergonomic tools soon</p>
+                    <p><strong>REBA:</strong> Score 7 (Medium risk) - Redesign workstation layout</p>
+                    <p><strong>OWAS:</strong> Category 3 - Changes needed as soon as possible</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Construction Worker</h4>
+                    <p><strong>RULA:</strong> Score 8 (High risk) - Immediate changes required</p>
+                    <p><strong>REBA:</strong> Score 11 (Very high risk) - Immediate intervention needed</p>
+                    <p><strong>OWAS:</strong> Category 4 - Immediate corrective actions</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <p class="copyright">&copy; 2023 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Method tab switching
+        const methodTabs = document.querySelectorAll('.method-tab');
+        const methodContents = document.querySelectorAll('.method-content');
+        
+        methodTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                methodTabs.forEach(t => t.classList.remove('active'));
+                methodContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                const method = tab.getAttribute('data-method');
+                document.getElementById(`${method}-method`).classList.add('active');
+            });
+        });
+        
+        // RULA Calculation
+        document.getElementById('calculate-rula').addEventListener('click', function() {
+            const upperArm = parseInt(document.getElementById('rula-upper-arm').value);
+            const lowerArm = parseInt(document.getElementById('rula-lower-arm').value);
+            const wrist = parseInt(document.getElementById('rula-wrist').value);
+            const wristTwist = parseInt(document.getElementById('rula-wrist-twist').value);
+            const force = parseInt(document.getElementById('rula-force').value);
+            const activity = parseInt(document.getElementById('rula-activity').value);
+            
+            // Calculate RULA score (simplified version)
+            let scoreA = upperArm + lowerArm;
+            let scoreB = wrist + wristTwist;
+            
+            // Apply muscle use and force adjustments
+            let scoreC = scoreA;
+            if (force > 0 || activity > 0) {
+                scoreC += 1;
+            }
+            
+            let scoreD = scoreB;
+            if (force > 1 || activity > 0) {
+                scoreD += 1;
+            }
+            
+            // Final RULA score
+            const rulaScore = scoreC + scoreD;
+            
+            // Display results
+            document.getElementById('rula-score-value').textContent = `Score: ${rulaScore}`;
+            document.getElementById('rula-result').style.display = 'block';
+        });
+        
+        // REBA Calculation
+        document.getElementById('calculate-reba').addEventListener('click', function() {
+            const neck = parseInt(document.getElementById('reba-neck').value);
+            const trunk = parseInt(document.getElementById('reba-trunk').value);
+            const legs = parseInt(document.getElementById('reba-legs').value);
+            const force = parseInt(document.getElementById('reba-force').value);
+            const activity = parseInt(document.getElementById('reba-activity').value);
+            
+            // Calculate REBA score (simplified version)
+            let scoreA = neck + trunk;
+            let scoreB = legs;
+            
+            // Apply load and activity adjustments
+            let scoreC = scoreA;
+            if (force > 0) {
+                scoreC += 1;
+            }
+            if (activity > 0) {
+                scoreC += 1;
+            }
+            
+            let scoreD = scoreB;
+            if (force > 1) {
+                scoreD += 1;
+            }
+            
+            // Final REBA score
+            const rebaScore = scoreC + scoreD;
+            
+            // Display results
+            document.getElementById('reba-score-value').textContent = `Score: ${rebaScore}`;
+            document.getElementById('reba-result').style.display = 'block';
+        });
+        
+        // OWAS Calculation
+        document.getElementById('calculate-owas').addEventListener('click', function() {
+            const back = parseInt(document.getElementById('owas-back').value);
+            const arms = parseInt(document.getElementById('owas-arms').value);
+            const legs = parseInt(document.getElementById('owas-legs').value);
+            const force = parseInt(document.getElementById('owas-force').value);
+            
+            // Calculate OWAS category (simplified version)
+            let category = 1; // Default to no action
+            
+            if (back >= 3 || arms >= 2 || legs >= 4) {
+                category = 2; // Near future action
+            }
+            
+            if ((back >= 3 && force >= 2) || (arms >= 2 && force >= 2) || (legs >= 4 && force >= 2)) {
+                category = 3; // Soon action
+            }
+            
+            if ((back === 4 && force >= 2) || (arms === 3 && force >= 2) || (legs >= 5 && force >= 2)) {
+                category = 4; // Immediate action
+            }
+            
+            // Display results
+            document.getElementById('owas-score-value').textContent = `Category: ${category}`;
+            document.getElementById('owas-result').style.display = 'block';
+        });
+    </script>
+</body>
+</html>

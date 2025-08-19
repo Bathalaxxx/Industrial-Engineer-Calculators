@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Biomechanics Calculator - Tools for ergonomic assessment including Moment/Torque, NIOSH Lifting Equation, and Static Strength analysis">
+    <title>Biomechanics Calculator | Industrial Engineering Calculators</title>
+    <style>
+        /* Consistent with existing style */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+            
+            /* Tool-specific colors */
+            --moment-color: #3498db;
+            --niosh-color: #e67e22;
+            --strength-color: #2ecc71;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        /* Tool selector tabs */
+        .tool-selector {
+            margin-bottom: 2rem;
+        }
+        
+        .tool-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .tool-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            margin-right: 0.5rem;
+            border-radius: 5px 5px 0 0;
+            background-color: #f1f1f1;
+            transition: all 0.3s;
+        }
+        
+        .tool-tab.moment {
+            border-left-color: var(--moment-color);
+        }
+        
+        .tool-tab.niosh {
+            border-left-color: var(--niosh-color);
+        }
+        
+        .tool-tab.strength {
+            border-left-color: var(--strength-color);
+        }
+        
+        .tool-tab.active {
+            background-color: white;
+            border-color: #ddd;
+            border-bottom-color: white;
+            font-weight: 500;
+        }
+        
+        .tool-tab.moment.active {
+            color: var(--moment-color);
+            border-top-color: var(--moment-color);
+        }
+        
+        .tool-tab.niosh.active {
+            color: var(--niosh-color);
+            border-top-color: var(--niosh-color);
+        }
+        
+        .tool-tab.strength.active {
+            color: var(--strength-color);
+            border-top-color: var(--strength-color);
+        }
+        
+        .tool-tab:hover:not(.active) {
+            background-color: #e9e9e9;
+        }
+        
+        .tool-content {
+            display: none;
+        }
+        
+        .tool-content.active {
+            display: block;
+        }
+        
+        /* Input styling */
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        /* Result boxes */
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .moment-result {
+            color: var(--moment-color);
+        }
+        
+        .niosh-result {
+            color: var(--niosh-color);
+        }
+        
+        .strength-result {
+            color: var(--strength-color);
+        }
+        
+        /* Special styling for NIOSH results */
+        .niosh-multipliers {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .multiplier-card {
+            flex: 1;
+            min-width: 150px;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .multiplier-card h4 {
+            margin-bottom: 0.5rem;
+            color: var(--niosh-color);
+        }
+        
+        .multiplier-card .multiplier-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        /* Diagram container */
+        .diagram-container {
+            text-align: center;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .diagram-container img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .diagram-container figcaption {
+            margin-top: 0.5rem;
+            font-style: italic;
+            color: var(--text-light);
+        }
+        
+        /* Examples section */
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .tool-tabs {
+                flex-direction: column;
+            }
+            
+            .tool-tab {
+                border-radius: 0;
+                margin-right: 0;
+                border-bottom: 1px solid #ddd;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .multiplier-card {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">Industrial <span>Engineering</span> Calculators</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Biomechanics Calculator</h1>
+            <p>Ergonomic assessment tools including Moment/Torque, NIOSH Lifting Equation, and Static Strength analysis</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Ergonomic Assessment Tools</h2>
+                <p>These tools help evaluate biomechanical stresses in occupational tasks to prevent musculoskeletal disorders and injuries.</p>
+            </div>
+            
+            <div class="tool-selector">
+                <div class="tool-tabs">
+                    <div class="tool-tab moment active" data-tool="moment">Moment/Torque</div>
+                    <div class="tool-tab niosh" data-tool="niosh">NIOSH Lifting</div>
+                    <div class="tool-tab strength" data-tool="strength">Static Strength</div>
+                </div>
+                
+                <!-- Moment/Torque Calculator -->
+                <div class="tool-content active" id="moment-tool">
+                    <h3>Moment (Torque) Calculator</h3>
+                    <p>Calculate the torque generated by a force acting at a distance from a pivot point, which is critical for analyzing joint stresses in ergonomic assessments.</p>
+                    
+                    <div class="formula-box">
+                        Moment = Force × Distance × sin(θ)
+                    </div>
+                    
+                    <div class="diagram-container">
+                        <figure>
+                            <svg width="300" height="200" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Pivot point -->
+                                <circle cx="150" cy="150" r="5" fill="var(--moment-color)" />
+                                <text x="150" y="170" text-anchor="middle" font-size="12">Pivot Point</text>
+                                
+                                <!-- Arm -->
+                                <line x1="150" y1="150" x2="250" y2="50" stroke="var(--text-color)" stroke-width="3" />
+                                <text x="200" y="100" text-anchor="middle" font-size="12">Distance (d)</text>
+                                
+                                <!-- Force arrow -->
+                                <line x1="250" y1="50" x2="230" y2="70" stroke="var(--moment-color)" stroke-width="2" />
+                                <line x1="250" y1="50" x2="270" y2="70" stroke="var(--moment-color)" stroke-width="2" />
+                                <text x="280" y="60" text-anchor="start" font-size="12" fill="var(--moment-color)">Force (F)</text>
+                                
+                                <!-- Angle arc -->
+                                <path d="M 180 150 A 30 30 0 0 1 200 135" fill="none" stroke="var(--text-light)" stroke-width="1" />
+                                <text x="190" y="145" text-anchor="middle" font-size="12">θ</text>
+                            </svg>
+                            <figcaption>Diagram of moment/torque calculation</figcaption>
+                        </figure>
+                    </div>
+                    
+                    <form id="moment-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="moment-force">Force (N or lb):</label>
+                                <input type="number" id="moment-force" min="0" step="0.1" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="moment-distance">Distance (m or in):</label>
+                                <input type="number" id="moment-distance" min="0" step="0.01" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="moment-angle">Angle (degrees, 90° = perpendicular):</label>
+                                <input type="number" id="moment-angle" min="0" max="180" value="90" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="moment-units">Units:</label>
+                                <select id="moment-units" required>
+                                    <option value="metric">Metric (N·m)</option>
+                                    <option value="imperial">Imperial (lb·in)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate Moment</button>
+                    </form>
+                    
+                    <div class="result-box" id="moment-result">
+                        <h3>Moment/Torque Result</h3>
+                        <p>Calculated Moment: <span class="result-value moment-result" id="moment-value"></span></p>
+                        
+                        <h4>Interpretation</h4>
+                        <p>This moment represents the rotational force at the joint. Compare to:</p>
+                        <table>
+                            <tr>
+                                <th>Joint</th>
+                                <th>Typical Maximum Moment (N·m)</th>
+                                <th>Typical Maximum Moment (lb·in)</th>
+                            </tr>
+                            <tr>
+                                <td>Shoulder</td>
+                                <td>40-60</td>
+                                <td>350-530</td>
+                            </tr>
+                            <tr>
+                                <td>Elbow</td>
+                                <td>25-35</td>
+                                <td>220-310</td>
+                            </tr>
+                            <tr>
+                                <td>Wrist</td>
+                                <td>8-12</td>
+                                <td>70-105</td>
+                            </tr>
+                            <tr>
+                                <td>Lumbar Spine (L5/S1)</td>
+                                <td>120-180</td>
+                                <td>1060-1590</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- NIOSH Lifting Equation Calculator -->
+                <div class="tool-content" id="niosh-tool">
+                    <h3>NIOSH Lifting Equation Calculator</h3>
+                    <p>The NIOSH equation calculates a Recommended Weight Limit (RWL) and Lifting Index (LI) for two-handed manual lifting tasks.</p>
+                    
+                    <div class="formula-box">
+                        RWL = LC × HM × VM × DM × AM × FM × CM<br>
+                        Lifting Index (LI) = Object Weight / RWL
+                    </div>
+                    
+                    <form id="niosh-form">
+                        <h4>Task Parameters</h4>
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="niosh-weight">Object Weight (kg or lb):</label>
+                                <input type="number" id="niosh-weight" min="0" step="0.1" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="niosh-units">Units:</label>
+                                <select id="niosh-units" required>
+                                    <option value="metric">Metric (kg)</option>
+                                    <option value="imperial">Imperial (lb)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="niosh-horizontal">Horizontal Location (cm or in):</label>
+                                <input type="number" id="niosh-horizontal" min="0" step="0.1" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="niosh-vertical-start">Vertical Start (cm or in from floor):</label>
+                                <input type="number" id="niosh-vertical-start" min="0" step="0.1" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="niosh-vertical-end">Vertical End (cm or in from floor):</label>
+                                <input type="number" id="niosh-vertical-end" min="0" step="0.1" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="niosh-frequency">Lifts per Minute:</label>
+                                <input type="number" id="niosh-frequency" min="0" step="0.1" value="1" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="niosh-duration">Duration:</label>
+                                <select id="niosh-duration" required>
+                                    <option value="1">≤ 1 hour</option>
+                                    <option value="2">≤ 2 hours</option>
+                                    <option value="8">≤ 8 hours</option>
+                                </select>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="niosh-coupling">Coupling Type:</label>
+                                <select id="niosh-coupling" required>
+                                    <option value="good">Good (handles or optimal grip)</option>
+                                    <option value="fair">Fair (comfortable but not optimal)</option>
+                                    <option value="poor">Poor (difficult to grasp)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="niosh-asymmetry">Asymmetry Angle (degrees, 0° = symmetric):</label>
+                            <input type="number" id="niosh-asymmetry" min="0" max="135" value="0" required>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate NIOSH Values</button>
+                    </form>
+                    
+                    <div class="result-box" id="niosh-result">
+                        <h3>NIOSH Lifting Results</h3>
+                        
+                        <div class="niosh-multipliers">
+                            <div class="multiplier-card">
+                                <h4>Horizontal Multiplier (HM)</h4>
+                                <div class="multiplier-value" id="hm-value"></div>
+                            </div>
+                            
+                            <div class="multiplier-card">
+                                <h4>Vertical Multiplier (VM)</h4>
+                                <div class="multiplier-value" id="vm-value"></div>
+                            </div>
+                            
+                            <div class="multiplier-card">
+                                <h4>Distance Multiplier (DM)</h4>
+                                <div class="multiplier-value" id="dm-value"></div>
+                            </div>
+                            
+                            <div class="multiplier-card">
+                                <h4>Asymmetric Multiplier (AM)</h4>
+                                <div class="multiplier-value" id="am-value"></div>
+                            </div>
+                            
+                            <div class="multiplier-card">
+                                <h4>Frequency Multiplier (FM)</h4>
+                                <div class="multiplier-value" id="fm-value"></div>
+                            </div>
+                            
+                            <div class="multiplier-card">
+                                <h4>Coupling Multiplier (CM)</h4>
+                                <div class="multiplier-value" id="cm-value"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="multiplier-card">
+                                <h4>Recommended Weight Limit (RWL)</h4>
+                                <div class="result-value niosh-result" id="rwl-value"></div>
+                            </div>
+                            
+                            <div class="multiplier-card">
+                                <h4>Lifting Index (LI)</h4>
+                                <div class="result-value niosh-result" id="li-value"></div>
+                            </div>
+                        </div>
+                        
+                        <h4>Interpretation</h4>
+                        <table>
+                            <tr>
+                                <th>Lifting Index (LI)</th>
+                                <th>Risk Level</th>
+                                <th>Action Required</th>
+                            </tr>
+                            <tr>
+                                <td>LI ≤ 1</td>
+                                <td>Low</td>
+                                <td>Acceptable for most workers</td>
+                            </tr>
+                            <tr>
+                                <td>1 < LI ≤ 2</td>
+                                <td>Moderate</td>
+                                <td>Evaluate task and consider improvements</td>
+                            </tr>
+                            <tr>
+                                <td>2 < LI ≤ 3</td>
+                                <td>High</td>
+                                <td>Implement changes to reduce risk</td>
+                            </tr>
+                            <tr>
+                                <td>LI > 3</td>
+                                <td>Very High</td>
+                                <td>Immediate changes required</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Static Strength & Compressive Force Calculator -->
+                <div class="tool-content" id="strength-tool">
+                    <h3>Static Strength & Compressive Force Calculator</h3>
+                    <p>Estimate the required strength and spinal compressive forces for static holding tasks, particularly at the L5/S1 joint.</p>
+                    
+                    <div class="formula-box">
+                        Compressive Force = (Weight × Distance) / (Back Muscle Moment Arm) + Upper Body Weight
+                    </div>
+                    
+                    <div class="diagram-container">
+                        <figure>
+                            <svg width="300" height="250" viewBox="0 0 300 250" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Person outline -->
+                                <path d="M150 50 L140 100 L130 150 L140 200 L160 200 L170 150 L160 100 Z" fill="none" stroke="var(--text-color)" stroke-width="2" />
+                                
+                                <!-- Spine -->
+                                <line x1="150" y1="50" x2="150" y2="150" stroke="var(--strength-color)" stroke-width="2" />
+                                <text x="130" y="100" text-anchor="end" font-size="12" fill="var(--strength-color)">Spine</text>
+                                
+                                <!-- Weight -->
+                                <circle cx="170" cy="200" r="10" fill="var(--accent-color)" />
+                                <text x="190" y="200" text-anchor="start" font-size="12" fill="var(--accent-color)">Load</text>
+                                
+                                <!-- Moment arm -->
+                                <line x1="150" y1="175" x2="170" y2="175" stroke="var(--text-light)" stroke-width="1" stroke-dasharray="5,5" />
+                                <text x="160" y="190" text-anchor="middle" font-size="12">Moment Arm</text>
+                                
+                                <!-- Muscle force -->
+                                <line x1="130" y1="120" x2="150" y2="140" stroke="var(--moment-color)" stroke-width="2" marker-end="url(#arrowhead)" />
+                                <text x="110" y="120" text-anchor="end" font-size="12" fill="var(--moment-color)">Muscle Force</text>
+                                
+                                <defs>
+                                    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                                        <polygon points="0 0, 10 3.5, 0 7" fill="var(--moment-color)" />
+                                    </marker>
+                                </defs>
+                            </svg>
+                            <figcaption>Diagram of spinal compressive forces</figcaption>
+                        </figure>
+                    </div>
+                    
+                    <form id="strength-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="strength-weight">Load Weight (kg or lb):</label>
+                                <input type="number" id="strength-weight" min="0" step="0.1" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="strength-units">Units:</label>
+                                <select id="strength-units" required>
+                                    <option value="metric">Metric (kg, N)</option>
+                                    <option value="imperial">Imperial (lb)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="strength-distance">Horizontal Distance (cm or in from spine):</label>
+                                <input type="number" id="strength-distance" min="0" step="0.1" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="strength-bodyweight">Upper Body Weight (kg or lb, approx. 55% total):</label>
+                                <input type="number" id="strength-bodyweight" min="0" step="0.1" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="strength-torso-angle">Torso Angle (degrees from vertical):</label>
+                                <input type="number" id="strength-torso-angle" min="0" max="90" value="0" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="strength-arm-angle">Arm Angle (degrees from vertical):</label>
+                                <input type="number" id="strength-arm-angle" min="0" max="90" value="0" required>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate Forces</button>
+                    </form>
+                    
+                    <div class="result-box" id="strength-result">
+                        <h3>Static Strength Results</h3>
+                        
+                        <div class="input-row">
+                            <div class="multiplier-card">
+                                <h4>Required Back Muscle Force</h4>
+                                <div class="result-value strength-result" id="muscle-force-value"></div>
+                            </div>
+                            
+                            <div class="multiplier-card">
+                                <h4>L5/S1 Compressive Force</h4>
+                                <div class="result-value strength-result" id="compressive-force-value"></div>
+                            </div>
+                        </div>
+                        
+                        <h4>Interpretation</h4>
+                        <table>
+                            <tr>
+                                <th>Compressive Force</th>
+                                <th>Risk Level</th>
+                                <th>NIOSH Limit</th>
+                            </tr>
+                            <tr>
+                                <td>&lt; 3400 N (765 lb)</td>
+                                <td>Low</td>
+                                <td>Acceptable for most workers</td>
+                            </tr>
+                            <tr>
+                                <td>3400-6400 N (765-1440 lb)</td>
+                                <td>Moderate</td>
+                                <td>Some risk for some workers</td>
+                            </tr>
+                            <tr>
+                                <td>&gt; 6400 N (1440 lb)</td>
+                                <td>High</td>
+                                <td>Unacceptable for most workers</td>
+                            </tr>
+                        </table>
+                        
+                        <h4>Reduction Strategies</h4>
+                        <ul>
+                            <li>Reduce load weight</li>
+                            <li>Keep load closer to the body</li>
+                            <li>Minimize torso flexion (bending forward)</li>
+                            <li>Use lifting aids or team lifting</li>
+                            <li>Rotate workers to limit exposure</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Practical Examples</h3>
+                
+                <div class="example">
+                    <h4>Example 1: Safe Lifting</h4>
+                    <p><strong>Scenario:</strong> Lifting 10 kg box from waist height (75cm) to shelf (120cm), close to body (25cm horizontal), good grip, 4 lifts/minute for 2 hours.</p>
+                    <p><strong>Results:</strong> RWL = 14.2 kg, LI = 0.7 (Safe)</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 2: Risky Lifting</h4>
+                    <p><strong>Scenario:</strong> Lifting 25 kg crate from floor (30cm) to waist height (75cm), 50cm horizontal distance, poor grip, 6 lifts/minute for 8 hours.</p>
+                    <p><strong>Results:</strong> RWL = 7.8 kg, LI = 3.2 (Very High Risk)</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 3: Static Holding</h4>
+                    <p><strong>Scenario:</strong> Holding 15 kg tool 40cm in front of body with 30° torso flexion for extended periods.</p>
+                    <p><strong>Results:</strong> Compressive Force = 4200 N (Moderate Risk)</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <p class="copyright">&copy; 2023 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Tool tab switching
+        const tabs = document.querySelectorAll('.tool-tab');
+        const contents = document.querySelectorAll('.tool-content');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                tabs.forEach(t => t.classList.remove('active'));
+                contents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                const tool = tab.getAttribute('data-tool');
+                document.getElementById(`${tool}-tool`).classList.add('active');
+            });
+        });
+        
+        // Moment/Torque calculation
+        document.getElementById('moment-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const force = parseFloat(document.getElementById('moment-force').value);
+            const distance = parseFloat(document.getElementById('moment-distance').value);
+            const angle = parseFloat(document.getElementById('moment-angle').value);
+            const units = document.getElementById('moment-units').value;
+            
+            if (isNaN(force) || isNaN(distance) || isNaN(angle)) {
+                alert('Please enter valid numbers');
+                return;
+            }
+            
+            // Convert angle to radians
+            const angleRad = angle * Math.PI / 180;
+            
+            // Calculate moment
+            const moment = force * distance * Math.sin(angleRad);
+            
+            // Display result with appropriate units
+            const unitText = units === 'metric' ? 'N·m' : 'lb·in';
+            document.getElementById('moment-value').textContent = moment.toFixed(2) + ' ' + unitText;
+            
+            // Show results
+            document.getElementById('moment-result').style.display = 'block';
+        });
+        
+        // NIOSH Lifting Equation calculation
+        document.getElementById('niosh-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get input values
+            const weight = parseFloat(document.getElementById('niosh-weight').value);
+            const units = document.getElementById('niosh-units').value;
+            const horizontal = parseFloat(document.getElementById('niosh-horizontal').value);
+            const verticalStart = parseFloat(document.getElementById('niosh-vertical-start').value);
+            const verticalEnd = parseFloat(document.getElementById('niosh-vertical-end').value);
+            const frequency = parseFloat(document.getElementById('niosh-frequency').value);
+            const duration = parseInt(document.getElementById('niosh-duration').value);
+            const coupling = document.getElementById('niosh-coupling').value;
+            const asymmetry = parseFloat(document.getElementById('niosh-asymmetry').value);
+            
+            // Validate inputs
+            if (isNaN(weight) || isNaN(horizontal) || isNaN(verticalStart) || isNaN(verticalEnd) || isNaN(frequency)) {
+                alert('Please enter valid numbers');
+                return;
+            }
+            
+            // Convert to metric if imperial units selected
+            let h = horizontal;
+            let v = (verticalStart + verticalEnd) / 2; // Average vertical location
+            let d = Math.abs(verticalEnd - verticalStart); // Vertical travel distance
+            let lc = 23; // Load constant in kg
+            
+            if (units === 'imperial') {
+                h = h / 39.37; // inches to meters
+                v = v / 39.37;
+                d = d / 39.37;
+                lc = 51; // Load constant in lb
+            }
+            
+            h = h * 100; // Convert to cm for NIOSH formula
+            
+            // Calculate multipliers
+            // Horizontal Multiplier (HM)
+            const hm = 25 / h;
+            const HM = Math.min(hm, 1);
+            
+            // Vertical Multiplier (VM)
+            const VM = 1 - (0.003 * Math.abs(v - 75));
+            
+            // Distance Multiplier (DM)
+            const DM = 0.82 + (4.5 / d);
+            
+            // Asymmetric Multiplier (AM)
+            const AM = 1 - (0.0032 * asymmetry);
+            
+            // Frequency Multiplier (FM)
+            let FM;
+            if (duration === 1) { // ≤ 1 hour
+                if (frequency <= 0.2) FM = 1.00;
+                else if (frequency <= 0.5) FM = 0.97;
+                else if (frequency <= 1) FM = 0.94;
+                else if (frequency <= 2) FM = 0.91;
+                else if (frequency <= 5) FM = 0.84;
+                else FM = 0.75;
+            } else if (duration === 2) { // ≤ 2 hours
+                if (frequency <= 0.2) FM = 0.95;
+                else if (frequency <= 0.5) FM = 0.92;
+                else if (frequency <= 1) FM = 0.88;
+                else if (frequency <= 2) FM = 0.84;
+                else if (frequency <= 5) FM = 0.79;
+                else FM = 0.72;
+            } else { // ≤ 8 hours
+                if (frequency <= 0.2) FM = 0.85;
+                else if (frequency <= 0.5) FM = 0.81;
+                else if (frequency <= 1) FM = 0.75;
+                else if (frequency <= 2) FM = 0.65;
+                else if (frequency <= 5) FM = 0.55;
+                else FM = 0.45;
+            }
+            
+            // Coupling Multiplier (CM)
+            let CM;
+            if (v < 75) { // Low lift
+                if (coupling === 'good') CM = 1.00;
+                else if (coupling === 'fair') CM = 0.95;
+                else CM = 0.90;
+            } else { // High lift
+                if (coupling === 'good') CM = 1.00;
+                else if (coupling === 'fair') CM = 1.00;
+                else CM = 0.90;
+            }
+            
+            // Calculate RWL and LI
+            const RWL = lc * HM * VM * DM * AM * FM * CM;
+            const LI = weight / RWL;
+            
+            // Display results
+            document.getElementById('hm-value').textContent = HM.toFixed(3);
+            document.getElementById('vm-value').textContent = VM.toFixed(3);
+            document.getElementById('dm-value').textContent = DM.toFixed(3);
+            document.getElementById('am-value').textContent = AM.toFixed(3);
+            document.getElementById('fm-value').textContent = FM.toFixed(3);
+            document.getElementById('cm-value').textContent = CM.toFixed(3);
+            
+            document.getElementById('rwl-value').textContent = RWL.toFixed(1) + (units === 'metric' ? ' kg' : ' lb');
+            document.getElementById('li-value').textContent = LI.toFixed(2);
+            
+            // Show results
+            document.getElementById('niosh-result').style.display = 'block';
+        });
+        
+        // Static Strength calculation
+        document.getElementById('strength-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get input values
+            const weight = parseFloat(document.getElementById('strength-weight').value);
+            const units = document.getElementById('strength-units').value;
+            const distance = parseFloat(document.getElementById('strength-distance').value);
+            const bodyWeight = parseFloat(document.getElementById('strength-bodyweight').value);
+            const torsoAngle = parseFloat(document.getElementById('strength-torso-angle').value);
+            const armAngle = parseFloat(document.getElementById('strength-arm-angle').value);
+            
+            if (isNaN(weight) || isNaN(distance) || isNaN(bodyWeight) || isNaN(torsoAngle) || isNaN(armAngle)) {
+                alert('Please enter valid numbers');
+                return;
+            }
+            
+            // Convert to metric if imperial units selected
+            let w = weight;
+            let d = distance;
+            let bw = bodyWeight;
+            
+            if (units === 'imperial') {
+                w = w * 4.448; // lb to N
+                d = d * 0.0254; // inches to meters
+                bw = bw * 4.448;
+            }
+            
+            // Convert angles to radians
+            const torsoRad = torsoAngle * Math.PI / 180;
+            const armRad = armAngle * Math.PI / 180;
+            
+            // Back muscle moment arm (average 5cm)
+            const momentArm = 0.05; // meters
+            
+            // Calculate moments
+            const loadMoment = w * d * Math.cos(armRad);
+            const bodyMoment = bw * 0.25 * Math.cos(torsoRad); // Approx 25cm moment arm for upper body
+            
+            // Calculate muscle force required (sum of moments / moment arm)
+            const muscleForce = (loadMoment + bodyMoment) / momentArm;
+            
+            // Calculate compressive force (vertical components + muscle force)
+            const loadVertical = w * Math.sin(armRad);
+            const bodyVertical = bw * Math.sin(torsoRad);
+            const compressiveForce = loadVertical + bodyVertical + muscleForce;
+            
+            // Display results
+            if (units === 'metric') {
+                document.getElementById('muscle-force-value').textContent = muscleForce.toFixed(0) + ' N';
+                document.getElementById('compressive-force-value').textContent = compressiveForce.toFixed(0) + ' N';
+            } else {
+                document.getElementById('muscle-force-value').textContent = (muscleForce / 4.448).toFixed(0) + ' lb';
+                document.getElementById('compressive-force-value').textContent = (compressiveForce / 4.448).toFixed(0) + ' lb';
+            }
+            
+            // Show results
+            document.getElementById('strength-result').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
