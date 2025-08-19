@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Free online calculators for industrial engineering professionals and students. Tools for batch sizing, break-even analysis, EOQ, control charts, and more.">
-    <title>Industrial Engineering Calculators - Tools for Professionals</title>
+    <title>Industrial Engineering Calculators</title>
     <style>
         :root {
             --primary-color: #2c3e50;
@@ -18,9 +17,13 @@
             /* Subject area colors */
             --production-color: #3498db;
             --quality-color: #2ecc71;
-            --inventory-color: #9b59b6;
-            --workstudy-color: #e67e22;
-            --facilities-color: #1abc9c;
+            --statistics-color: #9b59b6;
+            --inventory-color: #e67e22;
+            --workstudy-color: #f1c40f;
+            --ergonomics-color: #1abc9c;
+            --operations-color: #34495e;
+            --economy-color: #27ae60;
+            --facilities-color: #8e44ad;
             --reliability-color: #e74c3c;
         }
         
@@ -42,6 +45,9 @@
             color: white;
             padding: 1rem 0;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
         
         .container {
@@ -155,6 +161,13 @@
             color: var(--quality-color);
         }
         
+        .statistics {
+            border-color: var(--statistics-color);
+        }
+        .statistics .subject-title {
+            color: var(--statistics-color);
+        }
+        
         .inventory {
             border-color: var(--inventory-color);
         }
@@ -167,6 +180,27 @@
         }
         .workstudy .subject-title {
             color: var(--workstudy-color);
+        }
+        
+        .ergonomics {
+            border-color: var(--ergonomics-color);
+        }
+        .ergonomics .subject-title {
+            color: var(--ergonomics-color);
+        }
+        
+        .operations {
+            border-color: var(--operations-color);
+        }
+        .operations .subject-title {
+            color: var(--operations-color);
+        }
+        
+        .economy {
+            border-color: var(--economy-color);
+        }
+        .economy .subject-title {
+            color: var(--economy-color);
         }
         
         .facilities {
@@ -196,6 +230,9 @@
             box-shadow: 0 3px 10px rgba(0,0,0,0.1);
             transition: transform 0.3s, box-shadow 0.3s;
             border-top: 4px solid;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
         
         /* Tool card colors by subject */
@@ -205,11 +242,23 @@
         .tool-card.quality {
             border-top-color: var(--quality-color);
         }
+        .tool-card.statistics {
+            border-top-color: var(--statistics-color);
+        }
         .tool-card.inventory {
             border-top-color: var(--inventory-color);
         }
         .tool-card.workstudy {
             border-top-color: var(--workstudy-color);
+        }
+        .tool-card.ergonomics {
+            border-top-color: var(--ergonomics-color);
+        }
+        .tool-card.operations {
+            border-top-color: var(--operations-color);
+        }
+        .tool-card.economy {
+            border-top-color: var(--economy-color);
         }
         .tool-card.facilities {
             border-top-color: var(--facilities-color);
@@ -233,11 +282,23 @@
         .tool-card.quality h3 {
             color: var(--quality-color);
         }
+        .tool-card.statistics h3 {
+            color: var(--statistics-color);
+        }
         .tool-card.inventory h3 {
             color: var(--inventory-color);
         }
         .tool-card.workstudy h3 {
             color: var(--workstudy-color);
+        }
+        .tool-card.ergonomics h3 {
+            color: var(--ergonomics-color);
+        }
+        .tool-card.operations h3 {
+            color: var(--operations-color);
+        }
+        .tool-card.economy h3 {
+            color: var(--economy-color);
         }
         .tool-card.facilities h3 {
             color: var(--facilities-color);
@@ -250,6 +311,7 @@
             color: var(--text-light);
             font-size: 0.9rem;
             margin-bottom: 1rem;
+            flex-grow: 1;
         }
         
         .tool-link {
@@ -261,6 +323,7 @@
             text-decoration: none;
             font-weight: 500;
             transition: background-color 0.3s;
+            align-self: flex-start;
         }
         
         .tool-link:hover {
@@ -295,6 +358,7 @@
             display: flex;
             justify-content: center;
             margin-bottom: 1.5rem;
+            flex-wrap: wrap;
         }
         
         .footer-links a {
@@ -321,10 +385,11 @@
             nav ul {
                 margin-top: 1rem;
                 justify-content: center;
+                flex-wrap: wrap;
             }
             
             nav ul li {
-                margin: 0 0.75rem;
+                margin: 0.5rem 0.75rem;
             }
             
             .hero h1 {
@@ -344,83 +409,78 @@
                 margin-right: 0;
                 margin-bottom: 0.5rem;
             }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .footer-links a {
+                margin: 0.25rem 0;
+            }
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
-        <div class="container header-content">
-            <div class="logo">Industrial <span>Engineering</span> Calculators</div>
-            <nav>
-                <ul>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="terms.html">Terms</a></li>
-                    <li><a href="privacy.html">Privacy Policy</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </nav>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Industrial Engineering <span>Calculators</span></div>
+                <nav>
+                    <ul>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="terms.html">Terms</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </header>
-    
+
     <section class="hero">
         <div class="container">
             <h1>Essential Tools for Industrial Engineers</h1>
             <p>Free online calculators to help with production planning, quality control, operations management, and more. Perfect for professionals and students.</p>
-            <form action="https://www.paypal.com/donate" method="post" target="_top" style="margin-top: 20px;">
-                <input type="hidden" name="business" value="YOUR_PAYPAL_EMAIL@example.com">
-                <input type="hidden" name="currency_code" value="USD">
-                <button type="submit" class="donate-btn">Support This Project</button>
-            </form>
+            <a href="support.html" class="donate-btn">Support This Project</a>
         </div>
     </section>
-    
-    <!-- Production Planning Calculators -->
-    <section class="subject-section">
+
+    <section class="subject-section production">
         <div class="container">
-            <div class="subject-header production">
-                <i class="fas fa-cogs subject-icon"></i>
+            <div class="subject-header">
+                <span class="subject-icon">⚙️</span>
                 <h2 class="subject-title">Production Planning</h2>
             </div>
             <div class="tools-grid">
-                <div class="tool-card production">
-                    <h3>Batch Sizing</h3>
-                    <p>Calculate optimal batch sizes for production runs to minimize costs.</p>
-                    <a href="batchsizing.html" class="tool-link">Use Calculator</a>
-                </div>
-                
                 <div class="tool-card production">
                     <h3>Flow Shop Sequencing</h3>
                     <p>Determine optimal job sequences in flow shop environments.</p>
                     <a href="flowshopsequencing.html" class="tool-link">Use Calculator</a>
                 </div>
-                
                 <div class="tool-card production">
                     <h3>Job Shop Sequencing</h3>
                     <p>Optimize job sequences in job shop production systems.</p>
                     <a href="jobshopsequencing.html" class="tool-link">Use Calculator</a>
                 </div>
-                
-                <div class="tool-card production">
-                    <h3>Line Balancing</h3>
-                    <p>Balance assembly lines for optimal efficiency and throughput.</p>
-                    <a href="linebalancing.html" class="tool-link">Use Calculator</a>
-                </div>
-                
                 <div class="tool-card production">
                     <h3>Takt Time</h3>
                     <p>Calculate production pace to match customer demand.</p>
                     <a href="takttime.html" class="tool-link">Use Calculator</a>
                 </div>
+                <div class="tool-card production">
+                    <h3>One Worker N Machines</h3>
+                    <p>Analyze scheduling for one worker managing multiple machines.</p>
+                    <a href="oneworkernmachines.html" class="tool-link">Use Calculator</a>
+                </div>
             </div>
         </div>
     </section>
-    
-    <!-- Quality Control Calculators -->
-    <section class="subject-section">
+
+    <section class="subject-section quality">
         <div class="container">
-            <div class="subject-header quality">
-                <i class="fas fa-chart-line subject-icon"></i>
+            <div class="subject-header">
+                <span class="subject-icon">📊</span>
                 <h2 class="subject-title">Quality Control</h2>
             </div>
             <div class="tools-grid">
@@ -429,25 +489,16 @@
                     <p>Create statistical process control charts for quality management.</p>
                     <a href="controlcharts.html" class="tool-link">Use Calculator</a>
                 </div>
-                
                 <div class="tool-card quality">
                     <h3>Gage R&R</h3>
                     <p>Analyze measurement system repeatability and reproducibility.</p>
                     <a href="gagerr.html" class="tool-link">Use Calculator</a>
                 </div>
-                
                 <div class="tool-card quality">
                     <h3>Process Capability</h3>
                     <p>Calculate Cp, Cpk and other process capability indices.</p>
                     <a href="processcapability.html" class="tool-link">Use Calculator</a>
                 </div>
-                
-                <div class="tool-card quality">
-                    <h3>Sample Size</h3>
-                    <p>Calculate required sample sizes for quality control.</p>
-                    <a href="samplesize.html" class="tool-link">Use Calculator</a>
-                </div>
-                
                 <div class="tool-card quality">
                     <h3>OEE Calculator</h3>
                     <p>Calculate Overall Equipment Effectiveness for manufacturing.</p>
@@ -456,12 +507,72 @@
             </div>
         </div>
     </section>
-    
-    <!-- Inventory Management Calculators -->
-    <section class="subject-section">
+
+    <section class="subject-section statistics">
         <div class="container">
-            <div class="subject-header inventory">
-                <i class="fas fa-boxes subject-icon"></i>
+            <div class="subject-header">
+                <span class="subject-icon">📈</span>
+                <h2 class="subject-title">Statistics & DOE</h2>
+            </div>
+            <div class="tools-grid">
+                <div class="tool-card statistics">
+                    <h3>ANOVA</h3>
+                    <p>Perform analysis of variance for experimental data.</p>
+                    <a href="anova.html" class="tool-link">Use Calculator</a>
+                </div>
+                <div class="tool-card statistics">
+                    <h3>Chi-Square Test</h3>
+                    <p>Conduct chi-square tests for categorical data analysis.</p>
+                    <a href="chisquaretest.html" class="tool-link">Use Calculator</a>
+                </div>
+                <div class="tool-card statistics">
+                    <h3>Factorial Design</h3>
+                    <p>Design and analyze factorial experiments.</p>
+                    <a href="factorialdesign.html" class="tool-link">Use Calculator</a>
+                </div>
+                <div class="tool-card statistics">
+                    <h3>Goodness of Fit</h3>
+                    <p>Test the fit of observed data to a theoretical distribution.</p>
+                    <a href="goodnessoffit.html" class="tool-link">Use Calculator</a>
+                </div>
+                <div class="tool-card statistics">
+                    <h3>Latin Square</h3>
+                    <p>Analyze Latin square designs for experiments.</p>
+                    <a href="latinsquare.html" class="tool-link">Use Calculator</a>
+                </div>
+                <div class="tool-card statistics">
+                    <h3>Regression</h3>
+                    <p>Perform regression analysis for predictive modeling.</p>
+                    <a href="regression.html" class="tool-link">Use Calculator</a>
+                </div>
+                <div class="tool-card statistics">
+                    <h3>Sample Size</h3>
+                    <p>Calculate required sample sizes for statistical analysis.</p>
+                    <a href="samplesize.html" class="tool-link">Use Calculator</a>
+                </div>
+                <div class="tool-card statistics">
+                    <h3>Taguchi</h3>
+                    <p>Apply Taguchi methods for robust design.</p>
+                    <a href="taguchi.html" class="tool-link">Use Calculator</a>
+                </div>
+                <div class="tool-card statistics">
+                    <h3>T-Test</h3>
+                    <p>Conduct t-tests for comparing means.</p>
+                    <a href="ttest.html" class="tool-link">Use Calculator</a>
+                </div>
+                <div class="tool-card statistics">
+                    <h3>Z-Test</h3>
+                    <p>Perform z-tests for large sample hypothesis testing.</p>
+                    <a href="ztest.html" class="tool-link">Use Calculator</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="subject-section inventory">
+        <div class="container">
+            <div class="subject-header">
+                <span class="subject-icon">📦</span>
                 <h2 class="subject-title">Inventory Management</h2>
             </div>
             <div class="tools-grid">
@@ -470,25 +581,16 @@
                     <p>Calculate optimal order quantity to minimize inventory costs.</p>
                     <a href="eoq.html" class="tool-link">Use Calculator</a>
                 </div>
-                
                 <div class="tool-card inventory">
                     <h3>Reorder Point</h3>
                     <p>Calculate optimal reorder points for inventory management.</p>
                     <a href="rop.html" class="tool-link">Use Calculator</a>
                 </div>
-                
-                <div class="tool-card inventory">
-                    <h3>Safety Stock</h3>
-                    <p>Determine appropriate safety stock levels for inventory.</p>
-                    <a href="safetystock.html" class="tool-link">Use Calculator</a>
-                </div>
-                
                 <div class="tool-card inventory">
                     <h3>Kanban Calculator</h3>
                     <p>Determine optimal number of kanban cards for lean systems.</p>
                     <a href="kanban.html" class="tool-link">Use Calculator</a>
                 </div>
-                
                 <div class="tool-card inventory">
                     <h3>Newsvendor Model</h3>
                     <p>Solve single-period inventory problems with probabilistic demand.</p>
@@ -497,12 +599,11 @@
             </div>
         </div>
     </section>
-    
-    <!-- Work Study Calculators -->
-    <section class="subject-section">
+
+    <section class="subject-section workstudy">
         <div class="container">
-            <div class="subject-header workstudy">
-                <i class="fas fa-stopwatch subject-icon"></i>
+            <div class="subject-header">
+                <span class="subject-icon">⏱️</span>
                 <h2 class="subject-title">Work Study</h2>
             </div>
             <div class="tools-grid">
@@ -511,33 +612,127 @@
                     <p>Perform time study calculations for work measurement.</p>
                     <a href="timestudy.html" class="tool-link">Use Calculator</a>
                 </div>
-                
                 <div class="tool-card workstudy">
-                    <h3>PMTS Calculator</h3>
+                    <h3>Predetermined Motion Time Systems</h3>
                     <p>Predetermined Motion Time Systems analysis for work measurement.</p>
                     <a href="predeterminedmotiontimesystems.html" class="tool-link">Use Calculator</a>
                 </div>
-                
                 <div class="tool-card workstudy">
                     <h3>Learning Curve</h3>
                     <p>Calculate time reductions based on learning curve theory.</p>
                     <a href="learningcurve.html" class="tool-link">Use Calculator</a>
                 </div>
-                
                 <div class="tool-card workstudy">
                     <h3>Little's Law</h3>
                     <p>Apply Little's Law to queuing systems and inventory.</p>
                     <a href="littleslaw.html" class="tool-link">Use Calculator</a>
                 </div>
+                <div class="tool-card workstudy">
+                    <h3>Work Sampling</h3>
+                    <p>Analyze work activities through sampling techniques.</p>
+                    <a href="worksampling.html" class="tool-link">Use Calculator</a>
+                </div>
             </div>
         </div>
     </section>
-    
-    <!-- Facilities Planning Calculators -->
-    <section class="subject-section">
+
+    <section class="subject-section ergonomics">
         <div class="container">
-            <div class="subject-header facilities">
-                <i class="fas fa-industry subject-icon"></i>
+            <div class="subject-header">
+                <span class="subject-icon">🧑‍💼</span>
+                <h2 class="subject-title">Ergonomics</h2>
+            </div>
+            <div class="tools-grid">
+                <div class="tool-card ergonomics">
+                    <h3>Biomechanics</h3>
+                    <p>Analyze biomechanical factors in workplace design.</p>
+                    <a href="biomechanics.html" class="tool-link">Use Calculator</a>
+                </div>
+                <div class="tool-card ergonomics">
+                    <h3>Posture Analysis</h3>
+                    <p>Evaluate workplace posture for ergonomic improvements.</p>
+                    <a href="posture.html" class="tool-link">Use Calculator</a>
+                </div>
+                <div class="tool-card ergonomics">
+                    <h3>Work Physiology</h3>
+                    <p>Assess physiological demands of work tasks.</p>
+                    <a href="workphysiology.html" class="tool-link">Use Calculator</a>
+                </div>
+                <div class="tool-card ergonomics">
+                    <h3>Work-Rest Cycles</h3>
+                    <p>Optimize work-rest schedules for productivity and health.</p>
+                    <a href="workrest.html" class="tool-link">Use Calculator</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="subject-section operations">
+        <div class="container">
+            <div class="subject-header">
+                <span class="subject-icon">📉</span>
+                <h2 class="subject-title">Operations Research</h2>
+            </div>
+            <div class="tools-grid">
+                <div class="tool-card operations">
+                    <h3>Linear Programming</h3>
+                    <p>Solve optimization problems using linear programming techniques.</p>
+                    <a href="linearprogramming.html" class="tool-link">Use Calculator</a>
+                </div>
+                <div class="tool-card operations">
+                    <h3>Queueing Analysis</h3>
+                    <p>Calculate and improve waiting lines.</p>
+                    <a href="queueing.html" class="tool-link">Use Calculator</a>
+                </div>
+                <div class="tool-card operations">
+                    <h3>Decision Analysis</h3>
+                    <p>Evaluate decisions under uncertainty.</p>
+                    <a href="decisionanalysis.html" class="tool-link">Use Calculator</a>
+                </div>
+                <div class="tool-card operations">
+                    <h3>Game Theory</h3>
+                    <p>Analyze strategic interactions using game theory.</p>
+                    <a href="gametheory.html" class="tool-link">Use Calculator</a>
+                </div>
+                <div class="tool-card operations">
+                    <h3>Markov Analysis</h3>
+                    <p>Model systems with probabilistic state transitions.</p>
+                    <a href="markov.html" class="tool-link">Use Calculator</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="subject-section economy">
+        <div class="container">
+            <div class="subject-header">
+                <span class="subject-icon">💰</span>
+                <h2 class="subject-title">Engineering Economy</h2>
+            </div>
+            <div class="tools-grid">
+                <div class="tool-card economy">
+                    <h3>Break-even Analysis</h3>
+                    <p>Determine the point at which revenue equals costs.</p>
+                    <a href="breakeven.html" class="tool-link">Use Calculator</a>
+                </div>
+                <div class="tool-card economy">
+                    <h3>Depreciation</h3>
+                    <p>Calculate asset depreciation for financial analysis.</p>
+                    <a href="depreciation.html" class="tool-link">Use Calculator</a>
+                </div>
+                <div class="tool-card economy">
+                    <h3>Time Value of Money</h3>
+                    <p>Analyze financial decisions considering time value of money.</p>
+                    <a href="timevalueofmoney.html" class="tool-link">Use Calculator</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="subject-section facilities">
+        <div class="container">
+            <div class="subject-header">
+                <span class="subject-icon">🏢</span>
                 <h2 class="subject-title">Facilities Planning</h2>
             </div>
             <div class="tools-grid">
@@ -546,30 +741,17 @@
                     <p>Find the optimal location for facilities based distance and demand.</p>
                     <a href="facilitieslocation.html" class="tool-link">Use Calculator</a>
                 </div>
-                
-                <div class="tool-card facilities">
-                    <h3>Break-even Analysis</h3>
-                    <p>Determine the point at which revenue equals costs.</p>
-                    <a href="breakeven.html" class="tool-link">Use Calculator</a>
-                </div>
-                
-                <div class="tool-card facilities">
-                    <h3>Queueing Analysis</h3>
-                    <p>Calculate and improve waiting lines.</p>
-                    <a href="queueing.html" class="tool-link">Use Calculator</a>
-                </div>
             </div>
         </div>
     </section>
-    
-    <!-- Reliability & Maintenance Calculators -->
-    <section class="subject-section">
+
+    <section class="subject-section reliability">
         <div class="container">
-            <div class="subject-header reliability">
-                <i class="fas fa-shield-alt subject-icon"></i>
+            <div class="subject-header">
+                <span class="subject-icon">🔧</span>
                 <h2 class="subject-title">Reliability & Maintenance</h2>
             </div>
-            <div class="tools-grid">                
+            <div class="tools-grid">
                 <div class="tool-card reliability">
                     <h3>Reliability Analysis</h3>
                     <p>Perform reliability calculations for systems and components.</p>
@@ -578,15 +760,17 @@
             </div>
         </div>
     </section>
-    
+
     <section class="about-section">
-        <div class="container about-content">
-            <h2>About Industrial Engineering Calculators</h2>
-            <p>Our mission is to provide free, easy-to-use calculators for industrial engineering professionals and students. All our tools are organized by subject area to help you quickly find what you need.</p>
-            <p>This project is maintained by industrial engineering professionals who understand the challenges of production planning, quality control, and operations management.</p>
+        <div class="container">
+            <div class="about-content">
+                <h2>About Industrial Engineering Calculators</h2>
+                <p>Our mission is to provide free, easy-to-use calculators for industrial engineering professionals and students. All our tools are organized by subject area to help you quickly find what you need.</p>
+                <p>This project is maintained by industrial engineering professionals who understand the challenges of production planning, quality control, and operations management.</p>
+            </div>
         </div>
     </section>
-    
+
     <footer>
         <div class="container">
             <div class="footer-links">
@@ -595,7 +779,7 @@
                 <a href="privacy.html">Privacy Policy</a>
                 <a href="contact.html">Contact Us</a>
             </div>
-            <p class="copyright">&copy; 2023 Industrial Engineering Calculators. All rights reserved.</p>
+            <p class="copyright">© 2023 Industrial Engineering Calculators. All rights reserved.</p>
         </div>
     </footer>
 </body>
