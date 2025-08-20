@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Linear Programming Calculator - Solve optimization problems with constraints">
-    <title>Linear Programming Calculator | Industrial Engineering Calculators</title>
+    <title>Z-Test Calculator | Industrial Engineering Calculators</title>
     <style>
-        /* Consistent with existing style */
         :root {
             --primary-color: #2c3e50;
             --secondary-color: #3498db;
@@ -119,6 +117,47 @@
             font-size: 1.1rem;
         }
         
+        .scenario-selector {
+            margin-bottom: 2rem;
+        }
+        
+        .scenario-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+        }
+        
+        .scenario-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            margin-right: 0.5rem;
+            border-radius: 5px 5px 0 0;
+            background-color: #f1f1f1;
+            transition: all 0.3s;
+        }
+        
+        .scenario-tab.active {
+            background-color: white;
+            border-color: #ddd;
+            border-bottom-color: white;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        
+        .scenario-tab:hover:not(.active) {
+            background-color: #e9e9e9;
+        }
+        
+        .scenario-content {
+            display: none;
+        }
+        
+        .scenario-content.active {
+            display: block;
+        }
+        
         .input-group {
             margin-bottom: 1.5rem;
         }
@@ -150,6 +189,26 @@
         
         .input-row .input-group {
             flex: 1;
+        }
+        
+        .data-input {
+            margin-bottom: 1.5rem;
+        }
+        
+        .data-input textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .data-input .help-text {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-top: 0.5rem;
         }
         
         .calculate-btn {
@@ -187,55 +246,40 @@
             color: var(--secondary-color);
         }
         
-        .lp-matrix {
-            width: 100%;
-            overflow-x: auto;
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
             margin: 1.5rem 0;
         }
         
-        .lp-matrix table {
-            min-width: 600px;
-            border-collapse: collapse;
+        .result-card {
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         
-        .lp-matrix th, .lp-matrix td {
-            border: 1px solid #ddd;
-            padding: 0.75rem;
-            text-align: center;
-        }
-        
-        .lp-matrix th {
-            background-color: #f2f2f2;
-            font-weight: 500;
-        }
-        
-        .lp-matrix input {
-            width: 80px;
-            padding: 0.5rem;
-            border: 1px solid #ddd;
-            border-radius: 3px;
-            text-align: center;
-        }
-        
-        .lp-matrix input:focus {
-            outline: none;
-            border-color: var(--secondary-color);
-        }
-        
-        .add-remove-btn {
-            background-color: var(--light-color);
+        .result-card h4 {
             color: var(--primary-color);
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            margin-right: 0.5rem;
-            transition: background-color 0.3s;
+            margin-bottom: 0.5rem;
         }
         
-        .add-remove-btn:hover {
-            background-color: #d6e0e5;
+        .interpretation {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #e8f4fc;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .distribution-chart {
+            margin: 2rem 0;
+            height: 200px;
+            position: relative;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            padding: 1rem;
         }
         
         .examples-section {
@@ -254,23 +298,24 @@
             color: var(--primary-color);
         }
         
-        table {
+        .critical-value-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 1rem 0;
+            margin: 1.5rem 0;
         }
         
-        table, th, td {
+        .critical-value-table, .critical-value-table th, .critical-value-table td {
             border: 1px solid #ddd;
         }
         
-        th, td {
+        .critical-value-table th, .critical-value-table td {
             padding: 0.75rem;
             text-align: left;
         }
         
-        th {
+        .critical-value-table th {
             background-color: #f2f2f2;
+            font-weight: 600;
         }
         
         footer {
@@ -317,21 +362,27 @@
                 margin: 0 0.75rem;
             }
             
+            .scenario-tabs {
+                flex-direction: column;
+            }
+            
+            .scenario-tab {
+                border-radius: 0;
+                margin-right: 0;
+                border-bottom: 1px solid #ddd;
+            }
+            
             .input-row {
                 flex-direction: column;
                 gap: 0;
             }
             
-            .lp-matrix {
-                font-size: 0.9rem;
-            }
-            
-            .lp-matrix input {
-                width: 60px;
-                padding: 0.3rem;
+            .result-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <header>
@@ -351,155 +402,365 @@
     
     <section class="page-hero">
         <div class="container">
-            <h1>Linear Programming Calculator</h1>
-            <p>Solve optimization problems with constraints using the simplex method</p>
+            <h1>Z-Test Calculator</h1>
+            <p>Perform hypothesis testing using Z-tests for population means and proportions</p>
         </div>
     </section>
     
     <main class="container">
         <section class="content-section">
             <div class="calculator-intro">
-                <h2>Linear Programming</h2>
-                <p>Linear programming (LP) is a method to achieve the best outcome in a mathematical model whose requirements are represented by linear relationships. It's widely used in business and economics to solve optimization problems.</p>
+                <h2>Z-Test for Hypothesis Testing</h2>
+                <p>A Z-test is any statistical test for which the distribution of the test statistic under the null hypothesis can be approximated by a normal distribution. Z-tests are used when sample sizes are large enough for the central limit theorem to be applied.</p>
                 
                 <div class="formula-box">
-                    Maximize (or Minimize): Z = c₁x₁ + c₂x₂ + ... + cₙxₙ<br>
-                    Subject to:<br>
-                    a₁₁x₁ + a₁₂x₂ + ... + a₁ₙxₙ ≤ b₁<br>
-                    a₂₁x₁ + a₂₂x₂ + ... + a₂ₙxₙ ≤ b₂<br>
-                    ...<br>
-                    x₁, x₂, ..., xₙ ≥ 0
+                    Z = (X̄ - μ) / (σ / √n)
                 </div>
                 
                 <p>Where:</p>
                 <ul>
-                    <li><strong>Z</strong> is the objective function to maximize or minimize</li>
-                    <li><strong>x₁, x₂, ..., xₙ</strong> are the decision variables</li>
-                    <li><strong>c₁, c₂, ..., cₙ</strong> are the coefficients of the objective function</li>
-                    <li><strong>aᵢⱼ</strong> are the coefficients of the constraints</li>
-                    <li><strong>bᵢ</strong> are the right-hand side values of the constraints</li>
+                    <li><strong>X̄</strong> = Sample mean</li>
+                    <li><strong>μ</strong> = Population mean (hypothesized)</li>
+                    <li><strong>σ</strong> = Population standard deviation</li>
+                    <li><strong>n</strong> = Sample size</li>
                 </ul>
             </div>
             
-            <form id="lp-form">
-                <div class="input-group">
-                    <label for="objective">Objective:</label>
-                    <select id="objective" required>
-                        <option value="maximize">Maximize</option>
-                        <option value="minimize">Minimize</option>
-                    </select>
+            <div class="scenario-selector">
+                <h3>Test Type</h3>
+                <p>Select the type of Z-test you want to perform:</p>
+                
+                <div class="scenario-tabs">
+                    <div class="scenario-tab active" data-scenario="one-sample">One-Sample Z-Test</div>
+                    <div class="scenario-tab" data-scenario="two-sample">Two-Sample Z-Test</div>
+                    <div class="scenario-tab" data-scenario="proportion">Z-Test for Proportions</div>
                 </div>
                 
-                <h3>Decision Variables</h3>
-                <div class="input-group">
-                    <label for="num-vars">Number of Decision Variables:</label>
-                    <input type="number" id="num-vars" min="1" max="10" value="2" required>
+                <!-- One-Sample Z-Test Scenario -->
+                <div class="scenario-content active" id="one-sample-scenario">
+                    <h3>One-Sample Z-Test</h3>
+                    <p>Test whether the mean of a single sample is significantly different from a known or hypothesized population mean.</p>
+                    
+                    <form id="one-sample-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="sample-mean">Sample Mean (X̄):</label>
+                                <input type="number" id="sample-mean" step="0.001" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="population-mean">Population Mean (μ):</label>
+                                <input type="number" id="population-mean" step="0.001" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="population-std">Population Standard Deviation (σ):</label>
+                                <input type="number" id="population-std" min="0" step="0.001" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="sample-size">Sample Size (n):</label>
+                                <input type="number" id="sample-size" min="2" step="1" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="alpha-level">Significance Level (α):</label>
+                                <select id="alpha-level">
+                                    <option value="0.01">0.01 (99% confidence)</option>
+                                    <option value="0.05" selected>0.05 (95% confidence)</option>
+                                    <option value="0.10">0.10 (90% confidence)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="test-type">Test Type:</label>
+                                <select id="test-type">
+                                    <option value="two-tailed">Two-Tailed</option>
+                                    <option value="one-tailed-left">One-Tailed (Left)</option>
+                                    <option value="one-tailed-right">One-Tailed (Right)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate Z-Test</button>
+                    </form>
+                    
+                    <div class="result-box" id="one-sample-result">
+                        <h3>One-Sample Z-Test Results</h3>
+                        
+                        <div class="result-grid">
+                            <div class="result-card">
+                                <h4>Z-Score</h4>
+                                <div class="result-value" id="z-score"></div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <h4>P-Value</h4>
+                                <div class="result-value" id="p-value"></div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <h4>Critical Value</h4>
+                                <div class="result-value" id="critical-value"></div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <h4>Result</h4>
+                                <div class="result-value" id="result-significance"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="interpretation">
+                            <h4>Interpretation</h4>
+                            <p id="interpretation-text"></p>
+                        </div>
+                        
+                        <h4>Standard Normal Distribution</h4>
+                        <div class="distribution-chart">
+                            <canvas id="distribution-chart"></canvas>
+                        </div>
+                    </div>
                 </div>
                 
-                <h3>Objective Function Coefficients</h3>
-                <div id="obj-coeffs" class="input-row"></div>
-                
-                <h3>Constraints</h3>
-                <div class="input-group">
-                    <label for="num-constraints">Number of Constraints:</label>
-                    <input type="number" id="num-constraints" min="1" max="10" value="2" required>
+                <!-- Two-Sample Z-Test Scenario -->
+                <div class="scenario-content" id="two-sample-scenario">
+                    <h3>Two-Sample Z-Test</h3>
+                    <p>Test whether the means of two independent samples are significantly different from each other.</p>
+                    
+                    <form id="two-sample-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="sample1-mean">Sample 1 Mean (X̄₁):</label>
+                                <input type="number" id="sample1-mean" step="0.001" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="sample2-mean">Sample 2 Mean (X̄₂):</label>
+                                <input type="number" id="sample2-mean" step="0.001" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="sample1-std">Sample 1 Standard Deviation (σ₁):</label>
+                                <input type="number" id="sample1-std" min="0" step="0.001" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="sample2-std">Sample 2 Standard Deviation (σ₂):</label>
+                                <input type="number" id="sample2-std" min="0" step="0.001" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="sample1-size">Sample 1 Size (n₁):</label>
+                                <input type="number" id="sample1-size" min="2" step="1" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="sample2-size">Sample 2 Size (n₂):</label>
+                                <input type="number" id="sample2-size" min="2" step="1" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="two-sample-alpha">Significance Level (α):</label>
+                                <select id="two-sample-alpha">
+                                    <option value="0.01">0.01 (99% confidence)</option>
+                                    <option value="0.05" selected>0.05 (95% confidence)</option>
+                                    <option value="0.10">0.10 (90% confidence)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="two-sample-test-type">Test Type:</label>
+                                <select id="two-sample-test-type">
+                                    <option value="two-tailed">Two-Tailed</option>
+                                    <option value="one-tailed-left">One-Tailed (Left)</option>
+                                    <option value="one-tailed-right">One-Tailed (Right)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate Z-Test</button>
+                    </form>
+                    
+                    <div class="result-box" id="two-sample-result">
+                        <h3>Two-Sample Z-Test Results</h3>
+                        
+                        <div class="result-grid">
+                            <div class="result-card">
+                                <h4>Z-Score</h4>
+                                <div class="result-value" id="two-sample-z-score"></div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <h4>P-Value</h4>
+                                <div class="result-value" id="two-sample-p-value"></div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <h4>Critical Value</h4>
+                                <div class="result-value" id="two-sample-critical-value"></div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <h4>Result</h4>
+                                <div class="result-value" id="two-sample-result-significance"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="interpretation">
+                            <h4>Interpretation</h4>
+                            <p id="two-sample-interpretation-text"></p>
+                        </div>
+                    </div>
                 </div>
                 
-                <div id="constraints-matrix" class="lp-matrix"></div>
-                
-                <button type="submit" class="calculate-btn">Solve Linear Program</button>
-            </form>
-            
-            <div class="result-box" id="lp-result">
-                <h3>Solution</h3>
-                <p>Optimal Value: <span class="result-value" id="optimal-value"></span></p>
-                
-                <h4>Optimal Solution</h4>
-                <div id="solution-vars"></div>
-                
-                <h4>Sensitivity Analysis</h4>
-                <div id="sensitivity-analysis"></div>
-                
-                <h4>Slack/Surplus Variables</h4>
-                <div id="slack-vars"></div>
+                <!-- Z-Test for Proportions Scenario -->
+                <div class="scenario-content" id="proportion-scenario">
+                    <h3>Z-Test for Proportions</h3>
+                    <p>Test whether the proportion of a characteristic in a sample is significantly different from a hypothesized population proportion.</p>
+                    
+                    <form id="proportion-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="sample-proportion">Sample Proportion (p̂):</label>
+                                <input type="number" id="sample-proportion" min="0" max="1" step="0.001" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="population-proportion">Population Proportion (p₀):</label>
+                                <input type="number" id="population-proportion" min="0" max="1" step="0.001" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="proportion-sample-size">Sample Size (n):</label>
+                                <input type="number" id="proportion-sample-size" min="2" step="1" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="proportion-alpha">Significance Level (α):</label>
+                                <select id="proportion-alpha">
+                                    <option value="0.01">0.01 (99% confidence)</option>
+                                    <option value="0.05" selected>0.05 (95% confidence)</option>
+                                    <option value="0.10">0.10 (90% confidence)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="proportion-test-type">Test Type:</label>
+                                <select id="proportion-test-type">
+                                    <option value="two-tailed">Two-Tailed</option>
+                                    <option value="one-tailed-left">One-Tailed (Left)</option>
+                                    <option value="one-tailed-right">One-Tailed (Right)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate Z-Test</button>
+                    </form>
+                    
+                    <div class="result-box" id="proportion-result">
+                        <h3>Z-Test for Proportions Results</h3>
+                        
+                        <div class="result-grid">
+                            <div class="result-card">
+                                <h4>Z-Score</h4>
+                                <div class="result-value" id="proportion-z-score"></div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <h4>P-Value</h4>
+                                <div class="result-value" id="proportion-p-value"></div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <h4>Critical Value</h4>
+                                <div class="result-value" id="proportion-critical-value"></div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <h4>Result</h4>
+                                <div class="result-value" id="proportion-result-significance"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="interpretation">
+                            <h4>Interpretation</h4>
+                            <p id="proportion-interpretation-text"></p>
+                        </div>
+                    </div>
+                </div>
             </div>
             
             <div class="examples-section">
                 <h3>Practical Examples</h3>
                 
                 <div class="example">
-                    <h4>Example 1: Production Planning</h4>
-                    <p><strong>Objective:</strong> Maximize profit</p>
-                    <p><strong>Variables:</strong> x₁ = Product A, x₂ = Product B</p>
-                    <p><strong>Objective Function:</strong> Z = 40x₁ + 30x₂</p>
-                    <p><strong>Constraints:</strong></p>
-                    <ul>
-                        <li>2x₁ + x₂ ≤ 100 (Labor hours)</li>
-                        <li>x₁ + x₂ ≤ 80 (Machine hours)</li>
-                        <li>x₁ ≤ 40 (Demand for A)</li>
-                        <li>x₂ ≤ 60 (Demand for B)</li>
-                    </ul>
-                    <p><strong>Solution:</strong> x₁ = 20, x₂ = 60, Z = 2600</p>
+                    <h4>Example 1: Quality Control</h4>
+                    <p>A manufacturer claims their products have a mean weight of 500g. A sample of 50 products has a mean weight of 495g with a population standard deviation of 10g. Test if the sample mean is significantly different.</p>
+                    <p>Z = (495 - 500) / (10 / √50) = -5 / 1.414 = -3.536</p>
+                    <p>With α = 0.05 (two-tailed), the critical value is ±1.96. Since -3.536 < -1.96, we reject the null hypothesis.</p>
                 </div>
                 
                 <div class="example">
-                    <h4>Example 2: Diet Problem</h4>
-                    <p><strong>Objective:</strong> Minimize cost</p>
-                    <p><strong>Variables:</strong> x₁ = Food A, x₂ = Food B</p>
-                    <p><strong>Objective Function:</strong> Z = 0.6x₁ + x₂</p>
-                    <p><strong>Constraints:</strong></p>
-                    <ul>
-                        <li>10x₁ + 4x₂ ≥ 20 (Protein)</li>
-                        <li>5x₁ + 5x₂ ≥ 20 (Carbohydrates)</li>
-                        <li>2x₁ + 6x₂ ≥ 12 (Fat)</li>
-                    </ul>
-                    <p><strong>Solution:</strong> x₁ = 3, x₂ = 1, Z = 2.8</p>
+                    <h4>Example 2: Marketing Campaign</h4>
+                    <p>A company claims their new marketing campaign increased conversion rates from 10% to 15%. In a sample of 200 visitors, 35 converted (p̂ = 0.175). Test if this is significantly different from the claimed 15%.</p>
+                    <p>Z = (0.175 - 0.15) / √(0.15×0.85/200) = 0.025 / 0.025 = 1.0</p>
+                    <p>With α = 0.05 (two-tailed), the critical value is ±1.96. Since 1.0 < 1.96, we fail to reject the null hypothesis.</p>
                 </div>
                 
                 <div class="example">
-                    <h4>Example 3: Transportation Problem</h4>
-                    <p><strong>Objective:</strong> Minimize shipping costs</p>
-                    <p><strong>Variables:</strong> x₁ = Warehouse A to Store 1, x₂ = Warehouse A to Store 2, etc.</p>
-                    <p><strong>Objective Function:</strong> Z = 2x₁ + 4x₂ + 5x₃ + 3x₄</p>
-                    <p><strong>Constraints:</strong></p>
-                    <ul>
-                        <li>x₁ + x₂ ≤ 100 (Supply from A)</li>
-                        <li>x₃ + x₄ ≤ 150 (Supply from B)</li>
-                        <li>x₁ + x₃ = 80 (Demand at Store 1)</li>
-                        <li>x₂ + x₄ = 120 (Demand at Store 2)</li>
-                    </ul>
-                    <p><strong>Solution:</strong> x₁ = 80, x₂ = 20, x₃ = 0, x₄ = 120, Z = 520</p>
+                    <h4>Example 3: Process Improvement</h4>
+                    <p>An engineer wants to test if a new process reduces processing time. The current mean is 120 minutes with σ = 15 minutes. A sample of 40 using the new process has a mean of 115 minutes.</p>
+                    <p>Z = (115 - 120) / (15 / √40) = -5 / 2.372 = -2.108</p>
+                    <p>With α = 0.05 (one-tailed left), the critical value is -1.645. Since -2.108 < -1.645, we reject the null hypothesis.</p>
                 </div>
             </div>
             
             <div class="calculator-intro">
-                <h3>LP Applications in Industrial Engineering</h3>
-                <table>
-                    <tr>
-                        <th>Application Area</th>
-                        <th>Typical Use Case</th>
-                    </tr>
-                    <tr>
-                        <td>Production Planning</td>
-                        <td>Optimal product mix to maximize profit</td>
-                    </tr>
-                    <tr>
-                        <td>Inventory Management</td>
-                        <td>Minimizing holding and ordering costs</td>
-                    </tr>
-                    <tr>
-                        <td>Transportation</td>
-                        <td>Minimizing shipping costs between locations</td>
-                    </tr>
-                    <tr>
-                        <td>Scheduling</td>
-                        <td>Optimal workforce or machine scheduling</td>
-                    </tr>
-                    <tr>
-                        <td>Blending Problems</td>
-                        <td>Optimal mix of raw materials</td>
-                    </tr>
+                <h3>Critical Values for Common Significance Levels</h3>
+                <table class="critical-value-table">
+                    <thead>
+                        <tr>
+                            <th>Significance Level (α)</th>
+                            <th>Two-Tailed Critical Values</th>
+                            <th>One-Tailed Critical Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>0.10 (90% confidence)</td>
+                            <td>±1.645</td>
+                            <td>±1.282</td>
+                        </tr>
+                        <tr>
+                            <td>0.05 (95% confidence)</td>
+                            <td>±1.960</td>
+                            <td>±1.645</td>
+                        </tr>
+                        <tr>
+                            <td>0.01 (99% confidence)</td>
+                            <td>±2.576</td>
+                            <td>±2.326</td>
+                        </tr>
+                    </tbody>
                 </table>
+                
+                <div class="formula-box">
+                    Decision Rule: Reject H₀ if |Z| > Z<sub>α/2</sub> (two-tailed) or Z > Z<sub>α</sub> (one-tailed right) or Z < -Z<sub>α</sub> (one-tailed left)
+                </div>
             </div>
         </section>
     </main>
@@ -518,244 +779,294 @@
     </footer>
 
     <script>
-        // Variables to track problem dimensions
-        let numVars = 2;
-        let numConstraints = 2;
+        // Chart variable
+        let distributionChart;
         
-        // Initialize the calculator
-        document.addEventListener('DOMContentLoaded', function() {
-            updateObjectiveCoefficients();
-            updateConstraintsMatrix();
-            
-            // Event listeners for changing dimensions
-            document.getElementById('num-vars').addEventListener('input', function() {
-                numVars = parseInt(this.value);
-                updateObjectiveCoefficients();
-                updateConstraintsMatrix();
-            });
-            
-            document.getElementById('num-constraints').addEventListener('input', function() {
-                numConstraints = parseInt(this.value);
-                updateConstraintsMatrix();
+        // Scenario tab switching
+        const tabs = document.querySelectorAll('.scenario-tab');
+        const contents = document.querySelectorAll('.scenario-content');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                tabs.forEach(t => t.classList.remove('active'));
+                contents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                const scenario = tab.getAttribute('data-scenario');
+                document.getElementById(`${scenario}-scenario`).classList.add('active');
             });
         });
         
-        // Update objective function coefficients inputs
-        function updateObjectiveCoefficients() {
-            const container = document.getElementById('obj-coeffs');
-            container.innerHTML = '';
+        // Calculate Z-score for one-sample test
+        function calculateZScore(sampleMean, populationMean, populationStd, sampleSize) {
+            return (sampleMean - populationMean) / (populationStd / Math.sqrt(sampleSize));
+        }
+        
+        // Calculate Z-score for two-sample test
+        function calculateTwoSampleZScore(mean1, mean2, std1, std2, n1, n2) {
+            const stdError = Math.sqrt((std1*std1)/n1 + (std2*std2)/n2);
+            return (mean1 - mean2) / stdError;
+        }
+        
+        // Calculate Z-score for proportions test
+        function calculateProportionZScore(sampleProp, populationProp, sampleSize) {
+            const stdError = Math.sqrt((populationProp * (1 - populationProp)) / sampleSize);
+            return (sampleProp - populationProp) / stdError;
+        }
+        
+        // Calculate p-value from Z-score
+        function calculatePValue(z, testType) {
+            // Using standard normal distribution approximation
+            const zAbs = Math.abs(z);
+            const p = Math.exp(-0.5 * zAbs * zAbs) / Math.sqrt(2 * Math.PI);
             
-            for (let i = 0; i < numVars; i++) {
-                const div = document.createElement('div');
-                div.className = 'input-group';
-                div.innerHTML = `
-                    <label for="coeff-${i}">Coefficient for x<sub>${i+1}</sub>:</label>
-                    <input type="number" id="coeff-${i}" step="0.01" required>
-                `;
-                container.appendChild(div);
+            if (testType === 'two-tailed') {
+                return 2 * p;
+            } else {
+                return p;
             }
         }
         
-        // Update constraints matrix
-        function updateConstraintsMatrix() {
-            const container = document.getElementById('constraints-matrix');
-            container.innerHTML = '';
-            
-            // Create table
-            const table = document.createElement('table');
-            
-            // Create header row
-            const headerRow = document.createElement('tr');
-            headerRow.innerHTML = '<th>Constraint</th>';
-            
-            for (let i = 0; i < numVars; i++) {
-                headerRow.innerHTML += `<th>x<sub>${i+1}</sub></th>`;
-            }
-            
-            headerRow.innerHTML += '<th>Inequality</th><th>RHS</th>';
-            table.appendChild(headerRow);
-            
-            // Create constraint rows
-            for (let i = 0; i < numConstraints; i++) {
-                const row = document.createElement('tr');
-                row.innerHTML = `<td>${i+1}</td>`;
-                
-                for (let j = 0; j < numVars; j++) {
-                    row.innerHTML += `
-                        <td><input type="number" id="constraint-${i}-${j}" step="0.01" required></td>
-                    `;
-                }
-                
-                row.innerHTML += `
-                    <td>
-                        <select id="inequality-${i}" required>
-                            <option value="<=">≤</option>
-                            <option value="=">=</option>
-                            <option value=">=">≥</option>
-                        </select>
-                    </td>
-                    <td><input type="number" id="rhs-${i}" step="0.01" required></td>
-                `;
-                
-                table.appendChild(row);
-            }
-            
-            container.appendChild(table);
-        }
-        
-        // Form submission handler
-        document.getElementById('lp-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get objective
-            const objective = document.getElementById('objective').value;
-            
-            // Get objective coefficients
-            const objCoeffs = [];
-            for (let i = 0; i < numVars; i++) {
-                const coeff = parseFloat(document.getElementById(`coeff-${i}`).value);
-                if (isNaN(coeff)) {
-                    alert(`Please enter a valid coefficient for x${i+1}`);
-                    return;
-                }
-                objCoeffs.push(coeff);
-            }
-            
-            // Get constraints
-            const constraints = [];
-            for (let i = 0; i < numConstraints; i++) {
-                const coeffs = [];
-                for (let j = 0; j < numVars; j++) {
-                    const coeff = parseFloat(document.getElementById(`constraint-${i}-${j}`).value);
-                    if (isNaN(coeff)) {
-                        alert(`Please enter valid coefficients for constraint ${i+1}`);
-                        return;
-                    }
-                    coeffs.push(coeff);
-                }
-                
-                const inequality = document.getElementById(`inequality-${i}`).value;
-                const rhs = parseFloat(document.getElementById(`rhs-${i}`).value);
-                
-                if (isNaN(rhs)) {
-                    alert(`Please enter a valid RHS value for constraint ${i+1}`);
-                    return;
-                }
-                
-                constraints.push({
-                    coefficients: coeffs,
-                    inequality: inequality,
-                    rhs: rhs
-                });
-            }
-            
-            // Solve the LP problem (in a real implementation, this would use a solver library)
-            const solution = solveLP(objective, objCoeffs, constraints);
-            
-            // Display results
-            displayResults(solution);
-        });
-        
-        // Mock solver function (in a real implementation, use a proper LP solver)
-        function solveLP(objective, objCoeffs, constraints) {
-            // This is a simplified mock solution - in practice you would use a proper LP solver
-            // For demonstration purposes, we'll return a plausible but not mathematically valid solution
-            
-            const solution = {
-                optimalValue: 0,
-                variables: [],
-                slack: [],
-                sensitivity: {
-                    objectiveCoefficients: [],
-                    rhs: []
+        // Get critical value based on alpha and test type
+        function getCriticalValue(alpha, testType) {
+            // Standard normal distribution critical values
+            const criticalValues = {
+                '0.10': {
+                    'two-tailed': 1.645,
+                    'one-tailed-left': -1.282,
+                    'one-tailed-right': 1.282
+                },
+                '0.05': {
+                    'two-tailed': 1.960,
+                    'one-tailed-left': -1.645,
+                    'one-tailed-right': 1.645
+                },
+                '0.01': {
+                    'two-tailed': 2.576,
+                    'one-tailed-left': -2.326,
+                    'one-tailed-right': 2.326
                 }
             };
             
-            // Calculate a mock optimal value
-            solution.optimalValue = objCoeffs.reduce((sum, coeff, i) => {
-                const varValue = Math.random() * 10;
-                solution.variables.push({
-                    name: `x${i+1}`,
-                    value: varValue.toFixed(2)
-                });
-                return sum + coeff * varValue;
-            }, 0);
-            
-            solution.optimalValue = (objective === 'maximize' ? 1 : -1) * solution.optimalValue;
-            solution.optimalValue = solution.optimalValue.toFixed(2);
-            
-            // Mock slack/surplus variables
-            constraints.forEach((constraint, i) => {
-                const slackValue = Math.random() * 5;
-                solution.slack.push({
-                    constraint: i+1,
-                    value: slackValue.toFixed(2),
-                    type: constraint.inequality === '<=' ? 'slack' : 'surplus'
-                });
-            });
-            
-            // Mock sensitivity analysis
-            objCoeffs.forEach((coeff, i) => {
-                solution.sensitivity.objectiveCoefficients.push({
-                    variable: `x${i+1}`,
-                    range: `[${(coeff - 1).toFixed(2)}, ${(coeff + 1).toFixed(2)}]`
-                });
-            });
-            
-            constraints.forEach((constraint, i) => {
-                solution.sensitivity.rhs.push({
-                    constraint: i+1,
-                    range: `[${(constraint.rhs - 5).toFixed(2)}, ${(constraint.rhs + 5).toFixed(2)}]`
-                });
-            });
-            
-            return solution;
+            return criticalValues[alpha][testType];
         }
         
-        // Display results
-        function displayResults(solution) {
-            document.getElementById('optimal-value').textContent = solution.optimalValue;
+        // Create distribution chart
+        function createDistributionChart(zScore, criticalValue, testType) {
+            const ctx = document.getElementById('distribution-chart').getContext('2d');
             
-            // Display variable values
-            const varsContainer = document.getElementById('solution-vars');
-            varsContainer.innerHTML = '';
+            // Destroy previous chart if it exists
+            if (distributionChart) {
+                distributionChart.destroy();
+            }
             
-            solution.variables.forEach(variable => {
-                const p = document.createElement('p');
-                p.innerHTML = `${variable.name} = ${variable.value}`;
-                varsContainer.appendChild(p);
+            // Create data points for normal distribution curve
+            const data = [];
+            for (let x = -4; x <= 4; x += 0.1) {
+                data.push({x: x, y: Math.exp(-0.5 * x * x) / Math.sqrt(2 * Math.PI)});
+            }
+            
+            // Create chart
+            distributionChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [
+                        {
+                            label: 'Standard Normal Distribution',
+                            data: data,
+                            borderColor: 'rgba(52, 152, 219, 1)',
+                            backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Z-Score',
+                            data: [{x: zScore, y: 0}, {x: zScore, y: Math.exp(-0.5 * zScore * zScore) / Math.sqrt(2 * Math.PI)}],
+                            borderColor: 'rgba(231, 76, 60, 1)',
+                            backgroundColor: 'rgba(231, 76, 60, 0.5)',
+                            pointRadius: 5,
+                            showLine: true
+                        },
+                        {
+                            label: 'Critical Value',
+                            data: [{x: criticalValue, y: 0}, {x: criticalValue, y: Math.exp(-0.5 * criticalValue * criticalValue) / Math.sqrt(2 * Math.PI)}],
+                            borderColor: 'rgba(46, 204, 113, 1)',
+                            backgroundColor: 'rgba(46, 204, 113, 0.5)',
+                            pointRadius: 5,
+                            showLine: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            title: {
+                                display: true,
+                                text: 'Z-Score'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Probability Density'
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Standard Normal Distribution with Z-Score and Critical Value'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: ${context.raw.x.toFixed(2)}`;
+                                }
+                            }
+                        }
+                    }
+                }
             });
+        }
+        
+        // One-sample Z-test calculation
+        document.getElementById('one-sample-form').addEventListener('submit', function(e) {
+            e.preventDefault();
             
-            // Display sensitivity analysis
-            const sensContainer = document.getElementById('sensitivity-analysis');
-            sensContainer.innerHTML = '<h5>Objective Coefficient Ranges</h5>';
+            const sampleMean = parseFloat(document.getElementById('sample-mean').value);
+            const populationMean = parseFloat(document.getElementById('population-mean').value);
+            const populationStd = parseFloat(document.getElementById('population-std').value);
+            const sampleSize = parseFloat(document.getElementById('sample-size').value);
+            const alpha = document.getElementById('alpha-level').value;
+            const testType = document.getElementById('test-type').value;
             
-            solution.sensitivity.objectiveCoefficients.forEach(item => {
-                const p = document.createElement('p');
-                p.innerHTML = `${item.variable}: ${item.range}`;
-                sensContainer.appendChild(p);
-            });
+            const zScore = calculateZScore(sampleMean, populationMean, populationStd, sampleSize);
+            const pValue = calculatePValue(zScore, testType);
+            const criticalValue = getCriticalValue(alpha, testType);
             
-            sensContainer.innerHTML += '<h5>RHS Ranges</h5>';
-            solution.sensitivity.rhs.forEach(item => {
-                const p = document.createElement('p');
-                p.innerHTML = `Constraint ${item.constraint}: ${item.range}`;
-                sensContainer.appendChild(p);
-            });
+            // Determine significance
+            let isSignificant = false;
+            if (testType === 'two-tailed') {
+                isSignificant = Math.abs(zScore) > Math.abs(criticalValue);
+            } else if (testType === 'one-tailed-left') {
+                isSignificant = zScore < criticalValue;
+            } else {
+                isSignificant = zScore > criticalValue;
+            }
             
-            // Display slack/surplus variables
-            const slackContainer = document.getElementById('slack-vars');
-            slackContainer.innerHTML = '';
+            // Display results
+            document.getElementById('z-score').textContent = zScore.toFixed(4);
+            document.getElementById('p-value').textContent = pValue.toFixed(4);
+            document.getElementById('critical-value').textContent = criticalValue;
+            document.getElementById('result-significance').textContent = isSignificant ? 'Significant' : 'Not Significant';
             
-            solution.slack.forEach(item => {
-                const p = document.createElement('p');
-                p.innerHTML = `Constraint ${item.constraint}: ${item.type} = ${item.value}`;
-                slackContainer.appendChild(p);
-            });
+            // Interpretation
+            let interpretation = `The Z-score of ${zScore.toFixed(4)} `;
+            interpretation += isSignificant ? 'exceeds' : 'does not exceed';
+            interpretation += ` the critical value of ${criticalValue} at the ${alpha} significance level. `;
+            interpretation += `Therefore, we ${isSignificant ? 'reject' : 'fail to reject'} the null hypothesis.`;
+            
+            document.getElementById('interpretation-text').textContent = interpretation;
+            
+            // Create distribution chart
+            createDistributionChart(zScore, criticalValue, testType);
             
             // Show results
-            document.getElementById('lp-result').style.display = 'block';
-        }
+            document.getElementById('one-sample-result').style.display = 'block';
+        });
+        
+        // Two-sample Z-test calculation
+        document.getElementById('two-sample-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const sample1Mean = parseFloat(document.getElementById('sample1-mean').value);
+            const sample2Mean = parseFloat(document.getElementById('sample2-mean').value);
+            const sample1Std = parseFloat(document.getElementById('sample1-std').value);
+            const sample2Std = parseFloat(document.getElementById('sample2-std').value);
+            const sample1Size = parseFloat(document.getElementById('sample1-size').value);
+            const sample2Size = parseFloat(document.getElementById('sample2-size').value);
+            const alpha = document.getElementById('two-sample-alpha').value;
+            const testType = document.getElementById('two-sample-test-type').value;
+            
+            const zScore = calculateTwoSampleZScore(sample1Mean, sample2Mean, sample1Std, sample2Std, sample1Size, sample2Size);
+            const pValue = calculatePValue(zScore, testType);
+            const criticalValue = getCriticalValue(alpha, testType);
+            
+            // Determine significance
+            let isSignificant = false;
+            if (testType === 'two-tailed') {
+                isSignificant = Math.abs(zScore) > Math.abs(criticalValue);
+            } else if (testType === 'one-tailed-left') {
+                isSignificant = zScore < criticalValue;
+            } else {
+                isSignificant = zScore > criticalValue;
+            }
+            
+            // Display results
+            document.getElementById('two-sample-z-score').textContent = zScore.toFixed(4);
+            document.getElementById('two-sample-p-value').textContent = pValue.toFixed(4);
+            document.getElementById('two-sample-critical-value').textContent = criticalValue;
+            document.getElementById('two-sample-result-significance').textContent = isSignificant ? 'Significant' : 'Not Significant';
+            
+            // Interpretation
+            let interpretation = `The Z-score of ${zScore.toFixed(4)} `;
+            interpretation += isSignificant ? 'exceeds' : 'does not exceed';
+            interpretation += ` the critical value of ${criticalValue} at the ${alpha} significance level. `;
+            interpretation += `Therefore, we ${isSignificant ? 'reject' : 'fail to reject'} the null hypothesis that the two population means are equal.`;
+            
+            document.getElementById('two-sample-interpretation-text').textContent = interpretation;
+            
+            // Show results
+            document.getElementById('two-sample-result').style.display = 'block';
+        });
+        
+        // Proportion Z-test calculation
+        document.getElementById('proportion-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const sampleProp = parseFloat(document.getElementById('sample-proportion').value);
+            const populationProp = parseFloat(document.getElementById('population-proportion').value);
+            const sampleSize = parseFloat(document.getElementById('proportion-sample-size').value);
+            const alpha = document.getElementById('proportion-alpha').value;
+            const testType = document.getElementById('proportion-test-type').value;
+            
+            const zScore = calculateProportionZScore(sampleProp, populationProp, sampleSize);
+            const pValue = calculatePValue(zScore, testType);
+            const criticalValue = getCriticalValue(alpha, testType);
+            
+            // Determine significance
+            let isSignificant = false;
+            if (testType === 'two-tailed') {
+                isSignificant = Math.abs(zScore) > Math.abs(criticalValue);
+            } else if (testType === 'one-tailed-left') {
+                isSignificant = zScore < criticalValue;
+            } else {
+                isSignificant = zScore > criticalValue;
+            }
+            
+            // Display results
+            document.getElementById('proportion-z-score').textContent = zScore.toFixed(4);
+            document.getElementById('proportion-p-value').textContent = pValue.toFixed(4);
+            document.getElementById('proportion-critical-value').textContent = criticalValue;
+            document.getElementById('proportion-result-significance').textContent = isSignificant ? 'Significant' : 'Not Significant';
+            
+            // Interpretation
+            let interpretation = `The Z-score of ${zScore.toFixed(4)} `;
+            interpretation += isSignificant ? 'exceeds' : 'does not exceed';
+            interpretation += ` the critical value of ${criticalValue} at the ${alpha} significance level. `;
+            interpretation += `Therefore, we ${isSignificant ? 'reject' : 'fail to reject'} the null hypothesis that the population proportion is ${populationProp}.`;
+            
+            document.getElementById('proportion-interpretation-text').textContent = interpretation;
+            
+            // Show results
+            document.getElementById('proportion-result').style.display = 'block';
+        });
     </script>
 </body>
 </html>
