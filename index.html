@@ -63,7 +63,7 @@
             padding: 8px 12px;
             cursor: pointer;
             font-size: 1.2rem;
-            display: none;
+            display: block; /* Changed from none to block */
         }
         
         .sidebar {
@@ -112,6 +112,11 @@
             align-items: center;
             cursor: pointer;
             font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
         }
         
         .sidebar-category-content {
@@ -121,7 +126,7 @@
         }
         
         .sidebar-category.open .sidebar-category-content {
-            max-height: 500px;
+            max-height: 1000px;
         }
         
         .sidebar-link {
@@ -137,7 +142,6 @@
         }
         
         body.sidebar-open {
-            margin-left: 300px;
             overflow: hidden;
         }
         
@@ -155,6 +159,38 @@
         .overlay.active {
             display: block;
         }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
         /* xxxx navigation end xxxxx */
         
         header {
@@ -171,6 +207,7 @@
             width: 90%;
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 15px;
         }
         
         .header-content {
@@ -1119,6 +1156,13 @@
                     body.classList.contains('sidebar-open') && 
                     !sidebar.contains(event.target) && 
                     event.target !== sidebarToggle) {
+                    toggleSidebar();
+                }
+            });
+            
+            // Close sidebar when pressing Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && body.classList.contains('sidebar-open')) {
                     toggleSidebar();
                 }
             });
