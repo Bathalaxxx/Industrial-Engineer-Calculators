@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8B3Q70V2YH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-8B3Q70V2YH');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Curve Calculator | Industrial Engineering Calculators</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .scenario-selector {
+            margin-bottom: 2rem;
+        }
+        
+        .scenario-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+        }
+        
+        .scenario-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            margin-right: 0.5rem;
+            border-radius: 5px 5px 0 0;
+            background-color: #f1f1f1;
+            transition: all 0.3s;
+        }
+        
+        .scenario-tab.active {
+            background-color: white;
+            border-color: #ddd;
+            border-bottom-color: white;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        
+        .scenario-tab:hover:not(.active) {
+            background-color: #e9e9e9;
+        }
+        
+        .scenario-content {
+            display: none;
+        }
+        
+        .scenario-content.active {
+            display: block;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .result-card {
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .result-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .chart-container {
+            margin: 2rem 0;
+            height: 300px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 1rem;
+            position: relative;
+        }
+        
+        .interpretation {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #e8f4fc;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .scenario-tabs {
+                flex-direction: column;
+            }
+            
+            .scenario-tab {
+                border-radius: 0;
+                margin-right: 0;
+                border-bottom: 1px solid #ddd;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">Industrial <span>Engineering</span> Calculators</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Learning Curve Calculator</h1>
+            <p>Calculate time reductions and cost savings based on learning curve theory</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Learning Curve Theory</h2>
+                <p>The learning curve theory states that as the quantity of items produced doubles, the cost or time to produce each unit decreases at a consistent rate. This phenomenon is observed in manufacturing, assembly operations, and any repetitive task where workers become more efficient with experience.</p>
+                
+                <div class="formula-box">
+                    Y = a * X^b
+                </div>
+                
+                <p>Where:</p>
+                <ul>
+                    <li><strong>Y</strong> = Cumulative average time per unit</li>
+                    <li><strong>a</strong> = Time required to produce the first unit</li>
+                    <li><strong>X</strong> = Cumulative number of units produced</li>
+                    <li><strong>b</strong> = Learning coefficient (log(learning rate)/log(2))</li>
+                </ul>
+            </div>
+            
+            <div class="scenario-selector">
+                <h3>Calculation Type</h3>
+                <p>Select what you want to calculate:</p>
+                
+                <div class="scenario-tabs">
+                    <div class="scenario-tab active" data-scenario="time">Time per Unit</div>
+                    <div class="scenario-tab" data-scenario="total">Total Time</div>
+                    <div class="scenario-tab" data-scenario="rate">Learning Rate</div>
+                </div>
+                
+                <!-- Time per Unit Scenario -->
+                <div class="scenario-content active" id="time-scenario">
+                    <h3>Calculate Time for a Specific Unit</h3>
+                    <p>Calculate the time required to produce a specific unit based on the learning curve.</p>
+                    
+                    <form id="time-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="first-unit-time">Time for First Unit (hours):</label>
+                                <input type="number" id="first-unit-time" min="0" step="0.01" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="learning-rate">Learning Rate (%):</label>
+                                <input type="number" id="learning-rate" min="1" max="100" value="80" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="target-unit">Unit Number to Calculate:</label>
+                                <input type="number" id="target-unit" min="1" step="1" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="units-to-calculate">Calculate Up to Unit:</label>
+                                <input type="number" id="units-to-calculate" min="1" step="1" value="20">
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate</button>
+                    </form>
+                    
+                    <div class="result-box" id="time-result">
+                        <h3>Results</h3>
+                        
+                        <div class="result-grid">
+                            <div class="result-card">
+                                <h4>Time for Unit #<span id="result-unit-number"></span></h4>
+                                <div class="result-value" id="unit-time-result"></div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <h4>Cumulative Average Time</h4>
+                                <div class="result-value" id="cumulative-average-result"></div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <h4>Total Time for All Units</h4>
+                                <div class="result-value" id="total-time-result"></div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <h4>Improvement from First Unit</h4>
+                                <div class="result-value" id="improvement-result"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="chart-container">
+                            <canvas id="time-chart"></canvas>
+                        </div>
+                        
+                        <h4>Time per Unit</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Unit Number</th>
+                                    <th>Time per Unit (hours)</th>
+                                    <th>Cumulative Average Time</th>
+                                    <th>Total Time</th>
+                                </tr>
+                            </thead>
+                            <tbody id="time-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Total Time Scenario -->
+                <div class="scenario-content" id="total-scenario">
+                    <h3>Calculate Total Time for Multiple Units</h3>
+                    <p>Calculate the total time required to produce a batch of units based on the learning curve.</p>
+                    
+                    <form id="total-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="total-first-unit-time">Time for First Unit (hours):</label>
+                                <input type="number" id="total-first-unit-time" min="0" step="0.01" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="total-learning-rate">Learning Rate (%):</label>
+                                <input type="number" id="total-learning-rate" min="1" max="100" value="80" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="start-unit">Starting Unit Number:</label>
+                                <input type="number" id="start-unit" min="1" step="1" value="1">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="end-unit">Ending Unit Number:</label>
+                                <input type="number" id="end-unit" min="1" step="1" value="10" required>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate Total Time</button>
+                    </form>
+                    
+                    <div class="result-box" id="total-result">
+                        <h3>Results</h3>
+                        
+                        <div class="result-grid">
+                            <div class="result-card">
+                                <h4>Total Time</h4>
+                                <div class="result-value" id="total-time-value"></div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <h4>Average Time per Unit</h4>
+                                <div class="result-value" id="average-time-value"></div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <h4>Time for First Unit in Range</h4>
+                                <div class="result-value" id="first-in-range-value"></div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <h4>Time for Last Unit in Range</h4>
+                                <div class="result-value" id="last-in-range-value"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="interpretation">
+                            <h4>Interpretation</h4>
+                            <p id="total-interpretation"></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Learning Rate Scenario -->
+                <div class="scenario-content" id="rate-scenario">
+                    <h3>Calculate Learning Rate</h3>
+                    <p>Calculate the learning rate based on time data from two different production points.</p>
+                    
+                    <form id="rate-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="first-known-unit">First Unit Number:</label>
+                                <input type="number" id="first-known-unit" min="1" step="1" value="1" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="first-known-time">Time for First Unit (hours):</label>
+                                <input type="number" id="first-known-time" min="0" step="0.01" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="second-known-unit">Second Unit Number:</label>
+                                <input type="number" id="second-known-unit" min="2" step="1" value="2" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="second-known-time">Time for Second Unit (hours):</label>
+                                <input type="number" id="second-known-time" min="0" step="0.01" required>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate Learning Rate</button>
+                    </form>
+                    
+                    <div class="result-box" id="rate-result">
+                        <h3>Results</h3>
+                        
+                        <div class="result-grid">
+                            <div class="result-card">
+                                <h4>Learning Rate</h4>
+                                <div class="result-value" id="calculated-rate-value"></div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <h4>Learning Coefficient</h4>
+                                <div class="result-value" id="learning-coefficient-value"></div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <h4>Time Reduction</h4>
+                                <div class="result-value" id="time-reduction-value"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="interpretation">
+                            <h4>Interpretation</h4>
+                            <p id="rate-interpretation"></p>
+                        </div>
+                        
+                        <h4>Projected Times</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>When Production Doubles To</th>
+                                    <th>Expected Time per Unit</th>
+                                </tr>
+                            </thead>
+                            <tbody id="projection-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Learning Curve Examples in Manufacturing</h3>
+                
+                <div class="example">
+                    <h4>Aircraft Manufacturing</h4>
+                    <p>The aircraft industry often experiences an 80% learning curve. If the first aircraft requires 10,000 hours to produce, the second aircraft would take 8,000 hours (80% of 10,000), the fourth would take 6,400 hours (80% of 8,000), and so on.</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Electronics Assembly</h4>
+                    <p>A smartphone manufacturer might have a 90% learning curve. If the first unit takes 60 minutes to assemble, the second would take 54 minutes, the fourth would take 48.6 minutes, etc.</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Custom Machinery</h4>
+                    <p>For complex custom machinery with an 85% learning curve, if the first unit requires 500 hours, the second would take 425 hours, and the fourth would take 361.25 hours.</p>
+                </div>
+            </div>
+            
+            <div class="calculator-intro">
+                <h3>Typical Learning Rates by Industry</h3>
+                <table>
+                    <tr>
+                        <th>Industry/Process</th>
+                        <th>Typical Learning Rate</th>
+                        <th>Explanation</th>
+                    </tr>
+                    <tr>
+                        <td>Aerospace</td>
+                        <td>80-85%</td>
+                        <td>Complex assembly processes show significant improvement with experience</td>
+                    </tr>
+                    <tr>
+                        <td>Electronics Manufacturing</td>
+                        <td>90-95%</td>
+                        <td>Highly automated processes with less room for human improvement</td>
+                    </tr>
+                    <tr>
+                        <td>Shipbuilding</td>
+                        <td>80-85%</td>
+                        <td>Large, complex projects with significant learning potential</td>
+                    </tr>
+                    <tr>
+                        <td>Repetitive Manual Tasks</td>
+                        <td>70-80%</td>
+                        <td>Tasks with high human involvement show steep learning curves</td>
+                    </tr>
+                    <tr>
+                        <td>Highly Automated Processes</td>
+                        <td>95-100%</td>
+                        <td>Little room for improvement beyond initial setup</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <p class="copyright">&copy; 2023 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Scenario tab switching
+        const tabs = document.querySelectorAll('.scenario-tab');
+        const contents = document.querySelectorAll('.scenario-content');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                tabs.forEach(t => t.classList.remove('active'));
+                contents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                const scenario = tab.getAttribute('data-scenario');
+                document.getElementById(`${scenario}-scenario`).classList.add('active');
+            });
+        });
+        
+        // Learning curve formula: Y = a * X^b
+        // Where b = log(learning rate) / log(2)
+        
+        // Calculate the learning coefficient
+        function calculateLearningCoefficient(learningRate) {
+            return Math.log(learningRate / 100) / Math.log(2);
+        }
+        
+        // Calculate time for a specific unit
+        function calculateUnitTime(firstUnitTime, unitNumber, learningRate) {
+            const b = calculateLearningCoefficient(learningRate);
+            return firstUnitTime * Math.pow(unitNumber, b);
+        }
+        
+        // Calculate cumulative average time
+        function calculateCumulativeAverage(firstUnitTime, unitNumber, learningRate) {
+            const b = calculateLearningCoefficient(learningRate);
+            return firstUnitTime * Math.pow(unitNumber, b);
+        }
+        
+        // Calculate total time for units from start to end
+        function calculateTotalTime(firstUnitTime, startUnit, endUnit, learningRate) {
+            let total = 0;
+            for (let i = startUnit; i <= endUnit; i++) {
+                total += calculateUnitTime(firstUnitTime, i, learningRate);
+            }
+            return total;
+        }
+        
+        // Calculate learning rate based on two data points
+        function calculateLearningRateFromData(unit1, time1, unit2, time2) {
+            const rate = Math.pow(time2 / time1, 1 / (Math.log(unit2) / Math.log(unit1)));
+            return rate * 100;
+        }
+        
+        // Time per unit scenario
+        document.getElementById('time-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const firstUnitTime = parseFloat(document.getElementById('first-unit-time').value);
+            const learningRate = parseFloat(document.getElementById('learning-rate').value);
+            const targetUnit = parseInt(document.getElementById('target-unit').value);
+            const unitsToCalculate = parseInt(document.getElementById('units-to-calculate').value);
+            
+            if (isNaN(firstUnitTime) || isNaN(learningRate) || isNaN(targetUnit) || isNaN(unitsToCalculate)) {
+                alert('Please enter valid numbers in all fields');
+                return;
+            }
+            
+            if (learningRate <= 0 || learningRate > 100) {
+                alert('Learning rate must be between 0 and 100%');
+                return;
+            }
+            
+            // Calculate results
+            const unitTime = calculateUnitTime(firstUnitTime, targetUnit, learningRate);
+            const cumulativeAverage = calculateCumulativeAverage(firstUnitTime, targetUnit, learningRate);
+            const totalTime = calculateTotalTime(firstUnitTime, 1, targetUnit, learningRate);
+            const improvement = ((firstUnitTime - unitTime) / firstUnitTime * 100).toFixed(1);
+            
+            // Display results
+            document.getElementById('result-unit-number').textContent = targetUnit;
+            document.getElementById('unit-time-result').textContent = unitTime.toFixed(2) + ' hours';
+            document.getElementById('cumulative-average-result').textContent = cumulativeAverage.toFixed(2) + ' hours';
+            document.getElementById('total-time-result').textContent = totalTime.toFixed(2) + ' hours';
+            document.getElementById('improvement-result').textContent = improvement + '%';
+            
+            // Generate table data
+            const tableBody = document.getElementById('time-table-body');
+            tableBody.innerHTML = '';
+            
+            for (let i = 1; i <= unitsToCalculate; i++) {
+                const row = document.createElement('tr');
+                const unitTime = calculateUnitTime(firstUnitTime, i, learningRate);
+                const cumAverage = calculateCumulativeAverage(firstUnitTime, i, learningRate);
+                const total = calculateTotalTime(firstUnitTime, 1, i, learningRate);
+                
+                row.innerHTML = `
+                    <td>${i}</td>
+                    <td>${unitTime.toFixed(2)}</td>
+                    <td>${cumAverage.toFixed(2)}</td>
+                    <td>${total.toFixed(2)}</td>
+                `;
+                
+                tableBody.appendChild(row);
+            }
+            
+            // Create chart
+            createTimeChart(firstUnitTime, unitsToCalculate, learningRate);
+            
+            // Show results
+            document.getElementById('time-result').style.display = 'block';
+        });
+        
+        // Total time scenario
+        document.getElementById('total-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const firstUnitTime = parseFloat(document.getElementById('total-first-unit-time').value);
+            const learningRate = parseFloat(document.getElementById('total-learning-rate').value);
+            const startUnit = parseInt(document.getElementById('start-unit').value);
+            const endUnit = parseInt(document.getElementById('end-unit').value);
+            
+            if (isNaN(firstUnitTime) || isNaN(learningRate) || isNaN(startUnit) || isNaN(endUnit)) {
+                alert('Please enter valid numbers in all fields');
+                return;
+            }
+            
+            if (startUnit > endUnit) {
+                alert('Starting unit must be less than or equal to ending unit');
+                return;
+            }
+            
+            // Calculate results
+            const totalTime = calculateTotalTime(firstUnitTime, startUnit, endUnit, learningRate);
+            const averageTime = totalTime / (endUnit - startUnit + 1);
+            const firstInRange = calculateUnitTime(firstUnitTime, startUnit, learningRate);
+            const lastInRange = calculateUnitTime(firstUnitTime, endUnit, learningRate);
+            const improvement = ((firstInRange - lastInRange) / firstInRange * 100).toFixed(1);
+            
+            // Display results
+            document.getElementById('total-time-value').textContent = totalTime.toFixed(2) + ' hours';
+            document.getElementById('average-time-value').textContent = averageTime.toFixed(2) + ' hours';
+            document.getElementById('first-in-range-value').textContent = firstInRange.toFixed(2) + ' hours';
+            document.getElementById('last-in-range-value').textContent = lastInRange.toFixed(2) + ' hours';
+            
+            // Interpretation
+            document.getElementById('total-interpretation').textContent = 
+                `Producing units ${startUnit} through ${endUnit} will take approximately ${totalTime.toFixed(2)} hours in total, 
+                with an average of ${averageTime.toFixed(2)} hours per unit. The time per unit improves by ${improvement}% 
+                from unit ${startUnit} to unit ${endUnit}.`;
+            
+            // Show results
+            document.getElementById('total-result').style.display = 'block';
+        });
+        
+        // Learning rate scenario
+        document.getElementById('rate-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const unit1 = parseInt(document.getElementById('first-known-unit').value);
+            const time1 = parseFloat(document.getElementById('first-known-time').value);
+            const unit2 = parseInt(document.getElementById('second-known-unit').value);
+            const time2 = parseFloat(document.getElementById('second-known-time').value);
+            
+            if (isNaN(unit1) || isNaN(time1) || isNaN(unit2) || isNaN(time2)) {
+                alert('Please enter valid numbers in all fields');
+                return;
+            }
+            
+            if (unit1 >= unit2) {
+                alert('The second unit number must be greater than the first');
+                return;
+            }
+            
+            // Calculate results
+            const learningRate = calculateLearningRateFromData(unit1, time1, unit2, time2);
+            const learningCoefficient = calculateLearningCoefficient(learningRate);
+            const timeReduction = (100 - learningRate).toFixed(1);
+            
+            // Display results
+            document.getElementById('calculated-rate-value').textContent = learningRate.toFixed(1) + '%';
+            document.getElementById('learning-coefficient-value').textContent = learningCoefficient.toFixed(4);
+            document.getElementById('time-reduction-value').textContent = timeReduction + '% per doubling';
+            
+            // Interpretation
+            document.getElementById('rate-interpretation').textContent = 
+                `Based on the data provided, this process has a ${learningRate.toFixed(1)}% learning curve. 
+                This means that each time cumulative production doubles, the time per unit decreases by ${timeReduction}%.`;
+            
+            // Generate projection table
+            const tableBody = document.getElementById('projection-table-body');
+            tableBody.innerHTML = '';
+            
+            let currentUnit = unit2;
+            const projections = [currentUnit * 2, currentUnit * 4, currentUnit * 8, currentUnit * 16];
+            
+            projections.forEach(unit => {
+                const row = document.createElement('tr');
+                const projectedTime = calculateUnitTime(time1, unit, learningRate);
+                
+                row.innerHTML = `
+                    <td>${unit} units</td>
+                    <td>${projectedTime.toFixed(2)} hours</td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+            
+            // Show results
+            document.getElementById('rate-result').style.display = 'block';
+        });
+        
+        // Create time chart
+        function createTimeChart(firstUnitTime, unitsToCalculate, learningRate) {
+            const ctx = document.getElementById('time-chart').getContext('2d');
+            
+            // Generate data
+            const labels = [];
+            const unitTimeData = [];
+            const cumulativeAvgData = [];
+            
+            for (let i = 1; i <= unitsToCalculate; i++) {
+                labels.push(i);
+                unitTimeData.push(calculateUnitTime(firstUnitTime, i, learningRate));
+                cumulativeAvgData.push(calculateCumulativeAverage(firstUnitTime, i, learningRate));
+            }
+            
+            // Create chart
+            if (window.timeChart) {
+                window.timeChart.destroy();
+            }
+            
+            window.timeChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Time per Unit',
+                            data: unitTimeData,
+                            borderColor: '#3498db',
+                            backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                            borderWidth: 2,
+                            fill: true
+                        },
+                        {
+                            label: 'Cumulative Average Time',
+                            data: cumulativeAvgData,
+                            borderColor: '#2ecc71',
+                            backgroundColor: 'rgba(46, 204, 113, 0.1)',
+                            borderWidth: 2,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Time (hours)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Unit Number'
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Learning Curve: Time per Unit'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + context.raw.toFixed(2) + ' hours';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
