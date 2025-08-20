@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceptance Sampling Calculator | Industrial Engineering Calculators</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .scenario-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+        }
+        
+        .scenario-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            margin-right: 0.5rem;
+            border-radius: 5px 5px 0 0;
+            background-color: #f1f1f1;
+            transition: all 0.3s;
+        }
+        
+        .scenario-tab.active {
+            background-color: white;
+            border-color: #ddd;
+            border-bottom-color: white;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        
+        .scenario-tab:hover:not(.active) {
+            background-color: #e9e9e9;
+        }
+        
+        .scenario-content {
+            display: none;
+        }
+        
+        .scenario-content.active {
+            display: block;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .result-card {
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .result-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .interpretation {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #e8f4fc;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .plan-details {
+            margin: 1.5rem 0;
+        }
+        
+        .plan-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        .plan-table, .plan-table th, .plan-table td {
+            border: 1px solid #ddd;
+        }
+        
+        .plan-table th, .plan-table td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        .plan-table th {
+            background-color: #f2f2f2;
+            font-weight: 600;
+        }
+        
+        .plan-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        .warning-box {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            border-radius: 4px;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .scenario-tabs {
+                flex-direction: column;
+            }
+            
+            .scenario-tab {
+                border-radius: 0;
+                margin-right: 0;
+                border-bottom: 1px solid #ddd;
+            }
+            
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">Industrial <span>Engineering</span> Calculators</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Acceptance Sampling Calculator</h1>
+            <p>Design and evaluate acceptance sampling plans for quality control</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Acceptance Sampling Plans</h2>
+                <p>Acceptance sampling is a quality control procedure where a batch of products is inspected to determine if it meets quality standards. This calculator helps you design and evaluate single sampling plans based on your quality requirements.</p>
+                
+                <div class="formula-box">
+                    Pₐ = Σ [C(n, d) × pᵈ × (1-p)ⁿ⁻ᵈ] for d = 0 to c
+                </div>
+                
+                <p>Where:</p>
+                <ul>
+                    <li><strong>Pₐ</strong> = Probability of acceptance</li>
+                    <li><strong>n</strong> = Sample size</li>
+                    <li><strong>c</strong> = Acceptance number</li>
+                    <li><strong>p</strong> = Proportion defective</li>
+                    <li><strong>d</strong> = Number of defectives in sample</li>
+                </ul>
+            </div>
+            
+            <div class="scenario-tabs">
+                <div class="scenario-tab active" data-scenario="design">Design Sampling Plan</div>
+                <div class="scenario-tab" data-scenario="evaluate">Evaluate Sampling Plan</div>
+            </div>
+            
+            <!-- Design Sampling Plan Scenario -->
+            <div class="scenario-content active" id="design-scenario">
+                <h3>Design a Sampling Plan</h3>
+                <p>Design a single sampling plan based on your quality requirements (AQL, LTPD, α, and β).</p>
+                
+                <form id="design-form">
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="aql">Acceptable Quality Level (AQL, %):</label>
+                            <input type="number" id="aql" min="0.01" max="20" step="0.01" value="1.0" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="ltpd">Lot Tolerance Percent Defective (LTPD, %):</label>
+                            <input type="number" id="ltpd" min="0.1" max="50" step="0.1" value="5.0" required>
+                        </div>
+                    </div>
+                    
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="alpha">Producer's Risk (α, %):</label>
+                            <input type="number" id="alpha" min="0.1" max="20" step="0.1" value="5.0" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="beta">Consumer's Risk (β, %):</label>
+                            <input type="number" id="beta" min="0.1" max="20" step="0.1" value="10.0" required>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="lot-size">Lot Size (optional):</label>
+                        <input type="number" id="lot-size" min="10" step="1" placeholder="Enter lot size if known">
+                    </div>
+                    
+                    <button type="submit" class="calculate-btn">Design Sampling Plan</button>
+                </form>
+                
+                <div class="result-box" id="design-result">
+                    <h3>Recommended Sampling Plan</h3>
+                    
+                    <div class="result-grid">
+                        <div class="result-card">
+                            <h4>Sample Size (n)</h4>
+                            <div class="result-value" id="sample-size"></div>
+                        </div>
+                        
+                        <div class="result-card">
+                            <h4>Acceptance Number (c)</h4>
+                            <div class="result-value" id="acceptance-number"></div>
+                        </div>
+                        
+                        <div class="result-card">
+                            <h4>Rejection Number (r)</h4>
+                            <div class="result-value" id="rejection-number"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="interpretation">
+                        <h4>Plan Interpretation</h4>
+                        <p id="plan-interpretation"></p>
+                    </div>
+                    
+                    <h4>Operating Characteristic (OC) Curve</h4>
+                    <p>The OC curve shows the probability of accepting a lot based on its actual quality level.</p>
+                    <div class="chart-container" style="height: 300px; margin: 1.5rem 0;">
+                        <canvas id="oc-curve"></canvas>
+                    </div>
+                    
+                    <h4>Plan Performance</h4>
+                    <table class="plan-table">
+                        <thead>
+                            <tr>
+                                <th>Quality Level</th>
+                                <th>Probability of Acceptance</th>
+                                <th>Interpretation</th>
+                            </tr>
+                        </thead>
+                        <tbody id="plan-performance">
+                            <!-- Will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Evaluate Sampling Plan Scenario -->
+            <div class="scenario-content" id="evaluate-scenario">
+                <h3>Evaluate a Sampling Plan</h3>
+                <p>Evaluate an existing single sampling plan to understand its performance characteristics.</p>
+                
+                <form id="evaluate-form">
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="eval-sample-size">Sample Size (n):</label>
+                            <input type="number" id="eval-sample-size" min="1" step="1" value="50" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="eval-acceptance-number">Acceptance Number (c):</label>
+                            <input type="number" id="eval-acceptance-number" min="0" step="1" value="3" required>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="eval-lot-size">Lot Size (optional):</label>
+                        <input type="number" id="eval-lot-size" min="10" step="1" placeholder="Enter lot size if known">
+                    </div>
+                    
+                    <button type="submit" class="calculate-btn">Evaluate Sampling Plan</button>
+                </form>
+                
+                <div class="result-box" id="evaluate-result">
+                    <h3>Sampling Plan Evaluation</h3>
+                    
+                    <div class="result-grid">
+                        <div class="result-card">
+                            <h4>AQL (α=5%)</h4>
+                            <div class="result-value" id="calculated-aql"></div>
+                        </div>
+                        
+                        <div class="result-card">
+                            <h4>LTPD (β=10%)</h4>
+                            <div class="result-value" id="calculated-ltpd"></div>
+                        </div>
+                        
+                        <div class="result-card">
+                            <h4>AOQL (%)</h4>
+                            <div class="result-value" id="calculated-aoql"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="interpretation">
+                        <h4>Plan Interpretation</h4>
+                        <p id="evaluation-interpretation"></p>
+                    </div>
+                    
+                    <h4>Operating Characteristic (OC) Curve</h4>
+                    <p>The OC curve shows the probability of accepting a lot based on its actual quality level.</p>
+                    <div class="chart-container" style="height: 300px; margin: 1.5rem 0;">
+                        <canvas id="eval-oc-curve"></canvas>
+                    </div>
+                    
+                    <h4>Quality Levels</h4>
+                    <table class="plan-table">
+                        <thead>
+                            <tr>
+                                <th>Quality Level (% defective)</th>
+                                <th>Probability of Acceptance</th>
+                                <th>Interpretation</th>
+                            </tr>
+                        </thead>
+                        <tbody id="quality-levels">
+                            <!-- Will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Practical Examples</h3>
+                
+                <div class="example">
+                    <h4>Example 1: Standard AQL Plan</h4>
+                    <p>AQL = 1.0%, LTPD = 5.0%, α = 5%, β = 10%</p>
+                    <p>Recommended plan: n = 89, c = 2</p>
+                    <p>This means sample 89 items and accept the lot if 2 or fewer are defective.</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 2: Tightened Inspection</h4>
+                    <p>AQL = 0.65%, LTPD = 4.0%, α = 5%, β = 10%</p>
+                    <p>Recommended plan: n = 139, c = 2</p>
+                    <p>Tighter quality requirements require larger sample sizes.</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 3: Reduced Inspection</h4>
+                    <p>AQL = 2.5%, LTPD = 10.0%, α = 5%, β = 10%</p>
+                    <p>Recommended plan: n = 44, c = 2</p>
+                    <p>More lenient quality requirements allow smaller sample sizes.</p>
+                </div>
+            </div>
+            
+            <div class="calculator-intro">
+                <h3>Understanding Acceptance Sampling</h3>
+                <p>Acceptance sampling is a statistical quality control method used to decide whether to accept or reject a batch of products based on inspection of a sample. It provides a balance between inspection costs and risk protection.</p>
+                
+                <p>Key concepts in acceptance sampling:</p>
+                <ul>
+                    <li><strong>AQL (Acceptable Quality Level):</strong> The worst quality level that is considered acceptable</li>
+                    <li><strong>LTPD (Lot Tolerance Percent Defective):</strong> The worst quality level that the consumer is willing to accept</li>
+                    <li><strong>Producer's Risk (α):</strong> The probability of rejecting a good lot</li>
+                    <li><strong>Consumer's Risk (β):</strong> The probability of accepting a bad lot</li>
+                    <li><strong>OC Curve:</strong> Shows the probability of accepting a lot as a function of quality level</li>
+                </ul>
+                
+                <div class="warning-box">
+                    <strong>Note:</strong> Acceptance sampling does not improve quality but helps make decisions about already produced lots. For quality improvement, process control methods are more appropriate.
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <p class="copyright">&copy; 2023 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Chart variables
+        let ocCurveChart, evalOcCurveChart;
+        
+        // Scenario tab switching
+        const tabs = document.querySelectorAll('.scenario-tab');
+        const contents = document.querySelectorAll('.scenario-content');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                tabs.forEach(t => t.classList.remove('active'));
+                contents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                const scenario = tab.getAttribute('data-scenario');
+                document.getElementById(`${scenario}-scenario`).classList.add('active');
+            });
+        });
+        
+        // Binomial probability calculation
+        function binomialProbability(n, c, p) {
+            let probability = 0;
+            for (let d = 0; d <= c; d++) {
+                probability += binomialTerm(n, d, p);
+            }
+            return probability;
+        }
+        
+        // Binomial term calculation
+        function binomialTerm(n, d, p) {
+            return combination(n, d) * Math.pow(p, d) * Math.pow(1 - p, n - d);
+        }
+        
+        // Combination calculation
+        function combination(n, k) {
+            if (k < 0 || k > n) return 0;
+            if (k === 0 || k === n) return 1;
+            
+            k = Math.min(k, n - k);
+            let result = 1;
+            for (let i = 1; i <= k; i++) {
+                result = result * (n - k + i) / i;
+            }
+            return result;
+        }
+        
+        // Find sample size and acceptance number
+        function findSamplingPlan(aql, ltpd, alpha, beta) {
+            aql = aql / 100;
+            ltpd = ltpd / 100;
+            alpha = alpha / 100;
+            beta = beta / 100;
+            
+            let n = 1;
+            let c = 0;
+            let found = false;
+            
+            // Try different combinations of n and c
+            while (!found && n < 1000) {
+                const paAql = binomialProbability(n, c, aql);
+                const paLtpd = binomialProbability(n, c, ltpd);
+                
+                if (paAql >= (1 - alpha) && paLtpd <= beta) {
+                    found = true;
+                } else {
+                    if (c < n) {
+                        c++;
+                    } else {
+                        n++;
+                        c = 0;
+                    }
+                }
+            }
+            
+            return { n, c };
+        }
+        
+        // Design sampling plan
+        document.getElementById('design-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get input values
+            const aql = parseFloat(document.getElementById('aql').value);
+            const ltpd = parseFloat(document.getElementById('ltpd').value);
+            const alpha = parseFloat(document.getElementById('alpha').value);
+            const beta = parseFloat(document.getElementById('beta').value);
+            const lotSize = document.getElementById('lot-size').value ? parseInt(document.getElementById('lot-size').value) : null;
+            
+            // Validate inputs
+            if (aql >= ltpd) {
+                alert('AQL must be less than LTPD');
+                return;
+            }
+            
+            // Find sampling plan
+            const { n, c } = findSamplingPlan(aql, ltpd, alpha, beta);
+            
+            // Display results
+            document.getElementById('sample-size').textContent = n;
+            document.getElementById('acceptance-number').textContent = c;
+            document.getElementById('rejection-number').textContent = c + 1;
+            
+            // Interpretation
+            let interpretation = `Sample ${n} items from the lot. `;
+            interpretation += `If ${c} or fewer items are defective, accept the lot. `;
+            interpretation += `If ${c + 1} or more items are defective, reject the lot.`;
+            
+            if (lotSize) {
+                interpretation += ` The sample represents ${((n / lotSize) * 100).toFixed(1)}% of the lot.`;
+            }
+            
+            document.getElementById('plan-interpretation').textContent = interpretation;
+            
+            // Generate OC curve data
+            const qualityLevels = [];
+            const acceptanceProbabilities = [];
+            
+            for (let p = 0; p <= 0.2; p += 0.005) {
+                qualityLevels.push(p * 100);
+                acceptanceProbabilities.push(binomialProbability(n, c, p) * 100);
+            }
+            
+            // Create or update OC curve chart
+            const ctx = document.getElementById('oc-curve').getContext('2d');
+            
+            if (ocCurveChart) {
+                ocCurveChart.destroy();
+            }
+            
+            ocCurveChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: qualityLevels,
+                    datasets: [{
+                        label: 'Probability of Acceptance (%)',
+                        data: acceptanceProbabilities,
+                        borderColor: '#3498db',
+                        backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                        borderWidth: 2,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Probability of Acceptance (%)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Percent Defective (%)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Operating Characteristic (OC) Curve'
+                        }
+                    }
+                }
+            });
+            
+            // Populate plan performance table
+            const performanceBody = document.getElementById('plan-performance');
+            performanceBody.innerHTML = '';
+            
+            const qualityPoints = [
+                { level: 0, label: 'Perfect Quality' },
+                { level: aql, label: 'AQL' },
+                { level: (aql + ltpd) / 2, label: 'Average Quality' },
+                { level: ltpd, label: 'LTPD' },
+                { level: ltpd * 1.5, label: 'Poor Quality' }
+            ];
+            
+            qualityPoints.forEach(point => {
+                const p = point.level / 100;
+                const pa = binomialProbability(n, c, p) * 100;
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${point.level.toFixed(2)}% (${point.label})</td>
+                    <td>${pa.toFixed(2)}%</td>
+                    <td>${pa > 50 ? 'Likely to accept' : 'Likely to reject'}</td>
+                `;
+                
+                performanceBody.appendChild(row);
+            });
+            
+            // Show results
+            document.getElementById('design-result').style.display = 'block';
+        });
+        
+        // Evaluate sampling plan
+        document.getElementById('evaluate-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get input values
+            const n = parseInt(document.getElementById('eval-sample-size').value);
+            const c = parseInt(document.getElementById('eval-acceptance-number').value);
+            const lotSize = document.getElementById('eval-lot-size').value ? parseInt(document.getElementById('eval-lot-size').value) : null;
+            
+            // Calculate AQL (p where Pa = 0.95)
+            let aql = 0;
+            for (let p = 0; p <= 0.2; p += 0.0001) {
+                const pa = binomialProbability(n, c, p);
+                if (pa >= 0.95) {
+                    aql = p * 100;
+                } else {
+                    break;
+                }
+            }
+            
+            // Calculate LTPD (p where Pa = 0.10)
+            let ltpd = 0;
+            for (let p = 0; p <= 0.5; p += 0.0001) {
+                const pa = binomialProbability(n, c, p);
+                if (pa >= 0.10) {
+                    ltpd = p * 100;
+                } else {
+                    break;
+                }
+            }
+            
+            // Calculate AOQL (approximate)
+            let aoql = 0;
+            let maxAoq = 0;
+            for (let p = 0; p <= 0.2; p += 0.001) {
+                const pa = binomialProbability(n, c, p);
+                const aoq = p * pa;
+                if (aoq > maxAoq) {
+                    maxAoq = aoq;
+                    aoql = p * 100;
+                }
+            }
+            
+            // Display results
+            document.getElementById('calculated-aql').textContent = aql.toFixed(2) + '%';
+            document.getElementById('calculated-ltpd').textContent = ltpd.toFixed(2) + '%';
+            document.getElementById('calculated-aoql').textContent = aoql.toFixed(2) + '%';
+            
+            // Interpretation
+            let interpretation = `This plan will accept lots with ${aql.toFixed(2)}% defective 95% of the time (AQL). `;
+            interpretation += `It will accept lots with ${ltpd.toFixed(2)}% defective only 10% of the time (LTPD). `;
+            interpretation += `The worst average outgoing quality is ${aoql.toFixed(2)}% defective (AOQL).`;
+            
+            if (lotSize) {
+                interpretation += ` The sample represents ${((n / lotSize) * 100).toFixed(1)}% of the lot.`;
+            }
+            
+            document.getElementById('evaluation-interpretation').textContent = interpretation;
+            
+            // Generate OC curve data
+            const qualityLevels = [];
+            const acceptanceProbabilities = [];
+            
+            for (let p = 0; p <= 0.2; p += 0.005) {
+                qualityLevels.push(p * 100);
+                acceptanceProbabilities.push(binomialProbability(n, c, p) * 100);
+            }
+            
+            // Create or update OC curve chart
+            const ctx = document.getElementById('eval-oc-curve').getContext('2d');
+            
+            if (evalOcCurveChart) {
+                evalOcCurveChart.destroy();
+            }
+            
+            evalOcCurveChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: qualityLevels,
+                    datasets: [{
+                        label: 'Probability of Acceptance (%)',
+                        data: acceptanceProbabilities,
+                        borderColor: '#3498db',
+                        backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                        borderWidth: 2,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Probability of Acceptance (%)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Percent Defective (%)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Operating Characteristic (OC) Curve'
+                        }
+                    }
+                }
+            });
+            
+            // Populate quality levels table
+            const qualityBody = document.getElementById('quality-levels');
+            qualityBody.innerHTML = '';
+            
+            const qualityPoints = [
+                { level: 0, label: 'Perfect Quality' },
+                { level: aql, label: 'AQL (α=5%)' },
+                { level: (aql + ltpd) / 2, label: 'Average Quality' },
+                { level: ltpd, label: 'LTPD (β=10%)' },
+                { level: ltpd * 1.5, label: 'Poor Quality' }
+            ];
+            
+            qualityPoints.forEach(point => {
+                const p = point.level / 100;
+                const pa = binomialProbability(n, c, p) * 100;
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${point.level.toFixed(2)}% (${point.label})</td>
+                    <td>${pa.toFixed(2)}%</td>
+                    <td>${pa > 50 ? 'Likely to accept' : 'Likely to reject'}</td>
+                `;
+                
+                qualityBody.appendChild(row);
+            });
+            
+            // Show results
+            document.getElementById('evaluate-result').style.display = 'block';
+        });
+    </script>
+</body>
+</html>

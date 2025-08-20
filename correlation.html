@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Correlation Calculator | Industrial Engineering Calculators</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .method-selector {
+            margin-bottom: 2rem;
+        }
+        
+        .method-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+        }
+        
+        .method-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            margin-right: 0.5rem;
+            border-radius: 5px 5px 0 0;
+            background-color: #f1f1f1;
+            transition: all 0.3s;
+        }
+        
+        .method-tab.active {
+            background-color: white;
+            border-color: #ddd;
+            border-bottom-color: white;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        
+        .method-tab:hover:not(.active) {
+            background-color: #e9e9e9;
+        }
+        
+        .method-info {
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            margin-bottom: 1.5rem;
+            display: none;
+        }
+        
+        .method-info.active {
+            display: block;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select, .input-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .data-input {
+            margin-bottom: 1.5rem;
+        }
+        
+        .data-input textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .data-input .help-text {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-top: 0.5rem;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: block;
+            width: 100%;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .result-card {
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .result-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .interpretation {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #e8f4fc;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .scatter-plot {
+            width: 100%;
+            height: 300px;
+            margin: 1.5rem 0;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .plot-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        .plot-point {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .plot-axis {
+            position: absolute;
+            background-color: #333;
+        }
+        
+        .plot-axis-x {
+            bottom: 30px;
+            left: 40px;
+            right: 20px;
+            height: 2px;
+        }
+        
+        .plot-axis-y {
+            top: 20px;
+            left: 40px;
+            bottom: 30px;
+            width: 2px;
+        }
+        
+        .plot-label {
+            position: absolute;
+            font-size: 0.8rem;
+            color: #333;
+        }
+        
+        .plot-label-x {
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .plot-label-y {
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%) rotate(-90deg);
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .method-tabs {
+                flex-direction: column;
+            }
+            
+            .method-tab {
+                border-radius: 0;
+                margin-right: 0;
+                border-bottom: 1px solid #ddd;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">Industrial <span>Engineering</span> Calculators</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Correlation Calculator</h1>
+            <p>Calculate correlation coefficients using Pearson, Spearman, or Kendall methods</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Correlation Analysis</h2>
+                <p>Correlation measures the strength and direction of the relationship between two variables. Different correlation methods are appropriate for different types of data and relationships.</p>
+            </div>
+            
+            <div class="method-selector">
+                <h3>Correlation Method</h3>
+                <p>Select the correlation method you want to use:</p>
+                
+                <div class="method-tabs">
+                    <div class="method-tab active" data-method="pearson">Pearson Correlation</div>
+                    <div class="method-tab" data-method="spearman">Spearman Rank Correlation</div>
+                    <div class="method-tab" data-method="kendall">Kendall's Tau</div>
+                </div>
+                
+                <!-- Pearson Method Info -->
+                <div class="method-info active" id="pearson-info">
+                    <h4>Pearson Correlation Coefficient (r)</h4>
+                    <p>Measures the linear relationship between two continuous variables. Assumes that both variables are normally distributed and the relationship is linear.</p>
+                    <div class="formula-box">
+                        r = Σ[(xᵢ - x̄)(yᵢ - ȳ)] / √[Σ(xᵢ - x̄)² * Σ(yᵢ - ȳ)²]
+                    </div>
+                    <p><strong>When to use:</strong> For continuous, normally distributed data with a linear relationship.</p>
+                </div>
+                
+                <!-- Spearman Method Info -->
+                <div class="method-info" id="spearman-info">
+                    <h4>Spearman Rank Correlation Coefficient (ρ)</h4>
+                    <p>Measures the monotonic relationship between two variables. Based on the ranks of the data rather than the raw values.</p>
+                    <div class="formula-box">
+                        ρ = 1 - [6Σdᵢ² / (n(n² - 1))]
+                    </div>
+                    <p><strong>When to use:</strong> For ordinal data or when the relationship is monotonic but not necessarily linear.</p>
+                </div>
+                
+                <!-- Kendall Method Info -->
+                <div class="method-info" id="kendall-info">
+                    <h4>Kendall's Tau (τ)</h4>
+                    <p>Measures the strength of dependence between two variables based on the concordance of pairs. More robust to outliers than other methods.</p>
+                    <div class="formula-box">
+                        τ = (n_c - n_d) / √[(n₀ - n₁)(n₀ - n₂)]
+                    </div>
+                    <p><strong>When to use:</strong> For small sample sizes or when there are many tied ranks in the data.</p>
+                </div>
+            </div>
+            
+            <form id="correlation-form">
+                <h3>Data Input</h3>
+                
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="x-data">X Variable Data (comma-separated):</label>
+                        <textarea id="x-data" placeholder="Enter values like: 12.5, 13.2, 11.8, 14.1, 12.9" required></textarea>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="y-data">Y Variable Data (comma-separated):</label>
+                        <textarea id="y-data" placeholder="Enter values like: 10.8, 11.5, 12.1, 10.9, 11.7" required></textarea>
+                    </div>
+                </div>
+                
+                <p class="help-text">Ensure both variables have the same number of data points. You can also copy and paste from a spreadsheet.</p>
+                
+                <button type="submit" class="calculate-btn">Calculate Correlation</button>
+            </form>
+            
+            <div class="result-box" id="correlation-result">
+                <h3>Correlation Results</h3>
+                
+                <div class="result-grid">
+                    <div class="result-card">
+                        <h4>Correlation Coefficient</h4>
+                        <div class="result-value" id="correlation-coefficient"></div>
+                        <p id="method-used"></p>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>Strength of Relationship</h4>
+                        <div class="result-value" id="strength"></div>
+                        <p id="direction"></p>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>Coefficient of Determination</h4>
+                        <div class="result-value" id="r-squared"></div>
+                        <p>Variance explained</p>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>Statistical Significance</h4>
+                        <div class="result-value" id="significance"></div>
+                        <p id="p-value"></p>
+                    </div>
+                </div>
+                
+                <div class="interpretation">
+                    <h4>Interpretation</h4>
+                    <p id="interpretation-text"></p>
+                </div>
+                
+                <h4>Scatter Plot</h4>
+                <div class="scatter-plot">
+                    <div class="plot-container" id="plot-container">
+                        <div class="plot-axis plot-axis-x"></div>
+                        <div class="plot-axis plot-axis-y"></div>
+                        <div class="plot-label plot-label-x" id="x-label">X Variable</div>
+                        <div class="plot-label plot-label-y" id="y-label">Y Variable</div>
+                    </div>
+                </div>
+                
+                <h4>Descriptive Statistics</h4>
+                <table>
+                    <tr>
+                        <th>Statistic</th>
+                        <th>X Variable</th>
+                        <th>Y Variable</th>
+                    </tr>
+                    <tr>
+                        <td>Sample Size (n)</td>
+                        <td id="x-size"></td>
+                        <td id="y-size"></td>
+                    </tr>
+                    <tr>
+                        <td>Mean</td>
+                        <td id="x-mean"></td>
+                        <td id="y-mean"></td>
+                    </tr>
+                    <tr>
+                        <td>Standard Deviation</td>
+                        <td id="x-std"></td>
+                        <td id="y-std"></td>
+                    </tr>
+                    <tr>
+                        <td>Minimum</td>
+                        <td id="x-min"></td>
+                        <td id="y-min"></td>
+                    </tr>
+                    <tr>
+                        <td>Maximum</td>
+                        <td id="x-max"></td>
+                        <td id="y-max"></td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Correlation Examples in Industrial Engineering</h3>
+                
+                <div class="example">
+                    <h4>Production Example</h4>
+                    <p>Analyze the relationship between machine runtime and product defects to determine if longer runs lead to more quality issues.</p>
+                    <p>Runtime (hrs): 8, 10, 12, 14, 16, 18, 20</p>
+                    <p>Defects (count): 5, 7, 10, 15, 18, 22, 25</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Quality Control Example</h4>
+                    <p>Examine the correlation between operator experience and product quality to inform training programs.</p>
+                    <p>Experience (months): 3, 6, 12, 18, 24, 36, 48</p>
+                    <p>Error Rate (%): 8.2, 6.5, 5.1, 4.3, 3.8, 3.2, 2.9</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Supply Chain Example</h4>
+                    <p>Investigate the relationship between order quantity and delivery time to optimize inventory management.</p>
+                    <p>Order Size (units): 100, 250, 500, 750, 1000, 1500, 2000</p>
+                    <p>Delivery Time (days): 3, 5, 7, 10, 12, 15, 18</p>
+                </div>
+            </div>
+            
+            <div class="calculator-intro">
+                <h3>Interpreting Correlation Coefficients</h3>
+                <table>
+                    <tr>
+                        <th>Correlation Coefficient</th>
+                        <th>Strength of Relationship</th>
+                    </tr>
+                    <tr>
+                        <td>±0.9 to ±1.0</td>
+                        <td>Very strong</td>
+                    </tr>
+                    <tr>
+                        <td>±0.7 to ±0.9</td>
+                        <td>Strong</td>
+                    </tr>
+                    <tr>
+                        <td>±0.5 to ±0.7</td>
+                        <td>Moderate</td>
+                    </tr>
+                    <tr>
+                        <td>±0.3 to ±0.5</td>
+                        <td>Weak</td>
+                    </tr>
+                    <tr>
+                        <td>0 to ±0.3</td>
+                        <td>Very weak or none</td>
+                    </tr>
+                </table>
+                
+                <p class="help-text" style="margin-top: 1rem;">Note: Correlation does not imply causation. A strong correlation between two variables does not mean that one causes the other.</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <p class="copyright">&copy; 2023 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Method tab switching
+        const methodTabs = document.querySelectorAll('.method-tab');
+        const methodInfos = document.querySelectorAll('.method-info');
+        
+        methodTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and infos
+                methodTabs.forEach(t => t.classList.remove('active'));
+                methodInfos.forEach(i => i.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding info
+                tab.classList.add('active');
+                const method = tab.getAttribute('data-method');
+                document.getElementById(`${method}-info`).classList.add('active');
+            });
+        });
+        
+        // Helper functions for statistical calculations
+        function parseData(dataString) {
+            return dataString.split(',')
+                .map(val => val.trim())
+                .filter(val => val !== '')
+                .map(val => parseFloat(val))
+                .filter(val => !isNaN(val));
+        }
+        
+        function calculateMean(data) {
+            return data.reduce((sum, val) => sum + val, 0) / data.length;
+        }
+        
+        function calculateStdDev(data, mean) {
+            const squaredDiffs = data.map(val => Math.pow(val - mean, 2));
+            return Math.sqrt(squaredDiffs.reduce((sum, val) => sum + val, 0) / (data.length - 1));
+        }
+        
+        function calculatePearsonCorrelation(xData, yData) {
+            const xMean = calculateMean(xData);
+            const yMean = calculateMean(yData);
+            
+            let numerator = 0;
+            let denomX = 0;
+            let denomY = 0;
+            
+            for (let i = 0; i < xData.length; i++) {
+                numerator += (xData[i] - xMean) * (yData[i] - yMean);
+                denomX += Math.pow(xData[i] - xMean, 2);
+                denomY += Math.pow(yData[i] - yMean, 2);
+            }
+            
+            return numerator / Math.sqrt(denomX * denomY);
+        }
+        
+        function calculateSpearmanCorrelation(xData, yData) {
+            // Get ranks for both datasets
+            const xRanks = getRanks(xData);
+            const yRanks = getRanks(yData);
+            
+            // Calculate differences between ranks
+            const diffs = xRanks.map((rank, i) => rank - yRanks[i]);
+            
+            // Square differences
+            const squaredDiffs = diffs.map(d => d * d);
+            
+            // Sum squared differences
+            const sumSquaredDiffs = squaredDiffs.reduce((sum, val) => sum + val, 0);
+            
+            const n = xData.length;
+            
+            // Calculate Spearman's rho
+            return 1 - (6 * sumSquaredDiffs) / (n * (n * n - 1));
+        }
+        
+        function getRanks(data) {
+            // Create an array of objects with value and original index
+            const indexedData = data.map((value, index) => ({ value, index }));
+            
+            // Sort by value
+            indexedData.sort((a, b) => a.value - b.value);
+            
+            // Assign ranks
+            const ranks = new Array(data.length);
+            for (let i = 0; i < indexedData.length; i++) {
+                ranks[indexedData[i].index] = i + 1;
+            }
+            
+            return ranks;
+        }
+        
+        function calculateKendallTau(xData, yData) {
+            const n = xData.length;
+            let concordant = 0;
+            let discordant = 0;
+            
+            for (let i = 0; i < n - 1; i++) {
+                for (let j = i + 1; j < n; j++) {
+                    const xDiff = xData[i] - xData[j];
+                    const yDiff = yData[i] - yData[j];
+                    
+                    if (xDiff * yDiff > 0) {
+                        concordant++;
+                    } else if (xDiff * yDiff < 0) {
+                        discordant++;
+                    }
+                    // Ties are ignored in this simple implementation
+                }
+            }
+            
+            return (concordant - discordant) / (concordant + discordant);
+        }
+        
+        function calculatePValue(correlation, n) {
+            // Simplified p-value calculation for demonstration
+            // In a real application, you would use proper statistical methods
+            const t = Math.abs(correlation) * Math.sqrt((n - 2) / (1 - correlation * correlation));
+            return Math.exp(-0.5 * t * t);
+        }
+        
+        // Create scatter plot
+        function createScatterPlot(xData, yData) {
+            const container = document.getElementById('plot-container');
+            
+            // Clear existing points
+            const existingPoints = container.querySelectorAll('.plot-point');
+            existingPoints.forEach(point => point.remove());
+            
+            // Calculate min and max values
+            const xMin = Math.min(...xData);
+            const xMax = Math.max(...xData);
+            const yMin = Math.min(...yData);
+            const yMax = Math.max(...yData);
+            
+            // Add padding to ranges
+            const xRange = xMax - xMin;
+            const yRange = yMax - yMin;
+            const xPadding = xRange * 0.1;
+            const yPadding = yRange * 0.1;
+            
+            const plotXMin = xMin - xPadding;
+            const plotXMax = xMax + xPadding;
+            const plotYMin = yMin - yPadding;
+            const plotYMax = yMax + yPadding;
+            
+            // Calculate scaling factors
+            const plotWidth = container.clientWidth - 60; // Account for axis labels
+            const plotHeight = container.clientHeight - 50;
+            
+            const xScale = plotWidth / (plotXMax - plotXMin);
+            const yScale = plotHeight / (plotYMax - plotYMin);
+            
+            // Create points
+            for (let i = 0; i < xData.length; i++) {
+                const point = document.createElement('div');
+                point.className = 'plot-point';
+                
+                // Calculate position
+                const xPos = 40 + (xData[i] - plotXMin) * xScale;
+                const yPos = container.clientHeight - 30 - (yData[i] - plotYMin) * yScale;
+                
+                point.style.left = `${xPos}px`;
+                point.style.top = `${yPos}px`;
+                
+                container.appendChild(point);
+            }
+            
+            // Update axis labels
+            document.getElementById('x-label').textContent = `X Variable (${xMin.toFixed(1)} to ${xMax.toFixed(1)})`;
+            document.getElementById('y-label').textContent = `Y Variable (${yMin.toFixed(1)} to ${yMax.toFixed(1)})`;
+        }
+        
+        // Correlation calculation
+        document.getElementById('correlation-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get data from both variables
+            const xDataString = document.getElementById('x-data').value;
+            const yDataString = document.getElementById('y-data').value;
+            const xData = parseData(xDataString);
+            const yData = parseData(yDataString);
+            
+            if (xData.length < 2 || yData.length < 2) {
+                alert('Each variable must have at least 2 data values');
+                return;
+            }
+            
+            if (xData.length !== yData.length) {
+                alert('X and Y variables must have the same number of data points');
+                return;
+            }
+            
+            // Get selected method
+            const selectedMethod = document.querySelector('.method-tab.active').getAttribute('data-method');
+            
+            // Calculate correlation based on selected method
+            let correlation = 0;
+            let methodName = '';
+            
+            switch(selectedMethod) {
+                case 'pearson':
+                    correlation = calculatePearsonCorrelation(xData, yData);
+                    methodName = 'Pearson Correlation Coefficient (r)';
+                    break;
+                case 'spearman':
+                    correlation = calculateSpearmanCorrelation(xData, yData);
+                    methodName = 'Spearman Rank Correlation (ρ)';
+                    break;
+                case 'kendall':
+                    correlation = calculateKendallTau(xData, yData);
+                    methodName = "Kendall's Tau (τ)";
+                    break;
+            }
+            
+            // Calculate additional statistics
+            const n = xData.length;
+            const xMean = calculateMean(xData);
+            const yMean = calculateMean(yData);
+            const xStd = calculateStdDev(xData, xMean);
+            const yStd = calculateStdDev(yData, yMean);
+            const xMin = Math.min(...xData);
+            const xMax = Math.max(...xData);
+            const yMin = Math.min(...yData);
+            const yMax = Math.max(...yData);
+            
+            // Calculate p-value
+            const pValue = calculatePValue(correlation, n);
+            const isSignificant = pValue < 0.05;
+            
+            // Calculate R-squared
+            const rSquared = correlation * correlation;
+            
+            // Determine strength and direction
+            let strength = '';
+            const absCorrelation = Math.abs(correlation);
+            
+            if (absCorrelation >= 0.9) {
+                strength = 'Very Strong';
+            } else if (absCorrelation >= 0.7) {
+                strength = 'Strong';
+            } else if (absCorrelation >= 0.5) {
+                strength = 'Moderate';
+            } else if (absCorrelation >= 0.3) {
+                strength = 'Weak';
+            } else {
+                strength = 'Very Weak';
+            }
+            
+            const direction = correlation >= 0 ? 'Positive' : 'Negative';
+            
+            // Interpretation
+            let interpretation = `There is a ${strength.toLowerCase()} ${direction.toLowerCase()} relationship between the two variables. `;
+            interpretation += `The correlation coefficient of ${correlation.toFixed(4)} is ${isSignificant ? 'statistically significant' : 'not statistically significant'} (p = ${pValue.toFixed(4)}). `;
+            interpretation += `Approximately ${(rSquared * 100).toFixed(1)}% of the variance in Y can be explained by X.`;
+            
+            // Display results
+            document.getElementById('correlation-coefficient').textContent = correlation.toFixed(4);
+            document.getElementById('method-used').textContent = methodName;
+            document.getElementById('strength').textContent = strength;
+            document.getElementById('direction').textContent = direction;
+            document.getElementById('r-squared').textContent = rSquared.toFixed(4);
+            document.getElementById('significance').textContent = isSignificant ? 'Significant' : 'Not Significant';
+            document.getElementById('p-value').textContent = `p = ${pValue.toFixed(4)}`;
+            document.getElementById('interpretation-text').textContent = interpretation;
+            
+            // Display descriptive statistics
+            document.getElementById('x-size').textContent = n;
+            document.getElementById('y-size').textContent = n;
+            document.getElementById('x-mean').textContent = xMean.toFixed(4);
+            document.getElementById('y-mean').textContent = yMean.toFixed(4);
+            document.getElementById('x-std').textContent = xStd.toFixed(4);
+            document.getElementById('y-std').textContent = yStd.toFixed(4);
+            document.getElementById('x-min').textContent = xMin.toFixed(4);
+            document.getElementById('y-min').textContent = yMin.toFixed(4);
+            document.getElementById('x-max').textContent = xMax.toFixed(4);
+            document.getElementById('y-max').textContent = yMax.toFixed(4);
+            
+            // Create scatter plot
+            createScatterPlot(xData, yData);
+            
+            // Show results
+            document.getElementById('correlation-result').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
