@@ -270,49 +270,6 @@
             font-size: 1.1rem;
         }
         
-        .chart-selector {
-            margin-bottom: 2rem;
-        }
-        
-        .chart-tabs {
-            display: flex;
-            border-bottom: 1px solid #ddd;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-        }
-        
-        .chart-tab {
-            padding: 0.8rem 1.5rem;
-            cursor: pointer;
-            border: 1px solid transparent;
-            border-bottom: none;
-            margin-right: 0.5rem;
-            border-radius: 5px 5px 0 0;
-            background-color: #f1f1f1;
-            transition: all 0.3s;
-            font-size: 0.9rem;
-        }
-        
-        .chart-tab.active {
-            background-color: white;
-            border-color: #ddd;
-            border-bottom-color: white;
-            color: var(--secondary-color);
-            font-weight: 500;
-        }
-        
-        .chart-tab:hover:not(.active) {
-            background-color: #e9e9e9;
-        }
-        
-        .chart-content {
-            display: none;
-        }
-        
-        .chart-content.active {
-            display: block;
-        }
-        
         .input-group {
             margin-bottom: 1.5rem;
         }
@@ -323,7 +280,7 @@
             font-weight: 500;
         }
         
-        .input-group input, .input-group select, .input-group textarea {
+        .input-group input, .input-group select {
             width: 100%;
             padding: 0.8rem;
             border: 1px solid #ddd;
@@ -331,12 +288,7 @@
             font-size: 1rem;
         }
         
-        .input-group textarea {
-            min-height: 100px;
-            font-family: monospace;
-        }
-        
-        .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
+        .input-group input:focus, .input-group select:focus {
             outline: none;
             border-color: var(--secondary-color);
             box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
@@ -366,82 +318,105 @@
             background-color: #2980b9;
         }
         
-        .result-section {
+        .result-box {
             margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
             display: none;
         }
         
-        .chart-container {
-            width: 100%;
-            height: 400px;
-            margin: 2rem 0;
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 1rem;
-            position: relative;
-        }
-        
-        .chart-placeholder {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            color: var(--text-light);
-            font-style: italic;
-        }
-        
-        .control-limits {
-            margin-top: 1.5rem;
-        }
-        
-        .control-limits h4 {
+        .result-box h3 {
             margin-bottom: 1rem;
             color: var(--primary-color);
         }
         
-        .control-limits-table {
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        /* Decision matrix specific styles */
+        .matrix-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .matrix-btn {
+            background-color: var(--light-color);
+            color: var(--primary-color);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .matrix-btn:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .decision-matrix {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 1.5rem;
-        }
-        
-        .control-limits-table th, .control-limits-table td {
-            padding: 0.75rem;
-            text-align: left;
-            border: 1px solid #ddd;
-        }
-        
-        .control-limits-table th {
-            background-color: #f2f2f2;
-            font-weight: 500;
-        }
-        
-        .data-points-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1.5rem;
-            max-height: 300px;
-            overflow-y: auto;
+            margin: 1rem 0;
+            overflow-x: auto;
             display: block;
         }
         
-        .data-points-table th, .data-points-table td {
-            padding: 0.5rem;
-            text-align: center;
+        .decision-matrix th, .decision-matrix td {
             border: 1px solid #ddd;
+            padding: 0.75rem;
+            text-align: center;
         }
         
-        .data-points-table th {
+        .decision-matrix th {
             background-color: #f2f2f2;
             font-weight: 500;
-            position: sticky;
-            top: 0;
         }
         
-        .out-of-control {
-            background-color: #ffebee;
-            color: #c62828;
+        .decision-matrix input {
+            width: 80px;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .decision-matrix input:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .criteria-results {
+            margin-top: 2rem;
+        }
+        
+        .criteria-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        .criteria-table th, .criteria-table td {
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            text-align: center;
+        }
+        
+        .criteria-table th {
+            background-color: #f2f2f2;
+        }
+        
+        .best-option {
+            background-color: rgba(46, 204, 113, 0.2);
             font-weight: bold;
         }
         
@@ -494,7 +469,7 @@
         .sidebar-toggle {
             display: block;
         }
-        
+            
         body.sidebar-open {
             margin-left: 0;
             overflow: hidden;
@@ -516,19 +491,19 @@
                 margin: 0 0.75rem;
             }
             
-            .chart-tabs {
-                flex-direction: column;
-            }
-            
-            .chart-tab {
-                border-radius: 0;
-                margin-right: 0;
-                border-bottom: 1px solid #ddd;
-            }
-            
             .input-row {
                 flex-direction: column;
                 gap: 0;
+            }
+            
+            .matrix-controls {
+                flex-direction: column;
+            }
+            
+            .decision-matrix {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
             }
         }
     </style>
