@@ -7,15 +7,12 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-8B3Q70V2YH');
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Linear Programming Calculator - Solve optimization problems with constraints">
-    <title>Linear Programming Calculator | Industrial Engineering Calculators</title>
+    <title>Chi-Square Goodness-of-Fit Test | Industrial Engineering Calculators</title>
     <style>
-        /* Consistent with existing style */
         :root {
             --primary-color: #2c3e50;
             --secondary-color: #3498db;
@@ -81,6 +78,7 @@
             text-decoration: none;
             font-weight: 500;
             transition: color 0.3s;
+            font-size: 0.9rem;
         }
         
         nav ul li a:hover {
@@ -138,7 +136,7 @@
             font-weight: 500;
         }
         
-        .input-group input, .input-group select {
+        .input-group input, .input-group select, .input-group textarea {
             width: 100%;
             padding: 0.8rem;
             border: 1px solid #ddd;
@@ -146,7 +144,7 @@
             font-size: 1rem;
         }
         
-        .input-group input:focus, .input-group select:focus {
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
             outline: none;
             border-color: var(--secondary-color);
             box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
@@ -161,6 +159,26 @@
             flex: 1;
         }
         
+        .data-input {
+            margin-bottom: 1.5rem;
+        }
+        
+        .data-input textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .data-input .help-text {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-top: 0.5rem;
+        }
+        
         .calculate-btn {
             background-color: var(--secondary-color);
             color: white;
@@ -170,6 +188,8 @@
             font-size: 1rem;
             cursor: pointer;
             transition: background-color 0.3s;
+            display: block;
+            width: 100%;
         }
         
         .calculate-btn:hover {
@@ -196,55 +216,31 @@
             color: var(--secondary-color);
         }
         
-        .lp-matrix {
-            width: 100%;
-            overflow-x: auto;
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
             margin: 1.5rem 0;
         }
         
-        .lp-matrix table {
-            min-width: 600px;
-            border-collapse: collapse;
+        .result-card {
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         
-        .lp-matrix th, .lp-matrix td {
-            border: 1px solid #ddd;
-            padding: 0.75rem;
-            text-align: center;
-        }
-        
-        .lp-matrix th {
-            background-color: #f2f2f2;
-            font-weight: 500;
-        }
-        
-        .lp-matrix input {
-            width: 80px;
-            padding: 0.5rem;
-            border: 1px solid #ddd;
-            border-radius: 3px;
-            text-align: center;
-        }
-        
-        .lp-matrix input:focus {
-            outline: none;
-            border-color: var(--secondary-color);
-        }
-        
-        .add-remove-btn {
-            background-color: var(--light-color);
+        .result-card h4 {
             color: var(--primary-color);
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            margin-right: 0.5rem;
-            transition: background-color 0.3s;
+            margin-bottom: 0.5rem;
         }
         
-        .add-remove-btn:hover {
-            background-color: #d6e0e5;
+        .interpretation {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #e8f4fc;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
         }
         
         .examples-section {
@@ -275,7 +271,7 @@
         
         th, td {
             padding: 0.75rem;
-            text-align: left;
+            text-align: center;
         }
         
         th {
@@ -311,6 +307,78 @@
             font-size: 0.9rem;
         }
         
+        .significance {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .significance select {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .cont-table {
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cont-table table {
+            min-width: 400px;
+        }
+        
+        .cont-table th:first-child,
+        .cont-table td:first-child {
+            font-weight: bold;
+            background-color: #f2f2f2;
+        }
+        
+        .expected {
+            color: var(--secondary-color);
+            font-style: italic;
+        }
+        
+        .table-caption {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        .category-inputs {
+            margin-bottom: 1.5rem;
+        }
+        
+        .category-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+            align-items: center;
+        }
+        
+        .category-row input {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            flex: 1;
+        }
+        
+        .category-row label {
+            min-width: 100px;
+            font-weight: 500;
+        }
+        
+        .add-category-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 1rem;
+        }
+        
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
@@ -320,10 +388,11 @@
             nav ul {
                 margin-top: 1rem;
                 justify-content: center;
+                flex-wrap: wrap;
             }
             
             nav ul li {
-                margin: 0 0.75rem;
+                margin: 0.5rem;
             }
             
             .input-row {
@@ -331,13 +400,14 @@
                 gap: 0;
             }
             
-            .lp-matrix {
-                font-size: 0.9rem;
+            .result-grid {
+                grid-template-columns: 1fr;
             }
             
-            .lp-matrix input {
-                width: 60px;
-                padding: 0.3rem;
+            .category-row {
+                flex-direction: column;
+                gap: 0.3rem;
+                align-items: flex-start;
             }
         }
     </style>
@@ -360,155 +430,144 @@
     
     <section class="page-hero">
         <div class="container">
-            <h1>Linear Programming Calculator</h1>
-            <p>Solve optimization problems with constraints using the simplex method</p>
+            <h1>Chi-Square Goodness-of-Fit Test</h1>
+            <p>Test whether observed data follows an expected distribution</p>
         </div>
     </section>
     
     <main class="container">
         <section class="content-section">
             <div class="calculator-intro">
-                <h2>Linear Programming</h2>
-                <p>Linear programming (LP) is a method to achieve the best outcome in a mathematical model whose requirements are represented by linear relationships. It's widely used in business and economics to solve optimization problems.</p>
-                
+                <h2>Chi-Square Goodness-of-Fit Test</h2>
+                <p>The Chi-Square Goodness-of-Fit Test determines whether sample data matches a population with a specific distribution. It compares observed frequencies with expected frequencies to see if there are significant differences.</p>
                 <div class="formula-box">
-                    Maximize (or Minimize): Z = c₁x₁ + c₂x₂ + ... + cₙxₙ<br>
-                    Subject to:<br>
-                    a₁₁x₁ + a₁₂x₂ + ... + a₁ₙxₙ ≤ b₁<br>
-                    a₂₁x₁ + a₂₂x₂ + ... + a₂ₙxₙ ≤ b₂<br>
-                    ...<br>
-                    x₁, x₂, ..., xₙ ≥ 0
+                    χ² = Σ [ (O - E)² / E ]
                 </div>
-                
-                <p>Where:</p>
-                <ul>
-                    <li><strong>Z</strong> is the objective function to maximize or minimize</li>
-                    <li><strong>x₁, x₂, ..., xₙ</strong> are the decision variables</li>
-                    <li><strong>c₁, c₂, ..., cₙ</strong> are the coefficients of the objective function</li>
-                    <li><strong>aᵢⱼ</strong> are the coefficients of the constraints</li>
-                    <li><strong>bᵢ</strong> are the right-hand side values of the constraints</li>
-                </ul>
+                <p>Where O is the observed frequency, E is the expected frequency, and the summation is over all categories.</p>
             </div>
             
-            <form id="lp-form">
-                <div class="input-group">
-                    <label for="objective">Objective:</label>
-                    <select id="objective" required>
-                        <option value="maximize">Maximize</option>
-                        <option value="minimize">Minimize</option>
-                    </select>
-                </div>
-                
-                <h3>Decision Variables</h3>
-                <div class="input-group">
-                    <label for="num-vars">Number of Decision Variables:</label>
-                    <input type="number" id="num-vars" min="1" max="10" value="2" required>
-                </div>
-                
-                <h3>Objective Function Coefficients</h3>
-                <div id="obj-coeffs" class="input-row"></div>
-                
-                <h3>Constraints</h3>
-                <div class="input-group">
-                    <label for="num-constraints">Number of Constraints:</label>
-                    <input type="number" id="num-constraints" min="1" max="10" value="2" required>
-                </div>
-                
-                <div id="constraints-matrix" class="lp-matrix"></div>
-                
-                <button type="submit" class="calculate-btn">Solve Linear Program</button>
-            </form>
+            <div class="significance">
+                <label for="alpha-level">Significance Level (α):</label>
+                <select id="alpha-level">
+                    <option value="0.01">0.01</option>
+                    <option value="0.05" selected>0.05</option>
+                    <option value="0.10">0.10</option>
+                </select>
+            </div>
             
-            <div class="result-box" id="lp-result">
-                <h3>Solution</h3>
-                <p>Optimal Value: <span class="result-value" id="optimal-value"></span></p>
+            <h3>Data Input</h3>
+            <p class="help-text">Enter your observed values and expected probabilities for each category. Probabilities must sum to 1.</p>
+            
+            <div class="input-group">
+                <label for="category-count">Number of Categories:</label>
+                <input type="number" id="category-count" min="2" max="10" value="3">
+            </div>
+            
+            <button id="generate-categories-btn" class="calculate-btn" style="margin-bottom: 1.5rem;">Generate Categories</button>
+            
+            <div id="categories-container">
+                <div class="category-inputs">
+                    <div class="category-row">
+                        <label for="obs-1">Observed 1:</label>
+                        <input type="number" id="obs-1" class="obs-input" value="52" min="0">
+                        <label for="exp-1">Probability 1:</label>
+                        <input type="number" id="exp-1" class="prob-input" value="0.5" min="0" max="1" step="0.01">
+                    </div>
+                    <div class="category-row">
+                        <label for="obs-2">Observed 2:</label>
+                        <input type="number" id="obs-2" class="obs-input" value="28" min="0">
+                        <label for="exp-2">Probability 2:</label>
+                        <input type="number" id="exp-2" class="prob-input" value="0.3" min="0" max="1" step="0.01">
+                    </div>
+                    <div class="category-row">
+                        <label for="obs-3">Observed 3:</label>
+                        <input type="number" id="obs-3" class="obs-input" value="20" min="0">
+                        <label for="exp-3">Probability 3:</label>
+                        <input type="number" id="exp-3" class="prob-input" value="0.2" min="0" max="1" step="0.01">
+                    </div>
+                </div>
+            </div>
+            
+            <button id="calculate-btn" class="calculate-btn">Calculate Chi-Square Test</button>
+            
+            <div class="result-box" id="chi-square-result">
+                <h3>Chi-Square Goodness-of-Fit Results</h3>
                 
-                <h4>Optimal Solution</h4>
-                <div id="solution-vars"></div>
+                <div class="result-grid">
+                    <div class="result-card">
+                        <h4>Chi-Square Statistic</h4>
+                        <div class="result-value" id="chi-square-value"></div>
+                        <p>Test statistic</p>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>P-Value</h4>
+                        <div class="result-value" id="p-value"></div>
+                        <p>Significance level</p>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>Degrees of Freedom</h4>
+                        <div class="result-value" id="df-value"></div>
+                        <p>(categories - 1)</p>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>Result</h4>
+                        <div class="result-value" id="result-significance"></div>
+                        <p>Hypothesis test</p>
+                    </div>
+                </div>
                 
-                <h4>Sensitivity Analysis</h4>
-                <div id="sensitivity-analysis"></div>
+                <div class="interpretation">
+                    <h4>Interpretation</h4>
+                    <p id="interpretation-text"></p>
+                </div>
                 
-                <h4>Slack/Surplus Variables</h4>
-                <div id="slack-vars"></div>
+                <h4>Expected Frequencies</h4>
+                <div class="cont-table">
+                    <table id="expected-table">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Observed</th>
+                                <th>Expected</th>
+                                <th>Contribution to χ²</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
             
             <div class="examples-section">
-                <h3>Practical Examples</h3>
+                <h3>Goodness-of-Fit Test Examples in Industrial Engineering</h3>
                 
                 <div class="example">
-                    <h4>Example 1: Production Planning</h4>
-                    <p><strong>Objective:</strong> Maximize profit</p>
-                    <p><strong>Variables:</strong> x₁ = Product A, x₂ = Product B</p>
-                    <p><strong>Objective Function:</strong> Z = 40x₁ + 30x₂</p>
-                    <p><strong>Constraints:</strong></p>
-                    <ul>
-                        <li>2x₁ + x₂ ≤ 100 (Labor hours)</li>
-                        <li>x₁ + x₂ ≤ 80 (Machine hours)</li>
-                        <li>x₁ ≤ 40 (Demand for A)</li>
-                        <li>x₂ ≤ 60 (Demand for B)</li>
-                    </ul>
-                    <p><strong>Solution:</strong> x₁ = 20, x₂ = 60, Z = 2600</p>
+                    <h4>Quality Control Example</h4>
+                    <p>Test whether defect types follow the expected distribution.</p>
+                    <p>Defect Types: Minor, Major, Critical</p>
+                    <p>Observed: 50, 30, 20</p>
+                    <p>Expected probabilities: 0.6, 0.3, 0.1</p>
                 </div>
                 
                 <div class="example">
-                    <h4>Example 2: Diet Problem</h4>
-                    <p><strong>Objective:</strong> Minimize cost</p>
-                    <p><strong>Variables:</strong> x₁ = Food A, x₂ = Food B</p>
-                    <p><strong>Objective Function:</strong> Z = 0.6x₁ + x₂</p>
-                    <p><strong>Constraints:</strong></p>
-                    <ul>
-                        <li>10x₁ + 4x₂ ≥ 20 (Protein)</li>
-                        <li>5x₁ + 5x₂ ≥ 20 (Carbohydrates)</li>
-                        <li>2x₁ + 6x₂ ≥ 12 (Fat)</li>
-                    </ul>
-                    <p><strong>Solution:</strong> x₁ = 3, x₂ = 1, Z = 2.8</p>
+                    <h4>Machine Downtime Example</h4>
+                    <p>Test whether machine downtime reasons follow the expected pattern.</p>
+                    <p>Reasons: Maintenance, Operator Error, Material Issue, Other</p>
+                    <p>Observed: 25, 15, 30, 10</p>
+                    <p>Expected probabilities: 0.3, 0.2, 0.4, 0.1</p>
                 </div>
                 
                 <div class="example">
-                    <h4>Example 3: Transportation Problem</h4>
-                    <p><strong>Objective:</strong> Minimize shipping costs</p>
-                    <p><strong>Variables:</strong> x₁ = Warehouse A to Store 1, x₂ = Warehouse A to Store 2, etc.</p>
-                    <p><strong>Objective Function:</strong> Z = 2x₁ + 4x₂ + 5x₃ + 3x₄</p>
-                    <p><strong>Constraints:</strong></p>
-                    <ul>
-                        <li>x₁ + x₂ ≤ 100 (Supply from A)</li>
-                        <li>x₃ + x₄ ≤ 150 (Supply from B)</li>
-                        <li>x₁ + x₃ = 80 (Demand at Store 1)</li>
-                        <li>x₂ + x₄ = 120 (Demand at Store 2)</li>
-                    </ul>
-                    <p><strong>Solution:</strong> x₁ = 80, x₂ = 20, x₃ = 0, x₄ = 120, Z = 520</p>
+                    <h4>Production Output Example</h4>
+                    <p>Test whether production output follows the expected distribution across shifts.</p>
+                    <p>Shifts: Morning, Afternoon, Night</p>
+                    <p>Observed: 120, 95, 85</p>
+                    <p>Expected probabilities: 0.4, 0.35, 0.25</p>
                 </div>
-            </div>
-            
-            <div class="calculator-intro">
-                <h3>LP Applications in Industrial Engineering</h3>
-                <table>
-                    <tr>
-                        <th>Application Area</th>
-                        <th>Typical Use Case</th>
-                    </tr>
-                    <tr>
-                        <td>Production Planning</td>
-                        <td>Optimal product mix to maximize profit</td>
-                    </tr>
-                    <tr>
-                        <td>Inventory Management</td>
-                        <td>Minimizing holding and ordering costs</td>
-                    </tr>
-                    <tr>
-                        <td>Transportation</td>
-                        <td>Minimizing shipping costs between locations</td>
-                    </tr>
-                    <tr>
-                        <td>Scheduling</td>
-                        <td>Optimal workforce or machine scheduling</td>
-                    </tr>
-                    <tr>
-                        <td>Blending Problems</td>
-                        <td>Optimal mix of raw materials</td>
-                    </tr>
-                </table>
             </div>
         </section>
     </main>
@@ -527,244 +586,258 @@
     </footer>
 
     <script>
-        // Variables to track problem dimensions
-        let numVars = 2;
-        let numConstraints = 2;
-        
-        // Initialize the calculator
-        document.addEventListener('DOMContentLoaded', function() {
-            updateObjectiveCoefficients();
-            updateConstraintsMatrix();
-            
-            // Event listeners for changing dimensions
-            document.getElementById('num-vars').addEventListener('input', function() {
-                numVars = parseInt(this.value);
-                updateObjectiveCoefficients();
-                updateConstraintsMatrix();
-            });
-            
-            document.getElementById('num-constraints').addEventListener('input', function() {
-                numConstraints = parseInt(this.value);
-                updateConstraintsMatrix();
-            });
-        });
-        
-        // Update objective function coefficients inputs
-        function updateObjectiveCoefficients() {
-            const container = document.getElementById('obj-coeffs');
-            container.innerHTML = '';
-            
-            for (let i = 0; i < numVars; i++) {
-                const div = document.createElement('div');
-                div.className = 'input-group';
-                div.innerHTML = `
-                    <label for="coeff-${i}">Coefficient for x<sub>${i+1}</sub>:</label>
-                    <input type="number" id="coeff-${i}" step="0.01" required>
-                `;
-                container.appendChild(div);
+        // Chi-Square Goodness-of-Fit Implementation
+        function chiSquareGoodnessOfFit(observed, expectedProbabilities) {
+            if (!Array.isArray(observed) || !Array.isArray(expectedProbabilities)) {
+                throw new Error("Observed and expected must be arrays.");
             }
+            if (observed.length !== expectedProbabilities.length) {
+                throw new Error("Observed and expected arrays must have the same length.");
+            }
+
+            const totalObserved = observed.reduce((a, b) => a + b, 0);
+
+            // Scale probabilities into expected counts
+            const expected = expectedProbabilities.map(p => p * totalObserved);
+
+            // Compute chi-square statistic
+            let chiSquare = 0;
+            const contributions = [];
+            for (let i = 0; i < observed.length; i++) {
+                if (expected[i] === 0) {
+                    throw new Error("Expected frequency cannot be zero.");
+                }
+                const contribution = Math.pow(observed[i] - expected[i], 2) / expected[i];
+                chiSquare += contribution;
+                contributions.push(contribution);
+            }
+
+            // Degrees of freedom = categories - 1
+            const df = observed.length - 1;
+
+            // P-value (upper tail probability)
+            const pValue = 1 - gammaCDF(chiSquare, df / 2);
+
+            return {
+                chiSquare,
+                df,
+                pValue,
+                observed,
+                expected,
+                contributions
+            };
         }
-        
-        // Update constraints matrix
-        function updateConstraintsMatrix() {
-            const container = document.getElementById('constraints-matrix');
-            container.innerHTML = '';
-            
-            // Create table
-            const table = document.createElement('table');
-            
-            // Create header row
-            const headerRow = document.createElement('tr');
-            headerRow.innerHTML = '<th>Constraint</th>';
-            
-            for (let i = 0; i < numVars; i++) {
-                headerRow.innerHTML += `<th>x<sub>${i+1}</sub></th>`;
+
+        // Gamma CDF implementation for Chi-square distribution
+        function gammaCDF(x, k) {
+            // Lower incomplete gamma ratio P(k, x/2)
+            function gammaln(z) {
+                const cof = [
+                    76.18009172947146,
+                    -86.50532032941677,
+                    24.01409824083091,
+                    -1.231739572450155,
+                    0.001208650973866179,
+                    -5.395239384953e-6
+                ];
+                let y = z;
+                let tmp = z + 5.5;
+                tmp -= (z + 0.5) * Math.log(tmp);
+                let ser = 1.000000000190015;
+                for (let j = 0; j < cof.length; j++) ser += cof[j] / ++y;
+                return Math.log(2.5066282746310005 * ser / z) - tmp;
             }
+
+            function gser(a, x) {
+                const ITMAX = 100;
+                const EPS = 1e-8;
+                let sum = 1 / a;
+                let del = sum;
+                let ap = a;
+                for (let n = 1; n <= ITMAX; n++) {
+                    ap++;
+                    del *= x / ap;
+                    sum += del;
+                    if (Math.abs(del) < Math.abs(sum) * EPS) {
+                        return sum * Math.exp(-x + a * Math.log(x) - gammaln(a));
+                    }
+                }
+                return sum * Math.exp(-x + a * Math.log(x) - gammaln(a));
+            }
+
+            function gcf(a, x) {
+                const ITMAX = 100;
+                const EPS = 1e-8;
+                let b = x + 1 - a;
+                let c = 1 / 1e-30;
+                let d = 1 / b;
+                let h = d;
+                for (let i = 1; i <= ITMAX; i++) {
+                    let an = -i * (i - a);
+                    b += 2;
+                    d = an * d + b;
+                    if (Math.abs(d) < 1e-30) d = 1e-30;
+                    c = b + an / c;
+                    if (Math.abs(c) < 1e-30) c = 1e-30;
+                    d = 1 / d;
+                    let del = d * c;
+                    h *= del;
+                    if (Math.abs(del - 1) < EPS) break;
+                }
+                return Math.exp(-x + a * Math.log(x) - gammaln(a)) * h;
+            }
+
+            function gammp(a, x) {
+                if (x < 0 || a <= 0) return 0;
+                if (x < a + 1) return gser(a, x);
+                return 1 - gcf(a, x);
+            }
+
+            return gammp(k, x / 2);
+        }
+
+        // UI Handling
+        document.addEventListener('DOMContentLoaded', function() {
+            const generateCategoriesBtn = document.getElementById('generate-categories-btn');
+            const calculateBtn = document.getElementById('calculate-btn');
+            const categoryCountInput = document.getElementById('category-count');
+            const categoriesContainer = document.getElementById('categories-container');
+            const resultBox = document.getElementById('chi-square-result');
+            const alphaLevel = document.getElementById('alpha-level');
             
-            headerRow.innerHTML += '<th>Inequality</th><th>RHS</th>';
-            table.appendChild(headerRow);
-            
-            // Create constraint rows
-            for (let i = 0; i < numConstraints; i++) {
-                const row = document.createElement('tr');
-                row.innerHTML = `<td>${i+1}</td>`;
+            // Generate categories based on count
+            generateCategoriesBtn.addEventListener('click', function() {
+                const categoryCount = parseInt(categoryCountInput.value);
                 
-                for (let j = 0; j < numVars; j++) {
-                    row.innerHTML += `
-                        <td><input type="number" id="constraint-${i}-${j}" step="0.01" required></td>
+                if (isNaN(categoryCount) || categoryCount < 2) {
+                    alert('Please enter a valid number of categories (minimum 2)');
+                    return;
+                }
+                
+                let categoriesHTML = '<div class="category-inputs">';
+                for (let i = 1; i <= categoryCount; i++) {
+                    categoriesHTML += `
+                        <div class="category-row">
+                            <label for="obs-${i}">Observed ${i}:</label>
+                            <input type="number" id="obs-${i}" class="obs-input" value="0" min="0">
+                            <label for="exp-${i}">Probability ${i}:</label>
+                            <input type="number" id="exp-${i}" class="prob-input" value="0" min="0" max="1" step="0.01">
+                        </div>
+                    `;
+                }
+                categoriesHTML += '</div>';
+                
+                categoriesContainer.innerHTML = categoriesHTML;
+            });
+            
+            // Calculate chi-square test
+            calculateBtn.addEventListener('click', function() {
+                try {
+                    // Get observed values and probabilities
+                    const obsInputs = document.querySelectorAll('.obs-input');
+                    const probInputs = document.querySelectorAll('.prob-input');
+                    
+                    if (obsInputs.length === 0 || probInputs.length === 0) {
+                        throw new Error('Please generate categories first');
+                    }
+                    
+                    if (obsInputs.length !== probInputs.length) {
+                        throw new Error('Mismatch between observed and probability inputs');
+                    }
+                    
+                    const observed = [];
+                    const expectedProbabilities = [];
+                    
+                    for (let i = 0; i < obsInputs.length; i++) {
+                        const obsValue = parseFloat(obsInputs[i].value);
+                        const probValue = parseFloat(probInputs[i].value);
+                        
+                        if (isNaN(obsValue) || obsValue < 0) {
+                            throw new Error(`Invalid observed value in category ${i+1}`);
+                        }
+                        
+                        if (isNaN(probValue) || probValue < 0 || probValue > 1) {
+                            throw new Error(`Invalid probability value in category ${i+1}. Must be between 0 and 1.`);
+                        }
+                        
+                        observed.push(obsValue);
+                        expectedProbabilities.push(probValue);
+                    }
+                    
+                    // Check if probabilities sum to 1
+                    const probSum = expectedProbabilities.reduce((a, b) => a + b, 0);
+                    if (Math.abs(probSum - 1) > 0.001) {
+                        throw new Error(`Probabilities must sum to 1. Current sum: ${probSum.toFixed(3)}`);
+                    }
+                    
+                    // Check for all zeros in observed
+                    const totalObserved = observed.reduce((a, b) => a + b, 0);
+                    if (totalObserved === 0) {
+                        throw new Error('All observed values cannot be zero');
+                    }
+                    
+                    // Perform chi-square test
+                    const result = chiSquareGoodnessOfFit(observed, expectedProbabilities);
+                    const alpha = parseFloat(alphaLevel.value);
+                    
+                    // Display results
+                    displayResults(result, alpha);
+                    
+                } catch (error) {
+                    alert('Error: ' + error.message);
+                    console.error(error);
+                }
+            });
+            
+            function displayResults(result, alpha) {
+                // Update result metrics
+                document.getElementById('chi-square-value').textContent = result.chiSquare.toFixed(4);
+                document.getElementById('p-value').textContent = result.pValue.toFixed(4);
+                document.getElementById('df-value').textContent = result.df;
+                
+                // Determine significance
+                const isSignificant = result.pValue <= alpha;
+                document.getElementById('result-significance').textContent = 
+                    isSignificant ? 'Significant' : 'Not Significant';
+                document.getElementById('result-significance').style.color = 
+                    isSignificant ? '#2ecc71' : '#e74c3c';
+                
+                // Update interpretation
+                const interpretationText = document.getElementById('interpretation-text');
+                if (isSignificant) {
+                    interpretationText.textContent = 
+                        `The p-value of ${result.pValue.toFixed(4)} is less than the significance level of ${alpha}. ` +
+                        `This provides evidence to reject the null hypothesis. The observed data does not follow the expected distribution.`;
+                } else {
+                    interpretationText.textContent = 
+                        `The p-value of ${result.pValue.toFixed(4)} is greater than the significance level of ${alpha}. ` +
+                        `There is not enough evidence to reject the null hypothesis. The observed data appears to follow the expected distribution.`;
+                }
+                
+                // Update expected frequencies table
+                const expectedTable = document.getElementById('expected-table');
+                const categoryCount = result.observed.length;
+                
+                let tableHTML = '<thead><tr><th>Category</th><th>Observed</th><th>Expected</th><th>Contribution to χ²</th></tr></thead><tbody>';
+                
+                for (let i = 0; i < categoryCount; i++) {
+                    tableHTML += `
+                        <tr>
+                            <td>${i+1}</td>
+                            <td>${result.observed[i]}</td>
+                            <td class="expected">${result.expected[i].toFixed(2)}</td>
+                            <td>${result.contributions[i].toFixed(4)}</td>
+                        </tr>
                     `;
                 }
                 
-                row.innerHTML += `
-                    <td>
-                        <select id="inequality-${i}" required>
-                            <option value="<=">≤</option>
-                            <option value="=">=</option>
-                            <option value=">=">≥</option>
-                        </select>
-                    </td>
-                    <td><input type="number" id="rhs-${i}" step="0.01" required></td>
-                `;
+                tableHTML += '</tbody>';
+                expectedTable.innerHTML = tableHTML;
                 
-                table.appendChild(row);
+                // Show results
+                resultBox.style.display = 'block';
             }
-            
-            container.appendChild(table);
-        }
-        
-        // Form submission handler
-        document.getElementById('lp-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get objective
-            const objective = document.getElementById('objective').value;
-            
-            // Get objective coefficients
-            const objCoeffs = [];
-            for (let i = 0; i < numVars; i++) {
-                const coeff = parseFloat(document.getElementById(`coeff-${i}`).value);
-                if (isNaN(coeff)) {
-                    alert(`Please enter a valid coefficient for x${i+1}`);
-                    return;
-                }
-                objCoeffs.push(coeff);
-            }
-            
-            // Get constraints
-            const constraints = [];
-            for (let i = 0; i < numConstraints; i++) {
-                const coeffs = [];
-                for (let j = 0; j < numVars; j++) {
-                    const coeff = parseFloat(document.getElementById(`constraint-${i}-${j}`).value);
-                    if (isNaN(coeff)) {
-                        alert(`Please enter valid coefficients for constraint ${i+1}`);
-                        return;
-                    }
-                    coeffs.push(coeff);
-                }
-                
-                const inequality = document.getElementById(`inequality-${i}`).value;
-                const rhs = parseFloat(document.getElementById(`rhs-${i}`).value);
-                
-                if (isNaN(rhs)) {
-                    alert(`Please enter a valid RHS value for constraint ${i+1}`);
-                    return;
-                }
-                
-                constraints.push({
-                    coefficients: coeffs,
-                    inequality: inequality,
-                    rhs: rhs
-                });
-            }
-            
-            // Solve the LP problem (in a real implementation, this would use a solver library)
-            const solution = solveLP(objective, objCoeffs, constraints);
-            
-            // Display results
-            displayResults(solution);
         });
-        
-        // Mock solver function (in a real implementation, use a proper LP solver)
-        function solveLP(objective, objCoeffs, constraints) {
-            // This is a simplified mock solution - in practice you would use a proper LP solver
-            // For demonstration purposes, we'll return a plausible but not mathematically valid solution
-            
-            const solution = {
-                optimalValue: 0,
-                variables: [],
-                slack: [],
-                sensitivity: {
-                    objectiveCoefficients: [],
-                    rhs: []
-                }
-            };
-            
-            // Calculate a mock optimal value
-            solution.optimalValue = objCoeffs.reduce((sum, coeff, i) => {
-                const varValue = Math.random() * 10;
-                solution.variables.push({
-                    name: `x${i+1}`,
-                    value: varValue.toFixed(2)
-                });
-                return sum + coeff * varValue;
-            }, 0);
-            
-            solution.optimalValue = (objective === 'maximize' ? 1 : -1) * solution.optimalValue;
-            solution.optimalValue = solution.optimalValue.toFixed(2);
-            
-            // Mock slack/surplus variables
-            constraints.forEach((constraint, i) => {
-                const slackValue = Math.random() * 5;
-                solution.slack.push({
-                    constraint: i+1,
-                    value: slackValue.toFixed(2),
-                    type: constraint.inequality === '<=' ? 'slack' : 'surplus'
-                });
-            });
-            
-            // Mock sensitivity analysis
-            objCoeffs.forEach((coeff, i) => {
-                solution.sensitivity.objectiveCoefficients.push({
-                    variable: `x${i+1}`,
-                    range: `[${(coeff - 1).toFixed(2)}, ${(coeff + 1).toFixed(2)}]`
-                });
-            });
-            
-            constraints.forEach((constraint, i) => {
-                solution.sensitivity.rhs.push({
-                    constraint: i+1,
-                    range: `[${(constraint.rhs - 5).toFixed(2)}, ${(constraint.rhs + 5).toFixed(2)}]`
-                });
-            });
-            
-            return solution;
-        }
-        
-        // Display results
-        function displayResults(solution) {
-            document.getElementById('optimal-value').textContent = solution.optimalValue;
-            
-            // Display variable values
-            const varsContainer = document.getElementById('solution-vars');
-            varsContainer.innerHTML = '';
-            
-            solution.variables.forEach(variable => {
-                const p = document.createElement('p');
-                p.innerHTML = `${variable.name} = ${variable.value}`;
-                varsContainer.appendChild(p);
-            });
-            
-            // Display sensitivity analysis
-            const sensContainer = document.getElementById('sensitivity-analysis');
-            sensContainer.innerHTML = '<h5>Objective Coefficient Ranges</h5>';
-            
-            solution.sensitivity.objectiveCoefficients.forEach(item => {
-                const p = document.createElement('p');
-                p.innerHTML = `${item.variable}: ${item.range}`;
-                sensContainer.appendChild(p);
-            });
-            
-            sensContainer.innerHTML += '<h5>RHS Ranges</h5>';
-            solution.sensitivity.rhs.forEach(item => {
-                const p = document.createElement('p');
-                p.innerHTML = `Constraint ${item.constraint}: ${item.range}`;
-                sensContainer.appendChild(p);
-            });
-            
-            // Display slack/surplus variables
-            const slackContainer = document.getElementById('slack-vars');
-            slackContainer.innerHTML = '';
-            
-            solution.slack.forEach(item => {
-                const p = document.createElement('p');
-                p.innerHTML = `Constraint ${item.constraint}: ${item.type} = ${item.value}`;
-                slackContainer.appendChild(p);
-            });
-            
-            // Show results
-            document.getElementById('lp-result').style.display = 'block';
-        }
     </script>
 </body>
 </html>
