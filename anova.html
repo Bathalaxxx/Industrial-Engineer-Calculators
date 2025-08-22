@@ -7,7 +7,6 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-8B3Q70V2YH');
     </script>
     <meta charset="UTF-8">
@@ -136,7 +135,7 @@
             font-weight: 500;
         }
         
-        .input-group input, .input-group select, .input-group button {
+        .input-group input, .input-group select, .input-group textarea {
             width: 100%;
             padding: 0.8rem;
             border: 1px solid #ddd;
@@ -144,7 +143,7 @@
             font-size: 1rem;
         }
         
-        .input-group input:focus, .input-group select:focus {
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
             outline: none;
             border-color: var(--secondary-color);
             box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
@@ -179,44 +178,6 @@
             margin-top: 0.5rem;
         }
         
-        .group-controls {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .group-controls button {
-            flex: 1;
-            padding: 0.8rem;
-            background-color: var(--secondary-color);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        
-        .group-controls button:hover {
-            background-color: #2980b9;
-        }
-        
-        .groups-container {
-            margin-bottom: 1.5rem;
-        }
-        
-        .group-box {
-            background-color: #f8f9fa;
-            border-radius: 5px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border-left: 4px solid var(--secondary-color);
-        }
-        
-        .group-box h4 {
-            margin-bottom: 0.5rem;
-            color: var(--primary-color);
-        }
-        
         .calculate-btn {
             background-color: var(--secondary-color);
             color: white;
@@ -228,7 +189,6 @@
             transition: background-color 0.3s;
             display: block;
             width: 100%;
-            margin-top: 1.5rem;
         }
         
         .calculate-btn:hover {
@@ -282,30 +242,6 @@
             border-left: 4px solid var(--secondary-color);
         }
         
-        .anova-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.5rem 0;
-        }
-        
-        .anova-table, .anova-table th, .anova-table td {
-            border: 1px solid #ddd;
-        }
-        
-        .anova-table th, .anova-table td {
-            padding: 0.75rem;
-            text-align: left;
-        }
-        
-        .anova-table th {
-            background-color: #f2f2f2;
-            font-weight: 600;
-        }
-        
-        .anova-table td {
-            background-color: white;
-        }
-        
         .examples-section {
             margin-top: 3rem;
         }
@@ -320,6 +256,25 @@
         .example h4 {
             margin-bottom: 0.5rem;
             color: var(--primary-color);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
         }
         
         footer {
@@ -351,6 +306,55 @@
             font-size: 0.9rem;
         }
         
+        .group-inputs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .group-input {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .group-input label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .group-input input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .add-group-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 1rem;
+        }
+        
+        .significance {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .significance select {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
@@ -371,12 +375,12 @@
                 gap: 0;
             }
             
-            .group-controls {
-                flex-direction: column;
-            }
-            
             .result-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .group-inputs {
+                flex-direction: column;
             }
         }
     </style>
@@ -400,7 +404,7 @@
     <section class="page-hero">
         <div class="container">
             <h1>ANOVA Calculator</h1>
-            <p>Perform Analysis of Variance to compare means across multiple groups</p>
+            <p>Perform One-Way Analysis of Variance to compare means across multiple groups</p>
         </div>
     </section>
     
@@ -409,60 +413,44 @@
             <div class="calculator-intro">
                 <h2>Analysis of Variance (ANOVA)</h2>
                 <p>ANOVA is a statistical method used to test differences between two or more means. It compares the variance between groups to the variance within groups to determine if any significant differences exist.</p>
-                
                 <div class="formula-box">
-                    F = (Between-Group Variability) / (Within-Group Variability)
+                    F = (Between-group variability) / (Within-group variability)
                 </div>
-                
-                <p>Where:</p>
-                <ul>
-                    <li><strong>Between-Group Variability</strong> = Variance explained by the differences between groups</li>
-                    <li><strong>Within-Group Variability</strong> = Unexplained variance within each group</li>
-                    <li><strong>F-ratio</strong> = The test statistic that follows an F-distribution</li>
-                </ul>
+                <p>Where F is the test statistic that follows an F-distribution. A large F-value indicates that the differences between group means are greater than would be expected by chance.</p>
             </div>
             
-            <h3>ANOVA Data Input</h3>
-            <p>Enter data for each group as comma-separated values. Add as many groups as needed for your analysis.</p>
-            
-            <div class="group-controls">
-                <button id="add-group-btn">Add Another Group</button>
-                <button id="remove-group-btn">Remove Last Group</button>
+            <div class="significance">
+                <label for="alpha-level">Significance Level (α):</label>
+                <select id="alpha-level">
+                    <option value="0.01">0.01</option>
+                    <option value="0.05" selected>0.05</option>
+                    <option value="0.10">0.10</option>
+                </select>
             </div>
             
-            <form id="anova-form">
-                <div class="groups-container" id="groups-container">
-                    <div class="group-box">
-                        <h4>Group 1</h4>
-                        <div class="input-group">
-                            <label for="group1-data">Data Values (comma-separated):</label>
-                            <textarea id="group1-data" placeholder="Enter values like: 12.5, 13.2, 11.8, 14.1, 12.9" required></textarea>
-                            <p class="help-text">Enter numerical values separated by commas. You can also copy and paste from a spreadsheet.</p>
-                        </div>
+            <h3>Data Input</h3>
+            <p class="help-text">Enter comma-separated values for each group. Add more groups as needed.</p>
+            
+            <div id="group-inputs-container">
+                <div class="group-inputs">
+                    <div class="group-input">
+                        <label for="group-1">Group 1:</label>
+                        <input type="text" id="group-1" class="group-data" placeholder="5, 6, 5, 7" value="5, 6, 5, 7">
                     </div>
-                    
-                    <div class="group-box">
-                        <h4>Group 2</h4>
-                        <div class="input-group">
-                            <label for="group2-data">Data Values (comma-separated):</label>
-                            <textarea id="group2-data" placeholder="Enter values like: 10.8, 11.5, 12.1, 10.9, 11.7" required></textarea>
-                        </div>
+                    <div class="group-input">
+                        <label for="group-2">Group 2:</label>
+                        <input type="text" id="group-2" class="group-data" placeholder="8, 9, 6, 7" value="8, 9, 6, 7">
                     </div>
-                </div>
-                
-                <div class="input-row">
-                    <div class="input-group">
-                        <label for="alpha-level">Significance Level (α):</label>
-                        <select id="alpha-level">
-                            <option value="0.01">0.01 (99% confidence)</option>
-                            <option value="0.05" selected>0.05 (95% confidence)</option>
-                            <option value="0.10">0.10 (90% confidence)</option>
-                        </select>
+                    <div class="group-input">
+                        <label for="group-3">Group 3:</label>
+                        <input type="text" id="group-3" class="group-data" placeholder="6, 7, 5, 6" value="6, 7, 5, 6">
                     </div>
                 </div>
-                
-                <button type="submit" class="calculate-btn">Calculate ANOVA</button>
-            </form>
+            </div>
+            
+            <button id="add-group-btn" class="add-group-btn">+ Add Another Group</button>
+            
+            <button id="calculate-btn" class="calculate-btn">Calculate ANOVA</button>
             
             <div class="result-box" id="anova-result">
                 <h3>ANOVA Results</h3>
@@ -471,39 +459,31 @@
                     <div class="result-card">
                         <h4>F-Statistic</h4>
                         <div class="result-value" id="f-statistic"></div>
+                        <p>Test statistic</p>
                     </div>
                     
                     <div class="result-card">
                         <h4>P-Value</h4>
                         <div class="result-value" id="p-value"></div>
-                    </div>
-                    
-                    <div class="result-card">
-                        <h4>Critical F-Value</h4>
-                        <div class="result-value" id="critical-value"></div>
+                        <p>Significance level</p>
                     </div>
                     
                     <div class="result-card">
                         <h4>Result</h4>
                         <div class="result-value" id="result-significance"></div>
+                        <p>Hypothesis test</p>
                     </div>
                 </div>
                 
-                <div class="interpretation">
-                    <h4>Interpretation</h4>
-                    <p id="interpretation-text"></p>
-                </div>
-                
                 <h4>ANOVA Table</h4>
-                <table class="anova-table">
+                <table id="anova-table">
                     <thead>
                         <tr>
                             <th>Source of Variation</th>
-                            <th>Sum of Squares (SS)</th>
-                            <th>Degrees of Freedom (df)</th>
-                            <th>Mean Square (MS)</th>
+                            <th>Sum of Squares</th>
+                            <th>Degrees of Freedom</th>
+                            <th>Mean Square</th>
                             <th>F-Value</th>
-                            <th>P-Value</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -513,14 +493,12 @@
                             <td id="df-between"></td>
                             <td id="ms-between"></td>
                             <td id="f-value"></td>
-                            <td id="p-value-cell"></td>
                         </tr>
                         <tr>
                             <td>Within Groups</td>
                             <td id="ss-within"></td>
                             <td id="df-within"></td>
                             <td id="ms-within"></td>
-                            <td></td>
                             <td></td>
                         </tr>
                         <tr>
@@ -529,24 +507,26 @@
                             <td id="df-total"></td>
                             <td></td>
                             <td></td>
-                            <td></td>
                         </tr>
                     </tbody>
                 </table>
                 
+                <div class="interpretation">
+                    <h4>Interpretation</h4>
+                    <p id="interpretation-text"></p>
+                </div>
+                
                 <h4>Group Statistics</h4>
-                <table class="anova-table" id="group-stats-table">
+                <table id="group-stats-table">
                     <thead>
                         <tr>
                             <th>Group</th>
-                            <th>Sample Size (n)</th>
+                            <th>Sample Size</th>
                             <th>Mean</th>
                             <th>Standard Deviation</th>
-                            <th>Variance</th>
                         </tr>
                     </thead>
                     <tbody id="group-stats-body">
-                        <!-- Will be populated by JavaScript -->
                     </tbody>
                 </table>
             </div>
@@ -555,56 +535,28 @@
                 <h3>ANOVA Examples in Industrial Engineering</h3>
                 
                 <div class="example">
-                    <h4>Manufacturing Process Example</h4>
-                    <p>Compare the output of three different machines to determine if there's a significant difference in production rates.</p>
-                    <p>Machine A: 105, 108, 110, 107, 106 units</p>
-                    <p>Machine B: 100, 102, 99, 101, 103 units</p>
-                    <p>Machine C: 112, 115, 110, 113, 111 units</p>
+                    <h4>Production Example</h4>
+                    <p>Compare the output of three different machines to determine if there are significant differences in productivity.</p>
+                    <p>Machine A: 23, 25, 24, 26, 22</p>
+                    <p>Machine B: 28, 27, 29, 26, 30</p>
+                    <p>Machine C: 21, 20, 22, 19, 23</p>
                 </div>
                 
                 <div class="example">
                     <h4>Quality Control Example</h4>
-                    <p>Test whether different shifts produce significantly different defect rates.</p>
-                    <p>Morning Shift: 1.2%, 1.5%, 1.1%, 1.3%, 1.4%</p>
-                    <p>Afternoon Shift: 1.8%, 1.6%, 1.9%, 1.7%, 1.5%</p>
-                    <p>Night Shift: 2.1%, 2.3%, 2.0%, 2.2%, 2.1%</p>
+                    <p>Test whether three different quality control methods result in different defect rates.</p>
+                    <p>Method A: 2.1, 1.9, 2.3, 2.0, 2.2</p>
+                    <p>Method B: 1.5, 1.6, 1.4, 1.7, 1.5</p>
+                    <p>Method C: 3.2, 3.0, 3.1, 3.3, 2.9</p>
                 </div>
                 
                 <div class="example">
                     <h4>Material Testing Example</h4>
-                    <p>Compare the strength of three different composite materials.</p>
-                    <p>Material X: 245, 251, 248, 253, 250 MPa</p>
-                    <p>Material Y: 238, 241, 235, 240, 237 MPa</p>
-                    <p>Material Z: 260, 255, 258, 262, 259 MPa</p>
+                    <p>Compare the strength of three different material types.</p>
+                    <p>Material A: 45, 47, 46, 48, 44</p>
+                    <p>Material B: 52, 51, 53, 50, 54</p>
+                    <p>Material C: 38, 39, 37, 40, 36</p>
                 </div>
-            </div>
-            
-            <div class="calculator-intro">
-                <h3>Understanding ANOVA Results</h3>
-                <table class="anova-table">
-                    <tr>
-                        <th>P-Value Range</th>
-                        <th>Interpretation</th>
-                    </tr>
-                    <tr>
-                        <td>p ≤ 0.01</td>
-                        <td>Strong evidence against the null hypothesis (means are equal)</td>
-                    </tr>
-                    <tr>
-                        <td>0.01 < p ≤ 0.05</td>
-                        <td>Moderate evidence against the null hypothesis</td>
-                    </tr>
-                    <tr>
-                        <td>0.05 < p ≤ 0.10</td>
-                        <td>Weak evidence against the null hypothesis</td>
-                    </tr>
-                    <tr>
-                        <td>p > 0.10</td>
-                        <td>Little or no evidence against the null hypothesis</td>
-                    </tr>
-                </table>
-                
-                <p class="help-text" style="margin-top: 1rem;">Note: A significant ANOVA result indicates that at least one group mean is different, but it doesn't specify which ones. Post-hoc tests are needed to identify specific differences between groups.</p>
             </div>
         </section>
     </main>
@@ -623,284 +575,265 @@
     </footer>
 
     <script>
-        // Group management
-        let groupCount = 2;
-        
-        document.getElementById('add-group-btn').addEventListener('click', function(e) {
-            e.preventDefault();
-            groupCount++;
-            
-            const groupsContainer = document.getElementById('groups-container');
-            const newGroup = document.createElement('div');
-            newGroup.className = 'group-box';
-            newGroup.innerHTML = `
-                <h4>Group ${groupCount}</h4>
-                <div class="input-group">
-                    <label for="group${groupCount}-data">Data Values (comma-separated):</label>
-                    <textarea id="group${groupCount}-data" placeholder="Enter values like: 15.2, 16.1, 14.8, 15.7, 16.0" required></textarea>
-                </div>
-            `;
-            
-            groupsContainer.appendChild(newGroup);
-        });
-        
-        document.getElementById('remove-group-btn').addEventListener('click', function(e) {
-            e.preventDefault();
-            if (groupCount > 2) {
-                const groupsContainer = document.getElementById('groups-container');
-                groupsContainer.removeChild(groupsContainer.lastChild);
-                groupCount--;
-            } else {
-                alert('You need at least two groups for ANOVA');
-            }
-        });
-        
-        // Helper functions for statistical calculations
-        function parseData(dataString) {
-            return dataString.split(',')
-                .map(val => val.trim())
-                .filter(val => val !== '')
-                .map(val => parseFloat(val))
-                .filter(val => !isNaN(val));
+        // ANOVA Implementation (provided code)
+        function mean(arr) {
+            return arr.reduce((a, b) => a + b, 0) / arr.length;
         }
-        
-        function calculateMean(data) {
-            return data.reduce((sum, val) => sum + val, 0) / data.length;
+
+        function sumSquares(arr, grandMean) {
+            return arr.reduce((sum, val) => sum + Math.pow(val - grandMean, 2), 0);
         }
-        
-        function calculateVariance(data, mean) {
-            const squaredDiffs = data.map(val => Math.pow(val - mean, 2));
-            return squaredDiffs.reduce((sum, val) => sum + val, 0) / (data.length - 1);
-        }
-        
-        function calculateStdDev(data, mean) {
-            return Math.sqrt(calculateVariance(data, mean));
-        }
-        
-        // ANOVA calculation
-        document.getElementById('anova-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get data from all groups
-            const groups = [];
-            let allData = [];
-            
-            for (let i = 1; i <= groupCount; i++) {
-                const dataString = document.getElementById(`group${i}-data`).value;
-                const data = parseData(dataString);
-                
-                if (data.length < 2) {
-                    alert(`Group ${i} must have at least 2 data values`);
-                    return;
-                }
-                
-                groups.push({
-                    data: data,
-                    mean: calculateMean(data),
-                    variance: calculateVariance(data, calculateMean(data)),
-                    size: data.length
-                });
-                
-                allData = allData.concat(data);
-            }
-            
-            const alpha = parseFloat(document.getElementById('alpha-level').value);
-            
-            // Calculate overall mean
-            const overallMean = calculateMean(allData);
-            
-            // Calculate Sum of Squares Between (SSB)
-            let ssBetween = 0;
-            groups.forEach(group => {
-                ssBetween += group.size * Math.pow(group.mean - overallMean, 2);
-            });
-            
-            // Calculate Sum of Squares Within (SSW)
-            let ssWithin = 0;
-            groups.forEach(group => {
-                ssWithin += (group.size - 1) * group.variance;
-            });
-            
-            // Calculate Total Sum of Squares (SST)
-            const ssTotal = ssBetween + ssWithin;
-            
-            // Calculate degrees of freedom
-            const dfBetween = groupCount - 1;
-            const dfWithin = allData.length - groupCount;
-            const dfTotal = allData.length - 1;
-            
-            // Calculate Mean Squares
-            const msBetween = ssBetween / dfBetween;
-            const msWithin = ssWithin / dfWithin;
-            
-            // Calculate F-statistic
-            const fStatistic = msBetween / msWithin;
-            
-            // Calculate p-value (simplified approximation)
-            const pValue = calculatePValue(fStatistic, dfBetween, dfWithin);
-            
-            // Get critical F-value (simplified approximation)
-            const criticalValue = getCriticalValue(alpha, dfBetween, dfWithin);
-            
-            // Determine significance
-            const isSignificant = pValue <= alpha;
-            
-            // Display results
-            document.getElementById('f-statistic').textContent = fStatistic.toFixed(4);
-            document.getElementById('p-value').textContent = pValue.toFixed(4);
-            document.getElementById('critical-value').textContent = criticalValue.toFixed(4);
-            document.getElementById('result-significance').textContent = isSignificant ? 'Significant' : 'Not Significant';
-            
-            // Interpretation
-            let interpretation = '';
-            if (isSignificant) {
-                interpretation = `There is a statistically significant difference between the group means (p = ${pValue.toFixed(4)} ≤ α = ${alpha}). Reject the null hypothesis that all group means are equal.`;
-            } else {
-                interpretation = `There is no statistically significant difference between the group means (p = ${pValue.toFixed(4)} > α = ${alpha}). Fail to reject the null hypothesis that all group means are equal.`;
-            }
-            document.getElementById('interpretation-text').textContent = interpretation;
-            
-            // ANOVA table
-            document.getElementById('ss-between').textContent = ssBetween.toFixed(4);
-            document.getElementById('df-between').textContent = dfBetween;
-            document.getElementById('ms-between').textContent = msBetween.toFixed(4);
-            document.getElementById('f-value').textContent = fStatistic.toFixed(4);
-            document.getElementById('p-value-cell').textContent = pValue.toFixed(4);
-            
-            document.getElementById('ss-within').textContent = ssWithin.toFixed(4);
-            document.getElementById('df-within').textContent = dfWithin;
-            document.getElementById('ms-within').textContent = msWithin.toFixed(4);
-            
-            document.getElementById('ss-total').textContent = ssTotal.toFixed(4);
-            document.getElementById('df-total').textContent = dfTotal;
-            
-            // Group statistics table
-            const groupStatsBody = document.getElementById('group-stats-body');
-            groupStatsBody.innerHTML = '';
-            
-            groups.forEach((group, index) => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>Group ${index + 1}</td>
-                    <td>${group.size}</td>
-                    <td>${group.mean.toFixed(4)}</td>
-                    <td>${Math.sqrt(group.variance).toFixed(4)}</td>
-                    <td>${group.variance.toFixed(4)}</td>
-                `;
-                groupStatsBody.appendChild(row);
-            });
-            
-            // Show results
-            document.getElementById('anova-result').style.display = 'block';
-        });
-        
-        // Simplified F-distribution p-value calculation
-        function calculatePValue(f, df1, df2) {
-            // This is a simplified approximation
-            // In a real application, you would use a proper F-distribution calculation
-            const x = df2 / (df2 + df1 * f);
-            const beta = Math.exp(logBeta(df1/2, df2/2));
-            return regularizedBeta(x, df2/2, df1/2, beta);
-        }
-        
-        // Helper functions for beta distribution calculations
-        function logBeta(a, b) {
-            return logGamma(a) + logGamma(b) - logGamma(a + b);
-        }
-        
-        function logGamma(z) {
-            // Lanczos approximation for log Gamma
-            if (z < 0.5) {
-                return Math.log(Math.PI) - Math.log(Math.sin(Math.PI * z)) - logGamma(1 - z);
-            }
-            
-            z -= 1;
-            let x = 0.99999999999980993;
-            const coefficients = [
-                676.5203681218851, -1259.1392167224028, 771.32342877765313,
-                -176.61502916214059, 12.507343278686905, -0.13857109526572012,
-                9.9843695780195716e-6, 1.5056327351493116e-7
-            ];
-            
-            for (let i = 0; i < coefficients.length; i++) {
-                x += coefficients[i] / (z + i + 1);
-            }
-            
-            const t = z + coefficients.length - 0.5;
-            return 0.5 * Math.log(2 * Math.PI) + (z + 0.5) * Math.log(t) - t + Math.log(x);
-        }
-        
-        function regularizedBeta(x, a, b, beta) {
-            // Continued fraction expansion for regularized beta function
-            const maxIterations = 100;
-            const epsilon = 1e-10;
-            
-            if (x === 0 || x === 1) {
-                return x;
-            }
-            
-            if (x < (a + 1) / (a + b + 2)) {
-                return continuedFraction(x, a, b, maxIterations, epsilon) * Math.exp(a * Math.log(x) + b * Math.log(1 - x) - Math.log(a) - Math.log(beta)) / a;
-            } else {
-                return 1 - continuedFraction(1 - x, b, a, maxIterations, epsilon) * Math.exp(b * Math.log(1 - x) + a * Math.log(x) - Math.log(b) - Math.log(beta)) / b;
-            }
-        }
-        
-        function continuedFraction(x, a, b, maxIterations, epsilon) {
-            let result = 1;
-            let c = 1;
-            let d = 1 - (a + b) * x / (a + 1);
-            
-            if (Math.abs(d) < epsilon) {
-                d = epsilon;
-            }
-            
-            d = 1 / d;
-            let h = d;
-            
-            for (let i = 1; i <= maxIterations; i++) {
-                const m = i / 2;
-                let numerator;
-                
-                if (i % 2 === 0) {
-                    numerator = m * (b - m) * x / ((a + 2 * m - 1) * (a + 2 * m));
+
+        function fCDF(f, d1, d2) {
+            // Incomplete Beta Function approximation for p-value
+            function betaInc(x, a, b) {
+                const MAX_ITER = 100, EPS = 1e-10;
+                let bt = (x === 0 || x === 1) ? 0 :
+                    Math.exp(
+                        lgamma(a + b) - lgamma(a) - lgamma(b) +
+                        a * Math.log(x) + b * Math.log(1 - x)
+                    );
+                if (x < (a + 1) / (a + b + 2)) {
+                    return bt * betacf(x, a, b) / a;
                 } else {
-                    numerator = -(a + m) * (a + b + m) * x / ((a + 2 * m) * (a + 2 * m + 1));
-                }
-                
-                d = 1 + numerator * d;
-                if (Math.abs(d) < epsilon) {
-                    d = epsilon;
-                }
-                
-                c = 1 + numerator / c;
-                if (Math.abs(c) < epsilon) {
-                    c = epsilon;
-                }
-                
-                d = 1 / d;
-                h *= d * c;
-                
-                if (Math.abs(d * c - 1) < epsilon) {
-                    return h;
+                    return 1 - bt * betacf(1 - x, b, a) / b;
                 }
             }
-            
-            return h;
+
+            function betacf(x, a, b) {
+                const MAX_ITER = 200, EPS = 1e-12;
+                let am = 1, bm = 1, az = 1, qab = a + b, qap = a + 1, qam = a - 1;
+                let bz = 1 - qab * x / qap;
+                for (let m = 1, d, ap, bp, app, bpp, aold; m <= MAX_ITER; m++) {
+                    let em = m;
+                    let tem = em + em;
+                    d = em * (b - em) * x / ((qam + tem) * (a + tem));
+                    ap = az + d * am;
+                    bp = bz + d * bm;
+                    d = -(a + em) * (qab + em) * x / ((a + tem) * (qap + tem));
+                    app = ap + d * az;
+                    bpp = bp + d * bz;
+                    aold = az;
+                    am = ap / bpp;
+                    bm = bp / bpp;
+                    az = app / bpp;
+                    bz = 1;
+                    if (Math.abs(az - aold) < EPS * Math.abs(az)) return az;
+                }
+                return az;
+            }
+
+            function lgamma(z) {
+                // Lanczos approximation
+                const g = 7;
+                const C = [
+                    0.99999999999980993,
+                    676.5203681218851,
+                    -1259.1392167224028,
+                    771.32342877765313,
+                    -176.61502916214059,
+                    12.507343278686905,
+                    -0.13857109526572012,
+                    9.9843695780195716e-6,
+                    1.5056327351493116e-7
+                ];
+                if (z < 0.5) return Math.log(Math.PI) - Math.log(Math.sin(Math.PI * z)) - lgamma(1 - z);
+                z -= 1;
+                let x = C[0];
+                for (let i = 1; i < g + 2; i++) x += C[i] / (z + i);
+                const t = z + g + 0.5;
+                return 0.5 * Math.log(2 * Math.PI) + (z + 0.5) * Math.log(t) - t + Math.log(x) - Math.log(z + 1);
+            }
+
+            let x = (d1 * f) / (d1 * f + d2);
+            return betaInc(x, d1 / 2, d2 / 2);
         }
-        
-        // Simplified critical value calculation
-        function getCriticalValue(alpha, df1, df2) {
-            // This is a simplified approximation
-            // In a real application, you would use a proper F-distribution table lookup
-            const baseValues = {
-                0.01: 5.39,
-                0.05: 3.49,
-                0.10: 2.71
+
+        function anova(groups) {
+            if (!Array.isArray(groups) || groups.length < 2) {
+                throw new Error("ANOVA requires at least 2 groups of data.");
+            }
+
+            const nGroups = groups.length;
+            const nTotal = groups.reduce((a, g) => a + g.length, 0);
+
+            const groupMeans = groups.map(mean);
+            const grandMean = groups.flat().reduce((a, b) => a + b, 0) / nTotal;
+
+            // Between-group sum of squares
+            let ssBetween = groups.reduce((sum, g, i) =>
+                sum + g.length * Math.pow(groupMeans[i] - grandMean, 2), 0);
+
+            // Within-group sum of squares
+            let ssWithin = groups.reduce((sum, g, i) =>
+                sum + g.reduce((s, val) => s + Math.pow(val - groupMeans[i], 2), 0), 0);
+
+            let dfBetween = nGroups - 1;
+            let dfWithin = nTotal - nGroups;
+
+            let msBetween = ssBetween / dfBetween;
+            let msWithin = ssWithin / dfWithin;
+
+            let F = msBetween / msWithin;
+
+            // p-value from F distribution (upper tail)
+            let pValue = 1 - fCDF(F, dfBetween, dfWithin);
+
+            return {
+                groups: groups.length,
+                totalSamples: nTotal,
+                dfBetween,
+                dfWithin,
+                ssBetween,
+                ssWithin,
+                msBetween,
+                msWithin,
+                F,
+                pValue,
+                groupMeans,
+                grandMean,
+                originalGroups: groups // Store original groups for later use
             };
-            
-            return baseValues[alpha] * (1 + (df1 + df2) / 100);
         }
+
+        // UI Handling
+        document.addEventListener('DOMContentLoaded', function() {
+            const calculateBtn = document.getElementById('calculate-btn');
+            const addGroupBtn = document.getElementById('add-group-btn');
+            const groupInputsContainer = document.getElementById('group-inputs-container');
+            const resultBox = document.getElementById('anova-result');
+            const alphaLevel = document.getElementById('alpha-level');
+            
+            let groupCount = 3; // Starting with 3 groups
+            let originalGroups = []; // Store original groups data
+
+            // Add event listener for adding new groups
+            addGroupBtn.addEventListener('click', function() {
+                groupCount++;
+                
+                const newGroupInput = document.createElement('div');
+                newGroupInput.className = 'group-input';
+                newGroupInput.innerHTML = `
+                    <label for="group-${groupCount}">Group ${groupCount}:</label>
+                    <input type="text" id="group-${groupCount}" class="group-data" placeholder="Enter comma-separated values">
+                `;
+                
+                const groupInputs = groupInputsContainer.querySelector('.group-inputs');
+                groupInputs.appendChild(newGroupInput);
+            });
+
+            // Add event listener for calculating ANOVA
+            calculateBtn.addEventListener('click', function() {
+                try {
+                    // Get all group data
+                    const groupInputs = document.querySelectorAll('.group-data');
+                    const groups = [];
+                    originalGroups = []; // Reset original groups
+                    
+                    for (let i = 0; i < groupInputs.length; i++) {
+                        const input = groupInputs[i];
+                        const value = input.value.trim();
+                        
+                        if (value === '') {
+                            continue; // Skip empty inputs
+                        }
+                        
+                        // Parse comma-separated values
+                        const values = value.split(',').map(v => {
+                            const num = parseFloat(v.trim());
+                            if (isNaN(num)) {
+                                throw new Error(`Invalid number in Group ${i+1}: ${v}`);
+                            }
+                            return num;
+                        });
+                        
+                        groups.push(values);
+                        originalGroups.push(values); // Store for later use
+                    }
+                    
+                    if (groups.length < 2) {
+                        throw new Error("ANOVA requires at least 2 groups of data.");
+                    }
+                    
+                    // Calculate ANOVA
+                    const result = anova(groups);
+                    const alpha = parseFloat(alphaLevel.value);
+                    
+                    // Display results
+                    displayResults(result, alpha, originalGroups);
+                    
+                } catch (error) {
+                    alert('Error: ' + error.message);
+                    console.error(error);
+                }
+            });
+            
+            function displayResults(result, alpha, originalGroups) {
+                // Update result metrics
+                document.getElementById('f-statistic').textContent = result.F.toFixed(6);
+                document.getElementById('p-value').textContent = result.pValue.toFixed(6);
+                
+                // Determine significance
+                const isSignificant = result.pValue <= alpha;
+                document.getElementById('result-significance').textContent = 
+                    isSignificant ? 'Significant' : 'Not Significant';
+                document.getElementById('result-significance').style.color = 
+                    isSignificant ? '#2ecc71' : '#e74c3c';
+                
+                // Update ANOVA table
+                document.getElementById('ss-between').textContent = result.ssBetween.toFixed(6);
+                document.getElementById('df-between').textContent = result.dfBetween;
+                document.getElementById('ms-between').textContent = result.msBetween.toFixed(6);
+                document.getElementById('f-value').textContent = result.F.toFixed(6);
+                
+                document.getElementById('ss-within').textContent = result.ssWithin.toFixed(6);
+                document.getElementById('df-within').textContent = result.dfWithin;
+                document.getElementById('ms-within').textContent = result.msWithin.toFixed(6);
+                
+                document.getElementById('ss-total').textContent = (result.ssBetween + result.ssWithin).toFixed(6);
+                document.getElementById('df-total').textContent = result.totalSamples - 1;
+                
+                // Update interpretation
+                const interpretationText = document.getElementById('interpretation-text');
+                if (isSignificant) {
+                    interpretationText.textContent = 
+                        `The p-value of ${result.pValue.toFixed(6)} is less than the significance level of ${alpha}. ` +
+                        `This provides evidence to reject the null hypothesis. There are statistically significant differences ` +
+                        `between at least two of the group means.`;
+                } else {
+                    interpretationText.textContent = 
+                        `The p-value of ${result.pValue.toFixed(6)} is greater than the significance level of ${alpha}. ` +
+                        `There is not enough evidence to reject the null hypothesis. The group means are not significantly different.`;
+                }
+                
+                // Update group statistics table
+                const groupStatsBody = document.getElementById('group-stats-body');
+                groupStatsBody.innerHTML = '';
+                
+                for (let i = 0; i < result.groups; i++) {
+                    const groupData = originalGroups[i];
+                    const groupMean = result.groupMeans[i];
+                    
+                    // Calculate standard deviation
+                    const squaredDiffs = groupData.map(value => Math.pow(value - groupMean, 2));
+                    const variance = squaredDiffs.reduce((sum, value) => sum + value, 0) / groupData.length;
+                    const stdDev = Math.sqrt(variance);
+                    
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>Group ${i+1}</td>
+                        <td>${groupData.length}</td>
+                        <td>${groupMean.toFixed(6)}</td>
+                        <td>${stdDev.toFixed(6)}</td>
+                    `;
+                    
+                    groupStatsBody.appendChild(row);
+                }
+                
+                // Show results
+                resultBox.style.display = 'block';
+            }
+        });
     </script>
 </body>
 </html>
