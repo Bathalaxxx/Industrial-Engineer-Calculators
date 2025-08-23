@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-3BSHG1DE6V');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taguchi Method Calculator | Industrial Engineering Calculators</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+            transition: margin-left 0.3s;
+        }
+        
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block; /* Changed from none to block */
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block; /* Changed from none to block */
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .scenario-selector {
+            margin-bottom: 2rem;
+        }
+        
+        .scenario-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+        }
+        
+        .scenario-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            margin-right: 0.5rem;
+            border-radius: 5px 5px 0 0;
+            background-color: #f1f1f1;
+            transition: all 0.3s;
+        }
+        
+        .scenario-tab.active {
+            background-color: white;
+            border-color: #ddd;
+            border-bottom-color: white;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        
+        .scenario-tab:hover:not(.active) {
+            background-color: #e9e9e9;
+        }
+        
+        .scenario-content {
+            display: none;
+        }
+        
+        .scenario-content.active {
+            display: block;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .factor-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        .factor-table th, .factor-table td {
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        .factor-table th {
+            background-color: #f2f2f2;
+            font-weight: 600;
+        }
+        
+        .factor-table input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .add-factor-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.6rem 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-bottom: 1.5rem;
+            transition: background-color 0.3s;
+        }
+        
+        .add-factor-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .result-card {
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .result-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .interpretation {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #e8f4fc;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            display: block;
+        }
+            
+        body.sidebar-open {
+            margin-left: 0;
+            overflow: hidden;
+        }
+        /* xxxx navigation end xxxxx */
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .scenario-tabs {
+                flex-direction: column;
+            }
+            
+            .scenario-tab {
+                border-radius: 0;
+                margin-right: 0;
+                border-bottom: 1px solid #ddd;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="gagerr.html" class="sidebar-link">Gage R&R</a>
+                <a href="processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="oee.html" class="sidebar-link">OEE Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="anova.html" class="sidebar-link">ANOVA</a>
+                <a href="chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
+                <a href="factorialdesign.html" class="sidebar-link">Factorial Design</a>
+                <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="latinsquare.html" class="sidebar-link">Latin Square</a>
+                <a href="regression.html" class="sidebar-link">Regression</a>
+                <a href="samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="ttest.html" class="sidebar-link">T-Test</a>
+                <a href="ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="eoq.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="rop.html" class="sidebar-link">Reorder Point</a>
+                <a href="kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Study</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+            </div>
+        </div>
+    </aside>
+    <!-- xxxx navigation end xxxxx -->
+    
+    <header>
+        <div class="container header-content">
+            <div class="logo">Industrial <span>Engineering</span> Calculators</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Taguchi Method Calculator</h1>
+            <p>Design experiments and analyze results using Taguchi's orthogonal arrays</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Taguchi Method for Quality Engineering</h2>
+                <p>The Taguchi Method is a statistical approach to experimental design that focuses on reducing variation in processes and products. It uses orthogonal arrays to efficiently study multiple factors with minimal experiments.</p>
+                
+                <div class="formula-box">
+                    S/N Ratio (Larger is Better) = -10 × log(Σ(1/y²)/n)
+                </div>
+                
+                <p>Where:</p>
+                <ul>
+                    <li><strong>S/N Ratio</strong> = Signal-to-Noise Ratio (measure of robustness)</li>
+                    <li><strong>y</strong> = Measured response value</li>
+                    <li><strong>n</strong> = Number of measurements</li>
+                </ul>
+            </div>
+            
+            <div class="scenario-selector">
+                <h3>Taguchi Method Applications</h3>
+                <p>Select the type of analysis you want to perform:</p>
+                
+                <div class="scenario-tabs">
+                    <div class="scenario-tab active" data-scenario="design">Experimental Design</div>
+                    <div class="scenario-tab" data-scenario="analysis">S/N Ratio Analysis</div>
+                    <div class="scenario-tab" data-scenario="optimization">Parameter Optimization</div>
+                </div>
+                
+                <!-- Experimental Design Scenario -->
+                <div class="scenario-content active" id="design-scenario">
+                    <h3>Taguchi Experimental Design</h3>
+                    <p>Create an orthogonal array based on your factors and levels to minimize the number of experiments needed.</p>
+                    
+                    <form id="design-form">
+                        <div class="input-group">
+                            <label for="factor-count">Number of Factors:</label>
+                            <input type="number" id="factor-count" min="2" max="10" value="3" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="level-count">Number of Levels per Factor:</label>
+                            <select id="level-count" required>
+                                <option value="2">2 Levels</option>
+                                <option value="3" selected>3 Levels</option>
+                                <option value="4">4 Levels</option>
+                                <option value="5">5 Levels</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Generate Orthogonal Array</button>
+                    </form>
+                    
+                    <div class="result-box" id="design-result">
+                        <h3>Recommended Orthogonal Array</h3>
+                        
+                        <div class="result-card">
+                            <h4>L9 Orthogonal Array</h4>
+                            <p>This array is suitable for up to 4 factors with 3 levels each, requiring only 9 experiments instead of 81 (3^4) full factorial experiments.</p>
+                        </div>
+                        
+                        <h4>Experimental Design</h4>
+                        <table>
+                            <tr>
+                                <th>Experiment #</th>
+                                <th>Factor A</th>
+                                <th>Factor B</th>
+                                <th>Factor C</th>
+                                <th>Factor D</th>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>1</td>
+                                <td>2</td>
+                                <td>2</td>
+                                <td>2</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>1</td>
+                                <td>3</td>
+                                <td>3</td>
+                                <td>3</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>2</td>
+                                <td>1</td>
+                                <td>2</td>
+                                <td>3</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>2</td>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>1</td>
+                                <td>2</td>
+                            </tr>
+                            <tr>
+                                <td>7</td>
+                                <td>3</td>
+                                <td>1</td>
+                                <td>3</td>
+                                <td>2</td>
+                            </tr>
+                            <tr>
+                                <td>8</td>
+                                <td>3</td>
+                                <td>2</td>
+                                <td>1</td>
+                                <td>3</td>
+                            </tr>
+                            <tr>
+                                <td>9</td>
+                                <td>3</td>
+                                <td>3</td>
+                                <td>2</td>
+                                <td>1</td>
+                            </tr>
+                        </table>
+                        
+                        <div class="interpretation">
+                            <h4>Design Interpretation</h4>
+                            <p>This orthogonal array allows you to study the main effects of each factor with a minimal number of experiments. Each column represents a factor, and the numbers represent the levels to be tested.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- S/N Ratio Analysis Scenario -->
+                <div class="scenario-content" id="analysis-scenario">
+                    <h3>Signal-to-Noise Ratio Analysis</h3>
+                    <p>Calculate Signal-to-Noise (S/N) ratios to determine the most robust parameter settings.</p>
+                    
+                    <form id="analysis-form">
+                        <div class="input-group">
+                            <label for="quality-characteristic">Quality Characteristic:</label>
+                            <select id="quality-characteristic" required>
+                                <option value="smaller">Smaller is Better (Defects, Noise)</option>
+                                <option value="larger" selected>Larger is Better (Strength, Yield)</option>
+                                <option value="nominal">Nominal is Best (Dimensions)</option>
+                            </select>
+                        </div>
+                        
+                        <h4>Experimental Results</h4>
+                        <table class="factor-table">
+                            <thead>
+                                <tr>
+                                    <th>Run #</th>
+                                    <th>Result 1</th>
+                                    <th>Result 2</th>
+                                    <th>Result 3</th>
+                                    <th>Add Replicate</th>
+                                </tr>
+                            </thead>
+                            <tbody id="results-table">
+                                <tr>
+                                    <td>1</td>
+                                    <td><input type="number" step="0.001" value="12.5"></td>
+                                    <td><input type="number" step="0.001" value="12.8"></td>
+                                    <td><input type="number" step="0.001" value="12.6"></td>
+                                    <td><button type="button" class="add-factor-btn" onclick="addReplicate(1)">+</button></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td><input type="number" step="0.001" value="14.2"></td>
+                                    <td><input type="number" step="0.001" value="14.0"></td>
+                                    <td><input type="number" step="0.001" value="14.3"></td>
+                                    <td><button type="button" class="add-factor-btn" onclick="addReplicate(2)">+</button></td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td><input type="number" step="0.001" value="11.8"></td>
+                                    <td><input type="number" step="0.001" value="11.9"></td>
+                                    <td><input type="number" step="0.001" value="11.7"></td>
+                                    <td><button type="button" class="add-factor-btn" onclick="addReplicate(3)">+</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <button type="submit" class="calculate-btn">Calculate S/N Ratios</button>
+                    </form>
+                    
+                    <div class="result-box" id="analysis-result">
+                        <h3>S/N Ratio Analysis Results</h3>
+                        
+                        <div class="result-grid">
+                            <div class="result-card">
+                                <h4>Average S/N Ratio</h4>
+                                <div class="result-value" id="avg-sn-ratio">18.65 dB</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <h4>Optimal Factor Combination</h4>
+                                <div>A2-B1-C3-D2</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <h4>Expected Improvement</h4>
+                                <div>23.5% quality improvement</div>
+                            </div>
+                        </div>
+                        
+                        <h4>S/N Ratios by Experiment</h4>
+                        <table>
+                            <tr>
+                                <th>Experiment #</th>
+                                <th>Mean Response</th>
+                                <th>Standard Deviation</th>
+                                <th>S/N Ratio (dB)</th>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>12.63</td>
+                                <td>0.15</td>
+                                <td>18.42</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>14.17</td>
+                                <td>0.15</td>
+                                <td>19.51</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>11.80</td>
+                                <td>0.10</td>
+                                <td>17.44</td>
+                            </tr>
+                        </table>
+                        
+                        <div class="interpretation">
+                            <h4>Interpretation</h4>
+                            <p>Higher S/N ratios indicate more robust parameter settings. Experiment #2 shows the highest S/N ratio, indicating it's the most robust setting against noise factors.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Parameter Optimization Scenario -->
+                <div class="scenario-content" id="optimization-scenario">
+                    <h3>Parameter Optimization</h3>
+                    <p>Determine the optimal parameter settings based on your experimental results.</p>
+                    
+                    <form id="optimization-form">
+                        <div class="input-group">
+                            <label for="factor-names">Factor Names (comma-separated):</label>
+                            <input type="text" id="factor-names" value="Temperature, Pressure, Speed, Material" required>
+                        </div>
+                        
+                        <h4>Factor Levels and Responses</h4>
+                        <table class="factor-table">
+                            <thead>
+                                <tr>
+                                    <th>Factor</th>
+                                    <th>Level 1</th>
+                                    <th>Level 2</th>
+                                    <th>Level 3</th>
+                                    <th>Optimal Level</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Temperature</td>
+                                    <td><input type="number" value="150"></td>
+                                    <td><input type="number" value="175"></td>
+                                    <td><input type="number" value="200"></td>
+                                    <td>
+                                        <select>
+                                            <option>Level 1</option>
+                                            <option selected>Level 2</option>
+                                            <option>Level 3</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Pressure</td>
+                                    <td><input type="number" value="50"></td>
+                                    <td><input type="number" value="60"></td>
+                                    <td><input type="number" value="70"></td>
+                                    <td>
+                                        <select>
+                                            <option selected>Level 1</option>
+                                            <option>Level 2</option>
+                                            <option>Level 3</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Speed</td>
+                                    <td><input type="number" value="100"></td>
+                                    <td><input type="number" value="120"></td>
+                                    <td><input type="number" value="140"></td>
+                                    <td>
+                                        <select>
+                                            <option>Level 1</option>
+                                            <option>Level 2</option>
+                                            <option selected>Level 3</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Material</td>
+                                    <td><input type="text" value="Type A"></td>
+                                    <td><input type="text" value="Type B"></td>
+                                    <td><input type="text" value="Type C"></td>
+                                    <td>
+                                        <select>
+                                            <option>Level 1</option>
+                                            <option selected>Level 2</option>
+                                            <option>Level 3</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <button type="submit" class="calculate-btn">Determine Optimal Settings</button>
+                    </form>
+                    
+                    <div class="result-box" id="optimization-result">
+                        <h3>Optimal Parameter Settings</h3>
+                        
+                        <div class="result-grid">
+                            <div class="result-card">
+                                <h4>Optimal Combination</h4>
+                                <div>Temperature: 175°<br>Pressure: 50 psi<br>Speed: 140 rpm<br>Material: Type B</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <h4>Expected Quality</h4>
+                                <div class="result-value">98.7%</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <h4>Estimated Improvement</h4>
+                                <div class="result-value">+22.4%</div>
+                            </div>
+                        </div>
+                        
+                        <h4>Factor Contribution</h4>
+                        <table>
+                            <tr>
+                                <th>Factor</th>
+                                <th>Contribution (%)</th>
+                                <th>Optimal Level</th>
+                                <th>Effect</th>
+                            </tr>
+                            <tr>
+                                <td>Temperature</td>
+                                <td>42.3%</td>
+                                <td>175° (Level 2)</td>
+                                <td>Strong positive</td>
+                            </tr>
+                            <tr>
+                                <td>Pressure</td>
+                                <td>28.7%</td>
+                                <td>50 psi (Level 1)</td>
+                                <td>Moderate positive</td>
+                            </tr>
+                            <tr>
+                                <td>Speed</td>
+                                <td>18.5%</td>
+                                <td>140 rpm (Level 3)</td>
+                                <td>Moderate positive</td>
+                            </tr>
+                            <tr>
+                                <td>Material</td>
+                                <td>10.5%</td>
+                                <td>Type B (Level 2)</td>
+                                <td>Weak positive</td>
+                            </tr>
+                        </table>
+                        
+                        <div class="interpretation">
+                            <h4>Interpretation</h4>
+                            <p>Temperature has the greatest influence on quality (42.3% contribution). The optimal settings are expected to improve quality by 22.4% compared to current settings.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Taguchi Method Examples in Manufacturing</h3>
+                
+                <div class="example">
+                    <h4>Injection Molding Process</h4>
+                    <p>A manufacturer used Taguchi methods to optimize an injection molding process. Factors included melt temperature, injection pressure, cooling time, and mold temperature. The L9 orthogonal array reduced experimentation time by 75% while identifying optimal settings that reduced defects by 32%.</p>
+                </div>
+                
+                <div class="example">
+                    <h4>PCB Assembly</h4>
+                    <p>An electronics company applied Taguchi techniques to improve solder joint quality in PCB assembly. Using an L8 array with factors including solder temperature, flux density, and conveyor speed, they achieved a 41% improvement in joint reliability.</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Automotive Part Manufacturing</h4>
+                    <p>An automotive supplier used Taguchi methods to reduce variation in brake pad dimensions. The study identified critical factors and optimal settings that reduced dimensional variation by 57% and improved customer satisfaction ratings.</p>
+                </div>
+            </div>
+            
+            <div class="calculator-intro">
+                <h3>Taguchi Orthogonal Arrays</h3>
+                <table>
+                    <tr>
+                        <th>Array</th>
+                        <th>Factors</th>
+                        <th>Levels</th>
+                        <th>Runs</th>
+                        <th>Full Factorial Equivalent</th>
+                    </tr>
+                    <tr>
+                        <td>L4</td>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>4</td>
+                        <td>8</td>
+                    </tr>
+                    <tr>
+                        <td>L8</td>
+                        <td>7</td>
+                        <td>2</td>
+                        <td>8</td>
+                        <td>128</td>
+                    </tr>
+                    <tr>
+                        <td>L9</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>9</td>
+                        <td>81</td>
+                    </tr>
+                    <tr>
+                        <td>L16</td>
+                        <td>15</td>
+                        <td>2</td>
+                        <td>16</td>
+                        <td>32,768</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            <p class="copyright">&copy; 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- xxxx navigation start xxxxx -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebarClose = document.querySelector('.sidebar-close');
+            const overlay = document.querySelector('.overlay');
+            const body = document.body;
+            
+            // Toggle sidebar
+            function toggleSidebar() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+                body.classList.toggle('sidebar-open');
+            }
+            
+            // Toggle category expansion
+            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
+            categoryHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const category = this.parentElement;
+                    category.classList.toggle('open');
+                    
+                    // Update the expand/collapse icon
+                    const icon = this.querySelector('span:last-child');
+                    icon.textContent = category.classList.contains('open') ? '−' : '+';
+                });
+            });
+            
+            // Event listeners
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            sidebarClose.addEventListener('click', toggleSidebar);
+            overlay.addEventListener('click', toggleSidebar);
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 768 && 
+                    body.classList.contains('sidebar-open') && 
+                    !sidebar.contains(event.target) && 
+                    event.target !== sidebarToggle) {
+                    toggleSidebar();
+                }
+            });
+            
+            // Close sidebar when pressing Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && body.classList.contains('sidebar-open')) {
+                    toggleSidebar();
+                }
+            });
+        });
+    </script>
+    <!-- xxxx navigation end xxxxx -->
+
+    <script>
+        // Scenario tab switching
+        const tabs = document.querySelectorAll('.scenario-tab');
+        const contents = document.querySelectorAll('.scenario-content');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                tabs.forEach(t => t.classList.remove('active'));
+                contents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                const scenario = tab.getAttribute('data-scenario');
+                document.getElementById(`${scenario}-scenario`).classList.add('active');
+            });
+        });
+        
+        // Experimental Design Form
+        document.getElementById('design-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            document.getElementById('design-result').style.display = 'block';
+        });
+        
+        // S/N Ratio Analysis Form
+        document.getElementById('analysis-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            document.getElementById('analysis-result').style.display = 'block';
+        });
+        
+        // Parameter Optimization Form
+        document.getElementById('optimization-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            document.getElementById('optimization-result').style.display = 'block';
+        });
+        
+        // Function to add replicates to the results table
+        function addReplicate(rowNum) {
+            const table = document.getElementById('results-table');
+            const row = table.rows[rowNum - 1];
+            const newCell = row.insertCell(-1);
+            newCell.innerHTML = '<input type="number" step="0.001" value="0.0">';
+            
+            // Update the button cell
+            const buttonCell = row.cells[row.cells.length - 1];
+            buttonCell.innerHTML = '<button type="button" class="add-factor-btn" onclick="addReplicate(' + rowNum + ')">+</button>';
+        }
+    </script>
+</body>
+</html>

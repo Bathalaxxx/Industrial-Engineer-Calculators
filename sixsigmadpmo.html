@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-3BSHG1DE6V');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Six Sigma DPMO Calculator | Industrial Engineering Calculators</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+            transition: margin-left 0.3s;
+        }
+        
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block; /* Changed from none to block */
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .sigma-scale {
+            width: 100%;
+            height: 40px;
+            background: linear-gradient(90deg, #e74c3c, #f39c12, #2ecc71);
+            border-radius: 5px;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+        
+        .sigma-marker {
+            position: absolute;
+            top: -10px;
+            width: 4px;
+            height: 60px;
+            background-color: var(--primary-color);
+            transform: translateX(-50%);
+        }
+        
+        .sigma-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .metric-card {
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .metric-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-card .metric-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .metric-card.dpmo .metric-value {
+            color: #e74c3c;
+        }
+        
+        .metric-card.sigma .metric-value {
+            color: #3498db;
+        }
+        
+        .metric-card.yield .metric-value {
+            color: #2ecc71;
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="gagerr.html" class="sidebar-link">Gage R&R</a>
+                <a href="processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="oee.html" class="sidebar-link">OEE Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="anova.html" class="sidebar-link">ANOVA</a>
+                <a href="chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
+                <a href="factorialdesign.html" class="sidebar-link">Factorial Design</a>
+                <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="latinsquare.html" class="sidebar-link">Latin Square</a>
+                <a href="regression.html" class="sidebar-link">Regression</a>
+                <a href="samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="ttest.html" class="sidebar-link">T-Test</a>
+                <a href="ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="eoq.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="rop.html" class="sidebar-link">Reorder Point</a>
+                <a href="kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Study</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+            </div>
+        </div>
+    </aside>
+    <!-- xxxx navigation end xxxxx -->
+    
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Industrial Engineering <span>Calculators</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Six Sigma DPMO Calculator</h1>
+            <p>Calculate Defects Per Million Opportunities and Sigma Level for process improvement</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Six Sigma Metrics</h2>
+                <p>Six Sigma is a data-driven approach to process improvement that aims to reduce defects to near-zero levels. DPMO (Defects Per Million Opportunities) is a key metric that quantifies process performance and helps determine the Sigma Level.</p>
+                
+                <div class="formula-box">
+                    DPMO = (Number of Defects / (Number of Units × Number of Opportunities)) × 1,000,000
+                </div>
+                
+                <p>Where:</p>
+                <ul>
+                    <li><strong>Defects</strong> = Total number of defects found</li>
+                    <li><strong>Units</strong> = Total number of units produced</li>
+                    <li><strong>Opportunities</strong> = Number of potential defect opportunities per unit</li>
+                </ul>
+            </div>
+            
+            <form id="dpmo-form">
+                <h3>Process Metrics</h3>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="units">Number of Units Produced:</label>
+                        <input type="number" id="units" min="1" step="1" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="defects">Number of Defects Found:</label>
+                        <input type="number" id="defects" min="0" step="1" required>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="opportunities">Number of Defect Opportunities per Unit:</label>
+                    <input type="number" id="opportunities" min="1" step="1" value="1" required>
+                    <p class="help-text">The number of potential ways a defect can occur in each unit</p>
+                </div>
+                
+                <button type="submit" class="calculate-btn">Calculate DPMO & Sigma Level</button>
+            </form>
+            
+            <div class="result-box" id="dpmo-result">
+                <h3>Six Sigma Results</h3>
+                
+                <div class="metrics-grid">
+                    <div class="metric-card dpmo">
+                        <h4>DPMO</h4>
+                        <div class="metric-value" id="dpmo-value"></div>
+                        <p>Defects Per Million Opportunities</p>
+                    </div>
+                    
+                    <div class="metric-card sigma">
+                        <h4>Sigma Level</h4>
+                        <div class="metric-value" id="sigma-value"></div>
+                        <p>Process Capability</p>
+                    </div>
+                    
+                    <div class="metric-card yield">
+                        <h4>Yield</h4>
+                        <div class="metric-value" id="yield-value"></div>
+                        <p>Percent Defect-Free</p>
+                    </div>
+                </div>
+                
+                <h4>Sigma Scale</h4>
+                <div class="sigma-scale">
+                    <div class="sigma-marker" id="sigma-marker"></div>
+                </div>
+                <div class="sigma-labels">
+                    <span>1σ</span>
+                    <span>2σ</span>
+                    <span>3σ</span>
+                    <span>4σ</span>
+                    <span>5σ</span>
+                    <span>6σ</span>
+                </div>
+                
+                <h4>Interpretation</h4>
+                <div id="interpretation"></div>
+                
+                <h4>Six Sigma Benchmarking</h4>
+                <table>
+                    <tr>
+                        <th>Sigma Level</th>
+                        <th>DPMO</th>
+                        <th>Yield</th>
+                        <th>Quality Level</th>
+                    </tr>
+                    <tr>
+                        <td>1σ</td>
+                        <td>691,462</td>
+                        <td>30.85%</td>
+                        <td>Unacceptable</td>
+                    </tr>
+                    <tr>
+                        <td>2σ</td>
+                        <td>308,538</td>
+                        <td>69.15%</td>
+                        <td>Marginal</td>
+                    </tr>
+                    <tr>
+                        <td>3σ</td>
+                        <td>66,807</td>
+                        <td>93.32%</td>
+                        <td>Average</td>
+                    </tr>
+                    <tr>
+                        <td>4σ</td>
+                        <td>6,210</td>
+                        <td>99.38%</td>
+                        <td>Good</td>
+                    </tr>
+                    <tr>
+                        <td>5σ</td>
+                        <td>233</td>
+                        <td>99.98%</td>
+                        <td>Excellent</td>
+                    </tr>
+                    <tr>
+                        <td>6σ</td>
+                        <td>3.4</td>
+                        <td>99.99966%</td>
+                        <td>World Class</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Practical Examples</h3>
+                
+                <div class="example">
+                    <h4>Example 1: Manufacturing Process</h4>
+                    <p>Units: 1,000 | Defects: 45 | Opportunities: 2</p>
+                    <p>DPMO = (45 / (1,000 × 2)) × 1,000,000 = 22,500</p>
+                    <p>Sigma Level ≈ 3.5σ (Between 3σ and 4σ)</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 2: Service Process</h4>
+                    <p>Units: 500 | Defects: 6 | Opportunities: 5</p>
+                    <p>DPMO = (6 / (500 × 5)) × 1,000,000 = 2,400</p>
+                    <p>Sigma Level ≈ 4.3σ (Between 4σ and 5σ)</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 3: High-Quality Process</h4>
+                    <p>Units: 10,000 | Defects: 3 | Opportunities: 1</p>
+                    <p>DPMO = (3 / (10,000 × 1)) × 1,000,000 = 300</p>
+                    <p>Sigma Level ≈ 4.8σ (Approaching 5σ)</p>
+                </div>
+            </div>
+            
+            <div class="calculator-intro">
+                <h3>Understanding DPMO and Sigma Level</h3>
+                <p>DPMO provides a standardized way to compare processes with different complexities. The Sigma Level translates DPMO into a simple scale from 1 to 6 (or higher), where higher values indicate better process performance.</p>
+                
+                <p>Most organizations operate at 3-4 Sigma levels. Six Sigma performance (3.4 DPMO) represents near-perfect processes, with only 3.4 defects per million opportunities.</p>
+                
+                <p>Using these metrics helps organizations:</p>
+                <ul>
+                    <li>Benchmark process performance against industry standards</li>
+                    <li>Identify improvement opportunities</li>
+                    <li>Set quality improvement targets</li>
+                    <li>Measure the impact of process changes</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('dpmo-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get input values
+            const units = parseInt(document.getElementById('units').value);
+            const defects = parseInt(document.getElementById('defects').value);
+            const opportunities = parseInt(document.getElementById('opportunities').value);
+            
+            // Validate inputs
+            if (isNaN(units) || isNaN(defects) || isNaN(opportunities)) {
+                alert('Please enter valid numbers in all fields');
+                return;
+            }
+            
+            if (units <= 0 || opportunities <= 0) {
+                alert('Units and opportunities must be greater than zero');
+                return;
+            }
+            
+            if (defects < 0) {
+                alert('Defects cannot be negative');
+                return;
+            }
+            
+            // Calculate DPMO
+            const dpmo = (defects / (units * opportunities)) * 1000000;
+            
+            // Calculate Yield
+            const yieldPercent = (1 - (defects / (units * opportunities))) * 100;
+            
+            // Calculate Sigma Level (approximation)
+            const sigmaLevel = calculateSigmaLevel(dpmo);
+            
+            // Display results
+            document.getElementById('dpmo-value').textContent = dpmo.toLocaleString(undefined, {maximumFractionDigits: 1});
+            document.getElementById('sigma-value').textContent = sigmaLevel.toFixed(2) + 'σ';
+            document.getElementById('yield-value').textContent = yieldPercent.toFixed(2) + '%';
+            
+            // Position sigma marker
+            const sigmaPercentage = Math.min(100, ((sigmaLevel - 1) / 5) * 100);
+            document.getElementById('sigma-marker').style.left = sigmaPercentage + '%';
+            
+            // Interpretation
+            let interpretation = '';
+            if (sigmaLevel >= 6) {
+                interpretation = `<p>Your process is at <strong>World Class</strong> level (6σ). This represents only ${dpmo.toFixed(1)} defects per million opportunities, which is the benchmark for excellence in most industries.</p>`;
+            } else if (sigmaLevel >= 5) {
+                interpretation = `<p>Your process is <strong>Excellent</strong> (5σ to 6σ). With ${dpmo.toLocaleString(undefined, {maximumFractionDigits: 1})} DPMO, you're performing better than most organizations.</p>`;
+            } else if (sigmaLevel >= 4) {
+                interpretation = `<p>Your process is <strong>Good</strong> (4σ to 5σ). At ${dpmo.toLocaleString(undefined, {maximumFractionDigits: 1})} DPMO, you're above average but still have room for improvement.</p>`;
+            } else if (sigmaLevel >= 3) {
+                interpretation = `<p>Your process is <strong>Average</strong> (3σ to 4σ). With ${dpmo.toLocaleString(undefined, {maximumFractionDigits: 1})} DPMO, you're performing at industry average but have significant improvement opportunities.</p>`;
+            } else {
+                interpretation = `<p>Your process needs <strong>significant improvement</strong> (below 3σ). At ${dpmo.toLocaleString(undefined, {maximumFractionDigits: 1})} DPMO, you should prioritize quality improvement initiatives.</p>`;
+            }
+            
+            interpretation += `<p>Your process yield is ${yieldPercent.toFixed(2)}%, meaning ${yieldPercent.toFixed(2)}% of opportunities are defect-free.</p>`;
+            
+            document.getElementById('interpretation').innerHTML = interpretation;
+            
+            // Show results
+            document.getElementById('dpmo-result').style.display = 'block';
+        });
+        
+        // Function to calculate Sigma Level from DPMO
+        function calculateSigmaLevel(dpmo) {
+            // This is an approximation as the exact calculation requires the normal distribution
+            // For precise calculation, we'd need to use the inverse normal distribution
+            
+            // Common benchmarks for Sigma Level to DPMO
+            const sigmaBenchmarks = [
+                { sigma: 1, dpmo: 691462 },
+                { sigma: 2, dpmo: 308538 },
+                { sigma: 3, dpmo: 66807 },
+                { sigma: 4, dpmo: 6210 },
+                { sigma: 5, dpmo: 233 },
+                { sigma: 6, dpmo: 3.4 }
+            ];
+            
+            // For DPMO values lower than 3.4 (better than 6σ)
+            if (dpmo <= 3.4) {
+                // Extrapolate beyond 6σ
+                return 6 + (Math.log10(3.4 / dpmo) / Math.log10(2));
+            }
+            
+            // For DPMO values between benchmarks
+            for (let i = 0; i < sigmaBenchmarks.length - 1; i++) {
+                const current = sigmaBenchmarks[i];
+                const next = sigmaBenchmarks[i + 1];
+                
+                if (dpmo <= current.dpmo && dpmo > next.dpmo) {
+                    // Linear interpolation between benchmarks
+                    const sigmaRange = next.sigma - current.sigma;
+                    const dpmoRange = current.dpmo - next.dpmo;
+                    const positionInRange = (current.dpmo - dpmo) / dpmoRange;
+                    
+                    return current.sigma + (sigmaRange * positionInRange);
+                }
+            }
+            
+            // For DPMO worse than 1σ
+            if (dpmo > 691462) {
+                return 1 - (Math.log10(dpmo / 691462) / Math.log10(2));
+            }
+            
+            return 0; // Fallback
+        }
+    </script>
+</body>
+</html>

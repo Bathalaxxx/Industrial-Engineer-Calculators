@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-3BSHG1DE6V');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Time Value of Money Calculator - Engineering economics calculations for present/future value, annuities, and more">
+    <title>Time Value of Money Calculator | Industrial Engineering Calculators</title>
+    <style>
+        /* Consistent with existing style */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block; /* Changed from none to block */
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .scenario-selector {
+            margin-bottom: 2rem;
+        }
+        
+        .scenario-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .scenario-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            margin-right: 0.5rem;
+            border-radius: 5px 5px 0 0;
+            background-color: #f1f1f1;
+            transition: all 0.3s;
+        }
+        
+        .scenario-tab.active {
+            background-color: white;
+            border-color: #ddd;
+            border-bottom-color: white;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        
+        .scenario-tab:hover:not(.active) {
+            background-color: #e9e9e9;
+        }
+        
+        .scenario-content {
+            display: none;
+        }
+        
+        .scenario-content.active {
+            display: block;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        .cashflow-diagram {
+            margin: 1rem 0;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        
+        .cashflow-line {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0.5rem 0;
+        }
+        
+        .cashflow-period {
+            width: 60px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .cashflow-arrow {
+            flex-grow: 1;
+            height: 2px;
+            background-color: var(--secondary-color);
+            position: relative;
+        }
+        
+        .cashflow-arrow::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: -4px;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 5px 0 5px 8px;
+            border-color: transparent transparent transparent var(--secondary-color);
+        }
+        
+        .cashflow-amount {
+            margin-left: 1rem;
+            font-weight: 500;
+        }
+        
+        .cashflow-up {
+            color: #2ecc71;
+        }
+        
+        .cashflow-down {
+            color: #e74c3c;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            display: block;
+        }
+            
+        body.sidebar-open {
+            margin-left: 0;
+            overflow: hidden;
+        }
+        /* xxxx navigation end xxxxx */
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .scenario-tabs {
+                flex-direction: column;
+            }
+            
+            .scenario-tab {
+                border-radius: 0;
+                margin-right: 0;
+                border-bottom: 1px solid #ddd;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="gagerr.html" class="sidebar-link">Gage R&R</a>
+                <a href="processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="oee.html" class="sidebar-link">OEE Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="anova.html" class="sidebar-link">ANOVA</a>
+                <a href="chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
+                <a href="factorialdesign.html" class="sidebar-link">Factorial Design</a>
+                <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="latinsquare.html" class="sidebar-link">Latin Square</a>
+                <a href="regression.html" class="sidebar-link">Regression</a>
+                <a href="samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="ttest.html" class="sidebar-link">T-Test</a>
+                <a href="ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="eoq.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="rop.html" class="sidebar-link">Reorder Point</a>
+                <a href="kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Study</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+            </div>
+        </div>
+    </aside>
+    <!-- xxxx navigation end xxxxx -->
+    
+    <header>
+        <div class="container header-content">
+            <div class="logo">Industrial <span>Engineering</span> Calculators</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Time Value of Money Calculator</h1>
+            <p>Engineering economics calculations for present/future value, annuities, and more</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Time Value of Money</h2>
+                <p>The time value of money (TVM) is the concept that money available at the present time is worth more than the identical sum in the future due to its potential earning capacity.</p>
+                
+                <div class="formula-box">
+                    F = P(1 + i)ⁿ   (Single Payment)
+                    <br>
+                    P = A[(1 + i)ⁿ - 1]/[i(1 + i)ⁿ]   (Uniform Series Present Worth)
+                    <br>
+                    F = A[(1 + i)ⁿ - 1]/i   (Uniform Series Future Worth)
+                </div>
+                
+                <p>Where:</p>
+                <ul>
+                    <li><strong>F</strong> = Future value</li>
+                    <li><strong>P</strong> = Present value</li>
+                    <li><strong>A</strong> = Uniform series amount (annuity)</li>
+                    <li><strong>i</strong> = Interest rate per period</li>
+                    <li><strong>n</strong> = Number of periods</li>
+                </ul>
+            </div>
+            
+            <div class="scenario-selector">
+                <h3>Calculation Type</h3>
+                <p>Select what you want to calculate:</p>
+                
+                <div class="scenario-tabs">
+                    <div class="scenario-tab active" data-scenario="single-future">Future Value (Single)</div>
+                    <div class="scenario-tab" data-scenario="single-present">Present Value (Single)</div>
+                    <div class="scenario-tab" data-scenario="annuity-present">Annuity Present Value</div>
+                    <div class="scenario-tab" data-scenario="annuity-future">Annuity Future Value</div>
+                    <div class="scenario-tab" data-scenario="annuity-payment">Annuity Payment (A)</div>
+                </div>
+                
+                <!-- Future Value (Single Payment) -->
+                <div class="scenario-content active" id="single-future-scenario">
+                    <h3>Future Value of a Single Payment</h3>
+                    <p>Calculate how much a present amount will grow to in the future with compound interest.</p>
+                    
+                    <form id="single-future-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="future-present-value">Present Value (P):</label>
+                                <input type="number" id="future-present-value" step="0.01" min="0" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="future-interest-rate">Interest Rate per Period (%):</label>
+                                <input type="number" id="future-interest-rate" step="0.01" min="0" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="future-periods">Number of Periods (n):</label>
+                                <input type="number" id="future-periods" min="1" step="1" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="future-compounding">Compounding:</label>
+                                <select id="future-compounding">
+                                    <option value="discrete">Discrete</option>
+                                    <option value="continuous">Continuous</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate Future Value</button>
+                    </form>
+                    
+                    <div class="result-box" id="single-future-result">
+                        <h3>Result</h3>
+                        <p>Future Value (F): <span class="result-value" id="single-future-result-value"></span></p>
+                        
+                        <div class="cashflow-diagram">
+                            <div class="cashflow-line">
+                                <div class="cashflow-period">0</div>
+                                <div class="cashflow-arrow"></div>
+                                <div class="cashflow-amount cashflow-down" id="single-future-pv-diagram"></div>
+                            </div>
+                            <div class="cashflow-line">
+                                <div class="cashflow-period" id="single-future-n-diagram"></div>
+                                <div class="cashflow-arrow"></div>
+                                <div class="cashflow-amount cashflow-up" id="single-future-fv-diagram"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Present Value (Single Payment) -->
+                <div class="scenario-content" id="single-present-scenario">
+                    <h3>Present Value of a Single Payment</h3>
+                    <p>Calculate what a future amount is worth today (its present value).</p>
+                    
+                    <form id="single-present-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="present-future-value">Future Value (F):</label>
+                                <input type="number" id="present-future-value" step="0.01" min="0" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="present-interest-rate">Interest Rate per Period (%):</label>
+                                <input type="number" id="present-interest-rate" step="0.01" min="0" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="present-periods">Number of Periods (n):</label>
+                                <input type="number" id="present-periods" min="1" step="1" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="present-compounding">Compounding:</label>
+                                <select id="present-compounding">
+                                    <option value="discrete">Discrete</option>
+                                    <option value="continuous">Continuous</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate Present Value</button>
+                    </form>
+                    
+                    <div class="result-box" id="single-present-result">
+                        <h3>Result</h3>
+                        <p>Present Value (P): <span class="result-value" id="single-present-result-value"></span></p>
+                        
+                        <div class="cashflow-diagram">
+                            <div class="cashflow-line">
+                                <div class="cashflow-period">0</div>
+                                <div class="cashflow-arrow"></div>
+                                <div class="cashflow-amount cashflow-down" id="single-present-pv-diagram"></div>
+                            </div>
+                            <div class="cashflow-line">
+                                <div class="cashflow-period" id="single-present-n-diagram"></div>
+                                <div class="cashflow-arrow"></div>
+                                <div class="cashflow-amount cashflow-up" id="single-present-fv-diagram"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Annuity Present Value -->
+                <div class="scenario-content" id="annuity-present-scenario">
+                    <h3>Present Value of an Annuity</h3>
+                    <p>Calculate the present value of a series of equal payments (annuity).</p>
+                    
+                    <form id="annuity-present-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="annuity-present-payment">Payment Amount (A):</label>
+                                <input type="number" id="annuity-present-payment" step="0.01" min="0" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="annuity-present-interest-rate">Interest Rate per Period (%):</label>
+                                <input type="number" id="annuity-present-interest-rate" step="0.01" min="0" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="annuity-present-periods">Number of Periods (n):</label>
+                                <input type="number" id="annuity-present-periods" min="1" step="1" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="annuity-present-type">Annuity Type:</label>
+                                <select id="annuity-present-type">
+                                    <option value="ordinary">Ordinary (end of period)</option>
+                                    <option value="due">Annuity due (beginning of period)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate Present Value</button>
+                    </form>
+                    
+                    <div class="result-box" id="annuity-present-result">
+                        <h3>Result</h3>
+                        <p>Present Value (P): <span class="result-value" id="annuity-present-result-value"></span></p>
+                        
+                        <div class="cashflow-diagram">
+                            <div class="cashflow-line">
+                                <div class="cashflow-period">0</div>
+                                <div class="cashflow-arrow"></div>
+                                <div class="cashflow-amount cashflow-down" id="annuity-present-pv-diagram"></div>
+                            </div>
+                            <div id="annuity-present-cashflows"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Annuity Future Value -->
+                <div class="scenario-content" id="annuity-future-scenario">
+                    <h3>Future Value of an Annuity</h3>
+                    <p>Calculate the future value of a series of equal payments (annuity).</p>
+                    
+                    <form id="annuity-future-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="annuity-future-payment">Payment Amount (A):</label>
+                                <input type="number" id="annuity-future-payment" step="0.01" min="0" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="annuity-future-interest-rate">Interest Rate per Period (%):</label>
+                                <input type="number" id="annuity-future-interest-rate" step="0.01" min="0" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="annuity-future-periods">Number of Periods (n):</label>
+                                <input type="number" id="annuity-future-periods" min="1" step="1" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="annuity-future-type">Annuity Type:</label>
+                                <select id="annuity-future-type">
+                                    <option value="ordinary">Ordinary (end of period)</option>
+                                    <option value="due">Annuity due (beginning of period)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate Future Value</button>
+                    </form>
+                    
+                    <div class="result-box" id="annuity-future-result">
+                        <h3>Result</h3>
+                        <p>Future Value (F): <span class="result-value" id="annuity-future-result-value"></span></p>
+                        
+                        <div class="cashflow-diagram">
+                            <div id="annuity-future-cashflows"></div>
+                            <div class="cashflow-line">
+                                <div class="cashflow-period" id="annuity-future-n-diagram"></div>
+                                <div class="cashflow-arrow"></div>
+                                <div class="cashflow-amount cashflow-up" id="annuity-future-fv-diagram"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Annuity Payment (A) -->
+                <div class="scenario-content" id="annuity-payment-scenario">
+                    <h3>Annuity Payment (Capital Recovery/Sinking Fund)</h3>
+                    <p>Calculate the equal payment amount needed to reach a future value (sinking fund) or pay off a present value (capital recovery).</p>
+                    
+                    <form id="annuity-payment-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="annuity-payment-type">Calculation Type:</label>
+                                <select id="annuity-payment-type">
+                                    <option value="sinking">Sinking Fund (Find A given F)</option>
+                                    <option value="capital">Capital Recovery (Find A given P)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="annuity-payment-amount">Amount (P or F):</label>
+                                <input type="number" id="annuity-payment-amount" step="0.01" min="0" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="annuity-payment-interest-rate">Interest Rate per Period (%):</label>
+                                <input type="number" id="annuity-payment-interest-rate" step="0.01" min="0" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="annuity-payment-periods">Number of Periods (n):</label>
+                                <input type="number" id="annuity-payment-periods" min="1" step="1" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="annuity-payment-compounding">Compounding:</label>
+                                <select id="annuity-payment-compounding">
+                                    <option value="discrete">Discrete</option>
+                                    <option value="continuous">Continuous</option>
+                                </select>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="annuity-payment-annuity-type">Annuity Type:</label>
+                                <select id="annuity-payment-annuity-type">
+                                    <option value="ordinary">Ordinary (end of period)</option>
+                                    <option value="due">Annuity due (beginning of period)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate Payment</button>
+                    </form>
+                    
+                    <div class="result-box" id="annuity-payment-result">
+                        <h3>Result</h3>
+                        <p>Payment Amount (A): <span class="result-value" id="annuity-payment-result-value"></span></p>
+                        
+                        <div class="cashflow-diagram" id="annuity-payment-diagram">
+                            <!-- Diagram will be generated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Practical Examples</h3>
+                
+                <div class="example">
+                    <h4>Example 1: Future Value of Investment</h4>
+                    <p>Invest $10,000 at 5% annual interest for 10 years (compounded annually).</p>
+                    <p>F = 10,000 × (1 + 0.05)¹⁰ = $16,288.95</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 2: Present Value of Future Sum</h4>
+                    <p>How much to invest today to have $50,000 in 8 years at 6% annual interest?</p>
+                    <p>P = 50,000 / (1 + 0.06)⁸ = $31,370.62</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 3: Annuity Present Value</h4>
+                    <p>Value today of 20 annual payments of $5,000 at 7% interest (ordinary annuity).</p>
+                    <p>P = 5,000 × [(1.07)²⁰ - 1]/[0.07(1.07)²⁰] = $52,970.07</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 4: Sinking Fund Payment</h4>
+                    <p>Annual payments needed to accumulate $100,000 in 15 years at 4% interest.</p>
+                    <p>A = 100,000 × 0.04 / [(1.04)¹⁵ - 1] = $4,995.25</p>
+                </div>
+            </div>
+            
+            <div class="calculator-intro">
+                <h3>Engineering Economics Factors</h3>
+                <table>
+                    <tr>
+                        <th>Factor</th>
+                        <th>Formula</th>
+                        <th>Notation</th>
+                    </tr>
+                    <tr>
+                        <td>Single Payment Compound Amount</td>
+                        <td>(1 + i)ⁿ</td>
+                        <td>(F/P,i,n)</td>
+                    </tr>
+                    <tr>
+                        <td>Single Payment Present Worth</td>
+                        <td>1/(1 + i)ⁿ</td>
+                        <td>(P/F,i,n)</td>
+                    </tr>
+                    <tr>
+                        <td>Uniform Series Sinking Fund</td>
+                        <td>i/[(1 + i)ⁿ - 1]</td>
+                        <td>(A/F,i,n)</td>
+                    </tr>
+                    <tr>
+                        <td>Uniform Series Capital Recovery</td>
+                        <td>i(1 + i)ⁿ/[(1 + i)ⁿ - 1]</td>
+                        <td>(A/P,i,n)</td>
+                    </tr>
+                    <tr>
+                        <td>Uniform Series Compound Amount</td>
+                        <td>[(1 + i)ⁿ - 1]/i</td>
+                        <td>(F/A,i,n)</td>
+                    </tr>
+                    <tr>
+                        <td>Uniform Series Present Worth</td>
+                        <td>[(1 + i)ⁿ - 1]/[i(1 + i)ⁿ]</td>
+                        <td>(P/A,i,n)</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- xxxx navigation start xxxxx -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebarClose = document.querySelector('.sidebar-close');
+            const overlay = document.querySelector('.overlay');
+            const body = document.body;
+            
+            // Toggle sidebar
+            function toggleSidebar() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+                body.classList.toggle('sidebar-open');
+            }
+            
+            // Toggle category expansion
+            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
+            categoryHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const category = this.parentElement;
+                    category.classList.toggle('open');
+                    
+                    // Update the expand/collapse icon
+                    const icon = this.querySelector('span:last-child');
+                    icon.textContent = category.classList.contains('open') ? '−' : '+';
+                });
+            });
+            
+            // Event listeners
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            sidebarClose.addEventListener('click', toggleSidebar);
+            overlay.addEventListener('click', toggleSidebar);
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 768 && 
+                    body.classList.contains('sidebar-open') && 
+                    !sidebar.contains(event.target) && 
+                    event.target !== sidebarToggle) {
+                    toggleSidebar();
+                }
+            });
+            
+            // Close sidebar when pressing Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && body.classList.contains('sidebar-open')) {
+                    toggleSidebar();
+                }
+            });
+        });
+    </script>
+    <!-- xxxx navigation end xxxxx -->
+
+    <script>
+        // Scenario tab switching
+        const tabs = document.querySelectorAll('.scenario-tab');
+        const contents = document.querySelectorAll('.scenario-content');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                tabs.forEach(t => t.classList.remove('active'));
+                contents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                const scenario = tab.getAttribute('data-scenario');
+                document.getElementById(`${scenario}-scenario`).classList.add('active');
+            });
+        });
+        
+        // Future Value (Single Payment) calculation
+        document.getElementById('single-future-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const presentValue = parseFloat(document.getElementById('future-present-value').value);
+            const interestRate = parseFloat(document.getElementById('future-interest-rate').value) / 100;
+            const periods = parseFloat(document.getElementById('future-periods').value);
+            const compounding = document.getElementById('future-compounding').value;
+            
+            if (isNaN(presentValue) || isNaN(interestRate) || isNaN(periods)) {
+                alert('Please enter valid numbers');
+                return;
+            }
+            
+            let futureValue;
+            if (compounding === 'continuous') {
+                futureValue = presentValue * Math.exp(interestRate * periods);
+            } else {
+                futureValue = presentValue * Math.pow(1 + interestRate, periods);
+            }
+            
+            document.getElementById('single-future-result-value').textContent = '$' + futureValue.toFixed(2);
+            document.getElementById('single-future-pv-diagram').textContent = '$' + presentValue.toFixed(2);
+            document.getElementById('single-future-fv-diagram').textContent = '$' + futureValue.toFixed(2);
+            document.getElementById('single-future-n-diagram').textContent = periods;
+            
+            document.getElementById('single-future-result').style.display = 'block';
+        });
+        
+        // Present Value (Single Payment) calculation
+        document.getElementById('single-present-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const futureValue = parseFloat(document.getElementById('present-future-value').value);
+            const interestRate = parseFloat(document.getElementById('present-interest-rate').value) / 100;
+            const periods = parseFloat(document.getElementById('present-periods').value);
+            const compounding = document.getElementById('present-compounding').value;
+            
+            if (isNaN(futureValue) || isNaN(interestRate) || isNaN(periods)) {
+                alert('Please enter valid numbers');
+                return;
+            }
+            
+            let presentValue;
+            if (compounding === 'continuous') {
+                presentValue = futureValue / Math.exp(interestRate * periods);
+            } else {
+                presentValue = futureValue / Math.pow(1 + interestRate, periods);
+            }
+            
+            document.getElementById('single-present-result-value').textContent = '$' + presentValue.toFixed(2);
+            document.getElementById('single-present-pv-diagram').textContent = '$' + presentValue.toFixed(2);
+            document.getElementById('single-present-fv-diagram').textContent = '$' + futureValue.toFixed(2);
+            document.getElementById('single-present-n-diagram').textContent = periods;
+            
+            document.getElementById('single-present-result').style.display = 'block';
+        });
+        
+        // Annuity Present Value calculation
+        document.getElementById('annuity-present-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const payment = parseFloat(document.getElementById('annuity-present-payment').value);
+            const interestRate = parseFloat(document.getElementById('annuity-present-interest-rate').value) / 100;
+            const periods = parseFloat(document.getElementById('annuity-present-periods').value);
+            const annuityType = document.getElementById('annuity-present-type').value;
+            
+            if (isNaN(payment) || isNaN(interestRate) || isNaN(periods)) {
+                alert('Please enter valid numbers');
+                return;
+            }
+            
+            let presentValue;
+            if (interestRate === 0) {
+                presentValue = payment * periods;
+            } else {
+                presentValue = payment * (Math.pow(1 + interestRate, periods) - 1) / (interestRate * Math.pow(1 + interestRate, periods));
+                
+                if (annuityType === 'due') {
+                    presentValue *= (1 + interestRate);
+                }
+            }
+            
+            document.getElementById('annuity-present-result-value').textContent = '$' + presentValue.toFixed(2);
+            document.getElementById('annuity-present-pv-diagram').textContent = '$' + presentValue.toFixed(2);
+            
+            // Generate cash flow diagram
+            let cashflowsHTML = '';
+            for (let i = 1; i <= periods; i++) {
+                cashflowsHTML += `
+                    <div class="cashflow-line">
+                        <div class="cashflow-period">${i}</div>
+                        <div class="cashflow-arrow"></div>
+                        <div class="cashflow-amount cashflow-up">$${payment.toFixed(2)}</div>
+                    </div>
+                `;
+            }
+            document.getElementById('annuity-present-cashflows').innerHTML = cashflowsHTML;
+            
+            document.getElementById('annuity-present-result').style.display = 'block';
+        });
+        
+        // Annuity Future Value calculation
+        document.getElementById('annuity-future-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const payment = parseFloat(document.getElementById('annuity-future-payment').value);
+            const interestRate = parseFloat(document.getElementById('annuity-future-interest-rate').value) / 100;
+            const periods = parseFloat(document.getElementById('annuity-future-periods').value);
+            const annuityType = document.getElementById('annuity-future-type').value;
+            
+            if (isNaN(payment) || isNaN(interestRate) || isNaN(periods)) {
+                alert('Please enter valid numbers');
+                return;
+            }
+            
+            let futureValue;
+            if (interestRate === 0) {
+                futureValue = payment * periods;
+            } else {
+                futureValue = payment * (Math.pow(1 + interestRate, periods) - 1) / interestRate;
+                
+                if (annuityType === 'due') {
+                    futureValue *= (1 + interestRate);
+                }
+            }
+            
+            document.getElementById('annuity-future-result-value').textContent = '$' + futureValue.toFixed(2);
+            document.getElementById('annuity-future-fv-diagram').textContent = '$' + futureValue.toFixed(2);
+            document.getElementById('annuity-future-n-diagram').textContent = periods;
+            
+            // Generate cash flow diagram
+            let cashflowsHTML = '';
+            for (let i = 1; i <= periods; i++) {
+                cashflowsHTML += `
+                    <div class="cashflow-line">
+                        <div class="cashflow-period">${i-1}</div>
+                        <div class="cashflow-arrow"></div>
+                        <div class="cashflow-amount cashflow-down">$${payment.toFixed(2)}</div>
+                    </div>
+                `;
+            }
+            document.getElementById('annuity-future-cashflows').innerHTML = cashflowsHTML;
+            
+            document.getElementById('annuity-future-result').style.display = 'block';
+        });
+        
+        // Annuity Payment calculation
+        document.getElementById('annuity-payment-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const amount = parseFloat(document.getElementById('annuity-payment-amount').value);
+            const interestRate = parseFloat(document.getElementById('annuity-payment-interest-rate').value) / 100;
+            const periods = parseFloat(document.getElementById('annuity-payment-periods').value);
+            const calculationType = document.getElementById('annuity-payment-type').value;
+            const annuityType = document.getElementById('annuity-payment-annuity-type').value;
+            
+            if (isNaN(amount) || isNaN(interestRate) || isNaN(periods)) {
+                alert('Please enter valid numbers');
+                return;
+            }
+            
+            let payment;
+            if (calculationType === 'sinking') {
+                // Sinking fund (A given F)
+                if (interestRate === 0) {
+                    payment = amount / periods;
+                } else {
+                    payment = amount * interestRate / (Math.pow(1 + interestRate, periods) - 1);
+                    
+                    if (annuityType === 'due') {
+                        payment /= (1 + interestRate);
+                    }
+                }
+            } else {
+                // Capital recovery (A given P)
+                if (interestRate === 0) {
+                    payment = amount / periods;
+                } else {
+                    payment = amount * interestRate * Math.pow(1 + interestRate, periods) / (Math.pow(1 + interestRate, periods) - 1);
+                    
+                    if (annuityType === 'due') {
+                        payment /= (1 + interestRate);
+                    }
+                }
+            }
+            
+            document.getElementById('annuity-payment-result-value').textContent = '$' + payment.toFixed(2);
+            
+            // Generate appropriate cash flow diagram
+            let diagramHTML = '';
+            if (calculationType === 'sinking') {
+                diagramHTML = `
+                    <div id="annuity-payment-sinking-diagram">
+                        ${Array.from({length: periods}, (_, i) => `
+                            <div class="cashflow-line">
+                                <div class="cashflow-period">${i+1}</div>
+                                <div class="cashflow-arrow"></div>
+                                <div class="cashflow-amount cashflow-down">$${payment.toFixed(2)}</div>
+                            </div>
+                        `).join('')}
+                        <div class="cashflow-line">
+                            <div class="cashflow-period">${periods}</div>
+                            <div class="cashflow-arrow"></div>
+                            <div class="cashflow-amount cashflow-up">$${amount.toFixed(2)}</div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                diagramHTML = `
+                    <div id="annuity-payment-capital-diagram">
+                        <div class="cashflow-line">
+                            <div class="cashflow-period">0</div>
+                            <div class="cashflow-arrow"></div>
+                            <div class="cashflow-amount cashflow-up">$${amount.toFixed(2)}</div>
+                        </div>
+                        ${Array.from({length: periods}, (_, i) => `
+                            <div class="cashflow-line">
+                                <div class="cashflow-period">${i+1}</div>
+                                <div class="cashflow-arrow"></div>
+                                <div class="cashflow-amount cashflow-down">$${payment.toFixed(2)}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+            document.getElementById('annuity-payment-diagram').innerHTML = diagramHTML;
+            
+            document.getElementById('annuity-payment-result').style.display = 'block';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-3BSHG1DE6V');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Control Charts Calculator - Create X-bar & R, X-bar & S, P, NP, C, and U charts for statistical process control">
+    <title>Control Charts Calculator | Industrial Engineering Calculators</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block; /* Changed from none to block */
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .chart-selector {
+            margin-bottom: 2rem;
+        }
+        
+        .chart-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .chart-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            margin-right: 0.5rem;
+            border-radius: 5px 5px 0 0;
+            background-color: #f1f1f1;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .chart-tab.active {
+            background-color: white;
+            border-color: #ddd;
+            border-bottom-color: white;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        
+        .chart-tab:hover:not(.active) {
+            background-color: #e9e9e9;
+        }
+        
+        .chart-content {
+            display: none;
+        }
+        
+        .chart-content.active {
+            display: block;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select, .input-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group textarea {
+            min-height: 100px;
+            font-family: monospace;
+        }
+        
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-section {
+            margin-top: 2rem;
+            display: none;
+        }
+        
+        .chart-container {
+            width: 100%;
+            height: 400px;
+            margin: 2rem 0;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 1rem;
+            position: relative;
+        }
+        
+        .chart-placeholder {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            color: var(--text-light);
+            font-style: italic;
+        }
+        
+        .control-limits {
+            margin-top: 1.5rem;
+        }
+        
+        .control-limits h4 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .control-limits-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+        }
+        
+        .control-limits-table th, .control-limits-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        
+        .control-limits-table th {
+            background-color: #f2f2f2;
+            font-weight: 500;
+        }
+        
+        .data-points-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+            max-height: 300px;
+            overflow-y: auto;
+            display: block;
+        }
+        
+        .data-points-table th, .data-points-table td {
+            padding: 0.5rem;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        
+        .data-points-table th {
+            background-color: #f2f2f2;
+            font-weight: 500;
+            position: sticky;
+            top: 0;
+        }
+        
+        .out-of-control {
+            background-color: #ffebee;
+            color: #c62828;
+            font-weight: bold;
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            display: block;
+        }
+        
+        body.sidebar-open {
+            margin-left: 0;
+            overflow: hidden;
+        }
+        /* xxxx navigation end xxxxx */
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .chart-tabs {
+                flex-direction: column;
+            }
+            
+            .chart-tab {
+                border-radius: 0;
+                margin-right: 0;
+                border-bottom: 1px solid #ddd;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="gagerr.html" class="sidebar-link">Gage R&R</a>
+                <a href="processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="oee.html" class="sidebar-link">OEE Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="anova.html" class="sidebar-link">ANOVA</a>
+                <a href="chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
+                <a href="factorialdesign.html" class="sidebar-link">Factorial Design</a>
+                <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="latinsquare.html" class="sidebar-link">Latin Square</a>
+                <a href="regression.html" class="sidebar-link">Regression</a>
+                <a href="samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="ttest.html" class="sidebar-link">T-Test</a>
+                <a href="ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="eoq.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="rop.html" class="sidebar-link">Reorder Point</a>
+                <a href="kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Study</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+            </div>
+        </div>
+    </aside>
+    <!-- xxxx navigation end xxxxx -->
+    
+    <header>
+        <div class="container header-content">
+            <div class="logo">Industrial <span>Engineering</span> Calculators</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Control Charts Calculator</h1>
+            <p>Create X-bar & R, X-bar & S, P, NP, C, and U charts for statistical process control</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Statistical Process Control Charts</h2>
+                <p>Control charts are statistical tools used to determine if a manufacturing or business process is in a state of control. They help identify special causes of variation and monitor process stability over time.</p>
+                
+                <div class="formula-box">
+                    Control Limits = Center Line ± (Control Limit Factor × Process Variability)
+                </div>
+                
+                <p>Key concepts:</p>
+                <ul>
+                    <li><strong>Upper Control Limit (UCL)</strong>: The highest value a process should produce when in control</li>
+                    <li><strong>Lower Control Limit (LCL)</strong>: The lowest value a process should produce when in control</li>
+                    <li><strong>Center Line (CL)</strong>: The average or median of the process data</li>
+                    <li><strong>Special Cause Variation</strong>: Indicated by points outside control limits or non-random patterns</li>
+                </ul>
+            </div>
+            
+            <div class="chart-selector">
+                <h3>Select Control Chart Type</h3>
+                <p>Choose the appropriate control chart for your data type:</p>
+                
+                <div class="chart-tabs">
+                    <div class="chart-tab active" data-chart="xbar-r">X-bar & R Chart</div>
+                    <div class="chart-tab" data-chart="xbar-s">X-bar & S Chart</div>
+                    <div class="chart-tab" data-chart="p">P Chart</div>
+                    <div class="chart-tab" data-chart="np">NP Chart</div>
+                    <div class="chart-tab" data-chart="c">C Chart</div>
+                    <div class="chart-tab" data-chart="u">U Chart</div>
+                </div>
+                
+                <!-- X-bar & R Chart -->
+                <div class="chart-content active" id="xbar-r-chart">
+                    <h3>X-bar & R Chart</h3>
+                    <p>For continuous data with subgroup sizes of 2-10. X-bar chart monitors process mean, R chart monitors process variability.</p>
+                    
+                    <form id="xbar-r-form">
+                        <div class="input-group">
+                            <label for="xbar-r-data">Enter subgroup data (comma or space separated, with subgroups separated by semicolons):</label>
+                            <textarea id="xbar-r-data" placeholder="Example: 10.2, 10.5, 10.3; 10.1, 10.4, 10.2; 10.3, 10.6, 10.4"></textarea>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="xbar-r-subgroup-size">Subgroup Size (n):</label>
+                                <input type="number" id="xbar-r-subgroup-size" min="2" max="10" value="3" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="xbar-r-target">Target Value (optional):</label>
+                                <input type="number" id="xbar-r-target" step="0.001">
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate Control Limits</button>
+                    </form>
+                </div>
+                
+                <!-- X-bar & S Chart -->
+                <div class="chart-content" id="xbar-s-chart">
+                    <h3>X-bar & S Chart</h3>
+                    <p>For continuous data with subgroup sizes >10. X-bar chart monitors process mean, S chart monitors process standard deviation.</p>
+                    
+                    <form id="xbar-s-form">
+                        <div class="input-group">
+                            <label for="xbar-s-data">Enter subgroup data (comma or space separated, with subgroups separated by semicolons):</label>
+                            <textarea id="xbar-s-data" placeholder="Example: 10.2, 10.5, 10.3, 10.4; 10.1, 10.4, 10.2, 10.3; 10.3, 10.6, 10.4, 10.5"></textarea>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="xbar-s-subgroup-size">Subgroup Size (n):</label>
+                                <input type="number" id="xbar-s-subgroup-size" min="2" value="4" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="xbar-s-target">Target Value (optional):</label>
+                                <input type="number" id="xbar-s-target" step="0.001">
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate Control Limits</button>
+                    </form>
+                </div>
+                
+                <!-- P Chart -->
+                <div class="chart-content" id="p-chart">
+                    <h3>P Chart</h3>
+                    <p>For proportion defective when subgroup sizes vary. Tracks the proportion of nonconforming items.</p>
+                    
+                    <form id="p-form">
+                        <div class="input-group">
+                            <label for="p-defectives">Number of defectives (comma separated):</label>
+                            <input type="text" id="p-defectives" placeholder="Example: 3, 5, 2, 4, 6">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="p-sample-sizes">Sample sizes (comma separated):</label>
+                            <input type="text" id="p-sample-sizes" placeholder="Example: 50, 50, 50, 50, 50">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="p-target">Target proportion (optional):</label>
+                            <input type="number" id="p-target" min="0" max="1" step="0.001">
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate Control Limits</button>
+                    </form>
+                </div>
+                
+                <!-- NP Chart -->
+                <div class="chart-content" id="np-chart">
+                    <h3>NP Chart</h3>
+                    <p>For number defective when subgroup sizes are constant. Tracks the number of nonconforming items.</p>
+                    
+                    <form id="np-form">
+                        <div class="input-group">
+                            <label for="np-defectives">Number of defectives (comma separated):</label>
+                            <input type="text" id="np-defectives" placeholder="Example: 3, 5, 2, 4, 6">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="np-sample-size">Sample size (constant for all subgroups):</label>
+                            <input type="number" id="np-sample-size" min="1" value="50" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="np-target">Target number defective (optional):</label>
+                            <input type="number" id="np-target" min="0" step="0.1">
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate Control Limits</button>
+                    </form>
+                </div>
+                
+                <!-- C Chart -->
+                <div class="chart-content" id="c-chart">
+                    <h3>C Chart</h3>
+                    <p>For count of defects when subgroup sizes are constant. Tracks the number of defects per unit.</p>
+                    
+                    <form id="c-form">
+                        <div class="input-group">
+                            <label for="c-defects">Number of defects (comma separated):</label>
+                            <input type="text" id="c-defects" placeholder="Example: 5, 7, 3, 6, 4">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="c-target">Target number of defects (optional):</label>
+                            <input type="number" id="c-target" min="0" step="0.1">
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate Control Limits</button>
+                    </form>
+                </div>
+                
+                <!-- U Chart -->
+                <div class="chart-content" id="u-chart">
+                    <h3>U Chart</h3>
+                    <p>For defects per unit when subgroup sizes vary. Tracks the average number of defects per unit.</p>
+                    
+                    <form id="u-form">
+                        <div class="input-group">
+                            <label for="u-defects">Number of defects (comma separated):</label>
+                            <input type="text" id="u-defects" placeholder="Example: 5, 7, 3, 6, 4">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="u-sample-sizes">Sample sizes (comma separated):</label>
+                            <input type="text" id="u-sample-sizes" placeholder="Example: 2, 2, 1, 3, 2">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="u-target">Target defects per unit (optional):</label>
+                            <input type="number" id="u-target" min="0" step="0.001">
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate Control Limits</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="result-section" id="result-section">
+                <h3>Control Chart Results</h3>
+                
+                <div class="chart-container">
+                    <canvas id="main-chart"></canvas>
+                    <div class="chart-placeholder" id="chart-placeholder">
+                        Chart will appear here after calculation
+                    </div>
+                </div>
+                
+                <div class="control-limits">
+                    <h4>Control Limits</h4>
+                    <table class="control-limits-table">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Center Line (CL)</th>
+                                <th>Upper Control Limit (UCL)</th>
+                                <th>Lower Control Limit (LCL)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="control-limits-body">
+                            <!-- Filled by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="data-points">
+                    <h4>Data Points</h4>
+                    <table class="data-points-table" id="data-points-table">
+                        <!-- Filled by JavaScript -->
+                    </table>
+                </div>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Practical Examples</h3>
+                
+                <div class="example">
+                    <h4>Example 1: X-bar & R Chart</h4>
+                    <p>Subgroup data: 10.2, 10.5, 10.3; 10.1, 10.4, 10.2; 10.3, 10.6, 10.4; 10.2, 10.3, 10.5</p>
+                    <p>Subgroup size: 3 | Target: 10.3</p>
+                    <p>X-bar CL: 10.35 | UCL: 10.56 | LCL: 10.14</p>
+                    <p>R CL: 0.3 | UCL: 0.78 | LCL: 0</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 2: P Chart</h4>
+                    <p>Defectives: 3, 5, 2, 4, 6, 3, 5, 2</p>
+                    <p>Sample sizes: 50, 50, 50, 50, 50, 50, 50, 50</p>
+                    <p>CL: 0.075 | UCL: 0.168 | LCL: 0</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 3: C Chart</h4>
+                    <p>Defects: 5, 7, 3, 6, 4, 5, 8, 6</p>
+                    <p>CL: 5.5 | UCL: 11.5 | LCL: 0</p>
+                </div>
+            </div>
+            
+            <div class="calculator-intro">
+                <h3>Control Chart Selection Guide</h3>
+                <table>
+                    <tr>
+                        <th>Data Type</th>
+                        <th>Subgroup Size</th>
+                        <th>Appropriate Chart</th>
+                    </tr>
+                    <tr>
+                        <td>Continuous (measurement)</td>
+                        <td>2-10</td>
+                        <td>X-bar & R</td>
+                    </tr>
+                    <tr>
+                        <td>Continuous (measurement)</td>
+                        <td>>10</td>
+                        <td>X-bar & S</td>
+                    </tr>
+                    <tr>
+                        <td>Attribute (proportion defective)</td>
+                        <td>Varies</td>
+                        <td>P chart</td>
+                    </tr>
+                    <tr>
+                        <td>Attribute (number defective)</td>
+                        <td>Constant</td>
+                        <td>NP chart</td>
+                    </tr>
+                    <tr>
+                        <td>Attribute (count of defects)</td>
+                        <td>Constant</td>
+                        <td>C chart</td>
+                    </tr>
+                    <tr>
+                        <td>Attribute (defects per unit)</td>
+                        <td>Varies</td>
+                        <td>U chart</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            <p class="copyright">&copy; 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- xxxx navigation start xxxxx -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebarClose = document.querySelector('.sidebar-close');
+            const overlay = document.querySelector('.overlay');
+            const body = document.body;
+            
+            // Toggle sidebar
+            function toggleSidebar() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+                body.classList.toggle('sidebar-open');
+            }
+            
+            // Toggle category expansion
+            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
+            categoryHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const category = this.parentElement;
+                    category.classList.toggle('open');
+                    
+                    // Update the expand/collapse icon
+                    const icon = this.querySelector('span:last-child');
+                    icon.textContent = category.classList.contains('open') ? '−' : '+';
+                });
+            });
+            
+            // Event listeners
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            sidebarClose.addEventListener('click', toggleSidebar);
+            overlay.addEventListener('click', toggleSidebar);
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 768 && 
+                    body.classList.contains('sidebar-open') && 
+                    !sidebar.contains(event.target) && 
+                    event.target !== sidebarToggle) {
+                    toggleSidebar();
+                }
+            });
+            
+            // Close sidebar when pressing Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && body.classList.contains('sidebar-open')) {
+                    toggleSidebar();
+                }
+            });
+        });
+    </script>
+    <!-- xxxx navigation end xxxxx -->
+
+    <script>
+        // Chart tab switching
+        const chartTabs = document.querySelectorAll('.chart-tab');
+        const chartContents = document.querySelectorAll('.chart-content');
+        
+        chartTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                chartTabs.forEach(t => t.classList.remove('active'));
+                chartContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                const chartType = tab.getAttribute('data-chart');
+                document.getElementById(`${chartType}-chart`).classList.add('active');
+            });
+        });
+        
+        // Control chart factors (A2, D3, D4, etc.)
+        const controlChartFactors = {
+            // n: [A2, D3, D4, A3, B3, B4, d2, d3]
+            2: [1.880, 0, 3.267, 2.659, 0, 3.267, 1.128, 0.853],
+            3: [1.023, 0, 2.574, 1.954, 0, 2.568, 1.693, 0.888],
+            4: [0.729, 0, 2.282, 1.628, 0, 2.266, 2.059, 0.880],
+            5: [0.577, 0, 2.114, 1.427, 0, 2.089, 2.326, 0.864],
+            6: [0.483, 0, 2.004, 1.287, 0.030, 1.970, 2.534, 0.848],
+            7: [0.419, 0.076, 1.924, 1.182, 0.118, 1.882, 2.704, 0.833],
+            8: [0.373, 0.136, 1.864, 1.099, 0.185, 1.815, 2.847, 0.820],
+            9: [0.337, 0.184, 1.816, 1.032, 0.239, 1.761, 2.970, 0.808],
+            10: [0.308, 0.223, 1.777, 0.975, 0.284, 1.716, 3.078, 0.797]
+        };
+        
+        // Initialize Chart.js
+        let controlChart = null;
+        const ctx = document.getElementById('main-chart').getContext('2d');
+        
+        // Common function to create a control chart
+        function createControlChart(labels, data, centerLine, ucl, lcl, chartTitle, yAxisLabel) {
+            const chartPlaceholder = document.getElementById('chart-placeholder');
+            chartPlaceholder.style.display = 'none';
+            
+            // Destroy previous chart if it exists
+            if (controlChart) {
+                controlChart.destroy();
+            }
+            
+            // Prepare dataset
+            const datasets = [
+                {
+                    label: 'Data Points',
+                    data: data,
+                    borderColor: '#3498db',
+                    backgroundColor: '#3498db',
+                    borderWidth: 2,
+                    pointRadius: 5,
+                    pointHoverRadius: 7
+                },
+                {
+                    label: 'Center Line',
+                    data: Array(data.length).fill(centerLine),
+                    borderColor: '#2ecc71',
+                    backgroundColor: 'transparent',
+                    borderWidth: 2,
+                    borderDash: [5, 5],
+                    pointRadius: 0
+                },
+                {
+                    label: 'Upper Control Limit',
+                    data: Array(data.length).fill(ucl),
+                    borderColor: '#e74c3c',
+                    backgroundColor: 'transparent',
+                    borderWidth: 2,
+                    pointRadius: 0
+                },
+                {
+                    label: 'Lower Control Limit',
+                    data: Array(data.length).fill(lcl),
+                    borderColor: '#e74c3c',
+                    backgroundColor: 'transparent',
+                    borderWidth: 2,
+                    pointRadius: 0
+                }
+            ];
+            
+            // Create new chart
+            controlChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: lcl >= 0,
+                            title: {
+                                display: true,
+                                text: yAxisLabel
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Subgroup Number'
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: chartTitle,
+                            font: {
+                                size: 16
+                            }
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false
+                        },
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Function to parse comma/semicolon separated data
+        function parseData(input, isSubgroups = false) {
+            if (!input) return [];
+            
+            if (isSubgroups) {
+                // For subgroup data (semicolon separated subgroups, comma separated values)
+                return input.split(';').map(subgroup => {
+                    return subgroup.split(/[,\s]+/).filter(val => val.trim() !== '').map(Number);
+                }).filter(subgroup => subgroup.length > 0);
+            } else {
+                // For simple comma separated values
+                return input.split(/[,\s]+/).filter(val => val.trim() !== '').map(Number);
+            }
+        }
+        
+        // Function to display control limits
+        function displayControlLimits(mainParams, secondaryParams = null) {
+            const tableBody = document.getElementById('control-limits-body');
+            tableBody.innerHTML = '';
+            
+            // Add main parameters (e.g., X-bar chart)
+            let row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${mainParams.name}</td>
+                <td>${mainParams.cl.toFixed(3)}</td>
+                <td>${mainParams.ucl.toFixed(3)}</td>
+                <td>${mainParams.lcl.toFixed(3)}</td>
+            `;
+            tableBody.appendChild(row);
+            
+            // Add secondary parameters if they exist (e.g., R chart)
+            if (secondaryParams) {
+                row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${secondaryParams.name}</td>
+                    <td>${secondaryParams.cl.toFixed(3)}</td>
+                    <td>${secondaryParams.ucl.toFixed(3)}</td>
+                    <td>${secondaryParams.lcl.toFixed(3)}</td>
+                `;
+                tableBody.appendChild(row);
+            }
+        }
+        
+        // Function to display data points
+        function displayDataPoints(points, isOutOfControl, secondaryPoints = null, isSecondaryOutOfControl = null) {
+            const table = document.getElementById('data-points-table');
+            table.innerHTML = '';
+            
+            // Create table header
+            let headerRow = document.createElement('tr');
+            headerRow.innerHTML = '<th>Subgroup</th><th>Value</th>';
+            
+            if (secondaryPoints) {
+                headerRow.innerHTML += '<th>Range</th>';
+            }
+            
+            table.appendChild(headerRow);
+            
+            // Add data rows
+            for (let i = 0; i < points.length; i++) {
+                const row = document.createElement('tr');
+                
+                // Highlight out of control points
+                if (isOutOfControl[i]) {
+                    row.classList.add('out-of-control');
+                }
+                
+                let rowContent = `
+                    <td>${i + 1}</td>
+                    <td>${points[i].toFixed(3)}</td>
+                `;
+                
+                if (secondaryPoints) {
+                    // Highlight out of control secondary points
+                    if (isSecondaryOutOfControl[i]) {
+                        row.classList.add('out-of-control');
+                    }
+                    rowContent += `<td>${secondaryPoints[i].toFixed(3)}</td>`;
+                }
+                
+                row.innerHTML = rowContent;
+                table.appendChild(row);
+            }
+        }
+        
+        // X-bar & R Chart calculation
+        document.getElementById('xbar-r-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const dataInput = document.getElementById('xbar-r-data').value;
+            const subgroupSize = parseInt(document.getElementById('xbar-r-subgroup-size').value);
+            const target = parseFloat(document.getElementById('xbar-r-target').value) || null;
+            
+            const subgroups = parseData(dataInput, true);
+            
+            // Validate data
+            if (subgroups.length === 0) {
+                alert('Please enter valid subgroup data');
+                return;
+            }
+            
+            if (subgroupSize < 2 || subgroupSize > 10) {
+                alert('Subgroup size must be between 2 and 10 for X-bar & R charts');
+                return;
+            }
+            
+            // Check if all subgroups have the correct size
+            for (let i = 0; i < subgroups.length; i++) {
+                if (subgroups[i].length !== subgroupSize) {
+                    alert(`Subgroup ${i + 1} has ${subgroups[i].length} values but subgroup size is set to ${subgroupSize}`);
+                    return;
+                }
+            }
+            
+            // Calculate subgroup means and ranges
+            const subgroupMeans = subgroups.map(subgroup => {
+                return subgroup.reduce((sum, val) => sum + val, 0) / subgroup.length;
+            });
+            
+            const subgroupRanges = subgroups.map(subgroup => {
+                return Math.max(...subgroup) - Math.min(...subgroup);
+            });
+            
+            // Calculate center lines
+            const xbarCL = subgroupMeans.reduce((sum, mean) => sum + mean, 0) / subgroupMeans.length;
+            const rCL = subgroupRanges.reduce((sum, range) => sum + range, 0) / subgroupRanges.length;
+            
+            // Get control chart factors
+            const factors = controlChartFactors[subgroupSize];
+            const A2 = factors[0];
+            const D3 = factors[1];
+            const D4 = factors[2];
+            
+            // Calculate control limits
+            const xbarUCL = xbarCL + A2 * rCL;
+            const xbarLCL = xbarCL - A2 * rCL;
+            
+            const rUCL = D4 * rCL;
+            const rLCL = D3 * rCL;
+            
+            // Check for out of control points
+            const xbarOutOfControl = subgroupMeans.map(mean => mean > xbarUCL || mean < xbarLCL);
+            const rOutOfControl = subgroupRanges.map(range => range > rUCL || range < rLCL);
+            
+            // Display results
+            displayControlLimits(
+                { name: 'X-bar Chart', cl: xbarCL, ucl: xbarUCL, lcl: xbarLCL },
+                { name: 'R Chart', cl: rCL, ucl: rUCL, lcl: rLCL }
+            );
+            
+            displayDataPoints(subgroupMeans, xbarOutOfControl, subgroupRanges, rOutOfControl);
+            
+            // Create chart (show X-bar chart by default)
+            const labels = Array.from({ length: subgroups.length }, (_, i) => i + 1);
+            createControlChart(
+                labels,
+                subgroupMeans,
+                xbarCL,
+                xbarUCL,
+                xbarLCL,
+                'X-bar Control Chart',
+                'Subgroup Average'
+            );
+            
+            // Show results section
+            document.getElementById('result-section').style.display = 'block';
+        });
+        
+        // X-bar & S Chart calculation
+        document.getElementById('xbar-s-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const dataInput = document.getElementById('xbar-s-data').value;
+            const subgroupSize = parseInt(document.getElementById('xbar-s-subgroup-size').value);
+            const target = parseFloat(document.getElementById('xbar-s-target').value) || null;
+            
+            const subgroups = parseData(dataInput, true);
+            
+            // Validate data
+            if (subgroups.length === 0) {
+                alert('Please enter valid subgroup data');
+                return;
+            }
+            
+            if (subgroupSize < 2) {
+                alert('Subgroup size must be at least 2');
+                return;
+            }
+            
+            // Check if all subgroups have the correct size
+            for (let i = 0; i < subgroups.length; i++) {
+                if (subgroups[i].length !== subgroupSize) {
+                    alert(`Subgroup ${i + 1} has ${subgroups[i].length} values but subgroup size is set to ${subgroupSize}`);
+                    return;
+                }
+            }
+            
+            // Calculate subgroup means and standard deviations
+            const subgroupMeans = subgroups.map(subgroup => {
+                return subgroup.reduce((sum, val) => sum + val, 0) / subgroup.length;
+            });
+            
+            const subgroupStdevs = subgroups.map(subgroup => {
+                const mean = subgroup.reduce((sum, val) => sum + val, 0) / subgroup.length;
+                const variance = subgroup.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / subgroup.length;
+                return Math.sqrt(variance);
+            });
+            
+            // Calculate center lines
+            const xbarCL = subgroupMeans.reduce((sum, mean) => sum + mean, 0) / subgroupMeans.length;
+            const sCL = subgroupStdevs.reduce((sum, stdev) => sum + stdev, 0) / subgroupStdevs.length;
+            
+            // Get control chart factors (use factors for n=10 if n>10)
+            const factors = subgroupSize <= 10 ? controlChartFactors[subgroupSize] : controlChartFactors[10];
+            const A3 = factors[3];
+            const B3 = factors[4];
+            const B4 = factors[5];
+            
+            // Calculate control limits
+            const xbarUCL = xbarCL + A3 * sCL;
+            const xbarLCL = xbarCL - A3 * sCL;
+            
+            const sUCL = B4 * sCL;
+            const sLCL = B3 * sCL;
+            
+            // Check for out of control points
+            const xbarOutOfControl = subgroupMeans.map(mean => mean > xbarUCL || mean < xbarLCL);
+            const sOutOfControl = subgroupStdevs.map(stdev => stdev > sUCL || stdev < sLCL);
+            
+            // Display results
+            displayControlLimits(
+                { name: 'X-bar Chart', cl: xbarCL, ucl: xbarUCL, lcl: xbarLCL },
+                { name: 'S Chart', cl: sCL, ucl: sUCL, lcl: sLCL }
+            );
+            
+            displayDataPoints(subgroupMeans, xbarOutOfControl, subgroupStdevs, sOutOfControl);
+            
+            // Create chart (show X-bar chart by default)
+            const labels = Array.from({ length: subgroups.length }, (_, i) => i + 1);
+            createControlChart(
+                labels,
+                subgroupMeans,
+                xbarCL,
+                xbarUCL,
+                xbarLCL,
+                'X-bar Control Chart',
+                'Subgroup Average'
+            );
+            
+            // Show results section
+            document.getElementById('result-section').style.display = 'block';
+        });
+        
+        // P Chart calculation
+        document.getElementById('p-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const defectivesInput = document.getElementById('p-defectives').value;
+            const sampleSizesInput = document.getElementById('p-sample-sizes').value;
+            const target = parseFloat(document.getElementById('p-target').value) || null;
+            
+            const defectives = parseData(defectivesInput);
+            const sampleSizes = parseData(sampleSizesInput);
+            
+            // Validate data
+            if (defectives.length === 0 || sampleSizes.length === 0) {
+                alert('Please enter valid data for defectives and sample sizes');
+                return;
+            }
+            
+            if (defectives.length !== sampleSizes.length) {
+                alert('Number of defectives must match number of sample sizes');
+                return;
+            }
+            
+            // Calculate proportions
+            const proportions = defectives.map((d, i) => d / sampleSizes[i]);
+            
+            // Calculate center line (average proportion)
+            const totalDefectives = defectives.reduce((sum, d) => sum + d, 0);
+            const totalSampleSize = sampleSizes.reduce((sum, n) => sum + n, 0);
+            const pCL = totalDefectives / totalSampleSize;
+            
+            // Calculate control limits for each point (since sample sizes vary)
+            const uclValues = sampleSizes.map(n => pCL + 3 * Math.sqrt(pCL * (1 - pCL) / n));
+            const lclValues = sampleSizes.map(n => Math.max(0, pCL - 3 * Math.sqrt(pCL * (1 - pCL) / n)));
+            
+            // For display, show average limits (using average sample size)
+            const avgSampleSize = totalSampleSize / sampleSizes.length;
+            const pUCL = pCL + 3 * Math.sqrt(pCL * (1 - pCL) / avgSampleSize);
+            const pLCL = Math.max(0, pCL - 3 * Math.sqrt(pCL * (1 - pCL) / avgSampleSize));
+            
+            // Check for out of control points
+            const pOutOfControl = proportions.map((p, i) => p > uclValues[i] || p < lclValues[i]);
+            
+            // Display results
+            displayControlLimits(
+                { name: 'P Chart', cl: pCL, ucl: pUCL, lcl: pLCL }
+            );
+            
+            // For data points table, we'll show the actual proportions and highlight any out of control points
+            displayDataPoints(proportions, pOutOfControl);
+            
+            // Create chart
+            const labels = Array.from({ length: proportions.length }, (_, i) => i + 1);
+            createControlChart(
+                labels,
+                proportions,
+                pCL,
+                pUCL,
+                pLCL,
+                'P Control Chart',
+                'Proportion Defective'
+            );
+            
+            // Show results section
+            document.getElementById('result-section').style.display = 'block';
+        });
+        
+        // NP Chart calculation
+        document.getElementById('np-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const defectivesInput = document.getElementById('np-defectives').value;
+            const sampleSize = parseInt(document.getElementById('np-sample-size').value);
+            const target = parseFloat(document.getElementById('np-target').value) || null;
+            
+            const defectives = parseData(defectivesInput);
+            
+            // Validate data
+            if (defectives.length === 0) {
+                alert('Please enter valid data for defectives');
+                return;
+            }
+            
+            if (sampleSize <= 0) {
+                alert('Sample size must be greater than 0');
+                return;
+            }
+            
+            // Calculate center line (average number defective)
+            const npCL = defectives.reduce((sum, d) => sum + d, 0) / defectives.length;
+            
+            // Calculate p for control limits
+            const p = npCL / sampleSize;
+            
+            // Calculate control limits
+            const npUCL = npCL + 3 * Math.sqrt(npCL * (1 - p));
+            const npLCL = Math.max(0, npCL - 3 * Math.sqrt(npCL * (1 - p)));
+            
+            // Check for out of control points
+            const npOutOfControl = defectives.map(d => d > npUCL || d < npLCL);
+            
+            // Display results
+            displayControlLimits(
+                { name: 'NP Chart', cl: npCL, ucl: npUCL, lcl: npLCL }
+            );
+            
+            displayDataPoints(defectives, npOutOfControl);
+            
+            // Create chart
+            const labels = Array.from({ length: defectives.length }, (_, i) => i + 1);
+            createControlChart(
+                labels,
+                defectives,
+                npCL,
+                npUCL,
+                npLCL,
+                'NP Control Chart',
+                'Number Defective'
+            );
+            
+            // Show results section
+            document.getElementById('result-section').style.display = 'block';
+        });
+        
+        // C Chart calculation
+        document.getElementById('c-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const defectsInput = document.getElementById('c-defects').value;
+            const target = parseFloat(document.getElementById('c-target').value) || null;
+            
+            const defects = parseData(defectsInput);
+            
+            // Validate data
+            if (defects.length === 0) {
+                alert('Please enter valid data for defects');
+                return;
+            }
+            
+            // Calculate center line (average number of defects)
+            const cCL = defects.reduce((sum, c) => sum + c, 0) / defects.length;
+            
+            // Calculate control limits
+            const cUCL = cCL + 3 * Math.sqrt(cCL);
+            const cLCL = Math.max(0, cCL - 3 * Math.sqrt(cCL));
+            
+            // Check for out of control points
+            const cOutOfControl = defects.map(c => c > cUCL || c < cLCL);
+            
+            // Display results
+            displayControlLimits(
+                { name: 'C Chart', cl: cCL, ucl: cUCL, lcl: cLCL }
+            );
+            
+            displayDataPoints(defects, cOutOfControl);
+            
+            // Create chart
+            const labels = Array.from({ length: defects.length }, (_, i) => i + 1);
+            createControlChart(
+                labels,
+                defects,
+                cCL,
+                cUCL,
+                cLCL,
+                'C Control Chart',
+                'Number of Defects'
+            );
+            
+            // Show results section
+            document.getElementById('result-section').style.display = 'block';
+        });
+        
+        // U Chart calculation
+        document.getElementById('u-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const defectsInput = document.getElementById('u-defects').value;
+            const sampleSizesInput = document.getElementById('u-sample-sizes').value;
+            const target = parseFloat(document.getElementById('u-target').value) || null;
+            
+            const defects = parseData(defectsInput);
+            const sampleSizes = parseData(sampleSizesInput);
+            
+            // Validate data
+            if (defects.length === 0 || sampleSizes.length === 0) {
+                alert('Please enter valid data for defects and sample sizes');
+                return;
+            }
+            
+            if (defects.length !== sampleSizes.length) {
+                alert('Number of defects must match number of sample sizes');
+                return;
+            }
+            
+            // Calculate defects per unit
+            const uValues = defects.map((c, i) => c / sampleSizes[i]);
+            
+            // Calculate center line (average defects per unit)
+            const totalDefects = defects.reduce((sum, c) => sum + c, 0);
+            const totalSampleSize = sampleSizes.reduce((sum, n) => sum + n, 0);
+            const uCL = totalDefects / totalSampleSize;
+            
+            // Calculate control limits for each point (since sample sizes vary)
+            const uclValues = sampleSizes.map(n => uCL + 3 * Math.sqrt(uCL / n));
+            const lclValues = sampleSizes.map(n => Math.max(0, uCL - 3 * Math.sqrt(uCL / n)));
+            
+            // For display, show average limits (using average sample size)
+            const avgSampleSize = totalSampleSize / sampleSizes.length;
+            const uUCL = uCL + 3 * Math.sqrt(uCL / avgSampleSize);
+            const uLCL = Math.max(0, uCL - 3 * Math.sqrt(uCL / avgSampleSize));
+            
+            // Check for out of control points
+            const uOutOfControl = uValues.map((u, i) => u > uclValues[i] || u < lclValues[i]);
+            
+            // Display results
+            displayControlLimits(
+                { name: 'U Chart', cl: uCL, ucl: uUCL, lcl: uLCL }
+            );
+            
+            // For data points table, we'll show the actual u values and highlight any out of control points
+            displayDataPoints(uValues, uOutOfControl);
+            
+            // Create chart
+            const labels = Array.from({ length: uValues.length }, (_, i) => i + 1);
+            createControlChart(
+                labels,
+                uValues,
+                uCL,
+                uUCL,
+                uLCL,
+                'U Control Chart',
+                'Defects per Unit'
+            );
+            
+            // Show results section
+            document.getElementById('result-section').style.display = 'block';
+        });
+    </script>
+</body>
+</html>

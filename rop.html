@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-3BSHG1DE6V');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Reorder Point Calculator - Calculate optimal reorder points for different demand and lead time scenarios">
+    <title>Reorder Point Calculator | Industrial Engineering Calculators</title>
+    <style>
+        /* Consistent with existing style */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block; /* Changed from none to block */
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .model-selector {
+            margin-bottom: 2rem;
+        }
+        
+        .model-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .model-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            margin-right: 0.5rem;
+            border-radius: 5px 5px 0 0;
+            background-color: #f1f1f1;
+            transition: all 0.3s;
+        }
+        
+        .model-tab.active {
+            background-color: white;
+            border-color: #ddd;
+            border-bottom-color: white;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        
+        .model-tab:hover:not(.active) {
+            background-color: #e9e9e9;
+        }
+        
+        .model-content {
+            display: none;
+        }
+        
+        .model-content.active {
+            display: block;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .metric-results {
+            display: flex;
+            justify-content: space-between;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .metric-card {
+            flex: 1;
+            min-width: 200px;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 0.5rem;
+            text-align: center;
+        }
+        
+        .metric-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-card .metric-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .metric-card.rop .metric-value {
+            color: #3498db;
+        }
+        
+        .metric-card.safety .metric-value {
+            color: #f39c12;
+        }
+        
+        .metric-card.leadtime .metric-value {
+            color: #2ecc71;
+        }
+        
+        .metric-card.service .metric-value {
+            color: #e74c3c;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        .safety-stock-table {
+            width: 100%;
+            margin-top: 1.5rem;
+        }
+        
+        .safety-stock-table th {
+            background-color: var(--light-color);
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            display: block;
+        }
+            
+        body.sidebar-open {
+            margin-left: 0;
+            overflow: hidden;
+        }
+        /* xxxx navigation end xxxxx */
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .model-tabs {
+                flex-direction: column;
+            }
+            
+            .model-tab {
+                border-radius: 0;
+                margin-right: 0;
+                border-bottom: 1px solid #ddd;
+            }
+            
+            .metric-results {
+                flex-direction: column;
+            }
+            
+            .metric-card {
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="gagerr.html" class="sidebar-link">Gage R&R</a>
+                <a href="processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="oee.html" class="sidebar-link">OEE Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="anova.html" class="sidebar-link">ANOVA</a>
+                <a href="chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
+                <a href="factorialdesign.html" class="sidebar-link">Factorial Design</a>
+                <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="latinsquare.html" class="sidebar-link">Latin Square</a>
+                <a href="regression.html" class="sidebar-link">Regression</a>
+                <a href="samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="ttest.html" class="sidebar-link">T-Test</a>
+                <a href="ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="eoq.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="rop.html" class="sidebar-link">Reorder Point</a>
+                <a href="kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Study</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+            </div>
+        </div>
+    </aside>
+    <!-- xxxx navigation end xxxxx -->
+    
+    <header>
+        <div class="container header-content">
+            <div class="logo">Industrial <span>Engineering</span> Calculators</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Reorder Point Calculator</h1>
+            <p>Calculate optimal reorder points for different demand and lead time scenarios</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Reorder Point (ROP) Analysis</h2>
+                <p>The reorder point is the inventory level at which an order should be placed to replenish stock before it runs out.</p>
+                
+                <div class="formula-box">
+                    Basic ROP = Demand During Lead Time + Safety Stock
+                </div>
+                
+                <p>Where:</p>
+                <ul>
+                    <li><strong>Demand During Lead Time</strong> = Average Demand × Lead Time</li>
+                    <li><strong>Safety Stock</strong> = Buffer for demand and lead time variability</li>
+                </ul>
+            </div>
+            
+            <div class="model-selector">
+                <h3>Select Demand and Lead Time Scenario</h3>
+                <p>Choose the model that matches your demand and lead time characteristics:</p>
+                
+                <div class="model-tabs">
+                    <div class="model-tab active" data-model="constant">Constant Demand & Lead Time</div>
+                    <div class="model-tab" data-model="variable-demand">Variable Demand</div>
+                    <div class="model-tab" data-model="variable-lead">Variable Lead Time</div>
+                    <div class="model-tab" data-model="both-variable">Both Variable</div>
+                </div>
+                
+                <!-- Constant Demand & Lead Time -->
+                <div class="model-content active" id="constant-model">
+                    <h3>Constant Demand and Lead Time</h3>
+                    <p>Use when both demand and lead time are stable with little variation.</p>
+                    
+                    <form id="constant-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="constant-demand">Average Demand (units/day):</label>
+                                <input type="number" id="constant-demand" min="0.01" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="constant-lead">Lead Time (days):</label>
+                                <input type="number" id="constant-lead" min="0.01" step="0.01" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="constant-safety">Safety Stock (optional):</label>
+                            <input type="number" id="constant-safety" min="0" step="1" value="0">
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate ROP</button>
+                    </form>
+                </div>
+                
+                <!-- Variable Demand -->
+                <div class="model-content" id="variable-demand-model">
+                    <h3>Variable Demand (Constant Lead Time)</h3>
+                    <p>Use when demand varies but lead time is relatively stable.</p>
+                    
+                    <form id="variable-demand-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="vd-avg-demand">Average Demand (units/day):</label>
+                                <input type="number" id="vd-avg-demand" min="0.01" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="vd-demand-std">Demand Standard Deviation:</label>
+                                <input type="number" id="vd-demand-std" min="0" step="0.01" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="vd-lead">Lead Time (days):</label>
+                                <input type="number" id="vd-lead" min="0.01" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="vd-service-level">Service Level (%):</label>
+                                <input type="number" id="vd-service-level" min="1" max="99.99" step="0.01" value="95" required>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate ROP</button>
+                    </form>
+                </div>
+                
+                <!-- Variable Lead Time -->
+                <div class="model-content" id="variable-lead-model">
+                    <h3>Variable Lead Time (Constant Demand)</h3>
+                    <p>Use when lead time varies but demand is relatively stable.</p>
+                    
+                    <form id="variable-lead-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="vl-demand">Demand (units/day):</label>
+                                <input type="number" id="vl-demand" min="0.01" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="vl-avg-lead">Average Lead Time (days):</label>
+                                <input type="number" id="vl-avg-lead" min="0.01" step="0.01" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="vl-lead-std">Lead Time Standard Deviation (days):</label>
+                                <input type="number" id="vl-lead-std" min="0" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="vl-service-level">Service Level (%):</label>
+                                <input type="number" id="vl-service-level" min="1" max="99.99" step="0.01" value="95" required>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate ROP</button>
+                    </form>
+                </div>
+                
+                <!-- Both Variable -->
+                <div class="model-content" id="both-variable-model">
+                    <h3>Variable Demand and Lead Time</h3>
+                    <p>Use when both demand and lead time have significant variability.</p>
+                    
+                    <form id="both-variable-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="bv-avg-demand">Average Demand (units/day):</label>
+                                <input type="number" id="bv-avg-demand" min="0.01" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="bv-demand-std">Demand Standard Deviation:</label>
+                                <input type="number" id="bv-demand-std" min="0" step="0.01" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="bv-avg-lead">Average Lead Time (days):</label>
+                                <input type="number" id="bv-avg-lead" min="0.01" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="bv-lead-std">Lead Time Standard Deviation (days):</label>
+                                <input type="number" id="bv-lead-std" min="0" step="0.01" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="bv-service-level">Service Level (%):</label>
+                            <input type="number" id="bv-service-level" min="1" max="99.99" step="0.01" value="95" required>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate ROP</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="result-box" id="rop-result">
+                <h3>Reorder Point Results</h3>
+                
+                <div class="metric-results">
+                    <div class="metric-card rop">
+                        <h4>Reorder Point</h4>
+                        <div class="metric-value" id="rop-value"></div>
+                        <p>Order When Inventory Reaches This Level</p>
+                    </div>
+                    
+                    <div class="metric-card safety">
+                        <h4>Safety Stock</h4>
+                        <div class="metric-value" id="safety-stock-value"></div>
+                        <p>Buffer Stock</p>
+                    </div>
+                    
+                    <div class="metric-card leadtime">
+                        <h4>Demand During Lead Time</h4>
+                        <div class="metric-value" id="ddlt-value"></div>
+                        <p>Average Expected Demand</p>
+                    </div>
+                    
+                    <div class="metric-card service">
+                        <h4>Service Level</h4>
+                        <div class="metric-value" id="service-level-value"></div>
+                        <p>Probability of No Stockout</p>
+                    </div>
+                </div>
+                
+                <h4>Safety Stock Calculation</h4>
+                <table class="safety-stock-table">
+                    <tr>
+                        <th>Component</th>
+                        <th>Value</th>
+                    </tr>
+                    <tr>
+                        <td>Z-Score (Service Factor)</td>
+                        <td id="z-score-value"></td>
+                    </tr>
+                    <tr>
+                        <td>Demand Variability</td>
+                        <td id="demand-var-value"></td>
+                    </tr>
+                    <tr>
+                        <td>Lead Time Variability</td>
+                        <td id="leadtime-var-value"></td>
+                    </tr>
+                    <tr>
+                        <td>Combined Variability</td>
+                        <td id="combined-var-value"></td>
+                    </tr>
+                </table>
+                
+                <h4>Interpretation Guidelines</h4>
+                <table>
+                    <tr>
+                        <th>Service Level</th>
+                        <th>Z-Score</th>
+                        <th>Typical Use Case</th>
+                    </tr>
+                    <tr>
+                        <td>85%</td>
+                        <td>1.04</td>
+                        <td>Low-cost items, minor stockouts acceptable</td>
+                    </tr>
+                    <tr>
+                        <td>90%</td>
+                        <td>1.28</td>
+                        <td>Standard products, moderate stockout tolerance</td>
+                    </tr>
+                    <tr>
+                        <td>95%</td>
+                        <td>1.65</td>
+                        <td>Most common target for important items</td>
+                    </tr>
+                    <tr>
+                        <td>99%</td>
+                        <td>2.33</td>
+                        <td>Critical items where stockouts are very costly</td>
+                    </tr>
+                    <tr>
+                        <td>99.9%</td>
+                        <td>3.09</td>
+                        <td>Extremely critical items (e.g., medical supplies)</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Practical Examples</h3>
+                
+                <div class="example">
+                    <h4>Example 1: Constant Demand & Lead Time</h4>
+                    <p>Demand: 20 units/day, Lead Time: 5 days, Safety Stock: 10 units</p>
+                    <p>ROP = (20 × 5) + 10 = 110 units</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 2: Variable Demand</h4>
+                    <p>Avg Demand: 25 ± 5 units/day, Lead Time: 4 days, Service: 95%</p>
+                    <p>ROP = (25 × 4) + (1.65 × 5 × √4) = 100 + 16.5 = 116.5 units</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 3: Both Variable</h4>
+                    <p>Avg Demand: 30 ± 6 units/day, Lead Time: 7 ± 1.5 days, Service: 90%</p>
+                    <p>ROP = (30 × 7) + (1.28 × √(6²×7 + 30²×1.5²)) = 210 + 64.6 = 274.6 units</p>
+                </div>
+            </div>
+            
+            <div class="calculator-intro">
+                <h3>Reorder Point Model Selection Guide</h3>
+                <table>
+                    <tr>
+                        <th>Model</th>
+                        <th>When to Use</th>
+                        <th>Key Assumptions</th>
+                    </tr>
+                    <tr>
+                        <td>Constant</td>
+                        <td>Stable demand and reliable suppliers</td>
+                        <td>No variability in demand or lead time</td>
+                    </tr>
+                    <tr>
+                        <td>Variable Demand</td>
+                        <td>Demand fluctuates but lead times are reliable</td>
+                        <td>Only demand varies, lead time is constant</td>
+                    </tr>
+                    <tr>
+                        <td>Variable Lead Time</td>
+                        <td>Demand is stable but suppliers are inconsistent</td>
+                        <td>Only lead time varies, demand is constant</td>
+                    </tr>
+                    <tr>
+                        <td>Both Variable</td>
+                        <td>Both demand and lead times fluctuate</td>
+                        <td>Both demand and lead time have variability</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- xxxx navigation start xxxxx -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebarClose = document.querySelector('.sidebar-close');
+            const overlay = document.querySelector('.overlay');
+            const body = document.body;
+            
+            // Toggle sidebar
+            function toggleSidebar() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+                body.classList.toggle('sidebar-open');
+            }
+            
+            // Toggle category expansion
+            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
+            categoryHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const category = this.parentElement;
+                    category.classList.toggle('open');
+                    
+                    // Update the expand/collapse icon
+                    const icon = this.querySelector('span:last-child');
+                    icon.textContent = category.classList.contains('open') ? '−' : '+';
+                });
+            });
+            
+            // Event listeners
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            sidebarClose.addEventListener('click', toggleSidebar);
+            overlay.addEventListener('click', toggleSidebar);
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 768 && 
+                    body.classList.contains('sidebar-open') && 
+                    !sidebar.contains(event.target) && 
+                    event.target !== sidebarToggle) {
+                    toggleSidebar();
+                }
+            });
+            
+            // Close sidebar when pressing Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && body.classList.contains('sidebar-open')) {
+                    toggleSidebar();
+                }
+            });
+        });
+    </script>
+    <!-- xxxx navigation end xxxxx -->
+
+    <script>
+        // Model tab switching
+        const modelTabs = document.querySelectorAll('.model-tab');
+        const modelContents = document.querySelectorAll('.model-content');
+        
+        modelTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                modelTabs.forEach(t => t.classList.remove('active'));
+                modelContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                const model = tab.getAttribute('data-model');
+                document.getElementById(`${model}-model`).classList.add('active');
+            });
+        });
+        
+        // Constant demand and lead time calculation
+        document.getElementById('constant-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            calculateConstantROP();
+        });
+        
+        // Variable demand calculation
+        document.getElementById('variable-demand-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            calculateVariableDemandROP();
+        });
+        
+        // Variable lead time calculation
+        document.getElementById('variable-lead-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            calculateVariableLeadROP();
+        });
+        
+        // Both variable calculation
+        document.getElementById('both-variable-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            calculateBothVariableROP();
+        });
+        
+        function calculateConstantROP() {
+            const demand = parseFloat(document.getElementById('constant-demand').value);
+            const leadTime = parseFloat(document.getElementById('constant-lead').value);
+            const safetyStock = parseFloat(document.getElementById('constant-safety').value) || 0;
+            
+            if (isNaN(demand) || isNaN(leadTime) || demand <= 0 || leadTime <= 0) {
+                alert('Please enter valid positive numbers for demand and lead time');
+                return;
+            }
+            
+            // Calculate ROP
+            const ddlt = demand * leadTime;
+            const rop = ddlt + safetyStock;
+            
+            // Display results
+            displayROPResults(rop, safetyStock, ddlt, 100);
+        }
+        
+        function calculateVariableDemandROP() {
+            const avgDemand = parseFloat(document.getElementById('vd-avg-demand').value);
+            const demandStd = parseFloat(document.getElementById('vd-demand-std').value);
+            const leadTime = parseFloat(document.getElementById('vd-lead').value);
+            const serviceLevel = parseFloat(document.getElementById('vd-service-level').value);
+            
+            if (isNaN(avgDemand) || isNaN(demandStd) || isNaN(leadTime) || isNaN(serviceLevel) ||
+                avgDemand <= 0 || leadTime <= 0 || serviceLevel <= 0 || serviceLevel >= 100) {
+                alert('Please enter valid positive numbers for all fields');
+                return;
+            }
+            
+            // Get Z-score for service level
+            const zScore = getZScore(serviceLevel / 100);
+            
+            // Calculate demand during lead time and safety stock
+            const ddlt = avgDemand * leadTime;
+            const safetyStock = zScore * demandStd * Math.sqrt(leadTime);
+            
+            // Calculate ROP
+            const rop = ddlt + safetyStock;
+            
+            // Display results
+            displayROPResults(rop, safetyStock, ddlt, serviceLevel);
+            
+            // Show safety stock details
+            document.getElementById('z-score-value').textContent = zScore.toFixed(2);
+            document.getElementById('demand-var-value').textContent = demandStd.toFixed(2) + ' × √' + leadTime + ' = ' + (demandStd * Math.sqrt(leadTime)).toFixed(2);
+            document.getElementById('leadtime-var-value').textContent = 'N/A (Constant)';
+            document.getElementById('combined-var-value').textContent = (demandStd * Math.sqrt(leadTime)).toFixed(2);
+        }
+        
+        function calculateVariableLeadROP() {
+            const demand = parseFloat(document.getElementById('vl-demand').value);
+            const avgLeadTime = parseFloat(document.getElementById('vl-avg-lead').value);
+            const leadStd = parseFloat(document.getElementById('vl-lead-std').value);
+            const serviceLevel = parseFloat(document.getElementById('vl-service-level').value);
+            
+            if (isNaN(demand) || isNaN(avgLeadTime) || isNaN(leadStd) || isNaN(serviceLevel) ||
+                demand <= 0 || avgLeadTime <= 0 || serviceLevel <= 0 || serviceLevel >= 100) {
+                alert('Please enter valid positive numbers for all fields');
+                return;
+            }
+            
+            // Get Z-score for service level
+            const zScore = getZScore(serviceLevel / 100);
+            
+            // Calculate demand during lead time and safety stock
+            const ddlt = demand * avgLeadTime;
+            const safetyStock = zScore * demand * leadStd;
+            
+            // Calculate ROP
+            const rop = ddlt + safetyStock;
+            
+            // Display results
+            displayROPResults(rop, safetyStock, ddlt, serviceLevel);
+            
+            // Show safety stock details
+            document.getElementById('z-score-value').textContent = zScore.toFixed(2);
+            document.getElementById('demand-var-value').textContent = 'N/A (Constant)';
+            document.getElementById('leadtime-var-value').textContent = demand.toFixed(2) + ' × ' + leadStd + ' = ' + (demand * leadStd).toFixed(2);
+            document.getElementById('combined-var-value').textContent = (demand * leadStd).toFixed(2);
+        }
+        
+        function calculateBothVariableROP() {
+            const avgDemand = parseFloat(document.getElementById('bv-avg-demand').value);
+            const demandStd = parseFloat(document.getElementById('bv-demand-std').value);
+            const avgLeadTime = parseFloat(document.getElementById('bv-avg-lead').value);
+            const leadStd = parseFloat(document.getElementById('bv-lead-std').value);
+            const serviceLevel = parseFloat(document.getElementById('bv-service-level').value);
+            
+            if (isNaN(avgDemand) || isNaN(demandStd) || isNaN(avgLeadTime) || isNaN(leadStd) || isNaN(serviceLevel) ||
+                avgDemand <= 0 || avgLeadTime <= 0 || serviceLevel <= 0 || serviceLevel >= 100) {
+                alert('Please enter valid positive numbers for all fields');
+                return;
+            }
+            
+            // Get Z-score for service level
+            const zScore = getZScore(serviceLevel / 100);
+            
+            // Calculate demand during lead time
+            const ddlt = avgDemand * avgLeadTime;
+            
+            // Calculate combined variability
+            const demandVar = Math.pow(demandStd, 2) * avgLeadTime;
+            const leadVar = Math.pow(avgDemand, 2) * Math.pow(leadStd, 2);
+            const combinedStd = Math.sqrt(demandVar + leadVar);
+            
+            // Calculate safety stock
+            const safetyStock = zScore * combinedStd;
+            
+            // Calculate ROP
+            const rop = ddlt + safetyStock;
+            
+            // Display results
+            displayROPResults(rop, safetyStock, ddlt, serviceLevel);
+            
+            // Show safety stock details
+            document.getElementById('z-score-value').textContent = zScore.toFixed(2);
+            document.getElementById('demand-var-value').textContent = demandStd + '² × ' + avgLeadTime + ' = ' + demandVar.toFixed(2);
+            document.getElementById('leadtime-var-value').textContent = avgDemand + '² × ' + leadStd + '² = ' + leadVar.toFixed(2);
+            document.getElementById('combined-var-value').textContent = '√(' + demandVar.toFixed(2) + ' + ' + leadVar.toFixed(2) + ') = ' + combinedStd.toFixed(2);
+        }
+        
+        function displayROPResults(rop, safetyStock, ddlt, serviceLevel) {
+            document.getElementById('rop-value').textContent = Math.round(rop);
+            document.getElementById('safety-stock-value').textContent = Math.round(safetyStock);
+            document.getElementById('ddlt-value').textContent = Math.round(ddlt);
+            document.getElementById('service-level-value').textContent = serviceLevel + '%';
+            
+            // Show results
+            document.getElementById('rop-result').style.display = 'block';
+        }
+        
+        function getZScore(serviceLevel) {
+            // Common Z-scores for normal distribution
+            const zScores = {
+                0.80: 0.84,
+                0.85: 1.04,
+                0.90: 1.28,
+                0.95: 1.65,
+                0.99: 2.33,
+                0.999: 3.09
+            };
+            
+            // Return exact match if available
+            if (zScores[serviceLevel]) {
+                return zScores[serviceLevel];
+            }
+            
+            // Linear approximation for other values
+            const levels = Object.keys(zScores).map(Number).sort((a, b) => a - b);
+            
+            // If below lowest level, return that Z-score
+            if (serviceLevel <= levels[0]) {
+                return zScores[levels[0]];
+            }
+            
+            // If above highest level, return that Z-score
+            if (serviceLevel >= levels[levels.length - 1]) {
+                return zScores[levels[levels.length - 1]];
+            }
+            
+            // Find the bracket for interpolation
+            let lowerLevel = levels[0];
+            let upperLevel = levels[1];
+            
+            for (let i = 1; i < levels.length; i++) {
+                if (serviceLevel <= levels[i]) {
+                    lowerLevel = levels[i - 1];
+                    upperLevel = levels[i];
+                    break;
+                }
+            }
+            
+            // Linear interpolation
+            const lowerZ = zScores[lowerLevel];
+            const upperZ = zScores[upperLevel];
+            
+            return lowerZ + ((serviceLevel - lowerLevel) / (upperLevel - lowerLevel)) * (upperZ - lowerZ);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-3BSHG1DE6V');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Markov Chain Calculator - Analyze state transitions and steady-state probabilities">
+    <title>Markov Chain Calculator | Industrial Engineering Calculators</title>
+    <style>
+        /* Consistent with existing style */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+            transition: margin-left 0.3s;
+        }
+        
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block; /* Changed from none to block */
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .matrix-input {
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+        
+        .matrix-input table {
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+        
+        .matrix-input th, .matrix-input td {
+            padding: 0.75rem;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        
+        .matrix-input th {
+            background-color: #f2f2f2;
+            font-weight: 500;
+        }
+        
+        .matrix-input input {
+            width: 80px;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .matrix-input input:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            display: block;
+        }
+            
+        body.sidebar-open {
+            margin-left: 0;
+            overflow: hidden;
+        }
+        /* xxxx navigation end xxxxx */
+    </style>
+</head>
+<body>
+    <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="gagerr.html" class="sidebar-link">Gage R&R</a>
+                <a href="processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="oee.html" class="sidebar-link">OEE Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="anova.html" class="sidebar-link">ANOVA</a>
+                <a href="chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
+                <a href="factorialdesign.html" class="sidebar-link">Factorial Design</a>
+                <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="latinsquare.html" class="sidebar-link">Latin Square</a>
+                <a href="regression.html" class="sidebar-link">Regression</a>
+                <a href="samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="ttest.html" class="sidebar-link">T-Test</a>
+                <a href="ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="eoq.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="rop.html" class="sidebar-link">Reorder Point</a>
+                <a href="kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Study</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+            </div>
+        </div>
+    </aside>
+    <!-- xxxx navigation end xxxxx -->
+    
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Industrial Engineering <span>Calculators</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Markov Chain Calculator</h1>
+            <p>Analyze state transitions and steady-state probabilities</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Markov Chains</h2>
+                <p>A Markov chain is a stochastic model describing a sequence of possible events in which the probability of each event depends only on the state attained in the previous event. Markov chains are used in various fields including queueing theory, statistics, and machine learning.</p>
+                
+                <div class="formula-box">
+                    P(X<sub>n+1</sub> = x | X<sub>n</sub> = x<sub>n</sub>, ..., X<sub>1</sub> = x<sub>1</sub>) = P(X<sub>n+1</sub> = x | X<sub>n</sub> = x<sub>n</sub>)
+                </div>
+                
+                <p>Where:</p>
+                <ul>
+                    <li><strong>Transition Matrix</strong>: Square matrix where each element P<sub>ij</sub> represents the probability of moving from state i to state j</li>
+                    <li><strong>Steady-State Probabilities</strong>: Long-term probabilities of being in each state</li>
+                </ul>
+            </div>
+            
+            <form id="markov-form">
+                <div class="input-group">
+                    <label for="num-states">Number of States:</label>
+                    <input type="number" id="num-states" min="2" max="6" value="3" required>
+                </div>
+                
+                <div class="matrix-input">
+                    <h3>Transition Probability Matrix</h3>
+                    <p>Enter probabilities for each state transition (rows must sum to 1):</p>
+                    <table id="transition-matrix">
+                        <!-- Matrix will be generated by JavaScript -->
+                    </table>
+                </div>
+                
+                <div class="input-group">
+                    <label for="initial-state">Initial State Probabilities (optional):</label>
+                    <p>If left blank, equal probabilities will be assumed</p>
+                    <table id="initial-state">
+                        <!-- Initial state inputs will be generated by JavaScript -->
+                    </table>
+                </div>
+                
+                <div class="input-group">
+                    <label for="steps">Number of Steps to Calculate (for n-step probabilities):</label>
+                    <input type="number" id="steps" min="1" value="5">
+                </div>
+                
+                <button type="submit" class="calculate-btn">Calculate Markov Chain</button>
+            </form>
+            
+            <div class="result-box" id="markov-result">
+                <h3>Results</h3>
+                
+                <div id="n-step-results">
+                    <h4>n-Step Transition Probabilities</h4>
+                    <div id="step-matrices">
+                        <!-- Step matrices will be generated by JavaScript -->
+                    </div>
+                </div>
+                
+                <div id="steady-state-results">
+                    <h4>Steady-State Probabilities</h4>
+                    <table id="steady-state-table">
+                        <!-- Steady state results will be generated by JavaScript -->
+                    </table>
+                </div>
+                
+                <div id="absorbing-results" style="display: none;">
+                    <h4>Absorbing Markov Chain Analysis</h4>
+                    <div id="absorbing-calculations">
+                        <!-- Absorbing state calculations will be generated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Practical Examples</h3>
+                
+                <div class="example">
+                    <h4>Example 1: Weather Model</h4>
+                    <p>States: Sunny, Cloudy, Rainy</p>
+                    <p>Transition Matrix:</p>
+                    <table>
+                        <tr><th></th><th>Sunny</th><th>Cloudy</th><th>Rainy</th></tr>
+                        <tr><th>Sunny</th><td>0.6</td><td>0.3</td><td>0.1</td></tr>
+                        <tr><th>Cloudy</th><td>0.4</td><td>0.4</td><td>0.2</td></tr>
+                        <tr><th>Rainy</th><td>0.2</td><td>0.3</td><td>0.5</td></tr>
+                    </table>
+                    <p>Steady-State: Sunny (42.9%), Cloudy (33.3%), Rainy (23.8%)</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 2: Machine States</h4>
+                    <p>States: Working, Degraded, Failed</p>
+                    <p>Transition Matrix:</p>
+                    <table>
+                        <tr><th></th><th>Working</th><th>Degraded</th><th>Failed</th></tr>
+                        <tr><th>Working</th><td>0.9</td><td>0.1</td><td>0.0</td></tr>
+                        <tr><th>Degraded</th><td>0.2</td><td>0.7</td><td>0.1</td></tr>
+                        <tr><th>Failed</th><td>0.0</td><td>0.0</td><td>1.0</td></tr>
+                    </table>
+                    <p>Failed is an absorbing state. Mean time to failure: 23.3 steps</p>
+                </div>
+            </div>
+            
+            <div class="calculator-intro">
+                <h3>Markov Chain Applications</h3>
+                <table>
+                    <tr>
+                        <th>Application Area</th>
+                        <th>Use Case</th>
+                    </tr>
+                    <tr>
+                        <td>Queueing Theory</td>
+                        <td>Modeling system states in service systems</td>
+                    </tr>
+                    <tr>
+                        <td>Reliability Engineering</td>
+                        <td>Predicting equipment failure states</td>
+                    </tr>
+                    <tr>
+                        <td>Finance</td>
+                        <td>Credit rating transitions</td>
+                    </tr>
+                    <tr>
+                        <td>Health Care</td>
+                        <td>Disease progression modeling</td>
+                    </tr>
+                    <tr>
+                        <td>Manufacturing</td>
+                        <td>Production system state analysis</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- xxxx navigation start xxxxx -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebarClose = document.querySelector('.sidebar-close');
+            const overlay = document.querySelector('.overlay');
+            const body = document.body;
+            
+            // Toggle sidebar
+            function toggleSidebar() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+                body.classList.toggle('sidebar-open');
+            }
+            
+            // Toggle category expansion
+            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
+            categoryHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const category = this.parentElement;
+                    category.classList.toggle('open');
+                    
+                    // Update the expand/collapse icon
+                    const icon = this.querySelector('span:last-child');
+                    icon.textContent = category.classList.contains('open') ? '−' : '+';
+                });
+            });
+            
+            // Event listeners
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            sidebarClose.addEventListener('click', toggleSidebar);
+            overlay.addEventListener('click', toggleSidebar);
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 768 && 
+                    body.classList.contains('sidebar-open') && 
+                    !sidebar.contains(event.target) && 
+                    event.target !== sidebarToggle) {
+                    toggleSidebar();
+                }
+            });
+            
+            // Close sidebar when pressing Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && body.classList.contains('sidebar-open')) {
+                    toggleSidebar();
+                }
+            });
+        });
+    </script>
+    <!-- xxxx navigation end xxxxx -->
+
+    <script>
+        // Generate matrix inputs based on number of states
+        document.getElementById('num-states').addEventListener('input', function() {
+            generateMatrixInputs();
+        });
+        
+        // Generate the matrix inputs when page loads
+        window.onload = function() {
+            generateMatrixInputs();
+        };
+        
+        function generateMatrixInputs() {
+            const numStates = parseInt(document.getElementById('num-states').value);
+            const transitionMatrix = document.getElementById('transition-matrix');
+            const initialStateTable = document.getElementById('initial-state');
+            
+            // Clear existing inputs
+            transitionMatrix.innerHTML = '';
+            initialStateTable.innerHTML = '';
+            
+            // Create header row for transition matrix
+            let headerRow = transitionMatrix.insertRow();
+            headerRow.insertCell(); // Empty corner cell
+            
+            for (let i = 0; i < numStates; i++) {
+                const th = document.createElement('th');
+                th.textContent = `State ${i+1}`;
+                headerRow.appendChild(th);
+            }
+            
+            // Create transition matrix rows
+            for (let i = 0; i < numStates; i++) {
+                const row = transitionMatrix.insertRow();
+                const th = document.createElement('th');
+                th.textContent = `State ${i+1}`;
+                row.appendChild(th);
+                
+                for (let j = 0; j < numStates; j++) {
+                    const cell = row.insertCell();
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.min = '0';
+                    input.max = '1';
+                    input.step = '0.01';
+                    input.value = i === j ? '1' : '0';
+                    input.dataset.row = i;
+                    input.dataset.col = j;
+                    input.addEventListener('input', validateRow);
+                    cell.appendChild(input);
+                }
+            }
+            
+            // Create initial state inputs
+            const initialStateRow = initialStateTable.insertRow();
+            for (let i = 0; i < numStates; i++) {
+                const cell = initialStateRow.insertCell();
+                const label = document.createElement('label');
+                label.textContent = `State ${i+1}:`;
+                cell.appendChild(label);
+                
+                const input = document.createElement('input');
+                input.type = 'number';
+                input.min = '0';
+                input.max = '1';
+                input.step = '0.01';
+                input.dataset.state = i;
+                cell.appendChild(input);
+            }
+        }
+        
+        // Validate that each row sums to 1
+        function validateRow() {
+            const row = parseInt(this.dataset.row);
+            const inputs = document.querySelectorAll(`#transition-matrix input[data-row="${row}"]`);
+            let sum = 0;
+            
+            inputs.forEach(input => {
+                const value = parseFloat(input.value) || 0;
+                sum += value;
+            });
+            
+            if (Math.abs(sum - 1) > 0.01) {
+                this.style.borderColor = 'var(--accent-color)';
+            } else {
+                inputs.forEach(input => {
+                    input.style.borderColor = '';
+                });
+            }
+        }
+        
+        // Main calculation function
+        document.getElementById('markov-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const numStates = parseInt(document.getElementById('num-states').value);
+            const steps = parseInt(document.getElementById('steps').value) || 5;
+            
+            // Get transition matrix
+            const P = [];
+            let isValid = true;
+            
+            for (let i = 0; i < numStates; i++) {
+                P[i] = [];
+                let rowSum = 0;
+                
+                for (let j = 0; j < numStates; j++) {
+                    const value = parseFloat(document.querySelector(`#transition-matrix input[data-row="${i}"][data-col="${j}"]`).value) || 0;
+                    P[i][j] = value;
+                    rowSum += value;
+                }
+                
+                // Check if row sums to 1 (within rounding tolerance)
+                if (Math.abs(rowSum - 1) > 0.01) {
+                    isValid = false;
+                    alert(`Row ${i+1} of the transition matrix does not sum to 1 (sum = ${rowSum.toFixed(2)})`);
+                    break;
+                }
+            }
+            
+            if (!isValid) return;
+            
+            // Get initial state (if provided)
+            let initialState = null;
+            const initialStateInputs = document.querySelectorAll('#initial-state input');
+            let hasInitialState = false;
+            
+            for (let i = 0; i < initialStateInputs.length; i++) {
+                if (initialStateInputs[i].value !== '') {
+                    hasInitialState = true;
+                    break;
+                }
+            }
+            
+            if (hasInitialState) {
+                initialState = [];
+                let initialStateSum = 0;
+                
+                for (let i = 0; i < numStates; i++) {
+                    const value = parseFloat(initialStateInputs[i].value) || 0;
+                    initialState[i] = value;
+                    initialStateSum += value;
+                }
+                
+                // Normalize initial state
+                if (initialStateSum > 0) {
+                    for (let i = 0; i < numStates; i++) {
+                        initialState[i] /= initialStateSum;
+                    }
+                } else {
+                    initialState = null;
+                }
+            }
+            
+            // Calculate n-step probabilities
+            const stepMatrices = calculateStepMatrices(P, steps);
+            
+            // Calculate steady-state probabilities
+            const steadyState = calculateSteadyState(P);
+            
+            // Check for absorbing states
+            const isAbsorbing = checkAbsorbing(P);
+            
+            // Display results
+            displayResults(stepMatrices, steadyState, isAbsorbing);
+            
+            // Show results section
+            document.getElementById('markov-result').style.display = 'block';
+        });
+        
+        function calculateStepMatrices(P, steps) {
+            const matrices = [];
+            matrices[0] = P; // Step 1 is the original matrix
+            
+            for (let step = 1; step < steps; step++) {
+                matrices[step] = multiplyMatrices(matrices[step-1], P);
+            }
+            
+            return matrices;
+        }
+        
+        function multiplyMatrices(A, B) {
+            const result = [];
+            const n = A.length;
+            
+            for (let i = 0; i < n; i++) {
+                result[i] = [];
+                for (let j = 0; j < n; j++) {
+                    result[i][j] = 0;
+                    for (let k = 0; k < n; k++) {
+                        result[i][j] += A[i][k] * B[k][j];
+                    }
+                }
+            }
+            
+            return result;
+        }
+        
+        function calculateSteadyState(P) {
+            const n = P.length;
+            
+            // Set up the system of equations: π = πP
+            // Which becomes: π(P - I) = 0
+            // With the constraint: sum(π) = 1
+            
+            // Create coefficient matrix
+            const A = [];
+            for (let i = 0; i < n; i++) {
+                A[i] = [];
+                for (let j = 0; j < n; j++) {
+                    A[i][j] = P[j][i]; // Transpose
+                    if (i === j) {
+                        A[i][j] -= 1;
+                    }
+                }
+            }
+            
+            // Replace last equation with sum(π) = 1
+            for (let j = 0; j < n; j++) {
+                A[n-1][j] = 1;
+            }
+            
+            // Right-hand side vector
+            const b = [];
+            for (let i = 0; i < n-1; i++) {
+                b[i] = 0;
+            }
+            b[n-1] = 1;
+            
+            // Solve the system (using Gaussian elimination)
+            return solveLinearSystem(A, b);
+        }
+        
+        function solveLinearSystem(A, b) {
+            const n = A.length;
+            const x = new Array(n).fill(0);
+            
+            // Gaussian elimination with partial pivoting
+            for (let i = 0; i < n; i++) {
+                // Partial pivoting
+                let maxRow = i;
+                for (let j = i + 1; j < n; j++) {
+                    if (Math.abs(A[j][i]) > Math.abs(A[maxRow][i])) {
+                        maxRow = j;
+                    }
+                }
+                
+                // Swap rows
+                [A[i], A[maxRow]] = [A[maxRow], A[i]];
+                [b[i], b[maxRow]] = [b[maxRow], b[i]];
+                
+                // Eliminate column
+                for (let j = i + 1; j < n; j++) {
+                    const factor = A[j][i] / A[i][i];
+                    for (let k = i; k < n; k++) {
+                        A[j][k] -= factor * A[i][k];
+                    }
+                    b[j] -= factor * b[i];
+                }
+            }
+            
+            // Back substitution
+            for (let i = n - 1; i >= 0; i--) {
+                let sum = 0;
+                for (let j = i + 1; j < n; j++) {
+                    sum += A[i][j] * x[j];
+                }
+                x[i] = (b[i] - sum) / A[i][i];
+            }
+            
+            // Ensure non-negative probabilities
+            for (let i = 0; i < n; i++) {
+                x[i] = Math.max(0, x[i]);
+            }
+            
+            // Normalize
+            const sum = x.reduce((a, b) => a + b, 0);
+            if (sum > 0) {
+                for (let i = 0; i < n; i++) {
+                    x[i] /= sum;
+                }
+            }
+            
+            return x;
+        }
+        
+        function checkAbsorbing(P) {
+            const n = P.length;
+            let hasAbsorbing = false;
+            
+            for (let i = 0; i < n; i++) {
+                if (P[i][i] === 1) {
+                    let isAbsorbing = true;
+                    for (let j = 0; j < n; j++) {
+                        if (j !== i && P[i][j] !== 0) {
+                            isAbsorbing = false;
+                            break;
+                        }
+                    }
+                    
+                    if (isAbsorbing) {
+                        hasAbsorbing = true;
+                        break;
+                    }
+                }
+            }
+            
+            return hasAbsorbing;
+        }
+        
+        function displayResults(stepMatrices, steadyState, isAbsorbing) {
+            const numStates = steadyState.length;
+            const stepResults = document.getElementById('step-matrices');
+            const steadyStateTable = document.getElementById('steady-state-table');
+            const absorbingResults = document.getElementById('absorbing-results');
+            
+            // Clear previous results
+            stepResults.innerHTML = '';
+            steadyStateTable.innerHTML = '';
+            
+            // Display n-step matrices
+            for (let step = 0; step < stepMatrices.length; step++) {
+                const stepDiv = document.createElement('div');
+                stepDiv.className = 'matrix-result';
+                
+                const stepHeader = document.createElement('h5');
+                stepHeader.textContent = `Step ${step+1} Transition Matrix:`;
+                stepDiv.appendChild(stepHeader);
+                
+                const table = document.createElement('table');
+                const headerRow = table.insertRow();
+                headerRow.insertCell();
+                
+                for (let j = 0; j < numStates; j++) {
+                    const th = document.createElement('th');
+                    th.textContent = `State ${j+1}`;
+                    headerRow.appendChild(th);
+                }
+                
+                for (let i = 0; i < numStates; i++) {
+                    const row = table.insertRow();
+                    const th = document.createElement('th');
+                    th.textContent = `State ${i+1}`;
+                    row.appendChild(th);
+                    
+                    for (let j = 0; j < numStates; j++) {
+                        const cell = row.insertCell();
+                        cell.textContent = stepMatrices[step][i][j].toFixed(4);
+                    }
+                }
+                
+                stepDiv.appendChild(table);
+                stepResults.appendChild(stepDiv);
+            }
+            
+            // Display steady-state probabilities
+            const headerRow = steadyStateTable.insertRow();
+            for (let i = 0; i < numStates; i++) {
+                const th = document.createElement('th');
+                th.textContent = `State ${i+1}`;
+                headerRow.appendChild(th);
+            }
+            
+            const valueRow = steadyStateTable.insertRow();
+            for (let i = 0; i < numStates; i++) {
+                const cell = valueRow.insertCell();
+                cell.textContent = steadyState[i].toFixed(4);
+            }
+            
+            // Display absorbing state analysis if applicable
+            if (isAbsorbing) {
+                absorbingResults.style.display = 'block';
+                // Additional absorbing state calculations would go here
+            } else {
+                absorbingResults.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

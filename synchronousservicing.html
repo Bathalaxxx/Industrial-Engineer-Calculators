@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-3BSHG1DE6V');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synchronous Servicing Calculator | Industrial Engineering Calculators</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block; /* Changed from none to block */
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .result-card {
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .result-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .interpretation {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #e8f4fc;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .visualization {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .cycle-chart {
+            height: 200px;
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(to top, var(--secondary-color), #2980b9);
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .chart-label {
+            position: absolute;
+            bottom: -25px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+        
+        .chart-value {
+            position: absolute;
+            top: -25px;
+            text-align: center;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        .comparison-table, .comparison-table th, .comparison-table td {
+            border: 1px solid #ddd;
+        }
+        
+        .comparison-table th, .comparison-table td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        .comparison-table th {
+            background-color: #f2f2f2;
+            font-weight: 600;
+        }
+        
+        .comparison-table tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .optimal {
+            background-color: #e8f5e9 !important;
+            font-weight: bold;
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            display: block;
+        }
+            
+        body.sidebar-open {
+            margin-left: 0;
+            overflow: hidden;
+        }
+        /* xxxx navigation end xxxxx */
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="gagerr.html" class="sidebar-link">Gage R&R</a>
+                <a href="processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="oee.html" class="sidebar-link">OEE Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="anova.html" class="sidebar-link">ANOVA</a>
+                <a href="chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
+                <a href="factorialdesign.html" class="sidebar-link">Factorial Design</a>
+                <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="latinsquare.html" class="sidebar-link">Latin Square</a>
+                <a href="regression.html" class="sidebar-link">Regression</a>
+                <a href="samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="ttest.html" class="sidebar-link">T-Test</a>
+                <a href="ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="eoq.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="rop.html" class="sidebar-link">Reorder Point</a>
+                <a href="kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Study</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+            </div>
+        </div>
+    </aside>
+    <!-- xxxx navigation end xxxxx -->
+    
+    <header>
+        <div class="container header-content">
+            <div class="logo">Industrial <span>Engineering</span> Calculators</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Synchronous Servicing Calculator</h1>
+            <p>Determine the optimal number of machines for an operator to service</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Synchronous Machine Servicing</h2>
+                <p>This calculator helps determine the optimal number of machines an operator should be assigned to maximize efficiency and minimize costs in synchronous servicing scenarios.</p>
+                
+                <div class="formula-box">
+                    n₁ ≤ (l + m) / (l + w)
+                </div>
+                
+                <p>Where:</p>
+                <ul>
+                    <li><strong>n₁</strong> = Optimal number of machines (lowest whole number)</li>
+                    <li><strong>l</strong> = Operator service time per machine (loading/unloading)</li>
+                    <li><strong>m</strong> = Machine processing time (automatic run time)</li>
+                    <li><strong>w</strong> = Worker walking time between machines</li>
+                </ul>
+            </div>
+            
+            <form id="servicing-form">
+                <h3>Time Parameters (in minutes)</h3>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="service-time">Service Time per Machine (l):</label>
+                        <input type="number" id="service-time" min="0" step="0.1" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="machine-time">Machine Processing Time (m):</label>
+                        <input type="number" id="machine-time" min="0" step="0.1" required>
+                    </div>
+                </div>
+                
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="walking-time">Walking Time Between Machines (w):</label>
+                        <input type="number" id="walking-time" min="0" step="0.1" required>
+                    </div>
+                </div>
+                
+                <h3>Cost Parameters</h3>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="operator-rate">Operator Rate (K₁, $/hr):</label>
+                        <input type="number" id="operator-rate" min="0" step="0.01" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="machine-cost">Machine Cost (K₂, $/hr):</label>
+                        <input type="number" id="machine-cost" min="0" step="0.01" required>
+                    </div>
+                </div>
+                
+                <button type="submit" class="calculate-btn">Calculate Optimal Assignment</button>
+            </form>
+            
+            <div class="result-box" id="servicing-result">
+                <h3>Results</h3>
+                
+                <div class="result-grid">
+                    <div class="result-card">
+                        <h4>Optimal Number of Machines (n₁)</h4>
+                        <div class="result-value" id="optimal-machines"></div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>Cycle Time</h4>
+                        <div class="result-value" id="cycle-time"></div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>Operator Utilization</h4>
+                        <div class="result-value" id="operator-utilization"></div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>Machine Utilization</h4>
+                        <div class="result-value" id="machine-utilization"></div>
+                    </div>
+                </div>
+                
+                <div class="interpretation">
+                    <h4>Interpretation</h4>
+                    <p id="interpretation-text"></p>
+                </div>
+                
+                <h4>Cost Comparison</h4>
+                <table class="comparison-table" id="cost-comparison">
+                    <thead>
+                        <tr>
+                            <th>Number of Machines</th>
+                            <th>Total Expected Cost ($/unit)</th>
+                            <th>Cycle Time (min)</th>
+                            <th>Cost Efficiency</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Will be populated by JavaScript -->
+                    </tbody>
+                </table>
+                
+                <div class="visualization">
+                    <h4>Cycle Time Visualization</h4>
+                    <p>The chart below shows how different numbers of machines affect the cycle time:</p>
+                    <div class="cycle-chart" id="cycle-chart">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Practical Examples</h3>
+                
+                <div class="example">
+                    <h4>Example 1: CNC Machining Center</h4>
+                    <p>Service Time (l): 2 min | Machine Time (m): 15 min | Walking Time (w): 0.5 min</p>
+                    <p>n₁ ≤ (2 + 15) / (2 + 0.5) = 17 / 2.5 = 6.8 → Optimal machines: 6</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 2: Injection Molding</h4>
+                    <p>Service Time (l): 1.5 min | Machine Time (m): 8 min | Walking Time (w): 0.3 min</p>
+                    <p>n₁ ≤ (1.5 + 8) / (1.5 + 0.3) = 9.5 / 1.8 = 5.3 → Optimal machines: 5</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 3: Textile Weaving</h4>
+                    <p>Service Time (l): 3 min | Machine Time (m): 12 min | Walking Time (w): 1 min</p>
+                    <p>n₁ ≤ (3 + 12) / (3 + 1) = 15 / 4 = 3.75 → Optimal machines: 3</p>
+                </div>
+            </div>
+            
+            <div class="calculator-intro">
+                <h3>Understanding Synchronous Servicing</h3>
+                <p>In synchronous servicing, the operator moves between machines in a fixed pattern, servicing each machine during its idle time. The goal is to balance the operator's workload with machine utilization to minimize total cost per unit produced.</p>
+                
+                <p>The optimal number of machines (n₁) is calculated using the formula above. After determining n₁, we also calculate the total expected cost for n₁+1 machines to ensure we've found the most cost-effective assignment.</p>
+                
+                <div class="formula-box">
+                    TEC = [(l + m)(K₁ + n × K₂)] / n
+                </div>
+                
+                <p>Where TEC is the Total Expected Cost per unit of production, K₁ is the operator rate, and K₂ is the machine cost rate.</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- xxxx navigation start xxxxx -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebarClose = document.querySelector('.sidebar-close');
+            const overlay = document.querySelector('.overlay');
+            const body = document.body;
+            
+            // Toggle sidebar
+            function toggleSidebar() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+                body.classList.toggle('sidebar-open');
+            }
+            
+            // Toggle category expansion
+            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
+            categoryHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const category = this.parentElement;
+                    category.classList.toggle('open');
+                    
+                    // Update the expand/collapse icon
+                    const icon = this.querySelector('span:last-child');
+                    icon.textContent = category.classList.contains('open') ? '−' : '+';
+                });
+            });
+            
+            // Event listeners
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            sidebarClose.addEventListener('click', toggleSidebar);
+            overlay.addEventListener('click', toggleSidebar);
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 768 && 
+                    body.classList.contains('sidebar-open') && 
+                    !sidebar.contains(event.target) && 
+                    event.target !== sidebarToggle) {
+                    toggleSidebar();
+                }
+            });
+            
+            // Close sidebar when pressing Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && body.classList.contains('sidebar-open')) {
+                    toggleSidebar();
+                }
+            });
+        });
+    </script>
+    <!-- xxxx navigation end xxxxx -->
+
+    <script>
+        document.getElementById('servicing-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get input values
+            const l = parseFloat(document.getElementById('service-time').value);
+            const m = parseFloat(document.getElementById('machine-time').value);
+            const w = parseFloat(document.getElementById('walking-time').value);
+            const K1 = parseFloat(document.getElementById('operator-rate').value);
+            const K2 = parseFloat(document.getElementById('machine-cost').value);
+            
+            // Validate inputs
+            if (isNaN(l) || isNaN(m) || isNaN(w) || isNaN(K1) || isNaN(K2) || l <= 0 || m <= 0 || w < 0 || K1 <= 0 || K2 <= 0) {
+                alert('Please enter valid positive numbers for all fields');
+                return;
+            }
+            
+            // Calculate optimal number of machines (n1)
+            const n1 = Math.floor((l + m) / (l + w));
+            
+            // Calculate cycle time for n1 machines
+            const cycleTimeN1 = l + m;
+            
+            // Calculate utilizations
+            const operatorUtilization = (n1 * l) / (n1 * l + n1 * w);
+            const machineUtilization = m / (l + m);
+            
+            // Calculate TEC for n1 machines
+            const TEC_n1 = ((l + m) * (K1/60 + n1 * (K2/60))) / n1;
+            
+            // Calculate for n2 machines (n1 + 1)
+            const n2 = n1 + 1;
+            const cycleTimeN2 = n2 * (l + w);
+            const TEC_n2 = (cycleTimeN2 * (K1/60 + n2 * (K2/60))) / n2;
+            
+            // Determine which is more cost-effective
+            const optimalN = TEC_n1 <= TEC_n2 ? n1 : n2;
+            const optimalTEC = Math.min(TEC_n1, TEC_n2);
+            
+            // Display results
+            document.getElementById('optimal-machines').textContent = optimalN;
+            document.getElementById('cycle-time').textContent = optimalN === n1 ? cycleTimeN1.toFixed(2) + ' min' : cycleTimeN2.toFixed(2) + ' min';
+            document.getElementById('operator-utilization').textContent = (operatorUtilization * 100).toFixed(1) + '%';
+            document.getElementById('machine-utilization').textContent = (machineUtilization * 100).toFixed(1) + '%';
+            
+            // Interpretation text
+            let interpretation = `The optimal number of machines for this operator is ${optimalN}. `;
+            interpretation += `With this assignment, the cycle time is ${optimalN === n1 ? cycleTimeN1.toFixed(2) : cycleTimeN2.toFixed(2)} minutes, `;
+            interpretation += `and the operator utilization is ${(operatorUtilization * 100).toFixed(1)}%. `;
+            interpretation += `The total expected cost per unit is $${optimalTEC.toFixed(4)}.`;
+            document.getElementById('interpretation-text').textContent = interpretation;
+            
+            // Populate cost comparison table
+            const tableBody = document.getElementById('cost-comparison').querySelector('tbody');
+            tableBody.innerHTML = '';
+            
+            // Calculate for different numbers of machines around the optimal value
+            const startN = Math.max(1, optimalN - 2);
+            const endN = optimalN + 2;
+            
+            for (let n = startN; n <= endN; n++) {
+                let cycleTime, TEC;
+                
+                if (n <= n1) {
+                    cycleTime = l + m;
+                    TEC = ((l + m) * (K1/60 + n * (K2/60))) / n;
+                } else {
+                    cycleTime = n * (l + w);
+                    TEC = (cycleTime * (K1/60 + n * (K2/60))) / n;
+                }
+                
+                const row = document.createElement('tr');
+                if (n === optimalN) {
+                    row.classList.add('optimal');
+                }
+                
+                row.innerHTML = `
+                    <td>${n}</td>
+                    <td>$${TEC.toFixed(4)}</td>
+                    <td>${cycleTime.toFixed(2)} min</td>
+                    <td>${(optimalTEC/TEC * 100).toFixed(1)}%</td>
+                `;
+                
+                tableBody.appendChild(row);
+            }
+            
+            // Create visualization chart
+            const chart = document.getElementById('cycle-chart');
+            chart.innerHTML = '';
+            
+            for (let n = startN; n <= endN; n++) {
+                let cycleTime;
+                
+                if (n <= n1) {
+                    cycleTime = l + m;
+                } else {
+                    cycleTime = n * (l + w);
+                }
+                
+                // Find max cycle time for scaling
+                const maxCycleTime = endN * (l + w);
+                const height = (cycleTime / maxCycleTime) * 180;
+                
+                const bar = document.createElement('div');
+                bar.className = 'chart-bar';
+                bar.style.height = `${height}px`;
+                
+                const value = document.createElement('div');
+                value.className = 'chart-value';
+                value.textContent = cycleTime.toFixed(1);
+                
+                const label = document.createElement('div');
+                label.className = 'chart-label';
+                label.textContent = `${n} Machine${n !== 1 ? 's' : ''}`;
+                
+                bar.appendChild(value);
+                bar.appendChild(label);
+                chart.appendChild(bar);
+            }
+            
+            // Show results
+            document.getElementById('servicing-result').style.display = 'block';
+        });
+    </script>
+</body>
+</html>

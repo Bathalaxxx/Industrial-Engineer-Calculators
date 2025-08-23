@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-3BSHG1DE6V');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cost-Benefit Analysis Calculator | Industrial Engineering Calculators</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block; /* Changed from none to block */
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select, .input-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .cost-benefit-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            align-items: flex-end;
+        }
+        
+        .cost-benefit-row .input-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        
+        .add-item-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            white-space: nowrap;
+        }
+        
+        .add-item-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .remove-item-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            white-space: nowrap;
+        }
+        
+        .remove-item-btn:hover {
+            background-color: #c0392b;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: block;
+            width: 100%;
+            margin-top: 1.5rem;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .result-card {
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .result-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .interpretation {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #e8f4fc;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .financial-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        .financial-table, .financial-table th, .financial-table td {
+            border: 1px solid #ddd;
+        }
+        
+        .financial-table th, .financial-table td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        .financial-table th {
+            background-color: #f2f2f2;
+            font-weight: 600;
+        }
+        
+        .financial-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .positive-value {
+            color: #2ecc71;
+            font-weight: bold;
+        }
+        
+        .negative-value {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .chart-container {
+            margin: 2rem 0;
+            height: 300px;
+            position: relative;
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        .recommendation-box {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background-color: #e8f5e9;
+            border-left: 4px solid #2ecc71;
+            border-radius: 4px;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            display: block;
+        }
+            
+        body.sidebar-open {
+            margin-left: 0;
+            overflow: hidden;
+        }
+        /* xxxx navigation end xxxxx */
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .cost-benefit-row {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">Industrial <span>Engineering</span> Calculators</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Cost-Benefit Analysis Calculator</h1>
+            <p>Evaluate the financial viability of industrial engineering projects and investments</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Cost-Benefit Analysis</h2>
+                <p>This calculator helps you evaluate the financial viability of projects by comparing costs and benefits over time. Make data-driven decisions for your industrial engineering investments.</p>
+                
+                <div class="formula-box">
+                    NPV = Σ [Benefitₜ - Costₜ] / (1 + r)ᵗ
+                </div>
+                
+                <p>Where:</p>
+                <ul>
+                    <li><strong>NPV</strong> = Net Present Value</li>
+                    <li><strong>Benefitₜ</strong> = Benefits in time period t</li>
+                    <li><strong>Costₜ</strong> = Costs in time period t</li>
+                    <li><strong>r</strong> = Discount rate</li>
+                    <li><strong>t</strong> = Time period</li>
+                </ul>
+                
+                <div class="formula-box">
+                    ROI = (Net Benefits / Total Costs) × 100%
+                </div>
+                
+                <p>Where <strong>ROI</strong> is the Return on Investment percentage.</p>
+            </div>
+            
+            <form id="cba-form">
+                <h3>Project Information</h3>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="project-name">Project Name:</label>
+                        <input type="text" id="project-name" placeholder="Enter project name" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="time-horizon">Time Horizon (years):</label>
+                        <input type="number" id="time-horizon" min="1" max="50" value="5" required>
+                    </div>
+                </div>
+                
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="discount-rate">Discount Rate (%):</label>
+                        <input type="number" id="discount-rate" min="0" max="100" step="0.1" value="5" required>
+                    </div>
+                </div>
+                
+                <h3>Costs</h3>
+                <p>Enter all project costs by year:</p>
+                
+                <div id="costs-container">
+                    <div class="cost-benefit-row">
+                        <div class="input-group">
+                            <label for="cost-year0">Year 0 Costs ($):</label>
+                            <input type="number" id="cost-year0" min="0" step="1000" value="100000" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="cost-desc0">Cost Description:</label>
+                            <input type="text" id="cost-desc0" placeholder="Initial investment" required>
+                        </div>
+                        
+                        <button type="button" class="add-item-btn" id="add-cost">+ Add</button>
+                    </div>
+                </div>
+                
+                <h3>Benefits</h3>
+                <p>Enter all project benefits by year:</p>
+                
+                <div id="benefits-container">
+                    <div class="cost-benefit-row">
+                        <div class="input-group">
+                            <label for="benefit-year1">Year 1 Benefits ($):</label>
+                            <input type="number" id="benefit-year1" min="0" step="1000" value="50000" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="benefit-desc1">Benefit Description:</label>
+                            <input type="text" id="benefit-desc1" placeholder="Annual savings" required>
+                        </div>
+                        
+                        <button type="button" class="add-item-btn" id="add-benefit">+ Add</button>
+                    </div>
+                </div>
+                
+                <button type="submit" class="calculate-btn">Perform Cost-Benefit Analysis</button>
+            </form>
+            
+            <div class="result-box" id="cba-result">
+                <h3>Results for: <span id="result-project-name"></span></h3>
+                
+                <div class="result-grid">
+                    <div class="result-card">
+                        <h4>Net Present Value (NPV)</h4>
+                        <div class="result-value" id="npv-value"></div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>Return on Investment (ROI)</h4>
+                        <div class="result-value" id="roi-value"></div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>Payback Period</h4>
+                        <div class="result-value" id="payback-period"></div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>Benefit-Cost Ratio (BCR)</h4>
+                        <div class="result-value" id="bcr-value"></div>
+                    </div>
+                </div>
+                
+                <div class="interpretation">
+                    <h4>Interpretation</h4>
+                    <p id="interpretation-text"></p>
+                </div>
+                
+                <div class="recommendation-box">
+                    <h4>Recommendation</h4>
+                    <p id="recommendation-text"></p>
+                </div>
+                
+                <h4>Financial Summary</h4>
+                <table class="financial-table">
+                    <thead>
+                        <tr>
+                            <th>Year</th>
+                            <th>Costs ($)</th>
+                            <th>Benefits ($)</th>
+                            <th>Net Cash Flow ($)</th>
+                            <th>Discounted Cash Flow ($)</th>
+                            <th>Cumulative Cash Flow ($)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="financial-summary">
+                        <!-- Will be populated by JavaScript -->
+                    </tbody>
+                </table>
+                
+                <h4>Cash Flow Visualization</h4>
+                <div class="chart-container">
+                    <canvas id="cashflow-chart"></canvas>
+                </div>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Practical Examples</h3>
+                
+                <div class="example">
+                    <h4>Example 1: Equipment Upgrade</h4>
+                    <p>Initial Cost: $100,000 | Annual Savings: $30,000 | Time Horizon: 5 years | Discount Rate: 5%</p>
+                    <p>NPV = $29,883 | ROI = 50% | Payback Period: 3.3 years</p>
+                    <p>This investment would be financially viable with a positive NPV.</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 2: Automation Project</h4>
+                    <p>Initial Cost: $500,000 | Annual Savings: $150,000 | Time Horizon: 7 years | Discount Rate: 6%</p>
+                    <p>NPV = $337,000 | ROI = 110% | Payback Period: 3.3 years</p>
+                    <p>This project would be highly beneficial with strong returns.</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 3: Process Improvement</h4>
+                    <p>Initial Cost: $50,000 | Annual Savings: $8,000 | Time Horizon: 5 years | Discount Rate: 5%</p>
+                    <p>NPV = -$15,445 | ROI = -15% | Payback Period: 6.3 years</p>
+                    <p>This project would not be financially viable based on these estimates.</p>
+                </div>
+            </div>
+            
+            <div class="calculator-intro">
+                <h3>Understanding Cost-Benefit Analysis</h3>
+                <p>Cost-Benefit Analysis (CBA) is a systematic approach to estimating the strengths and weaknesses of alternatives used to determine options that provide the best approach to achieving benefits while preserving savings.</p>
+                
+                <p>Key metrics in CBA:</p>
+                <ul>
+                    <li><strong>Net Present Value (NPV):</strong> The difference between the present value of cash inflows and outflows</li>
+                    <li><strong>Return on Investment (ROI):</strong> A performance measure used to evaluate the efficiency of an investment</li>
+                    <li><strong>Payback Period:</strong> The length of time required to recover the cost of an investment</li>
+                    <li><strong>Benefit-Cost Ratio (BCR):</strong> The ratio of the benefits of a project relative to its costs</li>
+                </ul>
+                
+                <div class="formula-box">
+                    Decision Rule: Accept project if NPV > 0, ROI > required return, and BCR > 1
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            <p class="copyright">&copy; 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- xxxx navigation start xxxxx -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebarClose = document.querySelector('.sidebar-close');
+            const overlay = document.querySelector('.overlay');
+            const body = document.body;
+            
+            // Toggle sidebar
+            function toggleSidebar() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+                body.classList.toggle('sidebar-open');
+            }
+            
+            // Toggle category expansion
+            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
+            categoryHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const category = this.parentElement;
+                    category.classList.toggle('open');
+                    
+                    // Update the expand/collapse icon
+                    const icon = this.querySelector('span:last-child');
+                    icon.textContent = category.classList.contains('open') ? '−' : '+';
+                });
+            });
+            
+            // Event listeners
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            sidebarClose.addEventListener('click', toggleSidebar);
+            overlay.addEventListener('click', toggleSidebar);
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 768 && 
+                    body.classList.contains('sidebar-open') && 
+                    !sidebar.contains(event.target) && 
+                    event.target !== sidebarToggle) {
+                    toggleSidebar();
+                }
+            });
+            
+            // Close sidebar when pressing Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && body.classList.contains('sidebar-open')) {
+                    toggleSidebar();
+                }
+            });
+        });
+    </script>
+    <!-- xxxx navigation end xxxxx -->
+
+    <script>
+        // Chart variable
+        let cashflowChart;
+        
+        // Add cost row functionality
+        let costCount = 0;
+        
+        document.getElementById('add-cost').addEventListener('click', function() {
+            costCount++;
+            const timeHorizon = parseInt(document.getElementById('time-horizon').value);
+            
+            if (costCount >= timeHorizon) {
+                alert('You cannot add more cost entries than the time horizon');
+                return;
+            }
+            
+            const costsContainer = document.getElementById('costs-container');
+            const newRow = document.createElement('div');
+            newRow.className = 'cost-benefit-row';
+            newRow.innerHTML = `
+                <div class="input-group">
+                    <label for="cost-year${costCount}">Year ${costCount} Costs ($):</label>
+                    <input type="number" id="cost-year${costCount}" min="0" step="1000" value="0" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="cost-desc${costCount}">Cost Description:</label>
+                    <input type="text" id="cost-desc${costCount}" placeholder="Maintenance, operational costs, etc." required>
+                </div>
+                
+                <button type="button" class="remove-item-btn">− Remove</button>
+            `;
+            
+            costsContainer.appendChild(newRow);
+            
+            // Add event listener to remove button
+            newRow.querySelector('.remove-item-btn').addEventListener('click', function() {
+                costsContainer.removeChild(newRow);
+                costCount--;
+            });
+        });
+        
+        // Add benefit row functionality
+        let benefitCount = 1;
+        
+        document.getElementById('add-benefit').addEventListener('click', function() {
+            benefitCount++;
+            const timeHorizon = parseInt(document.getElementById('time-horizon').value);
+            
+            if (benefitCount >= timeHorizon) {
+                alert('You cannot add more benefit entries than the time horizon');
+                return;
+            }
+            
+            const benefitsContainer = document.getElementById('benefits-container');
+            const newRow = document.createElement('div');
+            newRow.className = 'cost-benefit-row';
+            newRow.innerHTML = `
+                <div class="input-group">
+                    <label for="benefit-year${benefitCount}">Year ${benefitCount} Benefits ($):</label>
+                    <input type="number" id="benefit-year${benefitCount}" min="0" step="1000" value="0" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="benefit-desc${benefitCount}">Benefit Description:</label>
+                    <input type="text" id="benefit-desc${benefitCount}" placeholder="Revenue increase, cost savings, etc." required>
+                </div>
+                
+                <button type="button" class="remove-item-btn">− Remove</button>
+            `;
+            
+            benefitsContainer.appendChild(newRow);
+            
+            // Add event listener to remove button
+            newRow.querySelector('.remove-item-btn').addEventListener('click', function() {
+                benefitsContainer.removeChild(newRow);
+                benefitCount--;
+            });
+        });
+        
+        // Calculate NPV
+        function calculateNPV(cashFlows, discountRate) {
+            let npv = 0;
+            for (let t = 0; t < cashFlows.length; t++) {
+                npv += cashFlows[t] / Math.pow(1 + discountRate, t);
+            }
+            return npv;
+        }
+        
+        // Calculate ROI
+        function calculateROI(totalBenefits, totalCosts) {
+            return ((totalBenefits - totalCosts) / totalCosts) * 100;
+        }
+        
+        // Calculate payback period
+        function calculatePaybackPeriod(cashFlows) {
+            let cumulativeCashFlow = 0;
+            for (let year = 0; year < cashFlows.length; year++) {
+                cumulativeCashFlow += cashFlows[year];
+                if (cumulativeCashFlow >= 0) {
+                    // Interpolate to get exact payback period
+                    const previousCumulative = cumulativeCashFlow - cashFlows[year];
+                    const fraction = (-previousCumulative) / cashFlows[year];
+                    return (year + fraction).toFixed(1);
+                }
+            }
+            return 'Never';
+        }
+        
+        // Calculate Benefit-Cost Ratio
+        function calculateBCR(pvBenefits, pvCosts) {
+            return pvBenefits / pvCosts;
+        }
+        
+        // Cost-benefit analysis calculation
+        document.getElementById('cba-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get basic inputs
+            const projectName = document.getElementById('project-name').value;
+            const timeHorizon = parseInt(document.getElementById('time-horizon').value);
+            const discountRate = parseFloat(document.getElementById('discount-rate').value) / 100;
+            
+            // Collect cost data
+            const costs = new Array(timeHorizon).fill(0);
+            for (let i = 0; i <= costCount; i++) {
+                const costInput = document.getElementById(`cost-year${i}`);
+                if (costInput) {
+                    const costValue = parseFloat(costInput.value) || 0;
+                    if (i < timeHorizon) {
+                        costs[i] = costValue;
+                    }
+                }
+            }
+            
+            // Collect benefit data
+            const benefits = new Array(timeHorizon).fill(0);
+            for (let i = 1; i <= benefitCount; i++) {
+                const benefitInput = document.getElementById(`benefit-year${i}`);
+                if (benefitInput) {
+                    const benefitValue = parseFloat(benefitInput.value) || 0;
+                    if (i < timeHorizon) {
+                        benefits[i] = benefitValue;
+                    }
+                }
+            }
+            
+            // Calculate cash flows
+            const cashFlows = [];
+            for (let i = 0; i < timeHorizon; i++) {
+                cashFlows.push(benefits[i] - costs[i]);
+            }
+            
+            // Calculate financial metrics
+            const npv = calculateNPV(cashFlows, discountRate);
+            const totalCosts = costs.reduce((sum, cost) => sum + cost, 0);
+            const totalBenefits = benefits.reduce((sum, benefit) => sum + benefit, 0);
+            const roi = calculateROI(totalBenefits, totalCosts);
+            const paybackPeriod = calculatePaybackPeriod(cashFlows);
+            
+            // Calculate present value of costs and benefits
+            let pvCosts = 0;
+            let pvBenefits = 0;
+            for (let t = 0; t < timeHorizon; t++) {
+                pvCosts += costs[t] / Math.pow(1 + discountRate, t);
+                pvBenefits += benefits[t] / Math.pow(1 + discountRate, t);
+            }
+            
+            const bcr = calculateBCR(pvBenefits, pvCosts);
+            
+            // Display results
+            document.getElementById('result-project-name').textContent = projectName;
+            document.getElementById('npv-value').textContent = `$${npv.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            document.getElementById('roi-value').textContent = `${roi.toFixed(2)}%`;
+            document.getElementById('payback-period').textContent = `${paybackPeriod} years`;
+            document.getElementById('bcr-value').textContent = bcr.toFixed(2);
+            
+            // Set text color based on value
+            document.getElementById('npv-value').className = npv >= 0 ? 'result-value positive-value' : 'result-value negative-value';
+            document.getElementById('roi-value').className = roi >= 0 ? 'result-value positive-value' : 'result-value negative-value';
+            
+            // Interpretation
+            let interpretation = ``;
+            if (npv > 0) {
+                interpretation = `The project has a positive Net Present Value of $${npv.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}, which means it is expected to generate value over its lifetime. `;
+            } else {
+                interpretation = `The project has a negative Net Present Value of $${npv.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}, which means it is not expected to generate sufficient returns. `;
+            }
+            
+            interpretation += `The Return on Investment is ${roi.toFixed(2)}%, and the payback period is ${paybackPeriod} years. `;
+            interpretation += `The Benefit-Cost Ratio of ${bcr.toFixed(2)} indicates that ${bcr > 1 ? 'benefits exceed costs' : 'costs exceed benefits'}.`;
+            
+            document.getElementById('interpretation-text').textContent = interpretation;
+            
+            // Recommendation
+            let recommendation = ``;
+            if (npv > 0 && roi > 10 && bcr > 1) {
+                recommendation = `This project is HIGHLY RECOMMENDED. It shows strong financial viability with positive NPV, good ROI, and benefits exceeding costs.`;
+            } else if (npv > 0) {
+                recommendation = `This project is RECOMMENDED. It shows positive financial returns, though not exceptionally strong.`;
+            } else {
+                recommendation = `This project is NOT RECOMMENDED based on financial metrics. Consider revising the project plan or identifying additional benefits.`;
+            }
+            
+            document.getElementById('recommendation-text').textContent = recommendation;
+            
+            // Populate financial summary table
+            const summaryBody = document.getElementById('financial-summary');
+            summaryBody.innerHTML = '';
+            
+            let cumulativeCashFlow = 0;
+            let cumulativeDiscountedCashFlow = 0;
+            
+            for (let year = 0; year < timeHorizon; year++) {
+                const netCashFlow = cashFlows[year];
+                const discountedCashFlow = netCashFlow / Math.pow(1 + discountRate, year);
+                
+                cumulativeCashFlow += netCashFlow;
+                cumulativeDiscountedCashFlow += discountedCashFlow;
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${year}</td>
+                    <td>${costs[year].toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                    <td>${benefits[year].toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                    <td class="${netCashFlow >= 0 ? 'positive-value' : 'negative-value'}">${netCashFlow.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                    <td class="${discountedCashFlow >= 0 ? 'positive-value' : 'negative-value'}">${discountedCashFlow.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                    <td class="${cumulativeCashFlow >= 0 ? 'positive-value' : 'negative-value'}">${cumulativeCashFlow.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                `;
+                
+                summaryBody.appendChild(row);
+            }
+            
+            // Create cash flow chart
+            const ctx = document.getElementById('cashflow-chart').getContext('2d');
+            
+            // Destroy previous chart if it exists
+            if (cashflowChart) {
+                cashflowChart.destroy();
+            }
+            
+            const years = Array.from({length: timeHorizon}, (_, i) => `Year ${i}`);
+            
+            cashflowChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: years,
+                    datasets: [
+                        {
+                            label: 'Costs',
+                            data: costs,
+                            backgroundColor: 'rgba(231, 76, 60, 0.7)',
+                            borderColor: 'rgba(231, 76, 60, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Benefits',
+                            data: benefits,
+                            backgroundColor: 'rgba(46, 204, 113, 0.7)',
+                            borderColor: 'rgba(46, 204, 113, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Net Cash Flow',
+                            data: cashFlows,
+                            type: 'line',
+                            fill: false,
+                            backgroundColor: 'rgba(52, 152, 219, 0.7)',
+                            borderColor: 'rgba(52, 152, 219, 1)',
+                            borderWidth: 2,
+                            pointRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Amount ($)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Year'
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Project Cash Flow Over Time'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: $${context.raw.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Show results
+            document.getElementById('cba-result').style.display = 'block';
+        });
+    </script>
+</body>
+</html>

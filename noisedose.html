@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-3BSHG1DE6V');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noise Dose Calculator | Industrial Engineering Calculators</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+            transition: margin-left 0.3s;
+        }
+        
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block; /* Changed from none to block */
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .exposure-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            align-items: flex-end;
+        }
+        
+        .exposure-row .input-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        
+        .add-exposure-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            white-space: nowrap;
+        }
+        
+        .add-exposure-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .remove-exposure-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            white-space: nowrap;
+        }
+        
+        .remove-exposure-btn:hover {
+            background-color: #c0392b;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: block;
+            width: 100%;
+            margin-top: 1.5rem;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .result-card {
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .result-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .interpretation {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #e8f4fc;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .exposure-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        .exposure-table, .exposure-table th, .exposure-table td {
+            border: 1px solid #ddd;
+        }
+        
+        .exposure-table th, .exposure-table td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        .exposure-table th {
+            background-color: #f2f2f2;
+            font-weight: 600;
+        }
+        
+        .exposure-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        .warning-box {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            border-radius: 4px;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .exposure-row {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="gagerr.html" class="sidebar-link">Gage R&R</a>
+                <a href="processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="oee.html" class="sidebar-link">OEE Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="anova.html" class="sidebar-link">ANOVA</a>
+                <a href="chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
+                <a href="factorialdesign.html" class="sidebar-link">Factorial Design</a>
+                <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="latinsquare.html" class="sidebar-link">Latin Square</a>
+                <a href="regression.html" class="sidebar-link">Regression</a>
+                <a href="samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="ttest.html" class="sidebar-link">T-Test</a>
+                <a href="ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="eoq.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="rop.html" class="sidebar-link">Reorder Point</a>
+                <a href="kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Study</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+            </div>
+        </div>
+    </aside>
+    <!-- xxxx navigation end xxxxx -->
+    
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Industrial Engineering <span>Calculators</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>OSHA Noise Dose Calculator</h1>
+            <p>Calculate noise exposure levels and determine compliance with OSHA standards</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Noise Dose Calculation</h2>
+                <p>This calculator helps determine OSHA noise dose and Time-Weighted Average (TWA) for workplace noise exposure assessment.</p>
+                
+                <div class="formula-box">
+                    D = 100 × Σ(Cₙ / Tₙ)
+                </div>
+                
+                <p>Where:</p>
+                <ul>
+                    <li><strong>D</strong> = Noise dose percentage</li>
+                    <li><strong>Cₙ</strong> = Time spent at a specific noise level</li>
+                    <li><strong>Tₙ</strong> = Permissible time at that level (T = 8 / 2<sup>(L-90)/5</sup>)</li>
+                </ul>
+                
+                <div class="formula-box">
+                    TWA = 16.61 × log<sub>10</sub>(D/100) + 90
+                </div>
+                
+                <p>Where <strong>TWA</strong> is the 8-hour Time-Weighted Average sound level.</p>
+                
+                <div class="warning-box">
+                    <strong>OSHA Requirements:</strong> A hearing conservation program is required for all employees exposed to TWA of 85 dB or higher.
+                </div>
+            </div>
+            
+            <form id="noise-form">
+                <h3>Noise Exposure Input</h3>
+                <p>Enter each noise exposure period with its sound level and duration:</p>
+                
+                <div id="exposure-container">
+                    <div class="exposure-row">
+                        <div class="input-group">
+                            <label for="level1">Noise Level (dBA):</label>
+                            <input type="number" id="level1" min="80" max="130" step="0.1" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="time1">Exposure Time (hours):</label>
+                            <input type="number" id="time1" min="0.1" max="8" step="0.1" required>
+                        </div>
+                        
+                        <button type="button" class="add-exposure-btn" id="add-exposure">+ Add</button>
+                    </div>
+                </div>
+                
+                <button type="submit" class="calculate-btn">Calculate Noise Dose</button>
+            </form>
+            
+            <div class="result-box" id="noise-result">
+                <h3>Results</h3>
+                
+                <div class="result-grid">
+                    <div class="result-card">
+                        <h4>Noise Dose</h4>
+                        <div class="result-value" id="noise-dose"></div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>TWA</h4>
+                        <div class="result-value" id="twa-value"></div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>Compliance Status</h4>
+                        <div class="result-value" id="compliance-status"></div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>Action Required</h4>
+                        <div id="action-required"></div>
+                    </div>
+                </div>
+                
+                <div class="interpretation">
+                    <h4>Interpretation</h4>
+                    <p id="interpretation-text"></p>
+                </div>
+                
+                <h4>Exposure Details</h4>
+                <table class="exposure-table">
+                    <thead>
+                        <tr>
+                            <th>Noise Level (dBA)</th>
+                            <th>Exposure Time (hrs)</th>
+                            <th>Permissible Time (hrs)</th>
+                            <th>Partial Dose (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="exposure-details">
+                        <!-- Will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Practical Examples</h3>
+                
+                <div class="example">
+                    <h4>Example 1: Combined Exposures</h4>
+                    <p>A worker is exposed to 95 dBA for 3 hours and to 90 dBA for 5 hours.</p>
+                    <p>D = 100 × (3/4 + 5/8) = 100 × (0.75 + 0.625) = 137.5%</p>
+                    <p>This exceeds the OSHA limit of 100% dose.</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 2: TWA Calculation</h4>
+                    <p>For a noise dose of 139.3%:</p>
+                    <p>TWA = 16.61 × log<sub>10</sub>(139.3/100) + 90 = 92.39 dBA</p>
+                    <p>This exceeds the 85 dBA action level requiring a hearing conservation program.</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 3: Single Exposure</h4>
+                    <p>A worker is exposed to 100 dBA for 1 hour:</p>
+                    <p>Permissible time at 100 dBA: T = 8 / 2<sup>(100-90)/5</sup> = 8 / 2<sup>2</sup> = 2 hours</p>
+                    <p>D = 100 × (1/2) = 50% (within limits)</p>
+                </div>
+            </div>
+            
+            <div class="calculator-intro">
+                <h3>OSHA Noise Exposure Limits</h3>
+                <table class="exposure-table">
+                    <thead>
+                        <tr>
+                            <th>Noise Level (dBA)</th>
+                            <th>Permissible Exposure Time</th>
+                            <th>Dose per Hour (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>90</td>
+                            <td>8 hours</td>
+                            <td>12.5%</td>
+                        </tr>
+                        <tr>
+                            <td>92</td>
+                            <td>6 hours</td>
+                            <td>16.7%</td>
+                        </tr>
+                        <tr>
+                            <td>95</td>
+                            <td>4 hours</td>
+                            <td>25%</td>
+                        </tr>
+                        <tr>
+                            <td>97</td>
+                            <td>3 hours</td>
+                            <td>33.3%</td>
+                        </tr>
+                        <tr>
+                            <td>100</td>
+                            <td>2 hours</td>
+                            <td>50%</td>
+                        </tr>
+                        <tr>
+                            <td>105</td>
+                            <td>1 hour</td>
+                            <td>100%</td>
+                        </tr>
+                        <tr>
+                            <td>110</td>
+                            <td>30 minutes</td>
+                            <td>200%</td>
+                        </tr>
+                        <tr>
+                            <td>115</td>
+                            <td>15 minutes</td>
+                            <td>400%</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="warning-box">
+                    <strong>Note:</strong> Continuous exposure to noise levels above 115 dBA is not permitted under any circumstances.
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add exposure row functionality
+        let exposureCount = 1;
+        
+        document.getElementById('add-exposure').addEventListener('click', function() {
+            exposureCount++;
+            
+            const exposureContainer = document.getElementById('exposure-container');
+            const newRow = document.createElement('div');
+            newRow.className = 'exposure-row';
+            newRow.innerHTML = `
+                <div class="input-group">
+                    <label for="level${exposureCount}">Noise Level (dBA):</label>
+                    <input type="number" id="level${exposureCount}" min="80" max="130" step="0.1" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="time${exposureCount}">Exposure Time (hours):</label>
+                    <input type="number" id="time${exposureCount}" min="0.1" max="8" step="0.1" required>
+                </div>
+                
+                <button type="button" class="remove-exposure-btn">− Remove</button>
+            `;
+            
+            exposureContainer.appendChild(newRow);
+            
+            // Add event listener to remove button
+            newRow.querySelector('.remove-exposure-btn').addEventListener('click', function() {
+                if (exposureCount > 1) {
+                    exposureContainer.removeChild(newRow);
+                    exposureCount--;
+                }
+            });
+        });
+        
+        // Calculate permissible time for a given noise level
+        function calculatePermissibleTime(level) {
+            return 8 / Math.pow(2, (level - 90) / 5);
+        }
+        
+        // Calculate TWA from noise dose
+        function calculateTWA(dose) {
+            return 16.61 * Math.log10(dose / 100) + 90;
+        }
+        
+        // Noise dose calculation
+        document.getElementById('noise-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            let totalDose = 0;
+            const exposureDetails = [];
+            
+            // Collect all exposure data
+            for (let i = 1; i <= exposureCount; i++) {
+                const levelInput = document.getElementById(`level${i}`);
+                const timeInput = document.getElementById(`time${i}`);
+                
+                if (levelInput && timeInput) {
+                    const level = parseFloat(levelInput.value);
+                    const time = parseFloat(timeInput.value);
+                    
+                    if (!isNaN(level) && !isNaN(time) && level >= 80 && level <= 130 && time > 0) {
+                        const permissibleTime = calculatePermissibleTime(level);
+                        const partialDose = (time / permissibleTime) * 100;
+                        totalDose += partialDose;
+                        
+                        exposureDetails.push({
+                            level: level,
+                            time: time,
+                            permissibleTime: permissibleTime,
+                            partialDose: partialDose
+                        });
+                    }
+                }
+            }
+            
+            // Calculate TWA
+            const twa = calculateTWA(totalDose);
+            
+            // Determine compliance status
+            let complianceStatus, actionRequired, interpretation;
+            
+            if (totalDose <= 100) {
+                complianceStatus = 'Compliant';
+                if (twa >= 85) {
+                    actionRequired = 'Hearing conservation program required';
+                    interpretation = `Noise exposure is within OSHA limits (${totalDose.toFixed(1)}% dose), but a hearing conservation program is required because the TWA (${twa.toFixed(1)} dBA) exceeds 85 dBA.`;
+                } else {
+                    actionRequired = 'No action required';
+                    interpretation = `Noise exposure is within OSHA limits (${totalDose.toFixed(1)}% dose, TWA: ${twa.toFixed(1)} dBA).`;
+                }
+            } else {
+                complianceStatus = 'Non-Compliant';
+                actionRequired = 'Noise reduction measures required';
+                interpretation = `Noise exposure exceeds OSHA limits (${totalDose.toFixed(1)}% dose, TWA: ${twa.toFixed(1)} dBA). Immediate noise reduction measures are required.`;
+            }
+            
+            // Display results
+            document.getElementById('noise-dose').textContent = totalDose.toFixed(1) + '%';
+            document.getElementById('twa-value').textContent = twa.toFixed(1) + ' dBA';
+            document.getElementById('compliance-status').textContent = complianceStatus;
+            document.getElementById('action-required').textContent = actionRequired;
+            document.getElementById('interpretation-text').textContent = interpretation;
+            
+            // Populate exposure details table
+            const detailsBody = document.getElementById('exposure-details');
+            detailsBody.innerHTML = '';
+            
+            exposureDetails.forEach(detail => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${detail.level}</td>
+                    <td>${detail.time.toFixed(2)}</td>
+                    <td>${detail.permissibleTime.toFixed(2)}</td>
+                    <td>${detail.partialDose.toFixed(1)}%</td>
+                `;
+                detailsBody.appendChild(row);
+            });
+            
+            // Show results
+            document.getElementById('noise-result').style.display = 'block';
+        });
+    </script>
+</body>
+</html>

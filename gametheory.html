@@ -1,0 +1,1944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-3BSHG1DE6V');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Game Theory Calculator - Analyze zero-sum and non-zero-sum games with multiple solution concepts">
+    <title>Game Theory Calculator | Industrial Engineering Calculators</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block; /* Changed from none to block */
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .game-type-selector {
+            margin-bottom: 2rem;
+        }
+        
+        .game-type-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .game-type-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            margin-right: 0.5rem;
+            border-radius: 5px 5px 0 0;
+            background-color: #f1f1f1;
+            transition: all 0.3s;
+        }
+        
+        .game-type-tab.active {
+            background-color: white;
+            border-color: #ddd;
+            border-bottom-color: white;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        
+        .game-type-tab:hover:not(.active) {
+            background-color: #e9e9e9;
+        }
+        
+        .game-type-content {
+            display: none;
+        }
+        
+        .game-type-content.active {
+            display: block;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .matrix-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .matrix-btn {
+            background-color: var(--light-color);
+            color: var(--primary-color);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .matrix-btn:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .game-matrix {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            overflow-x: auto;
+            display: block;
+        }
+        
+        .game-matrix th, .game-matrix td {
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            text-align: center;
+        }
+        
+        .game-matrix th {
+            background-color: #f2f2f2;
+            font-weight: 500;
+        }
+        
+        .game-matrix input {
+            width: 80px;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .game-matrix input:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .solution-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        .solution-table th, .solution-table td {
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            text-align: center;
+        }
+        
+        .solution-table th {
+            background-color: #f2f2f2;
+        }
+        
+        .best-option {
+            background-color: rgba(46, 204, 113, 0.2);
+            font-weight: bold;
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            display: block;
+        }
+            
+        body.sidebar-open {
+            margin-left: 0;
+            overflow: hidden;
+        }
+        /* xxxx navigation end xxxxx */
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .game-type-tabs {
+                flex-direction: column;
+            }
+            
+            .game-type-tab {
+                border-radius: 0;
+                margin-right: 0;
+                border-bottom: 1px solid #ddd;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .matrix-controls {
+                flex-direction: column;
+            }
+            
+            .game-matrix {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="gagerr.html" class="sidebar-link">Gage R&R</a>
+                <a href="processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="oee.html" class="sidebar-link">OEE Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="anova.html" class="sidebar-link">ANOVA</a>
+                <a href="chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
+                <a href="factorialdesign.html" class="sidebar-link">Factorial Design</a>
+                <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="latinsquare.html" class="sidebar-link">Latin Square</a>
+                <a href="regression.html" class="sidebar-link">Regression</a>
+                <a href="samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="ttest.html" class="sidebar-link">T-Test</a>
+                <a href="ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="eoq.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="rop.html" class="sidebar-link">Reorder Point</a>
+                <a href="kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Study</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+            </div>
+        </div>
+    </aside>
+    <!-- xxxx navigation end xxxxx -->
+    
+    <header>
+        <div class="container header-content">
+            <div class="logo">Industrial <span>Engineering</span> Calculators</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Game Theory Calculator</h1>
+            <p>Analyze zero-sum and non-zero-sum games with multiple solution concepts</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Game Theory Analysis</h2>
+                <p>This calculator helps analyze strategic interactions between rational decision-makers using various game theory concepts:</p>
+                
+                <div class="formula-box">
+                    <strong>Zero-Sum Games</strong>: Pure/Mixed Strategies, Saddle Point, Minimax<br>
+                    <strong>Non-Zero-Sum Games</strong>: Nash Equilibrium, Dominant Strategies<br>
+                    <strong>Prisoner's Dilemma</strong>: Classic game analysis<br>
+                    <strong>Battle of the Sexes</strong>: Coordination game analysis
+                </div>
+            </div>
+            
+            <div class="game-type-selector">
+                <h3>Game Type</h3>
+                <p>Select the type of game you want to analyze:</p>
+                
+                <div class="game-type-tabs">
+                    <div class="game-type-tab active" data-game-type="zero-sum">Zero-Sum Game</div>
+                    <div class="game-type-tab" data-game-type="non-zero-sum">Non-Zero-Sum Game</div>
+                    <div class="game-type-tab" data-game-type="prisoners-dilemma">Prisoner's Dilemma</div>
+                    <div class="game-type-tab" data-game-type="battle-sexes">Battle of the Sexes</div>
+                </div>
+                
+                <!-- Zero-Sum Game -->
+                <div class="game-type-content active" id="zero-sum-game">
+                    <h3>Zero-Sum Game Analysis</h3>
+                    <p>Analyze a two-player zero-sum game where one player's gain is the other's loss.</p>
+                    
+                    <form id="zero-sum-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="zero-sum-rows">Number of Rows (Player A):</label>
+                                <input type="number" id="zero-sum-rows" min="2" max="6" value="2" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="zero-sum-cols">Number of Columns (Player B):</label>
+                                <input type="number" id="zero-sum-cols" min="2" max="6" value="2" required>
+                            </div>
+                        </div>
+                        
+                        <div class="matrix-controls">
+                            <button type="button" id="zero-sum-fill-example" class="matrix-btn">Fill Example</button>
+                            <button type="button" id="zero-sum-clear" class="matrix-btn">Clear Matrix</button>
+                        </div>
+                        
+                        <table class="game-matrix" id="zero-sum-matrix">
+                            <thead>
+                                <tr>
+                                    <th>A \ B</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Will be filled by JavaScript -->
+                            </tbody>
+                        </table>
+                        
+                        <button type="submit" class="calculate-btn">Analyze Zero-Sum Game</button>
+                    </form>
+                    
+                    <div class="result-box" id="zero-sum-result">
+                        <h3>Zero-Sum Game Results</h3>
+                        <div id="zero-sum-results-content">
+                            <!-- Will be filled by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Non-Zero-Sum Game -->
+                <div class="game-type-content" id="non-zero-sum-game">
+                    <h3>Non-Zero-Sum Game Analysis</h3>
+                    <p>Analyze a two-player non-zero-sum game where players' payoffs are not directly opposed.</p>
+                    
+                    <form id="non-zero-sum-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="non-zero-sum-rows">Number of Rows (Player A):</label>
+                                <input type="number" id="non-zero-sum-rows" min="2" max="6" value="2" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="non-zero-sum-cols">Number of Columns (Player B):</label>
+                                <input type="number" id="non-zero-sum-cols" min="2" max="6" value="2" required>
+                            </div>
+                        </div>
+                        
+                        <div class="matrix-controls">
+                            <button type="button" id="non-zero-sum-fill-example" class="matrix-btn">Fill Example</button>
+                            <button type="button" id="non-zero-sum-clear" class="matrix-btn">Clear Matrix</button>
+                        </div>
+                        
+                        <h4>Player A's Payoffs</h4>
+                        <table class="game-matrix" id="non-zero-sum-matrix-a">
+                            <thead>
+                                <tr>
+                                    <th>A \ B</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Will be filled by JavaScript -->
+                            </tbody>
+                        </table>
+                        
+                        <h4>Player B's Payoffs</h4>
+                        <table class="game-matrix" id="non-zero-sum-matrix-b">
+                            <thead>
+                                <tr>
+                                    <th>A \ B</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Will be filled by JavaScript -->
+                            </tbody>
+                        </table>
+                        
+                        <button type="submit" class="calculate-btn">Analyze Non-Zero-Sum Game</button>
+                    </form>
+                    
+                    <div class="result-box" id="non-zero-sum-result">
+                        <h3>Non-Zero-Sum Game Results</h3>
+                        <div id="non-zero-sum-results-content">
+                            <!-- Will be filled by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Prisoner's Dilemma -->
+                <div class="game-type-content" id="prisoners-dilemma-game">
+                    <h3>Prisoner's Dilemma Analysis</h3>
+                    <p>Analyze the classic Prisoner's Dilemma game with customizable payoffs.</p>
+                    
+                    <form id="prisoners-dilemma-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="pd-t">Temptation (T):</label>
+                                <input type="number" id="pd-t" value="5" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="pd-r">Reward (R):</label>
+                                <input type="number" id="pd-r" value="3" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="pd-p">Punishment (P):</label>
+                                <input type="number" id="pd-p" value="1" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="pd-s">Sucker's Payoff (S):</label>
+                                <input type="number" id="pd-s" value="0" required>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Analyze Prisoner's Dilemma</button>
+                    </form>
+                    
+                    <div class="result-box" id="prisoners-dilemma-result">
+                        <h3>Prisoner's Dilemma Results</h3>
+                        <div id="prisoners-dilemma-results-content">
+                            <!-- Will be filled by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Battle of the Sexes -->
+                <div class="game-type-content" id="battle-sexes-game">
+                    <h3>Battle of the Sexes Analysis</h3>
+                    <p>Analyze the coordination game where players want to cooperate but prefer different outcomes.</p>
+                    
+                    <form id="battle-sexes-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="bs-a1">Player A's Favorite (a):</label>
+                                <input type="number" id="bs-a1" value="3" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="bs-a2">Player A's Second Choice (b):</label>
+                                <input type="number" id="bs-a2" value="1" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="bs-b1">Player B's Favorite (c):</label>
+                                <input type="number" id="bs-b1" value="2" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="bs-b2">Player B's Second Choice (d):</label>
+                                <input type="number" id="bs-b2" value="1" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="bs-mismatch">Mismatch Payoff (when choices don't align):</label>
+                            <input type="number" id="bs-mismatch" value="0" required>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Analyze Battle of the Sexes</button>
+                    </form>
+                    
+                    <div class="result-box" id="battle-sexes-result">
+                        <h3>Battle of the Sexes Results</h3>
+                        <div id="battle-sexes-results-content">
+                            <!-- Will be filled by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Game Theory Concepts</h3>
+                
+                <div class="example">
+                    <h4>Zero-Sum Games</h4>
+                    <p><strong>Pure Strategy</strong>: When players choose one strategy with certainty.</p>
+                    <p><strong>Mixed Strategy</strong>: When players randomize over possible strategies.</p>
+                    <p><strong>Saddle Point</strong>: When the maximin equals the minimax (pure strategy equilibrium).</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Non-Zero-Sum Games</h4>
+                    <p><strong>Nash Equilibrium</strong>: Strategy profile where no player can benefit by unilaterally changing strategy.</p>
+                    <p><strong>Dominant Strategy</strong>: Strategy that is best regardless of opponents' choices.</p>
+                    <p><strong>Pareto Optimality</strong>: Outcome where no player can improve without making another worse off.</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Classic Games</h4>
+                    <p><strong>Prisoner's Dilemma</strong>: Shows why rational individuals might not cooperate.</p>
+                    <p><strong>Battle of the Sexes</strong>: Coordination game with multiple equilibria.</p>
+                    <p><strong>Chicken Game</strong>: Shows brinkmanship and conflict escalation.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- xxxx navigation start xxxxx -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebarClose = document.querySelector('.sidebar-close');
+            const overlay = document.querySelector('.overlay');
+            const body = document.body;
+            
+            // Toggle sidebar
+            function toggleSidebar() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+                body.classList.toggle('sidebar-open');
+            }
+            
+            // Toggle category expansion
+            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
+            categoryHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const category = this.parentElement;
+                    category.classList.toggle('open');
+                    
+                    // Update the expand/collapse icon
+                    const icon = this.querySelector('span:last-child');
+                    icon.textContent = category.classList.contains('open') ? '−' : '+';
+                });
+            });
+            
+            // Event listeners
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            sidebarClose.addEventListener('click', toggleSidebar);
+            overlay.addEventListener('click', toggleSidebar);
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 768 && 
+                    body.classList.contains('sidebar-open') && 
+                    !sidebar.contains(event.target) && 
+                    event.target !== sidebarToggle) {
+                    toggleSidebar();
+                }
+            });
+            
+            // Close sidebar when pressing Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && body.classList.contains('sidebar-open')) {
+                    toggleSidebar();
+                }
+            });
+        });
+    </script>
+    <!-- xxxx navigation end xxxxx -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Game type tabs
+            const gameTypeTabs = document.querySelectorAll('.game-type-tab');
+            const gameTypeContents = document.querySelectorAll('.game-type-content');
+            
+            gameTypeTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active class from all tabs and contents
+                    gameTypeTabs.forEach(t => t.classList.remove('active'));
+                    gameTypeContents.forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked tab and corresponding content
+                    tab.classList.add('active');
+                    const gameType = tab.getAttribute('data-game-type');
+                    document.getElementById(`${gameType}-game`).classList.add('active');
+                });
+            });
+            
+            // Zero-Sum Game
+            const zeroSumRows = document.getElementById('zero-sum-rows');
+            const zeroSumCols = document.getElementById('zero-sum-cols');
+            const zeroSumMatrix = document.querySelector('#zero-sum-matrix tbody');
+            const zeroSumFillExample = document.getElementById('zero-sum-fill-example');
+            const zeroSumClear = document.getElementById('zero-sum-clear');
+            const zeroSumForm = document.getElementById('zero-sum-form');
+            
+            zeroSumRows.addEventListener('change', updateZeroSumMatrix);
+            zeroSumCols.addEventListener('change', updateZeroSumMatrix);
+            zeroSumFillExample.addEventListener('click', fillZeroSumExample);
+            zeroSumClear.addEventListener('click', clearZeroSumMatrix);
+            zeroSumForm.addEventListener('submit', analyzeZeroSumGame);
+            
+            function updateZeroSumMatrix() {
+                const rows = parseInt(zeroSumRows.value);
+                const cols = parseInt(zeroSumCols.value);
+                
+                zeroSumMatrix.innerHTML = '';
+                
+                // Create header row
+                let headerRow = '<tr><th>A \\ B</th>';
+                for (let c = 1; c <= cols; c++) {
+                    headerRow += `<th>B${c}</th>`;
+                }
+                headerRow += '</tr>';
+                zeroSumMatrix.innerHTML = headerRow;
+                
+                // Create data rows
+                for (let r = 1; r <= rows; r++) {
+                    let row = `<tr><th>A${r}</th>`;
+                    for (let c = 1; c <= cols; c++) {
+                        row += `<td><input type="number" class="payoff" data-row="${r}" data-col="${c}" placeholder="0"></td>`;
+                    }
+                    row += '</tr>';
+                    zeroSumMatrix.innerHTML += row;
+                }
+            }
+            
+            function fillZeroSumExample() {
+                const rows = parseInt(zeroSumRows.value);
+                const cols = parseInt(zeroSumCols.value);
+                
+                // Common zero-sum examples
+                const examples = [
+                    [[3, -2], [1, 4]],    // Simple 2x2
+                    [[2, 1, 4], [3, 0, 2], [1, 2, 3]],  // 3x3
+                    [[4, 2], [3, 5]]       // Another 2x2
+                ];
+                
+                let exampleData;
+                if (rows === 2 && cols === 2) {
+                    exampleData = examples[0];
+                } else if (rows === 3 && cols === 3) {
+                    exampleData = examples[1];
+                } else if (rows === 2 && cols === 2) {
+                    exampleData = examples[2];
+                } else {
+                    // Fill with random values if no matching example
+                    exampleData = Array.from({length: rows}, () => 
+                        Array.from({length: cols}, () => Math.floor(Math.random() * 10) - 5)
+                    );
+                }
+                
+                // Fill the matrix
+                const inputs = document.querySelectorAll('#zero-sum-matrix .payoff');
+                inputs.forEach(input => {
+                    const r = parseInt(input.dataset.row) - 1;
+                    const c = parseInt(input.dataset.col) - 1;
+                    
+                    if (r < exampleData.length && c < exampleData[0].length) {
+                        input.value = exampleData[r][c];
+                    } else {
+                        input.value = Math.floor(Math.random() * 10) - 5;
+                    }
+                });
+            }
+            
+            function clearZeroSumMatrix() {
+                const inputs = document.querySelectorAll('#zero-sum-matrix .payoff');
+                inputs.forEach(input => {
+                    input.value = '';
+                });
+                document.getElementById('zero-sum-result').style.display = 'none';
+            }
+            
+            function analyzeZeroSumGame(e) {
+                e.preventDefault();
+                
+                const rows = parseInt(zeroSumRows.value);
+                const cols = parseInt(zeroSumCols.value);
+                
+                // Get payoff matrix
+                const matrix = [];
+                for (let r = 1; r <= rows; r++) {
+                    const row = [];
+                    for (let c = 1; c <= cols; c++) {
+                        const input = document.querySelector(`#zero-sum-matrix .payoff[data-row="${r}"][data-col="${c}"]`);
+                        row.push(parseFloat(input.value) || 0);
+                    }
+                    matrix.push(row);
+                }
+                
+                // Find saddle point (pure strategy equilibrium)
+                let saddlePoint = findSaddlePoint(matrix);
+                
+                // Calculate maximin and minimax
+                const rowMinima = matrix.map(row => Math.min(...row));
+                const maximin = Math.max(...rowMinima);
+                const maximinStrategy = rowMinima.indexOf(maximin) + 1;
+                
+                const columnMaxima = [];
+                for (let c = 0; c < cols; c++) {
+                    let columnMax = -Infinity;
+                    for (let r = 0; r < rows; r++) {
+                        if (matrix[r][c] > columnMax) columnMax = matrix[r][c];
+                    }
+                    columnMaxima.push(columnMax);
+                }
+                const minimax = Math.min(...columnMaxima);
+                const minimaxStrategy = columnMaxima.indexOf(minimax) + 1;
+                
+                // Check if game has pure strategy solution
+                const hasPureStrategy = maximin === minimax;
+                
+                // Calculate mixed strategy (if no pure strategy exists)
+                let mixedStrategyA = null;
+                let mixedStrategyB = null;
+                let valueOfGame = null;
+                
+                if (!hasPureStrategy && rows === 2 && cols === 2) {
+                    // Solve 2x2 game using mixed strategies
+                    const a = matrix[0][0], b = matrix[0][1], c = matrix[1][0], d = matrix[1][1];
+                    
+                    // Player A's optimal strategy (p, 1-p)
+                    const denominator = (a + d) - (b + c);
+                    if (denominator !== 0) {
+                        const p = (d - c) / denominator;
+                        const q = (d - b) / denominator;
+                        
+                        mixedStrategyA = [p, 1 - p];
+                        mixedStrategyB = [q, 1 - q];
+                        valueOfGame = (a*d - b*c) / denominator;
+                    }
+                }
+                
+                // Display results
+                const resultsContent = document.getElementById('zero-sum-results-content');
+                resultsContent.innerHTML = `
+                    <h4>Payoff Matrix</h4>
+                    <div style="overflow-x: auto;">
+                        <table class="solution-table">
+                            <tr>
+                                <th>A \\ B</th>
+                                ${Array.from({length: cols}, (_, i) => `<th>B${i+1}</th>`).join('')}
+                            </tr>
+                            ${matrix.map((row, r) => `
+                                <tr>
+                                    <th>A${r+1}</th>
+                                    ${row.map(payoff => `<td>${payoff}</td>`).join('')}
+                                </tr>
+                            `).join('')}
+                        </table>
+                    </div>
+                    
+                    <h4>Pure Strategy Analysis</h4>
+                    <table class="solution-table">
+                        <tr>
+                            <th>Concept</th>
+                            <th>Value</th>
+                            <th>Strategy</th>
+                        </tr>
+                        <tr>
+                            <td>Maximin (Player A)</td>
+                            <td>${maximin}</td>
+                            <td>A${maximinStrategy}</td>
+                        </tr>
+                        <tr>
+                            <td>Minimax (Player B)</td>
+                            <td>${minimax}</td>
+                            <td>B${minimaxStrategy}</td>
+                        </tr>
+                        <tr class="${hasPureStrategy ? 'best-option' : ''}">
+                            <td>Saddle Point</td>
+                            <td>${hasPureStrategy ? maximin : 'None'}</td>
+                            <td>${hasPureStrategy ? `A${saddlePoint.row} B${saddlePoint.col}` : 'No pure strategy equilibrium'}</td>
+                        </tr>
+                    </table>
+                    
+                    ${!hasPureStrategy && rows === 2 && cols === 2 ? `
+                        <h4>Mixed Strategy Solution (2×2 game)</h4>
+                        <table class="solution-table">
+                            <tr>
+                                <th>Player</th>
+                                <th>Optimal Mixed Strategy</th>
+                                <th>Value</th>
+                            </tr>
+                            <tr>
+                                <td>Player A</td>
+                                <td>${mixedStrategyA[0].toFixed(2)} for A1, ${mixedStrategyA[1].toFixed(2)} for A2</td>
+                                <td rowspan="2">${valueOfGame.toFixed(2)}</td>
+                            </tr>
+                            <tr>
+                                <td>Player B</td>
+                                <td>${mixedStrategyB[0].toFixed(2)} for B1, ${mixedStrategyB[1].toFixed(2)} for B2</td>
+                            </tr>
+                        </table>
+                    ` : ''}
+                    
+                    ${!hasPureStrategy && (rows !== 2 || cols !== 2) ? `
+                        <p>Note: Mixed strategy solutions are only automatically calculated for 2×2 games.</p>
+                    ` : ''}
+                `;
+                
+                document.getElementById('zero-sum-result').style.display = 'block';
+            }
+            
+            function findSaddlePoint(matrix) {
+                const rows = matrix.length;
+                const cols = matrix[0].length;
+                
+                for (let r = 0; r < rows; r++) {
+                    const rowMin = Math.min(...matrix[r]);
+                    const colIndex = matrix[r].indexOf(rowMin);
+                    
+                    // Check if this is also the column maximum
+                    let isColumnMax = true;
+                    for (let i = 0; i < rows; i++) {
+                        if (matrix[i][colIndex] > rowMin) {
+                            isColumnMax = false;
+                            break;
+                        }
+                    }
+                    
+                    if (isColumnMax) {
+                        return { row: r+1, col: colIndex+1, value: rowMin };
+                    }
+                }
+                
+                return null;
+            }
+            
+            // Initialize zero-sum matrix
+            updateZeroSumMatrix();
+            
+            // Non-Zero-Sum Game
+            const nonZeroSumRows = document.getElementById('non-zero-sum-rows');
+            const nonZeroSumCols = document.getElementById('non-zero-sum-cols');
+            const nonZeroSumMatrixA = document.querySelector('#non-zero-sum-matrix-a tbody');
+            const nonZeroSumMatrixB = document.querySelector('#non-zero-sum-matrix-b tbody');
+            const nonZeroSumFillExample = document.getElementById('non-zero-sum-fill-example');
+            const nonZeroSumClear = document.getElementById('non-zero-sum-clear');
+            const nonZeroSumForm = document.getElementById('non-zero-sum-form');
+            
+            nonZeroSumRows.addEventListener('change', updateNonZeroSumMatrix);
+            nonZeroSumCols.addEventListener('change', updateNonZeroSumMatrix);
+            nonZeroSumFillExample.addEventListener('click', fillNonZeroSumExample);
+            nonZeroSumClear.addEventListener('click', clearNonZeroSumMatrix);
+            nonZeroSumForm.addEventListener('submit', analyzeNonZeroSumGame);
+            
+            function updateNonZeroSumMatrix() {
+                const rows = parseInt(nonZeroSumRows.value);
+                const cols = parseInt(nonZeroSumCols.value);
+                
+                nonZeroSumMatrixA.innerHTML = '';
+                nonZeroSumMatrixB.innerHTML = '';
+                
+                // Create header row
+                let headerRow = '<tr><th>A \\ B</th>';
+                for (let c = 1; c <= cols; c++) {
+                    headerRow += `<th>B${c}</th>`;
+                }
+                headerRow += '</tr>';
+                
+                nonZeroSumMatrixA.innerHTML = headerRow;
+                nonZeroSumMatrixB.innerHTML = headerRow;
+                
+                // Create data rows
+                for (let r = 1; r <= rows; r++) {
+                    let row = `<tr><th>A${r}</th>`;
+                    for (let c = 1; c <= cols; c++) {
+                        row += `<td><input type="number" class="payoff-a" data-row="${r}" data-col="${c}" placeholder="0"></td>`;
+                    }
+                    row += '</tr>';
+                    nonZeroSumMatrixA.innerHTML += row;
+                    
+                    row = `<tr><th>A${r}</th>`;
+                    for (let c = 1; c <= cols; c++) {
+                        row += `<td><input type="number" class="payoff-b" data-row="${r}" data-col="${c}" placeholder="0"></td>`;
+                    }
+                    row += '</tr>';
+                    nonZeroSumMatrixB.innerHTML += row;
+                }
+            }
+            
+            function fillNonZeroSumExample() {
+                const rows = parseInt(nonZeroSumRows.value);
+                const cols = parseInt(nonZeroSumCols.value);
+                
+                // Common non-zero-sum examples
+                const examplesA = [
+                    [[3, 0], [5, 1]],    // Prisoner's Dilemma
+                    [[2, 0], [0, 1]],     // Coordination game
+                    [[3, 1], [4, 2]]      // Another example
+                ];
+                
+                const examplesB = [
+                    [[3, 5], [0, 1]],     // Prisoner's Dilemma
+                    [[2, 0], [0, 1]],     // Coordination game
+                    [[2, 4], [1, 3]]      // Another example
+                ];
+                
+                let exampleDataA, exampleDataB;
+                if (rows === 2 && cols === 2) {
+                    exampleDataA = examplesA[0];
+                    exampleDataB = examplesB[0];
+                } else if (rows === 2 && cols === 2) {
+                    exampleDataA = examplesA[1];
+                    exampleDataB = examplesB[1];
+                } else if (rows === 2 && cols === 2) {
+                    exampleDataA = examplesA[2];
+                    exampleDataB = examplesB[2];
+                } else {
+                    // Fill with random values if no matching example
+                    exampleDataA = Array.from({length: rows}, () => 
+                        Array.from({length: cols}, () => Math.floor(Math.random() * 5))
+                    );
+                    exampleDataB = Array.from({length: rows}, () => 
+                        Array.from({length: cols}, () => Math.floor(Math.random() * 5))
+                    );
+                }
+                
+                // Fill the matrices
+                const inputsA = document.querySelectorAll('#non-zero-sum-matrix-a .payoff-a');
+                const inputsB = document.querySelectorAll('#non-zero-sum-matrix-b .payoff-b');
+                
+                inputsA.forEach(input => {
+                    const r = parseInt(input.dataset.row) - 1;
+                    const c = parseInt(input.dataset.col) - 1;
+                    
+                    if (r < exampleDataA.length && c < exampleDataA[0].length) {
+                        input.value = exampleDataA[r][c];
+                    } else {
+                        input.value = Math.floor(Math.random() * 5);
+                    }
+                });
+                
+                inputsB.forEach(input => {
+                    const r = parseInt(input.dataset.row) - 1;
+                    const c = parseInt(input.dataset.col) - 1;
+                    
+                    if (r < exampleDataB.length && c < exampleDataB[0].length) {
+                        input.value = exampleDataB[r][c];
+                    } else {
+                        input.value = Math.floor(Math.random() * 5);
+                    }
+                });
+            }
+            
+            function clearNonZeroSumMatrix() {
+                const inputsA = document.querySelectorAll('#non-zero-sum-matrix-a .payoff-a');
+                const inputsB = document.querySelectorAll('#non-zero-sum-matrix-b .payoff-b');
+                
+                inputsA.forEach(input => input.value = '');
+                inputsB.forEach(input => input.value = '');
+                document.getElementById('non-zero-sum-result').style.display = 'none';
+            }
+            
+            function analyzeNonZeroSumGame(e) {
+                e.preventDefault();
+                
+                const rows = parseInt(nonZeroSumRows.value);
+                const cols = parseInt(nonZeroSumCols.value);
+                
+                // Get payoff matrices
+                const matrixA = [];
+                const matrixB = [];
+                
+                for (let r = 1; r <= rows; r++) {
+                    const rowA = [];
+                    const rowB = [];
+                    for (let c = 1; c <= cols; c++) {
+                        const inputA = document.querySelector(`#non-zero-sum-matrix-a .payoff-a[data-row="${r}"][data-col="${c}"]`);
+                        const inputB = document.querySelector(`#non-zero-sum-matrix-b .payoff-b[data-row="${r}"][data-col="${c}"]`);
+                        rowA.push(parseFloat(inputA.value) || 0);
+                        rowB.push(parseFloat(inputB.value) || 0);
+                    }
+                    matrixA.push(rowA);
+                    matrixB.push(rowB);
+                }
+                
+                // Find Nash equilibria (pure strategies)
+                const nashEquilibria = findNashEquilibria(matrixA, matrixB);
+                
+                // Find dominant strategies
+                const dominantA = findDominantStrategy(matrixA, true);
+                const dominantB = findDominantStrategy(matrixB, false);
+                
+                // Check for Pareto optimal outcomes
+                const paretoOptimal = findParetoOptimal(matrixA, matrixB);
+                
+                // Display results
+                const resultsContent = document.getElementById('non-zero-sum-results-content');
+                resultsContent.innerHTML = `
+                    <h4>Payoff Matrices</h4>
+                    <div style="overflow-x: auto;">
+                        <h5>Player A's Payoffs</h5>
+                        <table class="solution-table">
+                            <tr>
+                                <th>A \\ B</th>
+                                ${Array.from({length: cols}, (_, i) => `<th>B${i+1}</th>`).join('')}
+                            </tr>
+                            ${matrixA.map((row, r) => `
+                                <tr>
+                                    <th>A${r+1}</th>
+                                    ${row.map(payoff => `<td>${payoff}</td>`).join('')}
+                                </tr>
+                            `).join('')}
+                        </table>
+                        
+                        <h5>Player B's Payoffs</h5>
+                        <table class="solution-table">
+                            <tr>
+                                <th>A \\ B</th>
+                                ${Array.from({length: cols}, (_, i) => `<th>B${i+1}</th>`).join('')}
+                            </tr>
+                            ${matrixB.map((row, r) => `
+                                <tr>
+                                    <th>A${r+1}</th>
+                                    ${row.map(payoff => `<td>${payoff}</td>`).join('')}
+                                </tr>
+                            `).join('')}
+                        </table>
+                    </div>
+                    
+                    <h4>Nash Equilibria (Pure Strategies)</h4>
+                    ${nashEquilibria.length > 0 ? `
+                        <table class="solution-table">
+                            <tr>
+                                <th>Equilibrium</th>
+                                <th>Player A's Payoff</th>
+                                <th>Player B's Payoff</th>
+                            </tr>
+                            ${nashEquilibria.map(eq => `
+                                <tr class="best-option">
+                                    <td>A${eq.row} B${eq.col}</td>
+                                    <td>${matrixA[eq.row-1][eq.col-1]}</td>
+                                    <td>${matrixB[eq.row-1][eq.col-1]}</td>
+                                </tr>
+                            `).join('')}
+                        </table>
+                    ` : '<p>No pure strategy Nash equilibria found.</p>'}
+                    
+                    <h4>Dominant Strategies</h4>
+                    <table class="solution-table">
+                        <tr>
+                            <th>Player</th>
+                            <th>Dominant Strategy</th>
+                        </tr>
+                        <tr>
+                            <td>Player A</td>
+                            <td>${dominantA ? `A${dominantA}` : 'No dominant strategy'}</td>
+                        </tr>
+                        <tr>
+                            <td>Player B</td>
+                            <td>${dominantB ? `B${dominantB}` : 'No dominant strategy'}</td>
+                        </tr>
+                    </table>
+                    
+                    <h4>Pareto Optimal Outcomes</h4>
+                    ${paretoOptimal.length > 0 ? `
+                        <table class="solution-table">
+                            <tr>
+                                <th>Outcome</th>
+                                <th>Player A's Payoff</th>
+                                <th>Player B's Payoff</th>
+                            </tr>
+                            ${paretoOptimal.map(po => `
+                                <tr>
+                                    <td>A${po.row} B${po.col}</td>
+                                    <td>${matrixA[po.row-1][po.col-1]}</td>
+                                    <td>${matrixB[po.row-1][po.col-1]}</td>
+                                </tr>
+                            `).join('')}
+                        </table>
+                    ` : '<p>No Pareto optimal outcomes found.</p>'}
+                `;
+                
+                document.getElementById('non-zero-sum-result').style.display = 'block';
+            }
+            
+            function findNashEquilibria(matrixA, matrixB) {
+                const rows = matrixA.length;
+                const cols = matrixA[0].length;
+                const equilibria = [];
+                
+                for (let r = 0; r < rows; r++) {
+                    for (let c = 0; c < cols; c++) {
+                        // Check if A's strategy is best response to B's
+                        let isABest = true;
+                        for (let i = 0; i < rows; i++) {
+                            if (matrixA[i][c] > matrixA[r][c]) {
+                                isABest = false;
+                                break;
+                            }
+                        }
+                        
+                        // Check if B's strategy is best response to A's
+                        let isBBest = true;
+                        for (let j = 0; j < cols; j++) {
+                            if (matrixB[r][j] > matrixB[r][c]) {
+                                isBBest = false;
+                                break;
+                            }
+                        }
+                        
+                        if (isABest && isBBest) {
+                            equilibria.push({ row: r+1, col: c+1 });
+                        }
+                    }
+                }
+                
+                return equilibria;
+            }
+            
+            function findDominantStrategy(matrix, isRowPlayer) {
+                const n = matrix.length;
+                const m = matrix[0].length;
+                
+                if (isRowPlayer) {
+                    // Check for dominant row
+                    for (let r = 0; r < n; r++) {
+                        let isDominant = true;
+                        for (let otherR = 0; otherR < n; otherR++) {
+                            if (r === otherR) continue;
+                            
+                            let allBetter = true;
+                            for (let c = 0; c < m; c++) {
+                                if (matrix[r][c] < matrix[otherR][c]) {
+                                    allBetter = false;
+                                    break;
+                                }
+                            }
+                            
+                            if (!allBetter) {
+                                isDominant = false;
+                                break;
+                            }
+                        }
+                        
+                        if (isDominant) return r + 1;
+                    }
+                } else {
+                    // Check for dominant column
+                    for (let c = 0; c < m; c++) {
+                        let isDominant = true;
+                        for (let otherC = 0; otherC < m; otherC++) {
+                            if (c === otherC) continue;
+                            
+                            let allBetter = true;
+                            for (let r = 0; r < n; r++) {
+                                if (matrix[r][c] < matrix[r][otherC]) {
+                                    allBetter = false;
+                                    break;
+                                }
+                            }
+                            
+                            if (!allBetter) {
+                                isDominant = false;
+                                break;
+                            }
+                        }
+                        
+                        if (isDominant) return c + 1;
+                    }
+                }
+                
+                return null;
+            }
+            
+            function findParetoOptimal(matrixA, matrixB) {
+                const rows = matrixA.length;
+                const cols = matrixA[0].length;
+                const paretoOptimal = [];
+                
+                // Create list of all outcomes with coordinates
+                const outcomes = [];
+                for (let r = 0; r < rows; r++) {
+                    for (let c = 0; c < cols; c++) {
+                        outcomes.push({
+                            row: r+1,
+                            col: c+1,
+                            a: matrixA[r][c],
+                            b: matrixB[r][c]
+                        });
+                    }
+                }
+                
+                // Check each outcome for Pareto optimality
+                for (let i = 0; i < outcomes.length; i++) {
+                    let isParetoOptimal = true;
+                    const current = outcomes[i];
+                    
+                    for (let j = 0; j < outcomes.length; j++) {
+                        if (i === j) continue;
+                        
+                        const other = outcomes[j];
+                        
+                        // Check if other outcome is better for both players
+                        if (other.a >= current.a && other.b >= current.b && 
+                            (other.a > current.a || other.b > current.b)) {
+                            isParetoOptimal = false;
+                            break;
+                        }
+                    }
+                    
+                    if (isParetoOptimal) {
+                        paretoOptimal.push(current);
+                    }
+                }
+                
+                return paretoOptimal;
+            }
+            
+            // Initialize non-zero-sum matrix
+            updateNonZeroSumMatrix();
+            
+            // Prisoner's Dilemma
+            const prisonersDilemmaForm = document.getElementById('prisoners-dilemma-form');
+            prisonersDilemmaForm.addEventListener('submit', analyzePrisonersDilemma);
+            
+            function analyzePrisonersDilemma(e) {
+                e.preventDefault();
+                
+                const T = parseFloat(document.getElementById('pd-t').value);
+                const R = parseFloat(document.getElementById('pd-r').value);
+                const P = parseFloat(document.getElementById('pd-p').value);
+                const S = parseFloat(document.getElementById('pd-s').value);
+                
+                // Create payoff matrices
+                const matrixA = [
+                    [R, S],
+                    [T, P]
+                ];
+                
+                const matrixB = [
+                    [R, T],
+                    [S, P]
+                ];
+                
+                // Find Nash equilibrium (always Defect-Defect)
+                const nashEquilibrium = { row: 2, col: 2 };
+                
+                // Check if mutual cooperation is Pareto optimal
+                const paretoOptimal = [];
+                if (R > P || (R === P && R > S)) {
+                    paretoOptimal.push({ row: 1, col: 1 });
+                }
+                if (T > P || (T === P && T > S)) {
+                    paretoOptimal.push({ row: 2, col: 1 });
+                    paretoOptimal.push({ row: 1, col: 2 });
+                }
+                paretoOptimal.push({ row: 2, col: 2 });
+                
+                // Display results
+                const resultsContent = document.getElementById('prisoners-dilemma-results-content');
+                resultsContent.innerHTML = `
+                    <h4>Payoff Matrices</h4>
+                    <div style="overflow-x: auto;">
+                        <h5>Player A's Payoffs (Row Player)</h5>
+                        <table class="solution-table">
+                            <tr>
+                                <th>A \\ B</th>
+                                <th>Cooperate</th>
+                                <th>Defect</th>
+                            </tr>
+                            <tr>
+                                <th>Cooperate</th>
+                                <td>${R}</td>
+                                <td>${S}</td>
+                            </tr>
+                            <tr>
+                                <th>Defect</th>
+                                <td>${T}</td>
+                                <td>${P}</td>
+                            </tr>
+                        </table>
+                        
+                        <h5>Player B's Payoffs (Column Player)</h5>
+                        <table class="solution-table">
+                            <tr>
+                                <th>A \\ B</th>
+                                <th>Cooperate</th>
+                                <th>Defect</th>
+                            </tr>
+                            <tr>
+                                <th>Cooperate</th>
+                                <td>${R}</td>
+                                <td>${T}</td>
+                            </tr>
+                            <tr>
+                                <th>Defect</th>
+                                <td>${S}</td>
+                                <td>${P}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <h4>Analysis</h4>
+                    <table class="solution-table">
+                        <tr>
+                            <th>Solution Concept</th>
+                            <th>Result</th>
+                        </tr>
+                        <tr class="best-option">
+                            <td>Nash Equilibrium</td>
+                            <td>Both players defect (D,D) with payoffs (${P}, ${P})</td>
+                        </tr>
+                        <tr>
+                            <td>Dominant Strategy</td>
+                            <td>Defect is dominant for both players</td>
+                        </tr>
+                        <tr>
+                            <td>Pareto Optimal Outcomes</td>
+                            <td>${paretoOptimal.map(po => 
+                                po.row === 1 && po.col === 1 ? 'Mutual cooperation (C,C)' :
+                                po.row === 2 && po.col === 1 ? 'A defects, B cooperates (D,C)' :
+                                po.row === 1 && po.col === 2 ? 'A cooperates, B defects (C,D)' :
+                                'Mutual defection (D,D)'
+                            ).join(', ')}</td>
+                        </tr>
+                        <tr>
+                            <td>Social Dilemma</td>
+                            <td>${R > P ? 'Exists (mutual cooperation is better but not stable)' : 'No'}</td>
+                        </tr>
+                    </table>
+                    
+                    <h4>Interpretation</h4>
+                    <p>The Prisoner's Dilemma demonstrates why rational individuals might not cooperate, even when it appears to be in their best interest.</p>
+                    <p>Although mutual cooperation (${R}, ${R}) would yield higher payoffs for both, the dominant strategy of defecting leads to the Nash equilibrium of mutual defection (${P}, ${P}).</p>
+                `;
+                
+                document.getElementById('prisoners-dilemma-result').style.display = 'block';
+            }
+            
+            // Battle of the Sexes
+            const battleSexesForm = document.getElementById('battle-sexes-form');
+            battleSexesForm.addEventListener('submit', analyzeBattleSexes);
+            
+            function analyzeBattleSexes(e) {
+                e.preventDefault();
+                
+                const a = parseFloat(document.getElementById('bs-a1').value);
+                const b = parseFloat(document.getElementById('bs-a2').value);
+                const c = parseFloat(document.getElementById('bs-b1').value);
+                const d = parseFloat(document.getElementById('bs-b2').value);
+                const mismatch = parseFloat(document.getElementById('bs-mismatch').value);
+                
+                // Create payoff matrices
+                const matrixA = [
+                    [a, mismatch],
+                    [mismatch, b]
+                ];
+                
+                const matrixB = [
+                    [c, mismatch],
+                    [mismatch, d]
+                ];
+                
+                // Find Nash equilibria (pure strategies)
+                const nashEquilibria = [];
+                if (a > mismatch && c > mismatch) {
+                    nashEquilibria.push({ row: 1, col: 1 });
+                }
+                if (b > mismatch && d > mismatch) {
+                    nashEquilibria.push({ row: 2, col: 2 });
+                }
+                
+                // Find mixed strategy Nash equilibrium (for 2x2 game)
+                let mixedStrategyA = null;
+                let mixedStrategyB = null;
+                
+                const denominatorA = (a - mismatch) + (d - mismatch);
+                if (denominatorA !== 0) {
+                    const p = (d - mismatch) / denominatorA;
+                    mixedStrategyA = [p, 1 - p];
+                }
+                
+                const denominatorB = (c - mismatch) + (b - mismatch);
+                if (denominatorB !== 0) {
+                    const q = (b - mismatch) / denominatorB;
+                    mixedStrategyB = [q, 1 - q];
+                }
+                
+                // Display results
+                const resultsContent = document.getElementById('battle-sexes-results-content');
+                resultsContent.innerHTML = `
+                    <h4>Payoff Matrices</h4>
+                    <div style="overflow-x: auto;">
+                        <h5>Player A's Payoffs (Row Player)</h5>
+                        <table class="solution-table">
+                            <tr>
+                                <th>A \\ B</th>
+                                <th>Option 1</th>
+                                <th>Option 2</th>
+                            </tr>
+                            <tr>
+                                <th>Option 1</th>
+                                <td>${a}</td>
+                                <td>${mismatch}</td>
+                            </tr>
+                            <tr>
+                                <th>Option 2</th>
+                                <td>${mismatch}</td>
+                                <td>${b}</td>
+                            </tr>
+                        </table>
+                        
+                        <h5>Player B's Payoffs (Column Player)</h5>
+                        <table class="solution-table">
+                            <tr>
+                                <th>A \\ B</th>
+                                <th>Option 1</th>
+                                <th>Option 2</th>
+                            </tr>
+                            <tr>
+                                <th>Option 1</th>
+                                <td>${c}</td>
+                                <td>${mismatch}</td>
+                            </tr>
+                            <tr>
+                                <th>Option 2</th>
+                                <td>${mismatch}</td>
+                                <td>${d}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <h4>Analysis</h4>
+                    <table class="solution-table">
+                        <tr>
+                            <th>Solution Concept</th>
+                            <th>Result</th>
+                        </tr>
+                        <tr>
+                            <td>Nash Equilibria (Pure Strategies)</td>
+                            <td>
+                                ${nashEquilibria.length > 0 ? 
+                                    nashEquilibria.map(eq => 
+                                        `Both choose ${eq.row === 1 ? 'Option 1' : 'Option 2'} (${matrixA[eq.row-1][eq.col-1]}, ${matrixB[eq.row-1][eq.col-1]})`
+                                    ).join(', ') : 
+                                    'No pure strategy Nash equilibria'}
+                            </td>
+                        </tr>
+                        ${mixedStrategyA && mixedStrategyB ? `
+                            <tr class="best-option">
+                                <td>Mixed Strategy Nash Equilibrium</td>
+                                <td>
+                                    Player A: ${(mixedStrategyA[0]*100).toFixed(1)}% Option 1, ${(mixedStrategyA[1]*100).toFixed(1)}% Option 2<br>
+                                    Player B: ${(mixedStrategyB[0]*100).toFixed(1)}% Option 1, ${(mixedStrategyB[1]*100).toFixed(1)}% Option 2
+                                </td>
+                            </tr>
+                        ` : ''}
+                        <tr>
+                            <td>Pareto Optimal Outcomes</td>
+                            <td>
+                                ${a > mismatch && c > mismatch ? 'Both choose Option 1, ' : ''}
+                                ${b > mismatch && d > mismatch ? 'Both choose Option 2' : ''}
+                                ${!(a > mismatch && c > mismatch) && !(b > mismatch && d > mismatch) ? 'None' : ''}
+                            </td>
+                        </tr>
+                    </table>
+                    
+                    <h4>Interpretation</h4>
+                    <p>The Battle of the Sexes models situations where players want to coordinate but prefer different outcomes.</p>
+                    <p>There are ${nashEquilibria.length} pure strategy Nash equilibrium${nashEquilibria.length !== 1 ? 'a' : ''}, representing the coordinated outcomes.</p>
+                    ${mixedStrategyA && mixedStrategyB ? `
+                        <p>The mixed strategy Nash equilibrium shows the probabilities with which rational players would randomize their choices.</p>
+                    ` : ''}
+                `;
+                
+                document.getElementById('battle-sexes-result').style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

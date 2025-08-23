@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-3BSHG1DE6V');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANOVA Calculator | Industrial Engineering Calculators</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block; /* Changed from none to block */
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select, .input-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .data-input {
+            margin-bottom: 1.5rem;
+        }
+        
+        .data-input textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .data-input .help-text {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-top: 0.5rem;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: block;
+            width: 100%;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .result-card {
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .result-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .interpretation {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #e8f4fc;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .group-inputs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .group-input {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .group-input label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .group-input input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .add-group-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 1rem;
+        }
+        
+        .significance {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .significance select {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            display: block;
+        }
+            
+        body.sidebar-open {
+            margin-left: 0;
+            overflow: hidden;
+        }
+        /* xxxx navigation end xxxxx */
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .group-inputs {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="gagerr.html" class="sidebar-link">Gage R&R</a>
+                <a href="processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="oee.html" class="sidebar-link">OEE Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="anova.html" class="sidebar-link">ANOVA</a>
+                <a href="chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
+                <a href="factorialdesign.html" class="sidebar-link">Factorial Design</a>
+                <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="latinsquare.html" class="sidebar-link">Latin Square</a>
+                <a href="regression.html" class="sidebar-link">Regression</a>
+                <a href="samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="ttest.html" class="sidebar-link">T-Test</a>
+                <a href="ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="eoq.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="rop.html" class="sidebar-link">Reorder Point</a>
+                <a href="kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Study</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+            </div>
+        </div>
+    </aside>
+    <!-- xxxx navigation end xxxxx -->
+
+    <header>
+        <div class="container header-content">
+            <div class="logo">Industrial <span>Engineering</span> Calculators</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>ANOVA Calculator</h1>
+            <p>Perform One-Way Analysis of Variance to compare means across multiple groups</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Analysis of Variance (ANOVA)</h2>
+                <p>ANOVA is a statistical method used to test differences between two or more means. It compares the variance between groups to the variance within groups to determine if any significant differences exist.</p>
+                <div class="formula-box">
+                    F = (Between-group variability) / (Within-group variability)
+                </div>
+                <p>Where F is the test statistic that follows an F-distribution. A large F-value indicates that the differences between group means are greater than would be expected by chance.</p>
+            </div>
+            
+            <div class="significance">
+                <label for="alpha-level">Significance Level (α):</label>
+                <select id="alpha-level">
+                    <option value="0.01">0.01</option>
+                    <option value="0.05" selected>0.05</option>
+                    <option value="0.10">0.10</option>
+                </select>
+            </div>
+            
+            <h3>Data Input</h3>
+            <p class="help-text">Enter comma-separated values for each group. Add more groups as needed.</p>
+            
+            <div id="group-inputs-container">
+                <div class="group-inputs">
+                    <div class="group-input">
+                        <label for="group-1">Group 1:</label>
+                        <input type="text" id="group-1" class="group-data" placeholder="5, 6, 5, 7" value="5, 6, 5, 7">
+                    </div>
+                    <div class="group-input">
+                        <label for="group-2">Group 2:</label>
+                        <input type="text" id="group-2" class="group-data" placeholder="8, 9, 6, 7" value="8, 9, 6, 7">
+                    </div>
+                    <div class="group-input">
+                        <label for="group-3">Group 3:</label>
+                        <input type="text" id="group-3" class="group-data" placeholder="6, 7, 5, 6" value="6, 7, 5, 6">
+                    </div>
+                </div>
+            </div>
+            
+            <button id="add-group-btn" class="add-group-btn">+ Add Another Group</button>
+            
+            <button id="calculate-btn" class="calculate-btn">Calculate ANOVA</button>
+            
+            <div class="result-box" id="anova-result">
+                <h3>ANOVA Results</h3>
+                
+                <div class="result-grid">
+                    <div class="result-card">
+                        <h4>F-Statistic</h4>
+                        <div class="result-value" id="f-statistic"></div>
+                        <p>Test statistic</p>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>P-Value</h4>
+                        <div class="result-value" id="p-value"></div>
+                        <p>Significance level</p>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>Result</h4>
+                        <div class="result-value" id="result-significance"></div>
+                        <p>Hypothesis test</p>
+                    </div>
+                </div>
+                
+                <h4>ANOVA Table</h4>
+                <table id="anova-table">
+                    <thead>
+                        <tr>
+                            <th>Source of Variation</th>
+                            <th>Sum of Squares</th>
+                            <th>Degrees of Freedom</th>
+                            <th>Mean Square</th>
+                            <th>F-Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Between Groups</td>
+                            <td id="ss-between"></td>
+                            <td id="df-between"></td>
+                            <td id="ms-between"></td>
+                            <td id="f-value"></td>
+                        </tr>
+                        <tr>
+                            <td>Within Groups</td>
+                            <td id="ss-within"></td>
+                            <td id="df-within"></td>
+                            <td id="ms-within"></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Total</td>
+                            <td id="ss-total"></td>
+                            <td id="df-total"></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="interpretation">
+                    <h4>Interpretation</h4>
+                    <p id="interpretation-text"></p>
+                </div>
+                
+                <h4>Group Statistics</h4>
+                <table id="group-stats-table">
+                    <thead>
+                        <tr>
+                            <th>Group</th>
+                            <th>Sample Size</th>
+                            <th>Mean</th>
+                            <th>Standard Deviation</th>
+                        </tr>
+                    </thead>
+                    <tbody id="group-stats-body">
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="examples-section">
+                <h3>ANOVA Examples in Industrial Engineering</h3>
+                
+                <div class="example">
+                    <h4>Production Example</h4>
+                    <p>Compare the output of three different machines to determine if there are significant differences in productivity.</p>
+                    <p>Machine A: 23, 25, 24, 26, 22</p>
+                    <p>Machine B: 28, 27, 29, 26, 30</p>
+                    <p>Machine C: 21, 20, 22, 19, 23</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Quality Control Example</h4>
+                    <p>Test whether three different quality control methods result in different defect rates.</p>
+                    <p>Method A: 2.1, 1.9, 2.3, 2.0, 2.2</p>
+                    <p>Method B: 1.5, 1.6, 1.4, 1.7, 1.5</p>
+                    <p>Method C: 3.2, 3.0, 3.1, 3.3, 2.9</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Material Testing Example</h4>
+                    <p>Compare the strength of three different material types.</p>
+                    <p>Material A: 45, 47, 46, 48, 44</p>
+                    <p>Material B: 52, 51, 53, 50, 54</p>
+                    <p>Material C: 38, 39, 37, 40, 36</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- xxxx navigation start xxxxx -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebarClose = document.querySelector('.sidebar-close');
+            const overlay = document.querySelector('.overlay');
+            const body = document.body;
+            
+            // Toggle sidebar
+            function toggleSidebar() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+                body.classList.toggle('sidebar-open');
+            }
+            
+            // Toggle category expansion
+            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
+            categoryHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const category = this.parentElement;
+                    category.classList.toggle('open');
+                    
+                    // Update the expand/collapse icon
+                    const icon = this.querySelector('span:last-child');
+                    icon.textContent = category.classList.contains('open') ? '−' : '+';
+                });
+            });
+            
+            // Event listeners
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            sidebarClose.addEventListener('click', toggleSidebar);
+            overlay.addEventListener('click', toggleSidebar);
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 768 && 
+                    body.classList.contains('sidebar-open') && 
+                    !sidebar.contains(event.target) && 
+                    event.target !== sidebarToggle) {
+                    toggleSidebar();
+                }
+            });
+            
+            // Close sidebar when pressing Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && body.classList.contains('sidebar-open')) {
+                    toggleSidebar();
+                }
+            });
+        });
+    </script>
+    <!-- xxxx navigation end xxxxx -->
+
+    <script>
+        // ANOVA Implementation (provided code)
+        function mean(arr) {
+            return arr.reduce((a, b) => a + b, 0) / arr.length;
+        }
+
+        function sumSquares(arr, grandMean) {
+            return arr.reduce((sum, val) => sum + Math.pow(val - grandMean, 2), 0);
+        }
+
+        function fCDF(f, d1, d2) {
+            // Incomplete Beta Function approximation for p-value
+            function betaInc(x, a, b) {
+                const MAX_ITER = 100, EPS = 1e-10;
+                let bt = (x === 0 || x === 1) ? 0 :
+                    Math.exp(
+                        lgamma(a + b) - lgamma(a) - lgamma(b) +
+                        a * Math.log(x) + b * Math.log(1 - x)
+                    );
+                if (x < (a + 1) / (a + b + 2)) {
+                    return bt * betacf(x, a, b) / a;
+                } else {
+                    return 1 - bt * betacf(1 - x, b, a) / b;
+                }
+            }
+
+            function betacf(x, a, b) {
+                const MAX_ITER = 200, EPS = 1e-12;
+                let am = 1, bm = 1, az = 1, qab = a + b, qap = a + 1, qam = a - 1;
+                let bz = 1 - qab * x / qap;
+                for (let m = 1, d, ap, bp, app, bpp, aold; m <= MAX_ITER; m++) {
+                    let em = m;
+                    let tem = em + em;
+                    d = em * (b - em) * x / ((qam + tem) * (a + tem));
+                    ap = az + d * am;
+                    bp = bz + d * bm;
+                    d = -(a + em) * (qab + em) * x / ((a + tem) * (qap + tem));
+                    app = ap + d * az;
+                    bpp = bp + d * bz;
+                    aold = az;
+                    am = ap / bpp;
+                    bm = bp / bpp;
+                    az = app / bpp;
+                    bz = 1;
+                    if (Math.abs(az - aold) < EPS * Math.abs(az)) return az;
+                }
+                return az;
+            }
+
+            function lgamma(z) {
+                // Lanczos approximation
+                const g = 7;
+                const C = [
+                    0.99999999999980993,
+                    676.5203681218851,
+                    -1259.1392167224028,
+                    771.32342877765313,
+                    -176.61502916214059,
+                    12.507343278686905,
+                    -0.13857109526572012,
+                    9.9843695780195716e-6,
+                    1.5056327351493116e-7
+                ];
+                if (z < 0.5) return Math.log(Math.PI) - Math.log(Math.sin(Math.PI * z)) - lgamma(1 - z);
+                z -= 1;
+                let x = C[0];
+                for (let i = 1; i < g + 2; i++) x += C[i] / (z + i);
+                const t = z + g + 0.5;
+                return 0.5 * Math.log(2 * Math.PI) + (z + 0.5) * Math.log(t) - t + Math.log(x) - Math.log(z + 1);
+            }
+
+            let x = (d1 * f) / (d1 * f + d2);
+            return betaInc(x, d1 / 2, d2 / 2);
+        }
+
+        function anova(groups) {
+            if (!Array.isArray(groups) || groups.length < 2) {
+                throw new Error("ANOVA requires at least 2 groups of data.");
+            }
+
+            const nGroups = groups.length;
+            const nTotal = groups.reduce((a, g) => a + g.length, 0);
+
+            const groupMeans = groups.map(mean);
+            const grandMean = groups.flat().reduce((a, b) => a + b, 0) / nTotal;
+
+            // Between-group sum of squares
+            let ssBetween = groups.reduce((sum, g, i) =>
+                sum + g.length * Math.pow(groupMeans[i] - grandMean, 2), 0);
+
+            // Within-group sum of squares
+            let ssWithin = groups.reduce((sum, g, i) =>
+                sum + g.reduce((s, val) => s + Math.pow(val - groupMeans[i], 2), 0), 0);
+
+            let dfBetween = nGroups - 1;
+            let dfWithin = nTotal - nGroups;
+
+            let msBetween = ssBetween / dfBetween;
+            let msWithin = ssWithin / dfWithin;
+
+            let F = msBetween / msWithin;
+
+            // p-value from F distribution (upper tail)
+            let pValue = 1 - fCDF(F, dfBetween, dfWithin);
+
+            return {
+                groups: groups.length,
+                totalSamples: nTotal,
+                dfBetween,
+                dfWithin,
+                ssBetween,
+                ssWithin,
+                msBetween,
+                msWithin,
+                F,
+                pValue,
+                groupMeans,
+                grandMean,
+                originalGroups: groups // Store original groups for later use
+            };
+        }
+
+        // UI Handling
+        document.addEventListener('DOMContentLoaded', function() {
+            const calculateBtn = document.getElementById('calculate-btn');
+            const addGroupBtn = document.getElementById('add-group-btn');
+            const groupInputsContainer = document.getElementById('group-inputs-container');
+            const resultBox = document.getElementById('anova-result');
+            const alphaLevel = document.getElementById('alpha-level');
+            
+            let groupCount = 3; // Starting with 3 groups
+            let originalGroups = []; // Store original groups data
+
+            // Add event listener for adding new groups
+            addGroupBtn.addEventListener('click', function() {
+                groupCount++;
+                
+                const newGroupInput = document.createElement('div');
+                newGroupInput.className = 'group-input';
+                newGroupInput.innerHTML = `
+                    <label for="group-${groupCount}">Group ${groupCount}:</label>
+                    <input type="text" id="group-${groupCount}" class="group-data" placeholder="Enter comma-separated values">
+                `;
+                
+                const groupInputs = groupInputsContainer.querySelector('.group-inputs');
+                groupInputs.appendChild(newGroupInput);
+            });
+
+            // Add event listener for calculating ANOVA
+            calculateBtn.addEventListener('click', function() {
+                try {
+                    // Get all group data
+                    const groupInputs = document.querySelectorAll('.group-data');
+                    const groups = [];
+                    originalGroups = []; // Reset original groups
+                    
+                    for (let i = 0; i < groupInputs.length; i++) {
+                        const input = groupInputs[i];
+                        const value = input.value.trim();
+                        
+                        if (value === '') {
+                            continue; // Skip empty inputs
+                        }
+                        
+                        // Parse comma-separated values
+                        const values = value.split(',').map(v => {
+                            const num = parseFloat(v.trim());
+                            if (isNaN(num)) {
+                                throw new Error(`Invalid number in Group ${i+1}: ${v}`);
+                            }
+                            return num;
+                        });
+                        
+                        groups.push(values);
+                        originalGroups.push(values); // Store for later use
+                    }
+                    
+                    if (groups.length < 2) {
+                        throw new Error("ANOVA requires at least 2 groups of data.");
+                    }
+                    
+                    // Calculate ANOVA
+                    const result = anova(groups);
+                    const alpha = parseFloat(alphaLevel.value);
+                    
+                    // Display results
+                    displayResults(result, alpha, originalGroups);
+                    
+                } catch (error) {
+                    alert('Error: ' + error.message);
+                    console.error(error);
+                }
+            });
+            
+            function displayResults(result, alpha, originalGroups) {
+                // Update result metrics
+                document.getElementById('f-statistic').textContent = result.F.toFixed(6);
+                document.getElementById('p-value').textContent = result.pValue.toFixed(6);
+                
+                // Determine significance
+                const isSignificant = result.pValue <= alpha;
+                document.getElementById('result-significance').textContent = 
+                    isSignificant ? 'Significant' : 'Not Significant';
+                document.getElementById('result-significance').style.color = 
+                    isSignificant ? '#2ecc71' : '#e74c3c';
+                
+                // Update ANOVA table
+                document.getElementById('ss-between').textContent = result.ssBetween.toFixed(6);
+                document.getElementById('df-between').textContent = result.dfBetween;
+                document.getElementById('ms-between').textContent = result.msBetween.toFixed(6);
+                document.getElementById('f-value').textContent = result.F.toFixed(6);
+                
+                document.getElementById('ss-within').textContent = result.ssWithin.toFixed(6);
+                document.getElementById('df-within').textContent = result.dfWithin;
+                document.getElementById('ms-within').textContent = result.msWithin.toFixed(6);
+                
+                document.getElementById('ss-total').textContent = (result.ssBetween + result.ssWithin).toFixed(6);
+                document.getElementById('df-total').textContent = result.totalSamples - 1;
+                
+                // Update interpretation
+                const interpretationText = document.getElementById('interpretation-text');
+                if (isSignificant) {
+                    interpretationText.textContent = 
+                        `The p-value of ${result.pValue.toFixed(6)} is less than the significance level of ${alpha}. ` +
+                        `This provides evidence to reject the null hypothesis. There are statistically significant differences ` +
+                        `between at least two of the group means.`;
+                } else {
+                    interpretationText.textContent = 
+                        `The p-value of ${result.pValue.toFixed(6)} is greater than the significance level of ${alpha}. ` +
+                        `There is not enough evidence to reject the null hypothesis. The group means are not significantly different.`;
+                }
+                
+                // Update group statistics table
+                const groupStatsBody = document.getElementById('group-stats-body');
+                groupStatsBody.innerHTML = '';
+                
+                for (let i = 0; i < result.groups; i++) {
+                    const groupData = originalGroups[i];
+                    const groupMean = result.groupMeans[i];
+                    
+                    // Calculate standard deviation
+                    const squaredDiffs = groupData.map(value => Math.pow(value - groupMean, 2));
+                    const variance = squaredDiffs.reduce((sum, value) => sum + value, 0) / groupData.length;
+                    const stdDev = Math.sqrt(variance);
+                    
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>Group ${i+1}</td>
+                        <td>${groupData.length}</td>
+                        <td>${groupMean.toFixed(6)}</td>
+                        <td>${stdDev.toFixed(6)}</td>
+                    `;
+                    
+                    groupStatsBody.appendChild(row);
+                }
+                
+                // Show results
+                resultBox.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
