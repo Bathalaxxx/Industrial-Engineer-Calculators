@@ -57,7 +57,7 @@
             position: fixed;
             top: 15px;
             left: 15px;
-            z-index: 1010;
+            z-index: 1000;
             background-color: var(--primary-color);
             color: white;
             border: none;
@@ -162,7 +162,37 @@
             display: block;
         }
         
-        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
         /* xxxx navigation end xxxxx */
         
         header {
@@ -172,7 +202,7 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             position: sticky;
             top: 0;
-            z-index: 101;
+            z-index: 100;
         }
         
         .container {
@@ -512,34 +542,6 @@
             overflow: hidden;
         }
         /* xxxx navigation end xxxxx */
-
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            nav ul {
-                margin-top: 1rem;
-                justify-content: center;
-            }
-            
-            nav ul li {
-                margin: 0 0.75rem;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .sidebar-toggle {
-                top: 25px; /* Move it down slightly */
-                left: 20px; /* Move it right slightly */
-                z-index: 1001; /* Higher than header */
-            }
-  
-            .logo {
-                margin-left: 50px; /* Push logo right to avoid overlap */
-            }
-            }
     </style>
 </head>
 <body>
@@ -575,7 +577,6 @@
                 <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
                 <a href="gagerr.html" class="sidebar-link">Gage R&R</a>
                 <a href="processcapability.html" class="sidebar-link">Process Capability</a>
-                <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
                 <a href="oee.html" class="sidebar-link">OEE Calculator</a>
             </div>
         </div>
@@ -691,24 +692,26 @@
     <!-- xxxx navigation end xxxxx -->
     
     <header>
-        <div class="container header-content">
-            <div class="logo">Industrial <span>Engineering</span> Calculators</div>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="terms.html">Terms</a></li>
-                    <li><a href="privacy.html">Privacy Policy</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </nav>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Industrial Engineering <span>Calculators</span></div>
+                <nav>
+                    <ul>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="terms.html">Terms</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </header>
 
     <section class="hero">
         <div class="container">
-            <h1>IEcalculators.online</h1>
-            <p>Calculators made for industrial engineering professionals, students, and aspiring future practitioners.</p>
+            <h1>Essential Tools for Industrial Engineers</h1>
+            <p>Free online calculators to help with production planning, quality control, operations management, and more. Made for industrial engineering professionals, students, and aspiring future practitioners.</p>
+            <a href="https://www.buymeacoffee.com/IndEnggcalculators"><img src="https://img.buymeacoffee.com/button-api/?text=Support our work!&emoji=🏭&slug=IndEnggcalculators&button_colour=FF5F5F&font_colour=ffffff&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00" /></a>
         </div>
     </section>
 
@@ -769,11 +772,6 @@
                 <div class="tool-card quality">
                     <h3>Process Capability</h3>
                     <p>Calculate Cp, Cpk and other process capability indices.</p>
-                    <a href="processcapability.html" class="tool-link">Use Calculator</a>
-                </div>
-                <div class="tool-card quality">
-                    <h3>Six Sigma DPMO</h3>
-                    <p>Calculate Defects Per Million Opportunities and Sigma Level for process improvement.</p>
                     <a href="processcapability.html" class="tool-link">Use Calculator</a>
                 </div>
                 <div class="tool-card quality">
@@ -1057,8 +1055,8 @@
         <div class="container">
             <div class="about-content">
                 <h2>About Industrial Engineering Calculators</h2>
-                <p>Our mission is to assist millions of industrial engineering professionals, students, and aspiring IEs by providing access to a curated collection of calculators used in real-world scenarios to support decision-making.</p>
-                
+                <p>Our mission is to provide free, easy-to-use calculators for industrial engineering professionals and students. All our tools are organized by subject area to help you quickly find what you need.</p>
+                <p>This project is maintained by industrial engineering professionals who understand the challenges of production planning, quality control, and operations management.</p>
             </div>
         </div>
     </section>
@@ -1072,7 +1070,7 @@
                 <a href="contact.html">Contact Us</a>
             </div>
             <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
-            <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
+            <p class="copyright">© 2023 Industrial Engineering Calculators. All rights reserved.</p>
         </div>
     </footer>
 

@@ -44,7 +44,7 @@
             position: fixed;
             top: 15px;
             left: 15px;
-            z-index: 1010;
+            z-index: 1000;
             background-color: var(--primary-color);
             color: white;
             border: none;
@@ -323,18 +323,6 @@
             }
         }
 
-        @media (max-width: 768px) {
-            .sidebar-toggle {
-                top: 25px; /* Move it down slightly */
-                left: 20px; /* Move it right slightly */
-                z-index: 1001; /* Higher than header */
-            }
-  
-            .logo {
-                margin-left: 50px; /* Push logo right to avoid overlap */
-            }
-        }
-
         /* New styles */
         .mission-statement {
             font-style: italic;
@@ -396,7 +384,6 @@
                 <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
                 <a href="gagerr.html" class="sidebar-link">Gage R&R</a>
                 <a href="processcapability.html" class="sidebar-link">Process Capability</a>
-                <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
                 <a href="oee.html" class="sidebar-link">OEE Calculator</a>
             </div>
         </div>
@@ -510,7 +497,6 @@
         </div>
     </aside>
     <!-- xxxx navigation end xxxxx -->
-     
     <header>
         <div class="container header-content">
             <div class="logo">Industrial <span>Engineering</span> Calculators</div>
@@ -537,15 +523,15 @@
         <section class="content-section">
             <h2>Our Mission</h2>
             <div class="mission-statement">
-                "To assist industrial engineering professionals, students, and aspiring IEs by providing access to a curated collection of calculators used in real-world scenarios to support decision-making."
+                "To empower industrial engineers with accessible, practical tools that simplify complex calculations and enhance decision-making in real-world scenarios."
             </div>
-            <p>I (Eugene James Palmes) created Industrial Engineering Calculators to address the gap in specialized online tools for our field. This platform was designed with three key audiences in mind:</p>
+            <p>Industrial Engineering Calculators was created by Eugene James G. Palmes, an industrial engineer from the Philippines, to address the gap in specialized online tools for our field. This platform was designed with three key audiences in mind:</p>
             <ul class="feature-list">
-                <li><strong>IE Professionals</strong> who need quick, reliable calculations during their workday</li>
+                <li><strong>Professionals</strong> who need quick, reliable calculations during their workday</li>
                 <li><strong>Students</strong> learning industrial engineering concepts and applications</li>
-                <li><strong>Aspiring IEs</strong> looking for practical examples of what IEs really do in real life</li>
+                <li><strong>Educators</strong> looking for practical examples to demonstrate theory</li>
             </ul>
-            <p>Unlike other sites, the tools here are specifically used in industrial engineering.</p>
+            <p>Unlike generic engineering calculators, our tools are specifically tailored to the unique challenges of industrial engineering.</p>
         </section>
         
         <section class="content-section">
@@ -555,19 +541,21 @@
                 <li><strong>Specialized tools</strong> you won't find on other engineering sites</li>
                 <li><strong>Time-saving solutions</strong> for common IE problems</li>
                 <li><strong>Practical applications</strong> of industrial engineering theory</li>
+                <li><strong>Mobile-friendly access</strong> to calculations in the field</li>
             </ul>
-            <p>These calculators cover essential areas including queueing models, line balancing, and linear programming - concepts that form the backbone of operational decision-making in manufacturing and service industries.</p>
+            <p>The calculators cover essential areas including queueing models, line balancing, and linear programming - concepts that form the backbone of operational decision-making in manufacturing and service industries.</p>
         </section>
         
         <section class="content-section">
             <h2>Our Commitment to Quality</h2>
-            <p>Every calculator on this site is developed and tested with care, but industrial engineering is a complex field with many variables. I'm committed to:</p>
+            <p>Every calculator on this site is developed and tested with care, but industrial engineering is a complex field with many variables. We're committed to:</p>
             <ul class="feature-list">
                 <li><strong>Continuous improvement</strong> based on user feedback</li>
-
+                <li><strong>Practical accuracy</strong> for real-world applications</li>
+                <li><strong>Clear explanations</strong> of calculations and assumptions</li>
                 <li><strong>No-cost access</strong> to all tools</li>
             </ul>
-            <p>While I rigorously tested each calculator, I acknowledge that industrial engineering problems can be complex. I welcome feedback from users to help improve these tools.</p>
+            <p>While we rigorously test each calculator, we acknowledge that industrial engineering problems can be complex. We welcome feedback from users to help improve these tools.</p>
         </section>
         
         <section class="content-section">
@@ -577,11 +565,15 @@
                 <li><strong>Share your expertise</strong> - Suggest improvements or new calculator ideas</li>
                 <li><strong>Spread the word</strong> - Tell colleagues and classmates about these resources</li>
                 <li><strong>Provide feedback</strong> - Help us identify areas for improvement</li>
-                <li><strong>Support this project</strong> - Consider donating to help cover costs of operating this site </li>
+                <li><strong>Support the project</strong> - Consider donating to help cover hosting costs</li>
             </ul>
-            <p>My vision is to build the most comprehensive collection of industrial engineering calculators available anywhere. With your help, we can make this the go-to resource for IE professionals and students worldwide.</p>
+            <p>Our vision is to build the most comprehensive collection of industrial engineering calculators available anywhere. With your help, we can make this the go-to resource for IE professionals and students worldwide.</p>
             
-            
+            <form action="https://www.paypal.com/donate" method="post" target="_top" style="margin-top: 20px;">
+                <input type="hidden" name="business" value="YOUR_PAYPAL_EMAIL@example.com">
+                <input type="hidden" name="currency_code" value="USD">
+                <button type="submit" style="background-color: var(--accent-color); color: white; padding: 0.8rem 1.5rem; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">Support This Project</button>
+            </form>
         </section>
     </main>
     
@@ -595,7 +587,7 @@
                 <a href="contact.html">Contact Us</a>
             </div>
             <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
-            <p class="copyright">&copy; 2025 Industrial Engineering Calculators. All rights reserved.</p>
+            <p class="copyright">&copy; 2023 Industrial Engineering Calculators. All rights reserved.</p>
         </div>
     </footer>
     <!-- xxxx navigation start xxxxx -->

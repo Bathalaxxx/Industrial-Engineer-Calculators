@@ -7,13 +7,15 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
+
       gtag('config', 'G-3BSHG1DE6V');
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Latin Square Design Calculator - Create and analyze Latin Square experimental designs">
-    <title>Latin Square Design Calculator | Industrial Engineering Calculators</title>
+    <meta name="description" content="Linear Programming Calculator - Solve optimization problems with constraints">
+    <title>Linear Programming Calculator | Industrial Engineering Calculators</title>
     <style>
+        /* Consistent with existing style */
         :root {
             --primary-color: #2c3e50;
             --secondary-color: #3498db;
@@ -22,7 +24,6 @@
             --dark-color: #2c3e50;
             --text-color: #333;
             --text-light: #7f8c8d;
-            --statistics-color: #9b59b6;
         }
         
         * {
@@ -37,122 +38,6 @@
             color: var(--text-color);
             background-color: #f5f7fa;
         }
-
-        /* xxxx navigation start xxxxx */
-        .sidebar-toggle {
-            position: fixed;
-            top: 15px;
-            left: 15px;
-            z-index: 1010;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            padding: 8px 12px;
-            cursor: pointer;
-            font-size: 1.2rem;
-            display: block;
-        }
-        
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: -300px;
-            width: 300px;
-            height: 100%;
-            background-color: var(--light-color);
-            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-            overflow-y: auto;
-            transition: left 0.3s;
-            z-index: 999;
-            padding: 20px 0;
-        }
-        
-        .sidebar.open {
-            left: 0;
-        }
-        
-        .sidebar-header {
-            padding: 0 20px 15px;
-            border-bottom: 1px solid #ddd;
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .sidebar-close {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text-color);
-        }
-        
-        .sidebar-category {
-            margin-bottom: 10px;
-        }
-        
-        .sidebar-category-header {
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background-color 0.3s;
-        }
-        
-        .sidebar-category-header:hover {
-            background-color: rgba(0,0,0,0.05);
-        }
-        
-        .sidebar-category-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-        
-        .sidebar-category.open .sidebar-category-content {
-            max-height: 1000px;
-        }
-        
-        .sidebar-link {
-            display: block;
-            padding: 8px 20px 8px 35px;
-            color: var(--text-color);
-            text-decoration: none;
-            transition: background-color 0.3s;
-        }
-        
-        .sidebar-link:hover {
-            background-color: rgba(0,0,0,0.05);
-        }
-        
-        body.sidebar-open {
-            overflow: hidden;
-        }
-        
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            z-index: 998;
-            display: none;
-        }
-        
-        .overlay.active {
-            display: block;
-        }
-        
-        /* Add color coding to sidebar categories */
-        .sidebar-category-header.statistics {
-            color: var(--statistics-color);
-        }
-        /* xxxx navigation end xxxxx */
         
         header {
             background-color: var(--primary-color);
@@ -243,47 +128,6 @@
             font-size: 1.1rem;
         }
         
-        .design-phase {
-            margin-bottom: 2rem;
-        }
-        
-        .phase-tabs {
-            display: flex;
-            border-bottom: 1px solid #ddd;
-            margin-bottom: 1.5rem;
-        }
-        
-        .phase-tab {
-            padding: 0.8rem 1.5rem;
-            cursor: pointer;
-            border: 1px solid transparent;
-            border-bottom: none;
-            margin-right: 0.5rem;
-            border-radius: 5px 5px 0 0;
-            background-color: #f1f1f1;
-            transition: all 0.3s;
-        }
-        
-        .phase-tab.active {
-            background-color: white;
-            border-color: #ddd;
-            border-bottom-color: white;
-            color: var(--secondary-color);
-            font-weight: 500;
-        }
-        
-        .phase-tab:hover:not(.active) {
-            background-color: #e9e9e9;
-        }
-        
-        .phase-content {
-            display: none;
-        }
-        
-        .phase-content.active {
-            display: block;
-        }
-        
         .input-group {
             margin-bottom: 1.5rem;
         }
@@ -294,9 +138,7 @@
             font-weight: 500;
         }
         
-        .input-group input, 
-        .input-group select, 
-        .input-group textarea {
+        .input-group input, .input-group select {
             width: 100%;
             padding: 0.8rem;
             border: 1px solid #ddd;
@@ -304,14 +146,7 @@
             font-size: 1rem;
         }
         
-        .input-group textarea {
-            min-height: 100px;
-            font-family: monospace;
-        }
-        
-        .input-group input:focus, 
-        .input-group select:focus, 
-        .input-group textarea:focus {
+        .input-group input:focus, .input-group select:focus {
             outline: none;
             border-color: var(--secondary-color);
             box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
@@ -361,64 +196,55 @@
             color: var(--secondary-color);
         }
         
-        .latin-square-table {
-            margin: 1.5rem 0;
-            border-collapse: collapse;
+        .lp-matrix {
             width: 100%;
+            overflow-x: auto;
+            margin: 1.5rem 0;
         }
         
-        .latin-square-table th, 
-        .latin-square-table td {
+        .lp-matrix table {
+            min-width: 600px;
+            border-collapse: collapse;
+        }
+        
+        .lp-matrix th, .lp-matrix td {
             border: 1px solid #ddd;
-            padding: 0.8rem;
+            padding: 0.75rem;
             text-align: center;
-            min-width: 60px;
         }
         
-        .latin-square-table th {
+        .lp-matrix th {
             background-color: #f2f2f2;
             font-weight: 500;
         }
         
-        .latin-square-table input {
-            width: 100%;
-            border: none;
+        .lp-matrix input {
+            width: 80px;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 3px;
             text-align: center;
-            font-size: 1rem;
-            background-color: transparent;
         }
         
-        .latin-square-table input:focus {
+        .lp-matrix input:focus {
             outline: none;
-            background-color: #f0f8ff;
+            border-color: var(--secondary-color);
         }
         
-        .stat-results {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin: 1.5rem 0;
-        }
-        
-        .stat-card {
-            flex: 1;
-            min-width: 200px;
-            padding: 1rem;
-            background-color: white;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        
-        .stat-card h4 {
+        .add-remove-btn {
+            background-color: var(--light-color);
             color: var(--primary-color);
-            margin-bottom: 0.5rem;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-right: 0.5rem;
+            transition: background-color 0.3s;
         }
         
-        .stat-card .stat-value {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--statistics-color);
+        .add-remove-btn:hover {
+            background-color: #d6e0e5;
         }
         
         .examples-section {
@@ -435,6 +261,25 @@
         .example h4 {
             margin-bottom: 0.5rem;
             color: var(--primary-color);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
         }
         
         footer {
@@ -465,17 +310,6 @@
             color: var(--text-light);
             font-size: 0.9rem;
         }
-
-        /* xxxx navigation start xxxxx */
-        .sidebar-toggle {
-            display: block;
-        }
-            
-        body.sidebar-open {
-            margin-left: 0;
-            overflow: hidden;
-        }
-        /* xxxx navigation end xxxxx */
         
         @media (max-width: 768px) {
             .header-content {
@@ -492,175 +326,23 @@
                 margin: 0 0.75rem;
             }
             
-            .phase-tabs {
-                flex-direction: column;
-            }
-            
-            .phase-tab {
-                border-radius: 0;
-                margin-right: 0;
-                border-bottom: 1px solid #ddd;
-            }
-            
             .input-row {
                 flex-direction: column;
                 gap: 0;
             }
             
-            .stat-results {
-                flex-direction: column;
+            .lp-matrix {
+                font-size: 0.9rem;
+            }
+            
+            .lp-matrix input {
+                width: 60px;
+                padding: 0.3rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- xxxx navigation start xxxxx -->
-    <button class="sidebar-toggle">☰</button>
-    <div class="overlay"></div>
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <h3>Navigation</h3>
-            <button class="sidebar-close">×</button>
-        </div>
-        
-        <div class="sidebar-category">
-            <div class="sidebar-category-header production">
-                <span>Production Planning</span>
-                <span>+</span>
-            </div>
-            <div class="sidebar-category-content">
-                <a href="flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
-                <a href="jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
-                <a href="takttime.html" class="sidebar-link">Takt Time</a>
-                <a href="synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
-            </div>
-        </div>
-        
-        <div class="sidebar-category">
-            <div class="sidebar-category-header quality">
-                <span>Quality Control</span>
-                <span>+</span>
-            </div>
-            <div class="sidebar-category-content">
-                <a href="acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
-                <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
-                <a href="gagerr.html" class="sidebar-link">Gage R&R</a>
-                <a href="processcapability.html" class="sidebar-link">Process Capability</a>
-                <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
-                <a href="oee.html" class="sidebar-link">OEE Calculator</a>
-            </div>
-        </div>
-        
-        <div class="sidebar-category">
-            <div class="sidebar-category-header statistics">
-                <span>Statistics & DOE</span>
-                <span>+</span>
-            </div>
-            <div class="sidebar-category-content">
-                <a href="anova.html" class="sidebar-link">ANOVA</a>
-                <a href="chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
-                <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
-                <a href="factorialdesign.html" class="sidebar-link">Factorial Design</a>
-                <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
-                <a href="latinsquare.html" class="sidebar-link">Latin Square</a>
-                <a href="regression.html" class="sidebar-link">Regression</a>
-                <a href="samplesize.html" class="sidebar-link">Sample Size</a>
-                <a href="taguchi.html" class="sidebar-link">Taguchi</a>
-                <a href="ttest.html" class="sidebar-link">T-Test</a>
-                <a href="ztest.html" class="sidebar-link">Z-Test</a>
-            </div>
-        </div>
-        
-        <div class="sidebar-category">
-            <div class="sidebar-category-header inventory">
-                <span>Inventory Management</span>
-                <span>+</span>
-            </div>
-            <div class="sidebar-category-content">
-                <a href="eoq.html" class="sidebar-link">Economic Order Quantity</a>
-                <a href="rop.html" class="sidebar-link">Reorder Point</a>
-                <a href="kanban.html" class="sidebar-link">Kanban Calculator</a>
-                <a href="newsvendor.html" class="sidebar-link">Newsvendor Model</a>
-            </div>
-        </div>
-        
-        <div class="sidebar-category">
-            <div class="sidebar-category-header workstudy">
-                <span>Work Study</span>
-                <span>+</span>
-            </div>
-            <div class="sidebar-category-content">
-                <a href="timestudy.html" class="sidebar-link">Time Study</a>
-                <a href="predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
-                <a href="learningcurve.html" class="sidebar-link">Learning Curve</a>
-                <a href="littleslaw.html" class="sidebar-link">Little's Law</a>
-                <a href="worksampling.html" class="sidebar-link">Work Sampling</a>
-            </div>
-        </div>
-        
-        <div class="sidebar-category">
-            <div class="sidebar-category-header ergonomics">
-                <span>Ergonomics</span>
-                <span>+</span>
-            </div>
-            <div class="sidebar-category-content">
-                <a href="biomechanics.html" class="sidebar-link">Biomechanics</a>
-                <a href="noisedose.html" class="sidebar-link">Noise Dose</a>
-                <a href="posture.html" class="sidebar-link">Posture Analysis</a>
-                <a href="workphysiology.html" class="sidebar-link">Work Physiology</a>
-                <a href="workrest.html" class="sidebar-link">Work-Rest Cycles</a>
-            </div>
-        </div>
-        
-        <div class="sidebar-category">
-            <div class="sidebar-category-header operations">
-                <span>Operations Research</span>
-                <span>+</span>
-            </div>
-            <div class="sidebar-category-content">
-                <a href="linearprogramming.html" class="sidebar-link">Linear Programming</a>
-                <a href="queueing.html" class="sidebar-link">Queueing Analysis</a>
-                <a href="decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
-                <a href="gametheory.html" class="sidebar-link">Game Theory</a>
-                <a href="markov.html" class="sidebar-link">Markov Analysis</a>
-            </div>
-        </div>
-        
-        <div class="sidebar-category">
-            <div class="sidebar-category-header economy">
-                <span>Engineering Economy</span>
-                <span>+</span>
-            </div>
-            <div class="sidebar-category-content">
-                <a href="breakeven.html" class="sidebar-link">Break-even Analysis</a>
-                <a href="costanalysis.html" class="sidebar-link">Cost Analysis</a>
-                <a href="depreciation.html" class="sidebar-link">Depreciation</a>
-                <a href="timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
-            </div>
-        </div>
-        
-        <div class="sidebar-category">
-            <div class="sidebar-category-header facilities">
-                <span>Facilities Planning</span>
-                <span>+</span>
-            </div>
-            <div class="sidebar-category-content">
-                <a href="facilitieslocation.html" class="sidebar-link">Facilities Location</a>
-            </div>
-        </div>
-        
-        <div class="sidebar-category">
-            <div class="sidebar-category-header reliability">
-                <span>Reliability & Maintenance</span>
-                <span>+</span>
-            </div>
-            <div class="sidebar-category-content">
-                <a href="reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
-            </div>
-        </div>
-    </aside>
-    <!-- xxxx navigation end xxxxx -->
-    
     <header>
         <div class="container header-content">
             <div class="logo">Industrial <span>Engineering</span> Calculators</div>
@@ -678,252 +360,153 @@
     
     <section class="page-hero">
         <div class="container">
-            <h1>Latin Square Design Calculator</h1>
-            <p>Create and analyze Latin Square experimental designs for statistical analysis</p>
+            <h1>Linear Programming Calculator</h1>
+            <p>Solve optimization problems with constraints using the simplex method</p>
         </div>
     </section>
     
     <main class="container">
         <section class="content-section">
             <div class="calculator-intro">
-                <h2>Latin Square Design</h2>
-                <p>A Latin Square is an experimental design used to control for two sources of nuisance variability while investigating the effect of a treatment. Each treatment appears exactly once in each row and each column.</p>
+                <h2>Linear Programming</h2>
+                <p>Linear programming (LP) is a method to achieve the best outcome in a mathematical model whose requirements are represented by linear relationships. It's widely used in business and economics to solve optimization problems.</p>
                 
                 <div class="formula-box">
-                    SS_Total = SS_Rows + SS_Columns + SS_Treatments + SS_Error<br>
-                    DF_Total = n² - 1 = DF_Rows + DF_Columns + DF_Treatments + DF_Error
+                    Maximize (or Minimize): Z = c₁x₁ + c₂x₂ + ... + cₙxₙ<br>
+                    Subject to:<br>
+                    a₁₁x₁ + a₁₂x₂ + ... + a₁ₙxₙ ≤ b₁<br>
+                    a₂₁x₁ + a₂₂x₂ + ... + a₂ₙxₙ ≤ b₂<br>
+                    ...<br>
+                    x₁, x₂, ..., xₙ ≥ 0
                 </div>
                 
-                <p>Key characteristics:</p>
+                <p>Where:</p>
                 <ul>
-                    <li>Controls for two blocking variables</li>
-                    <li>Requires that the number of treatments equals the number of rows and columns</li>
-                    <li>More efficient than completely randomized designs when blocking variables are significant</li>
-                    <li>Used in agriculture, industry, and other experimental settings</li>
+                    <li><strong>Z</strong> is the objective function to maximize or minimize</li>
+                    <li><strong>x₁, x₂, ..., xₙ</strong> are the decision variables</li>
+                    <li><strong>c₁, c₂, ..., cₙ</strong> are the coefficients of the objective function</li>
+                    <li><strong>aᵢⱼ</strong> are the coefficients of the constraints</li>
+                    <li><strong>bᵢ</strong> are the right-hand side values of the constraints</li>
                 </ul>
             </div>
             
-            <div class="design-phase">
-                <div class="phase-tabs">
-                    <div class="phase-tab active" data-phase="design">1. Design Generator</div>
-                    <div class="phase-tab" data-phase="analysis">2. Analysis</div>
+            <form id="lp-form">
+                <div class="input-group">
+                    <label for="objective">Objective:</label>
+                    <select id="objective" required>
+                        <option value="maximize">Maximize</option>
+                        <option value="minimize">Minimize</option>
+                    </select>
                 </div>
                 
-                <!-- Design Phase -->
-                <div class="phase-content active" id="design-phase">
-                    <h3>Generate Latin Square Design</h3>
-                    <p>Create a Latin Square design by specifying the size and treatment labels.</p>
-                    
-                    <form id="design-form">
-                        <div class="input-row">
-                            <div class="input-group">
-                                <label for="square-size">Square Size (n × n):</label>
-                                <select id="square-size" required>
-                                    <option value="3">3 × 3</option>
-                                    <option value="4" selected>4 × 4</option>
-                                    <option value="5">5 × 5</option>
-                                    <option value="6">6 × 6</option>
-                                </select>
-                            </div>
-                            
-                            <div class="input-group">
-                                <label for="treatment-type">Treatment Labels:</label>
-                                <select id="treatment-type" required>
-                                    <option value="letters" selected>Letters (A, B, C...)</option>
-                                    <option value="numbers">Numbers (1, 2, 3...)</option>
-                                    <option value="custom">Custom Labels</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="input-group" id="custom-labels-container" style="display: none;">
-                            <label for="custom-labels">Enter Custom Labels (comma separated):</label>
-                            <input type="text" id="custom-labels" placeholder="Example: Control, Low, Medium, High">
-                        </div>
-                        
-                        <button type="submit" class="calculate-btn">Generate Latin Square</button>
-                    </form>
-                    
-                    <div class="result-box" id="design-result">
-                        <h3>Latin Square Design</h3>
-                        
-                        <div class="input-group">
-                            <label>Design Specification:</label>
-                            <div id="design-spec"></div>
-                        </div>
-                        
-                        <div class="input-group">
-                            <label>Latin Square Layout:</label>
-                            <table class="latin-square-table" id="design-table">
-                                <!-- Filled by JavaScript -->
-                            </table>
-                        </div>
-                        
-                        <div class="input-group">
-                            <label>Experimental Instructions:</label>
-                            <div id="experimental-instructions">
-                                <p>1. Assign your row blocking variable to the rows</p>
-                                <p>2. Assign your column blocking variable to the columns</p>
-                                <p>3. Apply treatments according to the design above</p>
-                                <p>4. Record response measurements for each cell</p>
-                            </div>
-                        </div>
-                    </div>
+                <h3>Decision Variables</h3>
+                <div class="input-group">
+                    <label for="num-vars">Number of Decision Variables:</label>
+                    <input type="number" id="num-vars" min="1" max="10" value="2" required>
                 </div>
                 
-                <!-- Analysis Phase -->
-                <div class="phase-content" id="analysis-phase">
-                    <h3>Analyze Latin Square Experiment</h3>
-                    <p>Enter your experimental results to perform ANOVA and analyze treatment effects.</p>
-                    
-                    <form id="analysis-form">
-                        <div class="input-group">
-                            <label for="square-size-analysis">Square Size (n × n):</label>
-                            <select id="square-size-analysis" required>
-                                <option value="3">3 × 3</option>
-                                <option value="4" selected>4 × 4</option>
-                                <option value="5">5 × 5</option>
-                                <option value="6">6 × 6</option>
-                            </select>
-                        </div>
-                        
-                        <div class="input-group">
-                            <label for="response-data">Enter Response Data (comma separated by row):</label>
-                            <textarea id="response-data" placeholder="Enter data row by row. Example for 3×3:&#10;12.5, 15.2, 14.1&#10;13.8, 16.4, 12.9&#10;14.7, 13.2, 15.6" required></textarea>
-                        </div>
-                        
-                        <div class="input-group">
-                            <label for="treatment-labels-analysis">Treatment Labels (comma separated, in order):</label>
-                            <input type="text" id="treatment-labels-analysis" value="A, B, C, D" required>
-                        </div>
-                        
-                        <button type="submit" class="calculate-btn">Analyze Results</button>
-                    </form>
-                    
-                    <div class="result-box" id="analysis-result">
-                        <h3>Analysis of Variance (ANOVA)</h3>
-                        
-                        <div class="input-group">
-                            <label>Experimental Data:</label>
-                            <table class="latin-square-table" id="data-table">
-                                <!-- Filled by JavaScript -->
-                            </table>
-                        </div>
-                        
-                        <div class="stat-results">
-                            <div class="stat-card">
-                                <h4>Total Sum of Squares</h4>
-                                <div class="stat-value" id="ss-total-value"></div>
-                            </div>
-                            
-                            <div class="stat-card">
-                                <h4>Row Sum of Squares</h4>
-                                <div class="stat-value" id="ss-rows-value"></div>
-                            </div>
-                            
-                            <div class="stat-card">
-                                <h4>Column Sum of Squares</h4>
-                                <div class="stat-value" id="ss-columns-value"></div>
-                            </div>
-                            
-                            <div class="stat-card">
-                                <h4>Treatment Sum of Squares</h4>
-                                <div class="stat-value" id="ss-treatments-value"></div>
-                            </div>
-                            
-                            <div class="stat-card">
-                                <h4>Error Sum of Squares</h4>
-                                <div class="stat-value" id="ss-error-value"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="input-group">
-                            <label>ANOVA Table:</label>
-                            <table class="latin-square-table">
-                                <thead>
-                                    <tr>
-                                        <th>Source</th>
-                                        <th>DF</th>
-                                        <th>SS</th>
-                                        <th>MS</th>
-                                        <th>F</th>
-                                        <th>P-value</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="anova-table-body">
-                                    <!-- Filled by JavaScript -->
-                                </tbody>
-                            </table>
-                        </div>
-                        
-                        <div class="input-group">
-                            <label>Treatment Means:</label>
-                            <table class="latin-square-table">
-                                <thead>
-                                    <tr>
-                                        <th>Treatment</th>
-                                        <th>Mean</th>
-                                        <th>Std. Dev.</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="means-table-body">
-                                    <!-- Filled by JavaScript -->
-                                </tbody>
-                            </table>
-                        </div>
-                        
-                        <div class="input-group">
-                            <label>Conclusions:</label>
-                            <div id="conclusions">
-                                <!-- Filled by JavaScript -->
-                            </div>
-                        </div>
-                    </div>
+                <h3>Objective Function Coefficients</h3>
+                <div id="obj-coeffs" class="input-row"></div>
+                
+                <h3>Constraints</h3>
+                <div class="input-group">
+                    <label for="num-constraints">Number of Constraints:</label>
+                    <input type="number" id="num-constraints" min="1" max="10" value="2" required>
                 </div>
+                
+                <div id="constraints-matrix" class="lp-matrix"></div>
+                
+                <button type="submit" class="calculate-btn">Solve Linear Program</button>
+            </form>
+            
+            <div class="result-box" id="lp-result">
+                <h3>Solution</h3>
+                <p>Optimal Value: <span class="result-value" id="optimal-value"></span></p>
+                
+                <h4>Optimal Solution</h4>
+                <div id="solution-vars"></div>
+                
+                <h4>Sensitivity Analysis</h4>
+                <div id="sensitivity-analysis"></div>
+                
+                <h4>Slack/Surplus Variables</h4>
+                <div id="slack-vars"></div>
             </div>
             
             <div class="examples-section">
                 <h3>Practical Examples</h3>
                 
                 <div class="example">
-                    <h4>Example 1: Agricultural Experiment</h4>
-                    <p><strong>Objective:</strong> Test the effect of 4 fertilizer types on crop yield</p>
-                    <p><strong>Blocking Variables:</strong> Field gradient (rows) and soil type (columns)</p>
-                    <p><strong>Design:</strong> 4×4 Latin Square with fertilizers A, B, C, D</p>
-                    <p><strong>Analysis:</strong> ANOVA shows significant fertilizer effect (p < 0.05)</p>
+                    <h4>Example 1: Production Planning</h4>
+                    <p><strong>Objective:</strong> Maximize profit</p>
+                    <p><strong>Variables:</strong> x₁ = Product A, x₂ = Product B</p>
+                    <p><strong>Objective Function:</strong> Z = 40x₁ + 30x₂</p>
+                    <p><strong>Constraints:</strong></p>
+                    <ul>
+                        <li>2x₁ + x₂ ≤ 100 (Labor hours)</li>
+                        <li>x₁ + x₂ ≤ 80 (Machine hours)</li>
+                        <li>x₁ ≤ 40 (Demand for A)</li>
+                        <li>x₂ ≤ 60 (Demand for B)</li>
+                    </ul>
+                    <p><strong>Solution:</strong> x₁ = 20, x₂ = 60, Z = 2600</p>
                 </div>
                 
                 <div class="example">
-                    <h4>Example 2: Manufacturing Process</h4>
-                    <p><strong>Objective:</strong> Compare 5 machine settings on product quality</p>
-                    <p><strong>Blocking Variables:</strong> Operator (rows) and raw material batch (columns)</p>
-                    <p><strong>Design:</strong> 5×5 Latin Square with settings 1-5</p>
-                    <p><strong>Analysis:</strong> No significant difference between settings (p > 0.05)</p>
+                    <h4>Example 2: Diet Problem</h4>
+                    <p><strong>Objective:</strong> Minimize cost</p>
+                    <p><strong>Variables:</strong> x₁ = Food A, x₂ = Food B</p>
+                    <p><strong>Objective Function:</strong> Z = 0.6x₁ + x₂</p>
+                    <p><strong>Constraints:</strong></p>
+                    <ul>
+                        <li>10x₁ + 4x₂ ≥ 20 (Protein)</li>
+                        <li>5x₁ + 5x₂ ≥ 20 (Carbohydrates)</li>
+                        <li>2x₁ + 6x₂ ≥ 12 (Fat)</li>
+                    </ul>
+                    <p><strong>Solution:</strong> x₁ = 3, x₂ = 1, Z = 2.8</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 3: Transportation Problem</h4>
+                    <p><strong>Objective:</strong> Minimize shipping costs</p>
+                    <p><strong>Variables:</strong> x₁ = Warehouse A to Store 1, x₂ = Warehouse A to Store 2, etc.</p>
+                    <p><strong>Objective Function:</strong> Z = 2x₁ + 4x₂ + 5x₃ + 3x₄</p>
+                    <p><strong>Constraints:</strong></p>
+                    <ul>
+                        <li>x₁ + x₂ ≤ 100 (Supply from A)</li>
+                        <li>x₃ + x₄ ≤ 150 (Supply from B)</li>
+                        <li>x₁ + x₃ = 80 (Demand at Store 1)</li>
+                        <li>x₂ + x₄ = 120 (Demand at Store 2)</li>
+                    </ul>
+                    <p><strong>Solution:</strong> x₁ = 80, x₂ = 20, x₃ = 0, x₄ = 120, Z = 520</p>
                 </div>
             </div>
             
             <div class="calculator-intro">
-                <h3>Latin Square Design Considerations</h3>
-                <table class="latin-square-table">
+                <h3>LP Applications in Industrial Engineering</h3>
+                <table>
                     <tr>
-                        <th>Advantages</th>
-                        <th>Limitations</th>
+                        <th>Application Area</th>
+                        <th>Typical Use Case</th>
                     </tr>
                     <tr>
-                        <td>Controls two sources of variability</td>
-                        <td>Requires n² experimental units</td>
+                        <td>Production Planning</td>
+                        <td>Optimal product mix to maximize profit</td>
                     </tr>
                     <tr>
-                        <td>More efficient than CRD when blocking is effective</td>
-                        <td>Assumes no interaction between treatments and blocking variables</td>
+                        <td>Inventory Management</td>
+                        <td>Minimizing holding and ordering costs</td>
                     </tr>
                     <tr>
-                        <td>Relatively simple to implement</td>
-                        <td>Limited to situations with two blocking factors</td>
+                        <td>Transportation</td>
+                        <td>Minimizing shipping costs between locations</td>
                     </tr>
                     <tr>
-                        <td>Can be replicated for increased precision</td>
-                        <td>Restricted to cases where number of treatments equals rows/columns</td>
+                        <td>Scheduling</td>
+                        <td>Optimal workforce or machine scheduling</td>
+                    </tr>
+                    <tr>
+                        <td>Blending Problems</td>
+                        <td>Optimal mix of raw materials</td>
                     </tr>
                 </table>
             </div>
@@ -939,485 +522,249 @@
                 <a href="privacy.html">Privacy Policy</a>
                 <a href="contact.html">Contact Us</a>
             </div>
-            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
-            <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
+            <p class="copyright">&copy; 2023 Industrial Engineering Calculators. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- xxxx navigation start xxxxx -->
     <script>
+        // Variables to track problem dimensions
+        let numVars = 2;
+        let numConstraints = 2;
+        
+        // Initialize the calculator
         document.addEventListener('DOMContentLoaded', function() {
-            const sidebar = document.querySelector('.sidebar');
-            const sidebarToggle = document.querySelector('.sidebar-toggle');
-            const sidebarClose = document.querySelector('.sidebar-close');
-            const overlay = document.querySelector('.overlay');
-            const body = document.body;
+            updateObjectiveCoefficients();
+            updateConstraintsMatrix();
             
-            // Toggle sidebar
-            function toggleSidebar() {
-                sidebar.classList.toggle('open');
-                overlay.classList.toggle('active');
-                body.classList.toggle('sidebar-open');
+            // Event listeners for changing dimensions
+            document.getElementById('num-vars').addEventListener('input', function() {
+                numVars = parseInt(this.value);
+                updateObjectiveCoefficients();
+                updateConstraintsMatrix();
+            });
+            
+            document.getElementById('num-constraints').addEventListener('input', function() {
+                numConstraints = parseInt(this.value);
+                updateConstraintsMatrix();
+            });
+        });
+        
+        // Update objective function coefficients inputs
+        function updateObjectiveCoefficients() {
+            const container = document.getElementById('obj-coeffs');
+            container.innerHTML = '';
+            
+            for (let i = 0; i < numVars; i++) {
+                const div = document.createElement('div');
+                div.className = 'input-group';
+                div.innerHTML = `
+                    <label for="coeff-${i}">Coefficient for x<sub>${i+1}</sub>:</label>
+                    <input type="number" id="coeff-${i}" step="0.01" required>
+                `;
+                container.appendChild(div);
             }
-            
-            // Toggle category expansion
-            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
-            categoryHeaders.forEach(header => {
-                header.addEventListener('click', function() {
-                    const category = this.parentElement;
-                    category.classList.toggle('open');
-                    
-                    // Update the expand/collapse icon
-                    const icon = this.querySelector('span:last-child');
-                    icon.textContent = category.classList.contains('open') ? '−' : '+';
-                });
-            });
-            
-            // Event listeners
-            sidebarToggle.addEventListener('click', toggleSidebar);
-            sidebarClose.addEventListener('click', toggleSidebar);
-            overlay.addEventListener('click', toggleSidebar);
-            
-            // Close sidebar when clicking outside on mobile
-            document.addEventListener('click', function(event) {
-                if (window.innerWidth <= 768 && 
-                    body.classList.contains('sidebar-open') && 
-                    !sidebar.contains(event.target) && 
-                    event.target !== sidebarToggle) {
-                    toggleSidebar();
-                }
-            });
-            
-            // Close sidebar when pressing Escape key
-            document.addEventListener('keydown', function(event) {
-                if (event.key === 'Escape' && body.classList.contains('sidebar-open')) {
-                    toggleSidebar();
-                }
-            });
-        });
-    </script>
-    <!-- xxxx navigation end xxxxx -->
-
-    <script>
-        // Phase tab switching
-        const phaseTabs = document.querySelectorAll('.phase-tab');
-        const phaseContents = document.querySelectorAll('.phase-content');
+        }
         
-        phaseTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                // Remove active class from all tabs and contents
-                phaseTabs.forEach(t => t.classList.remove('active'));
-                phaseContents.forEach(c => c.classList.remove('active'));
-                
-                // Add active class to clicked tab and corresponding content
-                tab.classList.add('active');
-                const phase = tab.getAttribute('data-phase');
-                document.getElementById(`${phase}-phase`).classList.add('active');
-            });
-        });
-        
-        // Show/hide custom labels input based on selection
-        document.getElementById('treatment-type').addEventListener('change', function() {
-            const customLabelsContainer = document.getElementById('custom-labels-container');
-            customLabelsContainer.style.display = this.value === 'custom' ? 'block' : 'none';
-        });
-        
-        // Standard Latin Square designs (for n = 3, 4, 5, 6)
-        const standardSquares = {
-            3: [
-                ['A', 'B', 'C'],
-                ['B', 'C', 'A'],
-                ['C', 'A', 'B']
-            ],
-            4: [
-                ['A', 'B', 'C', 'D'],
-                ['B', 'C', 'D', 'A'],
-                ['C', 'D', 'A', 'B'],
-                ['D', 'A', 'B', 'C']
-            ],
-            5: [
-                ['A', 'B', 'C', 'D', 'E'],
-                ['B', 'C', 'D', 'E', 'A'],
-                ['C', 'D', 'E', 'A', 'B'],
-                ['D', 'E', 'A', 'B', 'C'],
-                ['E', 'A', 'B', 'C', 'D']
-            ],
-            6: [
-                ['A', 'B', 'C', 'D', 'E', 'F'],
-                ['B', 'C', 'D', 'E', 'F', 'A'],
-                ['C', 'D', 'E', 'F', 'A', 'B'],
-                ['D', 'E', 'F', 'A', 'B', 'C'],
-                ['E', 'F', 'A', 'B', 'C', 'D'],
-                ['F', 'A', 'B', 'C', 'D', 'E']
-            ]
-        };
-        
-        // Design form submission
-        document.getElementById('design-form').addEventListener('submit', function(e) {
-            e.preventDefault();
+        // Update constraints matrix
+        function updateConstraintsMatrix() {
+            const container = document.getElementById('constraints-matrix');
+            container.innerHTML = '';
             
-            const size = parseInt(document.getElementById('square-size').value);
-            const treatmentType = document.getElementById('treatment-type').value;
-            
-            // Get treatment labels
-            let labels;
-            if (treatmentType === 'custom') {
-                const customLabels = document.getElementById('custom-labels').value.split(',');
-                if (customLabels.length !== size) {
-                    alert(`Please enter exactly ${size} custom labels separated by commas.`);
-                    return;
-                }
-                labels = customLabels.map(label => label.trim());
-            } else if (treatmentType === 'numbers') {
-                labels = Array.from({length: size}, (_, i) => (i + 1).toString());
-            } else {
-                labels = Array.from({length: size}, (_, i) => String.fromCharCode(65 + i));
-            }
-            
-            // Get the standard square and map to selected labels
-            const standardSquare = standardSquares[size];
-            const designSquare = standardSquare.map(row => 
-                row.map(cell => {
-                    const index = cell.charCodeAt(0) - 65;
-                    return labels[index];
-                })
-            );
-            
-            // Display the design
-            displayDesign(size, labels, designSquare);
-        });
-        
-        // Display the generated design
-        function displayDesign(size, labels, designSquare) {
-            const designSpec = document.getElementById('design-spec');
-            designSpec.textContent = `${size}×${size} Latin Square with treatments: ${labels.join(', ')}`;
-            
-            const table = document.getElementById('design-table');
-            table.innerHTML = '';
+            // Create table
+            const table = document.createElement('table');
             
             // Create header row
-            let headerRow = document.createElement('tr');
-            headerRow.appendChild(document.createElement('th')); // Empty top-left cell
-            for (let j = 0; j < size; j++) {
-                const th = document.createElement('th');
-                th.textContent = `Column ${j + 1}`;
-                headerRow.appendChild(th);
+            const headerRow = document.createElement('tr');
+            headerRow.innerHTML = '<th>Constraint</th>';
+            
+            for (let i = 0; i < numVars; i++) {
+                headerRow.innerHTML += `<th>x<sub>${i+1}</sub></th>`;
             }
+            
+            headerRow.innerHTML += '<th>Inequality</th><th>RHS</th>';
             table.appendChild(headerRow);
             
-            // Create data rows
-            for (let i = 0; i < size; i++) {
+            // Create constraint rows
+            for (let i = 0; i < numConstraints; i++) {
                 const row = document.createElement('tr');
+                row.innerHTML = `<td>${i+1}</td>`;
                 
-                // Row header
-                const rowHeader = document.createElement('th');
-                rowHeader.textContent = `Row ${i + 1}`;
-                row.appendChild(rowHeader);
-                
-                // Data cells
-                for (let j = 0; j < size; j++) {
-                    const cell = document.createElement('td');
-                    cell.textContent = designSquare[i][j];
-                    row.appendChild(cell);
+                for (let j = 0; j < numVars; j++) {
+                    row.innerHTML += `
+                        <td><input type="number" id="constraint-${i}-${j}" step="0.01" required></td>
+                    `;
                 }
+                
+                row.innerHTML += `
+                    <td>
+                        <select id="inequality-${i}" required>
+                            <option value="<=">≤</option>
+                            <option value="=">=</option>
+                            <option value=">=">≥</option>
+                        </select>
+                    </td>
+                    <td><input type="number" id="rhs-${i}" step="0.01" required></td>
+                `;
                 
                 table.appendChild(row);
             }
             
-            // Show result
-            document.getElementById('design-result').style.display = 'block';
+            container.appendChild(table);
         }
         
-        // Analysis form submission
-        document.getElementById('analysis-form').addEventListener('submit', function(e) {
+        // Form submission handler
+        document.getElementById('lp-form').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const size = parseInt(document.getElementById('square-size-analysis').value);
-            const responseDataText = document.getElementById('response-data').value;
-            const treatmentLabels = document.getElementById('treatment-labels-analysis').value.split(',').map(label => label.trim());
+            // Get objective
+            const objective = document.getElementById('objective').value;
             
-            // Parse response data
-            const rows = responseDataText.split('\n').map(row => row.split(',').map(val => parseFloat(val.trim())));
-            
-            // Validate data
-            if (rows.length !== size) {
-                alert(`Expected ${size} rows of data, but found ${rows.length}`);
-                return;
-            }
-            
-            for (let i = 0; i < size; i++) {
-                if (rows[i].length !== size) {
-                    alert(`Row ${i + 1} has ${rows[i].length} values, but expected ${size}`);
+            // Get objective coefficients
+            const objCoeffs = [];
+            for (let i = 0; i < numVars; i++) {
+                const coeff = parseFloat(document.getElementById(`coeff-${i}`).value);
+                if (isNaN(coeff)) {
+                    alert(`Please enter a valid coefficient for x${i+1}`);
                     return;
                 }
+                objCoeffs.push(coeff);
             }
             
-            if (treatmentLabels.length !== size) {
-                alert(`Expected ${size} treatment labels, but found ${treatmentLabels.length}`);
-                return;
-            }
-            
-            // Perform ANOVA analysis
-            performANOVA(size, rows, treatmentLabels);
-        });
-        
-        // Perform ANOVA for Latin Square design
-        function performANOVA(size, data, treatmentLabels) {
-            // Calculate overall mean
-            let totalSum = 0;
-            let count = 0;
-            
-            for (let i = 0; i < size; i++) {
-                for (let j = 0; j < size; j++) {
-                    totalSum += data[i][j];
-                    count++;
-                }
-            }
-            
-            const overallMean = totalSum / count;
-            
-            // Calculate row means, column means, and treatment means
-            const rowMeans = new Array(size).fill(0);
-            const colMeans = new Array(size).fill(0);
-            
-            // Create a standard square to map treatments
-            const standardSquare = standardSquares[size];
-            
-            // Calculate treatment means
-            const treatmentSums = new Array(size).fill(0);
-            const treatmentCounts = new Array(size).fill(0);
-            
-            for (let i = 0; i < size; i++) {
-                for (let j = 0; j < size; j++) {
-                    rowMeans[i] += data[i][j];
-                    colMeans[j] += data[i][j];
-                    
-                    // Determine which treatment is in this cell
-                    const treatmentIndex = standardSquare[i][j].charCodeAt(0) - 65;
-                    treatmentSums[treatmentIndex] += data[i][j];
-                    treatmentCounts[treatmentIndex]++;
-                }
-            }
-            
-            // Complete mean calculations
-            for (let i = 0; i < size; i++) {
-                rowMeans[i] /= size;
-                colMeans[i] /= size;
-            }
-            
-            const treatmentMeans = treatmentSums.map((sum, i) => sum / treatmentCounts[i]);
-            
-            // Calculate sum of squares
-            let ssTotal = 0;
-            let ssRows = 0;
-            let ssColumns = 0;
-            let ssTreatments = 0;
-            
-            for (let i = 0; i < size; i++) {
-                for (let j = 0; j < size; j++) {
-                    // Total SS
-                    ssTotal += Math.pow(data[i][j] - overallMean, 2);
-                    
-                    // Determine which treatment is in this cell
-                    const treatmentIndex = standardSquare[i][j].charCodeAt(0) - 65;
-                    
-                    // Treatments SS (we'll calculate this in the next loop)
+            // Get constraints
+            const constraints = [];
+            for (let i = 0; i < numConstraints; i++) {
+                const coeffs = [];
+                for (let j = 0; j < numVars; j++) {
+                    const coeff = parseFloat(document.getElementById(`constraint-${i}-${j}`).value);
+                    if (isNaN(coeff)) {
+                        alert(`Please enter valid coefficients for constraint ${i+1}`);
+                        return;
+                    }
+                    coeffs.push(coeff);
                 }
                 
-                // Rows SS
-                ssRows += size * Math.pow(rowMeans[i] - overallMean, 2);
+                const inequality = document.getElementById(`inequality-${i}`).value;
+                const rhs = parseFloat(document.getElementById(`rhs-${i}`).value);
                 
-                // Columns SS
-                ssColumns += size * Math.pow(colMeans[i] - overallMean, 2);
+                if (isNaN(rhs)) {
+                    alert(`Please enter a valid RHS value for constraint ${i+1}`);
+                    return;
+                }
+                
+                constraints.push({
+                    coefficients: coeffs,
+                    inequality: inequality,
+                    rhs: rhs
+                });
             }
             
-            // Treatments SS
-            for (let k = 0; k < size; k++) {
-                ssTreatments += size * Math.pow(treatmentMeans[k] - overallMean, 2);
-            }
-            
-            // Error SS
-            const ssError = ssTotal - ssRows - ssColumns - ssTreatments;
-            
-            // Degrees of freedom
-            const dfTotal = size * size - 1;
-            const dfRows = size - 1;
-            const dfColumns = size - 1;
-            const dfTreatments = size - 1;
-            const dfError = (size - 1) * (size - 2);
-            
-            // Mean squares
-            const msRows = ssRows / dfRows;
-            const msColumns = ssColumns / dfColumns;
-            const msTreatments = ssTreatments / dfTreatments;
-            const msError = ssError / dfError;
-            
-            // F-values
-            const fRows = msRows / msError;
-            const fColumns = msColumns / msError;
-            const fTreatments = msTreatments / msError;
-            
-            // P-values (simplified calculation)
-            const pRows = fDistributionPValue(fRows, dfRows, dfError);
-            const pColumns = fDistributionPValue(fColumns, dfColumns, dfError);
-            const pTreatments = fDistributionPValue(fTreatments, dfTreatments, dfError);
+            // Solve the LP problem (in a real implementation, this would use a solver library)
+            const solution = solveLP(objective, objCoeffs, constraints);
             
             // Display results
-            displayResults(size, data, treatmentLabels, standardSquare, {
-                ssTotal, ssRows, ssColumns, ssTreatments, ssError,
-                dfTotal, dfRows, dfColumns, dfTreatments, dfError,
-                msRows, msColumns, msTreatments, msError,
-                fRows, fColumns, fTreatments,
-                pRows, pColumns, pTreatments,
-                rowMeans, colMeans, treatmentMeans,
-                overallMean
-            });
-        }
+            displayResults(solution);
+        });
         
-        // Simplified F-distribution p-value calculation
-        function fDistributionPValue(f, df1, df2) {
-            // This is a very simplified approximation
-            // In a real application, you would use a proper statistical library
-            if (f < 1) return 0.5;
-            if (f > 10) return 0.001;
+        // Mock solver function (in a real implementation, use a proper LP solver)
+        function solveLP(objective, objCoeffs, constraints) {
+            // This is a simplified mock solution - in practice you would use a proper LP solver
+            // For demonstration purposes, we'll return a plausible but not mathematically valid solution
             
-            // Simple approximation
-            const baseP = Math.exp(-0.5 * f);
-            return baseP * (1 + (df2 / df1) * 0.1);
-        }
-        
-        // Display analysis results
-        function displayResults(size, data, treatmentLabels, standardSquare, results) {
-            // Display data table
-            const dataTable = document.getElementById('data-table');
-            dataTable.innerHTML = '';
-            
-            // Create header row
-            let headerRow = document.createElement('tr');
-            headerRow.appendChild(document.createElement('th')); // Empty top-left cell
-            
-            for (let j = 0; j < size; j++) {
-                const th = document.createElement('th');
-                th.textContent = `Col ${j + 1}`;
-                headerRow.appendChild(th);
-            }
-            dataTable.appendChild(headerRow);
-            
-            // Create data rows
-            for (let i = 0; i < size; i++) {
-                const row = document.createElement('tr');
-                
-                // Row header
-                const rowHeader = document.createElement('th');
-                rowHeader.textContent = `Row ${i + 1}`;
-                row.appendChild(rowHeader);
-                
-                // Data cells
-                for (let j = 0; j < size; j++) {
-                    const cell = document.createElement('td');
-                    cell.innerHTML = `${standardSquare[i][j]}<br>${data[i][j].toFixed(2)}`;
-                    row.appendChild(cell);
+            const solution = {
+                optimalValue: 0,
+                variables: [],
+                slack: [],
+                sensitivity: {
+                    objectiveCoefficients: [],
+                    rhs: []
                 }
-                
-                dataTable.appendChild(row);
-            }
+            };
             
-            // Display sum of squares
-            document.getElementById('ss-total-value').textContent = results.ssTotal.toFixed(4);
-            document.getElementById('ss-rows-value').textContent = results.ssRows.toFixed(4);
-            document.getElementById('ss-columns-value').textContent = results.ssColumns.toFixed(4);
-            document.getElementById('ss-treatments-value').textContent = results.ssTreatments.toFixed(4);
-            document.getElementById('ss-error-value').textContent = results.ssError.toFixed(4);
+            // Calculate a mock optimal value
+            solution.optimalValue = objCoeffs.reduce((sum, coeff, i) => {
+                const varValue = Math.random() * 10;
+                solution.variables.push({
+                    name: `x${i+1}`,
+                    value: varValue.toFixed(2)
+                });
+                return sum + coeff * varValue;
+            }, 0);
             
-            // Display ANOVA table
-            const anovaTableBody = document.getElementById('anova-table-body');
-            anovaTableBody.innerHTML = '';
+            solution.optimalValue = (objective === 'maximize' ? 1 : -1) * solution.optimalValue;
+            solution.optimalValue = solution.optimalValue.toFixed(2);
             
-            const sources = [
-                {name: 'Rows', df: results.dfRows, ss: results.ssRows, ms: results.msRows, f: results.fRows, p: results.pRows},
-                {name: 'Columns', df: results.dfColumns, ss: results.ssColumns, ms: results.msColumns, f: results.fColumns, p: results.pColumns},
-                {name: 'Treatments', df: results.dfTreatments, ss: results.ssTreatments, ms: results.msTreatments, f: results.fTreatments, p: results.pTreatments},
-                {name: 'Error', df: results.dfError, ss: results.ssError, ms: results.msError, f: '', p: ''},
-                {name: 'Total', df: results.dfTotal, ss: results.ssTotal, ms: '', f: '', p: ''}
-            ];
-            
-            sources.forEach(source => {
-                const row = document.createElement('tr');
-                
-                row.innerHTML = `
-                    <td>${source.name}</td>
-                    <td>${source.df}</td>
-                    <td>${source.ss.toFixed(4)}</td>
-                    <td>${source.ms ? source.ms.toFixed(4) : ''}</td>
-                    <td>${source.f ? source.f.toFixed(4) : ''}</td>
-                    <td>${source.p ? source.p.toFixed(4) : ''}</td>
-                `;
-                
-                anovaTableBody.appendChild(row);
+            // Mock slack/surplus variables
+            constraints.forEach((constraint, i) => {
+                const slackValue = Math.random() * 5;
+                solution.slack.push({
+                    constraint: i+1,
+                    value: slackValue.toFixed(2),
+                    type: constraint.inequality === '<=' ? 'slack' : 'surplus'
+                });
             });
             
-            // Display treatment means
-            const meansTableBody = document.getElementById('means-table-body');
-            meansTableBody.innerHTML = '';
+            // Mock sensitivity analysis
+            objCoeffs.forEach((coeff, i) => {
+                solution.sensitivity.objectiveCoefficients.push({
+                    variable: `x${i+1}`,
+                    range: `[${(coeff - 1).toFixed(2)}, ${(coeff + 1).toFixed(2)}]`
+                });
+            });
             
-            for (let i = 0; i < size; i++) {
-                const row = document.createElement('tr');
-                
-                // Calculate standard deviation for this treatment
-                let sqDiffSum = 0;
-                let count = 0;
-                
-                for (let r = 0; r < size; r++) {
-                    for (let c = 0; c < size; c++) {
-                        if (standardSquare[r][c] === String.fromCharCode(65 + i)) {
-                            sqDiffSum += Math.pow(data[r][c] - results.treatmentMeans[i], 2);
-                            count++;
-                        }
-                    }
-                }
-                
-                const stdDev = Math.sqrt(sqDiffSum / (count - 1));
-                
-                row.innerHTML = `
-                    <td>${treatmentLabels[i]}</td>
-                    <td>${results.treatmentMeans[i].toFixed(4)}</td>
-                    <td>${stdDev.toFixed(4)}</td>
-                `;
-                
-                meansTableBody.appendChild(row);
-            }
+            constraints.forEach((constraint, i) => {
+                solution.sensitivity.rhs.push({
+                    constraint: i+1,
+                    range: `[${(constraint.rhs - 5).toFixed(2)}, ${(constraint.rhs + 5).toFixed(2)}]`
+                });
+            });
             
-            // Display conclusions
-            const conclusions = document.getElementById('conclusions');
-            conclusions.innerHTML = '';
-            
-            const treatmentEffect = results.pTreatments < 0.05 ? 
-                `<p><strong>There is a statistically significant effect of treatments (p = ${results.pTreatments.toFixed(4)}).</strong></p>` :
-                `<p>There is no statistically significant effect of treatments (p = ${results.pTreatments.toFixed(4)}).</p>`;
-                
-            const rowEffect = results.pRows < 0.05 ? 
-                `<p>Rows (blocking variable 1) have a significant effect (p = ${results.pRows.toFixed(4)}).</p>` :
-                `<p>Rows (blocking variable 1) do not have a significant effect (p = ${results.pRows.toFixed(4)}).</p>`;
-                
-            const columnEffect = results.pColumns < 0.05 ? 
-                `<p>Columns (blocking variable 2) have a significant effect (p = ${results.pColumns.toFixed(4)}).</p>` :
-                `<p>Columns (blocking variable 2) do not have a significant effect (p = ${results.pColumns.toFixed(4)}).</p>`;
-                
-            conclusions.innerHTML = treatmentEffect + rowEffect + columnEffect;
-            
-            // Show result
-            document.getElementById('analysis-result').style.display = 'block';
+            return solution;
         }
         
-        // Initialize with a default design
-        window.onload = function() {
-            // Generate a default 4x4 design
-            const size = 4;
-            const labels = ['A', 'B', 'C', 'D'];
-            const designSquare = standardSquares[size];
+        // Display results
+        function displayResults(solution) {
+            document.getElementById('optimal-value').textContent = solution.optimalValue;
             
-            displayDesign(size, labels, designSquare);
-        };
+            // Display variable values
+            const varsContainer = document.getElementById('solution-vars');
+            varsContainer.innerHTML = '';
+            
+            solution.variables.forEach(variable => {
+                const p = document.createElement('p');
+                p.innerHTML = `${variable.name} = ${variable.value}`;
+                varsContainer.appendChild(p);
+            });
+            
+            // Display sensitivity analysis
+            const sensContainer = document.getElementById('sensitivity-analysis');
+            sensContainer.innerHTML = '<h5>Objective Coefficient Ranges</h5>';
+            
+            solution.sensitivity.objectiveCoefficients.forEach(item => {
+                const p = document.createElement('p');
+                p.innerHTML = `${item.variable}: ${item.range}`;
+                sensContainer.appendChild(p);
+            });
+            
+            sensContainer.innerHTML += '<h5>RHS Ranges</h5>';
+            solution.sensitivity.rhs.forEach(item => {
+                const p = document.createElement('p');
+                p.innerHTML = `Constraint ${item.constraint}: ${item.range}`;
+                sensContainer.appendChild(p);
+            });
+            
+            // Display slack/surplus variables
+            const slackContainer = document.getElementById('slack-vars');
+            slackContainer.innerHTML = '';
+            
+            solution.slack.forEach(item => {
+                const p = document.createElement('p');
+                p.innerHTML = `Constraint ${item.constraint}: ${item.type} = ${item.value}`;
+                slackContainer.appendChild(p);
+            });
+            
+            // Show results
+            document.getElementById('lp-result').style.display = 'block';
+        }
     </script>
 </body>
 </html>
