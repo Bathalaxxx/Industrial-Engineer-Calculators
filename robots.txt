@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://bathalaxxx.github.io/Industrial-Engineer-Calculators/sitemap.xml
+Sitemap: https://iecalculators.online/sitemap.xml
