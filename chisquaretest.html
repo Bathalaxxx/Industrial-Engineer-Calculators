@@ -1257,5 +1257,42 @@
             }
         });
     </script>
+
+
+    <div id="cookie-banner" style="position:fixed;bottom:0;left:0;width:100%;background:#fffbe6;border-top:1px solid #e2c96f;padding:1rem;box-shadow:0 -2px 8px rgba(0,0,0,0.07);display:none;z-index:9999;">
+        <span>
+            We use cookies to improve your experience. Non-essential cookies (analytics, personalization) require your consent. 
+            <a href="privacy.html" target="_blank">Learn more</a>
+        </span>
+        <button id="cookie-accept" style="margin-left:1rem;">Accept</button>
+        <button id="cookie-reject" style="margin-left:0.5rem;">Reject</button>
+    </div>
+    <script>
+    (function() {
+        var banner = document.getElementById('cookie-banner');
+        var accepted = localStorage.getItem('cookieConsent');
+        if (!accepted) banner.style.display = 'block';
+
+        document.getElementById('cookie-accept').onclick = function() {
+            localStorage.setItem('cookieConsent', 'accepted');
+            banner.style.display = 'none';
+            // Place non-essential cookie scripts here, e.g. analytics
+            // Example: load Google Analytics only if accepted
+            var gaScript = document.createElement('script');
+            gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V";
+            gaScript.async = true;
+            document.head.appendChild(gaScript);
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-3BSHG1DE6V');
+        };
+        document.getElementById('cookie-reject').onclick = function() {
+            localStorage.setItem('cookieConsent', 'rejected');
+            banner.style.display = 'none';
+            // Do not load non-essential cookies/scripts
+        };
+    })();
+    </script>
 </body>
 </html>
