@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-3BSHG1DE6V');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Work Physiology Calculator - Energy Expenditure, Metabolic Rate, and Heart Rate Workload Analysis">
+    <title>Work Physiology Calculator | Industrial Engineering Calculators</title>
+    <style>
+        /* Consistent with existing style */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1010;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block; /* Changed from none to block */
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .physio-method {
+            margin-bottom: 3rem;
+        }
+        
+        .method-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+        }
+        
+        .method-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            margin-right: 0.5rem;
+            border-radius: 5px 5px 0 0;
+            background-color: #f1f1f1;
+            transition: all 0.3s;
+        }
+        
+        .method-tab.active {
+            background-color: white;
+            border-color: #ddd;
+            border-bottom-color: white;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        
+        .method-tab:hover:not(.active) {
+            background-color: #e9e9e9;
+        }
+        
+        .method-content {
+            display: none;
+        }
+        
+        .method-content.active {
+            display: block;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .activity-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        .activity-table th, .activity-table td {
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        .activity-table th {
+            background-color: #f2f2f2;
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        .chart-container {
+            width: 100%;
+            height: 400px;
+            margin: 2rem 0;
+            position: relative;
+        }
+        
+        .chart-placeholder {
+            width: 100%;
+            height: 100%;
+            background-color: #f8f9fa;
+            border: 1px dashed #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            display: block;
+        }
+            
+        body.sidebar-open {
+            margin-left: 0;
+            overflow: hidden;
+        }
+        /* xxxx navigation end xxxxx */
+    
+    </style>
+</head>
+<body>
+    <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="gagerr.html" class="sidebar-link">Gage R&R</a>
+                <a href="processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="oee.html" class="sidebar-link">OEE Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="anova.html" class="sidebar-link">ANOVA</a>
+                <a href="chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
+                <a href="factorialdesign.html" class="sidebar-link">Factorial Design</a>
+                <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="latinsquare.html" class="sidebar-link">Latin Square</a>
+                <a href="regression.html" class="sidebar-link">Regression</a>
+                <a href="samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="ttest.html" class="sidebar-link">T-Test</a>
+                <a href="ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="eoq.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="rop.html" class="sidebar-link">Reorder Point</a>
+                <a href="kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Study</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+            </div>
+        </div>
+    </aside>
+    <!-- xxxx navigation end xxxxx -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">Industrial <span>Engineering</span> Calculators</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Work Physiology Calculator</h1>
+            <p>Calculate energy expenditure, metabolic rates, and heart rate workload relationships</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Work Physiology Analysis</h2>
+                <p>These tools help analyze human physiological responses to work, including energy expenditure, metabolic rates, and cardiovascular workload.</p>
+            </div>
+            
+            <div class="physio-method">
+                <div class="method-tabs">
+                    <div class="method-tab active" data-method="energy">Energy Expenditure</div>
+                    <div class="method-tab" data-method="metabolic">Metabolic Rate (M)</div>
+                    <div class="method-tab" data-method="heartrate">Heart Rate & Workload</div>
+                </div>
+                
+                <!-- Energy Expenditure Method -->
+                <div class="method-content active" id="energy-method">
+                    <h3>Energy Expenditure Calculation</h3>
+                    <p>Calculate total energy expenditure for work activities based on metabolic equivalents (METs) or oxygen consumption.</p>
+                    
+                    <form id="energy-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="energy-method">Calculation Method:</label>
+                                <select id="energy-method">
+                                    <option value="mets">Using METs</option>
+                                    <option value="vo2">Using Oxygen Consumption (VO₂)</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="body-weight">Body Weight (kg):</label>
+                                <input type="number" id="body-weight" min="30" max="200" step="0.1" required>
+                            </div>
+                        </div>
+                        
+                        <div id="mets-inputs">
+                            <div class="input-group">
+                                <label for="mets-value">MET Value:</label>
+                                <input type="number" id="mets-value" min="0.5" max="20" step="0.1" required>
+                                <p class="help-text">1 MET = 3.5 ml O₂/kg/min = 1 kcal/kg/hr</p>
+                            </div>
+                        </div>
+                        
+                        <div id="vo2-inputs" style="display: none;">
+                            <div class="input-group">
+                                <label for="vo2-value">Oxygen Consumption (ml/kg/min):</label>
+                                <input type="number" id="vo2-value" min="5" max="100" step="0.1">
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="activity-duration">Activity Duration (minutes):</label>
+                            <input type="number" id="activity-duration" min="1" max="1440" required>
+                        </div>
+                        
+                        <button type="button" id="calculate-energy" class="calculate-btn">Calculate Energy Expenditure</button>
+                    </form>
+                    
+                    <div class="result-box" id="energy-result">
+                        <h3>Energy Expenditure Results</h3>
+                        <p>Total Energy Expenditure: <span class="result-value" id="energy-value"></span> kcal</p>
+                        <p>Average Energy Expenditure Rate: <span id="energy-rate"></span> kcal/min</p>
+                        
+                        <h4>MET Reference Values</h4>
+                        <table class="activity-table">
+                            <tr>
+                                <th>Activity</th>
+                                <th>MET Range</th>
+                            </tr>
+                            <tr>
+                                <td>Resting (sitting quietly)</td>
+                                <td>1.0-1.3</td>
+                            </tr>
+                            <tr>
+                                <td>Light office work</td>
+                                <td>1.5-2.0</td>
+                            </tr>
+                            <tr>
+                                <td>Walking (3.2 km/h)</td>
+                                <td>2.5-3.0</td>
+                            </tr>
+                            <tr>
+                                <td>Moderate manual work</td>
+                                <td>4.0-6.0</td>
+                            </tr>
+                            <tr>
+                                <td>Heavy manual work</td>
+                                <td>6.0-8.0</td>
+                            </tr>
+                            <tr>
+                                <td>Very heavy work (shoveling)</td>
+                                <td>8.0-10.0</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Metabolic Rate Method -->
+                <div class="method-content" id="metabolic-method">
+                    <h3>Metabolic Rate (M) Calculation</h3>
+                    <p>Calculate the metabolic rate (M) in watts or kcal/min based on oxygen consumption or work output.</p>
+                    
+                    <form id="metabolic-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="metabolic-method">Calculation Method:</label>
+                                <select id="metabolic-method">
+                                    <option value="vo2">Using Oxygen Consumption (VO₂)</option>
+                                    <option value="work">Using Mechanical Work</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="body-weight-m">Body Weight (kg):</label>
+                                <input type="number" id="body-weight-m" min="30" max="200" step="0.1" required>
+                            </div>
+                        </div>
+                        
+                        <div id="vo2-m-inputs">
+                            <div class="input-group">
+                                <label for="vo2-m-value">Oxygen Consumption (ml/kg/min):</label>
+                                <input type="number" id="vo2-m-value" min="5" max="100" step="0.1" required>
+                            </div>
+                        </div>
+                        
+                        <div id="work-inputs" style="display: none;">
+                            <div class="input-row">
+                                <div class="input-group">
+                                    <label for="work-rate">Work Rate (W):</label>
+                                    <input type="number" id="work-rate" min="0" step="1">
+                                </div>
+                                <div class="input-group">
+                                    <label for="efficiency">Efficiency (%):</label>
+                                    <input type="number" id="efficiency" min="5" max="50" value="20" step="0.1">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="output-unit">Output Unit:</label>
+                            <select id="output-unit">
+                                <option value="watts">Watts</option>
+                                <option value="kcal">kcal/min</option>
+                            </select>
+                        </div>
+                        
+                        <button type="button" id="calculate-metabolic" class="calculate-btn">Calculate Metabolic Rate</button>
+                    </form>
+                    
+                    <div class="result-box" id="metabolic-result">
+                        <h3>Metabolic Rate Results</h3>
+                        <p>Metabolic Rate (M): <span class="result-value" id="metabolic-value"></span></p>
+                        <p>Equivalent: <span id="metabolic-equivalent"></span></p>
+                        
+                        <h4>Metabolic Rate Reference Values</h4>
+                        <table class="activity-table">
+                            <tr>
+                                <th>Activity Level</th>
+                                <th>Metabolic Rate (W)</th>
+                            </tr>
+                            <tr>
+                                <td>Resting (basal metabolic rate)</td>
+                                <td>80-100</td>
+                            </tr>
+                            <tr>
+                                <td>Sedentary work</td>
+                                <td>100-150</td>
+                            </tr>
+                            <tr>
+                                <td>Light work</td>
+                                <td>150-250</td>
+                            </tr>
+                            <tr>
+                                <td>Moderate work</td>
+                                <td>250-400</td>
+                            </tr>
+                            <tr>
+                                <td>Heavy work</td>
+                                <td>400-600</td>
+                            </tr>
+                            <tr>
+                                <td>Very heavy work</td>
+                                <td>600-1000</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Heart Rate & Workload Method -->
+                <div class="method-content" id="heartrate-method">
+                    <h3>Heart Rate & Workload (Astrand-Ryhming)</h3>
+                    <p>Estimate VO₂max and workload capacity based on submaximal heart rate response using the Astrand-Ryhming nomogram method.</p>
+                    
+                    <form id="heartrate-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="gender">Gender:</label>
+                                <select id="gender">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="age">Age (years):</label>
+                                <input type="number" id="age" min="18" max="80" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="workload">Workload (W or kgm/min):</label>
+                                <input type="number" id="workload" min="50" max="500" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="workload-unit">Workload Unit:</label>
+                                <select id="workload-unit">
+                                    <option value="watts">Watts</option>
+                                    <option value="kgm">kgm/min</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="heart-rate">Steady-State Heart Rate (bpm):</label>
+                            <input type="number" id="heart-rate" min="60" max="200" required>
+                        </div>
+                        
+                        <button type="button" id="calculate-heartrate" class="calculate-btn">Estimate VO₂max</button>
+                    </form>
+                    
+                    <div class="result-box" id="heartrate-result">
+                        <h3>Cardiovascular Results</h3>
+                        <p>Estimated VO₂max: <span class="result-value" id="vo2max-value"></span> ml/kg/min</p>
+                        <p>Age-Corrected VO₂max: <span id="corrected-vo2max"></span> ml/kg/min</p>
+                        <p>Fitness Classification: <span id="fitness-class"></span></p>
+                        
+                        <div class="chart-container">
+                            <div class="chart-placeholder">
+                                [Astrand-Ryhming Nomogram Visualization Would Appear Here]
+                                <p>In a full implementation, this would show the graphical nomogram with plotted values</p>
+                            </div>
+                        </div>
+                        
+                        <h4>Fitness Classification by VO₂max</h4>
+                        <table class="activity-table">
+                            <tr>
+                                <th>Classification</th>
+                                <th>Male (ml/kg/min)</th>
+                                <th>Female (ml/kg/min)</th>
+                            </tr>
+                            <tr>
+                                <td>Excellent</td>
+                                <td>>52</td>
+                                <td>>46</td>
+                            </tr>
+                            <tr>
+                                <td>Good</td>
+                                <td>46-52</td>
+                                <td>40-46</td>
+                            </tr>
+                            <tr>
+                                <td>Average</td>
+                                <td>40-46</td>
+                                <td>34-40</td>
+                            </tr>
+                            <tr>
+                                <td>Fair</td>
+                                <td>34-40</td>
+                                <td>28-34</td>
+                            </tr>
+                            <tr>
+                                <td>Poor</td>
+                                <td>&lt;34</td>
+                                <td>&lt;28</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Practical Examples</h3>
+                
+                <div class="example">
+                    <h4>Example 1: Office Work Energy Expenditure</h4>
+                    <p>70 kg person, 2.0 MET office work for 8 hours (480 min)</p>
+                    <p>Energy = 70 kg × 2.0 kcal/kg/hr × 8 hr = 1,120 kcal</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 2: Manual Labor Metabolic Rate</h4>
+                    <p>VO₂ = 25 ml/kg/min for 80 kg worker</p>
+                    <p>M = (25 × 80 × 0.005) × 60 = 600 kcal/hr = 418 W</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 3: Astrand-Ryhming Test</h4>
+                    <p>30-year-old female, 150 W workload, HR = 150 bpm</p>
+                    <p>Estimated VO₂max ≈ 42 ml/kg/min (Good fitness)</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            <p class="copyright">&copy; 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- xxxx navigation start xxxxx -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebarClose = document.querySelector('.sidebar-close');
+            const overlay = document.querySelector('.overlay');
+            const body = document.body;
+            
+            // Toggle sidebar
+            function toggleSidebar() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+                body.classList.toggle('sidebar-open');
+            }
+            
+            // Toggle category expansion
+            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
+            categoryHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const category = this.parentElement;
+                    category.classList.toggle('open');
+                    
+                    // Update the expand/collapse icon
+                    const icon = this.querySelector('span:last-child');
+                    icon.textContent = category.classList.contains('open') ? '−' : '+';
+                });
+            });
+            
+            // Event listeners
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            sidebarClose.addEventListener('click', toggleSidebar);
+            overlay.addEventListener('click', toggleSidebar);
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 768 && 
+                    body.classList.contains('sidebar-open') && 
+                    !sidebar.contains(event.target) && 
+                    event.target !== sidebarToggle) {
+                    toggleSidebar();
+                }
+            });
+            
+            // Close sidebar when pressing Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && body.classList.contains('sidebar-open')) {
+                    toggleSidebar();
+                }
+            });
+        });
+    </script>
+    <!-- xxxx navigation end xxxxx -->
+
+    <script>
+        // Method tab switching
+        const methodTabs = document.querySelectorAll('.method-tab');
+        const methodContents = document.querySelectorAll('.method-content');
+        
+        methodTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                methodTabs.forEach(t => t.classList.remove('active'));
+                methodContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                const method = tab.getAttribute('data-method');
+                document.getElementById(`${method}-method`).classList.add('active');
+            });
+        });
+        
+        // Energy method toggle
+        document.getElementById('energy-method').addEventListener('change', function() {
+            if (this.value === 'mets') {
+                document.getElementById('mets-inputs').style.display = 'block';
+                document.getElementById('vo2-inputs').style.display = 'none';
+            } else {
+                document.getElementById('mets-inputs').style.display = 'none';
+                document.getElementById('vo2-inputs').style.display = 'block';
+            }
+        });
+        
+        // Metabolic method toggle
+        document.getElementById('metabolic-method').addEventListener('change', function() {
+            if (this.value === 'vo2') {
+                document.getElementById('vo2-m-inputs').style.display = 'block';
+                document.getElementById('work-inputs').style.display = 'none';
+            } else {
+                document.getElementById('vo2-m-inputs').style.display = 'none';
+                document.getElementById('work-inputs').style.display = 'block';
+            }
+        });
+        
+        // Energy expenditure calculation
+        document.getElementById('calculate-energy').addEventListener('click', function() {
+            const weight = parseFloat(document.getElementById('body-weight').value);
+            const duration = parseFloat(document.getElementById('activity-duration').value);
+            const method = document.getElementById('energy-method').value;
+            
+            if (isNaN(weight) || isNaN(duration)) {
+                alert('Please enter valid numbers in all fields');
+                return;
+            }
+            
+            let energyRate, totalEnergy;
+            
+            if (method === 'mets') {
+                const mets = parseFloat(document.getElementById('mets-value').value);
+                if (isNaN(mets)) {
+                    alert('Please enter a valid MET value');
+                    return;
+                }
+                energyRate = mets * weight; // kcal/hr
+                totalEnergy = energyRate * (duration / 60);
+            } else {
+                const vo2 = parseFloat(document.getElementById('vo2-value').value);
+                if (isNaN(vo2)) {
+                    alert('Please enter a valid VO₂ value');
+                    return;
+                }
+                // 1 L O₂ ≈ 5 kcal, convert ml/kg/min to L/hr
+                energyRate = (vo2 * weight * 60 / 1000) * 5; // kcal/hr
+                totalEnergy = energyRate * (duration / 60);
+            }
+            
+            document.getElementById('energy-value').textContent = totalEnergy.toFixed(1);
+            document.getElementById('energy-rate').textContent = (energyRate / 60).toFixed(2);
+            document.getElementById('energy-result').style.display = 'block';
+        });
+        
+        // Metabolic rate calculation
+        document.getElementById('calculate-metabolic').addEventListener('click', function() {
+            const weight = parseFloat(document.getElementById('body-weight-m').value);
+            const method = document.getElementById('metabolic-method').value;
+            const unit = document.getElementById('output-unit').value;
+            
+            if (isNaN(weight)) {
+                alert('Please enter a valid body weight');
+                return;
+            }
+            
+            let metabolicRate, equivalent;
+            
+            if (method === 'vo2') {
+                const vo2 = parseFloat(document.getElementById('vo2-m-value').value);
+                if (isNaN(vo2)) {
+                    alert('Please enter a valid VO₂ value');
+                    return;
+                }
+                // 1 W = 0.01433 kcal/min, 1 kcal/min = 69.77 W
+                // VO₂ (ml/kg/min) × weight (kg) × 0.005 (kcal/ml) = kcal/min
+                const kcalMin = vo2 * weight * 0.005;
+                
+                if (unit === 'watts') {
+                    metabolicRate = kcalMin * 69.77; // Convert to watts
+                    equivalent = kcalMin.toFixed(2) + ' kcal/min';
+                } else {
+                    metabolicRate = kcalMin;
+                    equivalent = (kcalMin * 69.77).toFixed(1) + ' W';
+                }
+            } else {
+                const workRate = parseFloat(document.getElementById('work-rate').value);
+                const efficiency = parseFloat(document.getElementById('efficiency').value) / 100;
+                
+                if (isNaN(workRate) || isNaN(efficiency)) {
+                    alert('Please enter valid work rate and efficiency values');
+                    return;
+                }
+                
+                // Metabolic rate = work rate / efficiency
+                if (unit === 'watts') {
+                    metabolicRate = workRate / efficiency;
+                    equivalent = (metabolicRate / 69.77).toFixed(2) + ' kcal/min';
+                } else {
+                    metabolicRate = (workRate / efficiency) / 69.77; // Convert to kcal/min
+                    equivalent = (workRate / efficiency).toFixed(1) + ' W';
+                }
+            }
+            
+            document.getElementById('metabolic-value').textContent = metabolicRate.toFixed(1) + (unit === 'watts' ? ' W' : ' kcal/min');
+            document.getElementById('metabolic-equivalent').textContent = equivalent;
+            document.getElementById('metabolic-result').style.display = 'block';
+        });
+        
+        // Heart rate workload calculation (Astrand-Ryhming)
+        document.getElementById('calculate-heartrate').addEventListener('click', function() {
+            const gender = document.getElementById('gender').value;
+            const age = parseFloat(document.getElementById('age').value);
+            let workload = parseFloat(document.getElementById('workload').value);
+            const unit = document.getElementById('workload-unit').value;
+            const heartRate = parseFloat(document.getElementById('heart-rate').value);
+            
+            if (isNaN(age) || isNaN(workload) || isNaN(heartRate)) {
+                alert('Please enter valid numbers in all fields');
+                return;
+            }
+            
+            // Convert kgm/min to watts if needed (1 W ≈ 6.12 kgm/min)
+            if (unit === 'kgm') {
+                workload = workload / 6.12;
+            }
+            
+            // Simplified Astrand-Ryhming estimation
+            // In a real implementation, this would use the nomogram or more precise equations
+            let vo2max;
+            
+            if (gender === 'male') {
+                vo2max = 1.92 * workload + 12.6 - (0.38 * heartRate);
+            } else {
+                vo2max = 1.67 * workload + 9.0 - (0.35 * heartRate);
+            }
+            
+            // Age correction factor
+            const ageFactor = (220 - age - 65) / (220 - age - 25);
+            const correctedVo2max = vo2max / ageFactor;
+            
+            // Fitness classification
+            let fitnessClass;
+            if (gender === 'male') {
+                if (correctedVo2max > 52) fitnessClass = 'Excellent';
+                else if (correctedVo2max > 46) fitnessClass = 'Good';
+                else if (correctedVo2max > 40) fitnessClass = 'Average';
+                else if (correctedVo2max > 34) fitnessClass = 'Fair';
+                else fitnessClass = 'Poor';
+            } else {
+                if (correctedVo2max > 46) fitnessClass = 'Excellent';
+                else if (correctedVo2max > 40) fitnessClass = 'Good';
+                else if (correctedVo2max > 34) fitnessClass = 'Average';
+                else if (correctedVo2max > 28) fitnessClass = 'Fair';
+                else fitnessClass = 'Poor';
+            }
+            
+            document.getElementById('vo2max-value').textContent = vo2max.toFixed(1);
+            document.getElementById('corrected-vo2max').textContent = correctedVo2max.toFixed(1);
+            document.getElementById('fitness-class').textContent = fitnessClass;
+            document.getElementById('heartrate-result').style.display = 'block';
+        });
+    </script>
+</body>
+</html>

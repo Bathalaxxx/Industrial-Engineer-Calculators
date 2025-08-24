@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-3BSHG1DE6V');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi-Square Test of Independence | Industrial Engineering Calculators</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+            transition: margin-left 0.3s;
+        }
+        
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1010;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block; /* Changed from none to block */
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 101;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select, .input-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .data-input {
+            margin-bottom: 1.5rem;
+        }
+        
+        .data-input textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .data-input .help-text {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-top: 0.5rem;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: block;
+            width: 100%;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .result-card {
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .result-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .interpretation {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #e8f4fc;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: center;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .significance {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .significance select {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .cont-table {
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cont-table table {
+            min-width: 400px;
+        }
+        
+        .cont-table th:first-child,
+        .cont-table td:first-child {
+            font-weight: bold;
+            background-color: #f2f2f2;
+        }
+        
+        .expected {
+            color: var(--secondary-color);
+            font-style: italic;
+        }
+        
+        .table-caption {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="gagerr.html" class="sidebar-link">Gage R&R</a>
+                <a href="processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="oee.html" class="sidebar-link">OEE Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="anova.html" class="sidebar-link">ANOVA</a>
+                <a href="chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
+                <a href="factorialdesign.html" class="sidebar-link">Factorial Design</a>
+                <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="latinsquare.html" class="sidebar-link">Latin Square</a>
+                <a href="regression.html" class="sidebar-link">Regression</a>
+                <a href="samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="ttest.html" class="sidebar-link">T-Test</a>
+                <a href="ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="eoq.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="rop.html" class="sidebar-link">Reorder Point</a>
+                <a href="kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Study</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+            </div>
+        </div>
+    </aside>
+    <!-- xxxx navigation end xxxxx -->
+    
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Industrial Engineering <span>Calculators</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Chi-Square Test of Independence</h1>
+            <p>Test whether two categorical variables are independent of each other</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Chi-Square Test of Independence</h2>
+                <p>The Chi-Square Test of Independence determines whether there is a significant association between two categorical variables. It compares the observed frequencies in each category to the frequencies we would expect if the variables were independent.</p>
+                <div class="formula-box">
+                    χ² = Σ [ (O - E)² / E ]
+                </div>
+                <p>Where O is the observed frequency, E is the expected frequency, and the summation is over all cells in the contingency table.</p>
+            </div>
+            
+            <div class="significance">
+                <label for="alpha-level">Significance Level (α):</label>
+                <select id="alpha-level">
+                    <option value="0.01">0.01</option>
+                    <option value="0.05" selected>0.05</option>
+                    <option value="0.10">0.10</option>
+                </select>
+            </div>
+            
+            <h3>Contingency Table Input</h3>
+            <p class="help-text">Enter your observed values in the table below. You can add more rows and columns as needed.</p>
+            
+            <div class="input-group">
+                <label for="row-count">Number of Rows:</label>
+                <input type="number" id="row-count" min="2" max="10" value="3">
+            </div>
+            
+            <div class="input-group">
+                <label for="col-count">Number of Columns:</label>
+                <input type="number" id="col-count" min="2" max="10" value="3">
+            </div>
+            
+            <button id="generate-table-btn" class="calculate-btn" style="margin-bottom: 1.5rem;">Generate Table</button>
+            
+            <div id="contingency-table-container">
+                <div class="table-caption">Observed Frequencies</div>
+                <div class="cont-table">
+                    <table id="contingency-table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Column 1</th>
+                                <th>Column 2</th>
+                                <th>Column 3</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>Row 1</th>
+                                <td><input type="number" class="obs-cell" value="10" min="0"></td>
+                                <td><input type="number" class="obs-cell" value="20" min="0"></td>
+                                <td><input type="number" class="obs-cell" value="30" min="0"></td>
+                            </tr>
+                            <tr>
+                                <th>Row 2</th>
+                                <td><input type="number" class="obs-cell" value="6" min="0"></td>
+                                <td><input type="number" class="obs-cell" value="9" min="0"></td>
+                                <td><input type="number" class="obs-cell" value="17" min="0"></td>
+                            </tr>
+                            <tr>
+                                <th>Row 3</th>
+                                <td><input type="number" class="obs-cell" value="7" min="0"></td>
+                                <td><input type="number" class="obs-cell" value="11" min="0"></td>
+                                <td><input type="number" class="obs-cell" value="22" min="0"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <button id="calculate-btn" class="calculate-btn">Calculate Chi-Square Test</button>
+            
+            <div class="result-box" id="chi-square-result">
+                <h3>Chi-Square Test Results</h3>
+                
+                <div class="result-grid">
+                    <div class="result-card">
+                        <h4>Chi-Square Statistic</h4>
+                        <div class="result-value" id="chi-square-value"></div>
+                        <p>Test statistic</p>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>P-Value</h4>
+                        <div class="result-value" id="p-value"></div>
+                        <p>Significance level</p>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>Degrees of Freedom</h4>
+                        <div class="result-value" id="df-value"></div>
+                        <p>(rows - 1) × (columns - 1)</p>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>Result</h4>
+                        <div class="result-value" id="result-significance"></div>
+                        <p>Hypothesis test</p>
+                    </div>
+                </div>
+                
+                <div class="interpretation">
+                    <h4>Interpretation</h4>
+                    <p id="interpretation-text"></p>
+                </div>
+                
+                <h4>Expected Frequencies</h4>
+                <div class="cont-table">
+                    <table id="expected-table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Column 1</th>
+                                <th>Column 2</th>
+                                <th>Column 3</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Chi-Square Test Examples in Industrial Engineering</h3>
+                
+                <div class="example">
+                    <h4>Quality Control Example</h4>
+                    <p>Test whether defect rates are independent of production shifts.</p>
+                    <p>Shifts: Morning, Afternoon, Night</p>
+                    <p>Defect Types: Minor, Major, Critical</p>
+                    <p>Example data:</p>
+                    <table>
+                        <tr>
+                            <th></th>
+                            <th>Minor</th>
+                            <th>Major</th>
+                            <th>Critical</th>
+                        </tr>
+                        <tr>
+                            <th>Morning</th>
+                            <td>15</td>
+                            <td>8</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <th>Afternoon</th>
+                            <td>12</td>
+                            <td>10</td>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            <th>Night</th>
+                            <td>18</td>
+                            <td>14</td>
+                            <td>7</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="example">
+                    <h4>Supplier Evaluation Example</h4>
+                    <p>Test whether product quality is independent of suppliers.</p>
+                    <p>Suppliers: A, B, C</p>
+                    <p>Quality Levels: Excellent, Good, Fair, Poor</p>
+                    <p>Example data:</p>
+                    <table>
+                        <tr>
+                            <th></th>
+                            <th>Excellent</th>
+                            <th>Good</th>
+                            <th>Fair</th>
+                            <th>Poor</th>
+                        </tr>
+                        <tr>
+                            <th>Supplier A</th>
+                            <td>25</td>
+                            <td>40</td>
+                            <td>20</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <th>Supplier B</th>
+                            <td>30</td>
+                            <td>35</td>
+                            <td>25</td>
+                            <td>10</td>
+                        </tr>
+                        <tr>
+                            <th>Supplier C</th>
+                            <td>20</td>
+                            <td>30</td>
+                            <td>35</td>
+                            <td>15</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="example">
+                    <h4>Machine Performance Example</h4>
+                    <p>Test whether machine performance is independent of maintenance schedule.</p>
+                    <p>Maintenance: Weekly, Bi-weekly, Monthly</p>
+                    <p>Performance: Optimal, Acceptable, Needs Attention</p>
+                    <p>Example data:</p>
+                    <table>
+                        <tr>
+                            <th></th>
+                            <th>Optimal</th>
+                            <th>Acceptable</th>
+                            <th>Needs Attention</th>
+                        </tr>
+                        <tr>
+                            <th>Weekly</th>
+                            <td>18</td>
+                            <td>10</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <th>Bi-weekly</th>
+                            <td>12</td>
+                            <td>15</td>
+                            <td>8</td>
+                        </tr>
+                        <tr>
+                            <th>Monthly</th>
+                            <td>5</td>
+                            <td>12</td>
+                            <td>13</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Chi-Square Test Implementation
+        function chiSquareTest(observed) {
+            // Calculate row totals, column totals, and grand total
+            const rows = observed.length;
+            const cols = observed[0].length;
+            
+            const rowTotals = new Array(rows).fill(0);
+            const colTotals = new Array(cols).fill(0);
+            let grandTotal = 0;
+            
+            for (let i = 0; i < rows; i++) {
+                for (let j = 0; j < cols; j++) {
+                    rowTotals[i] += observed[i][j];
+                    colTotals[j] += observed[i][j];
+                    grandTotal += observed[i][j];
+                }
+            }
+            
+            // Calculate expected frequencies
+            const expected = [];
+            for (let i = 0; i < rows; i++) {
+                expected.push([]);
+                for (let j = 0; j < cols; j++) {
+                    expected[i].push((rowTotals[i] * colTotals[j]) / grandTotal);
+                }
+            }
+            
+            // Calculate chi-square statistic
+            let chiSquare = 0;
+            for (let i = 0; i < rows; i++) {
+                for (let j = 0; j < cols; j++) {
+                    const diff = observed[i][j] - expected[i][j];
+                    chiSquare += (diff * diff) / expected[i][j];
+                }
+            }
+            
+            // Calculate degrees of freedom
+            const df = (rows - 1) * (cols - 1);
+            
+            // Calculate p-value (using approximation)
+            const pValue = chiSquareCDF(chiSquare, df);
+            
+            return {
+                chiSquare,
+                df,
+                pValue,
+                observed,
+                expected,
+                rowTotals,
+                colTotals,
+                grandTotal
+            };
+        }
+        
+        // Chi-square CDF approximation
+        function chiSquareCDF(x, df) {
+            if (df <= 0) return 0;
+            
+            // Using the regularized gamma function approximation
+            function gamma(z) {
+                // Lanczos approximation
+                const g = 7;
+                const C = [
+                    0.99999999999980993,
+                    676.5203681218851,
+                    -1259.1392167224028,
+                    771.32342877765313,
+                    -176.61502916214059,
+                    12.507343278686905,
+                    -0.13857109526572012,
+                    9.9843695780195716e-6,
+                    1.5056327351493116e-7
+                ];
+                
+                if (z < 0.5) {
+                    return Math.PI / (Math.sin(Math.PI * z) * gamma(1 - z));
+                } else {
+                    z -= 1;
+                    let x = C[0];
+                    for (let i = 1; i < g + 2; i++) {
+                        x += C[i] / (z + i);
+                    }
+                    const t = z + g + 0.5;
+                    return Math.sqrt(2 * Math.PI) * Math.pow(t, z + 0.5) * Math.exp(-t) * x;
+                }
+            }
+            
+            function lowerGamma(s, x) {
+                // Lower incomplete gamma function
+                function series(s, x) {
+                    let sum = 0;
+                    let term = 1 / s;
+                    let n = 0;
+                    
+                    while (Math.abs(term) > 1e-10) {
+                        sum += term;
+                        n++;
+                        term = term * x / (s + n);
+                    }
+                    
+                    return sum * Math.pow(x, s) * Math.exp(-x);
+                }
+                
+                return series(s, x);
+            }
+            
+            function regularizedGamma(s, x) {
+                return lowerGamma(s, x) / gamma(s);
+            }
+            
+            // For chi-square: P(X ≤ x) = regularizedGamma(df/2, x/2)
+            return 1 - regularizedGamma(df/2, x/2);
+        }
+        
+        // UI Handling
+        document.addEventListener('DOMContentLoaded', function() {
+            const generateTableBtn = document.getElementById('generate-table-btn');
+            const calculateBtn = document.getElementById('calculate-btn');
+            const rowCountInput = document.getElementById('row-count');
+            const colCountInput = document.getElementById('col-count');
+            const contingencyTable = document.getElementById('contingency-table');
+            const resultBox = document.getElementById('chi-square-result');
+            const alphaLevel = document.getElementById('alpha-level');
+            
+            // Generate table based on row and column counts
+            generateTableBtn.addEventListener('click', function() {
+                const rowCount = parseInt(rowCountInput.value);
+                const colCount = parseInt(colCountInput.value);
+                
+                if (isNaN(rowCount) || rowCount < 2 || isNaN(colCount) || colCount < 2) {
+                    alert('Please enter valid numbers for rows and columns (minimum 2 each)');
+                    return;
+                }
+                
+                // Generate table header
+                let tableHTML = '<thead><tr><th></th>';
+                for (let j = 0; j < colCount; j++) {
+                    tableHTML += `<th>Column ${j+1}</th>`;
+                }
+                tableHTML += '</tr></thead><tbody>';
+                
+                // Generate table rows
+                for (let i = 0; i < rowCount; i++) {
+                    tableHTML += `<tr><th>Row ${i+1}</th>`;
+                    for (let j = 0; j < colCount; j++) {
+                        tableHTML += `<td><input type="number" class="obs-cell" value="0" min="0"></td>`;
+                    }
+                    tableHTML += '</tr>';
+                }
+                
+                tableHTML += '</tbody>';
+                contingencyTable.innerHTML = tableHTML;
+            });
+            
+            // Calculate chi-square test
+            calculateBtn.addEventListener('click', function() {
+                try {
+                    // Get observed values from table
+                    const obsCells = document.querySelectorAll('.obs-cell');
+                    const rowCount = contingencyTable.rows.length - 1; // Subtract header row
+                    const colCount = contingencyTable.rows[0].cells.length - 1; // Subtract row header
+                    
+                    const observed = [];
+                    let cellIndex = 0;
+                    
+                    for (let i = 0; i < rowCount; i++) {
+                        observed.push([]);
+                        for (let j = 0; j < colCount; j++) {
+                            const value = parseFloat(obsCells[cellIndex].value);
+                            if (isNaN(value) || value < 0) {
+                                throw new Error(`Invalid value in row ${i+1}, column ${j+1}`);
+                            }
+                            observed[i].push(value);
+                            cellIndex++;
+                        }
+                    }
+                    
+                    // Check for all zeros
+                    const total = observed.flat().reduce((sum, val) => sum + val, 0);
+                    if (total === 0) {
+                        throw new Error('All values cannot be zero');
+                    }
+                    
+                    // Perform chi-square test
+                    const result = chiSquareTest(observed);
+                    const alpha = parseFloat(alphaLevel.value);
+                    
+                    // Display results
+                    displayResults(result, alpha);
+                    
+                } catch (error) {
+                    alert('Error: ' + error.message);
+                    console.error(error);
+                }
+            });
+            
+            function displayResults(result, alpha) {
+                // Update result metrics
+                document.getElementById('chi-square-value').textContent = result.chiSquare.toFixed(4);
+                document.getElementById('p-value').textContent = result.pValue.toFixed(4);
+                document.getElementById('df-value').textContent = result.df;
+                
+                // Determine significance
+                const isSignificant = result.pValue <= alpha;
+                document.getElementById('result-significance').textContent = 
+                    isSignificant ? 'Significant' : 'Not Significant';
+                document.getElementById('result-significance').style.color = 
+                    isSignificant ? '#2ecc71' : '#e74c3c';
+                
+                // Update interpretation
+                const interpretationText = document.getElementById('interpretation-text');
+                if (isSignificant) {
+                    interpretationText.textContent = 
+                        `The p-value of ${result.pValue.toFixed(4)} is less than the significance level of ${alpha}. ` +
+                        `This provides evidence to reject the null hypothesis. There is a statistically significant association ` +
+                        `between the two variables.`;
+                } else {
+                    interpretationText.textContent = 
+                        `The p-value of ${result.pValue.toFixed(4)} is greater than the significance level of ${alpha}. ` +
+                        `There is not enough evidence to reject the null hypothesis. The variables appear to be independent.`;
+                }
+                
+                // Update expected frequencies table
+                const expectedTable = document.getElementById('expected-table');
+                const rowCount = result.observed.length;
+                const colCount = result.observed[0].length;
+                
+                // Generate table header
+                let tableHTML = '<thead><tr><th></th>';
+                for (let j = 0; j < colCount; j++) {
+                    tableHTML += `<th>Column ${j+1}</th>`;
+                }
+                tableHTML += '</tr></thead><tbody>';
+                
+                // Generate table rows with expected values
+                for (let i = 0; i < rowCount; i++) {
+                    tableHTML += `<tr><th>Row ${i+1}</th>`;
+                    for (let j = 0; j < colCount; j++) {
+                        tableHTML += `<td class="expected">${result.expected[i][j].toFixed(2)}</td>`;
+                    }
+                    tableHTML += '</tr>';
+                }
+                
+                tableHTML += '</tbody>';
+                expectedTable.innerHTML = tableHTML;
+                
+                // Show results
+                resultBox.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

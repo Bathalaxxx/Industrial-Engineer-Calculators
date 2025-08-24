@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-3BSHG1DE6V');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="OEE Calculator - Calculate Overall Equipment Effectiveness with Availability, Performance, and Quality metrics">
+    <title>OEE Calculator | Industrial Engineering Calculators</title>
+    <style>
+        /* Same CSS as landing page */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+            transition: margin-left 0.3s;
+        }
+        
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1010;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block; /* Changed from none to block */
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 101;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .oee-gauge {
+            width: 100%;
+            height: 30px;
+            background-color: #f0f0f0;
+            border-radius: 15px;
+            margin: 1rem 0;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .oee-gauge-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #e74c3c, #f39c12, #2ecc71);
+            transition: width 0.5s ease;
+        }
+        
+        .oee-gauge-marker {
+            position: absolute;
+            height: 40px;
+            width: 2px;
+            background-color: rgba(0,0,0,0.5);
+            top: -5px;
+        }
+        
+        .oee-gauge-label {
+            position: absolute;
+            top: -20px;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+        }
+        
+        .metric-results {
+            display: flex;
+            justify-content: space-between;
+            margin: 1.5rem 0;
+        }
+        
+        .metric-card {
+            flex: 1;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 0 0.5rem;
+            text-align: center;
+        }
+        
+        .metric-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-card .metric-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .metric-card.availability .metric-value {
+            color: #3498db;
+        }
+        
+        .metric-card.performance .metric-value {
+            color: #f39c12;
+        }
+        
+        .metric-card.quality .metric-value {
+            color: #2ecc71;
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            display: block;
+        }
+            
+        body.sidebar-open {
+            margin-left: 0;
+            overflow: hidden;
+        }
+        /* xxxx navigation end xxxxx */
+    </style>
+</head>
+<body>
+    <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="gagerr.html" class="sidebar-link">Gage R&R</a>
+                <a href="processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="oee.html" class="sidebar-link">OEE Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="anova.html" class="sidebar-link">ANOVA</a>
+                <a href="chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
+                <a href="factorialdesign.html" class="sidebar-link">Factorial Design</a>
+                <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="latinsquare.html" class="sidebar-link">Latin Square</a>
+                <a href="regression.html" class="sidebar-link">Regression</a>
+                <a href="samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="ttest.html" class="sidebar-link">T-Test</a>
+                <a href="ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="eoq.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="rop.html" class="sidebar-link">Reorder Point</a>
+                <a href="kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Study</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+            </div>
+        </div>
+    </aside>
+    <!-- xxxx navigation end xxxxx -->
+    
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Industrial Engineering <span>Calculators</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>OEE Calculator</h1>
+            <p>Calculate Overall Equipment Effectiveness with Availability, Performance, and Quality metrics</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Overall Equipment Effectiveness (OEE)</h2>
+                <p>OEE is a standard metric for measuring manufacturing productivity. It identifies the percentage of manufacturing time that is truly productive (100% OEE means perfect production).</p>
+                
+                <div class="formula-box">
+                    OEE = Availability × Performance × Quality
+                </div>
+                
+                <p>Where:</p>
+                <ul>
+                    <li><strong>Availability</strong> = Run Time / Planned Production Time</li>
+                    <li><strong>Performance</strong> = (Total Parts × Ideal Cycle Time) / Run Time</li>
+                    <li><strong>Quality</strong> = Good Parts / Total Parts</li>
+                </ul>
+            </div>
+            
+            <form id="oee-form">
+                <h3>Time Metrics</h3>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="planned-production-time">Planned Production Time (minutes):</label>
+                        <input type="number" id="planned-production-time" min="0" step="1" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="downtime">Downtime (minutes):</label>
+                        <input type="number" id="downtime" min="0" step="1" required>
+                    </div>
+                </div>
+                
+                <h3>Production Metrics</h3>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="ideal-cycle-time">Ideal Cycle Time (seconds/part):</label>
+                        <input type="number" id="ideal-cycle-time" min="0" step="0.01" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="total-parts">Total Parts Produced:</label>
+                        <input type="number" id="total-parts" min="0" step="1" required>
+                    </div>
+                </div>
+                
+                <h3>Quality Metrics</h3>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="good-parts">Good Parts (Passed Quality):</label>
+                        <input type="number" id="good-parts" min="0" step="1" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="rejected-parts">Rejected Parts:</label>
+                        <input type="number" id="rejected-parts" min="0" step="1">
+                    </div>
+                </div>
+                
+                <button type="submit" class="calculate-btn">Calculate OEE</button>
+            </form>
+            
+            <div class="result-box" id="oee-result">
+                <h3>Results</h3>
+                
+                <div class="oee-gauge">
+                    <div class="oee-gauge-fill" id="oee-gauge-fill"></div>
+                    <div class="oee-gauge-marker" style="left: 30%;">
+                        <div class="oee-gauge-label">30% (Poor)</div>
+                    </div>
+                    <div class="oee-gauge-marker" style="left: 65%;">
+                        <div class="oee-gauge-label">65% (Average)</div>
+                    </div>
+                    <div class="oee-gauge-marker" style="left: 85%;">
+                        <div class="oee-gauge-label">85% (World Class)</div>
+                    </div>
+                </div>
+                
+                <p>Overall Equipment Effectiveness: <span class="result-value" id="oee-value"></span></p>
+                
+                <div class="metric-results">
+                    <div class="metric-card availability">
+                        <h4>Availability</h4>
+                        <div class="metric-value" id="availability-value"></div>
+                        <p>Run Time: <span id="run-time-value"></span> minutes</p>
+                    </div>
+                    
+                    <div class="metric-card performance">
+                        <h4>Performance</h4>
+                        <div class="metric-value" id="performance-value"></div>
+                        <p>Theoretical Production: <span id="theoretical-production-value"></span> parts</p>
+                    </div>
+                    
+                    <div class="metric-card quality">
+                        <h4>Quality</h4>
+                        <div class="metric-value" id="quality-value"></div>
+                        <p>Rejection Rate: <span id="rejection-rate-value"></span></p>
+                    </div>
+                </div>
+                
+                <h4>Loss Analysis</h4>
+                <table>
+                    <tr>
+                        <th>Loss Category</th>
+                        <th>Time Lost (minutes)</th>
+                        <th>Percentage</th>
+                    </tr>
+                    <tr>
+                        <td>Availability Loss (Downtime)</td>
+                        <td id="availability-loss-time"></td>
+                        <td id="availability-loss-pct"></td>
+                    </tr>
+                    <tr>
+                        <td>Performance Loss (Speed)</td>
+                        <td id="performance-loss-time"></td>
+                        <td id="performance-loss-pct"></td>
+                    </tr>
+                    <tr>
+                        <td>Quality Loss (Defects)</td>
+                        <td id="quality-loss-time"></td>
+                        <td id="quality-loss-pct"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Total Productive Time</strong></td>
+                        <td id="productive-time"></td>
+                        <td id="productive-time-pct"></td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Practical Examples</h3>
+                
+                <div class="example">
+                    <h4>Example 1: World-Class Performance</h4>
+                    <p>Planned Time: 480 min | Downtime: 24 min | Ideal Cycle Time: 45 sec | Total Parts: 580 | Good Parts: 576</p>
+                    <p>Availability: 95% | Performance: 93.75% | Quality: 99.3% | OEE: 88.5%</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 2: Average Performance</h4>
+                    <p>Planned Time: 480 min | Downtime: 120 min | Ideal Cycle Time: 45 sec | Total Parts: 450 | Good Parts: 432</p>
+                    <p>Availability: 75% | Performance: 84.4% | Quality: 96% | OEE: 60.8%</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 3: Poor Performance</h4>
+                    <p>Planned Time: 480 min | Downtime: 240 min | Ideal Cycle Time: 45 sec | Total Parts: 300 | Good Parts: 270</p>
+                    <p>Availability: 50% | Performance: 62.5% | Quality: 90% | OEE: 28.1%</p>
+                </div>
+            </div>
+            
+            <div class="calculator-intro">
+                <h3>OEE Benchmarking</h3>
+                <table>
+                    <tr>
+                        <th>OEE Level</th>
+                        <th>Percentage</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>World Class</td>
+                        <td>85%+</td>
+                        <td>Considered best-in-class performance</td>
+                    </tr>
+                    <tr>
+                        <td>Excellent</td>
+                        <td>75-84%</td>
+                        <td>Strong performance with minor opportunities</td>
+                    </tr>
+                    <tr>
+                        <td>Average</td>
+                        <td>65-74%</td>
+                        <td>Typical for many manufacturers</td>
+                    </tr>
+                    <tr>
+                        <td>Below Average</td>
+                        <td>55-64%</td>
+                        <td>Significant room for improvement</td>
+                    </tr>
+                    <tr>
+                        <td>Poor</td>
+                        <td>&lt;55%</td>
+                        <td>Urgent need for improvement</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('oee-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get input values
+            const plannedTime = parseFloat(document.getElementById('planned-production-time').value);
+            const downtime = parseFloat(document.getElementById('downtime').value);
+            const idealCycleTime = parseFloat(document.getElementById('ideal-cycle-time').value);
+            let totalParts = parseFloat(document.getElementById('total-parts').value);
+            let goodParts = parseFloat(document.getElementById('good-parts').value);
+            const rejectedParts = parseFloat(document.getElementById('rejected-parts').value) || 0;
+            
+            // Validate inputs
+            if (isNaN(plannedTime) || isNaN(downtime) || isNaN(idealCycleTime) || isNaN(totalParts) || isNaN(goodParts)) {
+                alert('Please enter valid numbers in all required fields');
+                return;
+            }
+            
+            // If rejected parts entered, calculate good parts
+            if (rejectedParts > 0) {
+                goodParts = totalParts - rejectedParts;
+                if (goodParts < 0) goodParts = 0;
+            }
+            
+            // Calculate run time
+            const runTime = plannedTime - downtime;
+            
+            // Calculate metrics
+            const availability = runTime / plannedTime;
+            const performance = (totalParts * idealCycleTime / 60) / runTime;
+            const quality = goodParts / totalParts;
+            
+            // Calculate OEE
+            const oee = availability * performance * quality;
+            
+            // Calculate loss analysis
+            const availabilityLossTime = downtime;
+            const availabilityLossPct = downtime / plannedTime;
+            
+            const theoreticalProduction = (runTime * 60) / idealCycleTime;
+            const performanceLossTime = runTime - (totalParts * idealCycleTime / 60);
+            const performanceLossPct = performanceLossTime / plannedTime;
+            
+            const qualityLossTime = (totalParts - goodParts) * idealCycleTime / 60;
+            const qualityLossPct = qualityLossTime / plannedTime;
+            
+            const productiveTime = (goodParts * idealCycleTime) / 60;
+            const productiveTimePct = productiveTime / plannedTime;
+            
+            // Display results
+            document.getElementById('oee-value').textContent = (oee * 100).toFixed(1) + '%';
+            document.getElementById('availability-value').textContent = (availability * 100).toFixed(1) + '%';
+            document.getElementById('performance-value').textContent = (performance * 100).toFixed(1) + '%';
+            document.getElementById('quality-value').textContent = (quality * 100).toFixed(1) + '%';
+            
+            document.getElementById('run-time-value').textContent = runTime.toFixed(0);
+            document.getElementById('theoretical-production-value').textContent = theoreticalProduction.toFixed(0);
+            document.getElementById('rejection-rate-value').textContent = ((1 - quality) * 100).toFixed(1) + '%';
+            
+            document.getElementById('availability-loss-time').textContent = availabilityLossTime.toFixed(1);
+            document.getElementById('availability-loss-pct').textContent = (availabilityLossPct * 100).toFixed(1) + '%';
+            
+            document.getElementById('performance-loss-time').textContent = performanceLossTime.toFixed(1);
+            document.getElementById('performance-loss-pct').textContent = (performanceLossPct * 100).toFixed(1) + '%';
+            
+            document.getElementById('quality-loss-time').textContent = qualityLossTime.toFixed(1);
+            document.getElementById('quality-loss-pct').textContent = (qualityLossPct * 100).toFixed(1) + '%';
+            
+            document.getElementById('productive-time').textContent = productiveTime.toFixed(1);
+            document.getElementById('productive-time-pct').textContent = (productiveTimePct * 100).toFixed(1) + '%';
+            
+            // Update gauge
+            document.getElementById('oee-gauge-fill').style.width = (oee * 100) + '%';
+            
+            // Show results
+            document.getElementById('oee-result').style.display = 'block';
+        });
+        
+        // Auto-calculate good parts if rejected parts changes
+        document.getElementById('rejected-parts').addEventListener('input', function() {
+            const totalParts = parseFloat(document.getElementById('total-parts').value) || 0;
+            const rejectedParts = parseFloat(this.value) || 0;
+            const goodParts = totalParts - rejectedParts;
+            
+            if (goodParts >= 0) {
+                document.getElementById('good-parts').value = goodParts;
+            }
+        });
+        
+        // Auto-calculate rejected parts if good parts changes
+        document.getElementById('good-parts').addEventListener('input', function() {
+            const totalParts = parseFloat(document.getElementById('total-parts').value) || 0;
+            const goodParts = parseFloat(this.value) || 0;
+            const rejectedParts = totalParts - goodParts;
+            
+            if (rejectedParts >= 0) {
+                document.getElementById('rejected-parts').value = rejectedParts;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-3BSHG1DE6V');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Queueing Theory Calculator - Analyze M/M/1, M/M/c, M/G/1, and M/D/1 queueing systems">
+    <title>Queueing Theory Calculator | Industrial Engineering Calculators</title>
+    <style>
+        
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1010;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block; /* Changed from none to block */
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .model-selector {
+            margin-bottom: 2rem;
+        }
+        
+        .model-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+        }
+        
+        .model-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            margin-right: 0.5rem;
+            border-radius: 5px 5px 0 0;
+            background-color: #f1f1f1;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .model-tab.active {
+            background-color: white;
+            border-color: #ddd;
+            border-bottom-color: white;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        
+        .model-tab:hover:not(.active) {
+            background-color: #e9e9e9;
+        }
+        
+        .model-content {
+            display: none;
+        }
+        
+        .model-content.active {
+            display: block;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .metric-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .metric-card {
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .metric-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .metric-card .metric-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .metric-card.queue .metric-value {
+            color: #3498db;
+        }
+        
+        .metric-card.time .metric-value {
+            color: #f39c12;
+        }
+        
+        .metric-card.utilization .metric-value {
+            color: #2ecc71;
+        }
+        
+        .metric-card.probability .metric-value {
+            color: #9b59b6;
+        }
+        
+        .queue-visual {
+            width: 100%;
+            height: 150px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            margin: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .server {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .customer {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            transition: left 0.5s ease;
+        }
+        
+        .queue-line {
+            position: absolute;
+            height: 10px;
+            background-color: var(--primary-color);
+            border-radius: 5px;
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            display: block;
+        }
+            
+        body.sidebar-open {
+            margin-left: 0;
+            overflow: hidden;
+        }
+        /* xxxx navigation end xxxxx */
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .model-tabs {
+                flex-direction: column;
+            }
+            
+            .model-tab {
+                border-radius: 0;
+                margin-right: 0;
+                border-bottom: 1px solid #ddd;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="gagerr.html" class="sidebar-link">Gage R&R</a>
+                <a href="processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="oee.html" class="sidebar-link">OEE Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="anova.html" class="sidebar-link">ANOVA</a>
+                <a href="chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
+                <a href="factorialdesign.html" class="sidebar-link">Factorial Design</a>
+                <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="latinsquare.html" class="sidebar-link">Latin Square</a>
+                <a href="regression.html" class="sidebar-link">Regression</a>
+                <a href="samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="ttest.html" class="sidebar-link">T-Test</a>
+                <a href="ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="eoq.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="rop.html" class="sidebar-link">Reorder Point</a>
+                <a href="kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Study</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+            </div>
+        </div>
+    </aside>
+    <!-- xxxx navigation end xxxxx -->
+    
+    <header>
+        <div class="container header-content">
+            <div class="logo">Industrial <span>Engineering</span> Calculators</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Queueing Theory Calculator</h1>
+            <p>Analyze M/M/1, M/M/c, M/G/1, and M/D/1 queueing systems</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Queueing System Analysis</h2>
+                <p>Queueing theory is the mathematical study of waiting lines or queues. This calculator helps analyze different queueing models to understand system performance and optimize service operations.</p>
+                
+                <div class="formula-box">
+                    Key Metrics: L = λW (Little's Law), ρ = λ/μ (Utilization), P₀ = 1 - ρ (Empty system probability)
+                </div>
+                
+                <p>Where:</p>
+                <ul>
+                    <li><strong>L</strong> = Average number of customers in the system</li>
+                    <li><strong>λ</strong> = Arrival rate (customers per time unit)</li>
+                    <li><strong>W</strong> = Average time a customer spends in the system</li>
+                    <li><strong>μ</strong> = Service rate (customers per time unit)</li>
+                    <li><strong>ρ</strong> = Server utilization factor</li>
+                </ul>
+            </div>
+            
+            <div class="model-selector">
+                <h3>Queueing Model</h3>
+                <p>Select the queueing model you want to analyze:</p>
+                
+                <div class="model-tabs">
+                    <div class="model-tab active" data-model="mm1">M/M/1</div>
+                    <div class="model-tab" data-model="mmc">M/M/c</div>
+                    <div class="model-tab" data-model="mg1">M/G/1</div>
+                    <div class="model-tab" data-model="md1">M/D/1</div>
+                </div>
+                
+                <!-- M/M/1 Model -->
+                <div class="model-content active" id="mm1-model">
+                    <h3>M/M/1 Queue</h3>
+                    <p>Single server queue with Poisson arrivals and exponential service times.</p>
+                    
+                    <form id="mm1-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="mm1-arrival-rate">Arrival Rate (λ) - customers per time unit:</label>
+                                <input type="number" id="mm1-arrival-rate" min="0" step="0.1" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="mm1-service-rate">Service Rate (μ) - customers per time unit:</label>
+                                <input type="number" id="mm1-service-rate" min="0" step="0.1" required>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Analyze M/M/1 Queue</button>
+                    </form>
+                </div>
+                
+                <!-- M/M/c Model -->
+                <div class="model-content" id="mmc-model">
+                    <h3>M/M/c Queue</h3>
+                    <p>Multiple server queue with Poisson arrivals and exponential service times.</p>
+                    
+                    <form id="mmc-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="mmc-arrival-rate">Arrival Rate (λ) - customers per time unit:</label>
+                                <input type="number" id="mmc-arrival-rate" min="0" step="0.1" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="mmc-service-rate">Service Rate per Server (μ) - customers per time unit:</label>
+                                <input type="number" id="mmc-service-rate" min="0" step="0.1" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="mmc-servers">Number of Servers (c):</label>
+                            <input type="number" id="mmc-servers" min="1" step="1" value="2" required>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Analyze M/M/c Queue</button>
+                    </form>
+                </div>
+                
+                <!-- M/G/1 Model -->
+                <div class="model-content" id="mg1-model">
+                    <h3>M/G/1 Queue</h3>
+                    <p>Single server queue with Poisson arrivals and general service time distribution.</p>
+                    
+                    <form id="mg1-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="mg1-arrival-rate">Arrival Rate (λ) - customers per time unit:</label>
+                                <input type="number" id="mg1-arrival-rate" min="0" step="0.1" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="mg1-service-rate">Average Service Rate (μ) - customers per time unit:</label>
+                                <input type="number" id="mg1-service-rate" min="0" step="0.1" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="mg1-service-variance">Service Time Variance (σ²):</label>
+                            <input type="number" id="mg1-service-variance" min="0" step="0.1" required>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Analyze M/G/1 Queue</button>
+                    </form>
+                </div>
+                
+                <!-- M/D/1 Model -->
+                <div class="model-content" id="md1-model">
+                    <h3>M/D/1 Queue</h3>
+                    <p>Single server queue with Poisson arrivals and deterministic (constant) service times.</p>
+                    
+                    <form id="md1-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="md1-arrival-rate">Arrival Rate (λ) - customers per time unit:</label>
+                                <input type="number" id="md1-arrival-rate" min="0" step="0.1" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="md1-service-rate">Service Rate (μ) - customers per time unit:</label>
+                                <input type="number" id="md1-service-rate" min="0" step="0.1" required>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Analyze M/D/1 Queue</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="result-box" id="queue-result">
+                <h3>Results</h3>
+                <p id="model-description"></p>
+                
+                <div class="metric-results">
+                    <div class="metric-card utilization">
+                        <h4>Utilization (ρ)</h4>
+                        <div class="metric-value" id="utilization"></div>
+                        <p>Server busy probability</p>
+                    </div>
+                    
+                    <div class="metric-card queue">
+                        <h4>Avg in Queue (Lₙ)</h4>
+                        <div class="metric-value" id="avg-queue"></div>
+                        <p>Customers waiting</p>
+                    </div>
+                    
+                    <div class="metric-card queue">
+                        <h4>Avg in System (L)</h4>
+                        <div class="metric-value" id="avg-system"></div>
+                        <p>Total customers</p>
+                    </div>
+                    
+                    <div class="metric-card time">
+                        <h4>Queue Time (Wₙ)</h4>
+                        <div class="metric-value" id="queue-time"></div>
+                        <p>Time spent waiting</p>
+                    </div>
+                    
+                    <div class="metric-card time">
+                        <h4>System Time (W)</h4>
+                        <div class="metric-value" id="system-time"></div>
+                        <p>Total time in system</p>
+                    </div>
+                    
+                    <div class="metric-card probability">
+                        <h4>P(0)</h4>
+                        <div class="metric-value" id="prob-empty"></div>
+                        <p>System empty probability</p>
+                    </div>
+                </div>
+                
+                <div class="queue-visual" id="queue-visual">
+                    <!-- Visualization will be added by JavaScript -->
+                </div>
+                
+                <h4>Probability Distribution</h4>
+                <table id="probability-table">
+                    <thead>
+                        <tr>
+                            <th>n</th>
+                            <th>P(n) in System</th>
+                            <th>P(≥n) in System</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Will be populated by JavaScript -->
+                    </tbody>
+                </table>
+                
+                <h4>Interpretation Guide</h4>
+                <table>
+                    <tr>
+                        <th>Utilization (ρ)</th>
+                        <th>System State</th>
+                        <th>Recommendation</th>
+                    </tr>
+                    <tr>
+                        <td>0% - 60%</td>
+                        <td>Underutilized</td>
+                        <td>Consider reducing capacity</td>
+                    </tr>
+                    <tr>
+                        <td>60% - 80%</td>
+                        <td>Well-utilized</td>
+                        <td>Good balance</td>
+                    </tr>
+                    <tr>
+                        <td>80% - 100%</td>
+                        <td>Overutilized</td>
+                        <td>Risk of long queues - add capacity</td>
+                    </tr>
+                    <tr>
+                        <td>≥100%</td>
+                        <td>Unstable</td>
+                        <td>Queue will grow indefinitely</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Practical Examples</h3>
+                
+                <div class="example">
+                    <h4>Example 1: M/M/1 - Small Store Checkout</h4>
+                    <p>Arrival Rate: 4 customers/hour | Service Rate: 5 customers/hour</p>
+                    <p>Utilization: 80% | Avg in System: 4 customers | Avg Wait: 48 minutes</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 2: M/M/3 - Call Center</h4>
+                    <p>Arrival Rate: 15 calls/hour | Service Rate: 6 calls/hour | Servers: 3</p>
+                    <p>Utilization: 83% | Avg in System: 5.2 calls | Avg Wait: 6.5 minutes</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 3: M/G/1 - Repair Shop</h4>
+                    <p>Arrival Rate: 2 jobs/hour | Service Rate: 3 jobs/hour | Variance: 0.2</p>
+                    <p>Utilization: 67% | Avg in System: 1.27 jobs | Avg Wait: 0.47 hours</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 4: M/D/1 - Automated Process</h4>
+                    <p>Arrival Rate: 9 units/hour | Service Rate: 10 units/hour</p>
+                    <p>Utilization: 90% | Avg in System: 4.95 units | Avg Wait: 0.45 hours</p>
+                </div>
+            </div>
+            
+            <div class="calculator-intro">
+                <h3>Queueing Model Comparison</h3>
+                <table>
+                    <tr>
+                        <th>Model</th>
+                        <th>Arrivals</th>
+                        <th>Service</th>
+                        <th>Servers</th>
+                        <th>Typical Use Cases</th>
+                    </tr>
+                    <tr>
+                        <td>M/M/1</td>
+                        <td>Poisson</td>
+                        <td>Exponential</td>
+                        <td>1</td>
+                        <td>Single checkout, simple systems</td>
+                    </tr>
+                    <tr>
+                        <td>M/M/c</td>
+                        <td>Poisson</td>
+                        <td>Exponential</td>
+                        <td>Multiple</td>
+                        <td>Call centers, multi-server systems</td>
+                    </tr>
+                    <tr>
+                        <td>M/G/1</td>
+                        <td>Poisson</td>
+                        <td>General</td>
+                        <td>1</td>
+                        <td>Repair shops, variable service times</td>
+                    </tr>
+                    <tr>
+                        <td>M/D/1</td>
+                        <td>Poisson</td>
+                        <td>Deterministic</td>
+                        <td>1</td>
+                        <td>Automated processes, constant service</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- xxxx navigation start xxxxx -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebarClose = document.querySelector('.sidebar-close');
+            const overlay = document.querySelector('.overlay');
+            const body = document.body;
+            
+            // Toggle sidebar
+            function toggleSidebar() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+                body.classList.toggle('sidebar-open');
+            }
+            
+            // Toggle category expansion
+            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
+            categoryHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const category = this.parentElement;
+                    category.classList.toggle('open');
+                    
+                    // Update the expand/collapse icon
+                    const icon = this.querySelector('span:last-child');
+                    icon.textContent = category.classList.contains('open') ? '−' : '+';
+                });
+            });
+            
+            // Event listeners
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            sidebarClose.addEventListener('click', toggleSidebar);
+            overlay.addEventListener('click', toggleSidebar);
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 768 && 
+                    body.classList.contains('sidebar-open') && 
+                    !sidebar.contains(event.target) && 
+                    event.target !== sidebarToggle) {
+                    toggleSidebar();
+                }
+            });
+            
+            // Close sidebar when pressing Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && body.classList.contains('sidebar-open')) {
+                    toggleSidebar();
+                }
+            });
+        });
+    </script>
+    <!-- xxxx navigation end xxxxx -->
+
+    <script>
+        // Model tab switching
+        const modelTabs = document.querySelectorAll('.model-tab');
+        const modelContents = document.querySelectorAll('.model-content');
+        
+        modelTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                modelTabs.forEach(t => t.classList.remove('active'));
+                modelContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                const model = tab.getAttribute('data-model');
+                document.getElementById(`${model}-model`).classList.add('active');
+            });
+        });
+        
+        // M/M/1 Queue Calculation
+        document.getElementById('mm1-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const lambda = parseFloat(document.getElementById('mm1-arrival-rate').value);
+            const mu = parseFloat(document.getElementById('mm1-service-rate').value);
+            
+            if (isNaN(lambda) || isNaN(mu)) {
+                alert('Please enter valid arrival and service rates');
+                return;
+            }
+            
+            const rho = lambda / mu;
+            
+            if (rho >= 1) {
+                alert('Warning: Utilization ≥ 100%. System is unstable (queue will grow indefinitely)');
+                // Continue calculation but note the instability
+            }
+            
+            // Calculate metrics
+            const L = rho / (1 - rho); // Avg in system
+            const Lq = rho * rho / (1 - rho); // Avg in queue
+            const W = 1 / (mu - lambda); // Avg time in system
+            const Wq = rho / (mu - lambda); // Avg time in queue
+            const P0 = 1 - rho; // Prob system empty
+            
+            displayResults(
+                "M/M/1 Queue - Single server with Poisson arrivals and exponential service times",
+                rho, Lq, L, Wq, W, P0, 
+                lambda, mu, 1, 0
+            );
+            
+            // Generate probability distribution
+            generateProbabilityDistribution(rho, 10);
+            
+            // Create visualization
+            createQueueVisualization(1, rho);
+        });
+        
+        // M/M/c Queue Calculation
+        document.getElementById('mmc-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const lambda = parseFloat(document.getElementById('mmc-arrival-rate').value);
+            const mu = parseFloat(document.getElementById('mmc-service-rate').value);
+            const c = parseInt(document.getElementById('mmc-servers').value);
+            
+            if (isNaN(lambda) || isNaN(mu) || isNaN(c)) {
+                alert('Please enter valid arrival rate, service rate, and number of servers');
+                return;
+            }
+            
+            const rho = lambda / (c * mu);
+            
+            if (rho >= 1) {
+                alert('Warning: Utilization ≥ 100%. System is unstable (queue will grow indefinitely)');
+                // Continue calculation but note the instability
+            }
+            
+            // Calculate P0 (probability of 0 customers in system)
+            let sum = 0;
+            for (let n = 0; n < c; n++) {
+                sum += Math.pow(lambda / mu, n) / factorial(n);
+            }
+            sum += Math.pow(lambda / mu, c) / (factorial(c) * (1 - rho));
+            const P0 = 1 / sum;
+            
+            // Calculate other metrics
+            const Lq = (P0 * Math.pow(lambda / mu, c) * rho) / (factorial(c) * Math.pow(1 - rho, 2));
+            const Wq = Lq / lambda;
+            const W = Wq + (1 / mu);
+            const L = lambda * W;
+            
+            displayResults(
+                `M/M/c Queue - ${c} servers with Poisson arrivals and exponential service times`,
+                rho, Lq, L, Wq, W, P0,
+                lambda, mu, c, 0
+            );
+            
+            // Generate probability distribution
+            generateProbabilityDistributionMMc(lambda, mu, c, P0, 10);
+            
+            // Create visualization
+            createQueueVisualization(c, rho);
+        });
+        
+        // M/G/1 Queue Calculation
+        document.getElementById('mg1-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const lambda = parseFloat(document.getElementById('mg1-arrival-rate').value);
+            const mu = parseFloat(document.getElementById('mg1-service-rate').value);
+            const variance = parseFloat(document.getElementById('mg1-service-variance').value);
+            
+            if (isNaN(lambda) || isNaN(mu) || isNaN(variance)) {
+                alert('Please enter valid arrival rate, service rate, and variance');
+                return;
+            }
+            
+            const rho = lambda / mu;
+            
+            if (rho >= 1) {
+                alert('Warning: Utilization ≥ 100%. System is unstable (queue will grow indefinitely)');
+                // Continue calculation but note the instability
+            }
+            
+            // Calculate metrics using Pollaczek-Khinchin formula
+            const ES2 = variance + (1 / (mu * mu)); // E[S²]
+            const Lq = (lambda * lambda * ES2) / (2 * (1 - rho));
+            const Wq = Lq / lambda;
+            const W = Wq + (1 / mu);
+            const L = lambda * W;
+            const P0 = 1 - rho;
+            
+            displayResults(
+                "M/G/1 Queue - Single server with Poisson arrivals and general service times",
+                rho, Lq, L, Wq, W, P0,
+                lambda, mu, 1, variance
+            );
+            
+            // Note: Probability distribution not shown for M/G/1 as it's complex
+            document.getElementById('probability-table').innerHTML = `
+                <thead>
+                    <tr>
+                        <th>Note</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Probability distribution not calculated for M/G/1 queues due to complexity</td>
+                    </tr>
+                </tbody>
+            `;
+            
+            // Create visualization
+            createQueueVisualization(1, rho);
+        });
+        
+        // M/D/1 Queue Calculation
+        document.getElementById('md1-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const lambda = parseFloat(document.getElementById('md1-arrival-rate').value);
+            const mu = parseFloat(document.getElementById('md1-service-rate').value);
+            
+            if (isNaN(lambda) || isNaN(mu)) {
+                alert('Please enter valid arrival and service rates');
+                return;
+            }
+            
+            const rho = lambda / mu;
+            
+            if (rho >= 1) {
+                alert('Warning: Utilization ≥ 100%. System is unstable (queue will grow indefinitely)');
+                // Continue calculation but note the instability
+            }
+            
+            // Calculate metrics for M/D/1 (special case of M/G/1 with variance = 0)
+            const ES2 = 1 / (mu * mu); // E[S²] for deterministic service
+            const Lq = (lambda * lambda * ES2) / (2 * (1 - rho));
+            const Wq = Lq / lambda;
+            const W = Wq + (1 / mu);
+            const L = lambda * W;
+            const P0 = 1 - rho;
+            
+            displayResults(
+                "M/D/1 Queue - Single server with Poisson arrivals and deterministic service times",
+                rho, Lq, L, Wq, W, P0,
+                lambda, mu, 1, 0
+            );
+            
+            // Generate probability distribution (approximation)
+            generateProbabilityDistribution(rho, 10);
+            
+            // Create visualization
+            createQueueVisualization(1, rho);
+        });
+        
+        // Helper function to display results
+        function displayResults(modelDesc, rho, Lq, L, Wq, W, P0, lambda, mu, c, variance) {
+            document.getElementById('model-description').textContent = modelDesc;
+            document.getElementById('utilization').textContent = (rho * 100).toFixed(1) + '%';
+            document.getElementById('avg-queue').textContent = Lq.toFixed(2);
+            document.getElementById('avg-system').textContent = L.toFixed(2);
+            document.getElementById('queue-time').textContent = Wq.toFixed(2) + ' time units';
+            document.getElementById('system-time').textContent = W.toFixed(2) + ' time units';
+            document.getElementById('prob-empty').textContent = P0.toFixed(4);
+            
+            document.getElementById('queue-result').style.display = 'block';
+        }
+        
+        // Helper function to generate probability distribution for M/M/1 and M/D/1
+        function generateProbabilityDistribution(rho, maxN) {
+            const tableBody = document.querySelector('#probability-table tbody');
+            tableBody.innerHTML = '';
+            
+            for (let n = 0; n <= maxN; n++) {
+                const Pn = (1 - rho) * Math.pow(rho, n);
+                const Pgeqn = Math.pow(rho, n); // P(≥n) = ρⁿ
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${n}</td>
+                    <td>${Pn.toFixed(4)}</td>
+                    <td>${Pgeqn.toFixed(4)}</td>
+                `;
+                tableBody.appendChild(row);
+            }
+        }
+        
+        // Helper function to generate probability distribution for M/M/c
+        function generateProbabilityDistributionMMc(lambda, mu, c, P0, maxN) {
+            const tableBody = document.querySelector('#probability-table tbody');
+            tableBody.innerHTML = '';
+            const rho = lambda / (c * mu);
+            
+            for (let n = 0; n <= maxN; n++) {
+                let Pn;
+                if (n < c) {
+                    Pn = (Math.pow(lambda / mu, n) / factorial(n)) * P0;
+                } else {
+                    Pn = (Math.pow(lambda / mu, n) / (factorial(c) * Math.pow(c, n - c))) * P0;
+                }
+                
+                // P(≥n) is more complex to calculate, so we'll leave it blank for M/M/c
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${n}</td>
+                    <td>${Pn.toFixed(4)}</td>
+                    <td>-</td>
+                `;
+                tableBody.appendChild(row);
+            }
+        }
+        
+        // Helper function to create queue visualization
+        function createQueueVisualization(servers, rho) {
+            const visual = document.getElementById('queue-visual');
+            visual.innerHTML = '';
+            
+            // Calculate number of customers to show (up to 10)
+            const customersInSystem = Math.min(10, Math.ceil(rho * 5 / (1 - rho)) || 1);
+            const customersInQueue = Math.max(0, customersInSystem - servers);
+            
+            // Create servers
+            for (let i = 0; i < servers; i++) {
+                const server = document.createElement('div');
+                server.className = 'server';
+                server.textContent = i+1;
+                server.style.left = `${70 + (i * 50)}px`;
+                server.style.top = '50px';
+                visual.appendChild(server);
+            }
+            
+            // Create queue line
+            const queueLine = document.createElement('div');
+            queueLine.className = 'queue-line';
+            queueLine.style.width = '30px';
+            queueLine.style.left = '20px';
+            queueLine.style.top = '55px';
+            visual.appendChild(queueLine);
+            
+            // Create customers in queue
+            for (let i = 0; i < customersInQueue; i++) {
+                const customer = document.createElement('div');
+                customer.className = 'customer';
+                customer.textContent = i+1;
+                customer.style.left = `${25 + (i * 10)}px`;
+                customer.style.top = '50px';
+                visual.appendChild(customer);
+            }
+            
+            // Create customers being served
+            for (let i = 0; i < Math.min(servers, customersInSystem); i++) {
+                const customer = document.createElement('div');
+                customer.className = 'customer';
+                customer.textContent = customersInQueue + i + 1;
+                customer.style.left = `${65 + (i * 50)}px`;
+                customer.style.top = '20px';
+                visual.appendChild(customer);
+            }
+        }
+        
+        // Helper function for factorial calculation
+        function factorial(n) {
+            if (n === 0 || n === 1) return 1;
+            let result = 1;
+            for (let i = 2; i <= n; i++) {
+                result *= i;
+            }
+            return result;
+        }
+    </script>
+</body>
+</html>

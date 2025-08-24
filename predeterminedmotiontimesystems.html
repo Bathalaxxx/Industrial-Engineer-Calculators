@@ -1,0 +1,1833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-3BSHG1DE6V');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PMTS Calculator - Calculate time standards using MTM-1, MTM-2, MTM-UAS, MOST, and MODAPTS methods">
+    <title>PMTS Calculator | Industrial Engineering Calculators</title>
+    <style>
+        /* Same CSS as landing page */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+            transition: margin-left 0.3s;
+        }
+        
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1010;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block; /* Changed from none to block */
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 101;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .method-selector {
+            margin-bottom: 2rem;
+        }
+        
+        .method-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .method-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            margin-right: 0.5rem;
+            border-radius: 5px 5px 0 0;
+            background-color: #f1f1f1;
+            transition: all 0.3s;
+            margin-bottom: 0.5rem;
+        }
+        
+        .method-tab.active {
+            background-color: white;
+            border-color: #ddd;
+            border-bottom-color: white;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        
+        .method-tab:hover:not(.active) {
+            background-color: #e9e9e9;
+        }
+        
+        .method-content {
+            display: none;
+        }
+        
+        .method-content.active {
+            display: block;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .time-units {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        
+        .activity-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        .activity-table th, .activity-table td {
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        .activity-table th {
+            background-color: #f2f2f2;
+        }
+        
+        .add-activity-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 0.5rem;
+        }
+        
+        .add-activity-btn:hover {
+            background-color: #c0392b;
+        }
+        
+        .remove-activity-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .remove-activity-btn:hover {
+            background-color: #c0392b;
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            display: block;
+        }
+            
+        body.sidebar-open {
+            margin-left: 0;
+            overflow: hidden;
+        }
+        /* xxxx navigation end xxxxx */
+    </style>
+</head>
+<body>
+    <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="gagerr.html" class="sidebar-link">Gage R&R</a>
+                <a href="processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="oee.html" class="sidebar-link">OEE Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="anova.html" class="sidebar-link">ANOVA</a>
+                <a href="chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
+                <a href="factorialdesign.html" class="sidebar-link">Factorial Design</a>
+                <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="latinsquare.html" class="sidebar-link">Latin Square</a>
+                <a href="regression.html" class="sidebar-link">Regression</a>
+                <a href="samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="ttest.html" class="sidebar-link">T-Test</a>
+                <a href="ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="eoq.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="rop.html" class="sidebar-link">Reorder Point</a>
+                <a href="kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Study</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+            </div>
+        </div>
+    </aside>
+    <!-- xxxx navigation end xxxxx -->
+    
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Industrial Engineering <span>Calculators</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>PMTS Calculator</h1>
+            <p>Calculate time standards using MTM-1, MTM-2, MTM-UAS, MOST, and MODAPTS methods</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Predetermined Motion Time Systems</h2>
+                <p>PMTS are techniques used to establish time standards for manual work by analyzing the basic human motions required to perform a task and assigning predetermined time values to these motions.</p>
+                
+                <div class="input-group">
+                    <label for="performance-rating">Performance Rating (%):</label>
+                    <input type="number" id="performance-rating" min="80" max="120" value="100" step="1">
+                </div>
+                
+                <div class="input-group">
+                    <label for="allowance">Allowance (%):</label>
+                    <input type="number" id="allowance" min="0" max="50" value="15" step="1">
+                </div>
+            </div>
+            
+            <div class="method-selector">
+                <h3>PMTS Method</h3>
+                <p>Select the predetermined time system you want to use:</p>
+                
+                <div class="method-tabs">
+                    <div class="method-tab active" data-method="mtm1">MTM-1</div>
+                    <div class="method-tab" data-method="mtm2">MTM-2</div>
+                    <div class="method-tab" data-method="mtmuas">MTM-UAS</div>
+                    <div class="method-tab" data-method="most">MOST</div>
+                    <div class="method-tab" data-method="modapts">MODAPTS</div>
+                </div>
+                
+                <!-- MTM-1 Method -->
+                <div class="method-content active" id="mtm1-scenario">
+                    <h3>MTM-1 (Methods-Time Measurement)</h3>
+                    <p>MTM-1 is the most detailed MTM system, analyzing work into basic motions with time values in TMUs (Time Measurement Units, where 1 TMU = 0.00001 hour = 0.036 seconds).</p>
+                    
+                    <table class="activity-table" id="mtm1-activities">
+                        <thead>
+                            <tr>
+                                <th>Motion</th>
+                                <th>Description</th>
+                                <th>Distance/Parameter</th>
+                                <th>TMUs</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <select class="mtm1-motion">
+                                        <option value="reach">Reach</option>
+                                        <option value="move">Move</option>
+                                        <option value="turn">Turn</option>
+                                        <option value="grasp">Grasp</option>
+                                        <option value="position">Position</option>
+                                        <option value="release">Release</option>
+                                        <option value="disengage">Disengage</option>
+                                        <option value="eye">Eye Action</option>
+                                        <option value="body">Body Motion</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="mtm1-case">
+                                        <!-- Options will be populated by JavaScript based on motion -->
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="number" class="mtm1-distance" min="0" step="0.1" placeholder="Distance (cm)">
+                                </td>
+                                <td class="mtm1-tmu">0</td>
+                                <td>
+                                    <button class="remove-activity-btn">×</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <button class="add-activity-btn" id="add-mtm1-activity">+ Add Motion</button>
+                    
+                    <div class="result-box" id="mtm1-result">
+                        <h3>Result</h3>
+                        <p>Total TMUs: <span class="result-value" id="mtm1-total-tmu"></span></p>
+                        <p>Standard Time: <span class="result-value" id="mtm1-standard-time"></span> seconds</p>
+                        <p class="time-units">1 TMU = 0.036 seconds | 27.8 TMU = 1 second | 100,000 TMU = 1 hour</p>
+                    </div>
+                </div>
+                
+                <!-- MTM-2 Method -->
+                <div class="method-content" id="mtm2-scenario">
+                    <h3>MTM-2 (Second Generation MTM)</h3>
+                    <p>MTM-2 is a simplified version of MTM-1 with fewer categories, suitable for less detailed analysis. It uses time values in TMUs.</p>
+                    
+                    <table class="activity-table" id="mtm2-activities">
+                        <thead>
+                            <tr>
+                                <th>Motion</th>
+                                <th>Description</th>
+                                <th>Distance/Parameter</th>
+                                <th>TMUs</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <select class="mtm2-motion">
+                                        <option value="get">Get</option>
+                                        <option value="put">Put</option>
+                                        <option value="regrasp">Regrasp</option>
+                                        <option value="apply">Apply Pressure</option>
+                                        <option value="eye">Eye Action</option>
+                                        <option value="step">Step</option>
+                                        <option value="foot">Foot Motion</option>
+                                        <option value="bend">Bend/Arise</option>
+                                        <option value="knuckle">Knuckle Turn</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="mtm2-case">
+                                        <!-- Options will be populated by JavaScript based on motion -->
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="number" class="mtm2-distance" min="0" step="0.1" placeholder="Distance (cm)">
+                                </td>
+                                <td class="mtm2-tmu">0</td>
+                                <td>
+                                    <button class="remove-activity-btn">×</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <button class="add-activity-btn" id="add-mtm2-activity">+ Add Motion</button>
+                    
+                    <div class="result-box" id="mtm2-result">
+                        <h3>Result</h3>
+                        <p>Total TMUs: <span class="result-value" id="mtm2-total-tmu"></span></p>
+                        <p>Standard Time: <span class="result-value" id="mtm2-standard-time"></span> seconds</p>
+                        <p class="time-units">1 TMU = 0.036 seconds | 27.8 TMU = 1 second | 100,000 TMU = 1 hour</p>
+                    </div>
+                </div>
+                
+                <!-- MTM-UAS Method -->
+                <div class="method-content" id="mtmuas-scenario">
+                    <h3>MTM-UAS (Universal Analyzing System)</h3>
+                    <p>MTM-UAS is a simplified MTM system for analyzing work cycles with less detail than MTM-1 but more than MTM-2.</p>
+                    
+                    <table class="activity-table" id="mtmuas-activities">
+                        <thead>
+                            <tr>
+                                <th>Activity</th>
+                                <th>Description</th>
+                                <th>Distance/Parameter</th>
+                                <th>TMUs</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <select class="mtmuas-activity">
+                                        <option value="handle">Handle</option>
+                                        <option value="place">Place</option>
+                                        <option value="operation">Operation</option>
+                                        <option value="walk">Walk</option>
+                                        <option value="body">Body Motion</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="mtmuas-case">
+                                        <!-- Options will be populated by JavaScript based on activity -->
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="number" class="mtmuas-distance" min="0" step="0.1" placeholder="Distance (cm)">
+                                </td>
+                                <td class="mtmuas-tmu">0</td>
+                                <td>
+                                    <button class="remove-activity-btn">×</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <button class="add-activity-btn" id="add-mtmuas-activity">+ Add Activity</button>
+                    
+                    <div class="result-box" id="mtmuas-result">
+                        <h3>Result</h3>
+                        <p>Total TMUs: <span class="result-value" id="mtmuas-total-tmu"></span></p>
+                        <p>Standard Time: <span class="result-value" id="mtmuas-standard-time"></span> seconds</p>
+                        <p class="time-units">1 TMU = 0.036 seconds | 27.8 TMU = 1 second | 100,000 TMU = 1 hour</p>
+                    </div>
+                </div>
+                
+                <!-- MOST Method -->
+                <div class="method-content" id="most-scenario">
+                    <h3>MOST (Maynard Operation Sequence Technique)</h3>
+                    <p>MOST is a higher-level PMTS that analyzes work using standardized sequence models (General Move, Controlled Move, Tool Use).</p>
+                    
+                    <div class="input-group">
+                        <label for="most-sequence">Sequence Model:</label>
+                        <select id="most-sequence">
+                            <option value="general">General Move (A B G A B P A)</option>
+                            <option value="controlled">Controlled Move (A B G M X I A)</option>
+                            <option value="tool">Tool Use (A B G A B P U I A)</option>
+                        </select>
+                    </div>
+                    
+                    <table class="activity-table" id="most-activities">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Value</th>
+                                <th>TMUs</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Rows will be populated by JavaScript based on sequence -->
+                        </tbody>
+                    </table>
+                    
+                    <div class="result-box" id="most-result">
+                        <h3>Result</h3>
+                        <p>Total TMUs: <span class="result-value" id="most-total-tmu"></span></p>
+                        <p>Standard Time: <span class="result-value" id="most-standard-time"></span> seconds</p>
+                        <p class="time-units">1 TMU = 0.036 seconds | 27.8 TMU = 1 second | 100,000 TMU = 1 hour</p>
+                    </div>
+                </div>
+                
+                <!-- MODAPTS Method -->
+                <div class="method-content" id="modapts-scenario">
+                    <h3>MODAPTS (Modular Arrangement of Predetermined Time Standards)</h3>
+                    <p>MODAPTS is a simplified PMTS where 1 MOD = 0.129 seconds. Body parts are assigned MOD values based on movement.</p>
+                    
+                    <table class="activity-table" id="modapts-activities">
+                        <thead>
+                            <tr>
+                                <th>Body Part</th>
+                                <th>Motion</th>
+                                <th>Distance/Parameter</th>
+                                <th>MODs</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <select class="modapts-part">
+                                        <option value="finger">Finger</option>
+                                        <option value="hand">Hand</option>
+                                        <option value="arm">Arm</option>
+                                        <option value="shoulder">Shoulder</option>
+                                        <option value="trunk">Trunk</option>
+                                        <option value="foot">Foot</option>
+                                        <option value="leg">Leg</option>
+                                        <option value="eye">Eye</option>
+                                        <option value="cognition">Cognition</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="modapts-motion">
+                                        <!-- Options will be populated by JavaScript based on body part -->
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="number" class="modapts-distance" min="0" step="0.1" placeholder="Distance (cm)">
+                                </td>
+                                <td class="modapts-mods">0</td>
+                                <td>
+                                    <button class="remove-activity-btn">×</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <button class="add-activity-btn" id="add-modapts-activity">+ Add Motion</button>
+                    
+                    <div class="result-box" id="modapts-result">
+                        <h3>Result</h3>
+                        <p>Total MODs: <span class="result-value" id="modapts-total-mods"></span></p>
+                        <p>Standard Time: <span class="result-value" id="modapts-standard-time"></span> seconds</p>
+                        <p class="time-units">1 MOD = 0.129 seconds | 7.75 MOD = 1 second</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Practical Examples</h3>
+                
+                <div class="example">
+                    <h4>MTM-1 Example</h4>
+                    <p>Reach 15 cm to object in fixed location: Reach Case A, 15 cm = 10.6 TMU</p>
+                    <p>Grasp object: Grasp Case 1 = 2.0 TMU</p>
+                    <p>Move object 20 cm to new location: Move Case B, 20 cm = 12.9 TMU</p>
+                    <p>Total = 25.5 TMU (0.92 seconds)</p>
+                </div>
+                
+                <div class="example">
+                    <h4>MTM-2 Example</h4>
+                    <p>Get small object in easy location: Get A = 6 TMU</p>
+                    <p>Put object to approximate location: Put B = 10 TMU</p>
+                    <p>Total = 16 TMU (0.58 seconds)</p>
+                </div>
+                
+                <div class="example">
+                    <h4>MODAPTS Example</h4>
+                    <p>Move hand 15 cm: M3 = 3 MOD (0.39 seconds)</p>
+                    <p>Grasp object: G1 = 1 MOD (0.13 seconds)</p>
+                    <p>Total = 4 MOD (0.52 seconds)</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Method tab switching
+        const methodTabs = document.querySelectorAll('.method-tab');
+        const methodContents = document.querySelectorAll('.method-content');
+        
+        methodTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                methodTabs.forEach(t => t.classList.remove('active'));
+                methodContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                const method = tab.getAttribute('data-method');
+                document.getElementById(`${method}-scenario`).classList.add('active');
+            });
+        });
+        
+        // TMU to seconds conversion
+        function tmuToSeconds(tmu) {
+            return tmu * 0.036;
+        }
+        
+        // MOD to seconds conversion
+        function modToSeconds(mod) {
+            return mod * 0.129;
+        }
+        
+        // Calculate standard time with performance rating and allowances
+        function calculateStandardTime(baseTime) {
+            const rating = parseFloat(document.getElementById('performance-rating').value) || 100;
+            const allowance = parseFloat(document.getElementById('allowance').value) || 15;
+            
+            return (baseTime * (100 / rating)) * (1 + (allowance / 100));
+        }
+        
+        // MTM-1 Data
+        const mtm1Data = {
+            reach: {
+                name: "Reach",
+                cases: [
+                    {name: "A - To object in fixed location", values: [2.0, 4.0, 6.1, 8.1, 10.2, 12.3, 14.4, 16.5]},
+                    {name: "B - To object in other location", values: [3.5, 5.6, 7.7, 9.8, 11.9, 14.0, 16.1, 18.2]},
+                    {name: "C - To object jumbled with others", values: [5.3, 7.4, 9.5, 11.6, 13.7, 15.8, 17.9, 20.0]}
+                ],
+                distanceRanges: [2, 5, 10, 15, 20, 25, 30, 35]
+            },
+            move: {
+                name: "Move",
+                cases: [
+                    {name: "A - To approximate location", values: [2.5, 4.6, 6.7, 8.8, 10.9, 13.0, 15.1, 17.2]},
+                    {name: "B - To exact location", values: [4.0, 6.1, 8.2, 10.3, 12.4, 14.5, 16.6, 18.7]},
+                    {name: "C - Move object to other object", values: [5.7, 7.8, 9.9, 12.0, 14.1, 16.2, 18.3, 20.4]}
+                ],
+                distanceRanges: [2, 5, 10, 15, 20, 25, 30, 35]
+            },
+            turn: {
+                name: "Turn",
+                cases: [
+                    {name: "Turn wrist (30° increments)", values: [2.8]}
+                ],
+                paramDesc: "Degrees (30° increments)"
+            },
+            grasp: {
+                name: "Grasp",
+                cases: [
+                    {name: "1 - Small, easy to grasp", values: [2.0]},
+                    {name: "2 - Very small or large", values: [3.5]},
+                    {name: "3 - Jumbled objects", values: [7.3]},
+                    {name: "4 - Contact grasp", values: [5.6]},
+                    {name: "5 - Pickup grasp", values: [5.6]}
+                ]
+            },
+            position: {
+                name: "Position",
+                cases: [
+                    {name: "1 - Loose, easy", values: [5.6]},
+                    {name: "2 - Close fit", values: [16.2]},
+                    {name: "3 - Exact placement", values: [21.0]}
+                ]
+            },
+            release: {
+                name: "Release",
+                cases: [
+                    {name: "Normal release", values: [2.0]},
+                    {name: "Contact release", values: [0.0]}
+                ]
+            },
+            disengage: {
+                name: "Disengage",
+                cases: [
+                    {name: "1 - Loose fit", values: [4.0]},
+                    {name: "2 - Close fit", values: [7.5]},
+                    {name: "3 - Tight fit", values: [22.9]}
+                ]
+            },
+            eye: {
+                name: "Eye Action",
+                cases: [
+                    {name: "Eye focus", values: [7.3]},
+                    {name: "Eye travel (per 10°)", values: [1.3]}
+                ]
+            },
+            body: {
+                name: "Body Motion",
+                cases: [
+                    {name: "Foot motion", values: [8.5]},
+                    {name: "Leg motion", values: [7.1]},
+                    {name: "Side step", values: [17.0]},
+                    {name: "Turn body", values: [18.6]},
+                    {name: "Bend/arise", values: [29.0]},
+                    {name: "Sit/stand", values: [34.7]}
+                ]
+            }
+        };
+        
+        // MTM-2 Data
+        const mtm2Data = {
+            get: {
+                name: "Get",
+                cases: [
+                    {name: "A - Small, easy to grasp", values: [6]},
+                    {name: "B - Large or awkward", values: [8]},
+                    {name: "C - Jumbled objects", values: [12]}
+                ]
+            },
+            put: {
+                name: "Put",
+                cases: [
+                    {name: "A - To approximate location", values: [6]},
+                    {name: "B - To exact location", values: [10]},
+                    {name: "C - Precise placement", values: [16]}
+                ]
+            },
+            regrasp: {
+                name: "Regrasp",
+                cases: [
+                    {name: "Normal regrasp", values: [6]}
+                ]
+            },
+            apply: {
+                name: "Apply Pressure",
+                cases: [
+                    {name: "Normal pressure", values: [10]},
+                    {name: "Heavy pressure", values: [20]}
+                ]
+            },
+            eye: {
+                name: "Eye Action",
+                cases: [
+                    {name: "Eye focus", values: [8]},
+                    {name: "Eye travel", values: [6]}
+                ]
+            },
+            step: {
+                name: "Step",
+                cases: [
+                    {name: "Normal step", values: [15]},
+                    {name: "Long step", values: [20]}
+                ]
+            },
+            foot: {
+                name: "Foot Motion",
+                cases: [
+                    {name: "Foot motion", values: [8]}
+                ]
+            },
+            bend: {
+                name: "Bend/Arise",
+                cases: [
+                    {name: "Bend or arise", values: [30]}
+                ]
+            },
+            knuckle: {
+                name: "Knuckle Turn",
+                cases: [
+                    {name: "Knuckle turn (per 30°)", values: [3]}
+                ]
+            }
+        };
+        
+        // MTM-UAS Data
+        const mtmuasData = {
+            handle: {
+                name: "Handle",
+                cases: [
+                    {name: "A - Light, easy to handle", values: [20]},
+                    {name: "B - Heavy or awkward", values: [30]},
+                    {name: "C - Very heavy or difficult", values: [45]}
+                ]
+            },
+            place: {
+                name: "Place",
+                cases: [
+                    {name: "A - To approximate location", values: [15]},
+                    {name: "B - To exact location", values: [25]},
+                    {name: "C - Precise placement", values: [40]}
+                ]
+            },
+            operation: {
+                name: "Operation",
+                cases: [
+                    {name: "A - Simple operation", values: [30]},
+                    {name: "B - Moderate operation", values: [50]},
+                    {name: "C - Complex operation", values: [80]}
+                ]
+            },
+            walk: {
+                name: "Walk",
+                cases: [
+                    {name: "Per step (normal)", values: [15]},
+                    {name: "Per step (carrying load)", values: [20]}
+                ]
+            },
+            body: {
+                name: "Body Motion",
+                cases: [
+                    {name: "Sit/stand", values: [35]},
+                    {name: "Bend/arise", values: [30]},
+                    {name: "Turn body", values: [20]}
+                ]
+            }
+        };
+        
+        // MOST Data
+        const mostData = {
+            general: {
+                sequence: "A B G A B P A",
+                parameters: [
+                    {name: "A - Action distance", values: [3, 6, 10, 16], desc: "Body motion distance (steps or meters)"},
+                    {name: "B - Body motion", values: [3, 6, 10, 16], desc: "Bend, arise, or sit/stand"},
+                    {name: "G - Gain control", values: [1, 3, 6, 10], desc: "Get or grasp object"},
+                    {name: "P - Placement", values: [0, 1, 3, 6], desc: "Put or place object"}
+                ]
+            },
+            controlled: {
+                sequence: "A B G M X I A",
+                parameters: [
+                    {name: "A - Action distance", values: [3, 6, 10, 16], desc: "Body motion distance"},
+                    {name: "B - Body motion", values: [3, 6, 10, 16], desc: "Bend, arise, or sit/stand"},
+                    {name: "G - Gain control", values: [1, 3, 6, 10], desc: "Get or grasp object"},
+                    {name: "M - Move controlled", values: [1, 3, 6, 10], desc: "Move with control"},
+                    {name: "X - Process time", values: [1, 3, 6, 10], desc: "Tool use or processing"},
+                    {name: "I - Alignment", values: [0, 1, 3, 6], desc: "Align or position"}
+                ]
+            },
+            tool: {
+                sequence: "A B G A B P U I A",
+                parameters: [
+                    {name: "A - Action distance", values: [3, 6, 10, 16], desc: "Body motion distance"},
+                    {name: "B - Body motion", values: [3, 6, 10, 16], desc: "Bend, arise, or sit/stand"},
+                    {name: "G - Gain control", values: [1, 3, 6, 10], desc: "Get or grasp object"},
+                    {name: "P - Placement", values: [0, 1, 3, 6], desc: "Put or place object"},
+                    {name: "U - Use tool", values: [3, 6, 10, 16], desc: "Tool operation time"},
+                    {name: "I - Alignment", values: [0, 1, 3, 6], desc: "Align or position"}
+                ]
+            }
+        };
+        
+        // MODAPTS Data
+        const modaptsData = {
+            finger: {
+                name: "Finger",
+                motions: [
+                    {name: "M1 - Move ≤1 cm", value: 1},
+                    {name: "M2 - Move ≤2 cm", value: 2},
+                    {name: "M3 - Move ≤3 cm", value: 3}
+                ]
+            },
+            hand: {
+                name: "Hand",
+                motions: [
+                    {name: "M1 - Move ≤2 cm", value: 1},
+                    {name: "M2 - Move ≤5 cm", value: 2},
+                    {name: "M3 - Move ≤15 cm", value: 3},
+                    {name: "M4 - Move ≤30 cm", value: 4},
+                    {name: "M5 - Move ≥30 cm", value: 5}
+                ]
+            },
+            arm: {
+                name: "Arm",
+                motions: [
+                    {name: "M2 - Move ≤15 cm", value: 2},
+                    {name: "M3 - Move ≤30 cm", value: 3},
+                    {name: "M4 - Move ≤45 cm", value: 4},
+                    {name: "M5 - Move ≥45 cm", value: 5}
+                ]
+            },
+            shoulder: {
+                name: "Shoulder",
+                motions: [
+                    {name: "M3 - Move ≤15 cm", value: 3},
+                    {name: "M4 - Move ≤30 cm", value: 4},
+                    {name: "M5 - Move ≥30 cm", value: 5}
+                ]
+            },
+            trunk: {
+                name: "Trunk",
+                motions: [
+                    {name: "M4 - Bend slightly", value: 4},
+                    {name: "M7 - Bend fully", value: 7},
+                    {name: "M9 - Bend and arise", value: 9}
+                ]
+            },
+            foot: {
+                name: "Foot",
+                motions: [
+                    {name: "M3 - Move foot", value: 3},
+                    {name: "M5 - Step", value: 5}
+                ]
+            },
+            leg: {
+                name: "Leg",
+                motions: [
+                    {name: "M5 - Move leg", value: 5},
+                    {name: "M7 - Step with leg", value: 7}
+                ]
+            },
+            eye: {
+                name: "Eye",
+                motions: [
+                    {name: "E2 - Eye focus", value: 2},
+                    {name: "E3 - Eye travel", value: 3}
+                ]
+            },
+            cognition: {
+                name: "Cognition",
+                motions: [
+                    {name: "D3 - Decision", value: 3}
+                ]
+            }
+        };
+        
+        // Initialize all calculators
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeMtm1Calculator();
+            initializeMtm2Calculator();
+            initializeMtmuasCalculator();
+            initializeMostCalculator();
+            initializeModaptsCalculator();
+        });
+        
+        // MTM-1 Calculator
+        function initializeMtm1Calculator() {
+            const motionSelects = document.querySelectorAll('.mtm1-motion');
+            const activityTable = document.getElementById('mtm1-activities').getElementsByTagName('tbody')[0];
+            
+            // Update case options when motion changes
+            document.addEventListener('change', function(e) {
+                if (e.target.classList.contains('mtm1-motion')) {
+                    const motion = e.target.value;
+                    const caseSelect = e.target.parentNode.parentNode.querySelector('.mtm1-case');
+                    
+                    // Clear existing options
+                    caseSelect.innerHTML = '';
+                    
+                    // Add new options
+                    mtm1Data[motion].cases.forEach((c, i) => {
+                        const option = document.createElement('option');
+                        option.value = i;
+                        option.textContent = c.name;
+                        caseSelect.appendChild(option);
+                    });
+                    
+                    // Update TMU value
+                    updateMtm1Row(e.target.parentNode.parentNode);
+                }
+                
+                if (e.target.classList.contains('mtm1-case') || e.target.classList.contains('mtm1-distance')) {
+                    updateMtm1Row(e.target.parentNode.parentNode);
+                }
+            });
+            
+            // Add new activity row
+            document.getElementById('add-mtm1-activity').addEventListener('click', function() {
+                const newRow = activityTable.insertRow();
+                newRow.innerHTML = `
+                    <td>
+                        <select class="mtm1-motion">
+                            <option value="reach">Reach</option>
+                            <option value="move">Move</option>
+                            <option value="turn">Turn</option>
+                            <option value="grasp">Grasp</option>
+                            <option value="position">Position</option>
+                            <option value="release">Release</option>
+                            <option value="disengage">Disengage</option>
+                            <option value="eye">Eye Action</option>
+                            <option value="body">Body Motion</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="mtm1-case"></select>
+                    </td>
+                    <td>
+                        <input type="number" class="mtm1-distance" min="0" step="0.1" placeholder="Distance (cm)">
+                    </td>
+                    <td class="mtm1-tmu">0</td>
+                    <td>
+                        <button class="remove-activity-btn">×</button>
+                    </td>
+                `;
+                
+                // Trigger change to populate cases
+                newRow.querySelector('.mtm1-motion').dispatchEvent(new Event('change'));
+            });
+            
+            // Remove activity row
+            activityTable.addEventListener('click', function(e) {
+                if (e.target.classList.contains('remove-activity-btn')) {
+                    if (activityTable.rows.length > 1) {
+                        e.target.parentNode.parentNode.remove();
+                        calculateMtm1Total();
+                    }
+                }
+            });
+            
+            // Calculate total when any input changes
+            activityTable.addEventListener('input', function() {
+                calculateMtm1Total();
+            });
+        }
+        
+        function updateMtm1Row(row) {
+            const motion = row.querySelector('.mtm1-motion').value;
+            const caseIndex = parseInt(row.querySelector('.mtm1-case').value) || 0;
+            const distanceInput = row.querySelector('.mtm1-distance');
+            const tmuCell = row.querySelector('.mtm1-tmu');
+            
+            const motionData = mtm1Data[motion];
+            const caseData = motionData.cases[caseIndex];
+            
+            let tmu = 0;
+            
+            if (motionData.distanceRanges) {
+                // Motion with distance parameter
+                const distance = parseFloat(distanceInput.value) || 0;
+                const ranges = motionData.distanceRanges;
+                let index = ranges.findIndex(r => distance <= r);
+                
+                if (index === -1) index = ranges.length - 1;
+                else if (distance < ranges[0]) index = 0;
+                
+                tmu = caseData.values[index];
+            } else {
+                // Fixed time motion
+                tmu = caseData.values[0];
+                
+                // Handle special cases
+                if (motion === 'turn') {
+                    const degrees = parseFloat(distanceInput.value) || 0;
+                    const increments = Math.ceil(degrees / 30);
+                    tmu *= increments;
+                } else if (motion === 'eye' && caseIndex === 1) {
+                    const degrees = parseFloat(distanceInput.value) || 0;
+                    const increments = Math.ceil(degrees / 10);
+                    tmu *= increments;
+                }
+            }
+            
+            tmuCell.textContent = tmu.toFixed(1);
+        }
+        
+        function calculateMtm1Total() {
+            const rows = document.querySelectorAll('#mtm1-activities tbody tr');
+            let totalTmu = 0;
+            
+            rows.forEach(row => {
+                const tmu = parseFloat(row.querySelector('.mtm1-tmu').textContent) || 0;
+                totalTmu += tmu;
+            });
+            
+            const standardTime = calculateStandardTime(tmuToSeconds(totalTmu));
+            
+            document.getElementById('mtm1-total-tmu').textContent = totalTmu.toFixed(1);
+            document.getElementById('mtm1-standard-time').textContent = standardTime.toFixed(2);
+            document.getElementById('mtm1-result').style.display = 'block';
+        }
+        
+        // MTM-2 Calculator (similar structure to MTM-1)
+        function initializeMtm2Calculator() {
+            const activityTable = document.getElementById('mtm2-activities').getElementsByTagName('tbody')[0];
+            
+            document.addEventListener('change', function(e) {
+                if (e.target.classList.contains('mtm2-motion')) {
+                    const motion = e.target.value;
+                    const caseSelect = e.target.parentNode.parentNode.querySelector('.mtm2-case');
+                    
+                    caseSelect.innerHTML = '';
+                    
+                    mtm2Data[motion].cases.forEach((c, i) => {
+                        const option = document.createElement('option');
+                        option.value = i;
+                        option.textContent = c.name;
+                        caseSelect.appendChild(option);
+                    });
+                    
+                    updateMtm2Row(e.target.parentNode.parentNode);
+                }
+                
+                if (e.target.classList.contains('mtm2-case') || e.target.classList.contains('mtm2-distance')) {
+                    updateMtm2Row(e.target.parentNode.parentNode);
+                }
+            });
+            
+            document.getElementById('add-mtm2-activity').addEventListener('click', function() {
+                const newRow = activityTable.insertRow();
+                newRow.innerHTML = `
+                    <td>
+                        <select class="mtm2-motion">
+                            <option value="get">Get</option>
+                            <option value="put">Put</option>
+                            <option value="regrasp">Regrasp</option>
+                            <option value="apply">Apply Pressure</option>
+                            <option value="eye">Eye Action</option>
+                            <option value="step">Step</option>
+                            <option value="foot">Foot Motion</option>
+                            <option value="bend">Bend/Arise</option>
+                            <option value="knuckle">Knuckle Turn</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="mtm2-case"></select>
+                    </td>
+                    <td>
+                        <input type="number" class="mtm2-distance" min="0" step="0.1" placeholder="Distance (cm)">
+                    </td>
+                    <td class="mtm2-tmu">0</td>
+                    <td>
+                        <button class="remove-activity-btn">×</button>
+                    </td>
+                `;
+                
+                newRow.querySelector('.mtm2-motion').dispatchEvent(new Event('change'));
+            });
+            
+            activityTable.addEventListener('click', function(e) {
+                if (e.target.classList.contains('remove-activity-btn')) {
+                    if (activityTable.rows.length > 1) {
+                        e.target.parentNode.parentNode.remove();
+                        calculateMtm2Total();
+                    }
+                }
+            });
+            
+            activityTable.addEventListener('input', function() {
+                calculateMtm2Total();
+            });
+        }
+        
+        function updateMtm2Row(row) {
+            const motion = row.querySelector('.mtm2-motion').value;
+            const caseIndex = parseInt(row.querySelector('.mtm2-case').value) || 0;
+            const distanceInput = row.querySelector('.mtm2-distance');
+            const tmuCell = row.querySelector('.mtm2-tmu');
+            
+            const motionData = mtm2Data[motion];
+            const caseData = motionData.cases[caseIndex];
+            
+            let tmu = caseData.values[0];
+            
+            // Handle special cases
+            if (motion === 'knuckle' && caseIndex === 0) {
+                const degrees = parseFloat(distanceInput.value) || 0;
+                const increments = Math.ceil(degrees / 30);
+                tmu *= increments;
+            } else if (motion === 'eye' && caseIndex === 1) {
+                tmu = 6; // Eye travel is fixed at 6 TMU
+            }
+            
+            tmuCell.textContent = tmu;
+        }
+        
+        function calculateMtm2Total() {
+            const rows = document.querySelectorAll('#mtm2-activities tbody tr');
+            let totalTmu = 0;
+            
+            rows.forEach(row => {
+                const tmu = parseInt(row.querySelector('.mtm2-tmu').textContent) || 0;
+                totalTmu += tmu;
+            });
+            
+            const standardTime = calculateStandardTime(tmuToSeconds(totalTmu));
+            
+            document.getElementById('mtm2-total-tmu').textContent = totalTmu;
+            document.getElementById('mtm2-standard-time').textContent = standardTime.toFixed(2);
+            document.getElementById('mtm2-result').style.display = 'block';
+        }
+        
+        // MTM-UAS Calculator (similar structure)
+        function initializeMtmuasCalculator() {
+            const activityTable = document.getElementById('mtmuas-activities').getElementsByTagName('tbody')[0];
+            
+            document.addEventListener('change', function(e) {
+                if (e.target.classList.contains('mtmuas-activity')) {
+                    const activity = e.target.value;
+                    const caseSelect = e.target.parentNode.parentNode.querySelector('.mtmuas-case');
+                    
+                    caseSelect.innerHTML = '';
+                    
+                    mtmuasData[activity].cases.forEach((c, i) => {
+                        const option = document.createElement('option');
+                        option.value = i;
+                        option.textContent = c.name;
+                        caseSelect.appendChild(option);
+                    });
+                    
+                    updateMtmuasRow(e.target.parentNode.parentNode);
+                }
+                
+                if (e.target.classList.contains('mtmuas-case') || e.target.classList.contains('mtmuas-distance')) {
+                    updateMtmuasRow(e.target.parentNode.parentNode);
+                }
+            });
+            
+            document.getElementById('add-mtmuas-activity').addEventListener('click', function() {
+                const newRow = activityTable.insertRow();
+                newRow.innerHTML = `
+                    <td>
+                        <select class="mtmuas-activity">
+                            <option value="handle">Handle</option>
+                            <option value="place">Place</option>
+                            <option value="operation">Operation</option>
+                            <option value="walk">Walk</option>
+                            <option value="body">Body Motion</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="mtmuas-case"></select>
+                    </td>
+                    <td>
+                        <input type="number" class="mtmuas-distance" min="0" step="0.1" placeholder="Distance (cm)">
+                    </td>
+                    <td class="mtmuas-tmu">0</td>
+                    <td>
+                        <button class="remove-activity-btn">×</button>
+                    </td>
+                `;
+                
+                newRow.querySelector('.mtmuas-activity').dispatchEvent(new Event('change'));
+            });
+            
+            activityTable.addEventListener('click', function(e) {
+                if (e.target.classList.contains('remove-activity-btn')) {
+                    if (activityTable.rows.length > 1) {
+                        e.target.parentNode.parentNode.remove();
+                        calculateMtmuasTotal();
+                    }
+                }
+            });
+            
+            activityTable.addEventListener('input', function() {
+                calculateMtmuasTotal();
+            });
+        }
+        
+        function updateMtmuasRow(row) {
+            const activity = row.querySelector('.mtmuas-activity').value;
+            const caseIndex = parseInt(row.querySelector('.mtmuas-case').value) || 0;
+            const distanceInput = row.querySelector('.mtmuas-distance');
+            const tmuCell = row.querySelector('.mtmuas-tmu');
+            
+            const activityData = mtmuasData[activity];
+            const caseData = activityData.cases[caseIndex];
+            
+            let tmu = caseData.values[0];
+            
+            // Handle walk steps
+            if (activity === 'walk') {
+                const steps = parseFloat(distanceInput.value) || 0;
+                tmu *= steps;
+            }
+            
+            tmuCell.textContent = tmu;
+        }
+        
+        function calculateMtmuasTotal() {
+            const rows = document.querySelectorAll('#mtmuas-activities tbody tr');
+            let totalTmu = 0;
+            
+            rows.forEach(row => {
+                const tmu = parseInt(row.querySelector('.mtmuas-tmu').textContent) || 0;
+                totalTmu += tmu;
+            });
+            
+            const standardTime = calculateStandardTime(tmuToSeconds(totalTmu));
+            
+            document.getElementById('mtmuas-total-tmu').textContent = totalTmu;
+            document.getElementById('mtmuas-standard-time').textContent = standardTime.toFixed(2);
+            document.getElementById('mtmuas-result').style.display = 'block';
+        }
+        
+        // MOST Calculator
+        function initializeMostCalculator() {
+            const sequenceSelect = document.getElementById('most-sequence');
+            const activityTable = document.getElementById('most-activities').getElementsByTagName('tbody')[0];
+            
+            function updateMostTable() {
+                const sequence = sequenceSelect.value;
+                const sequenceData = mostData[sequence];
+                
+                // Clear table
+                activityTable.innerHTML = '';
+                
+                // Add rows for each parameter
+                sequenceData.parameters.forEach(param => {
+                    const row = activityTable.insertRow();
+                    row.innerHTML = `
+                        <td>${param.name}<br><small>${param.desc}</small></td>
+                        <td>
+                            <select class="most-param-value">
+                                ${param.values.map((v, i) => `<option value="${v}">${v} TMU</option>`).join('')}
+                            </select>
+                        </td>
+                        <td class="most-tmu">${param.values[0]}</td>
+                    `;
+                });
+                
+                calculateMostTotal();
+            }
+            
+            sequenceSelect.addEventListener('change', updateMostTable);
+            
+            activityTable.addEventListener('change', function(e) {
+                if (e.target.classList.contains('most-param-value')) {
+                    const tmuCell = e.target.parentNode.parentNode.querySelector('.most-tmu');
+                    tmuCell.textContent = e.target.value;
+                    calculateMostTotal();
+                }
+            });
+            
+            // Initialize table
+            updateMostTable();
+        }
+        
+        function calculateMostTotal() {
+            const rows = document.querySelectorAll('#most-activities tbody tr');
+            let totalTmu = 0;
+            
+            rows.forEach(row => {
+                const tmu = parseInt(row.querySelector('.most-tmu').textContent) || 0;
+                totalTmu += tmu;
+            });
+            
+            const standardTime = calculateStandardTime(tmuToSeconds(totalTmu));
+            
+            document.getElementById('most-total-tmu').textContent = totalTmu;
+            document.getElementById('most-standard-time').textContent = standardTime.toFixed(2);
+            document.getElementById('most-result').style.display = 'block';
+        }
+        
+        // MODAPTS Calculator
+        function initializeModaptsCalculator() {
+            const activityTable = document.getElementById('modapts-activities').getElementsByTagName('tbody')[0];
+            
+            document.addEventListener('change', function(e) {
+                if (e.target.classList.contains('modapts-part')) {
+                    const part = e.target.value;
+                    const motionSelect = e.target.parentNode.parentNode.querySelector('.modapts-motion');
+                    
+                    motionSelect.innerHTML = '';
+                    
+                    modaptsData[part].motions.forEach((m, i) => {
+                        const option = document.createElement('option');
+                        option.value = i;
+                        option.textContent = m.name;
+                        motionSelect.appendChild(option);
+                    });
+                    
+                    updateModaptsRow(e.target.parentNode.parentNode);
+                }
+                
+                if (e.target.classList.contains('modapts-motion') || e.target.classList.contains('modapts-distance')) {
+                    updateModaptsRow(e.target.parentNode.parentNode);
+                }
+            });
+            
+            document.getElementById('add-modapts-activity').addEventListener('click', function() {
+                const newRow = activityTable.insertRow();
+                newRow.innerHTML = `
+                    <td>
+                        <select class="modapts-part">
+                            <option value="finger">Finger</option>
+                            <option value="hand">Hand</option>
+                            <option value="arm">Arm</option>
+                            <option value="shoulder">Shoulder</option>
+                            <option value="trunk">Trunk</option>
+                            <option value="foot">Foot</option>
+                            <option value="leg">Leg</option>
+                            <option value="eye">Eye</option>
+                            <option value="cognition">Cognition</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="modapts-motion"></select>
+                    </td>
+                    <td>
+                        <input type="number" class="modapts-distance" min="0" step="0.1" placeholder="Distance (cm)">
+                    </td>
+                    <td class="modapts-mods">0</td>
+                    <td>
+                        <button class="remove-activity-btn">×</button>
+                    </td>
+                `;
+                
+                newRow.querySelector('.modapts-part').dispatchEvent(new Event('change'));
+            });
+            
+            activityTable.addEventListener('click', function(e) {
+                if (e.target.classList.contains('remove-activity-btn')) {
+                    if (activityTable.rows.length > 1) {
+                        e.target.parentNode.parentNode.remove();
+                        calculateModaptsTotal();
+                    }
+                }
+            });
+            
+            activityTable.addEventListener('input', function() {
+                calculateModaptsTotal();
+            });
+        }
+        
+        function updateModaptsRow(row) {
+            const part = row.querySelector('.modapts-part').value;
+            const motionIndex = parseInt(row.querySelector('.modapts-motion').value) || 0;
+            const modsCell = row.querySelector('.modapts-mods');
+            
+            const partData = modaptsData[part];
+            const motionData = partData.motions[motionIndex];
+            
+            modsCell.textContent = motionData.value;
+        }
+        
+        function calculateModaptsTotal() {
+            const rows = document.querySelectorAll('#modapts-activities tbody tr');
+            let totalMods = 0;
+            
+            rows.forEach(row => {
+                const mods = parseInt(row.querySelector('.modapts-mods').textContent) || 0;
+                totalMods += mods;
+            });
+            
+            const standardTime = calculateStandardTime(modToSeconds(totalMods));
+            
+            document.getElementById('modapts-total-mods').textContent = totalMods;
+            document.getElementById('modapts-standard-time').textContent = standardTime.toFixed(2);
+            document.getElementById('modapts-result').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

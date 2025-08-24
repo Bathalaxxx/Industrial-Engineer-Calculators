@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-3BSHG1DE6V');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regression Analysis | Industrial Engineering Calculators</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+            transition: margin-left 0.3s;
+        }
+        
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1010;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block; /* Changed from none to block */
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 101;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select, .input-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .data-input {
+            margin-bottom: 1.5rem;
+        }
+        
+        .data-input textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .data-input .help-text {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-top: 0.5rem;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: block;
+            width: 100%;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .result-card {
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .result-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .interpretation {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #e8f4fc;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .scatter-plot {
+            width: 100%;
+            height: 300px;
+            margin: 1.5rem 0;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .plot-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        .plot-point {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .plot-axis {
+            position: absolute;
+            background-color: #333;
+        }
+        
+        .plot-axis-x {
+            bottom: 30px;
+            left: 40px;
+            right: 20px;
+            height: 2px;
+        }
+        
+        .plot-axis-y {
+            top: 20px;
+            left: 40px;
+            bottom: 30px;
+            width: 2px;
+        }
+        
+        .plot-label {
+            position: absolute;
+            font-size: 0.8rem;
+            color: #333;
+        }
+        
+        .plot-label-x {
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .plot-label-y {
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%) rotate(-90deg);
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+            margin-right: 10px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 30px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: var(--secondary-color);
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(30px);
+        }
+        
+        .prediction-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        .prediction-inputs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .prediction-input {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .prediction-input label {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .prediction-input input {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .prediction-inputs {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="gagerr.html" class="sidebar-link">Gage R&R</a>
+                <a href="processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="oee.html" class="sidebar-link">OEE Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="anova.html" class="sidebar-link">ANOVA</a>
+                <a href="chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
+                <a href="factorialdesign.html" class="sidebar-link">Factorial Design</a>
+                <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="latinsquare.html" class="sidebar-link">Latin Square</a>
+                <a href="regression.html" class="sidebar-link">Regression</a>
+                <a href="samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="ttest.html" class="sidebar-link">T-Test</a>
+                <a href="ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="eoq.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="rop.html" class="sidebar-link">Reorder Point</a>
+                <a href="kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Study</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+            </div>
+        </div>
+    </aside>
+    <!-- xxxx navigation end xxxxx -->
+    
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Industrial Engineering <span>Calculators</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Regression Analysis Calculator</h1>
+            <p>Perform Ordinary Least Squares (OLS) regression with detailed statistical output</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Regression Analysis</h2>
+                <p>Regression analysis is a statistical method for estimating the relationships among variables. It includes many techniques for modeling and analyzing several variables, focusing on the relationship between a dependent variable and one or more independent variables.</p>
+                <div class="formula-box">
+                    y = β₀ + β₁x₁ + β₂x₂ + ... + βₚxₚ + ε
+                </div>
+                <p>Where y is the dependent variable, x₁ to xₚ are independent variables, β₀ is the intercept, β₁ to βₚ are coefficients, and ε is the error term.</p>
+            </div>
+            
+            <div class="toggle-container">
+                <label class="toggle-switch">
+                    <input type="checkbox" id="intercept-toggle" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+                <label for="intercept-toggle">Include Intercept Term</label>
+            </div>
+            
+            <form id="regression-form">
+                <h3>Data Input</h3>
+                
+                <div class="input-group">
+                    <label for="x-data">Independent Variables (X) - Comma-separated values, rows separated by semicolons:</label>
+                    <textarea id="x-data" placeholder="Enter values like: 2, 3; 1, 1; 4, 0; 0, 2; 3, 1" required></textarea>
+                    <p class="help-text">Each row represents one observation. Separate values with commas and rows with semicolons.</p>
+                </div>
+                
+                <div class="input-group">
+                    <label for="y-data">Dependent Variable (y) - Comma-separated values:</label>
+                    <textarea id="y-data" placeholder="Enter values like: 20, 11, 23, 9, 18" required></textarea>
+                    <p class="help-text">Enter the dependent variable values in the same order as the independent variable rows.</p>
+                </div>
+                
+                <button type="submit" class="calculate-btn">Calculate Regression</button>
+            </form>
+            
+            <div class="result-box" id="regression-result">
+                <h3>Regression Results</h3>
+                
+                <div class="result-grid">
+                    <div class="result-card">
+                        <h4>R-squared</h4>
+                        <div class="result-value" id="r-squared"></div>
+                        <p>Goodness of fit</p>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>Adjusted R-squared</h4>
+                        <div class="result-value" id="adj-r-squared"></div>
+                        <p>Adjusted for predictors</p>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>Standard Error</h4>
+                        <div class="result-value" id="std-error"></div>
+                        <p>Residual standard error</p>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>Observations</h4>
+                        <div class="result-value" id="observations"></div>
+                        <p>Number of data points</p>
+                    </div>
+                </div>
+                
+                <h4>Coefficients</h4>
+                <table id="coefficients-table">
+                    <thead>
+                        <tr>
+                            <th>Variable</th>
+                            <th>Coefficient</th>
+                            <th>Std. Error</th>
+                            <th>t-statistic</th>
+                            <th>VIF</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                
+                <h4>Analysis of Variance (ANOVA)</h4>
+                <table id="anova-table">
+                    <thead>
+                        <tr>
+                            <th>Source</th>
+                            <th>Sum of Squares</th>
+                            <th>Degrees of Freedom</th>
+                            <th>Mean Square</th>
+                            <th>F-value</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                
+                <div class="prediction-section">
+                    <h4>Prediction</h4>
+                    <div class="prediction-inputs" id="prediction-inputs">
+                        <!-- Will be populated dynamically -->
+                    </div>
+                    <button id="predict-btn" class="calculate-btn" style="width: auto;">Predict</button>
+                    <div id="prediction-result" style="margin-top: 1rem;"></div>
+                </div>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Regression Examples in Industrial Engineering</h3>
+                
+                <div class="example">
+                    <h4>Production Example</h4>
+                    <p>Predict production output based on machine runtime and operator experience.</p>
+                    <p>X: Runtime (hrs), Experience (years)</p>
+                    <p>y: Output (units)</p>
+                    <p>Example data:</p>
+                    <p>X: 8,2; 10,3; 12,1; 14,5; 16,4</p>
+                    <p>y: 100, 120, 110, 150, 140</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Quality Control Example</h4>
+                    <p>Predict defect rate based on temperature and pressure settings.</p>
+                    <p>X: Temperature (°C), Pressure (psi)</p>
+                    <p>y: Defect Rate (%)</p>
+                    <p>Example data:</p>
+                    <p>X: 180,40; 190,45; 200,50; 210,55; 220,60</p>
+                    <p>y: 5.2, 4.1, 3.8, 3.5, 3.2</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Supply Chain Example</h4>
+                    <p>Predict delivery time based on order size and distance.</p>
+                    <p>X: Order Size (units), Distance (miles)</p>
+                    <p>y: Delivery Time (days)</p>
+                    <p>Example data:</p>
+                    <p>X: 100,50; 250,75; 500,100; 750,125; 1000,150</p>
+                    <p>y: 3, 5, 7, 9, 11</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // OLS Regression Module (provided code)
+        const OLS = (() => {
+            // ---------- Basic linear algebra helpers ----------
+            function zeros(rows, cols) {
+                const a = new Array(rows);
+                for (let i = 0; i < rows; i++) {
+                    a[i] = new Array(cols).fill(0);
+                }
+                return a;
+            }
+
+            function cloneMat(A) {
+                return A.map(r => r.slice());
+            }
+
+            function transpose(A) {
+                const m = A.length, n = A[0].length;
+                const T = zeros(n, m);
+                for (let i = 0; i < m; i++) for (let j = 0; j < n; j++) T[j][i] = A[i][j];
+                return T;
+            }
+
+            function matMult(A, B) {
+                const m = A.length, p = A[0].length, n = B[0].length;
+                const C = zeros(m, n);
+                for (let i = 0; i < m; i++) {
+                    for (let k = 0; k < p; k++) {
+                        const aik = A[i][k];
+                        if (aik === 0) continue;
+                        for (let j = 0; j < n; j++) {
+                            C[i][j] += aik * B[k][j];
+                        }
+                    }
+                }
+                return C;
+            }
+
+            function matVecMult(A, v) {
+                const m = A.length, n = A[0].length;
+                const out = new Array(m).fill(0);
+                for (let i = 0; i < m; i++) {
+                    let s = 0;
+                    for (let j = 0; j < n; j++) s += A[i][j] * v[j];
+                    out[i] = s;
+                }
+                return out;
+            }
+
+            function dot(u, v) {
+                let s = 0;
+                for (let i = 0; i < u.length; i++) s += u[i] * v[i];
+                return s;
+            }
+
+            function norm2(v) {
+                return Math.sqrt(dot(v, v));
+            }
+
+            function scalarVecMul(alpha, v) {
+                return v.map(x => alpha * x);
+            }
+
+            // ---------- QR decomposition (Householder) ----------
+            function qrHouseholder(A) {
+                const m = A.length, n = A[0].length;
+                const R = cloneMat(A);
+                const Q = zeros(m, m);
+                for (let i = 0; i < m; i++) Q[i][i] = 1;
+
+                for (let k = 0; k < Math.min(m, n); k++) {
+                    const x = new Array(m - k);
+                    for (let i = k; i < m; i++) x[i - k] = R[i][k];
+                    const xNorm = norm2(x);
+                    if (xNorm < 1e-14) continue;
+                    const sign = x[0] >= 0 ? 1 : -1;
+                    const u1 = x[0] + sign * xNorm;
+                    const w = x.slice();
+                    w[0] = u1;
+                    const wNorm = norm2(w);
+                    for (let i = 0; i < w.length; i++) w[i] /= wNorm;
+
+                    for (let j = k; j < n; j++) {
+                        let dotw = 0;
+                        for (let i = k; i < m; i++) dotw += w[i - k] * R[i][j];
+                        for (let i = k; i < m; i++) R[i][j] -= 2 * w[i - k] * dotw;
+                    }
+
+                    for (let j = 0; j < m; j++) {
+                        let dotw = 0;
+                        for (let i = k; i < m; i++) dotw += w[i - k] * Q[i][j];
+                        for (let i = k; i < m; i++) Q[i][j] -= 2 * w[i - k] * dotw;
+                    }
+                }
+
+                return { Q: Q, R: R };
+            }
+
+            function backSubUpper(R, b) {
+                const n = R.length;
+                const x = new Array(n).fill(0);
+                for (let i = n - 1; i >= 0; i--) {
+                    let s = b[i];
+                    for (let j = i + 1; j < n; j++) s -= R[i][j] * x[j];
+                    if (Math.abs(R[i][i]) < 1e-14) throw new Error('Singular matrix in back substitution');
+                    x[i] = s / R[i][i];
+                }
+                return x;
+            }
+
+            function invertUpper(R) {
+                const n = R.length;
+                const inv = zeros(n, n);
+                for (let j = 0; j < n; j++) {
+                    const e = new Array(n).fill(0); e[j] = 1;
+                    const col = backSubUpper(R, e);
+                    for (let i = 0; i < n; i++) inv[i][j] = col[i];
+                }
+                return inv;
+            }
+
+            function matMultBTrans(A, B) {
+                const m = A.length, p = A[0].length, n = B.length;
+                const C = zeros(m, n);
+                for (let i = 0; i < m; i++) {
+                    for (let j = 0; j < n; j++) {
+                        let s = 0;
+                        for (let k = 0; k < p; k++) s += A[i][k] * B[j][k];
+                        C[i][j] = s;
+                    }
+                }
+                return C;
+            }
+
+            // ---------- Main fit function ----------
+            function fit(X_in, y_in, opts = {}) {
+                const intercept = opts.intercept !== undefined ? !!opts.intercept : true;
+
+                if (!Array.isArray(X_in) || !Array.isArray(y_in)) throw new Error('X and y must be arrays');
+                const n = X_in.length;
+                if (n === 0) throw new Error('Empty X');
+                if (y_in.length !== n) throw new Error('X and y must have same number of rows');
+
+                const p0 = X_in[0].length;
+                const p = (intercept ? 1 : 0) + p0;
+                const X = zeros(n, p);
+                for (let i = 0; i < n; i++) {
+                    let col = 0;
+                    if (intercept) { X[i][0] = 1; col = 1; }
+                    for (let j = 0; j < p0; j++, col++) X[i][col] = X_in[i][j];
+                }
+
+                const { Q, R: Rfull } = qrHouseholder(X);
+                const Qt = transpose(Q);
+                const qty = new Array(p).fill(0);
+                for (let i = 0; i < p; i++) {
+                    let s = 0;
+                    for (let j = 0; j < n; j++) s += Qt[i][j] * y_in[j];
+                    qty[i] = s;
+                }
+
+                const R = zeros(p, p);
+                for (let i = 0; i < p; i++) for (let j = i; j < p; j++) R[i][j] = Rfull[i][j];
+
+                const qty_trunc = qty.slice(0, p);
+                const beta = backSubUpper(R, qty_trunc);
+
+                const yhat = matVecMult(X, beta);
+                const resid = new Array(n);
+                for (let i = 0; i < n; i++) resid[i] = y_in[i] - yhat[i];
+
+                let sse = 0;
+                for (let i = 0; i < n; i++) sse += resid[i] * resid[i];
+                const yMean = y_in.reduce((a, b) => a + b, 0) / n;
+                let sst = 0;
+                for (let i = 0; i < n; i++) {
+                    const d = y_in[i] - yMean;
+                    sst += d * d;
+                }
+                const ssr = sst - sse;
+
+                const dfResidual = Math.max(0, n - p);
+                const sigma2 = dfResidual > 0 ? sse / dfResidual : NaN;
+
+                const Rinv = invertUpper(R);
+                const XtX_inv = matMult(Rinv, transpose(Rinv));
+                const covb = zeros(p, p);
+                for (let i = 0; i < p; i++) for (let j = 0; j < p; j++) covb[i][j] = XtX_inv[i][j] * sigma2;
+
+                const stdErr = new Array(p);
+                for (let i = 0; i < p; i++) stdErr[i] = Math.sqrt(Math.max(0, covb[i][i]));
+
+                const tstats = new Array(p);
+                for (let i = 0; i < p; i++) tstats[i] = stdErr[i] === 0 ? NaN : beta[i] / stdErr[i];
+
+                const r2 = 1 - (sse / sst);
+                const adjR2 = 1 - ( (1 - r2) * (n - 1) / Math.max(1, n - p) );
+
+                function predict(xRowRaw, optsPred = { includeIntercept: undefined }) {
+                    const includeIntercept = optsPred.includeIntercept !== undefined ? optsPred.includeIntercept : intercept;
+                    let xRow = [];
+                    if (includeIntercept) {
+                        xRow = [1].concat(xRowRaw);
+                    } else {
+                        xRow = xRowRaw.slice();
+                    }
+                    if (xRow.length !== p) throw new Error('Prediction row length mismatch');
+                    const ypred = dot(xRow, beta);
+                    if (!optsPred.se) return { y: ypred };
+
+                    let seMeanSq = 0;
+                    for (let i = 0; i < p; i++) {
+                        for (let j = 0; j < p; j++) {
+                            seMeanSq += xRow[i] * covb[i][j] * xRow[j];
+                        }
+                    }
+                    const seMean = Math.sqrt(Math.max(0, seMeanSq));
+                    const sePred = Math.sqrt(seMeanSq + sigma2);
+                    return { y: ypred, seMean, sePred };
+                }
+
+                function vif() {
+                    const res = [];
+                    for (let j = 0; j < p; j++) {
+                        let colSS = 0;
+                        for (let i = 0; i < n; i++) colSS += X[i][j] * X[i][j];
+                        const vifj = XtX_inv[j][j] * colSS;
+                        res.push(vifj);
+                    }
+                    return res;
+                }
+
+                function summary() {
+                    return {
+                        n,
+                        p,
+                        dfResidual,
+                        sigma2,
+                        sse,
+                        ssr,
+                        sst,
+                        r2,
+                        adjR2,
+                        coef: beta.slice(),
+                        stdErr: stdErr.slice(),
+                        tstats: tstats.slice(),
+                        covb: cloneMat(covb)
+                    };
+                }
+
+                return {
+                    coef: beta,
+                    stdErr,
+                    tstats,
+                    cov: covb,
+                    sigma2,
+                    sse,
+                    ssr,
+                    sst,
+                    r2,
+                    adjR2,
+                    dfResidual,
+                    predict,
+                    vif,
+                    summary
+                };
+            }
+
+            return { fit };
+        })();
+
+        // UI Handling
+        document.addEventListener('DOMContentLoaded', function() {
+            const regressionForm = document.getElementById('regression-form');
+            const resultBox = document.getElementById('regression-result');
+            const interceptToggle = document.getElementById('intercept-toggle');
+            const predictBtn = document.getElementById('predict-btn');
+            const predictionInputs = document.getElementById('prediction-inputs');
+            const predictionResult = document.getElementById('prediction-result');
+            
+            let currentModel = null;
+            let numPredictors = 0;
+
+            regressionForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                try {
+                    // Parse X data
+                    const xDataText = document.getElementById('x-data').value.trim();
+                    const xRows = xDataText.split(';').map(row => row.trim()).filter(row => row !== '');
+                    const X = xRows.map(row => row.split(',').map(val => parseFloat(val.trim())));
+                    
+                    // Parse y data
+                    const yDataText = document.getElementById('y-data').value.trim();
+                    const y = yDataText.split(',').map(val => parseFloat(val.trim()));
+                    
+                    // Check data consistency
+                    if (X.length !== y.length) {
+                        throw new Error('Number of rows in X must match number of values in y');
+                    }
+                    
+                    const rowLength = X[0].length;
+                    if (!X.every(row => row.length === rowLength)) {
+                        throw new Error('All rows in X must have the same number of values');
+                    }
+                    
+                    // Fit the model
+                    currentModel = OLS.fit(X, y, { intercept: interceptToggle.checked });
+                    numPredictors = X[0].length;
+                    
+                    // Display results
+                    displayResults(currentModel, numPredictors);
+                    
+                } catch (error) {
+                    alert('Error: ' + error.message);
+                    console.error(error);
+                }
+            });
+            
+            function displayResults(model, numPredictors) {
+                // Update summary metrics
+                document.getElementById('r-squared').textContent = model.r2.toFixed(6);
+                document.getElementById('adj-r-squared').textContent = model.adjR2.toFixed(6);
+                document.getElementById('std-error').textContent = Math.sqrt(model.sigma2).toFixed(6);
+                document.getElementById('observations').textContent = model.summary().n;
+                
+                // Update coefficients table
+                const coefTable = document.getElementById('coefficients-table').querySelector('tbody');
+                coefTable.innerHTML = '';
+                
+                const vifs = model.vif();
+                
+                for (let i = 0; i < model.coef.length; i++) {
+                    const row = document.createElement('tr');
+                    
+                    // Variable name
+                    const varName = i === 0 && interceptToggle.checked ? 'Intercept' : `x${i}`;
+                    
+                    row.innerHTML = `
+                        <td>${varName}</td>
+                        <td>${model.coef[i].toFixed(6)}</td>
+                        <td>${model.stdErr[i].toFixed(6)}</td>
+                        <td>${model.tstats[i].toFixed(6)}</td>
+                        <td>${vifs[i] ? vifs[i].toFixed(6) : 'N/A'}</td>
+                    `;
+                    
+                    coefTable.appendChild(row);
+                }
+                
+                // Update ANOVA table
+                const anovaTable = document.getElementById('anova-table').querySelector('tbody');
+                anovaTable.innerHTML = '';
+                
+                const ssr = model.ssr;
+                const sse = model.sse;
+                const sst = model.sst;
+                const dfModel = model.p - (interceptToggle.checked ? 1 : 0);
+                const dfResidual = model.dfResidual;
+                const dfTotal = model.n - 1;
+                const msr = ssr / dfModel;
+                const mse = sse / dfResidual;
+                const fValue = msr / mse;
+                
+                anovaTable.innerHTML = `
+                    <tr>
+                        <td>Regression</td>
+                        <td>${ssr.toFixed(6)}</td>
+                        <td>${dfModel}</td>
+                        <td>${msr.toFixed(6)}</td>
+                        <td>${fValue.toFixed(6)}</td>
+                    </tr>
+                    <tr>
+                        <td>Residual</td>
+                        <td>${sse.toFixed(6)}</td>
+                        <td>${dfResidual}</td>
+                        <td>${mse.toFixed(6)}</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Total</td>
+                        <td>${sst.toFixed(6)}</td>
+                        <td>${dfTotal}</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                `;
+                
+                // Create prediction inputs
+                predictionInputs.innerHTML = '';
+                
+                for (let i = 0; i < numPredictors; i++) {
+                    const inputDiv = document.createElement('div');
+                    inputDiv.className = 'prediction-input';
+                    
+                    const label = document.createElement('label');
+                    label.textContent = `x${i+1}`;
+                    
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.step = 'any';
+                    input.required = true;
+                    input.dataset.index = i;
+                    
+                    inputDiv.appendChild(label);
+                    inputDiv.appendChild(input);
+                    predictionInputs.appendChild(inputDiv);
+                }
+                
+                // Show results
+                resultBox.style.display = 'block';
+            }
+            
+            predictBtn.addEventListener('click', function() {
+                if (!currentModel) return;
+                
+                try {
+                    const inputs = predictionInputs.querySelectorAll('input');
+                    const values = Array.from(inputs).map(input => parseFloat(input.value));
+                    
+                    if (values.some(isNaN)) {
+                        throw new Error('Please enter valid numbers for all prediction inputs');
+                    }
+                    
+                    const prediction = currentModel.predict(values, { se: true });
+                    
+                    predictionResult.innerHTML = `
+                        <div class="result-card">
+                            <h4>Predicted Value</h4>
+                            <div class="result-value">${prediction.y.toFixed(6)}</div>
+                            <p>Standard Error (Mean): ${prediction.seMean.toFixed(6)}</p>
+                            <p>Prediction Interval: ${(prediction.y - 1.96 * prediction.sePred).toFixed(6)} to ${(prediction.y + 1.96 * prediction.sePred).toFixed(6)}</p>
+                        </div>
+                    `;
+                    
+                } catch (error) {
+                    alert('Prediction error: ' + error.message);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

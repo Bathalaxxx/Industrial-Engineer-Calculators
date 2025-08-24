@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-3BSHG1DE6V');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi-Square Goodness-of-Fit Test | Industrial Engineering Calculators</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+            transition: margin-left 0.3s;
+        }
+        
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1010;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block; /* Changed from none to block */
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 101;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select, .input-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .data-input {
+            margin-bottom: 1.5rem;
+        }
+        
+        .data-input textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .data-input .help-text {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-top: 0.5rem;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: block;
+            width: 100%;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .result-card {
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .result-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .interpretation {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #e8f4fc;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: center;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .significance {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .significance select {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .cont-table {
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cont-table table {
+            min-width: 400px;
+        }
+        
+        .cont-table th:first-child,
+        .cont-table td:first-child {
+            font-weight: bold;
+            background-color: #f2f2f2;
+        }
+        
+        .expected {
+            color: var(--secondary-color);
+            font-style: italic;
+        }
+        
+        .table-caption {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        .category-inputs {
+            margin-bottom: 1.5rem;
+        }
+        
+        .category-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+            align-items: center;
+        }
+        
+        .category-row input {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            flex: 1;
+        }
+        
+        .category-row label {
+            min-width: 100px;
+            font-weight: 500;
+        }
+        
+        .add-category-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            nav ul li {
+                margin: 0.5rem;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .category-row {
+                flex-direction: column;
+                gap: 0.3rem;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="gagerr.html" class="sidebar-link">Gage R&R</a>
+                <a href="processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="oee.html" class="sidebar-link">OEE Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="anova.html" class="sidebar-link">ANOVA</a>
+                <a href="chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
+                <a href="factorialdesign.html" class="sidebar-link">Factorial Design</a>
+                <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="latinsquare.html" class="sidebar-link">Latin Square</a>
+                <a href="regression.html" class="sidebar-link">Regression</a>
+                <a href="samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="ttest.html" class="sidebar-link">T-Test</a>
+                <a href="ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="eoq.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="rop.html" class="sidebar-link">Reorder Point</a>
+                <a href="kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Study</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+            </div>
+        </div>
+    </aside>
+    <!-- xxxx navigation end xxxxx -->
+    
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Industrial Engineering <span>Calculators</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Chi-Square Goodness-of-Fit Test</h1>
+            <p>Test whether observed data follows an expected distribution</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Chi-Square Goodness-of-Fit Test</h2>
+                <p>The Chi-Square Goodness-of-Fit Test determines whether sample data matches a population with a specific distribution. It compares observed frequencies with expected frequencies to see if there are significant differences.</p>
+                <div class="formula-box">
+                    χ² = Σ [ (O - E)² / E ]
+                </div>
+                <p>Where O is the observed frequency, E is the expected frequency, and the summation is over all categories.</p>
+            </div>
+            
+            <div class="significance">
+                <label for="alpha-level">Significance Level (α):</label>
+                <select id="alpha-level">
+                    <option value="0.01">0.01</option>
+                    <option value="0.05" selected>0.05</option>
+                    <option value="0.10">0.10</option>
+                </select>
+            </div>
+            
+            <h3>Data Input</h3>
+            <p class="help-text">Enter your observed values and expected probabilities for each category. Probabilities must sum to 1.</p>
+            
+            <div class="input-group">
+                <label for="category-count">Number of Categories:</label>
+                <input type="number" id="category-count" min="2" max="10" value="3">
+            </div>
+            
+            <button id="generate-categories-btn" class="calculate-btn" style="margin-bottom: 1.5rem;">Generate Categories</button>
+            
+            <div id="categories-container">
+                <div class="category-inputs">
+                    <div class="category-row">
+                        <label for="obs-1">Observed 1:</label>
+                        <input type="number" id="obs-1" class="obs-input" value="52" min="0">
+                        <label for="exp-1">Probability 1:</label>
+                        <input type="number" id="exp-1" class="prob-input" value="0.5" min="0" max="1" step="0.01">
+                    </div>
+                    <div class="category-row">
+                        <label for="obs-2">Observed 2:</label>
+                        <input type="number" id="obs-2" class="obs-input" value="28" min="0">
+                        <label for="exp-2">Probability 2:</label>
+                        <input type="number" id="exp-2" class="prob-input" value="0.3" min="0" max="1" step="0.01">
+                    </div>
+                    <div class="category-row">
+                        <label for="obs-3">Observed 3:</label>
+                        <input type="number" id="obs-3" class="obs-input" value="20" min="0">
+                        <label for="exp-3">Probability 3:</label>
+                        <input type="number" id="exp-3" class="prob-input" value="0.2" min="0" max="1" step="0.01">
+                    </div>
+                </div>
+            </div>
+            
+            <button id="calculate-btn" class="calculate-btn">Calculate Chi-Square Test</button>
+            
+            <div class="result-box" id="chi-square-result">
+                <h3>Chi-Square Goodness-of-Fit Results</h3>
+                
+                <div class="result-grid">
+                    <div class="result-card">
+                        <h4>Chi-Square Statistic</h4>
+                        <div class="result-value" id="chi-square-value"></div>
+                        <p>Test statistic</p>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>P-Value</h4>
+                        <div class="result-value" id="p-value"></div>
+                        <p>Significance level</p>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>Degrees of Freedom</h4>
+                        <div class="result-value" id="df-value"></div>
+                        <p>(categories - 1)</p>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>Result</h4>
+                        <div class="result-value" id="result-significance"></div>
+                        <p>Hypothesis test</p>
+                    </div>
+                </div>
+                
+                <div class="interpretation">
+                    <h4>Interpretation</h4>
+                    <p id="interpretation-text"></p>
+                </div>
+                
+                <h4>Expected Frequencies</h4>
+                <div class="cont-table">
+                    <table id="expected-table">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Observed</th>
+                                <th>Expected</th>
+                                <th>Contribution to χ²</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Goodness-of-Fit Test Examples in Industrial Engineering</h3>
+                
+                <div class="example">
+                    <h4>Quality Control Example</h4>
+                    <p>Test whether defect types follow the expected distribution.</p>
+                    <p>Defect Types: Minor, Major, Critical</p>
+                    <p>Observed: 50, 30, 20</p>
+                    <p>Expected probabilities: 0.6, 0.3, 0.1</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Machine Downtime Example</h4>
+                    <p>Test whether machine downtime reasons follow the expected pattern.</p>
+                    <p>Reasons: Maintenance, Operator Error, Material Issue, Other</p>
+                    <p>Observed: 25, 15, 30, 10</p>
+                    <p>Expected probabilities: 0.3, 0.2, 0.4, 0.1</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Production Output Example</h4>
+                    <p>Test whether production output follows the expected distribution across shifts.</p>
+                    <p>Shifts: Morning, Afternoon, Night</p>
+                    <p>Observed: 120, 95, 85</p>
+                    <p>Expected probabilities: 0.4, 0.35, 0.25</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Chi-Square Goodness-of-Fit Implementation
+        function chiSquareGoodnessOfFit(observed, expectedProbabilities) {
+            if (!Array.isArray(observed) || !Array.isArray(expectedProbabilities)) {
+                throw new Error("Observed and expected must be arrays.");
+            }
+            if (observed.length !== expectedProbabilities.length) {
+                throw new Error("Observed and expected arrays must have the same length.");
+            }
+
+            const totalObserved = observed.reduce((a, b) => a + b, 0);
+
+            // Scale probabilities into expected counts
+            const expected = expectedProbabilities.map(p => p * totalObserved);
+
+            // Compute chi-square statistic
+            let chiSquare = 0;
+            const contributions = [];
+            for (let i = 0; i < observed.length; i++) {
+                if (expected[i] === 0) {
+                    throw new Error("Expected frequency cannot be zero.");
+                }
+                const contribution = Math.pow(observed[i] - expected[i], 2) / expected[i];
+                chiSquare += contribution;
+                contributions.push(contribution);
+            }
+
+            // Degrees of freedom = categories - 1
+            const df = observed.length - 1;
+
+            // P-value (upper tail probability)
+            const pValue = 1 - gammaCDF(chiSquare, df / 2);
+
+            return {
+                chiSquare,
+                df,
+                pValue,
+                observed,
+                expected,
+                contributions
+            };
+        }
+
+        // Gamma CDF implementation for Chi-square distribution
+        function gammaCDF(x, k) {
+            // Lower incomplete gamma ratio P(k, x/2)
+            function gammaln(z) {
+                const cof = [
+                    76.18009172947146,
+                    -86.50532032941677,
+                    24.01409824083091,
+                    -1.231739572450155,
+                    0.001208650973866179,
+                    -5.395239384953e-6
+                ];
+                let y = z;
+                let tmp = z + 5.5;
+                tmp -= (z + 0.5) * Math.log(tmp);
+                let ser = 1.000000000190015;
+                for (let j = 0; j < cof.length; j++) ser += cof[j] / ++y;
+                return Math.log(2.5066282746310005 * ser / z) - tmp;
+            }
+
+            function gser(a, x) {
+                const ITMAX = 100;
+                const EPS = 1e-8;
+                let sum = 1 / a;
+                let del = sum;
+                let ap = a;
+                for (let n = 1; n <= ITMAX; n++) {
+                    ap++;
+                    del *= x / ap;
+                    sum += del;
+                    if (Math.abs(del) < Math.abs(sum) * EPS) {
+                        return sum * Math.exp(-x + a * Math.log(x) - gammaln(a));
+                    }
+                }
+                return sum * Math.exp(-x + a * Math.log(x) - gammaln(a));
+            }
+
+            function gcf(a, x) {
+                const ITMAX = 100;
+                const EPS = 1e-8;
+                let b = x + 1 - a;
+                let c = 1 / 1e-30;
+                let d = 1 / b;
+                let h = d;
+                for (let i = 1; i <= ITMAX; i++) {
+                    let an = -i * (i - a);
+                    b += 2;
+                    d = an * d + b;
+                    if (Math.abs(d) < 1e-30) d = 1e-30;
+                    c = b + an / c;
+                    if (Math.abs(c) < 1e-30) c = 1e-30;
+                    d = 1 / d;
+                    let del = d * c;
+                    h *= del;
+                    if (Math.abs(del - 1) < EPS) break;
+                }
+                return Math.exp(-x + a * Math.log(x) - gammaln(a)) * h;
+            }
+
+            function gammp(a, x) {
+                if (x < 0 || a <= 0) return 0;
+                if (x < a + 1) return gser(a, x);
+                return 1 - gcf(a, x);
+            }
+
+            return gammp(k, x / 2);
+        }
+
+        // UI Handling
+        document.addEventListener('DOMContentLoaded', function() {
+            const generateCategoriesBtn = document.getElementById('generate-categories-btn');
+            const calculateBtn = document.getElementById('calculate-btn');
+            const categoryCountInput = document.getElementById('category-count');
+            const categoriesContainer = document.getElementById('categories-container');
+            const resultBox = document.getElementById('chi-square-result');
+            const alphaLevel = document.getElementById('alpha-level');
+            
+            // Generate categories based on count
+            generateCategoriesBtn.addEventListener('click', function() {
+                const categoryCount = parseInt(categoryCountInput.value);
+                
+                if (isNaN(categoryCount) || categoryCount < 2) {
+                    alert('Please enter a valid number of categories (minimum 2)');
+                    return;
+                }
+                
+                let categoriesHTML = '<div class="category-inputs">';
+                for (let i = 1; i <= categoryCount; i++) {
+                    categoriesHTML += `
+                        <div class="category-row">
+                            <label for="obs-${i}">Observed ${i}:</label>
+                            <input type="number" id="obs-${i}" class="obs-input" value="0" min="0">
+                            <label for="exp-${i}">Probability ${i}:</label>
+                            <input type="number" id="exp-${i}" class="prob-input" value="0" min="0" max="1" step="0.01">
+                        </div>
+                    `;
+                }
+                categoriesHTML += '</div>';
+                
+                categoriesContainer.innerHTML = categoriesHTML;
+            });
+            
+            // Calculate chi-square test
+            calculateBtn.addEventListener('click', function() {
+                try {
+                    // Get observed values and probabilities
+                    const obsInputs = document.querySelectorAll('.obs-input');
+                    const probInputs = document.querySelectorAll('.prob-input');
+                    
+                    if (obsInputs.length === 0 || probInputs.length === 0) {
+                        throw new Error('Please generate categories first');
+                    }
+                    
+                    if (obsInputs.length !== probInputs.length) {
+                        throw new Error('Mismatch between observed and probability inputs');
+                    }
+                    
+                    const observed = [];
+                    const expectedProbabilities = [];
+                    
+                    for (let i = 0; i < obsInputs.length; i++) {
+                        const obsValue = parseFloat(obsInputs[i].value);
+                        const probValue = parseFloat(probInputs[i].value);
+                        
+                        if (isNaN(obsValue) || obsValue < 0) {
+                            throw new Error(`Invalid observed value in category ${i+1}`);
+                        }
+                        
+                        if (isNaN(probValue) || probValue < 0 || probValue > 1) {
+                            throw new Error(`Invalid probability value in category ${i+1}. Must be between 0 and 1.`);
+                        }
+                        
+                        observed.push(obsValue);
+                        expectedProbabilities.push(probValue);
+                    }
+                    
+                    // Check if probabilities sum to 1
+                    const probSum = expectedProbabilities.reduce((a, b) => a + b, 0);
+                    if (Math.abs(probSum - 1) > 0.001) {
+                        throw new Error(`Probabilities must sum to 1. Current sum: ${probSum.toFixed(3)}`);
+                    }
+                    
+                    // Check for all zeros in observed
+                    const totalObserved = observed.reduce((a, b) => a + b, 0);
+                    if (totalObserved === 0) {
+                        throw new Error('All observed values cannot be zero');
+                    }
+                    
+                    // Perform chi-square test
+                    const result = chiSquareGoodnessOfFit(observed, expectedProbabilities);
+                    const alpha = parseFloat(alphaLevel.value);
+                    
+                    // Display results
+                    displayResults(result, alpha);
+                    
+                } catch (error) {
+                    alert('Error: ' + error.message);
+                    console.error(error);
+                }
+            });
+            
+            function displayResults(result, alpha) {
+                // Update result metrics
+                document.getElementById('chi-square-value').textContent = result.chiSquare.toFixed(4);
+                document.getElementById('p-value').textContent = result.pValue.toFixed(4);
+                document.getElementById('df-value').textContent = result.df;
+                
+                // Determine significance
+                const isSignificant = result.pValue <= alpha;
+                document.getElementById('result-significance').textContent = 
+                    isSignificant ? 'Significant' : 'Not Significant';
+                document.getElementById('result-significance').style.color = 
+                    isSignificant ? '#2ecc71' : '#e74c3c';
+                
+                // Update interpretation
+                const interpretationText = document.getElementById('interpretation-text');
+                if (isSignificant) {
+                    interpretationText.textContent = 
+                        `The p-value of ${result.pValue.toFixed(4)} is less than the significance level of ${alpha}. ` +
+                        `This provides evidence to reject the null hypothesis. The observed data does not follow the expected distribution.`;
+                } else {
+                    interpretationText.textContent = 
+                        `The p-value of ${result.pValue.toFixed(4)} is greater than the significance level of ${alpha}. ` +
+                        `There is not enough evidence to reject the null hypothesis. The observed data appears to follow the expected distribution.`;
+                }
+                
+                // Update expected frequencies table
+                const expectedTable = document.getElementById('expected-table');
+                const categoryCount = result.observed.length;
+                
+                let tableHTML = '<thead><tr><th>Category</th><th>Observed</th><th>Expected</th><th>Contribution to χ²</th></tr></thead><tbody>';
+                
+                for (let i = 0; i < categoryCount; i++) {
+                    tableHTML += `
+                        <tr>
+                            <td>${i+1}</td>
+                            <td>${result.observed[i]}</td>
+                            <td class="expected">${result.expected[i].toFixed(2)}</td>
+                            <td>${result.contributions[i].toFixed(4)}</td>
+                        </tr>
+                    `;
+                }
+                
+                tableHTML += '</tbody>';
+                expectedTable.innerHTML = tableHTML;
+                
+                // Show results
+                resultBox.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-3BSHG1DE6V');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Z-Test Calculator | Industrial Engineering Calculators</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1010;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block; /* Changed from none to block */
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .scenario-selector {
+            margin-bottom: 2rem;
+        }
+        
+        .scenario-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+        }
+        
+        .scenario-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            margin-right: 0.5rem;
+            border-radius: 5px 5px 0 0;
+            background-color: #f1f1f1;
+            transition: all 0.3s;
+        }
+        
+        .scenario-tab.active {
+            background-color: white;
+            border-color: #ddd;
+            border-bottom-color: white;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        
+        .scenario-tab:hover:not(.active) {
+            background-color: #e9e9e9;
+        }
+        
+        .scenario-content {
+            display: none;
+        }
+        
+        .scenario-content.active {
+            display: block;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .data-input {
+            margin-bottom: 1.5rem;
+        }
+        
+        .data-input textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .data-input .help-text {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-top: 0.5rem;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .result-card {
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .result-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .interpretation {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #e8f4fc;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .distribution-chart {
+            margin: 2rem 0;
+            height: 200px;
+            position: relative;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            padding: 1rem;
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        .critical-value-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        .critical-value-table, .critical-value-table th, .critical-value-table td {
+            border: 1px solid #ddd;
+        }
+        
+        .critical-value-table th, .critical-value-table td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        .critical-value-table th {
+            background-color: #f2f2f2;
+            font-weight: 600;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .scenario-tabs {
+                flex-direction: column;
+            }
+            
+            .scenario-tab {
+                border-radius: 0;
+                margin-right: 0;
+                border-bottom: 1px solid #ddd;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+
+            /* xxxx navigation start xxxxx */
+            .sidebar-toggle {
+                display: block;
+            }
+            
+            body.sidebar-open {
+                margin-left: 0;
+                overflow: hidden;
+            }
+            /* xxxx navigation end xxxxx */
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="gagerr.html" class="sidebar-link">Gage R&R</a>
+                <a href="processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="oee.html" class="sidebar-link">OEE Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="anova.html" class="sidebar-link">ANOVA</a>
+                <a href="chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
+                <a href="factorialdesign.html" class="sidebar-link">Factorial Design</a>
+                <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="latinsquare.html" class="sidebar-link">Latin Square</a>
+                <a href="regression.html" class="sidebar-link">Regression</a>
+                <a href="samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="ttest.html" class="sidebar-link">T-Test</a>
+                <a href="ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="eoq.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="rop.html" class="sidebar-link">Reorder Point</a>
+                <a href="kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Study</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+            </div>
+        </div>
+    </aside>
+    <!-- xxxx navigation end xxxxx -->
+    
+    <header>
+        <div class="container header-content">
+            <div class="logo">Industrial <span>Engineering</span> Calculators</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Z-Test Calculator</h1>
+            <p>Perform hypothesis testing using Z-tests for population means and proportions</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Z-Test for Hypothesis Testing</h2>
+                <p>A Z-test is any statistical test for which the distribution of the test statistic under the null hypothesis can be approximated by a normal distribution. Z-tests are used when sample sizes are large enough for the central limit theorem to be applied.</p>
+                
+                <div class="formula-box">
+                    Z = (X̄ - μ) / (σ / √n)
+                </div>
+                
+                <p>Where:</p>
+                <ul>
+                    <li><strong>X̄</strong> = Sample mean</li>
+                    <li><strong>μ</strong> = Population mean (hypothesized)</li>
+                    <li><strong>σ</strong> = Population standard deviation</li>
+                    <li><strong>n</strong> = Sample size</li>
+                </ul>
+            </div>
+            
+            <div class="scenario-selector">
+                <h3>Test Type</h3>
+                <p>Select the type of Z-test you want to perform:</p>
+                
+                <div class="scenario-tabs">
+                    <div class="scenario-tab active" data-scenario="one-sample">One-Sample Z-Test</div>
+                    <div class="scenario-tab" data-scenario="two-sample">Two-Sample Z-Test</div>
+                    <div class="scenario-tab" data-scenario="proportion">Z-Test for Proportions</div>
+                </div>
+                
+                <!-- One-Sample Z-Test Scenario -->
+                <div class="scenario-content active" id="one-sample-scenario">
+                    <h3>One-Sample Z-Test</h3>
+                    <p>Test whether the mean of a single sample is significantly different from a known or hypothesized population mean.</p>
+                    
+                    <form id="one-sample-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="sample-mean">Sample Mean (X̄):</label>
+                                <input type="number" id="sample-mean" step="0.001" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="population-mean">Population Mean (μ):</label>
+                                <input type="number" id="population-mean" step="0.001" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="population-std">Population Standard Deviation (σ):</label>
+                                <input type="number" id="population-std" min="0" step="0.001" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="sample-size">Sample Size (n):</label>
+                                <input type="number" id="sample-size" min="2" step="1" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="alpha-level">Significance Level (α):</label>
+                                <select id="alpha-level">
+                                    <option value="0.01">0.01 (99% confidence)</option>
+                                    <option value="0.05" selected>0.05 (95% confidence)</option>
+                                    <option value="0.10">0.10 (90% confidence)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="test-type">Test Type:</label>
+                                <select id="test-type">
+                                    <option value="two-tailed">Two-Tailed</option>
+                                    <option value="one-tailed-left">One-Tailed (Left)</option>
+                                    <option value="one-tailed-right">One-Tailed (Right)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate Z-Test</button>
+                    </form>
+                    
+                    <div class="result-box" id="one-sample-result">
+                        <h3>One-Sample Z-Test Results</h3>
+                        
+                        <div class="result-grid">
+                            <div class="result-card">
+                                <h4>Z-Score</h4>
+                                <div class="result-value" id="z-score"></div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <h4>P-Value</h4>
+                                <div class="result-value" id="p-value"></div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <h4>Critical Value</h4>
+                                <div class="result-value" id="critical-value"></div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <h4>Result</h4>
+                                <div class="result-value" id="result-significance"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="interpretation">
+                            <h4>Interpretation</h4>
+                            <p id="interpretation-text"></p>
+                        </div>
+                        
+                        <h4>Standard Normal Distribution</h4>
+                        <div class="distribution-chart">
+                            <canvas id="distribution-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Two-Sample Z-Test Scenario -->
+                <div class="scenario-content" id="two-sample-scenario">
+                    <h3>Two-Sample Z-Test</h3>
+                    <p>Test whether the means of two independent samples are significantly different from each other.</p>
+                    
+                    <form id="two-sample-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="sample1-mean">Sample 1 Mean (X̄₁):</label>
+                                <input type="number" id="sample1-mean" step="0.001" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="sample2-mean">Sample 2 Mean (X̄₂):</label>
+                                <input type="number" id="sample2-mean" step="0.001" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="sample1-std">Sample 1 Standard Deviation (σ₁):</label>
+                                <input type="number" id="sample1-std" min="0" step="0.001" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="sample2-std">Sample 2 Standard Deviation (σ₂):</label>
+                                <input type="number" id="sample2-std" min="0" step="0.001" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="sample1-size">Sample 1 Size (n₁):</label>
+                                <input type="number" id="sample1-size" min="2" step="1" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="sample2-size">Sample 2 Size (n₂):</label>
+                                <input type="number" id="sample2-size" min="2" step="1" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="two-sample-alpha">Significance Level (α):</label>
+                                <select id="two-sample-alpha">
+                                    <option value="0.01">0.01 (99% confidence)</option>
+                                    <option value="0.05" selected>0.05 (95% confidence)</option>
+                                    <option value="0.10">0.10 (90% confidence)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="two-sample-test-type">Test Type:</label>
+                                <select id="two-sample-test-type">
+                                    <option value="two-tailed">Two-Tailed</option>
+                                    <option value="one-tailed-left">One-Tailed (Left)</option>
+                                    <option value="one-tailed-right">One-Tailed (Right)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate Z-Test</button>
+                    </form>
+                    
+                    <div class="result-box" id="two-sample-result">
+                        <h3>Two-Sample Z-Test Results</h3>
+                        
+                        <div class="result-grid">
+                            <div class="result-card">
+                                <h4>Z-Score</h4>
+                                <div class="result-value" id="two-sample-z-score"></div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <h4>P-Value</h4>
+                                <div class="result-value" id="two-sample-p-value"></div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <h4>Critical Value</h4>
+                                <div class="result-value" id="two-sample-critical-value"></div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <h4>Result</h4>
+                                <div class="result-value" id="two-sample-result-significance"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="interpretation">
+                            <h4>Interpretation</h4>
+                            <p id="two-sample-interpretation-text"></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Z-Test for Proportions Scenario -->
+                <div class="scenario-content" id="proportion-scenario">
+                    <h3>Z-Test for Proportions</h3>
+                    <p>Test whether the proportion of a characteristic in a sample is significantly different from a hypothesized population proportion.</p>
+                    
+                    <form id="proportion-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="sample-proportion">Sample Proportion (p̂):</label>
+                                <input type="number" id="sample-proportion" min="0" max="1" step="0.001" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="population-proportion">Population Proportion (p₀):</label>
+                                <input type="number" id="population-proportion" min="0" max="1" step="0.001" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="proportion-sample-size">Sample Size (n):</label>
+                                <input type="number" id="proportion-sample-size" min="2" step="1" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="proportion-alpha">Significance Level (α):</label>
+                                <select id="proportion-alpha">
+                                    <option value="0.01">0.01 (99% confidence)</option>
+                                    <option value="0.05" selected>0.05 (95% confidence)</option>
+                                    <option value="0.10">0.10 (90% confidence)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="proportion-test-type">Test Type:</label>
+                                <select id="proportion-test-type">
+                                    <option value="two-tailed">Two-Tailed</option>
+                                    <option value="one-tailed-left">One-Tailed (Left)</option>
+                                    <option value="one-tailed-right">One-Tailed (Right)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate Z-Test</button>
+                    </form>
+                    
+                    <div class="result-box" id="proportion-result">
+                        <h3>Z-Test for Proportions Results</h3>
+                        
+                        <div class="result-grid">
+                            <div class="result-card">
+                                <h4>Z-Score</h4>
+                                <div class="result-value" id="proportion-z-score"></div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <h4>P-Value</h4>
+                                <div class="result-value" id="proportion-p-value"></div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <h4>Critical Value</h4>
+                                <div class="result-value" id="proportion-critical-value"></div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <h4>Result</h4>
+                                <div class="result-value" id="proportion-result-significance"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="interpretation">
+                            <h4>Interpretation</h4>
+                            <p id="proportion-interpretation-text"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Practical Examples</h3>
+                
+                <div class="example">
+                    <h4>Example 1: Quality Control</h4>
+                    <p>A manufacturer claims their products have a mean weight of 500g. A sample of 50 products has a mean weight of 495g with a population standard deviation of 10g. Test if the sample mean is significantly different.</p>
+                    <p>Z = (495 - 500) / (10 / √50) = -5 / 1.414 = -3.536</p>
+                    <p>With α = 0.05 (two-tailed), the critical value is ±1.96. Since -3.536 < -1.96, we reject the null hypothesis.</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 2: Marketing Campaign</h4>
+                    <p>A company claims their new marketing campaign increased conversion rates from 10% to 15%. In a sample of 200 visitors, 35 converted (p̂ = 0.175). Test if this is significantly different from the claimed 15%.</p>
+                    <p>Z = (0.175 - 0.15) / √(0.15×0.85/200) = 0.025 / 0.025 = 1.0</p>
+                    <p>With α = 0.05 (two-tailed), the critical value is ±1.96. Since 1.0 < 1.96, we fail to reject the null hypothesis.</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 3: Process Improvement</h4>
+                    <p>An engineer wants to test if a new process reduces processing time. The current mean is 120 minutes with σ = 15 minutes. A sample of 40 using the new process has a mean of 115 minutes.</p>
+                    <p>Z = (115 - 120) / (15 / √40) = -5 / 2.372 = -2.108</p>
+                    <p>With α = 0.05 (one-tailed left), the critical value is -1.645. Since -2.108 < -1.645, we reject the null hypothesis.</p>
+                </div>
+            </div>
+            
+            <div class="calculator-intro">
+                <h3>Critical Values for Common Significance Levels</h3>
+                <table class="critical-value-table">
+                    <thead>
+                        <tr>
+                            <th>Significance Level (α)</th>
+                            <th>Two-Tailed Critical Values</th>
+                            <th>One-Tailed Critical Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>0.10 (90% confidence)</td>
+                            <td>±1.645</td>
+                            <td>±1.282</td>
+                        </tr>
+                        <tr>
+                            <td>0.05 (95% confidence)</td>
+                            <td>±1.960</td>
+                            <td>±1.645</td>
+                        </tr>
+                        <tr>
+                            <td>0.01 (99% confidence)</td>
+                            <td>±2.576</td>
+                            <td>±2.326</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="formula-box">
+                    Decision Rule: Reject H₀ if |Z| > Z<sub>α/2</sub> (two-tailed) or Z > Z<sub>α</sub> (one-tailed right) or Z < -Z<sub>α</sub> (one-tailed left)
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            <p class="copyright">&copy; 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- xxxx navigation start xxxxx -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebarClose = document.querySelector('.sidebar-close');
+            const overlay = document.querySelector('.overlay');
+            const body = document.body;
+            
+            // Toggle sidebar
+            function toggleSidebar() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+                body.classList.toggle('sidebar-open');
+            }
+            
+            // Toggle category expansion
+            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
+            categoryHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const category = this.parentElement;
+                    category.classList.toggle('open');
+                    
+                    // Update the expand/collapse icon
+                    const icon = this.querySelector('span:last-child');
+                    icon.textContent = category.classList.contains('open') ? '−' : '+';
+                });
+            });
+            
+            // Event listeners
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            sidebarClose.addEventListener('click', toggleSidebar);
+            overlay.addEventListener('click', toggleSidebar);
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 768 && 
+                    body.classList.contains('sidebar-open') && 
+                    !sidebar.contains(event.target) && 
+                    event.target !== sidebarToggle) {
+                    toggleSidebar();
+                }
+            });
+            
+            // Close sidebar when pressing Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && body.classList.contains('sidebar-open')) {
+                    toggleSidebar();
+                }
+            });
+        });
+    </script>
+    <!-- xxxx navigation end xxxxx -->
+
+    <script>
+        // Chart variable
+        let distributionChart;
+        
+        // Scenario tab switching
+        const tabs = document.querySelectorAll('.scenario-tab');
+        const contents = document.querySelectorAll('.scenario-content');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                tabs.forEach(t => t.classList.remove('active'));
+                contents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                const scenario = tab.getAttribute('data-scenario');
+                document.getElementById(`${scenario}-scenario`).classList.add('active');
+            });
+        });
+        
+        // Calculate Z-score for one-sample test
+        function calculateZScore(sampleMean, populationMean, populationStd, sampleSize) {
+            return (sampleMean - populationMean) / (populationStd / Math.sqrt(sampleSize));
+        }
+        
+        // Calculate Z-score for two-sample test
+        function calculateTwoSampleZScore(mean1, mean2, std1, std2, n1, n2) {
+            const stdError = Math.sqrt((std1*std1)/n1 + (std2*std2)/n2);
+            return (mean1 - mean2) / stdError;
+        }
+        
+        // Calculate Z-score for proportions test
+        function calculateProportionZScore(sampleProp, populationProp, sampleSize) {
+            const stdError = Math.sqrt((populationProp * (1 - populationProp)) / sampleSize);
+            return (sampleProp - populationProp) / stdError;
+        }
+        
+        // Calculate p-value from Z-score
+        function calculatePValue(z, testType) {
+            // Using standard normal distribution approximation
+            const zAbs = Math.abs(z);
+            const p = Math.exp(-0.5 * zAbs * zAbs) / Math.sqrt(2 * Math.PI);
+            
+            if (testType === 'two-tailed') {
+                return 2 * p;
+            } else {
+                return p;
+            }
+        }
+        
+        // Get critical value based on alpha and test type
+        function getCriticalValue(alpha, testType) {
+            // Standard normal distribution critical values
+            const criticalValues = {
+                '0.10': {
+                    'two-tailed': 1.645,
+                    'one-tailed-left': -1.282,
+                    'one-tailed-right': 1.282
+                },
+                '0.05': {
+                    'two-tailed': 1.960,
+                    'one-tailed-left': -1.645,
+                    'one-tailed-right': 1.645
+                },
+                '0.01': {
+                    'two-tailed': 2.576,
+                    'one-tailed-left': -2.326,
+                    'one-tailed-right': 2.326
+                }
+            };
+            
+            return criticalValues[alpha][testType];
+        }
+        
+        // Create distribution chart
+        function createDistributionChart(zScore, criticalValue, testType) {
+            const ctx = document.getElementById('distribution-chart').getContext('2d');
+            
+            // Destroy previous chart if it exists
+            if (distributionChart) {
+                distributionChart.destroy();
+            }
+            
+            // Create data points for normal distribution curve
+            const data = [];
+            for (let x = -4; x <= 4; x += 0.1) {
+                data.push({x: x, y: Math.exp(-0.5 * x * x) / Math.sqrt(2 * Math.PI)});
+            }
+            
+            // Create chart
+            distributionChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [
+                        {
+                            label: 'Standard Normal Distribution',
+                            data: data,
+                            borderColor: 'rgba(52, 152, 219, 1)',
+                            backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Z-Score',
+                            data: [{x: zScore, y: 0}, {x: zScore, y: Math.exp(-0.5 * zScore * zScore) / Math.sqrt(2 * Math.PI)}],
+                            borderColor: 'rgba(231, 76, 60, 1)',
+                            backgroundColor: 'rgba(231, 76, 60, 0.5)',
+                            pointRadius: 5,
+                            showLine: true
+                        },
+                        {
+                            label: 'Critical Value',
+                            data: [{x: criticalValue, y: 0}, {x: criticalValue, y: Math.exp(-0.5 * criticalValue * criticalValue) / Math.sqrt(2 * Math.PI)}],
+                            borderColor: 'rgba(46, 204, 113, 1)',
+                            backgroundColor: 'rgba(46, 204, 113, 0.5)',
+                            pointRadius: 5,
+                            showLine: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            title: {
+                                display: true,
+                                text: 'Z-Score'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Probability Density'
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Standard Normal Distribution with Z-Score and Critical Value'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: ${context.raw.x.toFixed(2)}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // One-sample Z-test calculation
+        document.getElementById('one-sample-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const sampleMean = parseFloat(document.getElementById('sample-mean').value);
+            const populationMean = parseFloat(document.getElementById('population-mean').value);
+            const populationStd = parseFloat(document.getElementById('population-std').value);
+            const sampleSize = parseFloat(document.getElementById('sample-size').value);
+            const alpha = document.getElementById('alpha-level').value;
+            const testType = document.getElementById('test-type').value;
+            
+            const zScore = calculateZScore(sampleMean, populationMean, populationStd, sampleSize);
+            const pValue = calculatePValue(zScore, testType);
+            const criticalValue = getCriticalValue(alpha, testType);
+            
+            // Determine significance
+            let isSignificant = false;
+            if (testType === 'two-tailed') {
+                isSignificant = Math.abs(zScore) > Math.abs(criticalValue);
+            } else if (testType === 'one-tailed-left') {
+                isSignificant = zScore < criticalValue;
+            } else {
+                isSignificant = zScore > criticalValue;
+            }
+            
+            // Display results
+            document.getElementById('z-score').textContent = zScore.toFixed(4);
+            document.getElementById('p-value').textContent = pValue.toFixed(4);
+            document.getElementById('critical-value').textContent = criticalValue;
+            document.getElementById('result-significance').textContent = isSignificant ? 'Significant' : 'Not Significant';
+            
+            // Interpretation
+            let interpretation = `The Z-score of ${zScore.toFixed(4)} `;
+            interpretation += isSignificant ? 'exceeds' : 'does not exceed';
+            interpretation += ` the critical value of ${criticalValue} at the ${alpha} significance level. `;
+            interpretation += `Therefore, we ${isSignificant ? 'reject' : 'fail to reject'} the null hypothesis.`;
+            
+            document.getElementById('interpretation-text').textContent = interpretation;
+            
+            // Create distribution chart
+            createDistributionChart(zScore, criticalValue, testType);
+            
+            // Show results
+            document.getElementById('one-sample-result').style.display = 'block';
+        });
+        
+        // Two-sample Z-test calculation
+        document.getElementById('two-sample-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const sample1Mean = parseFloat(document.getElementById('sample1-mean').value);
+            const sample2Mean = parseFloat(document.getElementById('sample2-mean').value);
+            const sample1Std = parseFloat(document.getElementById('sample1-std').value);
+            const sample2Std = parseFloat(document.getElementById('sample2-std').value);
+            const sample1Size = parseFloat(document.getElementById('sample1-size').value);
+            const sample2Size = parseFloat(document.getElementById('sample2-size').value);
+            const alpha = document.getElementById('two-sample-alpha').value;
+            const testType = document.getElementById('two-sample-test-type').value;
+            
+            const zScore = calculateTwoSampleZScore(sample1Mean, sample2Mean, sample1Std, sample2Std, sample1Size, sample2Size);
+            const pValue = calculatePValue(zScore, testType);
+            const criticalValue = getCriticalValue(alpha, testType);
+            
+            // Determine significance
+            let isSignificant = false;
+            if (testType === 'two-tailed') {
+                isSignificant = Math.abs(zScore) > Math.abs(criticalValue);
+            } else if (testType === 'one-tailed-left') {
+                isSignificant = zScore < criticalValue;
+            } else {
+                isSignificant = zScore > criticalValue;
+            }
+            
+            // Display results
+            document.getElementById('two-sample-z-score').textContent = zScore.toFixed(4);
+            document.getElementById('two-sample-p-value').textContent = pValue.toFixed(4);
+            document.getElementById('two-sample-critical-value').textContent = criticalValue;
+            document.getElementById('two-sample-result-significance').textContent = isSignificant ? 'Significant' : 'Not Significant';
+            
+            // Interpretation
+            let interpretation = `The Z-score of ${zScore.toFixed(4)} `;
+            interpretation += isSignificant ? 'exceeds' : 'does not exceed';
+            interpretation += ` the critical value of ${criticalValue} at the ${alpha} significance level. `;
+            interpretation += `Therefore, we ${isSignificant ? 'reject' : 'fail to reject'} the null hypothesis that the two population means are equal.`;
+            
+            document.getElementById('two-sample-interpretation-text').textContent = interpretation;
+            
+            // Show results
+            document.getElementById('two-sample-result').style.display = 'block';
+        });
+        
+        // Proportion Z-test calculation
+        document.getElementById('proportion-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const sampleProp = parseFloat(document.getElementById('sample-proportion').value);
+            const populationProp = parseFloat(document.getElementById('population-proportion').value);
+            const sampleSize = parseFloat(document.getElementById('proportion-sample-size').value);
+            const alpha = document.getElementById('proportion-alpha').value;
+            const testType = document.getElementById('proportion-test-type').value;
+            
+            const zScore = calculateProportionZScore(sampleProp, populationProp, sampleSize);
+            const pValue = calculatePValue(zScore, testType);
+            const criticalValue = getCriticalValue(alpha, testType);
+            
+            // Determine significance
+            let isSignificant = false;
+            if (testType === 'two-tailed') {
+                isSignificant = Math.abs(zScore) > Math.abs(criticalValue);
+            } else if (testType === 'one-tailed-left') {
+                isSignificant = zScore < criticalValue;
+            } else {
+                isSignificant = zScore > criticalValue;
+            }
+            
+            // Display results
+            document.getElementById('proportion-z-score').textContent = zScore.toFixed(4);
+            document.getElementById('proportion-p-value').textContent = pValue.toFixed(4);
+            document.getElementById('proportion-critical-value').textContent = criticalValue;
+            document.getElementById('proportion-result-significance').textContent = isSignificant ? 'Significant' : 'Not Significant';
+            
+            // Interpretation
+            let interpretation = `The Z-score of ${zScore.toFixed(4)} `;
+            interpretation += isSignificant ? 'exceeds' : 'does not exceed';
+            interpretation += ` the critical value of ${criticalValue} at the ${alpha} significance level. `;
+            interpretation += `Therefore, we ${isSignificant ? 'reject' : 'fail to reject'} the null hypothesis that the population proportion is ${populationProp}.`;
+            
+            document.getElementById('proportion-interpretation-text').textContent = interpretation;
+            
+            // Show results
+            document.getElementById('proportion-result').style.display = 'block';
+        });
+    </script>
+</body>
+</html>

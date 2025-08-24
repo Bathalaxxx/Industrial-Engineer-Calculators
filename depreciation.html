@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-3BSHG1DE6V');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Depreciation Calculator - Calculate asset depreciation using multiple methods">
+    <title>Depreciation Calculator | Industrial Engineering Calculators</title>
+    <style>
+        /* Consistent with existing style */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+            transition: margin-left 0.3s;
+        }
+        
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1010;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block; /* Changed from none to block */
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 101;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .method-selector {
+            margin-bottom: 2rem;
+        }
+        
+        .method-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+        }
+        
+        .method-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            margin-right: 0.5rem;
+            border-radius: 5px 5px 0 0;
+            background-color: #f1f1f1;
+            transition: all 0.3s;
+        }
+        
+        .method-tab.active {
+            background-color: white;
+            border-color: #ddd;
+            border-bottom-color: white;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        
+        .method-tab:hover:not(.active) {
+            background-color: #e9e9e9;
+        }
+        
+        .method-content {
+            display: none;
+        }
+        
+        .method-content.active {
+            display: block;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .depreciation-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        .depreciation-table th, 
+        .depreciation-table td {
+            padding: 0.75rem;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        
+        .depreciation-table th {
+            background-color: #f2f2f2;
+            font-weight: 500;
+        }
+        
+        .depreciation-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .depreciation-table tr:hover {
+            background-color: #f1f1f1;
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .method-tabs {
+                flex-direction: column;
+            }
+            
+            .method-tab {
+                border-radius: 0;
+                margin-right: 0;
+                border-bottom: 1px solid #ddd;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .depreciation-table {
+                font-size: 0.8rem;
+            }
+            
+            .depreciation-table th, 
+            .depreciation-table td {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="gagerr.html" class="sidebar-link">Gage R&R</a>
+                <a href="processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="oee.html" class="sidebar-link">OEE Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="anova.html" class="sidebar-link">ANOVA</a>
+                <a href="chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
+                <a href="factorialdesign.html" class="sidebar-link">Factorial Design</a>
+                <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="latinsquare.html" class="sidebar-link">Latin Square</a>
+                <a href="regression.html" class="sidebar-link">Regression</a>
+                <a href="samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="ttest.html" class="sidebar-link">T-Test</a>
+                <a href="ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="eoq.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="rop.html" class="sidebar-link">Reorder Point</a>
+                <a href="kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Study</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+            </div>
+        </div>
+    </aside>
+    <!-- xxxx navigation end xxxxx -->
+    
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Industrial Engineering <span>Calculators</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Depreciation Calculator</h1>
+            <p>Calculate asset depreciation using multiple methods</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Depreciation Methods</h2>
+                <p>Depreciation is the systematic allocation of the cost of a tangible asset over its useful life. Different methods are used depending on the asset type and accounting requirements.</p>
+                
+                <div class="method-selector">
+                    <h3>Select Depreciation Method</h3>
+                    <div class="method-tabs">
+                        <div class="method-tab active" data-method="straight-line">Straight-Line</div>
+                        <div class="method-tab" data-method="declining-balance">Declining Balance</div>
+                        <div class="method-tab" data-method="sum-years-digits">Sum-of-Years' Digits</div>
+                    </div>
+                    
+                    <!-- Straight-Line Method -->
+                    <div class="method-content active" id="straight-line-method">
+                        <div class="formula-box">
+                            Annual Depreciation = (Cost - Salvage Value) / Useful Life
+                        </div>
+                        <p>The straight-line method is the simplest and most commonly used. It allocates equal depreciation expense each year over the asset's useful life.</p>
+                    </div>
+                    
+                    <!-- Declining Balance Method -->
+                    <div class="method-content" id="declining-balance-method">
+                        <div class="formula-box">
+                            Annual Depreciation = Book Value × (Depreciation Rate)
+                        </div>
+                        <p>The declining balance method applies a constant depreciation rate each year to the declining book value, resulting in higher depreciation in early years.</p>
+                    </div>
+                    
+                    <!-- Sum-of-Years' Digits Method -->
+                    <div class="method-content" id="sum-years-digits-method">
+                        <div class="formula-box">
+                            Annual Depreciation = (Cost - Salvage Value) × (Remaining Life / Sum of Years' Digits)
+                        </div>
+                        <p>The sum-of-years' digits method applies a decreasing fraction each year based on the remaining useful life, resulting in accelerated depreciation.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <form id="depreciation-form">
+                <h3>Asset Information</h3>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="asset-cost">Asset Cost ($):</label>
+                        <input type="number" id="asset-cost" min="0" step="0.01" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="salvage-value">Salvage Value ($):</label>
+                        <input type="number" id="salvage-value" min="0" step="0.01" required>
+                    </div>
+                </div>
+                
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="useful-life">Useful Life (years):</label>
+                        <input type="number" id="useful-life" min="1" step="1" required>
+                    </div>
+                    
+                    <div class="input-group" id="declining-rate-group" style="display: none;">
+                        <label for="depreciation-rate">Depreciation Rate (%):</label>
+                        <input type="number" id="depreciation-rate" min="1" max="200" step="1" value="150">
+                    </div>
+                </div>
+                
+                <button type="submit" class="calculate-btn">Calculate Depreciation</button>
+            </form>
+            
+            <div class="result-box" id="depreciation-result">
+                <h3>Depreciation Schedule</h3>
+                <div class="summary-row">
+                    <p>Total Depreciable Amount: $<span id="depreciable-amount"></span></p>
+                    <p>Total Depreciation Over <span id="life-span"></span> Years: $<span id="total-depreciation"></span></p>
+                </div>
+                
+                <div class="table-container">
+                    <table class="depreciation-table" id="depreciation-schedule">
+                        <thead>
+                            <tr>
+                                <th>Year</th>
+                                <th>Beginning Value</th>
+                                <th>Depreciation</th>
+                                <th>Accumulated Depreciation</th>
+                                <th>Ending Value</th>
+                            </tr>
+                        </thead>
+                        <tbody id="schedule-body">
+                            <!-- Will be filled by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="chart-container" style="margin-top: 2rem;">
+                    <canvas id="depreciation-chart" width="400" height="200"></canvas>
+                </div>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Practical Examples</h3>
+                
+                <div class="example">
+                    <h4>Example 1: Straight-Line Method</h4>
+                    <p>Asset Cost: $10,000 | Salvage Value: $1,000 | Useful Life: 5 years</p>
+                    <p>Annual Depreciation = ($10,000 - $1,000) / 5 = $1,800 per year</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 2: Double Declining Balance</h4>
+                    <p>Asset Cost: $10,000 | Salvage Value: $1,000 | Useful Life: 5 years | Rate: 40% (200%/5)</p>
+                    <p>Year 1: $10,000 × 40% = $4,000 | Year 2: ($10,000 - $4,000) × 40% = $2,400</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 3: Sum-of-Years' Digits</h4>
+                    <p>Asset Cost: $10,000 | Salvage Value: $1,000 | Useful Life: 5 years</p>
+                    <p>Sum of digits = 1+2+3+4+5 = 15 | Year 1: ($10,000 - $1,000) × (5/15) = $3,000</p>
+                    <p>Year 2: ($9,000) × (4/15) = $2,400 | Year 3: ($9,000) × (3/15) = $1,800</p>
+                </div>
+            </div>
+            
+            <div class="calculator-intro">
+                <h3>Depreciation Method Comparison</h3>
+                <table>
+                    <tr>
+                        <th>Method</th>
+                        <th>Advantages</th>
+                        <th>Disadvantages</th>
+                        <th>Best For</th>
+                    </tr>
+                    <tr>
+                        <td>Straight-Line</td>
+                        <td>Simple to calculate, equal expenses</td>
+                        <td>Doesn't match actual asset use pattern</td>
+                        <td>Assets with consistent utility</td>
+                    </tr>
+                    <tr>
+                        <td>Declining Balance</td>
+                        <td>Matches higher early-year expenses</td>
+                        <td>More complex, may not fully depreciate</td>
+                        <td>Assets losing value quickly</td>
+                    </tr>
+                    <tr>
+                        <td>Sum-of-Years' Digits</td>
+                        <td>Accelerated but smoother than DDB</td>
+                        <td>More complex calculation</td>
+                        <td>Assets with high early productivity</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Method tab switching
+        const methodTabs = document.querySelectorAll('.method-tab');
+        const methodContents = document.querySelectorAll('.method-content');
+        
+        methodTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                methodTabs.forEach(t => t.classList.remove('active'));
+                methodContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                const method = tab.getAttribute('data-method');
+                document.getElementById(`${method}-method`).classList.add('active');
+                
+                // Show/hide declining balance rate input
+                if (method === 'declining-balance') {
+                    document.getElementById('declining-rate-group').style.display = 'block';
+                } else {
+                    document.getElementById('declining-rate-group').style.display = 'none';
+                }
+            });
+        });
+        
+        // Depreciation calculation
+        document.getElementById('depreciation-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get common input values
+            const assetCost = parseFloat(document.getElementById('asset-cost').value);
+            const salvageValue = parseFloat(document.getElementById('salvage-value').value);
+            const usefulLife = parseInt(document.getElementById('useful-life').value);
+            
+            // Validate inputs
+            if (isNaN(assetCost) || isNaN(salvageValue) || isNaN(usefulLife) || usefulLife <= 0) {
+                alert('Please enter valid numbers (useful life must be greater than zero)');
+                return;
+            }
+            
+            if (salvageValue >= assetCost) {
+                alert('Salvage value cannot be greater than or equal to asset cost');
+                return;
+            }
+            
+            // Get selected method
+            let selectedMethod = 'straight-line';
+            methodTabs.forEach(tab => {
+                if (tab.classList.contains('active')) {
+                    selectedMethod = tab.getAttribute('data-method');
+                }
+            });
+            
+            // Calculate depreciation based on selected method
+            let schedule = [];
+            const depreciableAmount = assetCost - salvageValue;
+            let accumulatedDepreciation = 0;
+            
+            if (selectedMethod === 'straight-line') {
+                // Straight-Line Method
+                const annualDepreciation = depreciableAmount / usefulLife;
+                
+                for (let year = 1; year <= usefulLife; year++) {
+                    const beginningValue = year === 1 ? assetCost : schedule[year-2].endingValue;
+                    const endingValue = beginningValue - annualDepreciation;
+                    accumulatedDepreciation += annualDepreciation;
+                    
+                    schedule.push({
+                        year,
+                        beginningValue,
+                        depreciation: annualDepreciation,
+                        accumulatedDepreciation,
+                        endingValue
+                    });
+                }
+            } 
+            else if (selectedMethod === 'declining-balance') {
+                // Declining Balance Method
+                const rate = parseFloat(document.getElementById('depreciation-rate').value) / 100;
+                let bookValue = assetCost;
+                
+                for (let year = 1; year <= usefulLife; year++) {
+                    const beginningValue = bookValue;
+                    let depreciation = beginningValue * rate;
+                    
+                    // Ensure we don't depreciate below salvage value
+                    if (beginningValue - depreciation < salvageValue) {
+                        depreciation = beginningValue - salvageValue;
+                    }
+                    
+                    // For last year, ensure full depreciation
+                    if (year === usefulLife && (beginningValue - depreciation) > salvageValue) {
+                        depreciation = beginningValue - salvageValue;
+                    }
+                    
+                    const endingValue = beginningValue - depreciation;
+                    accumulatedDepreciation += depreciation;
+                    bookValue = endingValue;
+                    
+                    schedule.push({
+                        year,
+                        beginningValue,
+                        depreciation,
+                        accumulatedDepreciation,
+                        endingValue
+                    });
+                }
+            } 
+            else if (selectedMethod === 'sum-years-digits') {
+                // Sum-of-Years' Digits Method
+                const sumOfYears = (usefulLife * (usefulLife + 1)) / 2;
+                let remainingLife = usefulLife;
+                
+                for (let year = 1; year <= usefulLife; year++) {
+                    const beginningValue = year === 1 ? assetCost : schedule[year-2].endingValue;
+                    const fraction = remainingLife / sumOfYears;
+                    const depreciation = depreciableAmount * fraction;
+                    const endingValue = beginningValue - depreciation;
+                    accumulatedDepreciation += depreciation;
+                    remainingLife--;
+                    
+                    schedule.push({
+                        year,
+                        beginningValue,
+                        depreciation,
+                        accumulatedDepreciation,
+                        endingValue
+                    });
+                }
+            }
+            
+            // Display results
+            displayDepreciationSchedule(schedule, assetCost, salvageValue, usefulLife);
+            
+            // Show results
+            document.getElementById('depreciation-result').style.display = 'block';
+        });
+        
+        function displayDepreciationSchedule(schedule, assetCost, salvageValue, usefulLife) {
+            const scheduleBody = document.getElementById('schedule-body');
+            scheduleBody.innerHTML = '';
+            
+            // Update summary information
+            document.getElementById('depreciable-amount').textContent = (assetCost - salvageValue).toFixed(2);
+            document.getElementById('life-span').textContent = usefulLife;
+            document.getElementById('total-depreciation').textContent = (assetCost - salvageValue).toFixed(2);
+            
+            // Populate table
+            schedule.forEach(yearData => {
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>${yearData.year}</td>
+                    <td>$${yearData.beginningValue.toFixed(2)}</td>
+                    <td>$${yearData.depreciation.toFixed(2)}</td>
+                    <td>$${yearData.accumulatedDepreciation.toFixed(2)}</td>
+                    <td>$${yearData.endingValue.toFixed(2)}</td>
+                `;
+                
+                scheduleBody.appendChild(row);
+            });
+            
+            // Create chart
+            createDepreciationChart(schedule);
+        }
+        
+        function createDepreciationChart(schedule) {
+            const ctx = document.getElementById('depreciation-chart').getContext('2d');
+            
+            // Destroy previous chart if it exists
+            if (window.depreciationChart) {
+                window.depreciationChart.destroy();
+            }
+            
+            const years = schedule.map(item => item.year);
+            const bookValues = schedule.map(item => item.endingValue);
+            const depreciationValues = schedule.map(item => item.depreciation);
+            
+            window.depreciationChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: years,
+                    datasets: [
+                        {
+                            label: 'Book Value',
+                            data: bookValues,
+                            borderColor: '#3498db',
+                            backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                            fill: true,
+                            tension: 0.1
+                        },
+                        {
+                            label: 'Annual Depreciation',
+                            data: depreciationValues,
+                            borderColor: '#e74c3c',
+                            backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                            fill: true,
+                            tension: 0.1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Depreciation Over Time'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': $' + context.raw.toFixed(2);
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value.toFixed(2);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
