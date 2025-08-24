@@ -37,13 +37,160 @@
             line-height: 1.6;
             color: var(--text-color);
             background-color: #f5f7fa;
+            transition: margin-left 0.3s;
         }
+        
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block; /* Changed from none to block */
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
         
         header {
             background-color: var(--primary-color);
             color: white;
             padding: 1rem 0;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
         
         .container {
@@ -307,7 +454,17 @@
             color: var(--text-light);
             font-size: 0.9rem;
         }
-        
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            display: block;
+        }
+            
+        body.sidebar-open {
+            margin-left: 0;
+            overflow: hidden;
+        }
+        /* xxxx navigation end xxxxx */
+
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
@@ -350,9 +507,158 @@
     </style>
 </head>
 <body>
+</head>
+<body>
+    <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="gagerr.html" class="sidebar-link">Gage R&R</a>
+                <a href="processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="oee.html" class="sidebar-link">OEE Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="anova.html" class="sidebar-link">ANOVA</a>
+                <a href="chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
+                <a href="factorialdesign.html" class="sidebar-link">Factorial Design</a>
+                <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="regression.html" class="sidebar-link">Regression</a>
+                <a href="samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="ttest.html" class="sidebar-link">T-Test</a>
+                <a href="ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="eoq.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="rop.html" class="sidebar-link">Reorder Point</a>
+                <a href="kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Study</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+            </div>
+        </div>
+    </aside>
+    <!-- xxxx navigation end xxxxx -->
+    
     <header>
-        <div class="container header-content">
-            <div class="logo">Industrial <span>Engineering</span> Calculators</div>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Industrial Engineering <span>Calculators</span></div>
             <nav>
                 <ul>
                     <li><a href="index.html">Home</a></li>
@@ -534,7 +840,7 @@
                 <a href="privacy.html">Privacy Policy</a>
                 <a href="contact.html">Contact Us</a>
             </div>
-            <p class="copyright">&copy; 2023 Industrial Engineering Calculators. All rights reserved.</p>
+            <p class="copyright">&copy; 2025 Industrial Engineering Calculators. All rights reserved.</p>
         </div>
     </footer>
 

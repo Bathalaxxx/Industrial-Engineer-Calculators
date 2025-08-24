@@ -513,7 +513,17 @@
             color: var(--text-light);
             font-size: 0.9rem;
         }
-        
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            display: block;
+        }
+            
+        body.sidebar-open {
+            margin-left: 0;
+            overflow: hidden;
+        }
+        /* xxxx navigation end xxxxx */
+
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;

@@ -531,6 +531,40 @@
             color: var(--text-light);
             font-size: 0.9rem;
         }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .method-tabs {
+                flex-direction: column;
+            }
+            
+            .method-tab {
+                border-radius: 0;
+                margin-right: 0;
+                border-bottom: 1px solid #ddd;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
         
         /* xxxx navigation start xxxxx */
         .sidebar-toggle {
@@ -542,6 +576,7 @@
             overflow: hidden;
         }
         /* xxxx navigation end xxxxx */
+    }
     </style>
 </head>
 <body>
@@ -577,6 +612,7 @@
                 <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
                 <a href="gagerr.html" class="sidebar-link">Gage R&R</a>
                 <a href="processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
                 <a href="oee.html" class="sidebar-link">OEE Calculator</a>
             </div>
         </div>
@@ -592,7 +628,6 @@
                 <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
                 <a href="factorialdesign.html" class="sidebar-link">Factorial Design</a>
                 <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
-                <a href="latinsquare.html" class="sidebar-link">Latin Square</a>
                 <a href="regression.html" class="sidebar-link">Regression</a>
                 <a href="samplesize.html" class="sidebar-link">Sample Size</a>
                 <a href="taguchi.html" class="sidebar-link">Taguchi</a>
@@ -711,7 +746,6 @@
         <div class="container">
             <h1>Essential Tools for Industrial Engineers</h1>
             <p>Free online calculators to help with production planning, quality control, operations management, and more. Made for industrial engineering professionals, students, and aspiring future practitioners.</p>
-            <a href="https://www.buymeacoffee.com/IndEnggcalculators"><img src="https://img.buymeacoffee.com/button-api/?text=Support our work!&emoji=🏭&slug=IndEnggcalculators&button_colour=FF5F5F&font_colour=ffffff&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00" /></a>
         </div>
     </section>
 
@@ -1070,7 +1104,7 @@
                 <a href="contact.html">Contact Us</a>
             </div>
             <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
-            <p class="copyright">© 2023 Industrial Engineering Calculators. All rights reserved.</p>
+            <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
         </div>
     </footer>
 
