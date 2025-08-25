@@ -784,29 +784,7 @@
                         Moment = Force × Distance × sin(θ)
                     </div>
                     
-                    <div class="diagram-container">
-                        <figure>
-                            <svg width="300" height="200" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
-                                <!-- Pivot point -->
-                                <circle cx="150" cy="150" r="5" fill="var(--moment-color)" />
-                                <text x="150" y="170" text-anchor="middle" font-size="12">Pivot Point</text>
-                                
-                                <!-- Arm -->
-                                <line x1="150" y1="150" x2="250" y2="50" stroke="var(--text-color)" stroke-width="3" />
-                                <text x="200" y="100" text-anchor="middle" font-size="12">Distance (d)</text>
-                                
-                                <!-- Force arrow -->
-                                <line x1="250" y1="50" x2="230" y2="70" stroke="var(--moment-color)" stroke-width="2" />
-                                <line x1="250" y1="50" x2="270" y2="70" stroke="var(--moment-color)" stroke-width="2" />
-                                <text x="280" y="60" text-anchor="start" font-size="12" fill="var(--moment-color)">Force (F)</text>
-                                
-                                <!-- Angle arc -->
-                                <path d="M 180 150 A 30 30 0 0 1 200 135" fill="none" stroke="var(--text-light)" stroke-width="1" />
-                                <text x="190" y="145" text-anchor="middle" font-size="12">θ</text>
-                            </svg>
-                            <figcaption>Diagram of moment/torque calculation</figcaption>
-                        </figure>
-                    </div>
+                    
                     
                     <form id="moment-form">
                         <div class="input-row">
@@ -1172,7 +1150,7 @@
                 
                 <div class="example">
                     <h4>Example 1: Safe Lifting</h4>
-                    <p><strong>Scenario:</strong> Lifting 10 kg box from waist height (75cm) to shelf (120cm), close to body (25cm horizontal), good grip, 4 lifts/minute for 2 hours.</p>
+                    <p><strong>Scenario:</strong> Lifting 10 kg container from waist height (75 cm) to a shelf (120 cm), close to body (25 cm horizontal), with good grip, 4 lifts/minute for at most 2 hours.</p>
                     <p><strong>Results:</strong> RWL = 14.2 kg, LI = 0.7 (Safe)</p>
                 </div>
                 
