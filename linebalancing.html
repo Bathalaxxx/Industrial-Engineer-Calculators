@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
     <script>
@@ -16,12 +15,8 @@
     <meta charset="UTF-8">
     <meta name="google-adsense-account" content="ca-pub-5607576434988374">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Six Sigma DPMO Calculator | Industrial Engineering Calculators</title>
-
- 
-    
-
-    
+    <title>Line Balancing Calculator | Industrial Engineering Calculators</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
             --primary-color: #2c3e50;
@@ -44,9 +39,8 @@
             line-height: 1.6;
             color: var(--text-color);
             background-color: #f5f7fa;
-            transition: margin-left 0.3s;
         }
-        
+
         /* xxxx navigation start xxxxx */
         .sidebar-toggle {
             position: fixed;
@@ -190,6 +184,13 @@
         }
         /* xxxx navigation end xxxxx */
         
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
         header {
             background-color: var(--primary-color);
             color: white;
@@ -324,6 +325,7 @@
             font-size: 1rem;
             cursor: pointer;
             transition: background-color 0.3s;
+            margin-top: 1rem;
         }
         
         .calculate-btn:hover {
@@ -344,43 +346,11 @@
             color: var(--primary-color);
         }
         
-        .result-value {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--secondary-color);
-        }
-        
-        .sigma-scale {
-            width: 100%;
-            height: 40px;
-            background: linear-gradient(90deg, #e74c3c, #f39c12, #2ecc71);
-            border-radius: 5px;
-            margin: 1.5rem 0;
-            position: relative;
-        }
-        
-        .sigma-marker {
-            position: absolute;
-            top: -10px;
-            width: 4px;
-            height: 60px;
-            background-color: var(--primary-color);
-            transform: translateX(-50%);
-        }
-        
-        .sigma-labels {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 0.5rem;
-            font-size: 0.9rem;
-            color: var(--text-light);
-        }
-        
         .metrics-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin: 1.5rem 0;
+            gap: 1rem;
+            margin-bottom: 2rem;
         }
         
         .metric-card {
@@ -399,34 +369,7 @@
         .metric-card .metric-value {
             font-size: 1.5rem;
             font-weight: bold;
-        }
-        
-        .metric-card.dpmo .metric-value {
-            color: #e74c3c;
-        }
-        
-        .metric-card.sigma .metric-value {
-            color: #3498db;
-        }
-        
-        .metric-card.yield .metric-value {
-            color: #2ecc71;
-        }
-        
-        .examples-section {
-            margin-top: 3rem;
-        }
-        
-        .example {
-            margin-bottom: 1.5rem;
-            padding: 1rem;
-            background-color: #f8f9fa;
-            border-radius: 5px;
-        }
-        
-        .example h4 {
-            margin-bottom: 0.5rem;
-            color: var(--primary-color);
+            color: var(--secondary-color);
         }
         
         table {
@@ -446,6 +389,16 @@
         
         th {
             background-color: #f2f2f2;
+        }
+        
+        .workstation-row {
+            background-color: #e8f4fc;
+        }
+        
+        .chart-container {
+            margin-top: 2rem;
+            position: relative;
+            height: 400px;
         }
         
         footer {
@@ -476,44 +429,71 @@
             color: var(--text-light);
             font-size: 0.9rem;
         }
-        /* xxxx navigation start xxxxx */
-        .sidebar-toggle {
-            display: block;
+        
+        .task-inputs {
+            margin-bottom: 1.5rem;
         }
-            
-        body.sidebar-open {
-            margin-left: 0;
-            overflow: hidden;
+        
+        .task-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            align-items: center;
         }
-        /* xxxx navigation end xxxxx */
-
+        
+        .task-row input {
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .task-id {
+            width: 80px;
+        }
+        
+        .task-time {
+            width: 120px;
+        }
+        
+        .task-predecessors {
+            flex: 1;
+        }
+        
+        .add-task-btn, .remove-task-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .remove-task-btn {
+            background-color: var(--accent-color);
+        }
+        
         @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            nav ul {
-                margin-top: 1rem;
-                justify-content: center;
-            }
-            
-            nav ul li {
-                margin: 0 0.75rem;
-            }
-            
             .input-row {
                 flex-direction: column;
                 gap: 0;
             }
+
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            } 
             
-            .metrics-grid {
-                grid-template-columns: 1fr;
+            .task-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .task-id, .task-time {
+                width: 100%;
             }
         }
     </style>
-</head>
-<body>
 </head>
 <body>
     <!-- xxxx navigation start xxxxx -->
@@ -679,7 +659,6 @@
         </div>
     </aside>
     <!-- xxxx navigation end xxxxx -->
-    
     <header>
         <div class="container">
             <div class="header-content">
@@ -699,179 +678,156 @@
     
     <section class="page-hero">
         <div class="container">
-            <h1>Six Sigma DPMO Calculator</h1>
-            <p>Calculate Defects Per Million Opportunities and Sigma Level for process improvement</p>
+            <h1>Line Balancing Calculator</h1>
+            <p>Optimize your production line by balancing tasks across workstations</p>
         </div>
     </section>
     
     <main class="container">
         <section class="content-section">
             <div class="calculator-intro">
-                <h2>Six Sigma Metrics</h2>
-                <p>Six Sigma is a data-driven approach to process improvement that aims to reduce defects to near-zero levels. DPMO (Defects Per Million Opportunities) is a key metric that quantifies process performance and helps determine the Sigma Level.</p>
+                <h2>Assembly Line Balancing</h2>
+                <p>Line balancing is a production strategy that involves assigning tasks to workstations in such a way that the work at each station is approximately equal, minimizing idle time and maximizing efficiency.</p>
                 
                 <div class="formula-box">
-                    DPMO = (Number of Defects / (Number of Units × Number of Opportunities)) × 1,000,000
+                    Efficiency = (Sum of task times) / (Number of workstations × Cycle time) × 100%
                 </div>
                 
                 <p>Where:</p>
                 <ul>
-                    <li><strong>Defects</strong> = Total number of defects found</li>
-                    <li><strong>Units</strong> = Total number of units produced</li>
-                    <li><strong>Opportunities</strong> = Number of potential defect opportunities per unit</li>
+                    <li><strong>Cycle Time</strong> = Maximum time available at each workstation</li>
+                    <li><strong>Task Time</strong> = Time required to complete each task</li>
+                    <li><strong>Precedence Constraints</strong> = Order in which tasks must be performed</li>
                 </ul>
             </div>
 
             <script async="async" data-cfasync="false" src="//pl27511448.profitableratecpm.com/5d225b5e0b22c0980e365900e2390e1d/invoke.js"></script> <!-- adterra native banner -->
-            <div id="container-5d225b5e0b22c0980e365900e2390e1d"></div>    <!-- adterra native banner -->            
+            <div id="container-5d225b5e0b22c0980e365900e2390e1d"></div>    <!-- adterra native banner -->    
             
-            <form id="dpmo-form">
-                <h3>Process Metrics</h3>
-                <div class="input-row">
-                    <div class="input-group">
-                        <label for="units">Number of Units Produced:</label>
-                        <input type="number" id="units" min="1" step="1" required>
-                    </div>
-                    
-                    <div class="input-group">
-                        <label for="defects">Number of Defects Found:</label>
-                        <input type="number" id="defects" min="0" step="1" required>
-                    </div>
+            <h3>Input Parameters</h3>
+            
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="cycle-time">Cycle Time (seconds):</label>
+                    <input type="number" id="cycle-time" min="1" step="1" value="60" required>
                 </div>
                 
                 <div class="input-group">
-                    <label for="opportunities">Number of Defect Opportunities per Unit:</label>
-                    <input type="number" id="opportunities" min="1" step="1" value="1" required>
-                    <p class="help-text">The number of potential ways a defect can occur in each unit</p>
+                    <label for="production-time">Production Time Available (seconds/day):</label>
+                    <input type="number" id="production-time" min="1" step="1" value="28800" required>
                 </div>
                 
-                <button type="submit" class="calculate-btn">Calculate DPMO & Sigma Level</button>
-            </form>
+                <div class="input-group">
+                    <label for="demand">Daily Demand (units):</label>
+                    <input type="number" id="demand" min="1" step="1" value="480" required>
+                </div>
+            </div>
             
-            <div class="result-box" id="dpmo-result">
-                <h3>Six Sigma Results</h3>
+            <h3>Task Information</h3>
+            <p>Enter tasks with their times and predecessors (comma-separated task IDs):</p>
+            
+            <div class="task-inputs" id="task-inputs">
+                <div class="task-row">
+                    <input type="text" class="task-id" placeholder="Task ID" value="A">
+                    <input type="number" class="task-time" placeholder="Time (sec)" min="1" step="1" value="45">
+                    <input type="text" class="task-predecessors" placeholder="Predecessors (comma-separated)">
+                    <button class="remove-task-btn">Remove</button>
+                </div>
+                <div class="task-row">
+                    <input type="text" class="task-id" placeholder="Task ID" value="B">
+                    <input type="number" class="task-time" placeholder="Time (sec)" min="1" step="1" value="15">
+                    <input type="text" class="task-predecessors" placeholder="Predecessors (comma-separated)" value="A">
+                    <button class="remove-task-btn">Remove</button>
+                </div>
+                <div class="task-row">
+                    <input type="text" class="task-id" placeholder="Task ID" value="C">
+                    <input type="number" class="task-time" placeholder="Time (sec)" min="1" step="1" value="20">
+                    <input type="text" class="task-predecessors" placeholder="Predecessors (comma-separated)" value="A">
+                    <button class="remove-task-btn">Remove</button>
+                </div>
+                <div class="task-row">
+                    <input type="text" class="task-id" placeholder="Task ID" value="D">
+                    <input type="number" class="task-time" placeholder="Time (sec)" min="1" step="1" value="30">
+                    <input type="text" class="task-predecessors" placeholder="Predecessors (comma-separated)" value="B">
+                    <button class="remove-task-btn">Remove</button>
+                </div>
+                <div class="task-row">
+                    <input type="text" class="task-id" placeholder="Task ID" value="E">
+                    <input type="number" class="task-time" placeholder="Time (sec)" min="1" step="1" value="25">
+                    <input type="text" class="task-predecessors" placeholder="Predecessors (comma-separated)" value="C">
+                    <button class="remove-task-btn">Remove</button>
+                </div>
+                <div class="task-row">
+                    <input type="text" class="task-id" placeholder="Task ID" value="F">
+                    <input type="number" class="task-time" placeholder="Time (sec)" min="1" step="1" value="35">
+                    <input type="text" class="task-predecessors" placeholder="Predecessors (comma-separated)" value="D,E">
+                    <button class="remove-task-btn">Remove</button>
+                </div>
+            </div>
+            
+            <button id="add-task-btn" class="add-task-btn">Add Task</button>
+            
+            <button id="calculate-btn" class="calculate-btn">Balance Line</button>
+            
+            <div class="result-box" id="line-balancing-result">
+                <h3>Line Balancing Results</h3>
                 
                 <div class="metrics-grid">
-                    <div class="metric-card dpmo">
-                        <h4>DPMO</h4>
-                        <div class="metric-value" id="dpmo-value"></div>
-                        <p>Defects Per Million Opportunities</p>
+                    <div class="metric-card">
+                        <h4>Cycle Time</h4>
+                        <div class="metric-value" id="cycle-time-result"></div>
                     </div>
                     
-                    <div class="metric-card sigma">
-                        <h4>Sigma Level</h4>
-                        <div class="metric-value" id="sigma-value"></div>
-                        <p>Process Capability</p>
+                    <div class="metric-card">
+                        <h4>Theoretical Minimum Workstations</h4>
+                        <div class="metric-value" id="min-workstations"></div>
                     </div>
                     
-                    <div class="metric-card yield">
-                        <h4>Yield</h4>
-                        <div class="metric-value" id="yield-value"></div>
-                        <p>Percent Defect-Free</p>
+                    <div class="metric-card">
+                        <h4>Actual Workstations</h4>
+                        <div class="metric-value" id="actual-workstations"></div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <h4>Efficiency</h4>
+                        <div class="metric-value" id="efficiency"></div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <h4>Balance Delay</h4>
+                        <div class="metric-value" id="balance-delay"></div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <h4>Smoothness Index</h4>
+                        <div class="metric-value" id="smoothness-index"></div>
                     </div>
                 </div>
                 
-                <h4>Sigma Scale</h4>
-                <div class="sigma-scale">
-                    <div class="sigma-marker" id="sigma-marker"></div>
-                </div>
-                <div class="sigma-labels">
-                    <span>1σ</span>
-                    <span>2σ</span>
-                    <span>3σ</span>
-                    <span>4σ</span>
-                    <span>5σ</span>
-                    <span>6σ</span>
-                </div>
-                
-                <h4>Interpretation</h4>
-                <div id="interpretation"></div>
-                
-                <h4>Six Sigma Benchmarking</h4>
-                <table>
-                    <tr>
-                        <th>Sigma Level</th>
-                        <th>DPMO</th>
-                        <th>Yield</th>
-                        <th>Quality Level</th>
-                    </tr>
-                    <tr>
-                        <td>1σ</td>
-                        <td>691,462</td>
-                        <td>30.85%</td>
-                        <td>Unacceptable</td>
-                    </tr>
-                    <tr>
-                        <td>2σ</td>
-                        <td>308,538</td>
-                        <td>69.15%</td>
-                        <td>Marginal</td>
-                    </tr>
-                    <tr>
-                        <td>3σ</td>
-                        <td>66,807</td>
-                        <td>93.32%</td>
-                        <td>Average</td>
-                    </tr>
-                    <tr>
-                        <td>4σ</td>
-                        <td>6,210</td>
-                        <td>99.38%</td>
-                        <td>Good</td>
-                    </tr>
-                    <tr>
-                        <td>5σ</td>
-                        <td>233</td>
-                        <td>99.98%</td>
-                        <td>Excellent</td>
-                    </tr>
-                    <tr>
-                        <td>6σ</td>
-                        <td>3.4</td>
-                        <td>99.99966%</td>
-                        <td>World Class</td>
-                    </tr>
+                <h4>Workstation Assignment</h4>
+                <table id="assignment-table">
+                    <thead>
+                        <tr>
+                            <th>Workstation</th>
+                            <th>Tasks</th>
+                            <th>Total Time (sec)</th>
+                            <th>Idle Time (sec)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="assignment-body">
+                    </tbody>
                 </table>
-            </div>
-            
-            <div class="examples-section">
-                <h3>Practical Examples</h3>
                 
-                <div class="example">
-                    <h4>Example 1: Manufacturing Process</h4>
-                    <p>Units: 1,000 | Defects: 45 | Opportunities: 2</p>
-                    <p>DPMO = (45 / (1,000 × 2)) × 1,000,000 = 22,500</p>
-                    <p>Sigma Level ≈ 3.5σ (Between 3σ and 4σ)</p>
+                <h4>Workstation Utilization Chart</h4>
+                <div class="chart-container">
+                    <canvas id="workstation-chart"></canvas>
                 </div>
                 
-                <div class="example">
-                    <h4>Example 2: Service Process</h4>
-                    <p>Units: 500 | Defects: 6 | Opportunities: 5</p>
-                    <p>DPMO = (6 / (500 × 5)) × 1,000,000 = 2,400</p>
-                    <p>Sigma Level ≈ 4.3σ (Between 4σ and 5σ)</p>
+                <h4>Precedence Diagram</h4>
+                <div id="precedence-diagram">
+                    <!-- This would typically be a visual diagram, but we'll show a text representation -->
+                    <p><em>Visual diagram would appear here with proper graphing library</em></p>
                 </div>
-                
-                <div class="example">
-                    <h4>Example 3: High-Quality Process</h4>
-                    <p>Units: 10,000 | Defects: 3 | Opportunities: 1</p>
-                    <p>DPMO = (3 / (10,000 × 1)) × 1,000,000 = 300</p>
-                    <p>Sigma Level ≈ 4.8σ (Approaching 5σ)</p>
-                </div>
-            </div>
-            
-            <div class="calculator-intro">
-                <h3>Understanding DPMO and Sigma Level</h3>
-                <p>DPMO provides a standardized way to compare processes with different complexities. The Sigma Level translates DPMO into a simple scale from 1 to 6 (or higher), where higher values indicate better process performance.</p>
-                
-                <p>Most organizations operate at 3-4 Sigma levels. Six Sigma performance (3.4 DPMO) represents near-perfect processes, with only 3.4 defects per million opportunities.</p>
-                
-                <p>Using these metrics helps organizations:</p>
-                <ul>
-                    <li>Benchmark process performance against industry standards</li>
-                    <li>Identify improvement opportunities</li>
-                    <li>Set quality improvement targets</li>
-                    <li>Measure the impact of process changes</li>
-                </ul>
             </div>
         </section>
     </main>
@@ -890,171 +846,318 @@
         </div>
     </footer>
 
-    <!-- xxxx navigation start xxxxx -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const sidebar = document.querySelector('.sidebar');
-            const sidebarToggle = document.querySelector('.sidebar-toggle');
-            const sidebarClose = document.querySelector('.sidebar-close');
-            const overlay = document.querySelector('.overlay');
-            const body = document.body;
+            const taskInputs = document.getElementById('task-inputs');
+            const addTaskBtn = document.getElementById('add-task-btn');
+            const calculateBtn = document.getElementById('calculate-btn');
+            const resultBox = document.getElementById('line-balancing-result');
             
-            // Toggle sidebar
-            function toggleSidebar() {
-                sidebar.classList.toggle('open');
-                overlay.classList.toggle('active');
-                body.classList.toggle('sidebar-open');
-            }
-            
-            // Toggle category expansion
-            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
-            categoryHeaders.forEach(header => {
-                header.addEventListener('click', function() {
-                    const category = this.parentElement;
-                    category.classList.toggle('open');
-                    
-                    // Update the expand/collapse icon
-                    const icon = this.querySelector('span:last-child');
-                    icon.textContent = category.classList.contains('open') ? '−' : '+';
+            // Add task row
+            addTaskBtn.addEventListener('click', function() {
+                const taskRow = document.createElement('div');
+                taskRow.className = 'task-row';
+                taskRow.innerHTML = `
+                    <input type="text" class="task-id" placeholder="Task ID">
+                    <input type="number" class="task-time" placeholder="Time (sec)" min="1" step="1">
+                    <input type="text" class="task-predecessors" placeholder="Predecessors (comma-separated)">
+                    <button class="remove-task-btn">Remove</button>
+                `;
+                taskInputs.appendChild(taskRow);
+                
+                // Add event listener to remove button
+                taskRow.querySelector('.remove-task-btn').addEventListener('click', function() {
+                    taskInputs.removeChild(taskRow);
                 });
             });
             
-            // Event listeners
-            sidebarToggle.addEventListener('click', toggleSidebar);
-            sidebarClose.addEventListener('click', toggleSidebar);
-            overlay.addEventListener('click', toggleSidebar);
-            
-            // Close sidebar when clicking outside on mobile
-            document.addEventListener('click', function(event) {
-                if (window.innerWidth <= 768 && 
-                    body.classList.contains('sidebar-open') && 
-                    !sidebar.contains(event.target) && 
-                    event.target !== sidebarToggle) {
-                    toggleSidebar();
-                }
+            // Add event listeners to existing remove buttons
+            document.querySelectorAll('.remove-task-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (document.querySelectorAll('.task-row').length > 1) {
+                        taskInputs.removeChild(btn.parentElement);
+                    } else {
+                        alert('You need at least one task');
+                    }
+                });
             });
             
-            // Close sidebar when pressing Escape key
-            document.addEventListener('keydown', function(event) {
-                if (event.key === 'Escape' && body.classList.contains('sidebar-open')) {
-                    toggleSidebar();
-                }
-            });
-        });
-    </script>
-    <!-- xxxx navigation end xxxxx -->
-
-    <script>
-        document.getElementById('dpmo-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get input values
-            const units = parseInt(document.getElementById('units').value);
-            const defects = parseInt(document.getElementById('defects').value);
-            const opportunities = parseInt(document.getElementById('opportunities').value);
-            
-            // Validate inputs
-            if (isNaN(units) || isNaN(defects) || isNaN(opportunities)) {
-                alert('Please enter valid numbers in all fields');
-                return;
-            }
-            
-            if (units <= 0 || opportunities <= 0) {
-                alert('Units and opportunities must be greater than zero');
-                return;
-            }
-            
-            if (defects < 0) {
-                alert('Defects cannot be negative');
-                return;
-            }
-            
-            // Calculate DPMO
-            const dpmo = (defects / (units * opportunities)) * 1000000;
-            
-            // Calculate Yield
-            const yieldPercent = (1 - (defects / (units * opportunities))) * 100;
-            
-            // Calculate Sigma Level (approximation)
-            const sigmaLevel = calculateSigmaLevel(dpmo);
-            
-            // Display results
-            document.getElementById('dpmo-value').textContent = dpmo.toLocaleString(undefined, {maximumFractionDigits: 1});
-            document.getElementById('sigma-value').textContent = sigmaLevel.toFixed(2) + 'σ';
-            document.getElementById('yield-value').textContent = yieldPercent.toFixed(2) + '%';
-            
-            // Position sigma marker
-            const sigmaPercentage = Math.min(100, ((sigmaLevel - 1) / 5) * 100);
-            document.getElementById('sigma-marker').style.left = sigmaPercentage + '%';
-            
-            // Interpretation
-            let interpretation = '';
-            if (sigmaLevel >= 6) {
-                interpretation = `<p>Your process is at <strong>World Class</strong> level (6σ). This represents only ${dpmo.toFixed(1)} defects per million opportunities, which is the benchmark for excellence in most industries.</p>`;
-            } else if (sigmaLevel >= 5) {
-                interpretation = `<p>Your process is <strong>Excellent</strong> (5σ to 6σ). With ${dpmo.toLocaleString(undefined, {maximumFractionDigits: 1})} DPMO, you're performing better than most organizations.</p>`;
-            } else if (sigmaLevel >= 4) {
-                interpretation = `<p>Your process is <strong>Good</strong> (4σ to 5σ). At ${dpmo.toLocaleString(undefined, {maximumFractionDigits: 1})} DPMO, you're above average but still have room for improvement.</p>`;
-            } else if (sigmaLevel >= 3) {
-                interpretation = `<p>Your process is <strong>Average</strong> (3σ to 4σ). With ${dpmo.toLocaleString(undefined, {maximumFractionDigits: 1})} DPMO, you're performing at industry average but have significant improvement opportunities.</p>`;
-            } else {
-                interpretation = `<p>Your process needs <strong>significant improvement</strong> (below 3σ). At ${dpmo.toLocaleString(undefined, {maximumFractionDigits: 1})} DPMO, you should prioritize quality improvement initiatives.</p>`;
-            }
-            
-            interpretation += `<p>Your process yield is ${yieldPercent.toFixed(2)}%, meaning ${yieldPercent.toFixed(2)}% of opportunities are defect-free.</p>`;
-            
-            document.getElementById('interpretation').innerHTML = interpretation;
-            
-            // Show results
-            document.getElementById('dpmo-result').style.display = 'block';
-        });
-        
-        // Function to calculate Sigma Level from DPMO
-        function calculateSigmaLevel(dpmo) {
-            // This is an approximation as the exact calculation requires the normal distribution
-            // For precise calculation, we'd need to use the inverse normal distribution
-            
-            // Common benchmarks for Sigma Level to DPMO
-            const sigmaBenchmarks = [
-                { sigma: 1, dpmo: 691462 },
-                { sigma: 2, dpmo: 308538 },
-                { sigma: 3, dpmo: 66807 },
-                { sigma: 4, dpmo: 6210 },
-                { sigma: 5, dpmo: 233 },
-                { sigma: 6, dpmo: 3.4 }
-            ];
-            
-            // For DPMO values lower than 3.4 (better than 6σ)
-            if (dpmo <= 3.4) {
-                // Extrapolate beyond 6σ
-                return 6 + (Math.log10(3.4 / dpmo) / Math.log10(2));
-            }
-            
-            // For DPMO values between benchmarks
-            for (let i = 0; i < sigmaBenchmarks.length - 1; i++) {
-                const current = sigmaBenchmarks[i];
-                const next = sigmaBenchmarks[i + 1];
+            // Calculate line balancing
+            calculateBtn.addEventListener('click', function() {
+                // Get input values
+                const cycleTime = parseInt(document.getElementById('cycle-time').value);
+                const productionTime = parseInt(document.getElementById('production-time').value);
+                const demand = parseInt(document.getElementById('demand').value);
                 
-                if (dpmo <= current.dpmo && dpmo > next.dpmo) {
-                    // Linear interpolation between benchmarks
-                    const sigmaRange = next.sigma - current.sigma;
-                    const dpmoRange = current.dpmo - next.dpmo;
-                    const positionInRange = (current.dpmo - dpmo) / dpmoRange;
+                // Get tasks
+                const tasks = [];
+                const taskRows = document.querySelectorAll('.task-row');
+                
+                taskRows.forEach(row => {
+                    const id = row.querySelector('.task-id').value.trim();
+                    const time = parseInt(row.querySelector('.task-time').value);
+                    const predecessors = row.querySelector('.task-predecessors').value
+                        .split(',')
+                        .map(p => p.trim())
+                        .filter(p => p !== '');
                     
-                    return current.sigma + (sigmaRange * positionInRange);
+                    if (id && !isNaN(time)) {
+                        tasks.push({
+                            id,
+                            time,
+                            predecessors
+                        });
+                    }
+                });
+                
+                if (tasks.length === 0) {
+                    alert('Please enter at least one valid task');
+                    return;
                 }
+                
+                // Calculate line balancing
+                const result = calculateLineBalancing(tasks, cycleTime);
+                
+                // Display results
+                document.getElementById('cycle-time-result').textContent = `${cycleTime} sec`;
+                document.getElementById('min-workstations').textContent = result.minWorkstations.toFixed(2);
+                document.getElementById('actual-workstations').textContent = result.workstations.length;
+                document.getElementById('efficiency').textContent = `${(result.efficiency * 100).toFixed(2)}%`;
+                document.getElementById('balance-delay').textContent = `${(result.balanceDelay * 100).toFixed(2)}%`;
+                document.getElementById('smoothness-index').textContent = result.smoothnessIndex.toFixed(2);
+                
+                // Display workstation assignment
+                const assignmentBody = document.getElementById('assignment-body');
+                assignmentBody.innerHTML = '';
+                
+                result.workstations.forEach((ws, index) => {
+                    const row = document.createElement('tr');
+                    row.className = 'workstation-row';
+                    row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td>${ws.tasks.map(t => t.id).join(', ')}</td>
+                        <td>${ws.totalTime}</td>
+                        <td>${cycleTime - ws.totalTime}</td>
+                    `;
+                    assignmentBody.appendChild(row);
+                });
+                
+                // Create chart
+                createWorkstationChart(result.workstations, cycleTime);
+                
+                // Show results
+                resultBox.style.display = 'block';
+            });
+            
+            function calculateLineBalancing(tasks, cycleTime) {
+                // Calculate total task time and minimum workstations
+                const totalTaskTime = tasks.reduce((sum, task) => sum + task.time, 0);
+                const minWorkstations = Math.ceil(totalTaskTime / cycleTime);
+                
+                // Implement longest task time (LTT) heuristic for line balancing
+                // This is a simplified version - real implementations would be more complex
+                
+                // Create a copy of tasks to work with
+                const remainingTasks = [...tasks];
+                const workstations = [];
+                
+                // Calculate task priorities (positional weight)
+                const taskPriorities = calculateTaskPriorities(tasks);
+                
+                // Sort tasks by priority (descending)
+                remainingTasks.sort((a, b) => taskPriorities[b.id] - taskPriorities[a.id]);
+                
+                // Assign tasks to workstations
+                while (remainingTasks.length > 0) {
+                    const workstation = {
+                        tasks: [],
+                        totalTime: 0
+                    };
+                    
+                    // Find assignable tasks (with all predecessors already assigned)
+                    const assignableTasks = remainingTasks.filter(task => {
+                        // Check if all predecessors have been assigned
+                        return task.predecessors.every(predId => {
+                            return !remainingTasks.some(t => t.id === predId);
+                        });
+                    });
+                    
+                    if (assignableTasks.length === 0) {
+                        // This shouldn't happen if precedence constraints are valid
+                        console.error('No assignable tasks found - check precedence constraints');
+                        break;
+                    }
+                    
+                    // Assign tasks to this workstation
+                    for (let i = 0; i < assignableTasks.length; i++) {
+                        const task = assignableTasks[i];
+                        
+                        if (workstation.totalTime + task.time <= cycleTime) {
+                            workstation.tasks.push(task);
+                            workstation.totalTime += task.time;
+                            
+                            // Remove from remaining tasks
+                            const index = remainingTasks.findIndex(t => t.id === task.id);
+                            if (index !== -1) {
+                                remainingTasks.splice(index, 1);
+                            }
+                        }
+                    }
+                    
+                    workstations.push(workstation);
+                }
+                
+                // Calculate performance metrics
+                const efficiency = totalTaskTime / (workstations.length * cycleTime);
+                const balanceDelay = 1 - efficiency;
+                
+                // Calculate smoothness index
+                let idleTimeSumSquared = 0;
+                workstations.forEach(ws => {
+                    const idleTime = cycleTime - ws.totalTime;
+                    idleTimeSumSquared += idleTime * idleTime;
+                });
+                const smoothnessIndex = Math.sqrt(idleTimeSumSquared);
+                
+                return {
+                    minWorkstations,
+                    workstations,
+                    efficiency,
+                    balanceDelay,
+                    smoothnessIndex,
+                    totalTaskTime
+                };
             }
             
-            // For DPMO worse than 1σ
-            if (dpmo > 691462) {
-                return 1 - (Math.log10(dpmo / 691462) / Math.log10(2));
+            function calculateTaskPriorities(tasks) {
+                // Calculate positional weight for each task (sum of task time + all follower times)
+                const priorities = {};
+                
+                tasks.forEach(task => {
+                    priorities[task.id] = calculateTaskWeight(task, tasks);
+                });
+                
+                return priorities;
             }
             
-            return 0; // Fallback
-        }
+            function calculateTaskWeight(task, allTasks, visited = new Set()) {
+                if (visited.has(task.id)) return 0;
+                visited.add(task.id);
+                
+                // Find all tasks that have this task as a predecessor (followers)
+                const followers = allTasks.filter(t => t.predecessors.includes(task.id));
+                
+                let followerTime = 0;
+                followers.forEach(follower => {
+                    followerTime += calculateTaskWeight(follower, allTasks, visited);
+                });
+                
+                return task.time + followerTime;
+            }
+            
+            function createWorkstationChart(workstations, cycleTime) {
+                const ctx = document.getElementById('workstation-chart').getContext('2d');
+                
+                // Destroy existing chart if it exists
+                if (window.workstationChart instanceof Chart) {
+                    window.workstationChart.destroy();
+                }
+                
+                const workstationLabels = workstations.map((ws, index) => `Workstation ${index + 1}`);
+                const workstationTimes = workstations.map(ws => ws.totalTime);
+                const idleTimes = workstations.map(ws => cycleTime - ws.totalTime);
+                
+                window.workstationChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: workstationLabels,
+                        datasets: [
+                            {
+                                label: 'Task Time',
+                                data: workstationTimes,
+                                backgroundColor: 'rgba(52, 152, 219, 0.7)',
+                                borderColor: 'rgba(52, 152, 219, 1)',
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'Idle Time',
+                                data: idleTimes,
+                                backgroundColor: 'rgba(231, 76, 60, 0.7)',
+                                borderColor: 'rgba(231, 76, 60, 1)',
+                                borderWidth: 1
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                stacked: true,
+                                title: {
+                                    display: true,
+                                    text: 'Workstations'
+                                }
+                            },
+                            y: {
+                                stacked: true,
+                                title: {
+                                    display: true,
+                                    text: 'Time (seconds)'
+                                },
+                                max: cycleTime * 1.1,
+                                ticks: {
+                                    callback: function(value) {
+                                        return value + 's';
+                                    }
+                                }
+                            }
+                        },
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Workstation Utilization vs Cycle Time',
+                                font: {
+                                    size: 16
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return `${context.dataset.label}: ${context.raw}s`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+                
+                // Add cycle time line
+                Chart.helpers.merge(Chart.overrides.bar, {
+                    plugins: {
+                        annotation: {
+                            annotations: {
+                                line1: {
+                                    type: 'line',
+                                    mode: 'horizontal',
+                                    scaleID: 'y',
+                                    value: cycleTime,
+                                    borderColor: 'rgba(46, 204, 113, 1)',
+                                    borderWidth: 2,
+                                    borderDash: [5, 5],
+                                    label: {
+                                        display: true,
+                                        content: 'Cycle Time',
+                                        position: 'right'
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
     </script>
-
-
     <div id="cookie-banner" style="position:fixed;bottom:0;left:0;width:100%;background:#fffbe6;border-top:1px solid #e2c96f;padding:1rem;box-shadow:0 -2px 8px rgba(0,0,0,0.07);display:none;z-index:9999;">
         <span>
             We use cookies to improve your experience. Non-essential cookies (analytics, personalization) require your consent. 
@@ -1090,6 +1193,5 @@
         };
     })();
     </script>
-    
 </body>
 </html>
