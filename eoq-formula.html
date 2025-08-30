@@ -1,0 +1,1901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-3BSHG1DE6V');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5607576434988374"
+     crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="google-adsense-account" content="ca-pub-5607576434988374">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Updated Meta Tags -->
+    <meta name="description" content="EOQ Calculator - Calculate Economic Order Quantity with multiple methods. Learn EOQ formula, calculation methods, and inventory optimization techniques.">
+    <meta name="keywords" content="eoq formula, economic order quantity, eoq meaning, economic order quantity formula, eoq formula with example, inventory management, eoq calculator">
+    <title>EOQ Calculator | Economic Order Quantity Formula & Examples | Industrial Engineering Calculators</title>
+
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="EOQ Calculator | Economic Order Quantity Formula & Examples">
+    <meta property="og:description" content="Calculate Economic Order Quantity with our EOQ calculator. Learn the EOQ formula, calculation methods, and inventory optimization techniques.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.industrialengineeringcalculators.com/eoq-formula.html">
+    
+    <style>
+        /* Consistent with existing style */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block; /* Changed from none to block */
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .method-selector {
+            margin-bottom: 2rem;
+        }
+        
+        .method-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .method-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            margin-right: 0.5rem;
+            border-radius: 5px 5px 0 0;
+            background-color: #f1f1f1;
+            transition: all 0.3s;
+        }
+        
+        .method-tab.active {
+            background-color: white;
+            border-color: #ddd;
+            border-bottom-color: white;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        
+        .method-tab:hover:not(.active) {
+            background-color: #e9e9e9;
+        }
+        
+        .method-content {
+            display: none;
+        }
+        
+        .method-content.active {
+            display: block;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .metric-results {
+            display: flex;
+            justify-content: space-between;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .metric-card {
+            flex: 1;
+            min-width: 200px;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 0.5rem;
+            text-align: center;
+        }
+        
+        .metric-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-card .metric-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .metric-card.eoq .metric-value {
+            color: #3498db;
+        }
+        
+        .metric-card.orders .metric-value {
+            color: #f39c12;
+        }
+        
+        .metric-card.cycle .metric-value {
+            color: #2ecc71;
+        }
+        
+        .metric-card.cost .metric-value {
+            color: #e74c3c;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        .sensitivity-table {
+            width: 100%;
+            margin-top: 1.5rem;
+        }
+        
+        .sensitivity-table th {
+            background-color: var(--light-color);
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            display: block;
+        }
+            
+        body.sidebar-open {
+            margin-left: 0;
+            overflow: hidden;
+        }
+        /* xxxx navigation end xxxxx */
+
+        /* New styles for additional content */
+        .info-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .info-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1.5rem;
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .faq-answer {
+            display: none;
+            padding-top: 0.5rem;
+        }
+        
+        .faq-answer.show {
+            display: block;
+        }
+        
+        .related-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .tool-chip {
+            background-color: #e3f2fd;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .tool-chip:hover {
+            background-color: #bbdefb;
+        }
+        
+        .citation {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            font-style: italic;
+            margin-top: 0.5rem;
+        }
+
+        .bibliography {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .bibliography li {
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            text-indent: -1.5rem;
+        }
+
+        .bibliography li:before {
+            content: "•";
+            color: var(--secondary-color);
+            font-weight: bold;
+            display: inline-block;
+            width: 1.5rem;
+            margin-left: -1.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .method-tabs {
+                flex-direction: column;
+            }
+            
+            .method-tab {
+                border-radius: 0;
+                margin-right: 0;
+                border-bottom: 1px solid #ddd;
+            }
+            
+            .metric-results {
+                flex-direction: column;
+            }
+            
+            .metric-card {
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+
+    <div class="sidebar-category">
+        <div class="sidebar-category-header">
+            <span>Site Navigation</span>
+            <span>+</span>
+        </div>
+        
+        <div class="sidebar-category-content">
+            <a href="index.html" class="sidebar-link">Home</a>
+            <a href="about.html" class="sidebar-link">About</a>
+            <a href="terms.html" class="sidebar-link">Terms of Service</a>
+            <a href="privacy.html" class="sidebar-link">Privacy Policy</a>
+            <a href="contact.html" class="sidebar-link">Contact Us</a>
+            <a href="sitemap.html" class="sidebar-link">Sitemap</a>
+        </div>
+    </div>
+        
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="linebalancing.html" class="sidebar-link">Line Balancing</a>
+                <a href="takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="gagerr.html" class="sidebar-link">Gage R&R</a>
+                <a href="processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="oee-calculation.html" class="sidebar-link">OEE Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="anova.html" class="sidebar-link">ANOVA</a>
+                <a href="chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
+                
+                <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="regression.html" class="sidebar-link">Regression</a>
+                <a href="samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="ttest.html" class="sidebar-link">T-Test</a>
+                <a href="ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="eoq-formula.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="rop.html" class="sidebar-link">Reorder Point</a>
+                <a href="kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Study</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+            </div>
+        </div>
+    </aside>
+    <!-- xxxx navigation end xxxxx -->
+    
+
+    
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Industrial Engineering <span>Calculators</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="sitemap.html">Sitemap</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Economic Order Quantity Calculator</h1>
+            <p>Calculate optimal order quantities with multiple methods and variations</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Economic Order Quantity (EOQ)</h2>
+                <p>EOQ is the ideal optimal quantity an organization should purchase/acquire to minimize the costs associated to inventory such as holding costs, shortage costs, as well as order costs.</p>
+                
+                <div class="formula-box">
+                    Basic EOQ = √(2DS/H)
+                </div>
+                
+                <p>Where:</p>
+                <ul>
+                    <li><strong>D</strong> = Annual demand (units)</li>
+                    <li><strong>S</strong> = Ordering cost per order</li>
+                    <li><strong>H</strong> = Holding cost per unit per year</li>
+                </ul>
+            </div>
+
+            <script async="async" data-cfasync="false" src="//pl27511448.profitableratecpm.com/5d225b5e0b22c0980e365900e2390e1d/invoke.js"></script> <!-- adterra native banner -->
+            <div id="container-5d225b5e0b22c0980e365900e2390e1d"></div>    <!-- adterra native banner -->
+            
+            <!-- What is EOQ Section -->
+            <div class="info-section">
+                <h3>What is EOQ? Understanding Economic Order Quantity</h3>
+                <p><strong>Economic Order Quantity (EOQ)</strong> is a fundamental inventory management model that determines the optimal order quantity with the goal of minimizing the total inventory costs. The <strong>EOQ formula</strong> helps organizations find the balance between ordering costs (the cost to place and receive an order) and holding costs (the cost to store inventory).</p>
+                
+                <p>The <strong>economic order quantity formula</strong> was developed by Ford W. Harris in the 1910's and has since become a cornerstone of inventory management theory. It's based on several key assumptions:</p>
+                
+                <ol>
+                    <li>Demand is known, constant, and continuous</li>
+                    <li>Lead time is known and constant</li>
+                    <li>Receipt of inventory is instantaneous and complete</li>
+                    <li>Quantity discounts are not available (in the basic model)</li>
+                    <li>Ordering and holding costs are variable</li>
+                    <li>Stockouts can be completely avoided</li>
+                </ol>
+                
+                <p class="citation">Source: Harris, F. W. (1913). How many parts to make at once. Factory, The Magazine of Management, 10(2), 135-136, 152.</p>
+            </div>
+            
+            <!-- How to Use the EOQ Calculator -->
+            <div class="info-section">
+                <h3>How to Use This EOQ Calculator</h3>
+                <p>Our <strong>EOQ calculator</strong> supports multiple calculation methods to address different inventory scenarios. Follow these steps the optimum order quantity:</p>
+                
+                <ol>
+                    <li><strong>Select Calculation Method</strong>: Choose from Basic EOQ, Quantity Discount, Production Order, or Backordering models</li>
+                    <li><strong>Enter Demand Data</strong>: Input your annual demand in units</li>
+                    <li><strong>Enter Cost Parameters</strong>: Provide ordering cost, holding cost, and other relevant cost information</li>
+                    <li><strong>Calculate</strong>: Click the calculate button to see your optimal order quantity and associated costs</li>
+                </ol>
+                
+                <p>The calculator will provide calculated results including the optimal order quantity, order cycle time, number of orders per year, and minimized total inventory costs.</p>
+            </div>
+            
+            <div class="method-selector">
+                <h3>Calculation Method</h3>
+                <p>Select the EOQ variation you want to calculate:</p>
+                
+                <div class="method-tabs">
+                    <div class="method-tab active" data-method="basic">Basic EOQ</div>
+                    <div class="method-tab" data-method="discount">Quantity Discount</div>
+                    <div class="method-tab" data-method="production">Production Order</div>
+                    <div class="method-tab" data-method="backorder">Backordering</div>
+                </div>
+                
+                <!-- Basic EOQ Method -->
+                <div class="method-content active" id="basic-method">
+                    <h3>Basic EOQ Model</h3>
+                    <p>The standard EOQ model minimizes total inventory costs without considering discounts or backorders.</p>
+                    
+                    <form id="basic-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="basic-demand">Annual Demand (D):</label>
+                                <input type="number" id="basic-demand" min="1" step="1" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="basic-order-cost">Ordering Cost per Order (S):</label>
+                                <input type="number" id="basic-order-cost" min="0.01" step="0.01" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="basic-holding-cost">Holding Cost per Unit per Year (H):</label>
+                                <input type="number" id="basic-holding-cost" min="0.01" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="basic-unit-cost">Unit Cost (optional for TIC):</label>
+                                <input type="number" id="basic-unit-cost" min="0" step="0.01">
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate EOQ</button>
+                    </form>
+                </div>
+                
+                <!-- Quantity Discount Method -->
+                <div class="method-content" id="discount-method">
+                    <h3>EOQ with Quantity Discounts</h3>
+                    <p>Calculate EOQ when parts/materials/stock suppliers offer price discounts for larger order quantities.</p>
+                    
+                    <form id="discount-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="discount-demand">Annual Demand (D):</label>
+                                <input type="number" id="discount-demand" min="1" step="1" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="discount-order-cost">Ordering Cost per Order (S):</label>
+                                <input type="number" id="discount-order-cost" min="0.01" step="0.01" required>
+                            </div>
+                        </div>
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="discount-holding-rate">Holding Cost Rate (% of unit cost):</label>
+                                <input type="number" id="discount-holding-rate" min="0.1" step="0.1" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="discount-break-qty">Discount Break Quantities (comma separated):</label>
+                                <input type="text" id="discount-break-qty" placeholder="e.g., 100,500,1000" required>
+                            </div>
+                        </div>
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="discount-unit-prices">Unit Prices at Breaks (comma separated):</label>
+                                <input type="text" id="discount-unit-prices" placeholder="e.g., 10.00,9.50,9.00" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="calculate-btn">Calculate EOQ with Discounts</button>
+                    </form>
+                    </div>
+                
+                <!-- Production Order Method -->
+                <div class="method-content" id="production-method">
+                    <h3>Production Order Quantity</h3>
+                    <p>Calculate optimal order quantity when items are produced internally rather than ordered.</p>
+                    
+                    <form id="production-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="production-demand">Annual Demand (D):</label>
+                                <input type="number" id="production-demand" min="1" step="1" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="production-setup-cost">Setup Cost per Run (S):</label>
+                                <input type="number" id="production-setup-cost" min="0.01" step="0.01" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="production-holding-cost">Holding Cost per Unit per Year (H):</label>
+                                <input type="number" id="production-holding-cost" min="0.01" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="production-rate">Daily Production Rate (p):</label>
+                                <input type="number" id="production-rate" min="1" step="1" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="demand-rate">Daily Demand Rate (d):</label>
+                                <input type="number" id="demand-rate" min="1" step="1" required>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate Production Quantity</button>
+                    </form>
+                </div>
+                
+                <!-- Backordering Method -->
+                <div class="method-content" id="backorder-method">
+                    <h3>EOQ with Planned Backorders</h3>
+                    <p>Calculate optimal order quantity when backorders are allowed and planned.</p>
+                    
+                    <form id="backorder-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="backorder-demand">Annual Demand (D):</label>
+                                <input type="number" id="backorder-demand" min="1" step="1" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="backorder-order-cost">Ordering Cost per Order (S):</label>
+                                <input type="number" id="backorder-order-cost" min="0.01" step="0.01" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="backorder-holding-cost">Holding Cost per Unit per Year (H):</label>
+                                <input type="number" id="backorder-holding-cost" min="0.01" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="backorder-cost">Backorder Cost per Unit per Year (B):</label>
+                                <input type="number" id="backorder-cost" min="0.01" step="0.01" required>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate EOQ with Backorders</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="result-box" id="result-box">
+                <h3>Calculation Results</h3>
+                <div class="metric-results">
+                    <div class="metric-card eoq">
+                        <h4>Optimal Order Quantity (EOQ)</h4>
+                        <div class="metric-value" id="eoq-value">-</div>
+                    </div>
+                    <div class="metric-card orders">
+                        <h4>Orders per Year</h4>
+                        <div class="metric-value" id="orders-value">-</div>
+                    </div>
+                    <div class="metric-card cycle">
+                        <h4>Order Cycle (Days)</h4>
+                        <div class="metric-value" id="cycle-value">-</div>
+                    </div>
+                    <div class="metric-card cost">
+                        <h4>Total Annual Cost</h4>
+                        <div class="metric-value" id="cost-value">-</div>
+                    </div>
+                </div>
+                
+                <div id="detailed-results">
+                    <!-- Detailed results will be inserted here -->
+                </div>
+            </div>
+            
+            <!-- EOQ Formula with Example Section -->
+            <div class="info-section">
+                <h3>EOQ Formula with Example</h3>
+                <p>Let's examine the <strong>economic order quantity formula</strong> with a practical example:</p>
+                
+                <div class="formula-box">
+                    EOQ = √(2DS/H)
+                </div>
+                
+                <p><strong>Example:</strong> A company has the following inventory parameters:</p>
+                <ul>
+                    <li>Annual demand (D): 10,000 units</li>
+                    <li>Ordering cost (S): $50 per order</li>
+                    <li>Holding cost (H): $2.50 per unit per year</li>
+                </ul>
+                
+                <p>Using the <strong>EOQ formula</strong>:</p>
+                <div class="formula-box">
+                    EOQ = √(2 × 10,000 × 50 / 2.50) = √(1,000,000 / 2.50) = √400,000 = 632.46 units
+                </div>
+                
+                <p>Therefore, the optimal order quantity is approximately 633 units. This would result in about 15.81 orders per year (10,000 / 632.46) and an order cycle of approximately 23.12 days (365 / 15.81).</p>
+            </div>
+            
+            <!-- Related Tools Section -->
+            <div class="info-section">
+                <h3>Related Inventory Management Tools</h3>
+                <p>Explore these related calculators to optimize your inventory management:</p>
+                
+                <div class="related-tools">
+                    <a href="rop.html" class="tool-chip">Reorder Point Calculator</a>
+                    <a href="kanban.html" class="tool-chip">Kanban Calculator</a>
+                    <a href="newsvendor.html" class="tool-chip">Newsvendor Model</a>
+                    <a href="safety-stock.html" class="tool-chip">Safety Stock Calculator</a>
+                    <a href="inventory-turnover.html" class="tool-chip">Inventory Turnover</a>
+                </div>
+            </div>
+            
+            <!-- FAQs Section -->
+            <div class="info-section">
+                <h3>Frequently Asked Questions about EOQ</h3>
+                
+                <div class="faq-item">
+                    <div class="faq-question">What is the EOQ formula? <span>+</span></div>
+                    <div class="faq-answer">
+                        <p>The basic <strong>EOQ formula</strong> is: EOQ = √(2DS/H), where:</p>
+                        <ul>
+                            <li>D = Annual demand in units</li>
+                            <li>S = Ordering cost per order</li>
+                            <li>H = Holding cost per unit per year</li>
+                        </ul>
+                        <p>This formula calculates the optimal order quantity that minimizes total inventory costs.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">What are the limitations of the EOQ model? <span>+</span></div>
+                    <div class="faq-answer">
+                        <p>The EOQ model has several limitations:</p>
+                        <ol>
+                            <li>Assumes constant, known demand</li>
+                            <li>Assumes constant ordering and holding costs</li>
+                            <li>Assumes instantaneous replenishment</li>
+                            <li>Doesn't account for quantity discounts in the basic model</li>
+                            <li>Assumes no stockouts are allowed</li>
+                            <li>May not account for real-world constraints like storage limitations</li>
+                        </ol>
+                        <p>Despite these limitations, EOQ remains a valuable starting point for inventory analysis.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">When should I use EOQ with quantity discounts? <span>+</span></div>
+                    <div class="faq-answer">
+                        <p>Use the EOQ with quantity discounts model when:</p>
+                        <ul>
+                            <li>Suppliers offer price reductions for larger orders</li>
+                            <li>The savings from lower unit prices may outweigh increased holding costs</li>
+                            <li>You need to evaluate multiple price breaks to find the truly optimal order quantity</li>
+                        </ul>
+                
+                        <p>This model calculates the EOQ for each price break and determines which quantity results in the lowest total cost (including purchase cost).</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How does the production order quantity model differ from basic EOQ? <span>+</span></div>
+                    <div class="faq-answer">
+                        <p>The production order quantity (POQ) model differs from basic EOQ in several ways:</p>
+                        <ol>
+                            <li>Items are produced internally rather than ordered from suppliers</li>
+                            <li>Replenishment occurs gradually over time rather than instantaneously</li>
+                            <li>Uses production rate instead of order quantity</li>
+                            <li>Considers the relationship between production rate and demand rate</li>
+                            <li>Setup costs replace ordering costs</li>
+                        </ol>
+                        <p>The POQ model is more appropriate for manufacturing environments where production occurs in batches.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">What is the EOQ meaning in practical inventory management? <span>+</span></div>
+                    <div class="faq-answer">
+                        <p>In practical terms, the <strong>EOQ meaning</strong> (also called the <strong>optimal order quantity</strong> or <strong>economic lot size</strong>) shows the order quantity that:</p>
+                        <ul>
+                            <li>Minimizes the sum of ordering and holding costs</li>
+                            <li>Helps maintain optimal inventory levels</li>
+                            <li>Balances the cost of ordering too frequently versus holding too much inventory</li>
+                            <li>Provides a benchmark for evaluating order quantities</li>
+                        </ul>
+                        <p>While the exact EOQ may not always be practical to implement (due to actual package sizes, weight restrictions, etc.), it shows a target for inventory optimization efforts.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Definitions Section -->
+            <div class="info-section">
+                <h3>Key EOQ Terminology and Definitions</h3>
+                
+                <table>
+                    <tr>
+                        <th>Term</th>
+                        <th>Definition</th>
+                        <th>Symbol</th>
+                    </tr>
+                    <tr>
+                        <td>Economic Order Quantity</td>
+                        <td>The optimal order quantity that minimizes total inventory costs</td>
+                        <td>EOQ or Q*</td>
+                    </tr>
+                    <tr>
+                        <td>Annual Demand</td>
+                        <td>The total number of units required per year</td>
+                        <td>D</td>
+                    </tr>
+                    <tr>
+                        <td>Ordering Cost</td>
+                        <td>The fixed cost associated with placing and receiving an order</td>
+                        <td>S</td>
+                    </tr>
+                    <tr>
+                        <td>Holding Cost</td>
+                        <td>The cost to store one unit of inventory for one year</td>
+                        <td>H</td>
+                    </tr>
+                    <tr>
+                        <td>Unit Cost</td>
+                        <td>The purchase price per unit of inventory</td>
+                        <td>C</td>
+                    </tr>
+                    <tr>
+                        <td>Total Inventory Cost</td>
+                        <td>The sum of ordering, holding, and purchase costs</td>
+                        <td>TIC</td>
+                    </tr>
+                    <tr>
+                        <td>Reorder Point</td>
+                        <td>The inventory level at which a new order should be placed</td>
+                        <td>ROP</td>
+                    </tr>
+                    <tr>
+                        <td>Lead Time</td>
+                        <td>The time between placing an order and receiving it</td>
+                        <td>L</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <!-- Bibliography Section -->
+            <div class="info-section">
+                <h3>Bibliography and Further Reading</h3>
+                <ul class="bibliography">
+                    <li>
+                        Harris, F. W. (1913). 
+                        <em>How many parts to make at once</em></a>. Factory, The Magazine of Management, 10(2), 135-136, 152.
+                    </li>
+                    <li>
+                        Wilson, R. H. (1934). 
+                        <em>A scientific routine for stock control</em></a>. Harvard Business Review, 13(1), 116-128.
+                    </li>
+                    <li>
+                        Silver, E. A., Pyke, D. F., & Peterson, R. (1998). 
+                        <a href="https://amzn.to/4oZnDsf" rel="nofollow" target="_blank"><em>Inventory Management and Production Planning and Scheduling</em></a>. John Wiley & Sons.
+                    </li>
+                    <li>
+                        Nahmias, S. (2005). 
+                        <a href="https://amzn.to/4lQQtrQ" rel="nofollow" target="_blank"><em>Production and Operations Analysis</em></a>. McGraw-Hill/Irwin.
+                    </li>
+                    <li>
+                        Heizer, J., Render, B., & Munson, C. (2020). 
+                        <a href="https://amzn.to/4n5gmVX" rel="nofollow" target="_blank"><em>Operations Management: Sustainability and Supply Chain Management</em></a>. Pearson.
+                    </li>
+                </ul>
+                <p style="font-size: 0.9rem; margin-top: 1rem; font-style: italic;">
+                        <strong>Disclosure:</strong> As an Amazon Associate I earn from qualifying purchases. These links are provided for your convenience and help support this site.
+                </p>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+                <a href="sitemap.html">Sitemap</a>
+            </div>
+            <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebarClose = document.querySelector('.sidebar-close');
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.overlay');
+            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            
+            // Toggle sidebar
+            sidebarToggle.addEventListener('click', function() {
+                sidebar.classList.add('open');
+                overlay.classList.add('active');
+                document.body.classList.add('sidebar-open');
+            });
+            
+            // Close sidebar
+            function closeSidebar() {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+                document.body.classList.remove('sidebar-open');
+            }
+            
+            sidebarClose.addEventListener('click', closeSidebar);
+            overlay.addEventListener('click', closeSidebar);
+            
+            // Toggle category content
+            categoryHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const category = this.parentElement;
+                    category.classList.toggle('open');
+                    const icon = this.querySelector('span:last-child');
+                    icon.textContent = category.classList.contains('open') ? '−' : '+';
+                });
+            });
+            
+            // Toggle FAQ answers
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function() {
+                    const answer = this.nextElementSibling;
+                    answer.classList.toggle('show');
+                    const icon = this.querySelector('span');
+                    icon.textContent = answer.classList.contains('show') ? '−' : '+';
+                });
+            });
+            
+            // Method tabs functionality
+            const methodTabs = document.querySelectorAll('.method-tab');
+            const methodContents = document.querySelectorAll('.method-content');
+
+            methodTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const method = this.getAttribute('data-method');
+
+                    // Update active tab
+                    methodTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+
+                    // Show selected method content
+                    methodContents.forEach(content => content.classList.remove('active'));
+                    const selectedContent = document.getElementById(method + '-method');
+                    if (selectedContent) {
+                        selectedContent.classList.add('active');
+                    }
+                });
+            });
+
+            // Form submission handlers
+            const basicForm = document.getElementById('basic-form');
+            const discountForm = document.getElementById('discount-form');
+            const productionForm = document.getElementById('production-form');
+            const backorderForm = document.getElementById('backorder-form');
+            const resultBox = document.getElementById('result-box');
+
+            // Defensive: check if discountForm exists before adding event listener
+            if (discountForm) {
+                discountForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    // Get input values
+                    const demand = parseFloat(document.getElementById('discount-demand').value);
+                    const orderCost = parseFloat(document.getElementById('discount-order-cost').value);
+                    const holdingRate = parseFloat(document.getElementById('discount-holding-rate').value) / 100;
+                    const breakQtyInput = document.getElementById('discount-break-qty').value;
+                    const unitPricesInput = document.getElementById('discount-unit-prices').value;
+
+                    // Parse price breaks and unit prices
+                    const breakQtys = breakQtyInput.split(',').map(q => parseInt(q.trim())).filter(q => !isNaN(q));
+                    const unitPrices = unitPricesInput.split(',').map(p => parseFloat(p.trim())).filter(p => !isNaN(p));
+
+                    // Validate inputs
+                    if (
+                        isNaN(demand) ||
+                        isNaN(orderCost) ||
+                        isNaN(holdingRate) ||
+                        breakQtys.length === 0 ||
+                        unitPrices.length === 0 ||
+                        breakQtys.length !== unitPrices.length
+                    ) {
+                        alert('Please enter valid values. The number of break quantities and unit prices must match.');
+                        return;
+                    }
+
+                    // Sort breaks and prices together by breakQtys
+                    const breaksAndPrices = breakQtys.map((qty, idx) => ({ qty, price: unitPrices[idx] }))
+                        .sort((a, b) => a.qty - b.qty);
+                    const sortedBreakQtys = breaksAndPrices.map(bp => bp.qty);
+                    const sortedUnitPrices = breaksAndPrices.map(bp => bp.price);
+
+                    // Calculate EOQ and total cost for each price break
+                    const discountResults = [];
+                    let minTotalCost = Infinity;
+                    let optimalEOQ = 0;
+                    let optimalPrice = 0;
+                    for (let i = 0; i < sortedUnitPrices.length; i++) {
+                        const price = sortedUnitPrices[i];
+                        const minQty = sortedBreakQtys[i];
+                        const H = price * holdingRate;
+
+                        // Calculate EOQ at this price level
+                        const EOQ = Math.sqrt((2 * demand * orderCost) / H);
+
+                        // Check if EOQ is feasible at this price level
+                        let feasible = false;
+                        let orderQty = EOQ;
+
+                        if (i === sortedUnitPrices.length - 1) {
+                            // Last price break - must order at least minQty
+                            feasible = EOQ >= minQty;
+                            orderQty = Math.max(EOQ, minQty);
+                        } else {
+                            // Must order between minQty and next break
+                            const nextBreak = sortedBreakQtys[i + 1];
+                            if (EOQ >= minQty && EOQ < nextBreak) {
+                                feasible = true;
+                                orderQty = EOQ;
+                            } else if (EOQ < minQty) {
+                                // Can't order less than minimum for this price
+                                feasible = false;
+                                orderQty = minQty;
+                            } else {
+                                // EOQ is above next break - would get better price
+                                feasible = false;
+                                orderQty = nextBreak;
+                            }
+                        }
+
+                        // Calculate total cost at order quantity
+                        const orderingCost = (demand / orderQty) * orderCost;
+                        const holdingCost = (orderQty / 2) * H;
+                        const purchaseCost = demand * price;
+                        const totalCost = orderingCost + holdingCost + purchaseCost;
+
+                        // Check if this is the best so far
+                        if (feasible && totalCost < minTotalCost) {
+                            minTotalCost = totalCost;
+                            optimalEOQ = orderQty;
+                            optimalPrice = price;
+                        }
+
+                        discountResults.push({
+                            priceBreak: i + 1,
+                            minQty: minQty,
+                            maxQty: i < sortedUnitPrices.length - 1 ? sortedBreakQtys[i + 1] : Infinity,
+                            unitPrice: price,
+                            EOQ: EOQ,
+                            feasible: feasible,
+                            orderQty: orderQty,
+                            totalCost: totalCost,
+                            isBest: false
+                        });
+                    }
+
+                    // Mark the best option
+                    discountResults.forEach(result => {
+                        result.isBest = (result.totalCost === minTotalCost);
+                    });
+
+                    // Calculate metrics for optimal solution
+                    const discountOrdersPerYear = demand / optimalEOQ;
+                    const discountOrderCycle = 365 / discountOrdersPerYear;
+
+                    // Display results
+                    document.getElementById('eoq-value').textContent = Math.round(optimalEOQ);
+                    document.getElementById('orders-value').textContent = discountOrdersPerYear.toFixed(2);
+                    document.getElementById('cycle-value').textContent = discountOrderCycle.toFixed(2);
+                    document.getElementById('cost-value').textContent = `$${minTotalCost.toFixed(2)}`;
+
+                    // Create detailed results table
+                    let discountDetailedResults = `
+                        <h4>Quantity Discount Analysis</h4>
+                        <table class="sensitivity-table">
+                            <thead>
+                                <tr>
+                                    <th>Price Break</th>
+                                    <th>Min Qty</th>
+                                    <th>Max Qty</th>
+                                    <th>Unit Price</th>
+                                    <th>EOQ at Price</th>
+                                    <th>Feasible</th>
+                                    <th>Total Cost</th>
+                                    <th>Best</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                    `;
+
+                    discountResults.forEach(result => {
+                        discountDetailedResults += `
+                            <tr ${result.isBest ? 'style="background-color: #e8f5e9; font-weight: bold;"' : ''}>
+                                <td>${result.priceBreak}</td>
+                                <td>${result.minQty}</td>
+                                <td>${result.maxQty === Infinity ? '∞' : result.maxQty}</td>
+                                <td>$${result.unitPrice.toFixed(2)}</td>
+                                <td>${Math.round(result.EOQ)}</td>
+                                <td>${result.feasible ? 'Yes' : 'No'}</td>
+                                <td>$${result.totalCost.toFixed(2)}</td>
+                                <td>${result.isBest ? '★' : ''}</td>
+                            </tr>
+                        `;
+                    });
+
+                    discountDetailedResults += `
+                            </tbody>
+                        </table>
+                        <p><strong>Optimal Solution:</strong> Order ${Math.round(optimalEOQ)} units at $${optimalPrice.toFixed(2)} each</p>
+                    `;
+
+                    document.getElementById('detailed-results').innerHTML = discountDetailedResults;
+                    resultBox.style.display = 'block';
+                });
+            }
+
+            // Basic EOQ calculation
+            basicForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const demand = parseFloat(document.getElementById('basic-demand').value);
+                const orderCost = parseFloat(document.getElementById('basic-order-cost').value);
+                const holdingCost = parseFloat(document.getElementById('basic-holding-cost').value);
+                const unitCost = parseFloat(document.getElementById('basic-unit-cost').value) || 0;
+                
+                // Calculate EOQ
+                const eoq = Math.sqrt((2 * demand * orderCost) / holdingCost);
+                
+                // Calculate additional metrics
+                const basicOrdersPerYear = demand / eoq;
+                const basicOrderCycle = 365 / basicOrdersPerYear;
+                
+                // Calculate costs
+                const orderingCostTotal = basicOrdersPerYear * orderCost;
+                const holdingCostTotal = (eoq / 2) * holdingCost;
+                const purchaseCost = demand * unitCost;
+                const totalCost = orderingCostTotal + holdingCostTotal + purchaseCost;
+                
+                // Display results
+                document.getElementById('eoq-value').textContent = Math.round(eoq);
+                document.getElementById('orders-value').textContent = basicOrdersPerYear.toFixed(2);
+                document.getElementById('cycle-value').textContent = basicOrderCycle.toFixed(2);
+                document.getElementById('cost-value').textContent = `$${totalCost.toFixed(2)}`;
+                
+                // Detailed results
+                const basicDetailedResults = `
+                    <h4>Detailed Cost Breakdown</h4>
+                    <table>
+                        <tr>
+                            <th>Cost Component</th>
+                            <th>Value</th>
+                        </tr>
+                        <tr>
+                            <td>Annual Ordering Cost</td>
+                            <td>$${orderingCostTotal.toFixed(2)}</td>
+                        </tr>
+                        <tr>
+                            <td>Annual Holding Cost</td>
+                            <td>$${holdingCostTotal.toFixed(2)}</td>
+                        </tr>
+                        ${unitCost > 0 ? `<tr>
+                            <td>Annual Purchase Cost</td>
+                            <td>$${purchaseCost.toFixed(2)}</td>
+                        </tr>` : ''}
+                        <tr>
+                            <td><strong>Total Annual Cost</strong></td>
+                            <td><strong>$${totalCost.toFixed(2)}</strong></td>
+                        </tr>
+                    </table>
+                `;
+                
+                document.getElementById('detailed-results').innerHTML = basicDetailedResults;
+                resultBox.style.display = 'block';
+            });
+
+            // Quantity Discount EOQ Calculation
+            discountForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Get input values
+                const demand = parseFloat(document.getElementById('discount-demand').value);
+                const orderCost = parseFloat(document.getElementById('discount-order-cost').value);
+                const holdingRate = parseFloat(document.getElementById('discount-holding-rate').value) / 100;
+                const breakQtyInput = document.getElementById('discount-break-qty').value;
+                const unitPricesInput = document.getElementById('discount-unit-prices').value;
+
+                // Parse price breaks and unit prices
+                const breakQtys = breakQtyInput.split(',').map(q => parseInt(q.trim())).filter(q => !isNaN(q));
+                const unitPrices = unitPricesInput.split(',').map(p => parseFloat(p.trim())).filter(p => !isNaN(p));
+
+                // Validate inputs
+                if (
+                    isNaN(demand) ||
+                    isNaN(orderCost) ||
+                    isNaN(holdingRate) ||
+                    breakQtys.length === 0 ||
+                    unitPrices.length === 0 ||
+                    breakQtys.length !== unitPrices.length
+                ) {
+                    alert('Please enter valid values. The number of break quantities and unit prices must match.');
+                    return;
+                }
+
+                // Sort breaks and prices together by breakQtys
+                const breaksAndPrices = breakQtys.map((qty, idx) => ({ qty, price: unitPrices[idx] }))
+                    .sort((a, b) => a.qty - b.qty);
+                const sortedBreakQtys = breaksAndPrices.map(bp => bp.qty);
+                const sortedUnitPrices = breaksAndPrices.map(bp => bp.price);
+
+                // Calculate EOQ and total cost for each price break
+                const discountResults = [];
+                let minTotalCost = Infinity;
+                let optimalEOQ = 0;
+                let optimalPrice = 0;
+                for (let i = 0; i < sortedUnitPrices.length; i++) {
+                    const price = sortedUnitPrices[i];
+                    const minQty = sortedBreakQtys[i];
+                    const H = price * holdingRate;
+
+                    // Calculate EOQ at this price level
+                    const EOQ = Math.sqrt((2 * demand * orderCost) / H);
+
+                    // Check if EOQ is feasible at this price level
+                    let feasible = false;
+                    let orderQty = EOQ;
+
+                    if (i === sortedUnitPrices.length - 1) {
+                        // Last price break - must order at least minQty
+                        feasible = EOQ >= minQty;
+                        orderQty = Math.max(EOQ, minQty);
+                    } else {
+                        // Must order between minQty and next break
+                        const nextBreak = sortedBreakQtys[i + 1];
+                        if (EOQ >= minQty && EOQ < nextBreak) {
+                            feasible = true;
+                            orderQty = EOQ;
+                        } else if (EOQ < minQty) {
+                            // Can't order less than minimum for this price
+                            feasible = false;
+                            orderQty = minQty;
+                        } else {
+                            // EOQ is above next break - would get better price
+                            feasible = false;
+                            orderQty = nextBreak;
+                        }
+                    }
+
+                    // Calculate total cost at order quantity
+                    const orderingCost = (demand / orderQty) * orderCost;
+                    const holdingCost = (orderQty / 2) * H;
+                    const purchaseCost = demand * price;
+                    const totalCost = orderingCost + holdingCost + purchaseCost;
+
+                    // Check if this is the best so far
+                    if (feasible && totalCost < minTotalCost) {
+                        minTotalCost = totalCost;
+                        optimalEOQ = orderQty;
+                        optimalPrice = price;
+                    }
+
+                    discountResults.push({
+                        priceBreak: i + 1,
+                        minQty: minQty,
+                        maxQty: i < sortedUnitPrices.length - 1 ? sortedBreakQtys[i + 1] : Infinity,
+                        unitPrice: price,
+                        EOQ: EOQ,
+                        feasible: feasible,
+                        orderQty: orderQty,
+                        totalCost: totalCost,
+                        isBest: false
+                    });
+                }
+
+                // Mark the best option
+                discountResults.forEach(result => {
+                    result.isBest = (result.totalCost === minTotalCost);
+                });
+
+                // Calculate metrics for optimal solution
+                const discountOrdersPerYear = demand / optimalEOQ;
+                const discountOrderCycle = 365 / discountOrdersPerYear;
+
+                // Display results
+                document.getElementById('eoq-value').textContent = Math.round(optimalEOQ);
+                document.getElementById('orders-value').textContent = discountOrdersPerYear.toFixed(2);
+                document.getElementById('cycle-value').textContent = discountOrderCycle.toFixed(2);
+                document.getElementById('cost-value').textContent = `$${minTotalCost.toFixed(2)}`;
+
+                // Create detailed results table
+                let discountDetailedResults = `
+                    <h4>Quantity Discount Analysis</h4>
+                    <table class="sensitivity-table">
+                        <thead>
+                            <tr>
+                                <th>Price Break</th>
+                                <th>Min Qty</th>
+                                <th>Max Qty</th>
+                                <th>Unit Price</th>
+                                <th>EOQ at Price</th>
+                                <th>Feasible</th>
+                                <th>Total Cost</th>
+                                <th>Best</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+
+                discountResults.forEach(result => {
+                    discountDetailedResults += `
+                        <tr ${result.isBest ? 'style="background-color: #e8f5e9; font-weight: bold;"' : ''}>
+                            <td>${result.priceBreak}</td>
+                            <td>${result.minQty}</td>
+                            <td>${result.maxQty === Infinity ? '∞' : result.maxQty}</td>
+                            <td>$${result.unitPrice.toFixed(2)}</td>
+                            <td>${Math.round(result.EOQ)}</td>
+                            <td>${result.feasible ? 'Yes' : 'No'}</td>
+                            <td>$${result.totalCost.toFixed(2)}</td>
+                            <td>${result.isBest ? '★' : ''}</td>
+                        </tr>
+                    `;
+                });
+
+                discountDetailedResults += `
+                        </tbody>
+                    </table>
+                    <p><strong>Optimal Solution:</strong> Order ${Math.round(optimalEOQ)} units at $${optimalPrice.toFixed(2)} each</p>
+                `;
+
+                document.getElementById('detailed-results').innerHTML = discountDetailedResults;
+                resultBox.style.display = 'block';
+            });
+
+            // Production Order Quantity Calculation
+            productionForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Get input values
+                const demand = parseFloat(document.getElementById('production-demand').value);
+                const setupCost = parseFloat(document.getElementById('production-setup-cost').value);
+                const holdingCost = parseFloat(document.getElementById('production-holding-cost').value);
+                const productionRate = parseFloat(document.getElementById('production-rate').value);
+                const demandRate = parseFloat(document.getElementById('demand-rate').value);
+
+                // Validate inputs
+                if (productionRate <= demandRate) {
+                    alert('Production rate must be greater than demand rate');
+                    return;
+                }
+
+                // Calculate production order quantity
+                const POQ = Math.sqrt((2 * demand * setupCost) / (holdingCost * (1 - (demandRate / productionRate))));
+
+                // Calculate additional metrics
+                const prodOrdersPerYear = demand / POQ;
+                const prodOrderCycle = 365 / prodOrdersPerYear;
+
+                // Calculate production-specific metrics
+                const maxInventory = POQ * (1 - (demandRate / productionRate));
+                const productionTime = POQ / productionRate;
+                const consumptionTime = POQ / demandRate;
+
+                // Calculate costs
+                const totalSetupCost = prodOrdersPerYear * setupCost;
+                const totalHoldingCost = (maxInventory / 2) * holdingCost;
+                const totalCost = totalSetupCost + totalHoldingCost;
+
+                // Display results
+                document.getElementById('eoq-value').textContent = Math.round(POQ);
+                document.getElementById('orders-value').textContent = prodOrdersPerYear.toFixed(2);
+                document.getElementById('cycle-value').textContent = prodOrderCycle.toFixed(2);
+                document.getElementById('cost-value').textContent = `$${totalCost.toFixed(2)}`;
+
+                // Detailed results
+                const prodDetailedResults = `
+                    <h4>Production Order Quantity Details</h4>
+                    <table>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Value</th>
+                        </tr>
+                        <tr>
+                            <td>Maximum Inventory Level</td>
+                            <td>${Math.round(maxInventory)} units</td>
+                        </tr>
+                        <tr>
+                            <td>Production Run Time</td>
+                            <td>${productionTime.toFixed(2)} days</td>
+                        </tr>
+                        <tr>
+                            <td>Time Between Production Runs</td>
+                            <td>${consumptionTime.toFixed(2)} days</td>
+                        </tr>
+                        <tr>
+                            <td>Annual Setup Cost</td>
+                            <td>$${totalSetupCost.toFixed(2)}</td>
+                        </tr>
+                        <tr>
+                            <td>Annual Holding Cost</td>
+                            <td>$${totalHoldingCost.toFixed(2)}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Total Annual Cost</strong></td>
+                            <td><strong>$${totalCost.toFixed(2)}</strong></td>
+                        </tr>
+                    </table>
+                `;
+
+                document.getElementById('detailed-results').innerHTML = prodDetailedResults;
+                resultBox.style.display = 'block';
+            });
+
+            // Backordering EOQ Calculation
+            backorderForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Get input values
+                const demand = parseFloat(document.getElementById('backorder-demand').value);
+                const orderCost = parseFloat(document.getElementById('backorder-order-cost').value);
+                const holdingCost = parseFloat(document.getElementById('backorder-holding-cost').value);
+                const backorderCost = parseFloat(document.getElementById('backorder-cost').value);
+
+                // Calculate EOQ with backorders
+                const EOQ = Math.sqrt((2 * demand * orderCost) / holdingCost) * Math.sqrt((holdingCost + backorderCost) / backorderCost);
+
+                // Calculate maximum inventory and backorders
+                const maxInventory = Math.sqrt((2 * demand * orderCost) / holdingCost) * Math.sqrt(backorderCost / (holdingCost + backorderCost));
+                const maxBackorder = EOQ - maxInventory;
+
+                // Calculate time periods
+                const backOrdersPerYear = demand / EOQ;
+                const backOrderCycle = 365 / backOrdersPerYear;
+                const timeWithInventory = (maxInventory / demand) * 365;
+                const timeWithShortage = (maxBackorder / demand) * 365;
+
+                // Calculate costs
+                const totalOrderingCost = backOrdersPerYear * orderCost;
+                const totalHoldingCost = (Math.pow(maxInventory, 2) / (2 * EOQ)) * holdingCost;
+                const totalBackorderCost = (Math.pow(maxBackorder, 2) / (2 * EOQ)) * backorderCost;
+                const totalCost = totalOrderingCost + totalHoldingCost + totalBackorderCost;
+
+                // Display results
+                document.getElementById('eoq-value').textContent = Math.round(EOQ);
+                document.getElementById('orders-value').textContent = backOrdersPerYear.toFixed(2);
+                document.getElementById('cycle-value').textContent = backOrderCycle.toFixed(2);
+                document.getElementById('cost-value').textContent = `$${totalCost.toFixed(2)}`;
+
+                // Detailed results
+                const backDetailedResults = `
+                    <h4>Backordering Details</h4>
+                    <table>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Value</th>
+                        </tr>
+                        <tr>
+                            <td>Maximum Inventory Level</td>
+                            <td>${Math.round(maxInventory)} units</td>
+                        </tr>
+                        <tr>
+                            <td>Maximum Backorder Level</td>
+                            <td>${Math.round(maxBackorder)} units</td>
+                        </tr>
+                        <tr>
+                            <td>Time With Inventory</td>
+                            <td>${timeWithInventory.toFixed(2)} days per cycle</td>
+                        </tr>
+                        <tr>
+                            <td>Time With Shortage</td>
+                            <td>${timeWithShortage.toFixed(2)} days per cycle</td>
+                        </tr>
+                        <tr>
+                            <td>Annual Ordering Cost</td>
+                            <td>$${totalOrderingCost.toFixed(2)}</td>
+                        </tr>
+                        <tr>
+                            <td>Annual Holding Cost</td>
+                            <td>$${totalHoldingCost.toFixed(2)}</td>
+                        </tr>
+                        <tr>
+                            <td>Annual Backorder Cost</td>
+                            <td>$${totalBackorderCost.toFixed(2)}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Total Annual Cost</strong></td>
+                            <td><strong>$${totalCost.toFixed(2)}</strong></td>
+                        </tr>
+                    </table>
+                    <p><em>Note: Backordering allows for planned shortages, which can reduce overall inventory costs when shortage costs are lower than holding costs.</em></p>
+                `;
+
+                document.getElementById('detailed-results').innerHTML = backDetailedResults;
+                resultBox.style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>
