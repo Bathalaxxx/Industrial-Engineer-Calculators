@@ -1,0 +1,1567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-3BSHG1DE6V');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5607576434988374"
+     crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="google-adsense-account" content="ca-pub-5607576434988374">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Reorder Point Calculator - Calculate optimal reorder points and safety stock levels for inventory management. Learn reorder point formula and safety stock calculation methods.">
+    <meta name="keywords" content="reorder point, how to calculate reorder point, reorder point calculator, safety stock formula, how to calculate safety stock, safety stock, safety stock calculator, calculate safety stock, safety stock calculation formula, safety stock inventory">
+    <title>Reorder Point Calculator | How to Calculate Safety Stock | Industrial Engineering Calculators</title>
+
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Reorder Point Calculator | How to Calculate Safety Stock">
+    <meta property="og:description" content="Calculate optimal reorder points and safety stock levels with our inventory management calculator. Learn reorder point formulas and safety stock calculation methods.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.industrialengineeringcalculators.com/reorder-point-and-safety-stock.html">
+
+    <style>
+        /* Consistent with existing style */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block; /* Changed from none to block */
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .model-selector {
+            margin-bottom: 2rem;
+        }
+        
+        .model-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .model-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            margin-right: 0.5rem;
+            border-radius: 5px 5px 0 0;
+            background-color: #f1f1f1;
+            transition: all 0.3s;
+        }
+        
+        .model-tab.active {
+            background-color: white;
+            border-color: #ddd;
+            border-bottom-color: white;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        
+        .model-tab:hover:not(.active) {
+            background-color: #e9e9e9;
+        }
+        
+        .model-content {
+            display: none;
+        }
+        
+        .model-content.active {
+            display: block;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .metric-results {
+            display: flex;
+            justify-content: space-between;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .metric-card {
+            flex: 1;
+            min-width: 200px;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 0.5rem;
+            text-align: center;
+        }
+        
+        .metric-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-card .metric-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .metric-card.rop .metric-value {
+            color: #3498db;
+        }
+        
+        .metric-card.safety .metric-value {
+            color: #f39c12;
+        }
+        
+        .metric-card.leadtime .metric-value {
+            color: #2ecc71;
+        }
+        
+        .metric-card.service .metric-value {
+            color: #e74c3c;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        .safety-stock-table {
+            width: 100%;
+            margin-top: 1.5rem;
+        }
+        
+        .safety-stock-table th {
+            background-color: var(--light-color);
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* New styles for additional content */
+        .info-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .info-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1.5rem;
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .faq-answer {
+            display: none;
+            padding-top: 0.5rem;
+        }
+        
+        .faq-answer.show {
+            display: block;
+        }
+        
+        .related-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .tool-chip {
+            background-color: #e3f2fd;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .tool-chip:hover {
+            background-color: #bbdefb;
+        }
+        
+        .citation {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            font-style: italic;
+            margin-top: 0.5rem;
+        }
+
+        .bibliography {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .bibliography li {
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            text-indent: -1.5rem;
+        }
+
+        .bibliography li:before {
+            content: "•";
+            color: var(--secondary-color);
+            font-weight: bold;
+            display: inline-block;
+            width: 1.5rem;
+            margin-left: -1.5rem;
+        }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            display: block;
+        }
+            
+        body.sidebar-open {
+            margin-left: 0;
+            overflow: hidden;
+        }
+        /* xxxx navigation end xxxxx */
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .model-tabs {
+                flex-direction: column;
+            }
+            
+            .model-tab {
+                border-radius: 0;
+                margin-right: 0;
+                border-bottom: 1px solid #ddd;
+            }
+            
+            .metric-results {
+                flex-direction: column;
+            }
+            
+            .metric-card {
+                margin: 0.5rem 0;
+            }
+            
+            .related-tools {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+
+    <div class="sidebar-category">
+        <div class="sidebar-category-header">
+            <span>Site Navigation</span>
+            <span>+</span>
+        </div>
+        
+        <div class="sidebar-category-content">
+            <a href="index.html" class="sidebar-link">Home</a>
+            <a href="about.html" class="sidebar-link">About</a>
+            <a href="terms.html" class="sidebar-link">Terms of Service</a>
+            <a href="privacy.html" class="sidebar-link">Privacy Policy</a>
+            <a href="contact.html" class="sidebar-link">Contact Us</a>
+            <a href="sitemap.html" class="sidebar-link">Sitemap</a>
+        </div>
+    </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="linebalancing.html" class="sidebar-link">Line Balancing</a>
+                <a href="takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="gagerr.html" class="sidebar-link">Gage R&R</a>
+                <a href="processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="oee-calculation.html" class="sidebar-link">OEE Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="anova.html" class="sidebar-link">ANOVA</a>
+                <a href="chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
+                
+                <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="regression.html" class="sidebar-link">Regression</a>
+                <a href="samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="ttest.html" class="sidebar-link">T-Test</a>
+                <a href="ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="eoq-formula.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="reorder-point-and-safety-stock.html" class="sidebar-link">Reorder Point</a>
+                <a href="kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Study</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+            </div>
+        </div>
+    </aside>
+    <!-- xxxx navigation end xxxxx -->
+    
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Industrial Engineering <span>Calculators</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="sitemap.html">Sitemap</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Reorder Point & Safety Stock Calculator</h1>
+            <p>Calculate optimal reorder points and safety stock levels for different demand and lead time scenarios</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Reorder Point (ROP) and Safety Stock Analysis</h2>
+                <p>The reorder point is the inventory level at which an order should be placed to replenish stock before it runs out. This calculator helps you determine the optimal reorder point as well as the safety stock required based on your demand patterns and lead time characteristics.</p>
+                
+                <div class="formula-box">
+                    Basic ROP = Demand During Lead Time + Safety Stock
+                </div>
+                
+                <p>Where:</p>
+                <ul>
+                    <li><strong>Demand During Lead Time</strong> = Average Demand × Lead Time</li>
+                    <li><strong>Safety Stock</strong> = Buffer for demand and lead time variability</li>
+                </ul>
+            </div>
+
+            <!-- What is Reorder Point Section -->
+            <div class="info-section" style="margin-bottom:2.5rem;">
+                <h3>What is Reorder Point? Understanding Inventory Management</h3>
+                <p><strong>Reorder Point (ROP)</strong> is a critical inventory management concept that determines when to place a new order to replenish stock. It represents the minimum quantity of an item that should be in inventory to prevent stockouts during the lead time (the time between placing an order and receiving it).</p>
+                <p>Using <strong>reorder point calculation</strong> helps businesses maintain optimal inventory levels by considering:</p>
+                <ol>
+                    <li><strong>Demand Rate</strong> - How quickly inventory is being consumed</li>
+                    <li><strong>Lead Time</strong> - How long it takes to receive new inventory</li>
+                    <li><strong>Safety Stock</strong> - Buffer inventory to account for variability in demand and lead time</li>
+                </ol>
+                <p>Proper <strong>safety stock calculation</strong> is essential for balancing the costs of stockouts against the costs of holding excess inventory. This calculator helps you determine the optimal <strong>safety stock inventory</strong> level based on your specific demand and supply variability.</p>
+            </div>
+
+            <!-- How to Use the Reorder Point Calculator -->
+            <div class="info-section" style="margin-bottom:2.5rem;">
+                <h3>How to Use This Reorder Point Calculator</h3>
+                <p>Our <strong>reorder point calculator</strong> simplifies the inventory planning process. Follow these steps to calculate your optimal reorder point:</p>
+                <ol>
+                    <li><strong>Select the appropriate model</strong>: Choose the scenario that matches your demand and lead time characteristics (constant or variable).</li>
+                    <li><strong>Enter demand information</strong>: Input your average daily demand and, if applicable, demand variability (standard deviation).</li>
+                    <li><strong>Enter lead time information</strong>: Provide your average lead time and, if applicable, lead time variability.</li>
+                    <li><strong>Set service level target</strong>: Specify your desired service level (the probability of not having a stockout).</li>
+                    <li><strong>Calculate</strong>: Click the "Calculate ROP" button to see your results.</li>
+                </ol>
+                <p>The calculator will provide your reorder point, safety stock requirement, and detailed information about the calculation components.</p>
+            </div>
+
+            <div style="margin:2.5rem 0;">
+                <script async="async" data-cfasync="false" src="//pl27511448.profitableratecpm.com/5d225b5e0b22c0980e365900e2390e1d/invoke.js"></script>
+                <div id="container-5d225b5e0b22c0980e365900e2390e1d"></div>
+            </div>
+
+            
+
+            <div class="model-selector" style="margin-bottom:2.5rem;">
+                <h3>Select Demand and Lead Time Scenario</h3>
+                <p>Choose the model that matches your demand and lead time characteristics:</p>
+                <div class="model-tabs" style="margin-bottom:2rem;">
+                    <div class="model-tab active" data-model="constant">Constant Demand & Lead Time</div>
+                    <div class="model-tab" data-model="variable-demand">Variable Demand</div>
+                    <div class="model-tab" data-model="variable-lead">Variable Lead Time</div>
+                    <div class="model-tab" data-model="both-variable">Both Variable</div>
+                </div>
+                <!-- Constant Demand & Lead Time -->
+                <div class="model-content active" id="constant-model" style="margin-bottom:2.5rem;">
+                    <h3>Constant Demand and Lead Time</h3>
+                    <p>Use when both demand and lead time are stable with little variation.</p>
+                    <form id="constant-form">
+                        <div class="input-row" style="margin-bottom:1.2rem;">
+                            <div class="input-group">
+                                <label for="constant-demand">Average Demand (units/day):</label>
+                                <input type="number" id="constant-demand" min="0.01" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="constant-lead">Lead Time (days):</label>
+                                <input type="number" id="constant-lead" min="0.01" step="0.01" required>
+                            </div>
+                        </div>
+                        <div class="input-group" style="margin-bottom:1.2rem;">
+                            <label for="constant-safety">Safety Stock (optional):</label>
+                            <input type="number" id="constant-safety" min="0" step="1" value="0">
+                        </div>
+                        <button type="submit" class="calculate-btn">Calculate ROP</button>
+                    </form>
+                </div>
+                <!-- Variable Demand -->
+                <div class="model-content" id="variable-demand-model" style="margin-bottom:2.5rem;">
+                    <h3>Variable Demand (Constant Lead Time)</h3>
+                    <p>Use when demand varies but lead time is relatively stable.</p>
+                    <form id="variable-demand-form">
+                        <div class="input-row" style="margin-bottom:1.2rem;">
+                            <div class="input-group">
+                                <label for="vd-avg-demand">Average Demand (units/day):</label>
+                                <input type="number" id="vd-avg-demand" min="0.01" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="vd-demand-std">Demand Standard Deviation:</label>
+                                <input type="number" id="vd-demand-std" min="0" step="0.01" required>
+                            </div>
+                        </div>
+                        <div class="input-row" style="margin-bottom:1.2rem;">
+                            <div class="input-group">
+                                <label for="vd-lead">Lead Time (days):</label>
+                                <input type="number" id="vd-lead" min="0.01" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="vd-service-level">Service Level (%):</label>
+                                <input type="number" id="vd-service-level" min="1" max="99.99" step="0.01" value="95" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="calculate-btn">Calculate ROP</button>
+                    </form>
+                </div>
+                <!-- Variable Lead Time -->
+                <div class="model-content" id="variable-lead-model" style="margin-bottom:2.5rem;">
+                    <h3>Variable Lead Time (Constant Demand)</h3>
+                    <p>Use when lead time varies but demand is relatively stable.</p>
+                    <form id="variable-lead-form">
+                        <div class="input-row" style="margin-bottom:1.2rem;">
+                            <div class="input-group">
+                                <label for="vl-demand">Demand (units/day):</label>
+                                <input type="number" id="vl-demand" min="0.01" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="vl-avg-lead">Average Lead Time (days):</label>
+                                <input type="number" id="vl-avg-lead" min="0.01" step="0.01" required>
+                            </div>
+                        </div>
+                        <div class="input-row" style="margin-bottom:1.2rem;">
+                            <div class="input-group">
+                                <label for="vl-lead-std">Lead Time Standard Deviation (days):</label>
+                                <input type="number" id="vl-lead-std" min="0" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="vl-service-level">Service Level (%):</label>
+                                <input type="number" id="vl-service-level" min="1" max="99.99" step="0.01" value="95" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="calculate-btn">Calculate ROP</button>
+                    </form>
+                </div>
+                <!-- Both Variable -->
+                <div class="model-content" id="both-variable-model" style="margin-bottom:2.5rem;">
+                    <h3>Variable Demand and Lead Time</h3>
+                    <p>Use when both demand and lead time vary significantly.</p>
+                    <form id="both-variable-form">
+                        <div class="input-row" style="margin-bottom:1.2rem;">
+                            <div class="input-group">
+                                <label for="bv-avg-demand">Average Demand (units/day):</label>
+                                <input type="number" id="bv-avg-demand" min="0.01" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="bv-demand-std">Demand Standard Deviation:</label>
+                                <input type="number" id="bv-demand-std" min="0" step="0.01" required>
+                            </div>
+                        </div>
+                        <div class="input-row" style="margin-bottom:1.2rem;">
+                            <div class="input-group">
+                                <label for="bv-avg-lead">Average Lead Time (days):</label>
+                                <input type="number" id="bv-avg-lead" min="0.01" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="bv-lead-std">Lead Time Standard Deviation (days):</label>
+                                <input type="number" id="bv-lead-std" min="0" step="0.01" required>
+                            </div>
+                        </div>
+                        <div class="input-row" style="margin-bottom:1.2rem;">
+                            <div class="input-group">
+                                <label for="bv-service-level">Service Level (%):</label>
+                                <input type="number" id="bv-service-level" min="1" max="99.99" step="0.01" value="95" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="calculate-btn">Calculate ROP</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="result-box" id="result-box" style="margin-bottom:2.5rem;">
+                <h3>Reorder Point Calculation Results</h3>
+                <div class="metric-results" style="margin-bottom:2rem;">
+                    <div class="metric-card rop">
+                        <h4>Reorder Point</h4>
+                        <div class="metric-value" id="rop-value">0</div>
+                        <p>units</p>
+                    </div>
+                    <div class="metric-card safety">
+                        <h4>Safety Stock</h4>
+                        <div class="metric-value" id="safety-stock-value">0</div>
+                        <p>units</p>
+                    </div>
+                    <div class="metric-card leadtime">
+                        <h4>Lead Time Demand</h4>
+                        <div class="metric-value" id="lead-time-demand-value">0</div>
+                        <p>units</p>
+                    </div>
+                    <div class="metric-card service">
+                        <h4>Service Level</h4>
+                        <div class="metric-value" id="service-level-value">95%</div>
+                        <p>probability</p>
+                    </div>
+                </div>
+                <div id="calculation-details">
+                    <h4>Calculation Details</h4>
+                    <p id="calculation-formula"></p>
+                    <p id="calculation-explanation"></p>
+                </div>
+            </div>
+
+            <!-- Safety Stock Calculation Methods -->
+            <div class="info-section" style="margin-bottom:2.5rem;">
+                <h3>Safety Stock Calculation Methods</h3>
+                <p>Safety stock is extra inventory held to protect against uncertainties in demand and/or lead time. The method for calculating safety stock depends on which factors are variable in your scenario. Our calculator uses these formulas automatically based on your selection:</p>
+                
+                <h4>1. Constant Demand & Lead Time</h4>
+                
+                <div class="formula-box" style="margin-bottom:1.2rem;">
+                   <strong>Safety Stock:</strong> Theoretically there is no need for safety stock when there is complete certainty in the volume of demand and lead time.<br>
+                    <span class="citation">Use when both demand and lead time are stable.</span>
+                </div>
+                
+                
+                <h4>2. Variable Demand (Constant Lead Time)</h4>
+                <div class="formula-box" style="margin-bottom:1.2rem;">
+                    Safety Stock = Z × σ<sub>d</sub> × √L
+                </div>
+                <ul>
+                    <li><strong>Z</strong> = Service factor (based on desired service level)</li>
+                    <li><strong>σ<sub>d</sub></strong> = Standard deviation of demand</li>
+                    <li><strong>L</strong> = Lead time</li>
+                </ul>
+                <span class="citation">Use when demand varies but lead time is stable.</span>
+                
+                <h4>3. Variable Lead Time (Constant Demand)</h4>
+                <div class="formula-box" style="margin-bottom:1.2rem;">
+                    Safety Stock = Z × d × σ<sub>L</sub>
+                </div>
+                <ul>
+                    <li><strong>d</strong> = Average demand</li>
+                    <li><strong>σ<sub>L</sub></strong> = Standard deviation of lead time</li>
+                </ul>
+                <span class="citation">Use when lead time varies but demand is stable.</span>
+                
+                <h4>4. Both Demand and Lead Time Variable</h4>
+                <div class="formula-box" style="margin-bottom:1.2rem;">
+                    Safety Stock = Z × √(L × σ<sub>d</sub><sup>2</sup> + d<sup>2</sup> × σ<sub>L</sub><sup>2</sup>)
+                </div>
+                <ul>
+                    <li><strong>L</strong> = Average lead time</li>
+                </ul>
+                <span class="citation">Use when both demand and lead time are variable.</span>
+                
+                <p style="margin-top:1.2rem;">The calculator chooses the correct formula based on your scenario and inputs, ensuring your safety stock matches your real-world variability and service level goals.</p>
+            </div>
+
+            <!-- Interlinking to Related Tools -->
+            <div class="info-section" style="margin-bottom:2.5rem;">
+                <h3>Related Inventory Management Calculators</h3>
+                <p>Reorder point is just one component of comprehensive inventory management. Explore these related calculators to optimize your inventory operations:</p>
+                <div class="related-tools" style="margin-top:1.2rem;">
+                    <a href="eoq-formula.html" class="tool-chip">Economic Order Quantity (EOQ)</a>
+                    <a href="kanban.html" class="tool-chip">Kanban Calculator</a>
+                    <a href="newsvendor.html" class="tool-chip">Newsvendor Model</a>
+               </div>
+            </div>
+
+            <!-- Frequently Asked Questions -->
+            <div class="info-section" style="margin-bottom:2.5rem;">
+                <h3>Frequently Asked Questions (FAQs)</h3>
+                <div class="faq-item" style="margin-bottom:2rem;">
+                    <div class="faq-question">What is the difference between reorder point and safety stock? <span>+</span></div>
+                    <div class="faq-answer">
+                        <p><strong>Reorder point</strong> is the inventory level at which a new order should be placed. It includes both the expected demand during lead time and the safety stock.</p>
+                        <p><strong>Safety stock</strong> is the buffer inventory maintained to protect against variability in demand and lead time. It's a component of the reorder point calculation.</p>
+                        <p>Formula: Reorder Point = (Average Demand × Lead Time) + Safety Stock</p>
+                    </div>
+                </div>
+                <div class="faq-item" style="margin-bottom:2rem;">
+                    <div class="faq-question">How do I calculate safety stock with variable demand? <span>+</span></div>
+                    <div class="faq-answer">
+                        <p>When demand is variable but lead time is constant, use this <strong>safety stock calculation formula</strong>:</p>
+                        <div class="formula-box">
+                            Safety Stock = Z × σ_d × √L
+                        </div>
+                        <p>Where:</p>
+                        <ul>
+                            <li>Z = Service factor (based on desired service level)</li>
+                            <li>σ_d = Standard deviation of demand</li>
+                            <li>L = Lead time (in consistent time units with demand)</li>
+                        </ul>
+                        <p>For example, with a 95% service level (Z=1.65), demand standard deviation of 10 units, and 7-day lead time:</p>
+                        <div class="formula-box">
+                            Safety Stock = 1.65 × 10 × √7 ≈ 1.65 × 10 × 2.65 ≈ 43.7 units
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item" style="margin-bottom:2rem;">
+                    <div class="faq-question">What Z-value should I use for my desired service level? <span>+</span></div>
+                    <div class="faq-answer">
+                        <p>The Z-value (service factor) corresponds to your desired service level probability. Common values include:</p>
+                        <table style="margin-bottom:1rem;">
+                            <tr>
+                                <th>Service Level</th>
+                                <th>Z-value</th>
+                            </tr>
+                            <tr>
+                                <td>85%</td>
+                                <td>1.04</td>
+                            </tr>
+                            <tr>
+                                <td>90%</td>
+                                <td>1.28</td>
+                            </tr>
+                            <tr>
+                                <td>95%</td>
+                                <td>1.65</td>
+                            </tr>
+                            <tr>
+                                <td>97%</td>
+                                <td>1.88</td>
+                            </tr>
+                            <tr>
+                                <td>99%</td>
+                                <td>2.33</td>
+                            </tr>
+                            <tr>
+                                <td>99.9%</td>
+                                <td>3.09</td>
+                            </tr>
+                        </table>
+                        <p>Higher service levels require more safety stock, which increases inventory holding costs. Most businesses target 95-99% service levels.</p>
+                        <p>If your desired service level is not in the table above (eg. 96%), you will need to manually lookup the value on a normal distribution table. Mathematically, you can also use a process called interpolation to estimate the z value.</p>
+                    </div>
+                </div>
+                <div class="faq-item" style="margin-bottom:2rem;">
+                    <div class="faq-question">How often should I recalculate my reorder point? <span>+</span></div>
+                    <div class="faq-answer">
+                        <p>It's recommended to review and recalculate your reorder points:</p>
+                        <ol>
+                            <li><strong>Quarterly</strong> - For stable products with predictable demand</li>
+                            <li><strong>Monthly</strong> - For products with seasonal patterns or moderate variability</li>
+                            <li><strong>More frequently</strong> - For new products, promotional items, or during periods of significant supply chain disruption</li>
+                        </ol>
+                        <p>Additionally, recalculate whenever there are significant changes in:</p>
+                        <ul>
+                            <li>Supplier lead times</li>
+                            <li>Demand patterns</li>
+                            <li>Service level targets</li>
+                            <li>Cost structure (holding costs, stockout costs)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="faq-item" style="margin-bottom:2rem;">
+                    <div class="faq-question">What are the limitations of reorder point models? <span>+</span></div>
+                    <div class="faq-answer">
+                        <p>While reorder point models are widely used, they have some limitations:</p>
+                        <ol>
+                            <li><strong>Assumes normal distribution</strong> - Most formulas assume demand follows a normal distribution, which may not always be accurate.</li>
+                            <li><strong>Static parameters</strong> - Traditional ROP models use fixed parameters that may not adapt quickly to changing conditions.</li>
+                            <li><strong>Independent items</strong> - Standard models treat inventory items independently, ignoring potential correlations between products.</li>
+                            <li><strong>Cost considerations</strong> - Basic ROP formulas don't explicitly consider ordering costs and holding costs.</li>
+                            <li><strong>Lead time assumptions</strong> - Models may not adequately handle highly variable or unpredictable lead times.</li>
+                        </ol>
+                        <p>For more complex inventory situations, consider supplementing ROP with other methods like demand forecasting, inventory optimization software, or time-series approaches.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Examples Section -->
+            <div class="examples-section" style="margin-bottom:2.5rem;">
+                <h3>Practical Examples</h3>
+                <div class="example" style="margin-bottom:2rem;">
+                    <h4>Example 1: Constant Demand and Lead Time</h4>
+                    <p>A retailer sells an average of 20 units of a product per day. The lead time from their supplier is consistently 5 days. They want to maintain a small safety stock of 10 units.</p>
+                    <div class="formula-box">
+                        ROP = (Average Demand × Lead Time) + Safety Stock = (20 × 5) + 10 = 110 units
+                    </div>
+                    <p>When inventory drops to 110 units, they should place a new order.</p>
+                </div>
+                <div class="example" style="margin-bottom:2rem;">
+                    <h4>Example 2: Variable Demand</h4>
+                    <p>A product has an average daily demand of 15 units with a standard deviation of 4 units. Lead time is constant at 7 days. The company wants a 95% service level (Z=1.65).</p>
+                    <div class="formula-box">
+                        Safety Stock = Z × σ_d × √L = 1.65 × 4 × √7 ≈ 1.65 × 4 × 2.65 ≈ 17.5 units
+                    </div>
+                    <div class="formula-box">
+                        ROP = (Average Demand × Lead Time) + Safety Stock = (15 × 7) + 17.5 = 122.5 units
+                    </div>
+                    <p>They should reorder when inventory reaches approximately 123 units.</p>
+                </div>
+                <div class="example" style="margin-bottom:2rem;">
+                    <h4>Example 3: Variable Lead Time</h4>
+                    <p>A product has constant daily demand of 25 units. Lead time averages 10 days with a standard deviation of 2 days. The company wants a 90% service level (Z=1.28).</p>
+                    <div class="formula-box">
+                        Safety Stock = Z × d × σ_L = 1.28 × 25 × 2 = 64 units
+                    </div>
+                    <div class="formula-box">
+                        ROP = (Average Demand × Average Lead Time) + Safety Stock = (25 × 10) + 64 = 314 units
+                    </div>
+                    <p>They should reorder when inventory reaches 314 units.</p>
+                </div>
+            </div>
+
+            <!-- Key Terms and Definitions -->
+            <div class="info-section" style="margin-bottom:2.5rem;">
+                <h3>Key Terms and Definitions</h3>
+                <h4>Reorder Point (ROP)</h4>
+                <p>The inventory level at which a new order should be placed to replenish stock before it runs out. It's calculated based on demand during lead time plus safety stock.</p>
+                <h4>Safety Stock</h4>
+                <p>Extra inventory maintained as a buffer against uncertainties in demand and supply. It protects against stockouts caused by unexpected demand spikes or supplier delays.</p>
+                <h4>Lead Time</h4>
+                <p>The time between placing an order and receiving the goods. It includes order processing, manufacturing, shipping, and receiving times.</p>
+                <h4>Demand Variability</h4>
+                <p>The degree to which demand fluctuates over time. It's typically measured using standard deviation or coefficient of variation.</p>
+                <h4>Service Level</h4>
+                <p>The probability of not having a stockout during the replenishment cycle. Common service levels range from 90% to 99.9%.</p>
+                <h4>Stockout</h4>
+                <p>A situation where inventory is unavailable when needed, potentially resulting in lost sales, production delays, or customer dissatisfaction.</p>
+            </div>
+
+            <!-- Bibliography Section -->
+            <div class="info-section">
+                <h3>Bibliography and Further Reading</h3>
+                <ul class="bibliography">
+                    <li>
+                        Harris, F. W. (1913). 
+                        <em>How many parts to make at once</em>. Factory, The Magazine of Management, 10(2), 135-136, 152.
+                    </li>
+                    <li>
+                        Wilson, R. H. (1934). 
+                        <em>A scientific routine for stock control</em>. Harvard Business Review, 13(1), 116-128.
+                    </li>
+                    <li>
+                        Silver, E. A., Pyke, D. F., & Peterson, R. (1998). 
+                        <a href="https://amzn.to/3HVhnkB" rel="nofollow" target="_blank"><em>Inventory Management and Production Planning and Scheduling</em></a>. John Wiley & Sons.
+                    </li>
+                    <li>
+                        Heizer, J., Render, B., & Munson, C. (2020). 
+                        <a href="https://amzn.to/47l0fPv" rel="nofollow" target="_blank"><em>Operations Management: Sustainability and Supply Chain Management</em></a>. Pearson.
+                    </li>
+                </ul>
+                <p style="font-size: 0.9rem; margin-top: 1rem; font-style: italic;">
+                        <strong>Disclosure:</strong> As an Amazon Associate I earn from qualifying purchases. These links are provided for your convenience and help support this site.
+                </p>
+            </div>
+        </main>
+<footer>
+    <div class="container">
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="terms.html">Terms of Service</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="contact.html">Contact Us</a>
+            <a href="sitemap.html">Sitemap</a>
+        </div>
+        <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+        <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
+    </div>
+</footer>
+    
+    <script>
+        // Navigation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebarClose = document.querySelector('.sidebar-close');
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.overlay');
+            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
+            
+            sidebarToggle.addEventListener('click', function() {
+                sidebar.classList.add('open');
+                overlay.classList.add('active');
+                document.body.classList.add('sidebar-open');
+            });
+            
+            sidebarClose.addEventListener('click', function() {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+                document.body.classList.remove('sidebar-open');
+            });
+            
+            overlay.addEventListener('click', function() {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+                document.body.classList.remove('sidebar-open');
+            });
+            
+            categoryHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const category = this.parentElement;
+                    category.classList.toggle('open');
+                    
+                    const icon = this.querySelector('span:last-child');
+                    if (category.classList.contains('open')) {
+                        icon.textContent = '-';
+                    } else {
+                        icon.textContent = '+';
+                    }
+                });
+            });
+            
+            // Model tabs functionality
+            const modelTabs = document.querySelectorAll('.model-tab');
+            const modelContents = document.querySelectorAll('.model-content');
+            
+            modelTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const model = this.getAttribute('data-model');
+                    
+                    // Update active tab
+                    modelTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Show corresponding content
+                    modelContents.forEach(content => {
+                        content.classList.remove('active');
+                        if (content.id === model + '-model') {
+                            content.classList.add('active');
+                        }
+                    });
+                });
+            });
+            
+            // FAQ functionality
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function() {
+                    const answer = this.nextElementSibling;
+                    const isOpen = answer.classList.contains('show');
+                    
+                    // Close all answers
+                    document.querySelectorAll('.faq-answer').forEach(ans => {
+                        ans.classList.remove('show');
+                    });
+                    
+                    document.querySelectorAll('.faq-question span').forEach(span => {
+                        span.textContent = '+';
+                    });
+                    
+                    // Open this answer if it was closed
+                    if (!isOpen) {
+                        answer.classList.add('show');
+                        this.querySelector('span').textContent = '-';
+                    }
+                });
+            });
+            
+            // Form submission handlers
+            const constantForm = document.getElementById('constant-form');
+            const variableDemandForm = document.getElementById('variable-demand-form');
+            const variableLeadForm = document.getElementById('variable-lead-form');
+            const bothVariableForm = document.getElementById('both-variable-form');
+            const resultBox = document.getElementById('result-box');
+            
+            // Z-value lookup table for service levels
+            const zValues = {
+                80: 0.84,
+                85: 1.04,
+                90: 1.28,
+                95: 1.65,
+                97: 1.88,
+                98: 2.05,
+                99: 2.33,
+                99.9: 3.09
+            };
+            
+            function getZValue(serviceLevel) {
+                // Find the closest service level in the table
+                const levels = Object.keys(zValues).map(Number);
+                const closest = levels.reduce((prev, curr) => {
+                    return (Math.abs(curr - serviceLevel) < Math.abs(prev - serviceLevel) ? curr : prev);
+                });
+                
+                return zValues[closest];
+            }
+
+            // Replace service level input fields with dropdowns
+            function replaceServiceLevelInput(formId, selectId) {
+                const form = document.getElementById(formId);
+                const oldInput = form.querySelector('input[id$="service-level"]');
+                if (oldInput) {
+                    const select = document.createElement('select');
+                    select.id = selectId;
+                    select.required = true;
+                    select.className = oldInput.className;
+                    select.style.width = "100%";
+                    [
+                        { val: 80, label: "80%" },
+                        { val: 85, label: "85%" },
+                        { val: 90, label: "90%" },
+                        { val: 95, label: "95%" },
+                        { val: 97, label: "97%" },
+                        { val: 98, label: "98%" },
+                        { val: 99, label: "99%" },
+                        { val: 99.9, label: "99.9%" }
+                    ].forEach(opt => {
+                        const option = document.createElement('option');
+                        option.value = opt.val;
+                        option.textContent = opt.label;
+                        if (opt.val === 95) option.selected = true;
+                        select.appendChild(option);
+                    });
+                    oldInput.parentNode.replaceChild(select, oldInput);
+                }
+            }
+
+            replaceServiceLevelInput('variable-demand-form', 'vd-service-level');
+            replaceServiceLevelInput('variable-lead-form', 'vl-service-level');
+            replaceServiceLevelInput('both-variable-form', 'bv-service-level');
+            
+            // Constant Demand & Lead Time
+            constantForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const demand = parseFloat(document.getElementById('constant-demand').value);
+                const leadTime = parseFloat(document.getElementById('constant-lead').value);
+                const safetyStock = parseFloat(document.getElementById('constant-safety').value) || 0;
+                
+                const leadTimeDemand = demand * leadTime;
+                const reorderPoint = leadTimeDemand + safetyStock;
+                
+                // Update results
+                document.getElementById('rop-value').textContent = Math.ceil(reorderPoint);
+                document.getElementById('safety-stock-value').textContent = Math.ceil(safetyStock);
+                document.getElementById('lead-time-demand-value').textContent = Math.ceil(leadTimeDemand);
+                document.getElementById('service-level-value').textContent = 'N/A';
+                
+                document.getElementById('calculation-formula').innerHTML = 
+                    `<strong>Formula:</strong> ROP = (Average Demand × Lead Time) + Safety Stock = (${demand} × ${leadTime}) + ${safetyStock} = ${reorderPoint.toFixed(2)}`;
+                
+                document.getElementById('calculation-explanation').textContent = 
+                    'For constant demand and lead time, the reorder point is simply the expected demand during lead time plus any safety stock.';
+                
+                resultBox.style.display = 'block';
+            });
+            
+            // Variable Demand
+            variableDemandForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const avgDemand = parseFloat(document.getElementById('vd-avg-demand').value);
+                const demandStd = parseFloat(document.getElementById('vd-demand-std').value);
+                const leadTime = parseFloat(document.getElementById('vd-lead').value);
+                const serviceLevel = parseFloat(document.getElementById('vd-service-level').value);
+                
+                const z = getZValue(serviceLevel);
+                const safetyStock = z * demandStd * Math.sqrt(leadTime);
+                const leadTimeDemand = avgDemand * leadTime;
+                const reorderPoint = leadTimeDemand + safetyStock;
+                
+                // Update results
+                document.getElementById('rop-value').textContent = Math.ceil(reorderPoint);
+                document.getElementById('safety-stock-value').textContent = Math.ceil(safetyStock);
+                document.getElementById('lead-time-demand-value').textContent = Math.ceil(leadTimeDemand);
+                document.getElementById('service-level-value').textContent = serviceLevel + '%';
+                
+                document.getElementById('calculation-formula').innerHTML = 
+                    `<strong>Formula:</strong> ROP = (d × L) + (Z × σ_d × √L) = (${avgDemand} × ${leadTime}) + (${z.toFixed(2)} × ${demandStd} × ${Math.sqrt(leadTime).toFixed(2)}) = ${reorderPoint.toFixed(2)}`;
+                
+                document.getElementById('calculation-explanation').textContent = 
+                    'For variable demand and constant lead time, safety stock protects against demand variability during the lead time.';
+                
+                resultBox.style.display = 'block';
+            });
+            
+            // Variable Lead Time
+            variableLeadForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const demand = parseFloat(document.getElementById('vl-demand').value);
+                const avgLeadTime = parseFloat(document.getElementById('vl-avg-lead').value);
+                const leadStd = parseFloat(document.getElementById('vl-lead-std').value);
+                const serviceLevel = parseFloat(document.getElementById('vl-service-level').value);
+                
+                const z = getZValue(serviceLevel);
+                const safetyStock = z * demand * leadStd;
+                const leadTimeDemand = demand * avgLeadTime;
+                const reorderPoint = leadTimeDemand + safetyStock;
+                
+                // Update results
+                document.getElementById('rop-value').textContent = Math.ceil(reorderPoint);
+                document.getElementById('safety-stock-value').textContent = Math.ceil(safetyStock);
+                document.getElementById('lead-time-demand-value').textContent = Math.ceil(leadTimeDemand);
+                document.getElementById('service-level-value').textContent = serviceLevel + '%';
+                
+                document.getElementById('calculation-formula').innerHTML = 
+                    `<strong>Formula:</strong> ROP = (d × L_avg) + (Z × d × σ_L) = (${demand} × ${avgLeadTime}) + (${z.toFixed(2)} × ${demand} × ${leadStd}) = ${reorderPoint.toFixed(2)}`;
+                
+                document.getElementById('calculation-explanation').textContent = 
+                    'For constant demand and variable lead time, safety stock protects against lead time variability.';
+                
+                resultBox.style.display = 'block';
+            });
+            
+            // Both Variable
+            bothVariableForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const avgDemand = parseFloat(document.getElementById('bv-avg-demand').value);
+                const demandStd = parseFloat(document.getElementById('bv-demand-std').value);
+                const avgLeadTime = parseFloat(document.getElementById('bv-avg-lead').value);
+                const leadStd = parseFloat(document.getElementById('bv-lead-std').value);
+                const serviceLevel = parseFloat(document.getElementById('bv-service-level').value);
+                
+                const z = getZValue(serviceLevel);
+                const safetyStock = z * Math.sqrt((avgLeadTime * Math.pow(demandStd, 2)) + (Math.pow(avgDemand, 2) * Math.pow(leadStd, 2)));
+                const leadTimeDemand = avgDemand * avgLeadTime;
+                const reorderPoint = leadTimeDemand + safetyStock;
+                
+                // Update results
+                document.getElementById('rop-value').textContent = Math.ceil(reorderPoint);
+                document.getElementById('safety-stock-value').textContent = Math.ceil(safetyStock);
+                document.getElementById('lead-time-demand-value').textContent = Math.ceil(leadTimeDemand);
+                document.getElementById('service-level-value').textContent = serviceLevel + '%';
+                
+                document.getElementById('calculation-formula').innerHTML = 
+                    `<strong>Formula:</strong> ROP = (d_avg × L_avg) + Z × √(L_avg × σ_d² + d_avg² × σ_L²) = (${avgDemand} × ${avgLeadTime}) + ${z.toFixed(2)} × √(${avgLeadTime} × ${Math.pow(demandStd, 2).toFixed(2)} + ${Math.pow(avgDemand, 2).toFixed(2)} × ${Math.pow(leadStd, 2).toFixed(2)}) = ${reorderPoint.toFixed(2)}`;
+                
+                document.getElementById('calculation-explanation').textContent = 
+                    'For both variable demand and lead time, safety stock protects against both types of variability using this comprehensive formula.';
+                
+                resultBox.style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>
