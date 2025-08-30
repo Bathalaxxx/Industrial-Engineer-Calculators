@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-3BSHG1DE6V');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5607576434988374"
+     crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="google-adsense-account" content="ca-pub-5607576434988374">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="OEE Calculator - Calculate Overall Equipment Effectiveness with Availability, Performance, and Quality metrics. Learn OEE formula, calculation methods, and analysis techniques.">
+    <meta name="keywords" content="oee formula, oee calculation, oee meaning, oee definition, what is oee, oee manufacturing, oee calculator, oee analysis, how to calculate oee, overall equipment effectiveness">
+    <title>OEE Calculator | What is OEE & How to Calculate It | Industrial Engineering Calculators</title>
+
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="OEE Calculator | What is OEE & How to Calculate It">
+    <meta property="og:description" content="Calculate Overall Equipment Effectiveness with our OEE calculator. Learn the OEE formula, calculation methods, and analysis techniques for manufacturing optimization.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.industrialengineeringcalculators.com/oee-calculation.html">
+    
+    <style>
+        /* Same CSS as landing page */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+            transition: margin-left 0.3s;
+        }
+        
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block; /* Changed from none to block */
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .oee-gauge {
+            width: 100%;
+            height: 30px;
+            background-color: #f0f0f0;
+            border-radius: 15px;
+            margin: 1rem 0;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .oee-gauge-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #e74c3c, #f39c12, #2ecc71);
+            transition: width 0.5s ease;
+        }
+        
+        .oee-gauge-marker {
+            position: absolute;
+            height: 40px;
+            width: 2px;
+            background-color: rgba(0,0,0,0.5);
+            top: -5px;
+        }
+        
+        .oee-gauge-label {
+            position: absolute;
+            top: -20px;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+        }
+        
+        .metric-results {
+            display: flex;
+            justify-content: space-between;
+            margin: 1.5rem 0;
+        }
+        
+        .metric-card {
+            flex: 1;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 0 0.5rem;
+            text-align: center;
+        }
+        
+        .metric-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-card .metric-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .metric-card.availability .metric-value {
+            color: #3498db;
+        }
+        
+        .metric-card.performance .metric-value {
+            color: #f39c12;
+        }
+        
+        .metric-card.quality .metric-value {
+            color: #2ecc71;
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        /* New styles for additional content */
+        .info-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .info-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1.5rem;
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .faq-answer {
+            display: none;
+            padding-top: 0.5rem;
+        }
+        
+        .faq-answer.show {
+            display: block;
+        }
+        
+        .related-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .tool-chip {
+            background-color: #e3f2fd;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .tool-chip:hover {
+            background-color: #bbdefb;
+        }
+        
+        .citation {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            font-style: italic;
+            margin-top: 0.5rem;
+        }
+
+        .bibliography {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .bibliography li {
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            text-indent: -1.5rem;
+        }
+
+        .bibliography li:before {
+            content: "•";
+            color: var(--secondary-color);
+            font-weight: bold;
+            display: inline-block;
+            width: 1.5rem;
+            margin-left: -1.5rem;
+        }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            display: block;
+        }
+            
+        body.sidebar-open {
+            margin-left: 0;
+            overflow: hidden;
+        }
+        /* xxxx navigation end xxxxx */
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .metric-results {
+                flex-direction: column;
+            }
+            
+            .metric-card {
+                margin: 0.5rem 0;
+            }
+            
+            .related-tools {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+
+    <div class="sidebar-category">
+        <div class="sidebar-category-header">
+            <span>Site Navigation</span>
+            <span>+</span>
+        </div>
+        
+        <div class="sidebar-category-content">
+            <a href="index.html" class="sidebar-link">Home</a>
+            <a href="about.html" class="sidebar-link">About</a>
+            <a href="terms.html" class="sidebar-link">Terms of Service</a>
+            <a href="privacy.html" class="sidebar-link">Privacy Policy</a>
+            <a href="contact.html" class="sidebar-link">Contact Us</a>
+            <a href="sitemap.html" class="sidebar-link">Sitemap</a>
+        </div>
+    </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="linebalancing.html" class="sidebar-link">Line Balancing</a>
+                <a href="takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="gagerr.html" class="sidebar-link">Gage R&R</a>
+                <a href="processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="oee-calculation.html" class="sidebar-link">OEE Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="anova.html" class="sidebar-link">ANOVA</a>
+                <a href="chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
+                
+                <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="regression.html" class="sidebar-link">Regression</a>
+                <a href="samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="ttest.html" class="sidebar-link">T-Test</a>
+                <a href="ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="eoq.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="rop.html" class="sidebar-link">Reorder Point</a>
+                <a href="kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Study</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+            </div>
+        </div>
+    </aside>
+    <!-- xxxx navigation end xxxxx -->
+    
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Industrial Engineering <span>Calculators</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="sitemap.html">Sitemap</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>OEE Calculator</h1>
+            <p>Calculate Overall Equipment Effectiveness with Availability, Performance, and Quality metrics</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Overall Equipment Effectiveness (OEE)</h2>
+                <p>OEE is a metric for measuring productivity especially in a manufacturing setup. It identifies the percentage of manufacturing time that is actually utilized for productivite work.</p>
+                
+                <div class="formula-box">
+                    OEE = Availability × Performance × Quality
+                </div>
+                
+                <p>Where:</p>
+                <ul>
+                    <li><strong>Availability</strong> = Run Time / Planned Production Time</li>
+                    <li><strong>Performance</strong> = (Total Parts × Ideal Cycle Time) / Run Time</li>
+                    <li><strong>Quality</strong> = Good Parts / Total Parts</li>
+                </ul>
+            </div>
+
+            <script async="async" data-cfasync="false" src="//pl27511448.profitableratecpm.com/5d225b5e0b22c0980e365900e2390e1d/invoke.js"></script> <!-- adterra native banner -->
+            <div id="container-5d225b5e0b22c0980e365900e2390e1d"></div>    <!-- adterra native banner -->            
+            
+            <!-- What is OEE Section -->
+            <div class="info-section">
+                <h3>What is OEE? Understanding Overall Equipment Effectiveness</h3>
+                <p><strong>OEE (Overall Equipment Effectiveness)</strong> is a metric that measures how effectively an operation is is managed versus its 100% potential during periods when it is supposedly running. It gives ideas into the efficiency of equipment,processes, and the quality of output by evaluating three (3) critical aspects of manufacturing performance:</p>
+                
+                <ol>
+                    <li><strong>Availability</strong> - The percentage of production time that the equipment is available to operate</li>
+                    <li><strong>Performance</strong> - The speed at which the equipment runs as a percentage of its designed cycle time (Takt time)</li>
+                    <li><strong>Quality</strong> - The percentage of good quality parts/products produced out of the total parts/products produced</li>
+                </ol>
+                
+                <p>The <strong>OEE formula</strong> multiplies these three factors to provide a single percentage that represents the overall equipment effectiveness. This <strong>OEE calculation</strong> method originated in Japan as part of the Total Productive Maintenance (TPM) methodology. It has since been adopted worldwide and became the global standard for measuring manufacturing productivity.</p>
+                
+                <p class="citation">Source: Nakajima, S. (1988). Introduction to TPM. Productivity Press.</p>
+            </div>
+            
+            <!-- How to Use the OEE Calculator -->
+            <div class="info-section">
+                <h3>How to Use This OEE Calculator</h3>
+                <p>Our <strong>OEE calculator</strong> simplifies the <strong>OEE calculation</strong> process. Follow these steps to calculate your Overall Equipment Effectiveness:</p>
+                
+                <ol>
+                    <li><strong>Enter Time Metrics</strong>: Input your planned production time (in minutes) and any downtime that occurred during this period.</li>
+                    <li><strong>Enter Production Metrics</strong>: Provide the ideal cycle time (seconds per part) and the total number of parts produced.</li>
+                    <li><strong>Enter Quality Metrics</strong>: Input either the number of good parts or rejected parts (the calculator will automatically compute the other value).</li>
+                    <li><strong>Calculate</strong>: Click the "Calculate OEE" button to see your results.</li>
+                </ol>
+                
+            </div>
+            
+            <form id="oee-form">
+                <h3>Time Metrics</h3>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="planned-production-time">Planned Production Time (minutes):</label>
+                        <input type="number" id="planned-production-time" min="0" step="1" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="downtime">Downtime (minutes):</label>
+                        <input type="number" id="downtime" min="0" step="1" required>
+                    </div>
+                </div>
+                
+                <h3>Production Metrics</h3>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="ideal-cycle-time">Ideal Cycle Time (seconds/part):</label>
+                        <input type="number" id="ideal-cycle-time" min="0" step="0.01" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="total-parts">Total Parts Produced:</label>
+                        <input type="number" id="total-parts" min="0" step="1" required>
+                    </div>
+                </div>
+                
+                <h3>Quality Metrics</h3>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="good-parts">Good Parts (Passed Quality):</label>
+                        <input type="number" id="good-parts" min="0" step="1" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="rejected-parts">Rejected Parts:</label>
+                        <input type="number" id="rejected-parts" min="0" step="1">
+                    </div>
+                </div>
+                
+                <button type="submit" class="calculate-btn">Calculate OEE</button>
+            </form>
+            
+            <div class="result-box" id="oee-result">
+                <h3>Results</h3>
+                
+                <div class="oee-gauge">
+                    <div class="oee-gauge-fill" id="oee-gauge-fill"></div>
+                    <div class="oee-gauge-marker" style="left: 30%;">
+                        <div class="oee-gauge-label">30% (Poor)</div>
+                    </div>
+                    <div class="oee-gauge-marker" style="left: 65%;">
+                        <div class="oee-gauge-label">65% (Average)</div>
+                    </div>
+                    <div class="oee-gauge-marker" style="left: 85%;">
+                        <div class="oee-gauge-label">85% (World Class)</div>
+                    </div>
+                </div>
+                
+                <p>Overall Equipment Effectiveness: <span class="result-value" id="oee-value"></span></p>
+                
+                <div class="metric-results">
+                    <div class="metric-card availability">
+                        <h4>Availability</h4>
+                        <div class="metric-value" id="availability-value"></div>
+                        <p>Run Time: <span id="run-time-value"></span> minutes</p>
+                    </div>
+                    
+                    <div class="metric-card performance">
+                        <h4>Performance</h4>
+                        <div class="metric-value" id="performance-value"></div>
+                        <p>Theoretical Production: <span id="theoretical-production-value"></span> parts</p>
+                    </div>
+                    
+                    <div class="metric-card quality">
+                        <h4>Quality</h4>
+                        <div class="metric-value" id="quality-value"></div>
+                        <p>Rejection Rate: <span id="rejection-rate-value"></span></p>
+                    </div>
+                </div>
+                
+                <h4>Loss Analysis</h4>
+                <table>
+                    <tr>
+                        <th>Loss Category</th>
+                        <th>Time Lost (minutes)</th>
+                        <th>Percentage</th>
+                    </tr>
+                    <tr>
+                        <td>Availability Loss (Downtime)</td>
+                        <td id="availability-loss-time"></td>
+                        <td id="availability-loss-pct"></td>
+                    </tr>
+                    <tr>
+                        <td>Performance Loss (Speed)</td>
+                        <td id="performance-loss-time"></td>
+                        <td id="performance-loss-pct"></td>
+                    </tr>
+                    <tr>
+                        <td>Quality Loss (Defects)</td>
+                        <td id="quality-loss-time"></td>
+                        <td id="quality-loss-pct"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Total Productive Time</strong></td>
+                        <td id="productive-time"></td>
+                        <td id="productive-time-pct"></td>
+                    </tr>
+                </table>
+            </div>
+            
+            <!-- Interlinking to Related Tools -->
+            <div class="info-section">
+                <h3>Related Industrial Engineering Calculators</h3>
+                <p>OEE is just one of many important metrics in manufacturing and industrial engineering. Explore these related calculators to optimize your operations:</p>
+                
+                <div class="related-tools">
+                    <a href="processcapability.html" class="tool-chip">Process Capability Analysis</a>
+                    <a href="sixsigmadpmo.html" class="tool-chip">Six Sigma DPMO Calculator</a>
+                    <a href="controlcharts.html" class="tool-chip">Control Charts</a>
+                    <a href="takttime.html" class="tool-chip">Takt Time Calculator</a>
+                    <a href="linebalancing.html" class="tool-chip">Line Balancing</a>
+                    <a href="timestudy.html" class="tool-chip">Time Study Calculator</a>
+                </div>
+            </div>
+            
+            <!-- OEE Analysis and Improvement Section -->
+            <div class="info-section">
+                <h3>OEE Analysis and Improvement Strategies</h3>
+                <p>Effective <strong>OEE analysis</strong> goes beyond just calculating the number. It involves understanding the root causes of losses and implementing targeted improvements:</p>
+                
+                <h4>Addressing Availability Losses</h4>
+                <ul>
+                    <li>Implement preventive maintenance schedules</li>
+                    <li>Reduce changeover times using SMED (Single-Minute Exchange of Die) techniques</li>
+                    <li>Address equipment failures through root cause analysis</li>
+                </ul>
+                
+                <h4>Improving Performance Efficiency</h4>
+                <ul>
+                    <li>Identify and eliminate minor stops and idling</li>
+                    <li>Optimize machine settings for maximum speed while maintaining quality</li>
+                    <li>Address material flow issues that cause production delays</li>
+                </ul>
+                
+                <h4>Enhancing Quality Rate</h4>
+                <ul>
+                    <li>Implement error-proofing (poka-yoke) devices</li>
+                    <li>Improve operator training on quality standards</li>
+                    <li>Establish robust quality control processes</li>
+                </ul>
+                
+                <p>Regular <strong>OEE analysis</strong> helps identify trends and prioritize improvement efforts where they will have the greatest impact on overall equipment effectiveness.</p>
+                
+                <p class="citation">Source: Hansen, R. C. (2002). Overall Equipment Effectiveness: A Powerful Production/Maintenance Tool for Increased Profits. Industrial Press.</p>
+            </div>
+            
+            <!-- OEE FAQs Section -->
+            <div class="info-section">
+                <h3>Frequently Asked Questions About OEE</h3>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        What is a good OEE score? <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>OEE benchmarks vary by industry, but generally:</p>
+                        <ul>
+                            <li><strong>100%</strong>: Perfect production (only theoretically possible)</li>
+                            <li><strong>85%</strong>: World-class level (often considered the goal for discrete manufacturers)</li>
+                            <li><strong>60%</strong>: Normal range for many manufacturers, indicating room for more improvement</li>
+                            <li><strong>40%</strong>: Low score, indicating significant improvement opportunities</li>
+                        </ul>
+                        <p>It's important to note that process industries (like chemicals or pharmaceuticals) often have higher OEE scores than discrete manufacturing due to the continuous nature of their processes.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        How is OEE different from efficiency? <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>While efficiency typically measures output against a single standard, OEE provides a more comprehensive view by measuring three distinct components of manufacturing performance:</p>
+                        <ol>
+                            <li><strong>Availability</strong> measures uptime versus planned production time</li>
+                            <li><strong>Performance</strong> measures actual speed versus ideal speed</li>
+                            <li><strong>Quality</strong> measures good parts versus total parts produced</li>
+                        </ol>
+                        <p>This multi-dimensional approach makes OEE a more powerful metric for identifying specific areas for improvement in manufacturing operations.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        What are the Six Big Losses in OEE? <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>The Six Big Losses categorize equipment productivity losses that affect OEE:</p>
+                        <ol>
+                            <li><strong>Breakdowns</strong> (Availability Loss) - Equipment failures</li>
+                            <li><strong>Setup and Adjustments</strong> (Availability Loss) - Changeover time</li>
+                            <li><strong>Small Stops</strong> (Performance Loss) - Minor interruptions (< 5 minutes)</li>
+                            <li><strong>Reduced Speed</strong> (Performance Loss) - Operating below ideal cycle time</li>
+                            <li><strong>Startup Rejects</strong> (Quality Loss) - Defects during warm-up or startup</li>
+                            <li><strong>Production Rejects</strong> (Quality Loss) - Defects during stable production</li>
+                        </ol>
+                        <p>Identifying and addressing these Six Big Losses is fundamental to improving OEE.</p>
+                        <p class="citation">Source: Nakajima, S. (1988). Introduction to TPM. Productivity Press.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        How often should I measure OEE? <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>The frequency of OEE measurement depends on your production process and improvement goals:</p>
+                        <ul>
+                            <li><strong>Daily</strong>: For high-volume processes or when implementing rapid improvement initiatives</li>
+                            <li><strong>Weekly</strong>: Common frequency for tracking overall performance trends</li>
+                            <li><strong>Per shift</strong>: Useful for identifying shift-specific issues</li>
+                            <li><strong>Per production run</strong>: Helpful for job-based manufacturing</li>
+                        </ul>
+                        <p>More frequent measurement allows for quicker problem identification and resolution, but requires more robust data collection systems.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        Can OEE be greater than 100%? <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>No, OEE cannot legitimately exceed 100%. Each component of OEE is capped at 100%:</p>
+                        <ul>
+                            <li>Availability cannot exceed 100% (you can't have more time available than planned)</li>
+                            <li>Performance cannot exceed 100% (you can't run faster than the ideal cycle time)</li>
+                            <li>Quality cannot exceed 100% (you can't produce more good parts than total parts)</li>
+                        </ul>
+                        <p>If you calculate an OEE greater than 100%, it typically indicates that your "ideal cycle time" is set incorrectly (too slow) or there are errors in your data collection.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- OEE Definitions Section -->
+            <div class="info-section">
+                <h3>Key OEE Terms and Definitions</h3>
+                
+                <table>
+                    <tr>
+                        <th>Term</th>
+                        <th>Definition</th>
+                        <th>Calculation</th>
+                    </tr>
+                    <tr>
+                        <td><strong>OEE (Overall Equipment Effectiveness)</strong></td>
+                        <td>A comprehensive measure of manufacturing productivity that combines availability, performance, and quality metrics</td>
+                        <td>Availability × Performance × Quality</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Availability</strong></td>
+                        <td>The percentage of scheduled time that the equipment is available to operate</td>
+                        <td>Run Time / Planned Production Time</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Performance</strong></td>
+                        <td>The speed at which the equipment runs compared to its designed speed</td>
+                        <td>(Total Parts × Ideal Cycle Time) / Run Time</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Quality</strong></td>
+                        <td>The percentage of good parts out of the total parts produced</td>
+                        <td>Good Parts / Total Parts</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Planned Production Time</strong></td>
+                        <td>The total time scheduled for equipment operation</td>
+                        <td>Total Time - Planned Shutdowns</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Run Time</strong></td>
+                        <td>The time equipment was actually running</td>
+                        <td>Planned Production Time - Downtime</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ideal Cycle Time</strong></td>
+                        <td>The theoretical minimum time required to produce one part</td>
+                        <td>Based on equipment specifications under optimal conditions</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <!-- Examples Section -->
+            <div class="examples-section">
+                <h3>OEE Calculation Examples</h3>
+                
+                <div class="example">
+                    <h4>Example 1: Basic OEE Calculation</h4>
+                    <p>A manufacturing cell operates with the following metrics:</p>
+                    <ul>
+                        <li>Planned Production Time: 480 minutes (8-hour shift)</li>
+                        <li>Downtime: 47 minutes</li>
+                        <li>Ideal Cycle Time: 1.0 seconds per part</li>
+                        <li>Total Parts Produced: 19,271 parts</li>
+                        <li>Good Parts: 18,847 parts</li>
+                    </ul>
+                    
+                    <p><strong>Calculations:</strong></p>
+                    <ul>
+                        <li>Run Time = 480 - 47 = 433 minutes</li>
+                        <li>Availability = 433 / 480 = 0.9021 (90.21%)</li>
+                        <li>Performance = (19,271 × 1.0) / (433 × 60) = 19,271 / 25,980 = 0.7417 (74.17%)</li>
+                        <li>Quality = 18,847 / 19,271 = 0.9780 (97.80%)</li>
+                        <li>OEE = 0.9021 × 0.7417 × 0.9780 = 0.6545 (65.45%)</li>
+                    </ul>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 2: World-Class OEE</h4>
+                    <p>A high-performing manufacturing line:</p>
+                    <ul>
+                        <li>Planned Production Time: 1,440 minutes (24 hours)</li>
+                        <li>Downtime: 36 minutes</li>
+                        <li>Ideal Cycle Time: 2.5 seconds per part</li>
+                        <li>Total Parts Produced: 33,200 parts</li>
+                        <li>Good Parts: 33,100 parts</li>
+                    </ul>
+                    
+                    <p><strong>Calculations:</strong></p>
+                    <ul>
+                        <li>Run Time = 1,440 - 36 = 1,404 minutes</li>
+                        <li>Availability = 1,404 / 1,440 = 0.9750 (97.50%)</li>
+                        <li>Performance = (33,200 × 2.5) / (1,404 × 60) = 83,000 / 84,240 = 0.9853 (98.53%)</li>
+                        <li>Quality = 33,100 / 33,200 = 0.9970 (99.70%)</li>
+                        <li>OEE = 0.9750 × 0.9853 × 0.9970 = 0.9581 (95.81%)</li>
+                    </ul>
+                </div>
+
+                <!-- NEW RECOMMENDED RESOURCES SECTION -->
+                <div class="recommended-resources" style="margin-top: 3rem; padding: 1.5rem; background-color: #f8f9fa; border-radius: 8px;">
+                    <h3>Recommended Resources</h3>
+                    <p>Implementing OEE effectively often requires the right tools and knowledge. Here are some resources we recommend:</p>
+                
+                    <div class="resource-item" style="margin: 1rem 0; padding: 1rem; background: white; border-radius: 5px;">
+                        <h4>📚 "The Hitchhiker's Guide to Lean: Lessons from the Road"</h4>
+                        <p>Authored by Jamie Flinchbaugh and Andy Carlino. This book is considered as a definitive guide to understanding and implementing Lean thinking from a practical, foundational perspective.</p>
+                        <a href="https://amzn.to/4mK0cSc"_blank" rel="nofollow sponsored" style="display: inline-block; background-color: #3498db; color: white; padding: 0.5rem 1rem; border-radius: 4px; text-decoration: none; margin-top: 0.5rem;">View on Amazon</a>
+                    </div>
+
+                    <p style="font-size: 0.9rem; margin-top: 1.5rem; font-style: italic;">
+                        <strong>Disclosure:</strong> As an Amazon Associate I earn from qualifying purchases. These are resources we genuinely recommend for implementing OEE.
+                    </p>
+                </div>
+                <!-- END RECOMMENDED RESOURCES SECTION -->
+
+                <!-- Bibliography Section -->
+                <div class="info-section">
+                    <h3>Bibliography & Further Reading</h3>
+                    <ul class="bibliography">
+                        <li>Nakajima, S. (1988). <em>Introduction to TPM: Total Productive Maintenance</em>. Productivity Press.</li>
+                        <li>Hansen, R. C. (2002). <em>Overall Equipment Effectiveness: A Powerful Production/Maintenance Tool for Increased Profits</em>. Industrial Press.</li>
+                        <li>Wireman, T. (2004). <em>Total Productive Maintenance</em>. Industrial Press.</li>
+                        <li>Productivity Press Development Team. (1999). <em>Quick Changeover for Operators: The SMED System</em>. Productivity Press.</li>
+                        <li>ISO 22400:2014. (2014). <em>Automation systems and integration — Key performance indicators (KPIs) for manufacturing operations management</em>. International Organization for Standardization.</li>
+                    </ul>
+                </div>
+    
+
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+                <a href="sitemap.html">Sitemap</a>
+            </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Toggle FAQ answers
+        function toggleFAQ(element) {
+            const answer = element.nextElementSibling;
+            const isShowing = answer.classList.contains('show');
+            
+            if (isShowing) {
+                answer.classList.remove('show');
+                element.querySelector('span').textContent = '+';
+            } else {
+                answer.classList.add('show');
+                element.querySelector('span').textContent = '-';
+            }
+        }
+        
+        // OEE Calculation
+        document.getElementById('oee-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get input values
+            const plannedProductionTime = parseFloat(document.getElementById('planned-production-time').value);
+            const downtime = parseFloat(document.getElementById('downtime').value);
+            const idealCycleTime = parseFloat(document.getElementById('ideal-cycle-time').value);
+            const totalParts = parseFloat(document.getElementById('total-parts').value);
+            let goodParts = parseFloat(document.getElementById('good-parts').value);
+            const rejectedParts = parseFloat(document.getElementById('rejected-parts').value);
+            
+            // Calculate good parts if rejected parts are provided
+            if (rejectedParts && !isNaN(rejectedParts)) {
+                goodParts = totalParts - rejectedParts;
+                document.getElementById('good-parts').value = goodParts;
+            }
+            
+            // Validate inputs
+            if (downtime > plannedProductionTime) {
+                alert('Downtime cannot exceed planned production time!');
+                return;
+            }
+            
+            if (goodParts > totalParts) {
+                alert('Good parts cannot exceed total parts produced!');
+                return;
+            }
+            
+            // Calculate OEE components
+            const runTime = plannedProductionTime - downtime;
+            const availability = runTime / plannedProductionTime;
+            
+            const idealProductionTime = totalParts * idealCycleTime / 60; // Convert to minutes
+            const performance = idealProductionTime / runTime;
+            
+            const quality = goodParts / totalParts;
+            
+            const oee = availability * performance * quality;
+            
+            // Calculate loss analysis
+            const availabilityLossTime = downtime;
+            const availabilityLossPct = (availabilityLossTime / plannedProductionTime) * 100;
+            
+            const performanceLossTime = runTime - idealProductionTime;
+            const performanceLossPct = (performanceLossTime / plannedProductionTime) * 100;
+            
+            const qualityLossTime = (performanceLossTime + idealProductionTime) * (1 - quality);
+            const qualityLossPct = (qualityLossTime / plannedProductionTime) * 100;
+            
+            const productiveTime = plannedProductionTime - (availabilityLossTime + performanceLossTime + qualityLossTime);
+            const productiveTimePct = (productiveTime / plannedProductionTime) * 100;
+            
+            // Display results
+            document.getElementById('oee-value').textContent = (oee * 100).toFixed(2) + '%';
+            document.getElementById('availability-value').textContent = (availability * 100).toFixed(2) + '%';
+            document.getElementById('performance-value').textContent = (performance * 100).toFixed(2) + '%';
+            document.getElementById('quality-value').textContent = (quality * 100).toFixed(2) + '%';
+            
+            document.getElementById('run-time-value').textContent = runTime.toFixed(2);
+            
+            const theoreticalProduction = (runTime * 60) / idealCycleTime;
+            document.getElementById('theoretical-production-value').textContent = theoreticalProduction.toFixed(0);
+            
+            const rejectionRate = ((totalParts - goodParts) / totalParts) * 100;
+            document.getElementById('rejection-rate-value').textContent = rejectionRate.toFixed(2) + '%';
+            
+            // Update gauge
+            document.getElementById('oee-gauge-fill').style.width = (oee * 100) + '%';
+            
+            // Update loss analysis table
+            document.getElementById('availability-loss-time').textContent = availabilityLossTime.toFixed(2);
+            document.getElementById('availability-loss-pct').textContent = availabilityLossPct.toFixed(2) + '%';
+            
+            document.getElementById('performance-loss-time').textContent = performanceLossTime.toFixed(2);
+            document.getElementById('performance-loss-pct').textContent = performanceLossPct.toFixed(2) + '%';
+            
+            document.getElementById('quality-loss-time').textContent = qualityLossTime.toFixed(2);
+            document.getElementById('quality-loss-pct').textContent = qualityLossPct.toFixed(2) + '%';
+            
+            document.getElementById('productive-time').textContent = productiveTime.toFixed(2);
+            document.getElementById('productive-time-pct').textContent = productiveTimePct.toFixed(2) + '%';
+            
+            // Show result box
+            document.getElementById('oee-result').style.display = 'block';
+            
+            // Scroll to results
+            document.getElementById('oee-result').scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        // Auto-calculate rejected parts when good parts change
+        document.getElementById('good-parts').addEventListener('input', function() {
+            const totalParts = parseFloat(document.getElementById('total-parts').value);
+            const goodParts = parseFloat(this.value);
+            
+            if (!isNaN(totalParts) && !isNaN(goodParts) && totalParts >= goodParts) {
+                document.getElementById('rejected-parts').value = totalParts - goodParts;
+            }
+        });
+        
+        // Auto-calculate good parts when rejected parts change
+        document.getElementById('rejected-parts').addEventListener('input', function() {
+            const totalParts = parseFloat(document.getElementById('total-parts').value);
+            const rejectedParts = parseFloat(this.value);
+            
+            if (!isNaN(totalParts) && !isNaN(rejectedParts) && totalParts >= rejectedParts) {
+                document.getElementById('good-parts').value = totalParts - rejectedParts;
+            }
+        });
+        
+        // xxxx navigation start xxxxx
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebarClose = document.querySelector('.sidebar-close');
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.overlay');
+            const body = document.body;
+            
+            // Toggle sidebar
+            function toggleSidebar() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+                body.classList.toggle('sidebar-open');
+            }
+            
+            // Toggle category
+            function toggleCategory(categoryHeader) {
+                const category = categoryHeader.parentElement;
+                category.classList.toggle('open');
+                
+                const icon = categoryHeader.querySelector('span:last-child');
+                icon.textContent = category.classList.contains('open') ? '−' : '+';
+            }
+            
+            // Event listeners
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            sidebarClose.addEventListener('click', toggleSidebar);
+            overlay.addEventListener('click', toggleSidebar);
+            
+            // Add event listeners to category headers
+            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
+            categoryHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    toggleCategory(this);
+                });
+            });
+        });
+        // xxxx navigation end xxxxx
+    </script>
+</body>
+</html>
