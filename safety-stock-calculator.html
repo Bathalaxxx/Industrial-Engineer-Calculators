@@ -1,6 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+    </script>
+    <!--FAVICON-->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-3BSHG1DE6V');
+    </script>
+
+    <!-- Clarity tracking code for https://iecalculators.online/ -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "t31aicr9ep");
+    </script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5607576434988374"
+     crossorigin="anonymous"></script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Safety Stock Calculator - Calculate optimal safety stock levels for different demand and lead time scenarios">
@@ -28,6 +58,149 @@
             color: var(--text-color);
             background-color: #f5f7fa;
         }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block; /* Changed from none to block */
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
 
         header {
             background-color: var(--primary-color);
@@ -344,6 +517,17 @@
             color: var(--text-light);
             font-size: 0.9rem;
         }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            display: block;
+        }
+            
+        body.sidebar-open {
+            margin-left: 0;
+            overflow: hidden;
+        }
+        /* xxxx navigation end xxxxx */
         
         @media (max-width: 768px) {
             .header-content {
@@ -429,6 +613,9 @@
                     <li><strong>σ_L</strong> = Standard deviation of lead time</li>
                 </ul>
             </div>
+
+            <script async="async" data-cfasync="false" src="//pl27511448.profitableratecpm.com/5d225b5e0b22c0980e365900e2390e1d/invoke.js"></script> <!-- adterra native banner -->
+            <div id="container-5d225b5e0b22c0980e365900e2390e1d"></div>    <!-- adterra native banner -->            
             
             <div class="model-selector">
                 <h3>Select Demand and Lead Time Scenario</h3>
@@ -652,28 +839,31 @@
                 </div>
             </div>
 
-            <!-- RECOMMENDED RESOURCES SECTION -->
-            <div class="recommended-resources" style="margin-top: 3rem; padding: 1.5rem; background-color: #f8f9fa; border-radius: 8px;">
-                <h3>Recommended Resources</h3>
-                <p>Proper inventory management requires the right tools and knowledge. Here are some resources we recommend:</p>
-                
-                <div class="resource-item" style="margin: 1rem 0; padding: 1rem; background: white; border-radius: 5px;">
-                    <h4>📚 "Inventory Management Explained"</h4>
-                    <p>A comprehensive guide to inventory management techniques, including safety stock calculations and inventory optimization strategies.</p>
-                    <a href="https://amzn.to/3VfK9c7" target="_blank" rel="nofollow sponsored" style="display: inline-block; background-color: #3498db; color: white; padding: 0.5rem 1rem; border-radius: 4px; text-decoration: none; margin-top: 0.5rem;">View on Amazon</a>
-                </div>
-                
-                <div class="resource-item" style="margin: 1rem 0; padding: 1rem; background: white; border-radius: 5px;">
-                    <h4>📋 Inventory Management Labels</h4>
-                    <p>Essential tools for implementing safety stock systems and visual inventory management.</p>
-                    <a href="https://amzn.to/4cGgL9R" target="_blank" rel="nofollow sponsored" style="display: inline-block; background-color: #3498db; color: white; padding: 0.5rem 1rem; border-radius: 4px; text-decoration: none; margin-top: 0.5rem;">Browse Options</a>
-                </div>
-                
-                <p style="font-size: 0.9rem; margin-top: 1.5rem; font-style: italic;">
-                    <strong>Disclosure:</strong> As an Amazon Associate I earn from qualifying purchases. These are resources we genuinely recommend for effective inventory management.
+            <!-- Bibliography Section -->
+            <div class="info-section">
+                <h3>Bibliography and Further Reading</h3>
+                <ul class="bibliography">
+                    <li>
+                        Harris, F. W. (1913). 
+                        <em>How many parts to make at once</em>. Factory, The Magazine of Management, 10(2), 135-136, 152.
+                    </li>
+                    <li>
+                        Wilson, R. H. (1934). 
+                        <em>A scientific routine for stock control</em>. Harvard Business Review, 13(1), 116-128.
+                    </li>
+                    <li>
+                        Silver, E. A., Pyke, D. F., & Peterson, R. (1998). 
+                        <a href="https://amzn.to/3HVhnkB" rel="nofollow" target="_blank"><em>Inventory Management and Production Planning and Scheduling</em></a>. John Wiley & Sons.
+                    </li>
+                    <li>
+                        Heizer, J., Render, B., & Munson, C. (2020). 
+                        <a href="https://amzn.to/47l0fPv" rel="nofollow" target="_blank"><em>Operations Management: Sustainability and Supply Chain Management</em></a>. Pearson.
+                    </li>
+                </ul>
+                <p style="font-size: 0.9rem; margin-top: 1rem; font-style: italic;">
+                        <strong>Disclosure:</strong> As an Amazon Associate I earn from qualifying purchases. These links are provided for your convenience and help support this site.
                 </p>
             </div>
-            <!-- END RECOMMENDED RESOURCES SECTION -->  
             
             <div class="calculator-intro">
                 <h3>Safety Stock Model Selection Guide</h3>
@@ -713,9 +903,12 @@
                 <a href="contact.html">Contact Us</a>
                 <a href="sitemap.html">Sitemap</a>
             </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
             <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
         </div>
     </footer>
+
+    
 
     <script>
         // Model tab switching
