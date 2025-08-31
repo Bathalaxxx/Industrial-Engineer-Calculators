@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Safety Stock Calculator - Calculate optimal safety stock levels for different demand and lead time scenarios">
+    <title>Safety Stock Calculator | Industrial Engineering Calculators</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .model-selector {
+            margin-bottom: 2rem;
+        }
+        
+        .model-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .model-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            margin-right: 0.5rem;
+            border-radius: 5px 5px 0 0;
+            background-color: #f1f1f1;
+            transition: all 0.3s;
+        }
+        
+        .model-tab.active {
+            background-color: white;
+            border-color: #ddd;
+            border-bottom-color: white;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        
+        .model-tab:hover:not(.active) {
+            background-color: #e9e9e9;
+        }
+        
+        .model-content {
+            display: none;
+        }
+        
+        .model-content.active {
+            display: block;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .metric-results {
+            display: flex;
+            justify-content: space-between;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .metric-card {
+            flex: 1;
+            min-width: 200px;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 0.5rem;
+            text-align: center;
+        }
+        
+        .metric-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-card .metric-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .metric-card.safety .metric-value {
+            color: #f39c12;
+        }
+        
+        .metric-card.service .metric-value {
+            color: #e74c3c;
+        }
+        
+        .metric-card.zscore .metric-value {
+            color: #3498db;
+        }
+        
+        .metric-card.variability .metric-value {
+            color: #2ecc71;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        .safety-stock-table {
+            width: 100%;
+            margin-top: 1.5rem;
+        }
+        
+        .safety-stock-table th {
+            background-color: var(--light-color);
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .model-tabs {
+                flex-direction: column;
+            }
+            
+            .model-tab {
+                border-radius: 0;
+                margin-right: 0;
+                border-bottom: 1px solid #ddd;
+            }
+            
+            .metric-results {
+                flex-direction: column;
+            }
+            
+            .metric-card {
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Industrial Engineering <span>Calculators</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="sitemap.html">Sitemap</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Safety Stock Calculator</h1>
+            <p>Calculate optimal safety stock levels for different demand and lead time scenarios</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Safety Stock Analysis</h2>
+                <p>Safety stock is the extra inventory kept on hand to mitigate the risk of stockouts caused by variability in demand and supply lead times.</p>
+                
+                <div class="formula-box">
+                    Safety Stock = Z × √(σ_d² × L + d² × σ_L²)
+                </div>
+                
+                <p>Where:</p>
+                <ul>
+                    <li><strong>Z</strong> = Service factor (Z-score) based on desired service level</li>
+                    <li><strong>σ_d</strong> = Standard deviation of demand</li>
+                    <li><strong>L</strong> = Average lead time</li>
+                    <li><strong>d</strong> = Average demand</li>
+                    <li><strong>σ_L</strong> = Standard deviation of lead time</li>
+                </ul>
+            </div>
+            
+            <div class="model-selector">
+                <h3>Select Demand and Lead Time Scenario</h3>
+                <p>Choose the model that matches your demand and lead time characteristics:</p>
+                
+                <div class="model-tabs">
+                    <div class="model-tab active" data-model="variable-demand">Variable Demand</div>
+                    <div class="model-tab" data-model="variable-lead">Variable Lead Time</div>
+                    <div class="model-tab" data-model="both-variable">Both Variable</div>
+                </div>
+                
+                <!-- Variable Demand -->
+                <div class="model-content active" id="variable-demand-model">
+                    <h3>Variable Demand (Constant Lead Time)</h3>
+                    <p>Use when demand varies but lead time is relatively stable.</p>
+                    
+                    <form id="variable-demand-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="vd-avg-demand">Average Demand (units/day):</label>
+                                <input type="number" id="vd-avg-demand" min="0.01" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="vd-demand-std">Demand Standard Deviation:</label>
+                                <input type="number" id="vd-demand-std" min="0" step="0.01" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="vd-lead">Lead Time (days):</label>
+                                <input type="number" id="vd-lead" min="0.01" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="vd-service-level">Service Level (%):</label>
+                                <input type="number" id="vd-service-level" min="1" max="99.99" step="0.01" value="95" required>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate Safety Stock</button>
+                    </form>
+                </div>
+                
+                <!-- Variable Lead Time -->
+                <div class="model-content" id="variable-lead-model">
+                    <h3>Variable Lead Time (Constant Demand)</h3>
+                    <p>Use when lead time varies but demand is relatively stable.</p>
+                    
+                    <form id="variable-lead-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="vl-demand">Demand (units/day):</label>
+                                <input type="number" id="vl-demand" min="0.01" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="vl-avg-lead">Average Lead Time (days):</label>
+                                <input type="number" id="vl-avg-lead" min="0.01" step="0.01" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="vl-lead-std">Lead Time Standard Deviation (days):</label>
+                                <input type="number" id="vl-lead-std" min="0" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="vl-service-level">Service Level (%):</label>
+                                <input type="number" id="vl-service-level" min="1" max="99.99" step="0.01" value="95" required>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate Safety Stock</button>
+                    </form>
+                </div>
+                
+                <!-- Both Variable -->
+                <div class="model-content" id="both-variable-model">
+                    <h3>Variable Demand and Lead Time</h3>
+                    <p>Use when both demand and lead time have significant variability.</p>
+                    
+                    <form id="both-variable-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="bv-avg-demand">Average Demand (units/day):</label>
+                                <input type="number" id="bv-avg-demand" min="0.01" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="bv-demand-std">Demand Standard Deviation:</label>
+                                <input type="number" id="bv-demand-std" min="0" step="0.01" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="bv-avg-lead">Average Lead Time (days):</label>
+                                <input type="number" id="bv-avg-lead" min="0.01" step="0.01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="bv-lead-std">Lead Time Standard Deviation (days):</label>
+                                <input type="number" id="bv-lead-std" min="0" step="0.01" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="bv-service-level">Service Level (%):</label>
+                            <input type="number" id="bv-service-level" min="1" max="99.99" step="0.01" value="95" required>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate Safety Stock</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="result-box" id="safety-stock-result">
+                <h3>Safety Stock Results</h3>
+                
+                <div class="metric-results">
+                    <div class="metric-card safety">
+                        <h4>Safety Stock</h4>
+                        <div class="metric-value" id="safety-stock-value"></div>
+                        <p>Recommended Buffer Stock</p>
+                    </div>
+                    
+                    <div class="metric-card service">
+                        <h4>Service Level</h4>
+                        <div class="metric-value" id="service-level-value"></div>
+                        <p>Probability of No Stockout</p>
+                    </div>
+                    
+                    <div class="metric-card zscore">
+                        <h4>Z-Score</h4>
+                        <div class="metric-value" id="z-score-value"></div>
+                        <p>Service Factor</p>
+                    </div>
+                    
+                    <div class="metric-card variability">
+                        <h4>Combined Variability</h4>
+                        <div class="metric-value" id="combined-var-value"></div>
+                        <p>Standard Deviation</p>
+                    </div>
+                </div>
+                
+                <h4>Calculation Details</h4>
+                <table class="safety-stock-table">
+                    <tr>
+                        <th>Component</th>
+                        <th>Value</th>
+                    </tr>
+                    <tr>
+                        <td>Demand Variability Component</td>
+                        <td id="demand-var-value"></td>
+                    </tr>
+                    <tr>
+                        <td>Lead Time Variability Component</td>
+                        <td id="leadtime-var-value"></td>
+                    </tr>
+                    <tr>
+                        <td>Total Variance</td>
+                        <td id="total-variance-value"></td>
+                    </tr>
+                    <tr>
+                        <td>Standard Deviation</td>
+                        <td id="std-dev-value"></td>
+                    </tr>
+                </table>
+                
+                <h4>Interpretation Guidelines</h4>
+                <table>
+                    <tr>
+                        <th>Service Level</th>
+                        <th>Z-Score</th>
+                        <th>Typical Use Case</th>
+                    </tr>
+                    <tr>
+                        <td>85%</td>
+                        <td>1.04</td>
+                        <td>Low-cost items, minor stockouts acceptable</td>
+                    </tr>
+                    <tr>
+                        <td>90%</td>
+                        <td>1.28</td>
+                        <td>Standard products, moderate stockout tolerance</td>
+                    </tr>
+                    <tr>
+                        <td>95%</td>
+                        <td>1.65</td>
+                        <td>Most common target for important items</td>
+                    </tr>
+                    <tr>
+                        <td>99%</td>
+                        <td>2.33</td>
+                        <td>Critical items where stockouts are very costly</td>
+                    </tr>
+                    <tr>
+                        <td>99.9%</td>
+                        <td>3.09</td>
+                        <td>Extremely critical items (e.g., medical supplies)</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="examples-section">
+                <h3>Practical Examples</h3>
+                
+                <div class="example">
+                    <h4>Example 1: Variable Demand</h4>
+                    <p>Avg Demand: 25 ± 5 units/day, Lead Time: 4 days, Service: 95%</p>
+                    <p>Safety Stock = 1.65 × 5 × √4 = 16.5 units</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 2: Variable Lead Time</h4>
+                    <p>Demand: 30 units/day, Avg Lead Time: 7 ± 1.5 days, Service: 90%</p>
+                    <p>Safety Stock = 1.28 × 30 × 1.5 = 57.6 units</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 3: Both Variable</h4>
+                    <p>Avg Demand: 30 ± 6 units/day, Lead Time: 7 ± 1.5 days, Service: 90%</p>
+                    <p>Safety Stock = 1.28 × √(6²×7 + 30²×1.5²) = 64.6 units</p>
+                </div>
+            </div>
+
+            <!-- RECOMMENDED RESOURCES SECTION -->
+            <div class="recommended-resources" style="margin-top: 3rem; padding: 1.5rem; background-color: #f8f9fa; border-radius: 8px;">
+                <h3>Recommended Resources</h3>
+                <p>Proper inventory management requires the right tools and knowledge. Here are some resources we recommend:</p>
+                
+                <div class="resource-item" style="margin: 1rem 0; padding: 1rem; background: white; border-radius: 5px;">
+                    <h4>📚 "Inventory Management Explained"</h4>
+                    <p>A comprehensive guide to inventory management techniques, including safety stock calculations and inventory optimization strategies.</p>
+                    <a href="https://amzn.to/3VfK9c7" target="_blank" rel="nofollow sponsored" style="display: inline-block; background-color: #3498db; color: white; padding: 0.5rem 1rem; border-radius: 4px; text-decoration: none; margin-top: 0.5rem;">View on Amazon</a>
+                </div>
+                
+                <div class="resource-item" style="margin: 1rem 0; padding: 1rem; background: white; border-radius: 5px;">
+                    <h4>📋 Inventory Management Labels</h4>
+                    <p>Essential tools for implementing safety stock systems and visual inventory management.</p>
+                    <a href="https://amzn.to/4cGgL9R" target="_blank" rel="nofollow sponsored" style="display: inline-block; background-color: #3498db; color: white; padding: 0.5rem 1rem; border-radius: 4px; text-decoration: none; margin-top: 0.5rem;">Browse Options</a>
+                </div>
+                
+                <p style="font-size: 0.9rem; margin-top: 1.5rem; font-style: italic;">
+                    <strong>Disclosure:</strong> As an Amazon Associate I earn from qualifying purchases. These are resources we genuinely recommend for effective inventory management.
+                </p>
+            </div>
+            <!-- END RECOMMENDED RESOURCES SECTION -->  
+            
+            <div class="calculator-intro">
+                <h3>Safety Stock Model Selection Guide</h3>
+                <table>
+                    <tr>
+                        <th>Model</th>
+                        <th>When to Use</th>
+                        <th>Key Assumptions</th>
+                    </tr>
+                    <tr>
+                        <td>Variable Demand</td>
+                        <td>Demand fluctuates but lead times are reliable</td>
+                        <td>Only demand varies, lead time is constant</td>
+                    </tr>
+                    <tr>
+                        <td>Variable Lead Time</td>
+                        <td>Demand is stable but suppliers are inconsistent</td>
+                        <td>Only lead time varies, demand is constant</td>
+                    </tr>
+                    <tr>
+                        <td>Both Variable</td>
+                        <td>Both demand and lead times fluctuate</td>
+                        <td>Both demand and lead time have variability</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+                <a href="sitemap.html">Sitemap</a>
+            </div>
+            <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Model tab switching
+        const modelTabs = document.querySelectorAll('.model-tab');
+        const modelContents = document.querySelectorAll('.model-content');
+        
+        modelTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                modelTabs.forEach(t => t.classList.remove('active'));
+                modelContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                const model = tab.getAttribute('data-model');
+                document.getElementById(`${model}-model`).classList.add('active');
+            });
+        });
+        
+        // Variable demand calculation
+        document.getElementById('variable-demand-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            calculateVariableDemandSafetyStock();
+        });
+        
+        // Variable lead time calculation
+        document.getElementById('variable-lead-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            calculateVariableLeadSafetyStock();
+        });
+        
+        // Both variable calculation
+        document.getElementById('both-variable-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            calculateBothVariableSafetyStock();
+        });
+        
+        function calculateVariableDemandSafetyStock() {
+            const avgDemand = parseFloat(document.getElementById('vd-avg-demand').value);
+            const demandStd = parseFloat(document.getElementById('vd-demand-std').value);
+            const leadTime = parseFloat(document.getElementById('vd-lead').value);
+            const serviceLevel = parseFloat(document.getElementById('vd-service-level').value);
+            
+            if (isNaN(avgDemand) || isNaN(demandStd) || isNaN(leadTime) || isNaN(serviceLevel) ||
+                avgDemand <= 0 || leadTime <= 0 || serviceLevel <= 0 || serviceLevel >= 100) {
+                alert('Please enter valid positive numbers for all fields');
+                return;
+            }
+            
+            // Get Z-score for service level
+            const zScore = getZScore(serviceLevel / 100);
+            
+            // Calculate safety stock
+            const safetyStock = zScore * demandStd * Math.sqrt(leadTime);
+            
+            // Display results
+            displaySafetyStockResults(safetyStock, serviceLevel, zScore, demandStd * Math.sqrt(leadTime));
+            
+            // Show calculation details
+            document.getElementById('demand-var-value').textContent = demandStd.toFixed(2) + '² × ' + leadTime + ' = ' + (Math.pow(demandStd, 2) * leadTime).toFixed(2);
+            document.getElementById('leadtime-var-value').textContent = 'N/A (Constant)';
+            document.getElementById('total-variance-value').textContent = (Math.pow(demandStd, 2) * leadTime).toFixed(2);
+            document.getElementById('std-dev-value').textContent = (demandStd * Math.sqrt(leadTime)).toFixed(2);
+        }
+        
+        function calculateVariableLeadSafetyStock() {
+            const demand = parseFloat(document.getElementById('vl-demand').value);
+            const avgLeadTime = parseFloat(document.getElementById('vl-avg-lead').value);
+            const leadStd = parseFloat(document.getElementById('vl-lead-std').value);
+            const serviceLevel = parseFloat(document.getElementById('vl-service-level').value);
+            
+            if (isNaN(demand) || isNaN(avgLeadTime) || isNaN(leadStd) || isNaN(serviceLevel) ||
+                demand <= 0 || avgLeadTime <= 0 || serviceLevel <= 0 || serviceLevel >= 100) {
+                alert('Please enter valid positive numbers for all fields');
+                return;
+            }
+            
+            // Get Z-score for service level
+            const zScore = getZScore(serviceLevel / 100);
+            
+            // Calculate safety stock
+            const safetyStock = zScore * demand * leadStd;
+            
+            // Display results
+            displaySafetyStockResults(safetyStock, serviceLevel, zScore, demand * leadStd);
+            
+            // Show calculation details
+            document.getElementById('demand-var-value').textContent = 'N/A (Constant)';
+            document.getElementById('leadtime-var-value').textContent = demand.toFixed(2) + '² × ' + leadStd.toFixed(2) + '² = ' + (Math.pow(demand, 2) * Math.pow(leadStd, 2)).toFixed(2);
+            document.getElementById('total-variance-value').textContent = (Math.pow(demand, 2) * Math.pow(leadStd, 2)).toFixed(2);
+            document.getElementById('std-dev-value').textContent = (demand * leadStd).toFixed(2);
+        }
+        
+        function calculateBothVariableSafetyStock() {
+            const avgDemand = parseFloat(document.getElementById('bv-avg-demand').value);
+            const demandStd = parseFloat(document.getElementById('bv-demand-std').value);
+            const avgLeadTime = parseFloat(document.getElementById('bv-avg-lead').value);
+            const leadStd = parseFloat(document.getElementById('bv-lead-std').value);
+            const serviceLevel = parseFloat(document.getElementById('bv-service-level').value);
+            
+            if (isNaN(avgDemand) || isNaN(demandStd) || isNaN(avgLeadTime) || isNaN(leadStd) || isNaN(serviceLevel) ||
+                avgDemand <= 0 || avgLeadTime <= 0 || serviceLevel <= 0 || serviceLevel >= 100) {
+                alert('Please enter valid positive numbers for all fields');
+                return;
+            }
+            
+            // Get Z-score for service level
+            const zScore = getZScore(serviceLevel / 100);
+            
+            // Calculate combined variability
+            const demandVar = Math.pow(demandStd, 2) * avgLeadTime;
+            const leadVar = Math.pow(avgDemand, 2) * Math.pow(leadStd, 2);
+            const combinedStd = Math.sqrt(demandVar + leadVar);
+            
+            // Calculate safety stock
+            const safetyStock = zScore * combinedStd;
+            
+            // Display results
+            displaySafetyStockResults(safetyStock, serviceLevel, zScore, combinedStd);
+            
+            // Show calculation details
+            document.getElementById('demand-var-value').textContent = demandStd.toFixed(2) + '² × ' + avgLeadTime + ' = ' + demandVar.toFixed(2);
+            document.getElementById('leadtime-var-value').textContent = avgDemand.toFixed(2) + '² × ' + leadStd.toFixed(2) + '² = ' + leadVar.toFixed(2);
+            document.getElementById('total-variance-value').textContent = (demandVar + leadVar).toFixed(2);
+            document.getElementById('std-dev-value').textContent = combinedStd.toFixed(2);
+        }
+        
+        function displaySafetyStockResults(safetyStock, serviceLevel, zScore, combinedStd) {
+            document.getElementById('safety-stock-value').textContent = Math.round(safetyStock);
+            document.getElementById('service-level-value').textContent = serviceLevel + '%';
+            document.getElementById('z-score-value').textContent = zScore.toFixed(2);
+            document.getElementById('combined-var-value').textContent = combinedStd.toFixed(2);
+            
+            // Show results
+            document.getElementById('safety-stock-result').style.display = 'block';
+        }
+        
+        function getZScore(serviceLevel) {
+            // Common Z-scores for normal distribution
+            const zScores = {
+                0.80: 0.84,
+                0.85: 1.04,
+                0.90: 1.28,
+                0.95: 1.65,
+                0.99: 2.33,
+                0.999: 3.09
+            };
+            
+            // Return exact match if available
+            if (zScores[serviceLevel]) {
+                return zScores[serviceLevel];
+            }
+            
+            // Linear approximation for other values
+            const levels = Object.keys(zScores).map(Number).sort((a, b) => a - b);
+            
+            // If below lowest level, return that Z-score
+            if (serviceLevel <= levels[0]) {
+                return zScores[levels[0]];
+            }
+            
+            // If above highest level, return that Z-score
+            if (serviceLevel >= levels[levels.length - 1]) {
+                return zScores[levels[levels.length - 1]];
+            }
+            
+            // Find the bracket for interpolation
+            let lowerLevel = levels[0];
+            let upperLevel = levels[1];
+            
+            for (let i = 1; i < levels.length; i++) {
+                if (serviceLevel <= levels[i]) {
+                    lowerLevel = levels[i - 1];
+                    upperLevel = levels[i];
+                    break;
+                }
+            }
+            
+            // Linear interpolation
+            const lowerZ = zScores[lowerLevel];
+            const upperZ = zScores[upperLevel];
+            
+            return lowerZ + ((serviceLevel - lowerLevel) / (upperLevel - lowerLevel)) * (upperZ - lowerZ);
+        }
+    </script>
+</body>
+</html>
