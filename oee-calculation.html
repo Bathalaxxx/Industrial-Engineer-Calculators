@@ -827,31 +827,7 @@
     </section>
     
     <main class="container">
-        
-        <!-- FORMULA W/ EXAMPLE -->
-        <section class="content-section">
-            <div class="calculator-intro">
-                <h2>Gage R&R Formula</h2>
-                <p>Gage R&R is a statistical tool that measures the amount of variation in the measurement system arising from the measurement device and the operators.</p>
-                <div class="formula-box">
-                    %GRR = (σ_GRR / σ_Total) × 100
-                </div>
-                <p>Where:</p>
-                <ul style="margin-left: 2.5em;">
-                    <li><strong>Repeatability (σ_Repeatability)</strong> - Variation from the measurement device (same operator, same part)<br>
-                        Formula: σ_Repeatability = √(MS_Repeatability), where MS_Repeatability is the mean square for repeatability from ANOVA</li>
-                    <li><strong>Reproducibility (σ_Reproducibility)</strong> - Variation from different operators (different operators, same part)<br>
-                        Formula: σ_Reproducibility = √(MS_Reproducibility - MS_Repeatability / (n × r)), where MS_Reproducibility is the mean square for reproducibility, n is the number of parts, and r is the number of trials per operator</li>
-                    <li><strong>Total GRR (σ_GRR)</strong> - Combined repeatability and reproducibility variation<br>
-                        Formula: σ_GRR = √(σ_Repeatability² + σ_Reproducibility²)</li>
-                    <li><strong>Part Variation (σ_Part)</strong> - Variation between different parts being measured<br>
-                        Formula: σ_Part = √(MS_Part), where MS_Part is the mean square for part variation from ANOVA</li>
-                    <li><strong>Total Variation (σ_Total)</strong> - Total variation in the measurement system<br>
-                        Formula: σ_Total = √(σ_GRR² + σ_Part²)</li>
-                </ul>
-            </div>
-
-        </section>
+    
         
         
         <!-- What is OEE Section -->
