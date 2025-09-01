@@ -31,31 +31,10 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5607576434988374"
      crossorigin="anonymous"></script>
 
-    <!-- Primary Meta Tags -->
-    <title>Safety Stock Calculator | Calculate Optimal Inventory Buffer Levels</title>
-    <meta name="title" content="Safety Stock Calculator | Calculate Optimal Inventory Buffer Levels">
-    <meta name="description" content="Use our Safety Stock Calculator to determine optimal inventory buffer levels. Learn safety stock formulas, calculation methods, and inventory management strategies.">
-    <meta name="keywords" content="safety stock, safety stock formula, safety stock calculation, safety stock calculator, safety stock level, safety stock meaning, safety stock example, safety stock quantity, Safety Stock Formula & Calculator, How to calculate safety stock, inventory management, buffer stock">
-    <meta name="author" content="Industrial Engineering Calculators">
-    <meta name="robots" content="index, follow">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.industrialengineeringcalculators.com/safety-stock-calculator.html">
-    <meta property="og:title" content="Safety Stock Calculator | Calculate Optimal Inventory Buffer Levels">
-    <meta property="og:description" content="Use our Safety Stock Calculator to determine optimal inventory buffer levels. Learn safety stock formulas and inventory management strategies.">
-    <meta property="og:image" content="https://www.industrialengineeringcalculators.com/images/safety-stock-calculator-preview.png">
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://www.industrialengineeringcalculators.com/safety-stock-calculator.html">
-    <meta property="twitter:title" content="Safety Stock Calculator | Calculate Optimal Inventory Buffer Levels">
-    <meta property="twitter:description" content="Use our Safety Stock Calculator to determine optimal inventory buffer levels. Learn safety stock formulas and inventory management strategies.">
-    <meta property="twitter:image" content="https://www.industrialengineeringcalculators.com/images/safety-stock-calculator-preview.png">
-    
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://www.industrialengineeringcalculators.com/safety-stock-calculator.html">    
-    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Safety Stock Calculator - Calculate optimal safety stock levels for different demand and lead time scenarios">
+    <title>Safety Stock Calculator | Industrial Engineering Calculators</title>
     <style>
         :root {
             --primary-color: #2c3e50;
@@ -539,67 +518,7 @@
             font-size: 0.9rem;
         }
 
-        .info-section {
-            margin: 2rem 0;
-            padding: 1.5rem;
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            border-left: 4px solid var(--secondary-color);
-        }
-        
-        .info-section h3 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-        
-        .faq-item {
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 1.5rem;
-        }
-        
-        .faq-question {
-            font-weight: 600;
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .faq-answer {
-            display: none;
-            padding-top: 0.5rem;
-        }
-        
-        .faq-answer.show {
-            display: block;
-        }
-        
-        .related-tools {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin: 1rem 0;
-        }
-        
-        .tool-chip {
-            background-color: #e3f2fd;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            color: var(--primary-color);
-            text-decoration: none;
-            transition: background-color 0.3s;
-        }
-        
-        .tool-chip:hover {
-            background-color: #bbdefb;
-        }
-
         /* xxxx navigation start xxxxx */
-        
         .sidebar-toggle {
             display: block;
         }
@@ -651,170 +570,6 @@
     </style>
 </head>
 <body>
-    <!-- xxxx navigation start xxxxx -->
-    <button class="sidebar-toggle">☰</button>
-    <div class="overlay"></div>
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <h3>Navigation</h3>
-            <button class="sidebar-close">×</button>
-        </div>
-
-    <div class="sidebar-category">
-        <div class="sidebar-category-header">
-            <span>Site Navigation</span>
-            <span>+</span>
-        </div>
-        
-        <div class="sidebar-category-content">
-            <a href="index.html" class="sidebar-link">Home</a>
-            <a href="about.html" class="sidebar-link">About</a>
-            <a href="terms.html" class="sidebar-link">Terms of Service</a>
-            <a href="privacy.html" class="sidebar-link">Privacy Policy</a>
-            <a href="contact.html" class="sidebar-link">Contact Us</a>
-            <a href="sitemap.html" class="sidebar-link">Sitemap</a>
-        </div>
-    </div>
-        
-        <div class="sidebar-category">
-            <div class="sidebar-category-header production">
-                <span>Production Planning</span>
-                <span>+</span>
-            </div>
-            <div class="sidebar-category-content">
-                <a href="flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
-                <a href="jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
-                <a href="linebalancing.html" class="sidebar-link">Line Balancing</a>
-                <a href="takttime.html" class="sidebar-link">Takt Time</a>
-                <a href="synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
-            </div>
-        </div>
-        
-        <div class="sidebar-category">
-            <div class="sidebar-category-header quality">
-                <span>Quality Control</span>
-                <span>+</span>
-            </div>
-            <div class="sidebar-category-content">
-                <a href="acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
-                <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
-                
-                <a href="processcapability.html" class="sidebar-link">Process Capability</a>
-                <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
-                <a href="oee-calculation.html" class="sidebar-link">OEE Calculator</a>
-            </div>
-        </div>
-        
-        <div class="sidebar-category">
-            <div class="sidebar-category-header statistics">
-                <span>Statistics & DOE</span>
-                <span>+</span>
-            </div>
-            <div class="sidebar-category-content">
-                <a href="anova.html" class="sidebar-link">ANOVA</a>
-                <a href="chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
-                <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
-                
-                <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
-                <a href="regression.html" class="sidebar-link">Regression</a>
-                <a href="samplesize.html" class="sidebar-link">Sample Size</a>
-                <a href="taguchi.html" class="sidebar-link">Taguchi</a>
-                <a href="ttest.html" class="sidebar-link">T-Test</a>
-                <a href="ztest.html" class="sidebar-link">Z-Test</a>
-            </div>
-        </div>
-        
-        <div class="sidebar-category">
-            <div class="sidebar-category-header inventory">
-                <span>Inventory Management</span>
-                <span>+</span>
-            </div>
-            <div class="sidebar-category-content">
-                <a href="eoq-formula.html" class="sidebar-link">Economic Order Quantity</a>
-                <a href="reorder-point-calculator.html" class="sidebar-link">Reorder Point</a>
-                <a href="kanban.html" class="sidebar-link">Kanban Calculator</a>
-                <a href="newsvendor.html" class="sidebar-link">Newsvendor Model</a>
-                <a href="safety-stock-calculator.html" class="sidebar-link">Safety Stock Calculator</a>
-            </div>
-        </div>
-        
-        <div class="sidebar-category">
-            <div class="sidebar-category-header workstudy">
-                <span>Work Study</span>
-                <span>+</span>
-            </div>
-            <div class="sidebar-category-content">
-                <a href="timestudy.html" class="sidebar-link">Time Study</a>
-                <a href="predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
-                <a href="learningcurve.html" class="sidebar-link">Learning Curve</a>
-                <a href="littleslaw.html" class="sidebar-link">Little's Law</a>
-                <a href="worksampling.html" class="sidebar-link">Work Sampling</a>
-            </div>
-        </div>
-        
-        <div class="sidebar-category">
-            <div class="sidebar-category-header ergonomics">
-                <span>Ergonomics</span>
-                <span>+</span>
-            </div>
-            <div class="sidebar-category-content">
-                <a href="biomechanics.html" class="sidebar-link">Biomechanics</a>
-                <a href="noisedose.html" class="sidebar-link">Noise Dose</a>
-                <a href="posture.html" class="sidebar-link">Posture Analysis</a>
-                <a href="workphysiology.html" class="sidebar-link">Work Physiology</a>
-                <a href="workrest.html" class="sidebar-link">Work-Rest Cycles</a>
-            </div>
-        </div>
-        
-        <div class="sidebar-category">
-            <div class="sidebar-category-header operations">
-                <span>Operations Research</span>
-                <span>+</span>
-            </div>
-            <div class="sidebar-category-content">
-                <a href="linearprogramming.html" class="sidebar-link">Linear Programming</a>
-                <a href="queueing.html" class="sidebar-link">Queueing Analysis</a>
-                <a href="decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
-                <a href="gametheory.html" class="sidebar-link">Game Theory</a>
-                <a href="markov.html" class="sidebar-link">Markov Analysis</a>
-            </div>
-        </div>
-        
-        <div class="sidebar-category">
-            <div class="sidebar-category-header economy">
-                <span>Engineering Economy</span>
-                <span>+</span>
-            </div>
-            <div class="sidebar-category-content">
-                <a href="breakeven.html" class="sidebar-link">Break-even Analysis</a>
-                <a href="costanalysis.html" class="sidebar-link">Cost Analysis</a>
-                <a href="depreciation.html" class="sidebar-link">Depreciation</a>
-                <a href="timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
-            </div>
-        </div>
-        
-        <div class="sidebar-category">
-            <div class="sidebar-category-header facilities">
-                <span>Facilities Planning</span>
-                <span>+</span>
-            </div>
-            <div class="sidebar-category-content">
-                <a href="facilitieslocation.html" class="sidebar-link">Facilities Location</a>
-            </div>
-        </div>
-        
-        <div class="sidebar-category">
-            <div class="sidebar-category-header reliability">
-                <span>Reliability & Maintenance</span>
-                <span>+</span>
-            </div>
-            <div class="sidebar-category-content">
-                <a href="reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
-            </div>
-        </div>
-    </aside>
-    <!-- xxxx navigation end xxxxx -->
-
     <header>
         <div class="container">
             <div class="header-content">
@@ -835,32 +590,33 @@
     <section class="page-hero">
         <div class="container">
             <h1>Safety Stock Calculator</h1>
-            <p>Calculate optimal safety stock levels for different demand and lead time scenarios</p>        </div>
+            <p>Calculate optimal safety stock levels for different demand and lead time scenarios</p>
+        </div>
     </section>
     
     <main class="container">
         <section class="content-section">
             <div class="calculator-intro">
                 <h2>Safety Stock Analysis</h2>
-                <p>Safety stock is the extra inventory kept on hand to mitigate the risk of stockouts caused by variability in demand and supply lead times. The general formula for safety stock given variable demand and lead time is:</p>
+                <p>Safety stock is the extra inventory kept on hand to mitigate the risk of stockouts caused by variability in demand and supply lead times.</p>
                 
                 <div class="formula-box">
                     Safety Stock = Z × √(σ_d² × L + d² × σ_L²)
                 </div>
                 
                 <p>Where:</p>
-                <ul style="padding-left: 1.0em;">
-                    <li><strong>Z</strong> = Z-score linked to target service level</li>
+                <ul>
+                    <li><strong>Z</strong> = Service factor (Z-score) based on desired service level</li>
                     <li><strong>σ_d</strong> = Standard deviation of demand</li>
                     <li><strong>L</strong> = Average lead time</li>
                     <li><strong>d</strong> = Average demand</li>
                     <li><strong>σ_L</strong> = Standard deviation of lead time</li>
                 </ul>
             </div>
-        </section>
 
-        <section class="content-section">          
-            <h2>Safety Stock Calculator</h2>
+            <script async="async" data-cfasync="false" src="//pl27511448.profitableratecpm.com/5d225b5e0b22c0980e365900e2390e1d/invoke.js"></script> <!-- adterra native banner -->
+            <div id="container-5d225b5e0b22c0980e365900e2390e1d"></div>    <!-- adterra native banner -->            
+            
             <div class="model-selector">
                 <h3>Select Demand and Lead Time Scenario</h3>
                 <p>Choose the model that matches your demand and lead time characteristics:</p>
@@ -939,7 +695,7 @@
                 <div class="model-content" id="both-variable-model">
                     <h3>Variable Demand and Lead Time</h3>
                     <p>Use when both demand and lead time have significant variability.</p>
-        
+                    
                     <form id="both-variable-form">
                         <div class="input-row">
                             <div class="input-group">
@@ -951,7 +707,7 @@
                                 <input type="number" id="bv-demand-std" min="0" step="0.01" required>
                             </div>
                         </div>
-            
+                        
                         <div class="input-row">
                             <div class="input-group">
                                 <label for="bv-avg-lead">Average Lead Time (days):</label>
@@ -962,23 +718,16 @@
                                 <input type="number" id="bv-lead-std" min="0" step="0.01" required>
                             </div>
                         </div>
-            
+                        
                         <div class="input-group">
-                            <!-- FIXED: Changed ID to avoid duplicate -->
                             <label for="bv-service-level">Service Level (%):</label>
-                            <select id="bv-service-level" required>
-                                <option value="90">90</option>
-                                <option value="95" selected>95</option>
-                                <option value="99">99</option>
-                                <option value="99.9">99.9</option>
-                                <option value="99.99">99.99</option>
-                            </select>
+                            <input type="number" id="bv-service-level" min="1" max="99.99" step="0.01" value="95" required>
                         </div>
-            
+                        
                         <button type="submit" class="calculate-btn">Calculate Safety Stock</button>
                     </form>
                 </div>
-    
+            </div>
             
             <div class="result-box" id="safety-stock-result">
                 <h3>Safety Stock Results</h3>
@@ -1032,123 +781,8 @@
                         <td id="std-dev-value"></td>
                     </tr>
                 </table>
-            </div>
-        </section>
-
-                <script async="async" data-cfasync="false" src="//pl27511448.profitableratecpm.com/5d225b5e0b22c0980e365900e2390e1d/invoke.js"></script>
-        <div id="container-5d225b5e0b22c0980e365900e2390e1d"></div>
-
-
-        <!-- What is Section -->
-        <section class="content-section">  
-            <h2>What is Safety Stock? </h2>
-            <div>
-                <p><strong>Safety Stock</strong> is the extra inventory kept on hand to mitigate the risk of stockouts caused by variability in demand and supply lead times. Also known as buffer stock, it acts as an insurance against uncertainty in supply chain operations. It allows businesses maintain optimal buffer inventory needed to maintain service levels despite demand and supply variability.</p>
-                <br>
-        
-                <h3>Safety Stock Formulas</h3>
-        
-                <h4>1. Constant Demand and Constant Lead Time</h4>
-                <p>When both demand and lead time are stable and predictable, then theoretically there is no need for safety stock</p>
-              
-                <br>
-        
-                <h4>2. Variable Demand with Constant Lead Time</h4>
-                <p>When demand varies but lead time remains constant:</p>
-                <div class="formula-box">
-                    Safety =  Z × σ<sub>d</sub> × √L
-                </div>
-                <p>Where:<br>
-                L = Lead time (in periods)<br>
-                Z = Z-score (service level factor)<br>
-                σ<sub>d</sub> = Standard deviation of demand</p>
-
-                <br>
-        
-                <h4>3. Constant Demand with Variable Lead Time</h4>
-                <p>When demand is stable but lead time varies:</p>
-                <div class="formula-box">
-                    Safety Stock = Z × d × σ<sub>L</sub>
-                </div>
-                <p>Where:<br>
-
-                Z = Z-score (service level factor)<br>
-                σ<sub>L</sub> = Standard deviation of lead time</p>
-
-                <br>
-        
-                <h4>4. Variable Demand and Variable Lead Time</h4>
-                <p>When both demand and lead time are variable:</p>
-                <div class="formula-box">
-                    Safety Stock = Z × √(L × σ<sub>d</sub>² + d² × σ<sub>L</sub>²)
-                </div>
-                <p>Where:<br>
-                L = Average lead time<br>
-                Z = Z-score (service level factor)<br>
-                σ<sub>d</sub> = Standard deviation of demand<br>
-                σ<sub>L</sub> = Standard deviation of lead time</p>
-        
-                <br>
-
-                <p>Proper <strong>safety stock calculation</strong> is essential for balancing the costs of stockouts against the costs of holding excess inventory. These formulas help you determine the optimal <strong>safety stock inventory</strong> level based on your specific demand and supply variability.</p>
-                </div>
-        </section>
-
-        <section class="content-section">
-            <h2>Choosing the Right Safety Stock Model</h2>
-            <div class="calculator-intro">
-                <table>
-                    <tr>
-                        <th>Model</th>
-                        <th>When to Use</th>
-                        <th>Key Assumptions</th>
-                    </tr>
-                    <tr>
-                        <td>Variable Demand</td>
-                        <td>Demand fluctuates but lead times are reliable</td>
-                        <td>Only demand varies, lead time is constant</td>
-                    </tr>
-                    <tr>
-                        <td>Variable Lead Time</td>
-                        <td>Demand is stable but suppliers are inconsistent</td>
-                        <td>Only lead time varies, demand is constant</td>
-                    </tr>
-                    <tr>
-                        <td>Both Variable</td>
-                        <td>Both demand and lead times fluctuate</td>
-                        <td>Both demand and lead time have variability</td>
-                    </tr>
-                </table>
-            </div>
-        </section>
-            
-        <section class="content-section">
-            <h2>Practical Examples</h2>    
-            <div class="examples-section">
                 
-                <div class="example">
-                    <h4>Example 1: Variable Demand</h4>
-                    <p>Avg Demand: 25 ± 5 units/day, Lead Time: 4 days, Service: 95%</p>
-                    <p>Safety Stock = 1.65 × 5 × √4 = 16.5 units</p>
-                </div>
-                
-                <div class="example">
-                    <h4>Example 2: Variable Lead Time</h4>
-                    <p>Demand: 30 units/day, Avg Lead Time: 7 ± 1.5 days, Service: 90%</p>
-                    <p>Safety Stock = 1.28 × 30 × 1.5 = 57.6 units</p>
-                </div>
-                
-                <div class="example">
-                    <h4>Example 3: Both Variable</h4>
-                    <p>Avg Demand: 30 ± 6 units/day, Lead Time: 7 ± 1.5 days, Service: 90%</p>
-                    <p>Safety Stock = 1.28 × √(6²×7 + 30²×1.5²) = 64.6 units</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="content-section">
-            <h2>Common Used Z-values</h2>
-            <div class="calculator-intro">
+                <h4>Interpretation Guidelines</h4>
                 <table>
                     <tr>
                         <th>Service Level</th>
@@ -1182,88 +816,32 @@
                     </tr>
                 </table>
             </div>
-        </section>
-
-        <section class="content-section">
-            <!-- FAQs Section -->
-            <h2>Frequently Asked Questions (FAQs)</h2>
-                <div class="faq-item">
-                    <div class="faq-question">What is the purpose of safety stock? <span>+</span></div>
-                    <div class="faq-answer">
-                        <p>Safety stock serves as a buffer to protect against:</p>
-                        <ul style="padding-left: 1.0em;">
-                            <li>Unexpected increases in customer demand</li>
-                            <li>Delays in supplier deliveries</li>
-                            <li>Production delays or quality issues</li>
-                            <li>Forecasting errors</li>
-                            <li>Seasonal demand fluctuations</li>
-                        </ul>
-                        <p>By maintaining appropriate safety stock levels, businesses can achieve higher service levels and reduce the risk of stockouts.</p>
-                    </div>
+            
+            <div class="examples-section">
+                <h3>Practical Examples</h3>
+                
+                <div class="example">
+                    <h4>Example 1: Variable Demand</h4>
+                    <p>Avg Demand: 25 ± 5 units/day, Lead Time: 4 days, Service: 95%</p>
+                    <p>Safety Stock = 1.65 × 5 × √4 = 16.5 units</p>
                 </div>
                 
-                <div class="faq-item">
-                    <div class="faq-question">How often should I recalculate my safety stock? <span>+</span></div>
-                    <div class="faq-answer">
-                        <p>Safety stock should be recalculated regularly, typically:</p>
-                        <ul style="padding-left: 1.0em;">
-                            <li>Quarterly for stable products</li>
-                            <li>Monthly for products with seasonal patterns</li>
-                            <li>After significant changes in demand patterns</li>
-                            <li>When supplier lead times change substantially</li>
-                            <li>When service level targets are adjusted</li>
-                        </ul>
-                        <p>Regular recalibration ensures your safety stock remains aligned with current business conditions.</p>
-                    </div>
+                <div class="example">
+                    <h4>Example 2: Variable Lead Time</h4>
+                    <p>Demand: 30 units/day, Avg Lead Time: 7 ± 1.5 days, Service: 90%</p>
+                    <p>Safety Stock = 1.28 × 30 × 1.5 = 57.6 units</p>
                 </div>
                 
-                <div class="faq-item">
-                    <div class="faq-question">What are the drawbacks of carrying too much safety stock? <span>+</span></div>
-                    <div class="faq-answer">
-                        <p>While safety stock protects against stockouts, excessive safety stock can lead to:</p>
-                        <ul style="padding-left: 1.0em;">
-                            <li>Increased holding costs (storage, insurance, capital)</li>
-                            <li>Higher risk of obsolescence</li>
-                            <li>Reduced warehouse space availability</li>
-                            <li>Lower inventory turnover ratios</li>
-                            <li>Increased complexity in inventory management</li>
-                        </ul>
-                        <p>The goal is to find the optimal balance between stockout protection and carrying costs.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">Can safety stock be negative? <span>+</span></div>
-                    <div class="faq-answer">
-                        <p>No, safety stock values cannot be negative. The calculation always results in zero or positive values:</p>
-                        <ul style="padding-left: 1.0em;">
-                            <li>Zero safety stock might be appropriate for items with perfectly predictable demand and supply</li>
-                            <li>Positive values indicate the buffer needed to achieve your desired service level</li>
-                            <li>If calculations show negative values, check your input parameters for errors</li>
-                        </ul>
-                    </div>
-                </div>
-        </section>
-
-        <section class="content-section">
-            <h2>Related Inventory Management Tools</h2>
-            <div class="info-section">
-                <p>Explore these related calculators to optimize your inventory management:</p>
-                
-                <div class="related-tools">
-                    <a href="eoq-formula.html" class="tool-chip">Economic Order Quantity</a>
-                    <a href="reorder-point-calculator.html" class="tool-chip">Reorder Point Calculator</a>
-                    <a href="kanban.html" class="tool-chip">Kanban Calculator</a>
-                    <a href="newsvendor.html" class="tool-chip">Newsvendor Model</a>
+                <div class="example">
+                    <h4>Example 3: Both Variable</h4>
+                    <p>Avg Demand: 30 ± 6 units/day, Lead Time: 7 ± 1.5 days, Service: 90%</p>
+                    <p>Safety Stock = 1.28 × √(6²×7 + 30²×1.5²) = 64.6 units</p>
                 </div>
             </div>
-        </section>
 
-            
             <!-- Bibliography Section -->
-        <section class="content-section">
-            <h2>References & Further Reading</h2>
             <div class="info-section">
+                <h3>Bibliography and Further Reading</h3>
                 <ul class="bibliography">
                     <li>
                         Harris, F. W. (1913). 
@@ -1286,9 +864,33 @@
                         <strong>Disclosure:</strong> As an Amazon Associate I earn from qualifying purchases. These links are provided for your convenience and help support this site.
                 </p>
             </div>
-        </section>
             
-        
+            <div class="calculator-intro">
+                <h3>Safety Stock Model Selection Guide</h3>
+                <table>
+                    <tr>
+                        <th>Model</th>
+                        <th>When to Use</th>
+                        <th>Key Assumptions</th>
+                    </tr>
+                    <tr>
+                        <td>Variable Demand</td>
+                        <td>Demand fluctuates but lead times are reliable</td>
+                        <td>Only demand varies, lead time is constant</td>
+                    </tr>
+                    <tr>
+                        <td>Variable Lead Time</td>
+                        <td>Demand is stable but suppliers are inconsistent</td>
+                        <td>Only lead time varies, demand is constant</td>
+                    </tr>
+                    <tr>
+                        <td>Both Variable</td>
+                        <td>Both demand and lead times fluctuate</td>
+                        <td>Both demand and lead time have variability</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
     </main>
     
     <footer>
@@ -1306,114 +908,42 @@
         </div>
     </footer>
 
-    <!-- xxxx navigation start xxxxx -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const sidebar = document.querySelector('.sidebar');
-            const sidebarToggle = document.querySelector('.sidebar-toggle');
-            const sidebarClose = document.querySelector('.sidebar-close');
-            const overlay = document.querySelector('.overlay');
-            const body = document.body;
-            
-            // Toggle sidebar
-            function toggleSidebar() {
-                sidebar.classList.toggle('open');
-                overlay.classList.toggle('active');
-                body.classList.toggle('sidebar-open');
-            }
-            
-            // Toggle category expansion
-            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
-            categoryHeaders.forEach(header => {
-                header.addEventListener('click', function() {
-                    const category = this.parentElement;
-                    category.classList.toggle('open');
-                    
-                    // Update the expand/collapse icon
-                    const icon = this.querySelector('span:last-child');
-                    icon.textContent = category.classList.contains('open') ? '−' : '+';
-                });
-            });
-            
-            // Event listeners
-            sidebarToggle.addEventListener('click', toggleSidebar);
-            sidebarClose.addEventListener('click', toggleSidebar);
-            overlay.addEventListener('click', toggleSidebar);
-            
-            // Close sidebar when clicking outside on mobile
-            document.addEventListener('click', function(event) {
-                if (window.innerWidth <= 768 && 
-                    body.classList.contains('sidebar-open') && 
-                    !sidebar.contains(event.target) && 
-                    event.target !== sidebarToggle) {
-                    toggleSidebar();
-                }
-            });
-            
-            // Close sidebar when pressing Escape key
-            document.addEventListener('keydown', function(event) {
-                if (event.key === 'Escape' && body.classList.contains('sidebar-open')) {
-                    toggleSidebar();
-                }
-            });
-        });
-    </script>
-    <!-- xxxx navigation end xxxxx -->
-
-    <script>
-        // Add FAQ functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const faqQuestions = document.querySelectorAll('.faq-question');
-            
-            faqQuestions.forEach(question => {
-                question.addEventListener('click', function() {
-                    const answer = this.nextElementSibling;
-                    answer.classList.toggle('show');
-                    const icon = this.querySelector('span');
-                    icon.textContent = answer.classList.contains('show') ? '−' : '+';
-                });
-            });
-        });
-    </script>
+    
 
     <script>
         // Model tab switching
-        document.addEventListener('DOMContentLoaded', function() {
-            const modelTabs = document.querySelectorAll('.model-tab');
-            const modelContents = document.querySelectorAll('.model-content');
-            
-            modelTabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    // Remove active class from all tabs and contents
-                    modelTabs.forEach(t => t.classList.remove('active'));
-                    modelContents.forEach(c => c.classList.remove('active'));
-                    
-                    // Add active class to clicked tab and corresponding content
-                    tab.classList.add('active');
-                    const model = tab.getAttribute('data-model');
-                    document.getElementById(`${model}-model`).classList.add('active');
-                });
+        const modelTabs = document.querySelectorAll('.model-tab');
+        const modelContents = document.querySelectorAll('.model-content');
+        
+        modelTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                modelTabs.forEach(t => t.classList.remove('active'));
+                modelContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                const model = tab.getAttribute('data-model');
+                document.getElementById(`${model}-model`).classList.add('active');
             });
-            
-            // Variable demand calculation
-            document.getElementById('variable-demand-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                calculateVariableDemandSafetyStock();
-            });
-            
-            // Variable lead time calculation
-            document.getElementById('variable-lead-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                calculateVariableLeadSafetyStock();
-            });
-            
-            // Both variable calculation - FIXED ID
-            document.getElementById('both-variable-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                calculateBothVariableSafetyStock();
-            });
-            
-
+        });
+        
+        // Variable demand calculation
+        document.getElementById('variable-demand-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            calculateVariableDemandSafetyStock();
+        });
+        
+        // Variable lead time calculation
+        document.getElementById('variable-lead-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            calculateVariableLeadSafetyStock();
+        });
+        
+        // Both variable calculation
+        document.getElementById('both-variable-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            calculateBothVariableSafetyStock();
         });
         
         function calculateVariableDemandSafetyStock() {
@@ -1477,7 +1007,6 @@
             const demandStd = parseFloat(document.getElementById('bv-demand-std').value);
             const avgLeadTime = parseFloat(document.getElementById('bv-avg-lead').value);
             const leadStd = parseFloat(document.getElementById('bv-lead-std').value);
-            // FIXED: Changed ID to avoid duplicate
             const serviceLevel = parseFloat(document.getElementById('bv-service-level').value);
             
             if (isNaN(avgDemand) || isNaN(demandStd) || isNaN(avgLeadTime) || isNaN(leadStd) || isNaN(serviceLevel) ||
@@ -1515,9 +1044,6 @@
             
             // Show results
             document.getElementById('safety-stock-result').style.display = 'block';
-            
-            // Scroll to results
-            document.getElementById('safety-stock-result').scrollIntoView({ behavior: 'smooth' });
         }
         
         function getZScore(serviceLevel) {
