@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    </script>
+    <!--FAVICON-->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+  
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-3BSHG1DE6V');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5607576434988374"
+    crossorigin="anonymous"></script>
+
+    <!-- Clarity tracking code for https://iecalculators.online/ -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "t31aicr9ep");
+    </script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Negative Correlation: Meaning, Examples & Interpretation | Industrial Engineering Calculators</title>
+    <meta name="description" content="Learn about negative correlation, its meaning, real-world examples, and how to interpret inverse relationships in data. Use our correlation calculator to analyze your own data.">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block; /* Changed from none to block */
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+            margin-bottom: rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .scenario-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+        }
+        
+        .scenario-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            margin-right: 0.5rem;
+            border-radius: 5px 5px 0 0;
+            background-color: #f1f1f1;
+            transition: all 0.3s;
+        }
+        
+        .scenario-tab.active {
+            background-color: white;
+            border-color: #ddd;
+            border-bottom-color: white;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        
+        .scenario-tab:hover:not(.active) {
+            background-color: #e9e9e9;
+        }
+        
+        .scenario-content {
+            display: none;
+        }
+        
+        .scenario-content.active {
+            display: block;
+        }
+
+        .related-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .result-card {
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .result-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .interpretation {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #e8f4fc;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .plan-details {
+            margin: 1.5rem 0;
+        }
+        
+        .plan-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        .plan-table, .plan-table th, .plan-table td {
+            border: 1px solid #ddd;
+        }
+        
+        .plan-table th, .plan-table td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        .plan-table th {
+            background-color: #f2f2f2;
+            font-weight: 600;
+        }
+        
+        .plan-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        .warning-box {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            border-radius: 4px;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            display: block;
+        }
+            
+        body.sidebar-open {
+            margin-left: 0;
+            overflow: hidden;
+        }
+        /* xxxx navigation end xxxxx */
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .scenario-tabs {
+                flex-direction: column;
+            }
+            
+            .scenario-tab {
+                border-radius: 0;
+                margin-right: 0;
+                border-bottom: 1px solid #ddd;
+            }
+            
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            /* xxxx navigation start xxxxx */
+            .sidebar-toggle {
+                display: block;
+            }
+            
+            body.sidebar-open {
+                margin-left: 0;
+                overflow: hidden;
+            }
+            /* xxxx navigation end xxxxx */
+        }
+
+                .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .content-section h3 {
+            color: var(--primary-color);
+            margin: 1.5rem 0 1rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        
+        ul, ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .definition-box {
+            background-color: #e8f4fc;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        
+        .example-box {
+            background-color: #f9f9f9;
+            border-left: 4px solid var(--accent-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        .comparison-table, .comparison-table th, .comparison-table td {
+            border: 1px solid #ddd;
+        }
+        
+        .comparison-table th, .comparison-table td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        .comparison-table th {
+            background-color: #f2f2f2;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .calculator-cta {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        .calculator-cta h2 {
+            color: white;
+            margin-bottom: 1rem;
+            border: none;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: white;
+            color: var(--secondary-color);
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+        
+        .cta-button:hover {
+            background-color: var(--light-color);
+            transform: translateY(-2px);
+        }
+        
+        .interpretation-guide {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .interpretation-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-top: 4px solid;
+        }
+        
+        .interpretation-card h4 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .strong {
+            border-top-color: var(--accent-color);
+        }
+        
+        .moderate {
+            border-top-color: var(--secondary-color);
+        }
+        
+        .weak {
+            border-top-color: #f1c40f;
+        }
+        
+        .none {
+            border-top-color: var(--text-light);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .interpretation-guide {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+
+    <div class="sidebar-category">
+        <div class="sidebar-category-header">
+            <span>Site Navigation</span>
+            <span>+</span>
+        </div>
+        
+        <div class="sidebar-category-content">
+            <a href="/index.html" class="sidebar-link">Home</a>
+            <a href="/about.html" class="sidebar-link">About</a>
+            <a href="/terms.html" class="sidebar-link">Terms of Service</a>
+            <a href="/privacy.html" class="sidebar-link">Privacy Policy</a>
+            <a href="/contact.html" class="sidebar-link">Contact Us</a>
+            <a href="/sitemap.html" class="sidebar-link">Sitemap</a>
+        </div>
+    </div>
+        
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="/jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="/linebalancing.html" class="sidebar-link">Line Balancing</a>
+                <a href="/takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="/synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="/controlcharts.html" class="sidebar-link">Control Charts</a>
+                
+                <a href="/processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="/sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="/oee-calculation.html" class="sidebar-link">OEE Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/anova.html" class="sidebar-link">ANOVA</a>
+                <a href="/chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="/correlation.html" class="sidebar-link">Correlation Analysis</a>
+                
+                <a href="/goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="/regression.html" class="sidebar-link">Regression</a>
+                <a href="/samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="/taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="/ttest.html" class="sidebar-link">T-Test</a>
+                <a href="/ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/eoq-formula.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="/reorder-point-calculator.html" class="sidebar-link">Reorder Point</a>
+                <a href="/kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="/newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+                <a href="/safety-stock-calculator.html" class="sidebar-link">Safety Stock Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Study</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="/predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="/learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="/littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="/worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="/noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="/posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="/workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="/workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="/queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="/decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="/gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="/markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="/costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="/depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="/timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+            </div>
+        </div>
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Articles</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="Negative-Correlation-Understanding-Inverse-Relationships-in-Data.html" class="sidebar-link">Negative Correlation: Understanding Inverse Relationships in Data</a>
+            </div>
+        </div>
+    </aside>
+    <!-- xxxx navigation end xxxxx -->
+    
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Industrial Engineering <span>Calculators</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="sitemap.html">Sitemap</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+
+        <section class="page-hero">
+            <h1>Negative Correlation: Understanding Inverse Relationships</h1>
+            <p>Learn how variables move in opposite directions and how to interpret these relationships in your data</p>
+        </section>
+
+    <div class="container">
+        <section class="content-section">
+            <h2>What is Negative Correlation?</h2>
+            <p>Negative correlation is a statistical relationship between two variables where they move in opposite directions. When one variable increases, the other decreases, and vice versa. This inverse relationship is quantified by a <strong>negative correlation coefficient</strong> that ranges between -1 and 0.</p>
+            
+            <div class="definition-box">
+                <h3>Key Characteristics</h3>
+                <ul>
+                    <li>A perfect negative correlation is represented by -1.0</li>
+                    <li>A strong negative correlation typically falls between -0.7 and -0.9</li>
+                    <li>A moderate negative correlation ranges from -0.5 to -0.7</li>
+                    <li>A weak negative correlation falls between -0.3 and -0.5</li>
+                    <li>Values closer to 0 indicate little to no correlation</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Negative Correlation vs. Positive Correlation</h2>
+            <p>It's important to distinguish negative correlation from its counterpart:</p>
+            
+            <table class="comparison-table">
+                <tr>
+                    <th>Type</th>
+                    <th>Direction</th>
+                    <th>Coefficient Range</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td><strong>Negative Correlation</strong></td>
+                    <td>Variables move in opposite directions</td>
+                    <td>-1.0 to 0</td>
+                    <td>Price increases, demand decreases</td>
+                </tr>
+                <tr>
+                    <td><strong>Positive Correlation</strong></td>
+                    <td>Variables move in the same direction</td>
+                    <td>0 to +1.0</td>
+                    <td>Study time increases, test scores improve</td>
+                </tr>
+                <tr>
+                    <td><strong>No Correlation</strong></td>
+                    <td>No consistent relationship</td>
+                    <td>Approximately 0</td>
+                    <td>Shoe size and intelligence</td>
+                </tr>
+            </table>
+            
+            <div class="example-box">
+                <h3>Does negative correlation mean no correlation?</h3>
+                <p><strong>Absolutely not.</strong> Negative correlation indicates a clear, inverse relationship, whereas no correlation means there's no predictable pattern between the variables. A correlation of -0.8 represents a strong relationship, just in the opposite direction of a +0.8 correlation.</p>
+            </div>
+        </section>
+
+            <script async="async" data-cfasync="false" src="//pl27511448.profitableratecpm.com/5d225b5e0b22c0980e365900e2390e1d/invoke.js"></script> <!-- adterra native banner -->
+            <div id="container-5d225b5e0b22c0980e365900e2390e1d"></div>    <!-- adterra native banner -->
+
+
+        <section class="content-section">
+            <h2>Negative Correlation Examples in Real Life</h2>
+            <p>Negative correlations appear frequently in various fields. Here are some common examples:</p>
+            
+            <h3>Economics Examples</h3>
+            <ul>
+                <li><strong>Product price vs. demand:</strong> As prices increase, demand typically decreases</li>
+                <li><strong>Unemployment rate vs. consumer spending:</strong> Higher unemployment often correlates with reduced consumer spending</li>
+                <li><strong>Interest rates vs. borrowing:</strong> As interest rates rise, borrowing tends to decrease</li>
+            </ul>
+            
+            <h3>Healthcare Examples</h3>
+            <ul>
+                <li><strong>Exercise frequency vs. health risks:</strong> More exercise typically correlates with lower risk of heart disease</li>
+                <li><strong>Medication dosage vs. symptom severity:</strong> Higher doses of effective medication often correlate with reduced symptoms</li>
+                <li><strong>Vaccination rates vs. disease incidence:</strong> Higher vaccination rates correlate with lower disease occurrence</li>
+            </ul>
+            
+            <h3>Psychology Examples</h3>
+            <div class="example-box">
+                <h4>What is a negative correlation in Psychology?</h4>
+                <p>In psychology, negative correlation helps researchers understand how mental states, behaviors, and environmental factors relate to each other inversely.</p>
+                <ul>
+                    <li><strong>Stress levels vs. job performance:</strong> Higher stress often correlates with lower performance</li>
+                    <li><strong>Screen time vs. attention span:</strong> Increased screen time often correlates with reduced attention spans in children</li>
+                    <li><strong>Social support vs. depression risk:</strong> Stronger social connections typically correlate with lower depression rates</li>
+                    <li><strong>Sleep duration vs. anxiety levels:</strong> More sleep often correlates with reduced anxiety</li>
+                </ul>
+            </div>
+            
+            <h3>Industrial Engineering Examples</h3>
+            <ul>
+                <li><strong>Machine speed vs. product defects:</strong> Faster production speeds often correlate with more quality issues</li>
+                <li><strong>Training hours vs. error rates:</strong> More training typically correlates with fewer workplace errors</li>
+                <li><strong>Maintenance frequency vs. equipment downtime:</strong> More frequent maintenance correlates with less unexpected downtime</li>
+                <li><strong>Temperature vs. product viscosity:</strong> Higher temperatures often correlate with lower viscosity in fluids</li>
+            </ul>
+        </section>
+
+        <section class="content-section">
+            <h2>Interpreting Negative Correlation Results</h2>
+            <p>When you analyze data and get a negative correlation value, here's how to interpret it:</p>
+            
+            <div class="interpretation-guide">
+                <div class="interpretation-card strong">
+                    <h4>Strong Negative Correlation (-0.7 to -1.0)</h4>
+                    <p>A strong negative correlation indicates that as one variable changes, the other variable reliably changes in the opposite direction. This suggests a powerful inverse relationship where knowing one variable helps predict the other.</p>
+                </div>
+                
+                <div class="interpretation-card moderate">
+                    <h4>Moderate Negative Correlation (-0.5 to -0.7)</h4>
+                    <p>This indicates a noticeable inverse relationship that may be useful for predictions, though other factors likely influence the relationship.</p>
+                </div>
+                
+                <div class="interpretation-card weak">
+                    <h4>Weak Negative Correlation (-0.3 to -0.5)</h4>
+                    <p>A weak negative correlation suggests a slight tendency for variables to move in opposite directions, but the relationship isn't consistent enough for reliable predictions.</p>
+                </div>
+                
+                <div class="interpretation-card none">
+                    <h4>No Significant Correlation (-0.3 to +0.3)</h4>
+                    <p>Values close to zero indicate no meaningful relationship between the variables. Changes in one variable don't predict changes in the other.</p>
+                </div>
+            </div>
+            
+            <div class="example-box">
+                <h3>Important Consideration: Correlation vs. Causation</h3>
+                <p><strong>Remember:</strong> Correlation doesn't imply causation. Even strong negative correlations don't prove that one variable causes changes in the other—they only indicate a relationship. There might be other underlying factors or pure coincidence creating the apparent relationship.</p>
+            </div>
+        </section>
+
+        <section class="calculator-cta">
+            <h2>Discover Correlations in Your Data</h2>
+            <p>Now that you understand negative correlation, why not analyze your own data? Our Correlation Calculator helps you quantify relationships between variables with three different methods.</p>
+            <a href="/correlation.html" class="cta-button">Try Our Correlation Calculator</a>
+        </section>
+
+        <section class="content-section">
+            <h2>How to Use Our Correlation Calculator</h2>
+            <p>Our tool makes it easy to analyze relationships in your data:</p>
+            
+            <ol>
+                <li><strong>Select your method:</strong> Choose between Pearson, Spearman, or Kendall correlation based on your data type</li>
+                <li><strong>Input your data:</strong> Enter your variable values as comma-separated lists</li>
+                <li><strong>Calculate:</strong> Let our tool compute the correlation coefficient</li>
+                <li><strong>Interpret results:</strong> Get detailed analysis including strength, direction, and significance of the relationship</li>
+                <li><strong>Visualize:</strong> See your data plotted on a scatter plot to visually confirm the relationship</li>
+            </ol>
+            
+            <h3>Try It With These Examples:</h3>
+            <ul>
+                <li><strong>Production Analysis:</strong> Enter machine runtime hours vs. defect counts</li>
+                <li><strong>Psychological Study:</strong> Input stress survey scores vs. performance metrics</li>
+                <li><strong>Economic Data:</strong> Test product price vs. sales volume</li>
+                <li><strong>Healthcare Research:</strong> Examine exercise frequency vs. blood pressure readings</li>
+            </ul>
+            
+            <div class="definition-box">
+                <h3>How It Helps Industrial Engineers</h3>
+                <p>For industrial engineering professionals, understanding correlations is essential for:</p>
+                <ul>
+                    <li>Optimizing production processes by identifying factors that affect quality</li>
+                    <li>Reducing costs by understanding relationships between variables</li>
+                    <li>Improving safety by identifying risk factors</li>
+                    <li>Enhancing efficiency by pinpointing bottlenecks and constraints</li>
+                    <li>Making data-driven decisions based on statistical evidence</li>
+                </ul>
+            </div>
+        </section>
+
+            <!-- Related Tools Section -->
+        <section class="content-section">
+            <h2>Related Statistical Tools</h2>
+            <p>Explore these related calculators to deepen your understanding of Statistical concepts:</p>
+ 
+            <div>               
+                <div class="related-tools">
+                    <a href="/anova.html" class="tool-chip">Analysis of Variance</a>
+                    <a href="/regression.html" class="tool-chip">Regression Analysis</a>
+                    <a href="/ttest.html" class="tool-chip">Student T-test Analysis</a>
+                    <a href="/samplesize.html" class="tool-chip">Sample Size Calculator</a>
+
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+                <a href="sitemap.html">Sitemap</a>
+            </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            <p class="copyright">&copy; 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- xxxx navigation start xxxxx -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebarClose = document.querySelector('.sidebar-close');
+            const overlay = document.querySelector('.overlay');
+            const body = document.body;
+            
+            // Toggle sidebar
+            function toggleSidebar() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+                body.classList.toggle('sidebar-open');
+            }
+            
+            // Toggle category expansion
+            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
+            categoryHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const category = this.parentElement;
+                    category.classList.toggle('open');
+                    
+                    // Update the expand/collapse icon
+                    const icon = this.querySelector('span:last-child');
+                    icon.textContent = category.classList.contains('open') ? '−' : '+';
+                });
+            });
+            
+            // Event listeners
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            sidebarClose.addEventListener('click', toggleSidebar);
+            overlay.addEventListener('click', toggleSidebar);
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 768 && 
+                    body.classList.contains('sidebar-open') && 
+                    !sidebar.contains(event.target) && 
+                    event.target !== sidebarToggle) {
+                    toggleSidebar();
+                }
+            });
+            
+            // Close sidebar when pressing Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && body.classList.contains('sidebar-open')) {
+                    toggleSidebar();
+                }
+            });
+        });
+    </script>
+    <!-- xxxx navigation end xxxxx -->
+</body>
+</html>
