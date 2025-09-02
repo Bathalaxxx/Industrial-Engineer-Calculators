@@ -308,8 +308,16 @@
   </url>
     <url>
     <loc>https://iecalculators.online/Articles/Negative-Correlation-Understanding-Inverse-Relationships-in-Data.html</loc>
-    <lastmod>2024-05-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <lastmod>2024-08-31</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>1.0</priority>
   </url>
+    </url>
+    <url>
+    <loc>https://iecalculators.online/Articles/PParameter-vs-Statistic-Understanding-the-Key-Differences.html</loc>
+    <lastmod>2024-08-31</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
 </urlset>
