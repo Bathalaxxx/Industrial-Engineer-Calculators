@@ -1,0 +1,1835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quality Function Deployment Calculator - Industrial Engineering Calculators</title>
+  <meta name="description" content="Create a detailed Quality Function Deployment (QFD) matrix with our free, interactive House of Quality tool. Translate customer needs into technical specifications and prioritize engineering efforts.">
+  <meta name="keywords" content="QFD, Quality Function Deployment, House of Quality, HOQ, customer needs, voice of the customer, technical requirements, product design, engineering, quality tool, free tool">
+  
+  <!--FAVICON-->
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-3BSHG1DE6V');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5607576434988374" crossorigin="anonymous"></script>
+  
+  <meta charset="UTF-8">
+  <meta name="google-adsense-account" content="ca-pub-5607576434988374">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Clarity tracking code for https://iecalculators.online/ -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "t31aicr9ep");
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --primary-color: #2c3e50;
+      --secondary-color: #3498db;
+      --accent-color: #e74c3c;
+      --light-color: #ecf0f1;
+      --dark-color: #2c3e50;
+      --text-color: #333;
+      --text-light: #7f8c8d;
+      --success-color: #27ae60;
+      --warning-color: #f39c12;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: #f5f7fa;
+      transition: margin-left 0.3s;
+    }
+    
+    /* xxxx navigation start xxxxx */
+    .sidebar-toggle {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      z-index: 1000;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      display: block;
+    }
+    
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -300px;
+      width: 300px;
+      height: 100%;
+      background-color: var(--light-color);
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+      overflow-y: auto;
+      transition: left 0.3s;
+      z-index: 999;
+      padding: 20px 0;
+    }
+    
+    .sidebar.open {
+      left: 0;
+    }
+    
+    .sidebar-header {
+      padding: 0 20px 15px;
+      border-bottom: 1px solid #ddd;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .sidebar-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text-color);
+    }
+    
+    .sidebar-category {
+      margin-bottom: 10px;
+    }
+    
+    .sidebar-category-header {
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s;
+    }
+    
+    .sidebar-category-header:hover {
+      background-color: rgba(0,0,0,0.05);
+    }
+    
+    .sidebar-category-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    
+    .sidebar-category.open .sidebar-category-content {
+      max-height: 1000px;
+    }
+    
+    .sidebar-link {
+      display: block;
+      padding: 8px 20px 8px 35px;
+      color: var(--text-color);
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+    
+    .sidebar-link:hover {
+      background-color: rgba(0,0,0,0.05);
+    }
+    
+    body.sidebar-open {
+      overflow: hidden;
+    }
+    
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      z-index: 998;
+      display: none;
+    }
+    
+    .overlay.active {
+      display: block;
+    }
+    
+    /* Add color coding to sidebar categories */
+    .sidebar-category-header.production {
+      color: var(--production-color);
+    }
+    .sidebar-category-header.quality {
+      color: var(--quality-color);
+    }
+    .sidebar-category-header.statistics {
+      color: var(--statistics-color);
+    }
+    .sidebar-category-header.inventory {
+      color: var(--inventory-color);
+    }
+    .sidebar-category-header.workstudy {
+      color: var(--workstudy-color);
+    }
+    .sidebar-category-header.ergonomics {
+      color: var(--ergonomics-color);
+    }
+    .sidebar-category-header.operations {
+      color: var(--operations-color);
+    }
+    .sidebar-category-header.economy {
+      color: var(--economy-color);
+    }
+    .sidebar-category-header.facilities {
+      color: var(--facilities-color);
+    }
+    .sidebar-category-header.reliability {
+      color: var(--reliability-color);
+    }
+    /* xxxx navigation end xxxxx */
+    
+    header {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 1rem 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+    
+    .logo span {
+      color: var(--secondary-color);
+    }
+    
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+    
+    nav ul li {
+      margin-left: 1.5rem;
+    }
+    
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    
+    nav ul li a:hover {
+      color: var(--secondary-color);
+    }
+    
+    .page-hero {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 2rem 0;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    .page-hero h1 {
+      font-size: 2.2rem;
+    }
+    
+    .content-section {
+      background-color: white;
+      border-radius: 8px;
+      padding: 2rem;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
+    
+    .content-section h2 {
+      color: var(--secondary-color);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--light-color);
+    }
+    
+    .tool-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .infographic-flow {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1.5rem;
+      text-align: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    
+    .flow-step {
+      flex: 1;
+      min-width: 150px;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #f8f9fa;
+      margin: 5px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .flow-step:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    }
+    
+    .flow-step .fas {
+      font-size: 1.8rem;
+      color: var(--primary-color);
+      margin-bottom: 0.6rem;
+    }
+    
+    .flow-step strong {
+      display: block;
+      font-size: 1.1rem;
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+    
+    .flow-arrow {
+      font-size: 2rem;
+      color: var(--secondary-color);
+      margin: 0 0.6rem;
+    }
+    
+    .key-components-list {
+      list-style: none;
+      padding-left: 0;
+    }
+    
+    .key-components-list li {
+      margin-bottom: 0.75rem;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+    
+    .key-components-list li::before {
+      content: '\f058';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      color: var(--success-color);
+      position: absolute;
+      left: 0;
+      top: 2px;
+    }
+    
+    .instructions-box ul {
+      margin: 0.6rem 0 0 0;
+      padding-left: 1.25rem;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 0.6rem;
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+    
+    input[type="text"], select {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+      transition: border 0.3s, box-shadow 0.3s;
+    }
+    
+    input:focus, select:focus, button:focus-visible {
+      outline: none;
+      border-color: var(--secondary-color);
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.3);
+    }
+    
+    button {
+      background-color: var(--secondary-color);
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 5px;
+      font-size: 1rem;
+      transition: background-color 0.3s;
+      font-weight: 600;
+    }
+    
+    button:hover {
+      background-color: #2980b9;
+    }
+    
+    .btn-add {
+      background-color: var(--success-color);
+      padding: 0;
+      width: 42px;
+      height: 42px;
+      font-size: 1.2em;
+      flex-shrink: 0;
+    }
+    
+    .btn-remove {
+      background-color: var(--accent-color);
+      padding: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 1em;
+      flex-shrink: 0;
+    }
+    
+    .list-container {
+      min-height: 100px;
+      border: 1px solid #eee;
+      padding: 0.8rem;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+    }
+    
+    .list-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6rem;
+      padding: 0.8rem;
+      background-color: #f9f9f9;
+      border-radius: 4px;
+      margin-bottom: 0.5rem;
+    }
+    
+    .list-item span {
+      flex-grow: 1;
+      word-break: break-word;
+    }
+    
+    .customer-importance-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 150px;
+      flex-shrink: 0;
+    }
+    
+    .customer-importance-bar-bg {
+      flex-grow: 1;
+      background-color: #e0e0e0;
+      border-radius: 4px;
+      height: 18px;
+    }
+    
+    .customer-importance-bar {
+      height: 100%;
+      background-color: var(--success-color);
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
+    
+    .add-item-form {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+    }
+    
+    .add-item-form .input-group {
+      flex-grow: 1;
+    }
+    
+    .add-item-form .select-group {
+      width: 150px;
+    }
+    
+    /* FIX: Nueva clase para envolver tablas anchas y hacerlas desplazables */
+    .table-responsive-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch; /* Mejora el scroll en iOS */
+      margin-top: 1rem;
+    }
+    
+    #qfdMatrixContainer {
+      width: 100%;
+      overflow-x: auto;
+      padding: 2px;
+    }
+    
+    .qfd-table {
+      border-collapse: collapse;
+      font-size: 1rem;
+      width: 100%; /* Asegura que la tabla intente usar el espacio disponible */
+    }
+    
+    .qfd-table th, .qfd-table td {
+      border: 1px solid #ccc;
+      padding: 0.8rem;
+      text-align: center;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+    
+    .qfd-table th {
+      background-color: var(--primary-color);
+      color: white;
+      font-weight: 600;
+    }
+    
+    .qfd-table .customer-requirements {
+      text-align: left;
+      max-width: 200px;
+      word-wrap: break-word;
+      font-weight: bold;
+      background-color: #eaf2f8;
+      white-space: normal;
+    }
+    
+    .qfd-table .importance-cell {
+      font-weight: bold;
+      background-color: #fef9e7;
+    }
+    
+    .qfd-table .technical-requirements {
+      background-color: var(--primary-color);
+      color: white;
+      font-weight: bold;
+      vertical-align: middle;
+      white-space: normal;
+      max-width: 150px;
+    }
+    
+    .relationship-strong, .correlation-positive-strong {
+      background-color: var(--success-color);
+      color: var(--dark-color);
+      font-weight: bold;
+    }
+    
+    .relationship-medium, .correlation-positive-weak {
+      background-color: var(--warning-color);
+      color: var(--dark-color);
+      font-weight: bold;
+    }
+    
+    .relationship-weak, .correlation-negative-weak {
+      background-color: var(--accent-color);
+      color: white;
+      font-weight: bold;
+    }
+    
+    .correlation-negative-strong {
+      background-color: #7d3c98;
+      color: white;
+      font-weight: bold;
+    }
+    
+    .tabs {
+      display: flex;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid #ddd;
+      flex-wrap: wrap;
+    }
+    
+    .tab {
+      padding: 0.8rem 1.5rem;
+      cursor: pointer;
+      background-color: transparent;
+      border: none;
+      border-bottom: 3px solid transparent;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #777;
+      margin-bottom: -1px;
+    }
+    
+    .tab.active {
+      color: var(--primary-color);
+      border-bottom-color: var(--secondary-color);
+    }
+    
+    .tab-content {
+      display: none;
+      padding-top: 1rem;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    .priority-bar-container {
+      background-color: #e0e0e0;
+      border-radius: 4px;
+      height: 20px;
+      width: 100%;
+      min-width: 100px;
+    }
+    
+    .priority-bar {
+      height: 100%;
+      background-color: var(--secondary-color);
+      border-radius: 4px;
+      transition: width 0.5s ease-in-out;
+    }
+    
+    .example-btn {
+      background-color: var(--success-color);
+    }
+    
+    .reset-btn {
+      background-color: var(--warning-color);
+    }
+    
+    #toast-notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+      transform: translateY(-20px);
+    }
+    
+    #toast-notification.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    
+    #toast-notification.success {
+      background-color: var(--success-color);
+    }
+    
+    #toast-notification.info {
+      background-color: #3498db;
+    }
+    
+    footer {
+      background-color: var(--dark-color);
+      color: white;
+      padding: 2rem 0;
+      text-align: center;
+      margin-top: 2rem;
+    }
+    
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .footer-links a {
+      color: white;
+      margin: 0 1rem;
+      text-decoration: none;
+    }
+    
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+    
+    .copyright {
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+    
+    .disclaimer-note {
+      margin-top: 2rem;
+      padding: 0 1rem;
+      font-size: 0.8rem;
+      color: #ccc;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    /* xxxx navigation start xxxxx */
+    .sidebar-toggle {
+      display: block;
+    }
+        
+    body.sidebar-open {
+      margin-left: 0;
+      overflow: hidden;
+    }
+    /* xxxx navigation end xxxxx */
+
+    .faq-item {
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 1.5rem;
+    }
+
+    .faq-question {
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    }
+
+    .faq-answer {
+    display: none;
+    padding-top: 0.5rem;
+    }
+
+    .faq-answer.show {
+    display: block;
+    }
+
+    .faq-answer h4 {
+    color: var(--secondary-color);
+    margin: 1rem 0 0.5rem 0;
+    }
+
+    .faq-answer table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    }
+
+    .faq-answer table, .faq-answer th, .faq-answer td {
+    border: 1px solid #ddd;
+    }
+
+    .faq-answer th, .faq-answer td {
+    padding: 0.75rem;
+    text-align: left;
+    }
+
+    .faq-answer th {
+    background-color: #f2f2f2;
+    }
+    
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      nav ul {
+        margin-top: 1rem;
+        justify-content: center;
+      }
+      
+      nav ul li {
+        margin: 0 0.75rem;
+      }
+      
+      .infographic-flow {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .flow-arrow {
+        transform: rotate(90deg);
+        margin: 1rem 0;
+      }
+      
+      .input-row {
+        flex-direction: column;
+        gap: 0;
+      }
+      
+      .metric-results {
+        flex-direction: column;
+      }
+      
+      .metric-card {
+        margin: 0.5rem 0;
+      }
+      
+      .related-tools {
+        flex-direction: column;
+      }
+      
+      .tool-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .add-item-form {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .add-item-form .select-group {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- xxxx navigation start xxxxx -->
+  <button class="sidebar-toggle">☰</button>
+  <div class="overlay"></div>
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h3>Navigation</h3>
+      <button class="sidebar-close">×</button>
+    </div>
+
+    <div class="sidebar-category">
+      <div class="sidebar-category-header">
+        <span>Site Navigation</span>
+        <span>+</span>
+      </div>
+      
+      <div class="sidebar-category-content">
+        <a href="index.html" class="sidebar-link">Home</a>
+        <a href="about.html" class="sidebar-link">About</a>
+        <a href="terms.html" class="sidebar-link">Terms of Service</a>
+        <a href="privacy.html" class="sidebar-link">Privacy Policy</a>
+        <a href="contact.html" class="sidebar-link">Contact Us</a>
+        <a href="sitemap.html" class="sidebar-link">Sitemap</a>
+      </div>
+    </div>
+    
+    <div class="sidebar-category">
+      <div class="sidebar-category-header production">
+        <span>Production Planning</span>
+        <span>+</span>
+      </div>
+      <div class="sidebar-category-content">
+        <a href="flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+        <a href="jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+        <a href="linebalancing.html" class="sidebar-link">Line Balancing</a>
+        <a href="takttime.html" class="sidebar-link">Takt Time</a>
+        <a href="synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+      </div>
+    </div>
+    
+    <div class="sidebar-category">
+      <div class="sidebar-category-header quality">
+        <span>Quality Control</span>
+        <span>+</span>
+      </div>
+      <div class="sidebar-category-content">
+        <a href="acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+        <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
+        <a href="processcapability.html" class="sidebar-link">Process Capability</a>
+        <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+        <a href="oee-calculation.html" class="sidebar-link">OEE Calculator</a>
+        <a href="quality-function-deployment" class="sidebar-lin">Quality Function Deployment</a>
+      </div>
+    </div>
+    
+    <div class="sidebar-category">
+      <div class="sidebar-category-header statistics">
+        <span>Statistics & DOE</span>
+        <span>+</span>
+      </div>
+      <div class="sidebar-category-content">
+        <a href="anova.html" class="sidebar-link">ANOVA</a>
+        <a href="chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+        <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
+        <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+        <a href="regression.html" class="sidebar-link">Regression</a>
+        <a href="samplesize.html" class="sidebar-link">Sample Size</a>
+        <a href="taguchi.html" class="sidebar-link">Taguchi</a>
+        <a href="ttest.html" class="sidebar-link">T-Test</a>
+        <a href="ztest.html" class="sidebar-link">Z-Test</a>
+      </div>
+    </div>
+    
+    <div class="sidebar-category">
+      <div class="sidebar-category-header inventory">
+        <span>Inventory Management</span>
+        <span>+</span>
+      </div>
+      <div class="sidebar-category-content">
+        <a href="eoq-formula.html" class="sidebar-link">Economic Order Quantity</a>
+        <a href="reorder-point-calculator.html" class="sidebar-link">Reorder Point</a>
+        <a href="kanban.html" class="sidebar-link">Kanban Calculator</a>
+        <a href="newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+        <a href="safety-stock-calculator.html" class="sidebar-link">Safety Stock Calculator</a>
+      </div>
+    </div>
+    
+    <div class="sidebar-category">
+      <div class="sidebar-category-header workstudy">
+        <span>Work Study</span>
+        <span>+</span>
+      </div>
+      <div class="sidebar-category-content">
+        <a href="timestudy.html" class="sidebar-link">Time Study</a>
+        <a href="predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+        <a href="learningcurve.html" class="sidebar-link">Learning Curve</a>
+        <a href="littleslaw.html" class="sidebar-link">Little's Law</a>
+        <a href="worksampling.html" class="sidebar-link">Work Sampling</a>
+      </div>
+    </div>
+    
+    <div class="sidebar-category">
+      <div class="sidebar-category-header ergonomics">
+        <span>Ergonomics</span>
+        <span>+</span>
+      </div>
+      <div class="sidebar-category-content">
+        <a href="biomechanics.html" class="sidebar-link">Biomechanics</a>
+        <a href="noisedose.html" class="sidebar-link">Noise Dose</a>
+        <a href="posture.html" class="sidebar-link">Posture Analysis</a>
+        <a href="workphysiology.html" class="sidebar-link">Work Physiology</a>
+        <a href="workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+      </div>
+    </div>
+    
+    <div class="sidebar-category">
+      <div class="sidebar-category-header operations">
+        <span>Operations Research</span>
+        <span>+</span>
+      </div>
+      <div class="sidebar-category-content">
+        <a href="linearprogramming.html" class="sidebar-link">Linear Programming</a>
+        <a href="queueing.html" class="sidebar-link">Queueing Analysis</a>
+        <a href="decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+        <a href="gametheory.html" class="sidebar-link">Game Theory</a>
+        <a href="markov.html" class="sidebar-link">Markov Analysis</a>
+      </div>
+    </div>
+    
+    <div class="sidebar-category">
+      <div class="sidebar-category-header economy">
+        <span>Engineering Economy</span>
+        <span>+</span>
+      </div>
+      <div class="sidebar-category-content">
+        <a href="breakeven.html" class="sidebar-link">Break-even Analysis</a>
+        <a href="costanalysis.html" class="sidebar-link">Cost Analysis</a>
+        <a href="depreciation.html" class="sidebar-link">Depreciation</a>
+        <a href="timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+      </div>
+    </div>
+    
+    <div class="sidebar-category">
+      <div class="sidebar-category-header facilities">
+        <span>Facilities Planning</span>
+        <span>+</span>
+      </div>
+      <div class="sidebar-category-content">
+        <a href="facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+      </div>
+    </div>
+    
+    <div class="sidebar-category">
+      <div class="sidebar-category-header reliability">
+        <span>Reliability & Maintenance</span>
+        <span>+</span>
+      </div>
+      <div class="sidebar-category-content">
+        <a href="reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+      </div>
+    </div>
+    <div class="sidebar-category">
+      <div class="sidebar-category-header reliability">
+        <span>Articles</span>
+        <span>+</span>
+      </div>
+      <div class="sidebar-category-content">
+        <a href="Articles/Negative-Correlation-Understanding-Inverse-Relationships-in-Data.html" class="sidebar-link">Negative Correlation: Understanding Inverse Relationships in Data</a>
+        <a href="Articles/Parameter-vs-Statistic-Understanding-the-Key-Differences.html" class="sidebar-link">Parameter vs Statistic: Understanding the Key Differences</a>
+      </div>
+    </div>
+  </aside>
+  <!-- xxxx navigation end xxxxx -->
+  
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">Industrial Engineering <span>Calculators</span></div>
+        <nav>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="terms.html">Terms</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="sitemap.html">Sitemap</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+  
+  <section class="page-hero">
+    <div class="container">
+      <h1>Quality Function Deployment Calculator</h1>
+      <p>Translate customer needs into technical specifications with Quality Function Deployment</p>
+    </div>
+  </section>
+  
+  <main class="container">
+    <div id="toast-notification" class=" success">Example loaded. Click "Generate House of Quality".</div>
+    
+    <div class="content-section">
+      <h2>What is Quality Function Deployment?</h2>
+      <p>Quality Function Deployment <strong>(QFD)</strong> is a method that turns customer wants aka <strong>"Voice of Customer"</strong> into engineering plans. Its main tool, the House of Quality, connects what customers care about to how a product is designed. It helps teams focus on what matters most to buyers.</p>
+    </div>
+
+    <div class="content-section">
+      <div class="tool-header">
+        <h2>QFD Tool - House of Quality Inputs</h2>
+        <div>
+          <button id="loadExampleBtn" class="example-btn"><i class="fas fa-lightbulb"></i> Load Example</button>
+          <button id="resetBtn" class="reset-btn"><i class="fas fa-undo"></i> Reset All</button>
+        </div>
+      </div>
+      
+      <div class="tabs">
+        <div class="tab" data-tab="customer-needs">Customer Needs</div>
+        <div class="tab" data-tab="technical-specs">Technical Specifications</div>
+        <div class="tab" data-tab="relationships">Relationships</div>
+        <div class="tab active" data-tab="correlations">Correlations</div>
+      </div>
+      
+      <div class="tab-content" id="customer-needs">
+        <label for="newCustomerReqText"><i class="fas fa-users"></i> Current Customer Requirements:</label>
+        <div id="customerReqList" class="list-container">
+          <div class="list-item" data-id="cr_1">
+            <span>Reliable & Durable</span>
+            <div class="customer-importance-container">
+              <div class="customer-importance-bar-bg"><div class="customer-importance-bar" style="width: 100%;"></div></div>
+              <span>5</span>
+            </div>
+            <button class="btn-remove" title="Remove Requirement"><i class="fas fa-minus"></i></button>
+          </div>
+      
+          <div class="list-item" data-id="cr_2">
+            <span>Affordable Price</span>
+            <div class="customer-importance-container">
+              <div class="customer-importance-bar-bg"><div class="customer-importance-bar" style="width: 80%;"></div></div>
+              <span>4</span>
+            </div>
+            <button class="btn-remove" title="Remove Requirement"><i class="fas fa-minus"></i></button>
+          </div>
+      
+          <div class="list-item" data-id="cr_3">
+            <span>Good Fuel Range</span>
+            <div class="customer-importance-container">
+              <div class="customer-importance-bar-bg"><div class="customer-importance-bar" style="width: 60%;"></div></div>
+              <span>3</span>
+            </div>
+            <button class="btn-remove" title="Remove Requirement"><i class="fas fa-minus"></i></button>
+          </div>
+      
+          <div class="list-item" data-id="cr_4">
+            <span>Environmentally Friendly</span>
+            <div class="customer-importance-container">
+              <div class="customer-importance-bar-bg"><div class="customer-importance-bar" style="width: 80%;"></div></div>
+              <span>4</span>
+            </div>
+            <button class="btn-remove" title="Remove Requirement"><i class="fas fa-minus"></i></button>
+          </div>
+        </div>
+        <div class="add-item-form">
+          <div class="input-group">
+            <input type="text" id="newCustomerReqText" placeholder="Enter a new requirement...">
+          </div>
+          <div class="select-group">
+            <select id="importanceScale">
+              <option value="1">Importance: 1</option>
+              <option value="2">Importance: 2</option>
+              <option value="3">Importance: 3</option>
+              <option value="4">Importance: 4</option>
+              <option value="5" selected>Importance: 5</option>
+            </select>
+          </div>
+          <button id="addCustomerReqBtn" class="btn-add" title="Add Requirement"><i class="fas fa-plus"></i></button>
+        </div>
+      </div>
+      
+      <div class="tab-content" id="technical-specs">
+        <label for="newTechnicalSpecText"><i class="fas fa-cogs"></i> Current Technical Specifications:</label>
+        <div id="technicalSpecList" class="list-container">
+          <div class="list-item" data-id="tr_1">
+            <span>Engine Displacement (L)</span>
+            <button class="btn-remove" title="Remove Specification"><i class="fas fa-minus"></i></button>
+          </div>
+      
+          <div class="list-item" data-id="tr_2">
+            <span>Torque (Nm)</span>
+            <button class="btn-remove" title="Remove Specification"><i class="fas fa-minus"></i></button>
+          </div>
+      
+          <div class="list-item" data-id="tr_3">
+            <span>Top Speed (km/h)</span>
+            <button class="btn-remove" title="Remove Specification"><i class="fas fa-minus"></i></button>
+          </div>
+      
+          <div class="list-item" data-id="tr_4">
+            <span>Fuel Tank Capacity (L)</span>
+            <button class="btn-remove" title="Remove Specification"><i class="fas fa-minus"></i></button>
+          </div>
+        </div>
+        <div class="add-item-form">
+          <div class="input-group">
+            <input type="text" id="newTechnicalSpecText" placeholder="Enter a new technical specification...">
+          </div>
+          <button id="addTechnicalSpecBtn" class="btn-add" title="Add Specification"><i class="fas fa-plus"></i></button>
+        </div>
+      </div>
+      
+      <div class="tab-content" id="relationships">
+        <p>Define relationships between customer needs and technical specifications. Changes are saved automatically.</p>
+        <div id="relationshipControls" class="table-responsive-wrapper"></div>
+      </div>
+      
+      <div class="tab-content active" id="correlations">
+        <p>Define correlations between technical specifications (Roof of the House). Changes are saved automatically.</p>
+        <div id="correlationControls" class="table-responsive-wrapper"><table class="qfd-table"><thead><tr><th></th><th>Engine Displacement (L)</th><th>Torque (Nm)</th><th>Top Speed (km/h)</th><th>Fuel Tank Capacity (L)</th></tr></thead><tbody><tr><th class="customer-requirements">Engine Displacement (L)</th><td style="background-color: #f5f5f5;"></td><td><select data-tr1-id="tr_1" data-tr2-id="tr_2" style="min-width:100px;">
+                      <option value="" selected="">None</option>
+                      <option value="positive-strong">++ Strong Positive</option>
+                      <option value="positive-weak">+ Positive</option>
+                      <option value="negative-weak">- Negative</option>
+                      <option value="negative-strong">-- Strong Negative</option>
+                  </select></td><td><select data-tr1-id="tr_1" data-tr2-id="tr_3" style="min-width:100px;">
+                      <option value="">None</option>
+                      <option value="positive-strong">++ Strong Positive</option>
+                      <option value="positive-weak">+ Positive</option>
+                      <option value="negative-weak">- Negative</option>
+                      <option value="negative-strong" selected="">-- Strong Negative</option>
+                  </select></td><td><select data-tr1-id="tr_1" data-tr2-id="tr_4" style="min-width:100px;">
+                      <option value="">None</option>
+                      <option value="positive-strong" selected="">++ Strong Positive</option>
+                      <option value="positive-weak">+ Positive</option>
+                      <option value="negative-weak">- Negative</option>
+                      <option value="negative-strong">-- Strong Negative</option>
+                  </select></td></tr><tr><th class="customer-requirements">Torque (Nm)</th><td style="background-color: #f5f5f5;"></td><td style="background-color: #f5f5f5;"></td><td><select data-tr1-id="tr_2" data-tr2-id="tr_3" style="min-width:100px;">
+                      <option value="" selected="">None</option>
+                      <option value="positive-strong">++ Strong Positive</option>
+                      <option value="positive-weak">+ Positive</option>
+                      <option value="negative-weak">- Negative</option>
+                      <option value="negative-strong">-- Strong Negative</option>
+                  </select></td><td><select data-tr1-id="tr_2" data-tr2-id="tr_4" style="min-width:100px;">
+                      <option value="">None</option>
+                      <option value="positive-strong">++ Strong Positive</option>
+                      <option value="positive-weak" selected="">+ Positive</option>
+                      <option value="negative-weak">- Negative</option>
+                      <option value="negative-strong">-- Strong Negative</option>
+                  </select></td></tr><tr><th class="customer-requirements">Top Speed (km/h)</th><td style="background-color: #f5f5f5;"></td><td style="background-color: #f5f5f5;"></td><td style="background-color: #f5f5f5;"></td><td><select data-tr1-id="tr_3" data-tr2-id="tr_4" style="min-width:100px;">
+                      <option value="" selected="">None</option>
+                      <option value="positive-strong">++ Strong Positive</option>
+                      <option value="positive-weak">+ Positive</option>
+                      <option value="negative-weak">- Negative</option>
+                      <option value="negative-strong">-- Strong Negative</option>
+                  </select></td></tr><tr><th class="customer-requirements">Fuel Tank Capacity (L)</th><td style="background-color: #f5f5f5;"></td><td style="background-color: #f5f5f5;"></td><td style="background-color: #f5f5f5;"></td><td style="background-color: #f5f5f5;"></td></tr></tbody></table></div>
+      </div>
+      
+      <button id="generateQfdBtn" style="margin-top: 20px;"><i class="fas fa-home"></i> Generate House of Quality</button>
+    </div>
+
+    <div id="qfdMatrix" style="display: block;" class="content-section">
+      <h2><i class="fas fa-table"></i> House of Quality Matrix</h2>
+      <div id="qfdMatrixContainer" class="table-responsive-wrapper"><table class="qfd-table" id="qfdFinalTable"><thead><tr><th rowspan="4" colspan="2" style="background-color: rgb(245, 245, 245); border: none;"></th><th class="technical-requirements">Engine Displacement (L)</th><td class="correlation-positive-weak">+</td><td class="correlation-positive-strong">++</td><td></td></tr><tr><td style="border: none;"></td><th class="technical-requirements">Torque (Nm)</th><td class="correlation-positive-weak">+</td><td class="correlation-positive-weak">+</td></tr><tr><td style="border: none;"></td><td style="border: none;"></td><th class="technical-requirements">Top Speed (km/h)</th><td class="correlation-negative-strong">--</td></tr><tr><td style="border: none;"></td><td style="border: none;"></td><td style="border: none;"></td><th class="technical-requirements">Fuel Tank Capacity (L)</th></tr></thead><tbody><tr><td class="customer-requirements">Reliable & Durable</td><td class="importance-cell">5</td><td></td><td></td><td class="relationship-strong">●</td><td></td></tr><tr><td class="customer-requirements">Affordable Price</td><td class="importance-cell">4</td><td></td><td class="relationship-strong">●</td><td class="relationship-medium">○</td><td></td></tr><tr><td class="customer-requirements">Good Fuel Range</td><td class="importance-cell">3</td><td class="relationship-strong">●</td><td class="relationship-weak">▲</td><td></td><td></td></tr><tr><td class="customer-requirements">Environmentally Friendly</td><td class="importance-cell">4</td><td></td><td></td><td></td><td class="relationship-strong">●</td></tr></tbody><tfoot><tr><th class="technical-requirements" colspan="2">Technical Priority</th><td id="priority_tr_1">27</td><td id="priority_tr_2">39</td><td id="priority_tr_3">57</td><td id="priority_tr_4">36</td></tr><tr><th class="technical-requirements" colspan="2">Rank</th><td id="rank_tr_1">4</td><td id="rank_tr_2">2</td><td id="rank_tr_3">1</td><td id="rank_tr_4">3</td></tr></tfoot></table></div>
+    </div>
+
+    <div class="content-section">
+      <h2> Prioritized Technical Requirements</h2>
+      <!-- FIX: Se ha añadido un div wrapper para que la tabla de prioridades sea desplazable horizontalmente si es necesario. -->
+      <div class="table-responsive-wrapper">
+        <table id="priorityTable" class="qfd-table">
+          <thead>
+            <tr>
+              <th style="width: 40%;">Technical Requirement</th>
+              <th style="width: 15%;">Priority Score</th>
+              <th style="width: 35%;">Priority</th>
+              <th style="width: 10%;">Rank</th>
+            </tr>
+          </thead>
+          <tbody><tr><td>Top Speed (km/h)</td><td>210</td><td><div class="priority-bar-container"><div class="priority-bar" style="width: 100%;"></div></div></td><td>1</td></tr><tr><td>Torque (Nm)</td><td>250</td><td><div class="priority-bar-container"><div class="priority-bar" style="width: 68.42105263157895%;"></div></div></td><td>2</td></tr><tr><td>Fuel Tank Capacity (L)</td><td>55</td><td><div class="priority-bar-container"><div class="priority-bar" style="width: 63.1578947368421%;"></div></div></td><td>3</td></tr><tr><td>Engine Displacement (L)</td><td>2</td><td><div class="priority-bar-container"><div class="priority-bar" style="width: 47.368421052631575%;"></div></div></td><td>4</td></tr></tbody>
+        </table>
+      </div>
+      
+      <button id="exportQfdBtn" style="margin-top: 20px;"><i class="fas fa-file-excel"></i> Export to Excel</button>
+    </div>
+
+            <script async="async" data-cfasync="false" src="//pl27511448.profitableratecpm.com/5d225b5e0b22c0980e365900e2390e1d/invoke.js"></script> <!-- adterra native banner -->
+            <div id="container-5d225b5e0b22c0980e365900e2390e1d"></div>    <!-- adterra native banner -->            
+
+
+<div class="content-section">
+  <h2>How to Use This Tool</h2>
+  <div class="instructions-box">
+    <ul>
+      <li>Use tabs to move between sections.</li>
+      <li>Add or remove customer needs and technical specs using the <strong>+</strong> and <strong>–</strong> buttons.</li>
+      <li>Set relationships and correlations using dropdowns (changes save automatically).</li>
+      <li>Click <strong>Generate House of Quality</strong> to build the matrix.</li>
+      <li>Use <strong><i class="fas fa-lightbulb"></i> Load Example</strong> for a demo or <strong><i class="fas fa-file-excel"></i> Export to Excel</strong> to save your work.</li>
+    </ul>
+  </div>
+</div>
+
+    <div class="content-section">
+      <h2>Key Components of the House of Quality</h2>
+      <p>The term "House of Quality" is derived from the diagram’s distinctive architectural appearance, resembling a house with clearly defined structural elements with each serving a unique analytical function in translating customer desires into engineering specifications.</p>
+      <ul class="key-components-list">
+        <li><strong>Customer Requirements (The "WHATs"):</strong> Positioned along the left side, forming the foundational "left wall," this section captures the voice of the customer. It includes a prioritized list of expectations, preferences, and pain points identified through market research and user feedback.</li>
+        <li><strong>Importance to Customer:</strong> Adjacent to each customer need is a weighted score, commonly on a scale from 1 to 5. It reflects the relative significance of that need from the customer’s perspective. This helps prioritize which aspects deliver the greatest satisfaction.</li>
+        <li><strong>Technical Requirements (The "HOWs"):</strong> Located at the top, forming the "ceiling" of the house, these are the measurable technical parameters or design features that the development team can influence—such as performance metrics, material choices, or system configurations.</li>
+        <li><strong>Relationship Matrix:</strong> Occupying the central "living space" of the house, this grid maps how strongly each technical characteristic influences a given customer need. Relationships are typically coded (e.g., strong = ●, medium = ○, weak = △) to visualize which engineering decisions impact which customer expectations.</li>
+        <li><strong>Correlation Matrix (The "Roof"):</strong> This section, shaped like a roof, displays the correlations—positive or negative—between the technical requirements themselves. It reveals whether improving one parameter might enhance or hinder another, helping teams anticipate design trade offs.</li>
+        <li><strong>Technical Priorities:</strong> Situated at the base of the house, this section aggregates data from the relationships and customer weights to compute the overall strategic importance of each technical requirement. These calculated scores guide resource allocation, design focus, and performance targets, serving as the key output of the QFD process.</li>
+      </ul>
+    </div> 
+
+    <section class="content-section">
+    <h2>FAQs</h2>
+    
+    <div class="faq-item">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+            What is Voice of Customer (VOC) in QFD? <span>+</span>
+        </div>
+        <div class="faq-answer">
+            <p><strong>Voice of Customer (VOC)</strong> refers to the process of capturing customers' requirements, expectations, preferences, and dislikes. In Quality Function Deployment (QFD), the VOC forms the foundation of the House of Quality matrix, representing the "whats" that drive product or service design.</p>
+            <p>VOC data is typically gathered through:</p>
+            <ul style="padding-left: 1.0em;">
+                <li>Direct customer interviews and surveys</li>
+                <li>Focus groups</li>
+                <li>Complaint analysis</li>
+                <li>Market research</li>
+                <li>Product usage data</li>
+            </ul>
+            <p>This customer input is then translated into specific, actionable customer requirements that form the left side of the House of Quality matrix.</p>
+        </div>
+    </div>
+    
+    <div class="faq-item">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+            What are some Voice of Customer examples? <span>+</span>
+        </div>
+        <div class="faq-answer">
+            <p><strong>Voice of Customer examples</strong> vary by industry but generally fall into these categories:</p>
+            
+            <h4>Product Development Examples:</h4>
+            <ul style="padding-left: 1.0em;">
+                <li>"I want my smartphone battery to last all day with heavy use"</li>
+                <li>"The software should be intuitive enough that I don't need to read the manual"</li>
+                <li>"The car should have comfortable seats for long drives"</li>
+            </ul>
+            
+            <h4>Service Industry Examples:</h4>
+            <ul style="padding-left: 1.0em;">
+                <li>"I want my coffee ready within 3 minutes of ordering"</li>
+                <li>"Customer service should resolve my issue in one call"</li>
+                <li>"The hotel room should be completely clean upon arrival"</li>
+            </ul>
+            
+            <h4>B2B Examples:</h4>
+            <ul style="padding-left: 1.0em;">
+                <li>"The system should integrate with our existing ERP software"</li>
+                <li>"We need 99.9% uptime guarantee"</li>
+                <li>"Training should be provided for our staff at no extra cost"</li>
+            </ul>
+            
+            <p>In QFD, these VOC statements are transformed into measurable requirements like "Battery life ≥ 12 hours" or "System integration with SAP" that can be addressed through technical specifications.</p>
+        </div>
+    </div>
+    
+    <div class="faq-item">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+            How does Voice of Customer improve product development? <span>+</span>
+        </div>
+        <div class="faq-answer">
+            <p>Incorporating the <strong>Voice of Customer</strong> into product development through QFD provides several significant benefits:</p>
+            
+            <ol style="padding-left: 1.0em;">
+                <li><strong>Reduces development time</strong> by focusing resources on features that matter most to customers</li>
+                <li><strong>Decreases costly redesigns</strong> by identifying customer needs early in the process</li>
+                <li><strong>Increases customer satisfaction</strong> by delivering products that truly meet expectations</li>
+                <li><strong>Enhances competitive advantage</strong> by addressing unmet customer needs</li>
+                <li><strong>Improves cross-functional alignment</strong> by providing a clear customer-focused direction</li>
+            </ol>
+            
+            <p>Studies show that companies that effectively implement VOC processes in their development cycle experience up to 30% higher customer satisfaction rates and 25% faster time to market for new products.</p>
+        </div>
+    </div>
+    
+    <div class="faq-item">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+            What's the difference between VOC and VOB? <span>+</span>
+        </div>
+        <div class="faq-answer">
+            <p>While <strong>Voice of Customer (VOC)</strong> represents the needs and expectations of external customers, <strong>Voice of Business (VOB)</strong> represents the internal business requirements such as profitability, regulatory compliance, and operational efficiency.</p>
+            
+            <p>In an effective QFD process, both VOC and VOB are considered:</p>
+            
+            <table>
+                <tr>
+                    <th>Voice of Customer (VOC)</th>
+                    <th>Voice of Business (VOB)</th>
+                </tr>
+                <tr>
+                    <td>External perspective</td>
+                    <td>Internal perspective</td>
+                </tr>
+                <tr>
+                    <td>Market requirements</td>
+                    <td>Business constraints</td>
+                </tr>
+                <tr>
+                    <td>Example: "Easy to use"</td>
+                    <td>Example: "Manufacturing cost < $50"</td>
+                </tr>
+                <tr>
+                    <td>Example: "Durable construction"</td>
+                    <td>Example: "Complies with safety regulation XYZ"</td>
+                </tr>
+            </table>
+            
+            <p>The House of Quality helps balance these sometimes competing voices to arrive at optimal product specifications that satisfy both customers and business needs.</p>
+        </div>
+    </div>
+    
+    
+</section>
+
+  </main>
+  
+  <footer>
+    <div class="container">
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="contact.html">Contact</a>
+        <a href="sitemap.html">Sitemap</a>
+      </div>
+      <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+      <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
+  
+    </div>
+  </footer>
+
+  <script>
+    let customerRequirements = [];
+    let technicalRequirements = [];
+    let relationships = {};
+    let correlations = {};
+    
+    function renderCustomerRequirements() {
+      const list = document.getElementById('customerReqList');
+      list.innerHTML = customerRequirements.map(req => `
+          <div class="list-item" data-id="${req.id}">
+              <span>${req.text}</span>
+              <div class="customer-importance-container">
+                  <div class="customer-importance-bar-bg"><div class="customer-importance-bar" style="width: ${(req.importance / 5) * 100}%;"></div></div>
+                  <span>${req.importance}</span>
+              </div>
+              <button class="btn-remove" title="Remove Requirement"><i class="fas fa-minus"></i></button>
+          </div>
+      `).join('');
+    }
+    
+    function renderTechnicalSpecs() {
+      const list = document.getElementById('technicalSpecList');
+      list.innerHTML = technicalRequirements.map(spec => `
+          <div class="list-item" data-id="${spec.id}">
+              <span>${spec.text}</span>
+              <button class="btn-remove" title="Remove Specification"><i class="fas fa-minus"></i></button>
+          </div>
+      `).join('');
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCustomerRequirements();
+      renderTechnicalSpecs();
+      
+      const tabs = document.querySelectorAll('.tab');
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          document.querySelector('.tab.active')?.classList.remove('active');
+          document.querySelector('.tab-content.active')?.classList.remove('active');
+          tab.classList.add('active');
+          document.getElementById(tab.dataset.tab).classList.add('active');
+          if (tab.dataset.tab === 'relationships') updateRelationshipControls();
+          if (tab.dataset.tab === 'correlations') updateCorrelationControls();
+        });
+      });
+      
+      document.getElementById('addCustomerReqBtn').addEventListener('click', () => {
+        const input = document.getElementById('newCustomerReqText');
+        const text = input.value.trim();
+        if (!text) return;
+        const importance = document.getElementById('importanceScale').value;
+        customerRequirements.push({ id: 'cr_' + Date.now(), text, importance: parseInt(importance) });
+        input.value = '';
+        input.focus();
+        renderCustomerRequirements();
+      });
+      
+      document.getElementById('addTechnicalSpecBtn').addEventListener('click', () => {
+        const input = document.getElementById('newTechnicalSpecText');
+        const text = input.value.trim();
+        if (!text) return;
+        technicalRequirements.push({ id: 'tr_' + Date.now(), text });
+        input.value = '';
+        input.focus();
+        renderTechnicalSpecs();
+      });
+      
+      document.getElementById('customerReqList').addEventListener('click', (e) => {
+        if (e.target.closest('.btn-remove')) {
+          const itemId = e.target.closest('.list-item').dataset.id;
+          customerRequirements = customerRequirements.filter(req => req.id !== itemId);
+          renderCustomerRequirements();
+          showToast('Requirement removed.', 'info');
+        }
+      });
+      
+      document.getElementById('technicalSpecList').addEventListener('click', (e) => {
+        if (e.target.closest('.btn-remove')) {
+          const itemId = e.target.closest('.list-item').dataset.id;
+          technicalRequirements = technicalRequirements.filter(spec => spec.id !== itemId);
+          renderTechnicalSpecs();
+          showToast('Specification removed.', 'info');
+        }
+      });
+      
+      document.getElementById('relationshipControls').addEventListener('change', e => {
+        if (e.target.tagName === 'SELECT') {
+          const relationshipId = `${e.target.dataset.crId}_${e.target.dataset.trId}`;
+          if (e.target.value) {
+            relationships[relationshipId] = e.target.value;
+          } else {
+            delete relationships[relationshipId];
+          }
+        }
+      });
+      
+      document.getElementById('correlationControls').addEventListener('change', e => {
+        if (e.target.tagName === 'SELECT') {
+          const correlationId = `${e.target.dataset.tr1Id}_${e.target.dataset.tr2Id}`;
+          if (e.target.value) {
+            correlations[correlationId] = e.target.value;
+          } else {
+            delete correlations[correlationId];
+          }
+        }
+      });
+      
+      document.getElementById('generateQfdBtn').addEventListener('click', () => {
+        if (customerRequirements.length === 0 || technicalRequirements.length === 0) {
+          showToast('Please add customer and technical requirements first.', 'info');
+          return;
+        }
+        generateQfdMatrix();
+        calculatePriorities();
+        document.getElementById('qfdMatrix').style.display = 'block';
+        document.getElementById('qfdMatrix').scrollIntoView({ behavior: 'smooth' });
+      });
+      
+      document.getElementById('loadExampleBtn').addEventListener('click', loadExample);
+      document.getElementById('resetBtn').addEventListener('click', resetAll);
+      document.getElementById('exportQfdBtn').addEventListener('click', exportToExcel);
+    });
+    
+    function updateRelationshipControls() {
+      const container = document.getElementById('relationshipControls');
+      if (customerRequirements.length === 0 || technicalRequirements.length === 0) {
+        container.innerHTML = '<p>Please add both customer and technical requirements first.</p>';
+        return;
+      }
+      
+      const table = document.createElement('table');
+      table.className = 'qfd-table';
+      
+      let headerHtml = '<thead><tr><th>Customer Need</th>';
+      technicalRequirements.forEach(tr => {
+        headerHtml += `<th>${tr.text}</th>`;
+      });
+      headerHtml += '</tr></thead><tbody>';
+      
+      customerRequirements.forEach(cr => {
+        headerHtml += `<tr><td class="customer-requirements">${cr.text}</td>`;
+        technicalRequirements.forEach(tr => {
+          const relId = `${cr.id}_${tr.id}`;
+          const currentVal = relationships[relId] || '';
+          headerHtml += `<td><select data-cr-id="${cr.id}" data-tr-id="${tr.id}" style="min-width:100px;">
+            <option value="" ${!currentVal ? 'selected' : ''}>None</option>
+            <option value="strong" ${currentVal === 'strong' ? 'selected' : ''}>Strong (9)</option>
+            <option value="medium" ${currentVal === 'medium' ? 'selected' : ''}>Medium (3)</option>
+            <option value="weak" ${currentVal === 'weak' ? 'selected' : ''}>Weak (1)</option>
+          </select></td>`;
+        });
+        headerHtml += `</tr>`;
+      });
+      
+      table.innerHTML = headerHtml + '</tbody>';
+      container.innerHTML = '';
+      container.appendChild(table);
+    }
+    
+    function updateCorrelationControls() {
+      const container = document.getElementById('correlationControls');
+      if (technicalRequirements.length < 2) {
+        container.innerHTML = '<p>Please add at least 2 technical requirements first.</p>';
+        return;
+      }
+      
+      const table = document.createElement('table');
+      table.className = 'qfd-table';
+      
+      let tableHtml = '<thead><tr><th></th>';
+      technicalRequirements.forEach(tr => {
+        tableHtml += `<th>${tr.text}</th>`;
+      });
+      tableHtml += '</tr></thead><tbody>';
+      
+      technicalRequirements.forEach((tr1, i) => {
+        tableHtml += `<tr><th class="customer-requirements">${tr1.text}</th>`;
+        technicalRequirements.forEach((tr2, j) => {
+          if (i >= j) {
+            tableHtml += `<td style="background-color: #f5f5f5;"></td>`;
+          } else {
+            const corrId = `${tr1.id}_${tr2.id}`;
+            const currentVal = correlations[corrId] || '';
+            tableHtml += `<td><select data-tr1-id="${tr1.id}" data-tr2-id="${tr2.id}" style="min-width:100px;">
+              <option value="" ${!currentVal ? 'selected' : ''}>None</option>
+              <option value="positive-strong" ${currentVal === 'positive-strong' ? 'selected' : ''}>++ Strong Positive</option>
+              <option value="positive-weak" ${currentVal === 'positive-weak' ? 'selected' : ''}>+ Positive</option>
+              <option value="negative-weak" ${currentVal === 'negative-weak' ? 'selected' : ''}>- Negative</option>
+              <option value="negative-strong" ${currentVal === 'negative-strong' ? 'selected' : ''}>-- Strong Negative</option>
+            </select></td>`;
+          }
+        });
+        tableHtml += '</tr>';
+      });
+      
+      table.innerHTML = tableHtml + '</tbody>';
+      container.innerHTML = '';
+      container.appendChild(table);
+    }
+    
+    function generateQfdMatrix() {
+      const container = document.getElementById('qfdMatrixContainer');
+      const table = document.createElement('table');
+      table.className = 'qfd-table';
+      table.id = 'qfdFinalTable';
+      
+      // Create the roof of the house (correlation matrix)
+      const thead = table.createTHead();
+      for (let i = 0; i < technicalRequirements.length; i++) {
+        const row = thead.insertRow();
+        
+        if (i === 0) {
+          const cell = document.createElement('th');
+          cell.rowSpan = technicalRequirements.length;
+          cell.colSpan = 2;
+          cell.style.backgroundColor = "#f5f5f5";
+          cell.style.border = "none";
+          row.appendChild(cell);
+        }
+        
+        for (let j = 0; j < i; j++) {
+          row.insertCell().style.border = 'none';
+        }
+        
+        const th = document.createElement('th');
+        th.className = "technical-requirements";
+        th.innerHTML = technicalRequirements[i].text;
+        row.appendChild(th);
+        
+        for (let j = i + 1; j < technicalRequirements.length; j++) {
+          const cell = row.insertCell();
+          const corr = correlations[`${technicalRequirements[i].id}_${technicalRequirements[j].id}`] || '';
+          
+          if (corr.includes('positive')) {
+            cell.textContent = corr.includes('weak') ? '+' : '++';
+            cell.className = `correlation-${corr}`;
+          }
+          
+          if (corr.includes('negative')) {
+            cell.textContent = corr.includes('weak') ? '-' : '--';
+            cell.className = `correlation-${corr}`;
+          }
+        }
+      }
+      
+      // Create the relationship matrix
+      const tbody = table.createTBody();
+      customerRequirements.forEach(cr => {
+        const row = tbody.insertRow();
+        row.innerHTML = `<td class="customer-requirements">${cr.text}</td><td class="importance-cell">${cr.importance}</td>`;
+        
+        technicalRequirements.forEach(tr => {
+          const cell = row.insertCell();
+          const rel = relationships[`${cr.id}_${tr.id}`] || '';
+          
+          if (rel === 'strong') {
+            cell.textContent = '●';
+            cell.className = 'relationship-strong';
+          } else if (rel === 'medium') {
+            cell.textContent = '○';
+            cell.className = 'relationship-medium';
+          } else if (rel === 'weak') {
+            cell.textContent = '▲';
+            cell.className = 'relationship-weak';
+          }
+        });
+      });
+      
+      // Create the footer with priorities
+      const tfoot = table.createTFoot();
+      const priorityRow = tfoot.insertRow();
+      priorityRow.innerHTML = `<th class="technical-requirements" colspan="2">Technical Priority</th>`;
+      
+      technicalRequirements.forEach(tr => {
+        priorityRow.insertCell().id = `priority_${tr.id}`;
+      });
+      
+      const rankRow = tfoot.insertRow();
+      rankRow.innerHTML = `<th class="technical-requirements" colspan="2">Rank</th>`;
+      
+      technicalRequirements.forEach(tr => {
+        rankRow.insertCell().id = `rank_${tr.id}`;
+      });
+      
+      container.innerHTML = '';
+      container.appendChild(table);
+    }
+    
+    function calculatePriorities() {
+      const priorityTableBody = document.querySelector('#priorityTable tbody');
+      priorityTableBody.innerHTML = '';
+      
+      const techScores = calculatePrioritiesForExport();
+      const maxScore = Math.max(...techScores.map(t => t.score), 1);
+      
+      techScores.forEach(tech => {
+        const row = priorityTableBody.insertRow();
+        row.innerHTML = `<td>${tech.text}</td><td>${tech.score}</td><td><div class="priority-bar-container"><div class="priority-bar" style="width: ${ (tech.score / maxScore) * 100}%;"></div></div></td><td>${tech.rank}</td>`;
+        
+        document.getElementById(`priority_${tech.id}`).textContent = tech.score;
+        document.getElementById(`rank_${tech.id}`).textContent = tech.rank;
+      });
+    }
+    
+    function resetAll() {
+      if (confirm("Are you sure you want to reset all data?")) {
+        customerRequirements = [];
+        technicalRequirements = [];
+        relationships = {};
+        correlations = {};
+        renderCustomerRequirements();
+        renderTechnicalSpecs();
+        document.getElementById('qfdMatrix').style.display = 'none';
+        document.querySelector('#priorityTable tbody').innerHTML = '';
+        showToast('All data has been reset.', 'info');
+      }
+    }
+    
+    function loadExample() {
+      customerRequirements = [
+        { id: 'cr_1', text: "Reliable & Durable", importance: 5 },
+        { id: 'cr_2', text: "Affordable Price", importance: 4 },
+        { id: 'cr_3', text: "Good Fuel Range", importance: 3 },
+        { id: 'cr_4', text: "Environmentally Friendly", importance: 4 }
+      ];
+      
+      technicalRequirements = [
+        { id: 'tr_1', text: "Engine Displacement (L)" },
+        { id: 'tr_2', text: "Torque (Nm)" },
+        { id: 'tr_3', text: "Top Speed (km/h)" },
+        { id: 'tr_4', text: "Fuel Tank Capacity (L)" }
+      ];
+      
+      relationships = {
+        "cr_1_tr_3": "strong",
+        "cr_2_tr_2": "strong",
+        "cr_3_tr_1": "strong",
+        "cr_4_tr_4": "strong",
+        "cr_2_tr_3": "medium",
+        "cr_3_tr_2": "weak"
+      };
+      
+      correlations = {
+        "tr_1_tr_4": "positive-strong",
+        "tr_2_tr_4": "positive-weak",
+        "tr_1_tr_3": "negative-strong"
+      };
+      
+      renderCustomerRequirements();
+      renderTechnicalSpecs();
+      showToast('Example loaded. Click "Generate House of Quality".', 'success');
+    }
+    
+    function exportToExcel() {
+      const finalTable = document.getElementById('qfdFinalTable');
+      if (!finalTable) {
+        showToast('Please generate the matrix first.', 'info');
+        return;
+      }
+      
+      const wb = XLSX.utils.book_new();
+      const ws = XLSX.utils.table_to_sheet(finalTable);
+      
+      // Set column widths
+      ws['!cols'] = [{wch: 30}, {wch: 10}].concat(technicalRequirements.map(() => ({wch: 15})));
+      
+      XLSX.utils.book_append_sheet(wb, ws, 'QFD Matrix');
+      
+      // Add priorities sheet
+      const priorityData = [["Technical Requirement", "Priority Score", "Rank"]];
+      const techScores = calculatePrioritiesForExport();
+      techScores.forEach(t => priorityData.push([t.text, t.score, t.rank]));
+      
+      const ws_priority = XLSX.utils.aoa_to_sheet(priorityData);
+      ws_priority['!cols'] = [{wch: 30}, {wch: 15}, {wch: 10}];
+      
+      XLSX.utils.book_append_sheet(wb, ws_priority, 'Priorities');
+      
+      XLSX.writeFile(wb, 'QFD_Analysis.xlsx');
+    }
+    
+    function calculatePrioritiesForExport() {
+      const relValues = { strong: 9, medium: 3, weak: 1 };
+      
+      const techScores = technicalRequirements.map(tr => ({
+        id: tr.id,
+        text: tr.text,
+        score: customerRequirements.reduce((sum, cr) => {
+          return sum + (cr.importance * (relValues[relationships[`${cr.id}_${tr.id}`]] || 0));
+        }, 0)
+      })).sort((a, b) => b.score - a.score);
+      
+      let rank = 0;
+      let lastScore = -1;
+      
+      techScores.forEach((tech, i) => {
+        if (tech.score !== lastScore) {
+          rank = i + 1;
+          lastScore = tech.score;
+        }
+        tech.rank = rank;
+      });
+      
+      return techScores;
+    }
+    
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast-notification');
+      toast.textContent = message;
+      toast.className = 'show ' + type;
+      
+      setTimeout(() => {
+        toast.className = toast.className.replace('show', '');
+      }, 3000);
+    }
+  </script>
+  
+  <script>
+    // Navigation sidebar functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const sidebarToggle = document.querySelector('.sidebar-toggle');
+      const sidebar = document.querySelector('.sidebar');
+      const sidebarClose = document.querySelector('.sidebar-close');
+      const overlay = document.querySelector('.overlay');
+      const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
+      
+      sidebarToggle.addEventListener('click', function() {
+        sidebar.classList.add('open');
+        overlay.classList.add('active');
+        document.body.classList.add('sidebar-open');
+      });
+      
+      sidebarClose.addEventListener('click', function() {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('active');
+        document.body.classList.remove('sidebar-open');
+      });
+      
+      overlay.addEventListener('click', function() {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('active');
+        document.body.classList.remove('sidebar-open');
+      });
+      
+      categoryHeaders.forEach(header => {
+        header.addEventListener('click', function() {
+          const category = this.parentElement;
+          category.classList.toggle('open');
+          
+          const icon = this.querySelector('span:last-child');
+          if (category.classList.contains('open')) {
+            icon.textContent = '-';
+          } else {
+            icon.textContent = '+';
+          }
+        });
+      });
+    });
+  </script>
+
+  <script>
+    function toggleFAQ(element) {
+        const answer = element.nextElementSibling;
+        const isShowing = answer.classList.contains('show');
+    
+          // Close all FAQs first
+          document.querySelectorAll('.faq-answer').forEach(ans => {
+            ans.classList.remove('show');
+          });
+          document.querySelectorAll('.faq-question span').forEach(span => {
+              span.textContent = '+';
+          });
+    
+          // Toggle the clicked one
+          if (!isShowing) {
+              answer.classList.add('show');
+              element.querySelector('span').textContent = '-';
+          }
+      }
+</script>
+</body>
+</html>

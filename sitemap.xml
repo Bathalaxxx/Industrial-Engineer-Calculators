@@ -318,5 +318,17 @@
     <changefreq>yearly</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://iecalculators.online/quality-function-deployment.html</loc>
+    <lastmod>2024-08-31</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+    <url>
+    <loc>https://iecalculators.online/failure-mode-and-effects-analysis-fmea.html</loc>
+    <lastmod>2024-08-31</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
 
 </urlset>
