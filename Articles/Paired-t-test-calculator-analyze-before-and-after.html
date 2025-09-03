@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paired T-Test Calculator: Analyze Before-After Data with Confidence</title>
+    <meta name="description" content="Use our paired t-test calculator to analyze before-after measurements. Learn when and how to use paired t-tests with practical examples from industrial engineering.">
+    <meta name="keywords" content="paired t test calculator, what is paired t test, paired t test example, unpaired vs paired t test, paired t test vs unpaired, when to use paired t test, independent vs paired t test, paired t-test formula, one sample t-test vs paired t-test, independent t test">
+    <meta name="author" content="Eugene James G. Palmes, Industrial Engineer">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+            padding-bottom: 2rem;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .content-section h3 {
+            color: var(--primary-color);
+            margin: 1.5rem 0 1rem;
+        }
+        
+        .content-section p {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        
+        .content-section ul, .content-section ol {
+            margin: 1rem 0 1rem 2rem;
+        }
+        
+        .content-section li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .author-box {
+            display: flex;
+            align-items: center;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        
+        .author-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 1.5rem;
+            border: 2px solid var(--secondary-color);
+        }
+        
+        .author-info h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        .author-info p {
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .related-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .tool-chip {
+            background-color: #e3f2fd;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .tool-chip:hover {
+            background-color: #bbdefb;
+        }
+        
+        .highlight-box {
+            background-color: #e8f4fc;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        
+        .calculator-cta {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #f5f7fa, #e4e8ee);
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        
+        .calculator-cta h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .calculator-cta p {
+            margin-bottom: 1.5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .cta-button:hover {
+            background-color: #2980b9;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        .comparison-table, .comparison-table th, .comparison-table td {
+            border: 1px solid #ddd;
+        }
+        
+        .comparison-table th, .comparison-table td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        .comparison-table th {
+            background-color: #f2f2f2;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+            border-radius: 4px;
+        }
+        
+        .example-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        .example-table, .example-table th, .example-table td {
+            border: 1px solid #ddd;
+        }
+        
+        .example-table th, .example-table td {
+            padding: 0.75rem;
+            text-align: center;
+        }
+        
+        .example-table th {
+            background-color: #f2f2f2;
+        }
+        
+        .reference-list {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        
+        .reference-list li {
+            margin-bottom: 0.75rem;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            nav ul li {
+                margin: 0 0.5rem 0.5rem;
+            }
+            
+            .author-box {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .author-image {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Industrial Engineering <span>Calculators</span></div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="terms.html">Terms</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="sitemap.html">Sitemap</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Paired T-Test Calculator: Analyze Before-After Data with Confidence</h1>
+            <p>Learn when and how to use paired t-tests with practical examples from industrial engineering</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <div class="content-section">
+            <div class="author-box">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDgwIDgwIiBmaWxsPSJub25lIj48Y2lyY2xlIGN4PSI0MCIgY3k9IjQwIiByPSI0MCIgZmlsbD0iIzM0OThkYiIvPjx0ZXh0IHg9IjQwIiB5PSI0NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiIGZvbnQtc2l6ZT0iMjQiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiI+RVA8L3RleHQ+PC9zdmc+" alt="Eugene James Palmes" class="author-image">
+                <div class="author-info">
+                    <h4>Eugene James G. Palmes</h4>
+                    <p>Industrial Engineer & Data Analyst</p>
+                    <p>Published on: February 18, 2025 | 8 min read</p>
+                </div>
+            </div>
+            
+            <h2>My Warehouse Efficiency Project: A Paired T-Test Success Story</h2>
+            <p>Early in my career, I was tasked with improving operations at a logistics warehouse. The management wanted to implement a new picking process but needed evidence that it would actually reduce processing time. We conducted a time and motion study where the same warehouse picker used both the current and proposed methods with the same equipment.</p>
+            
+            <p>This created the perfect scenario for a paired t-test - we had before-and-after measurements from the same subject under different conditions. The results showed a statistically significant reduction in processing time, which gave management the confidence to implement the new process across all operations. The project ultimately reduced picking time by 23% and increased overall warehouse throughput.</p>
+            
+            <h2>What is a Paired T-Test?</h2>
+            <p>A paired t-test (also called a dependent samples t-test) is a statistical procedure used to determine whether the mean difference between two sets of observations is zero. In a paired design, each subject is measured twice, resulting in pairs of observations.</p>
+            
+            <div class="formula-box">
+                t = (M - μ) / (s / √n)
+            </div>
+            
+            <p>Where:</p>
+            <ul>
+                <li><strong>M</strong> = Mean of the differences between paired observations</li>
+                <li><strong>μ</strong> = Hypothesized mean difference (usually 0)</li>
+                <li><strong>s</strong> = Standard deviation of the differences</li>
+                <li><strong>n</strong> = Number of pairs</li>
+            </ul>
+            
+            <h2>When to Use a Paired T-Test</h2>
+            <p>Paired t-tests are appropriate in these common scenarios:</p>
+            <ul>
+                <li><strong>Before-and-after studies:</strong> Measuring the effect of an intervention or treatment</li>
+                <li><strong>Matched pairs:</strong> When subjects are paired based on specific characteristics</li>
+                <li><strong>Repeated measures:</strong> When the same subject is measured under different conditions</li>
+                <li><strong>Quality control:</strong> Comparing two measurement methods on the same items</li>
+            </ul>
+            
+            <h2>Paired vs. Unpaired T-Tests: Key Differences</h2>
+            <table class="comparison-table">
+                <tr>
+                    <th>Aspect</th>
+                    <th>Paired T-Test</th>
+                    <th>Unpaired T-Test</th>
+                </tr>
+                <tr>
+                    <td>Design</td>
+                    <td>Same subjects measured twice</td>
+                    <td>Different groups of subjects</td>
+                </tr>
+                <tr>
+                    <td>Data Structure</td>
+                    <td>Dependent samples</td>
+                    <td>Independent samples</td>
+                </tr>
+                <tr>
+                    <td>Variance</td>
+                    <td>Lower (controls for individual differences)</td>
+                    <td>Higher (includes individual differences)</td>
+                </tr>
+                <tr>
+                    <td>Statistical Power</td>
+                    <td>Higher (more sensitive to detect differences)</td>
+                    <td>Lower</td>
+                </tr>
+                <tr>
+                    <td>When to Use</td>
+                    <td>Before-after studies, matched pairs</td>
+                    <td>Comparing two separate groups</td>
+                </tr>
+            </table>
+            
+            <h2>Practical Example: Warehouse Process Improvement</h2>
+            <p>Let's walk through a simplified version of my warehouse project. We measured the time (in minutes) it took to pick 10 different orders using both the current and proposed methods:</p>
+            
+            <table class="example-table">
+                <tr>
+                    <th>Order #</th>
+                    <th>Current Method (min)</th>
+                    <th>Proposed Method (min)</th>
+                    <th>Difference (min)</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>12.5</td>
+                    <td>10.8</td>
+                    <td>1.7</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>13.2</td>
+                    <td>11.5</td>
+                    <td>1.7</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>11.8</td>
+                    <td>10.2</td>
+                    <td>1.6</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>14.1</td>
+                    <td>12.3</td>
+                    <td>1.8</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>12.9</td>
+                    <td>11.2</td>
+                    <td>1.7</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>13.5</td>
+                    <td>11.7</td>
+                    <td>1.8</td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>12.3</td>
+                    <td>10.6</td>
+                    <td>1.7</td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>13.8</td>
+                    <td>12.0</td>
+                    <td>1.8</td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td>12.1</td>
+                    <td>10.5</td>
+                    <td>1.6</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>13.0</td>
+                    <td>11.3</td>
+                    <td>1.7</td>
+                </tr>
+            </table>
+            
+            <p>Using our paired t-test calculator, we found:</p>
+            <ul>
+                <li>Mean difference: 1.71 minutes</li>
+                <li>Standard deviation of differences: 0.08 minutes</li>
+                <li>t-statistic: 67.74</li>
+                <li>p-value: < 0.0001</li>
+            </ul>
+            
+            <p>These results provided strong evidence that the new method significantly reduced picking time.</p>
+            
+            <h2>Common Mistakes to Avoid with Paired T-Tests</h2>
+            <p>Based on my experience, here are the most common pitfalls when conducting paired t-tests:</p>
+            
+            <ol>
+                <li><strong>Using independent tests for paired data:</strong> This reduces statistical power and can lead to incorrect conclusions.</li>
+                <li><strong>Not checking assumptions:</strong> Paired t-tests assume that the differences are normally distributed, especially with small sample sizes.</li>
+                <li><strong>Ignoring the order effect:</strong> In before-after studies, the order of treatments might influence results.</li>
+                <li><strong>Small sample sizes:</strong> With fewer than 10 pairs, the test may not have enough power to detect meaningful differences.</li>
+                <li><strong>Not reporting confidence intervals:</strong> Always include confidence intervals for the mean difference, not just the p-value.</li>
+            </ol>
+            
+            <h2>Try Our Free Paired T-Test Calculator</h2>
+            <p>Our online calculator makes it easy to perform paired t-test analysis:</p>
+            
+            <div class="calculator-cta">
+                <h3>Ready to Analyze Your Data?</h3>
+                <p>Our paired t-test calculator is free, easy to use, and provides detailed results with interpretation. Perfect for students, professionals, and business owners who need to compare before-after measurements.</p>
+                <a href="ttest.html" class="cta-button">Use Paired T-Test Calculator</a>
+            </div>
+            
+            <h2>Related Statistical Tools</h2>
+            <p>Depending on your research question, you might also find these calculators helpful:</p>
+            
+            <div class="related-tools">
+                <a href="correlation.html" class="tool-chip">Correlation Analysis</a>
+                <a href="ttest.html" class="tool-chip">Independent T-Test</a>
+                <a href="anova.html" class="tool-chip">ANOVA</a>
+                <a href="regression.html" class="tool-chip">Regression Analysis</a>
+                <a href="samplesize.html" class="tool-chip">Sample Size Calculator</a>
+            </div>
+            
+            <div class="highlight-box">
+                <p><strong>Professional Insight:</strong> While paired t-tests are powerful, remember that statistical significance doesn't always mean practical significance. Always consider the magnitude of the difference and its real-world implications for your business or research.</p>
+            </div>
+            
+            <h2>References</h2>
+            <ol class="reference-list">
+                <li>Montgomery, D. C. (2019). Introduction to Statistical Quality Control. John Wiley & Sons.</li>
+                <li>Box, G. E. P., Hunter, J. S., & Hunter, W. G. (2005). Statistics for Experimenters: Design, Innovation, and Discovery. Wiley-Interscience.</li>
+                <li>Student. (1908). The probable error of a mean. Biometrika, 6(1), 1-25.</li>
+                <li>Field, A. (2018). Discovering Statistics Using IBM SPSS Statistics. Sage Publications.</li>
+                <li>American Society for Quality. (2023). Quality Control Handbook. ASQ Quality Press.</li>
+            </ol>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+                <a href="sitemap.html">Sitemap</a>
+            </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

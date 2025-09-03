@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coefficient of Variation Calculator | Industrial Engineering Calculators</title>
+    <meta name="description" content="Calculate the coefficient of variation (CV) to measure relative variability of your data. Free online tool for industrial engineering professionals and students.">
+    
+    <!--FAVICON-->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+  
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-3BSHG1DE6V');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5607576434988374"
+     crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-5607576434988374">
+    
+    <!-- Clarity tracking code for https://iecalculators.online/ -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "t31aicr9ep");
+    </script>
+
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+            
+            /* Subject area colors */
+            --statistics-color: #9b59b6;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+
+        /* Navigation styles */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block;
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--statistics-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select, .input-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .data-input {
+            margin-bottom: 1.5rem;
+        }
+        
+        .data-input textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .data-input .help-text {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-top: 0.5rem;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: block;
+            width: 100%;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--statistics-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--statistics-color);
+        }
+        
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .result-card {
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .result-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .interpretation {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #e8f4fc;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            body.sidebar-open {
+                margin-left: 0;
+                overflow: hidden;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Industrial Engineering <span>Calculators</span></div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="terms.html">Terms</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="sitemap.html">Sitemap</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Coefficient of Variation Calculator</h1>
+            <p>Measure relative variability in your data</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Coefficient of Variation</h2>
+                <p>The coefficient of variation (CV) is a statistical measure of the relative dispersion of data points in a data series around the mean. It represents the ratio of the standard deviation to the mean, and it is often expressed as a percentage.</p>
+                
+                <div class="formula-box">
+                    CV = (Standard Deviation / Mean) × 100%
+                </div>
+                
+                <p>The CV is useful because it allows comparison of the degree of variation between different data sets, even if the means are drastically different from one another. It's particularly valuable in industrial engineering for quality control, process capability analysis, and comparing variability across different measurement scales.</p>
+            </div>
+            
+            <form id="cv-form">
+                <h3>Data Input</h3>
+                
+                <div class="data-input">
+                    <label for="data-input">Enter your data (comma-separated values):</label>
+                    <textarea id="data-input" placeholder="Enter values like: 12.5, 13.2, 11.8, 14.1, 12.9" required></textarea>
+                    <p class="help-text">You can also copy and paste from a spreadsheet. Minimum of 2 values required.</p>
+                </div>
+                
+                <button type="submit" class="calculate-btn">Calculate Coefficient of Variation</button>
+            </form>
+            
+            <div class="result-box" id="cv-result">
+                <h3>Calculation Results</h3>
+                
+                <div class="result-grid">
+                    <div class="result-card">
+                        <h4>Coefficient of Variation</h4>
+                        <div class="result-value" id="cv-value"></div>
+                        <p>Relative variability measure</p>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>Standard Deviation</h4>
+                        <div class="result-value" id="std-dev"></div>
+                        <p>Absolute measure of dispersion</p>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>Mean</h4>
+                        <div class="result-value" id="mean-value"></div>
+                        <p>Average of all values</p>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>Sample Size</h4>
+                        <div class="result-value" id="sample-size"></div>
+                        <p>Number of data points</p>
+                    </div>
+                </div>
+                
+                <div class="interpretation">
+                    <h4>Interpretation</h4>
+                    <p id="interpretation-text"></p>
+                </div>
+                
+                <h4>Descriptive Statistics</h4>
+                <table>
+                    <tr>
+                        <th>Statistic</th>
+                        <th>Value</th>
+                    </tr>
+                    <tr>
+                        <td>Minimum</td>
+                        <td id="min-value"></td>
+                    </tr>
+                    <tr>
+                        <td>Maximum</td>
+                        <td id="max-value"></td>
+                    </tr>
+                    <tr>
+                        <td>Range</td>
+                        <td id="range-value"></td>
+                    </tr>
+                    <tr>
+                        <td>Sum</td>
+                        <td id="sum-value"></td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="calculator-intro">
+                <h3>Understanding Coefficient of Variation</h3>
+                <p>The coefficient of variation is particularly useful in these industrial engineering contexts:</p>
+                
+                <table>
+                    <tr>
+                        <th>CV Range</th>
+                        <th>Interpretation</th>
+                        <th>Industrial Application</th>
+                    </tr>
+                    <tr>
+                        <td>CV &lt; 10%</td>
+                        <td>Low variability</td>
+                        <td>Process is well-controlled with minimal variation</td>
+                    </tr>
+                    <tr>
+                        <td>10% ≤ CV &lt; 20%</td>
+                        <td>Moderate variability</td>
+                        <td>Acceptable variation in many manufacturing processes</td>
+                    </tr>
+                    <tr>
+                        <td>20% ≤ CV &lt; 30%</td>
+                        <td>High variability</td>
+                        <td>Process may need improvement or investigation</td>
+                    </tr>
+                    <tr>
+                        <td>CV ≥ 30%</td>
+                        <td>Very high variability</td>
+                        <td>Process is unstable and requires immediate attention</td>
+                    </tr>
+                </table>
+                
+                <div class="formula-box" style="margin-top: 1.5rem;">
+                    CV Comparison: CV₁ vs CV₂ = |CV₁ - CV₂| / √((CV₁²/(2n₁)) + (CV₂²/(2n₂)))
+                </div>
+                
+                <p class="help-text" style="margin-top: 1rem;">Note: These interpretations are general guidelines. Specific acceptable CV ranges may vary by industry and application.</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+                <a href="sitemap.html">Sitemap</a>
+            </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Helper functions for statistical calculations
+        function parseData(dataString) {
+            return dataString.split(',')
+                .map(val => val.trim())
+                .filter(val => val !== '')
+                .map(val => parseFloat(val))
+                .filter(val => !isNaN(val));
+        }
+        
+        function calculateMean(data) {
+            return data.reduce((sum, val) => sum + val, 0) / data.length;
+        }
+        
+        function calculateStdDev(data, mean) {
+            const squaredDiffs = data.map(val => Math.pow(val - mean, 2));
+            return Math.sqrt(squaredDiffs.reduce((sum, val) => sum + val, 0) / (data.length - 1));
+        }
+        
+        function calculateCoefficientOfVariation(stdDev, mean) {
+            return (stdDev / mean) * 100;
+        }
+        
+        function getInterpretation(cv) {
+            if (cv < 10) {
+                return "Low variability: Your process shows minimal variation and appears to be well-controlled. This level of consistency is excellent for quality control and process stability.";
+            } else if (cv < 20) {
+                return "Moderate variability: Your process shows acceptable variation for many industrial applications. Continue monitoring to ensure consistency.";
+            } else if (cv < 30) {
+                return "High variability: Your process shows considerable variation that may need investigation. Consider implementing process improvements or root cause analysis.";
+            } else {
+                return "Very high variability: Your process shows excessive variation that requires immediate attention. The process is unstable and may need significant intervention.";
+            }
+        }
+        
+        // Coefficient of variation calculation
+        document.getElementById('cv-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get data from input
+            const dataString = document.getElementById('data-input').value;
+            const data = parseData(dataString);
+            
+            if (data.length < 2) {
+                alert('Please enter at least 2 valid data values');
+                return;
+            }
+            
+            // Calculate statistics
+            const mean = calculateMean(data);
+            const stdDev = calculateStdDev(data, mean);
+            const cv = calculateCoefficientOfVariation(stdDev, mean);
+            const interpretation = getInterpretation(cv);
+            
+            // Calculate additional statistics
+            const min = Math.min(...data);
+            const max = Math.max(...data);
+            const range = max - min;
+            const sum = data.reduce((total, val) => total + val, 0);
+            
+            // Display results
+            document.getElementById('cv-value').textContent = cv.toFixed(2) + '%';
+            document.getElementById('std-dev').textContent = stdDev.toFixed(4);
+            document.getElementById('mean-value').textContent = mean.toFixed(4);
+            document.getElementById('sample-size').textContent = data.length;
+            document.getElementById('interpretation-text').textContent = interpretation;
+            
+            // Display descriptive statistics
+            document.getElementById('min-value').textContent = min.toFixed(4);
+            document.getElementById('max-value').textContent = max.toFixed(4);
+            document.getElementById('range-value').textContent = range.toFixed(4);
+            document.getElementById('sum-value').textContent = sum.toFixed(4);
+            
+            // Show results
+            document.getElementById('cv-result').style.display = 'block';
+        });
+        
+        // Navigation sidebar functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebarClose = document.querySelector('.sidebar-close');
+            const overlay = document.querySelector('.overlay');
+            const body = document.body;
+            
+            // Toggle sidebar
+            function toggleSidebar() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+                body.classList.toggle('sidebar-open');
+            }
+            
+            // Toggle category expansion
+            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
+            categoryHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const category = this.parentElement;
+                    category.classList.toggle('open');
+                    
+                    // Update the expand/collapse icon
+                    const icon = this.querySelector('span:last-child');
+                    icon.textContent = category.classList.contains('open') ? '−' : '+';
+                });
+            });
+            
+            // Event listeners
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            sidebarClose.addEventListener('click', toggleSidebar);
+            overlay.addEventListener('click', toggleSidebar);
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 768 && 
+                    body.classList.contains('sidebar-open') && 
+                    !sidebar.contains(event.target) && 
+                    event.target !== sidebarToggle) {
+                    toggleSidebar();
+                }
+            });
+            
+            // Close sidebar when pressing Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && body.classList.contains('sidebar-open')) {
+                    toggleSidebar();
+                }
+            });
+        });
+    </script>
+
+    <div id="cookie-banner" style="position:fixed;bottom:0;left:0;width:100%;background:#fffbe6;border-top:1px solid #e2c96f;padding:1rem;box-shadow:0 -2px 8px rgba(0,0,0,0.07);display:none;z-index:9999;">
+        <span>
+            We use cookies to improve your experience. Non-essential cookies (analytics, personalization) require your consent. 
+            <a href="privacy.html" target="_blank">Learn more</a>
+        </span>
+        <button id="cookie-accept" style="margin-left:1rem;">Accept</button>
+        <button id="cookie-reject" style="margin-left:0.5rem;">Reject</button>
+    </div>
+    <script>
+    (function() {
+        var banner = document.getElementById('cookie-banner');
+        var accepted = localStorage.getItem('cookieConsent');
+        if (!accepted) banner.style.display = 'block';
+
+        document.getElementById('cookie-accept').onclick = function() {
+            localStorage.setItem('cookieConsent', 'accepted');
+            banner.style.display = 'none';
+            // Place non-essential cookie scripts here, e.g. analytics
+            var gaScript = document.createElement('script');
+            gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V";
+            gaScript.async = true;
+            document.head.appendChild(gaScript);
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-3BSHG1DE6V');
+        };
+        document.getElementById('cookie-reject').onclick = function() {
+            localStorage.setItem('cookieConsent', 'rejected');
+            banner.style.display = 'none';
+        };
+    })();
+    </script>
+    
+    <!-- Navigation Sidebar -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+
+        <div class="sidebar-category">
+            <div class="sidebar-category-header">
+                <span>Site Navigation</span>
+                <span>+</span>
+            </div>
+            
+            <div class="sidebar-category-content">
+                <a href="index.html" class="sidebar-link">Home</a>
+                <a href="about.html" class="sidebar-link">About</a>
+                <a href="terms.html" class="sidebar-link">Terms of Service</a>
+                <a href="privacy.html" class="sidebar-link">Privacy Policy</a>
+                <a href="contact.html" class="sidebar-link">Contact Us</a>
+                <a href="sitemap.html" class="sidebar-link">Sitemap</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="anova.html" class="sidebar-link">ANOVA</a>
+                <a href="chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
+                <a href="coefficient-of-variation.html" class="sidebar-link">Coefficient of Variation</a>
+                <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="regression.html" class="sidebar-link">Regression</a>
+                <a href="samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="ttest.html" class="sidebar-link">T-Test</a>
+                <a href="ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <!-- Additional categories would go here following your existing structure -->
+    </aside>
+</body>
+</html>
