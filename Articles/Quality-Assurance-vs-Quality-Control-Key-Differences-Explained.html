@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quality Assurance vs Quality Control: Key Differences Explained</title>
+    <meta name="description" content="Learn the difference between quality assurance and quality control, why both matter, and how to use quality control calculators in industrial settings.">
+    <meta name="keywords" content="quality assurance vs quality control, quality control, quality assurance, QA vs QC, quality management, control charts, OEE, QFD, six sigma">
+    <meta name="author" content="Industrial Engineering Calculators">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+            --qa-color: #3498db;
+            --qc-color: #e74c3c;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+            padding-bottom: 2rem;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .breadcrumb {
+            padding: 1rem 0;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .breadcrumb a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .content-section h3 {
+            color: var(--primary-color);
+            margin: 1.5rem 0 1rem;
+        }
+        
+        .content-section p {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        
+        .content-section ul, .content-section ol {
+            margin: 1rem 0 1rem 2rem;
+        }
+        
+        .content-section li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .author-box {
+            display: flex;
+            align-items: center;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        
+        .author-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 1.5rem;
+            border: 2px solid var(--secondary-color);
+        }
+        
+        .author-info h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        .author-info p {
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .highlight-box {
+            background-color: #e8f4fc;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        
+        .calculator-cta {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #f5f7fa, #e4e8ee);
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        
+        .calculator-cta h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .calculator-cta p {
+            margin-bottom: 1.5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .cta-button:hover {
+            background-color: #2980b9;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        .comparison-table, .comparison-table th, .comparison-table td {
+            border: 1px solid #ddd;
+        }
+        
+        .comparison-table th, .comparison-table td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        .comparison-table th {
+            background-color: #f2f2f2;
+        }
+        
+        .comparison-table .qa {
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+        
+        .comparison-table .qc {
+            background-color: rgba(231, 76, 60, 0.1);
+        }
+        
+        .reference-list {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        
+        .reference-list li {
+            margin-bottom: 0.75rem;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            nav ul li {
+                margin: 0 0.5rem 0.5rem;
+            }
+            
+            .author-box {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .author-image {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Industrial Engineering <span>Calculators</span></div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="terms.html">Terms</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="sitemap.html">Sitemap</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Quality Assurance vs Quality Control: Key Differences Explained</h1>
+            <p>Learn how these complementary approaches work together to deliver quality products and services</p>
+        </div>
+    </section>
+    
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a> &gt; <a href="articles.html">Articles</a> &gt; Quality Assurance vs Quality Control
+        </div>
+        
+        <div class="content-section">
+            <div class="author-box">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDgwIDgwIiBmaWxsPSJub25lIj48Y2lyY2xlIGN4PSI0MCIgY3k9IjQwIiByPSI0MCIgZmlsbD0iIzM0OThkYiIvPjx0ZXh0IHg9IjQwIiB5PSI0NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiIGZvbnQtc2l6ZT0iMjQiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiI+RVA8L3RleHQ+PC9zdmc+" alt="Eugene James Palmes" class="author-image">
+                <div class="author-info">
+                    <h4>Eugene James G. Palmes</h4>
+                    <p>Industrial Engineer & Data Analyst</p>
+                    <p>Published on: January 20, 2025 | 10 min read</p>
+                </div>
+            </div>
+            
+            <h2>Introduction: My First Encounter with the QA/QC Confusion</h2>
+            <p>Early in my career, I was tasked with improving quality at a furniture manufacturing facility. When I asked about their quality processes, the production manager proudly showed me their inspection station where workers meticulously checked each piece before packaging. "This is our quality assurance system," he explained. I immediately realized the common misconception—what he described was actually quality control, not quality assurance.</p>
+            
+            <p>This experience taught me that even professionals often confuse these two critical concepts. In this article, I'll clarify the difference between quality assurance (QA) and quality control (QC), explain why both are essential, and show how our <a href="quality.html">quality control calculators</a> can help you implement both effectively.</p>
+            
+            <div class="highlight-box">
+                <p><strong>Key Insight:</strong> Quality Assurance is process-oriented and proactive, while Quality Control is product-oriented and reactive. Both are essential components of a complete quality management system.</p>
+            </div>
+            
+            <h2>What is Quality Assurance (QA)?</h2>
+            <p>Quality Assurance refers to the process-focused activities that ensure quality requirements will be fulfilled. It's the systematic approach to preventing defects by establishing processes, standards, and methodologies.</p>
+            
+            <p>QA is proactive—it aims to prevent defects before they occur by focusing on the processes that create the product. According to ISO 9000 standards, QA provides confidence that quality requirements will be fulfilled.</p>
+            
+            <h3>Examples of Quality Assurance Activities:</h3>
+            <ul>
+                <li>Process documentation and standardization</li>
+                <li>Training programs for employees</li>
+                <li>Process audits and evaluations</li>
+                <li>Supplier management and certification</li>
+                <li>Design and development of quality processes</li>
+                <li>Implementation of quality management systems</li>
+            </ul>
+            
+            <div class="calculator-cta">
+                <h3>Quality Process Calculator</h3>
+                <p>Our <a href="process-capability.html">Process Capability Calculator</a> helps you establish baseline metrics for your quality assurance processes, ensuring they're capable of meeting specifications before production begins.</p>
+                <a href="quality.html" class="cta-button">Explore Quality Calculators</a>
+            </div>
+            
+            <h2>What is Quality Control (QC)?</h2>
+            <p>Quality Control refers to the product-focused activities that ensure products or services meet quality requirements. It's the set of activities that focus on identifying defects in actual products produced.</p>
+            
+            <p>QC is reactive—it aims to identify defects after they have occurred by inspecting, testing, and measuring products against specifications. The American Society for Quality (ASQ) defines QC as "the observation techniques and activities used to fulfill requirements for quality."</p>
+            
+            <h3>Examples of Quality Control Activities:</h3>
+            <ul>
+                <li>Product inspection and testing</li>
+                <li>Statistical process control monitoring</li>
+                <li>Laboratory testing of materials</li>
+                <li>Batch sampling and analysis</li>
+                <li>Calibration of measuring equipment</li>
+                <li>Final product verification</li>
+            </ul>
+            
+            <div class="calculator-cta">
+                <h3>Quality Measurement Tools</h3>
+                <p>Our <a href="control-charts.html">Control Chart Calculator</a> helps you implement statistical quality control by identifying process variations that might indicate quality issues.</p>
+                <a href="quality.html" class="cta-button">Try Our QC Calculators</a>
+            </div>
+            
+            <h2>QA vs QC: The Critical Differences</h2>
+            
+            <table class="comparison-table">
+                <tr>
+                    <th>Aspect</th>
+                    <th class="qa">Quality Assurance (QA)</th>
+                    <th class="qc">Quality Control (QC)</th>
+                </tr>
+                <tr>
+                    <td>Focus</td>
+                    <td class="qa">Process-oriented</td>
+                    <td class="qc">Product-oriented</td>
+                </tr>
+                <tr>
+                    <td>Approach</td>
+                    <td class="qa">Proactive (Prevent defects)</td>
+                    <td class="qc">Reactive (Identify defects)</td>
+                </tr>
+                <tr>
+                    <td>Timing</td>
+                    <td class="qa">During development</td>
+                    <td class="qc">After development</td>
+                </tr>
+                <tr>
+                    <td>Scope</td>
+                    <td class="qa">Company-wide</td>
+                    <td class="qc">Product-specific</td>
+                </tr>
+                <tr>
+                    <td>Responsibility</td>
+                    <td class="qa">Everyone involved</td>
+                    <td class="qc">Dedicated testing team</td>
+                </tr>
+                <tr>
+                    <td>Statistical Tool</td>
+                    <td class="qa">Process capability analysis</td>
+                    <td class="qc">Statistical sampling</td>
+                </tr>
+                <tr>
+                    <td>Standard</td>
+                    <td class="qa">ISO 9001</td>
+                    <td class="qc">Acceptance sampling standards</td>
+                </tr>
+                <tr>
+                    <td>Goal</td>
+                    <td class="qa">Prevent defects</td>
+                    <td class="qc">Detect defects</td>
+                </tr>
+            </table>
+            
+            <h2>Why Both QA and QC Are Essential</h2>
+            <p>The question isn't "which is better?" but "how do they work together?" During my time at the furniture company, we implemented both approaches:</p>
+            
+            <p><strong>QA Initiatives:</strong> We documented all production processes, trained workers on quality standards, implemented preventive maintenance schedules, and established clear material specifications with suppliers.</p>
+            
+            <p><strong>QC Initiatives:</strong> We set up inspection stations at critical control points, implemented statistical process control using <a href="control-charts.html">control charts</a>, and created standardized testing protocols for finished products.</p>
+            
+            <p>The result? Defect rates decreased by 47% within six months, and customer returns dropped by 62% in the first year.</p>
+            
+            <div class="highlight-box">
+                <p><strong>Professional Insight:</strong> Think of QA as building a good road system (processes) and QC as traffic police checking vehicles (products). You need both to ensure a smooth, safe journey for your products to customers.</p>
+            </div>
+            
+            <h2>Practical Examples of QA and QC in Different Industries</h2>
+            
+            <h3>Manufacturing Example:</h3>
+            <p><strong>QA:</strong> Implementing ISO 9001 quality management system, training operators on standard work procedures, conducting supplier audits.</p>
+            <p><strong>QC:</strong> Conducting dimensional checks on machined parts, performing functional tests on assembled products, using <a href="acceptance-sampling.html">acceptance sampling</a> for incoming materials.</p>
+            
+            <h3>Software Development Example:</h3>
+            <p><strong>QA:</strong> Establishing coding standards, implementing version control processes, conducting code reviews.</p>
+            <p><strong>QC:</strong> Executing test cases, performing user acceptance testing, identifying and logging bugs.</p>
+            
+            <h3>Healthcare Example:</h3>
+            <p><strong>QA:</strong> Developing treatment protocols, training medical staff, implementing electronic health record systems.</p>
+            <p><strong>QC:</strong> Reviewing patient records for accuracy, testing laboratory equipment, monitoring medication administration.</p>
+            
+            <div class="calculator-cta">
+                <h3>Calculate Your Quality Metrics</h3>
+                <p>Our <a href="six-sigma-dpmo.html">Six Sigma DPMO Calculator</a> helps you measure both QA process capability and QC results using standard Six Sigma metrics.</p>
+                <a href="quality.html" class="cta-button">Access All Quality Calculators</a>
+            </div>
+            
+            <h2>Implementing QA and QC in Your Organization</h2>
+            
+            <h3>Steps for Effective Quality Assurance:</h3>
+            <ol>
+                <li>Define quality standards and requirements</li>
+                <li>Document processes and procedures</li>
+                <li>Train employees on quality standards</li>
+                <li>Implement process controls and monitoring</li>
+                <li>Conduct regular process audits</li>
+                <li>Continuously improve based on findings</li>
+            </ol>
+            
+            <h3>Steps for Effective Quality Control:</h3>
+            <ol>
+                <li>Establish product specifications</li>
+                <li>Develop inspection and testing protocols</li>
+                <li>Implement measurement system analysis</li>
+                <li>Create sampling plans using our <a href="acceptance-sampling.html">Acceptance Sampling Calculator</a></li>
+                <li>Document and analyze quality data</li>
+                <li>Take corrective action on non-conformities</li>
+            </ol>
+            
+            <h2>The Role of Technology in Modern QA/QC</h2>
+            <p>Modern quality management has been transformed by digital tools. During my work with various manufacturers, I've seen how technology bridges the gap between QA and QC:</p>
+            
+            <ul>
+                <li><strong>Real-time data collection</strong> allows QC findings to immediately inform QA process improvements</li>
+                <li><strong>Statistical software</strong> and calculators make sophisticated analysis accessible to all organizations</li>
+                <li><strong>Automated measurement systems</strong> provide objective, consistent QC data</li>
+                <li><strong>Digital work instructions</strong> ensure QA standards are consistently implemented</li>
+            </ul>
+            
+            <div class="calculator-cta">
+                <h3>Modern Quality Tools</h3>
+                <p>Our <a href="oee-calculation.html">OEE Calculator</a> helps you measure overall equipment effectiveness—a key metric that combines quality, availability, and performance to give insights into both process effectiveness (QA) and output quality (QC).</p>
+                <a href="quality.html" class="cta-button">Explore Calculation Tools</a>
+            </div>
+            
+            <h2>Conclusion: The Synergy of QA and QC</h2>
+            <p>Quality Assurance and Quality Control are not competing approaches—they're complementary components of a robust quality management system. QA establishes the systems and processes that make quality possible, while QC verifies that those systems are producing the desired results.</p>
+            
+            <p>The most successful organizations I've worked with understand that:</p>
+            <ul>
+                <li>QA without QC means you have good processes but no verification of results</li>
+                <li>QC without QA means you're finding defects but not preventing them</li>
+                <li>QA and QC together create a continuous improvement cycle</li>
+            </ul>
+            
+            <p>Whether you're just starting your quality journey or looking to enhance existing systems, our suite of <a href="quality.html">quality calculators</a> can provide the data-driven insights needed to excel in both quality assurance and quality control.</p>
+            
+            <div class="highlight-box">
+                <p><strong>Final Thought:</strong> Don't fall into the trap of choosing between QA and QC. Instead, focus on building a culture where quality is everyone's responsibility, processes are continuously improved, and products are consistently verified. This holistic approach is what separates good organizations from great ones.</p>
+            </div>
+            
+            <h2>References</h2>
+            <ol class="reference-list">
+                <li>ISO 9001:2015 - Quality management systems — Requirements</li>
+                <li>ASQ Quality Control Handbook, 7th Edition</li>
+                <li>Juran's Quality Handbook: The Complete Guide to Performance Excellence, 7th Edition</li>
+                <li>Montgomery, D. C. (2019). Introduction to Statistical Quality Control. John Wiley & Sons.</li>
+                <li>Deming, W. E. (1982). Out of the Crisis. MIT Press.</li>
+                <li>Crosby, P. B. (1979). Quality is Free: The Art of Making Quality Certain. McGraw-Hill.</li>
+            </ol>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+                <a href="sitemap.html">Sitemap</a>
+            </div>
+            <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+    <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+
+    <div class="sidebar-category">
+        <div class="sidebar-category-header">
+            <span>Site Navigation</span>
+            <span>+</span>
+        </div>
+        
+        <div class="sidebar-category-content">
+            <a href="index.html" class="sidebar-link">Home</a>
+            <a href="about.html" class="sidebar-link">About</a>
+            <a href="terms.html" class="sidebar-link">Terms of Service</a>
+            <a href="privacy.html" class="sidebar-link">Privacy Policy</a>
+            <a href="contact.html" class="sidebar-link">Contact Us</a>
+            <a href="sitemap.html" class="sidebar-link">Sitemap</a>
+        </div>
+    </div>
+        
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="linebalancing.html" class="sidebar-link">Line Balancing</a>
+                <a href="takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="oee-calculation.html" class="sidebar-link">OEE Calculator</a>
+                <a href="quality-function-deployment" class="sidebar-lin">Quality Function Deployment</a>
+
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="anova.html" class="sidebar-link">ANOVA</a>
+                <a href="chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
+                
+                <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="regression.html" class="sidebar-link">Regression</a>
+                <a href="samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="ttest.html" class="sidebar-link">T-Test</a>
+                <a href="ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="eoq-formula.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="reorder-point-calculator.html" class="sidebar-link">Reorder Point</a>
+                <a href="kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+                <a href="safety-stock-calculator.html" class="sidebar-link">Safety Stock Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Study</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+                <a href="failure-mode-and-effects-analysis-fmea.html" class="sidebar-link">FMEA</a>           
+            </div>
+        </div>
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Articles</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="Articles/Negative-Correlation-Understanding-Inverse-Relationships-in-Data.html" class="sidebar-link">Negative Correlation: Understanding Inverse Relationships in Data</a>
+                <a href="Articles/Parameter-vs-Statistic-Understanding-the-Key-Differences.html" class="sidebar-link">Parameter vs Statistic: Understanding the Key Differences</a>
+
+        </div>
+    </aside>
+    <!-- xxxx navigation end xxxxx -->       
+</body>
+</html>
