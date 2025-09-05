@@ -429,6 +429,27 @@
             margin-bottom: 0.5rem;
             font-size: 1rem;
         }
+
+        .related-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .tool-chip {
+            background-color: #e3f2fd;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .tool-chip:hover {
+            background-color: #bbdefb;
+        }             
         
         .metric-card .metric-value {
             font-size: 1.2rem;
@@ -616,7 +637,7 @@
                     <li><a href="terms.html">Terms</a></li>
                     <li><a href="privacy.html">Privacy Policy</a></li>
                     <li><a href="contact.html">Contact</a></li>
-                    <li><a href="sitemap.html">Sitemap</a></li>
+                    <li></li>
                 </ul>
             </nav>
         </div>
@@ -936,6 +957,17 @@
                 </table>
             </div>
         </section>
+        <section class="content-section">
+            <h2>Related Tools</h2>
+            <div>               
+                <div class="related-tools">
+                    <a href="linearprogramming.html" class="tool-chip">Linear Programming</a>
+                    <a href="decisionanalysis.html" class="tool-chip">Decision Analysis</a>
+                    <a href="gametheory.html" class="tool-chip">Game Theory</a>
+                    <a href="markov.html" class="tool-chip">Markov Analysis</a>
+                </div>
+            </div>
+        </section>
     </main>
     
     <footer>
@@ -945,7 +977,7 @@
                 <a href="terms.html">Terms of Service</a>
                 <a href="privacy.html">Privacy Policy</a>
                 <a href="contact.html">Contact Us</a>
-                <a href="sitemap.html">Sitemap</a>
+                
             </div>
             <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
             <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
@@ -1376,7 +1408,6 @@
             <a href="terms.html" class="sidebar-link">Terms of Service</a>
             <a href="privacy.html" class="sidebar-link">Privacy Policy</a>
             <a href="contact.html" class="sidebar-link">Contact Us</a>
-            <a href="sitemap.html" class="sidebar-link">Sitemap</a>
         </div>
     </div>
         
@@ -1392,6 +1423,9 @@
                 <a href="linebalancing.html" class="sidebar-link">Line Balancing</a>
                 <a href="takttime.html" class="sidebar-link">Takt Time</a>
                 <a href="synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+                <a href="machine-utilization-calculator.html" class="sidebar-link">Synchronous Servicing</a>
+                <a href="manpower-calculator.html" class="sidebar-link active">Production Capacity</a>
+                <a href="production-capacity-calculator.html" class="sidebar-link">Synchronous Servicing</a>
             </div>
         </div>
         
@@ -1418,7 +1452,7 @@
                 <a href="anova.html" class="sidebar-link">ANOVA</a>
                 <a href="chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
                 <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
-                
+                <a href="coefficient-of-variation-calculator.html" class="sidebar-link">Coefficient of Variation</a>
                 <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
                 <a href="regression.html" class="sidebar-link">Regression</a>
                 <a href="samplesize.html" class="sidebar-link">Sample Size</a>
@@ -1434,6 +1468,8 @@
                 <span>+</span>
             </div>
             <div class="sidebar-category-content">
+                <a href="abc-analysis-calculator.html" class="sidebar-link">ABC Analysis</a>
+                <a href="inventory-turnover-calculator.html" class="sidebar-link">Inventory Turnover</a>
                 <a href="eoq-formula.html" class="sidebar-link">Economic Order Quantity</a>
                 <a href="reorder-point-calculator.html" class="sidebar-link">Reorder Point</a>
                 <a href="kanban.html" class="sidebar-link">Kanban Calculator</a>

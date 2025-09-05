@@ -1,37 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>Machine Utilization Rate Calculator | Industrial Engineering Calculators</title>
+    <meta name="description" content="Calculate machine utilization rate to optimize production efficiency. Measure equipment productivity and identify improvement opportunities.">
+    <meta name="keywords" content="Machine Utilization Rate Calculator, Equipment Productivity, Production Efficiency, Manufacturing KPI, Downtime Analysis, Industrial Engineering Tools">
+    <meta name="author" content="Industrial Engineering Calculators">
+    
 
-
-
-    </script>
     <!--FAVICON-->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
-  
+   
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-3BSHG1DE6V');
     </script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5607576434988374"
-     crossorigin="anonymous"></script>
+    <meta name='impact-site-verification' value='694e6735-2c94-4ab8-a7f7-78ac9bce77a1'>
     <meta charset="UTF-8">
     <meta name="google-adsense-account" content="ca-pub-5607576434988374">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Newsvendor Model Calculator - Determine optimal order quantity for perishable goods with probabilistic demand">
-    <title>Newsvendor Model Calculator | Industrial Engineering Calculators</title>
 
- 
-    
-
-    
      <!-- Clarity tracking code for https://iecalculators.online/ -->
     <script type="text/javascript">
         (function(c,l,a,r,i,t,y){
@@ -42,7 +36,6 @@
     </script>
 
     <style>
-        /* Consistent with existing style */
         :root {
             --primary-color: #2c3e50;
             --secondary-color: #3498db;
@@ -51,6 +44,9 @@
             --dark-color: #2c3e50;
             --text-color: #333;
             --text-light: #7f8c8d;
+            
+            /* Subject area colors */
+            --production-color: #3498db;
         }
         
         * {
@@ -80,7 +76,7 @@
             padding: 8px 12px;
             cursor: pointer;
             font-size: 1.2rem;
-            display: block; /* Changed from none to block */
+            display: block;
         }
         
         .sidebar {
@@ -177,39 +173,6 @@
             display: block;
         }
         
-        /* Add color coding to sidebar categories */
-        .sidebar-category-header.production {
-            color: var(--production-color);
-        }
-        .sidebar-category-header.quality {
-            color: var(--quality-color);
-        }
-        .sidebar-category-header.statistics {
-            color: var(--statistics-color);
-        }
-        .sidebar-category-header.inventory {
-            color: var(--inventory-color);
-        }
-        .sidebar-category-header.workstudy {
-            color: var(--workstudy-color);
-        }
-        .sidebar-category-header.ergonomics {
-            color: var(--ergonomics-color);
-        }
-        .sidebar-category-header.operations {
-            color: var(--operations-color);
-        }
-        .sidebar-category-header.economy {
-            color: var(--economy-color);
-        }
-        .sidebar-category-header.facilities {
-            color: var(--facilities-color);
-        }
-        .sidebar-category-header.reliability {
-            color: var(--reliability-color);
-        }
-        /* xxxx navigation end xxxxx */
-        
         header {
             background-color: var(--primary-color);
             color: white;
@@ -224,6 +187,7 @@
             width: 90%;
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 15px;
         }
         
         .header-content {
@@ -374,15 +338,17 @@
             display: flex;
             justify-content: space-between;
             margin: 1.5rem 0;
+            flex-wrap: wrap;
         }
         
         .metric-card {
             flex: 1;
+            min-width: 200px;
             padding: 1rem;
             background-color: white;
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            margin: 0 0.5rem;
+            margin: 0.5rem;
             text-align: center;
         }
         
@@ -396,78 +362,79 @@
             font-weight: bold;
         }
         
-        .metric-card.cost .metric-value {
-            color: #e74c3c;
-        }
-        
-        .metric-card.price .metric-value {
-            color: #2ecc71;
-        }
-        
-        .metric-card.ratio .metric-value {
+        .metric-card.utilization .metric-value {
             color: #3498db;
         }
         
-        .examples-section {
-            margin-top: 3rem;
+        .metric-card.downtime .metric-value {
+            color: #f39c12;
         }
         
-        .example {
-            margin-bottom: 1.5rem;
-            padding: 1rem;
+        .metric-card.available .metric-value {
+            color: #2ecc71;
+        }
+        
+        .metric-card.performance .metric-value {
+            color: #e74c3c;
+        }
+        
+        .info-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
             background-color: #f8f9fa;
-            border-radius: 5px;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
         }
         
-        .example h4 {
-            margin-bottom: 0.5rem;
+        .info-section h3 {
             color: var(--primary-color);
+            margin-bottom: 1rem;
         }
         
-        table {
-            width: 100%;
-            border-collapse: collapse;
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1.5rem;
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .faq-answer {
+            display: none;
+            padding-top: 0.5rem;
+        }
+        
+        .faq-answer.show {
+            display: block;
+        }
+        
+        .related-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
             margin: 1rem 0;
         }
         
-        table, th, td {
-            border: 1px solid #ddd;
+        .tool-chip {
+            background-color: #e3f2fd;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
         }
         
-        th, td {
-            padding: 0.75rem;
-            text-align: left;
-        }
-        
-        th {
-            background-color: #f2f2f2;
-        }
-        
-        .demand-distribution {
-            width: 100%;
-            height: 300px;
-            margin: 1.5rem 0;
-            background-color: #f8f9fa;
-            border: 1px solid #ddd;
-            position: relative;
-        }
-        
-        .optimal-quantity-line {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background-color: var(--accent-color);
-        }
-        
-        .optimal-quantity-label {
-            position: absolute;
-            background-color: var(--accent-color);
-            color: white;
-            padding: 0.2rem 0.5rem;
-            border-radius: 3px;
-            font-size: 0.8rem;
-            transform: translateX(-50%);
+        .tool-chip:hover {
+            background-color: #bbdefb;
         }
         
         footer {
@@ -475,13 +442,13 @@
             color: white;
             padding: 2rem 0;
             text-align: center;
-            margin-top: 2rem;
         }
         
         .footer-links {
             display: flex;
             justify-content: center;
             margin-bottom: 1.5rem;
+            flex-wrap: wrap;
         }
         
         .footer-links a {
@@ -498,16 +465,6 @@
             color: var(--text-light);
             font-size: 0.9rem;
         }
-        /* xxxx navigation start xxxxx */
-        .sidebar-toggle {
-            display: block;
-        }
-            
-        body.sidebar-open {
-            margin-left: 0;
-            overflow: hidden;
-        }
-        /* xxxx navigation end xxxxx */
 
         .related-tools {
             display: flex;
@@ -529,7 +486,7 @@
         .tool-chip:hover {
             background-color: #bbdefb;
         }            
-
+        
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
@@ -557,243 +514,248 @@
             .metric-card {
                 margin: 0.5rem 0;
             }
+            
+            /* xxxx navigation start xxxxx */
+            .sidebar-toggle {
+                display: block;
+            }
+                
+            body.sidebar-open {
+                margin-left: 0;
+                overflow: hidden;
+            }
+            /* xxxx navigation end xxxxx */
         }
     </style>
 </head>
-<body>
-</head>
-<body>
+<body> 
     
     <header>
         <div class="container">
             <div class="header-content">
                 <div class="logo">Industrial Engineering <span>Calculators</span></div>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="terms.html">Terms</a></li>
-                    <li><a href="privacy.html">Privacy Policy</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                    <li></li>
-                </ul>
-            </nav>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms</a></li>
+                        <li></li>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </header>
-    
+
     <section class="page-hero">
         <div class="container">
-            <h1>Newsvendor Model Calculator</h1>
-            <p>Determine optimal order quantity for perishable goods with probabilistic demand</p>
+            <h1>Machine Utilization Rate Calculator</h1>
+            <p>Calculate and optimize your equipment productivity with our utilization rate calculator</p>
         </div>
     </section>
     
     <main class="container">
         <section class="content-section">
             <div class="calculator-intro">
-                <h2>Newsvendor Model</h2>
-                <p>The Newsvendor Model helps determine the optimal order quantity for perishable goods when demand is uncertain. It balances the costs of overordering (excess inventory) and underordering (lost sales).</p>
+                <h2>Machine Utilization Rate</h2>
+                <p>Machine utilization rate measures the percentage of time that equipment is actively being used for production compared to its total available time. It's a key performance indicator (KPI) for manufacturing efficiency.</p>
                 
                 <div class="formula-box">
-                    Critical Ratio = Cu / (Cu + Co)
+                    Utilization Rate = (Actual Operating Time / Total Available Time) × 100%
                 </div>
-                
-                <p>Where:</p>
-                <ul>
-                    <li><strong>Cu</strong> = Cost of underordering (profit per unit)</li>
-                    <li><strong>Co</strong> = Cost of overordering (loss per unsold unit)</li>
-                    <li><strong>Optimal Quantity</strong> = Smallest quantity where cumulative probability ≥ Critical Ratio</li>
-                </ul>
             </div>
-
-            <script async="async" data-cfasync="false" src="//pl27511448.profitableratecpm.com/5d225b5e0b22c0980e365900e2390e1d/invoke.js"></script> <!-- adterra native banner -->
-            <div id="container-5d225b5e0b22c0980e365900e2390e1d"></div>    <!-- adterra native banner -->            
             
-            <form id="newsvendor-form">
-                <h3>Cost Parameters</h3>
+            <form id="utilization-form">
                 <div class="input-row">
                     <div class="input-group">
-                        <label for="unit-cost">Unit Cost ($):</label>
-                        <input type="number" id="unit-cost" min="0" step="0.01" required>
-                    </div>
-                    
-                    <div class="input-group">
-                        <label for="selling-price">Selling Price ($):</label>
-                        <input type="number" id="selling-price" min="0" step="0.01" required>
-                    </div>
-                    
-                    <div class="input-group">
-                        <label for="salvage-value">Salvage Value ($):</label>
-                        <input type="number" id="salvage-value" min="0" step="0.01" value="0">
-                    </div>
-                </div>
-                
-                <h3>Demand Distribution</h3>
-                <div class="input-group">
-                    <label for="distribution-type">Demand Distribution:</label>
-                    <select id="distribution-type">
-                        <option value="discrete">Discrete (Manual Input)</option>
-                        <option value="normal">Normal Distribution</option>
-                        <option value="uniform">Uniform Distribution</option>
-                    </select>
-                </div>
-                
-                <!-- Discrete Distribution Inputs -->
-                <div id="discrete-inputs">
-                    <div class="input-group">
-                        <label>Enter demand values and probabilities (comma separated):</label>
-                        <textarea id="discrete-values" placeholder="Demand values (e.g., 100, 150, 200)"></textarea>
+                        <label for="available-time">Total Available Time (hours):</label>
+                        <input type="number" id="available-time" min="1" step="0.1" required>
                     </div>
                     <div class="input-group">
-                        <textarea id="discrete-probabilities" placeholder="Probabilities (e.g., 0.3, 0.5, 0.2)"></textarea>
+                        <label for="operating-time">Actual Operating Time (hours):</label>
+                        <input type="number" id="operating-time" min="0" step="0.1" required>
                     </div>
                 </div>
                 
-                <!-- Normal Distribution Inputs -->
-                <div id="normal-inputs" style="display: none;">
-                    <div class="input-row">
-                        <div class="input-group">
-                            <label for="normal-mean">Mean Demand:</label>
-                            <input type="number" id="normal-mean" min="0" step="1">
-                        </div>
-                        <div class="input-group">
-                            <label for="normal-stddev">Standard Deviation:</label>
-                            <input type="number" id="normal-stddev" min="0" step="1">
-                        </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="planned-downtime">Planned Downtime (hours, optional):</label>
+                        <input type="number" id="planned-downtime" min="0" step="0.1" value="0">
+                    </div>
+                    <div class="input-group">
+                        <label for="unplanned-downtime">Unplanned Downtime (hours, optional):</label>
+                        <input type="number" id="unplanned-downtime" min="0" step="0.1" value="0">
                     </div>
                 </div>
                 
-                <!-- Uniform Distribution Inputs -->
-                <div id="uniform-inputs" style="display: none;">
-                    <div class="input-row">
-                        <div class="input-group">
-                            <label for="uniform-min">Minimum Demand:</label>
-                            <input type="number" id="uniform-min" min="0" step="1">
-                        </div>
-                        <div class="input-group">
-                            <label for="uniform-max">Maximum Demand:</label>
-                            <input type="number" id="uniform-max" min="0" step="1">
-                        </div>
-                    </div>
-                </div>
-                
-                <button type="submit" class="calculate-btn">Calculate Optimal Order Quantity</button>
+                <button type="submit" class="calculate-btn">Calculate Utilization Rate</button>
             </form>
             
-            <div class="result-box" id="newsvendor-result">
-                <h3>Results</h3>
-                
-                <p>Optimal Order Quantity: <span class="result-value" id="optimal-quantity"></span> units</p>
-                
+            <div class="result-box" id="result-box">
+                <h3>Calculation Results</h3>
                 <div class="metric-results">
-                    <div class="metric-card cost">
-                        <h4>Cost of Underordering (Cu)</h4>
-                        <div class="metric-value" id="underorder-cost"></div>
-                        <p>Profit per unit</p>
+                    <div class="metric-card utilization">
+                        <h4>Utilization Rate</h4>
+                        <div class="metric-value" id="utilization-value">-</div>
                     </div>
-                    
-                    <div class="metric-card price">
-                        <h4>Cost of Overordering (Co)</h4>
-                        <div class="metric-value" id="overorder-cost"></div>
-                        <p>Loss per unsold unit</p>
+                    <div class="metric-card downtime">
+                        <h4>Total Downtime</h4>
+                        <div class="metric-value" id="downtime-value">-</div>
                     </div>
-                    
-                    <div class="metric-card ratio">
-                        <h4>Critical Ratio</h4>
-                        <div class="metric-value" id="critical-ratio"></div>
-                        <p>Target service level</p>
+                    <div class="metric-card available">
+                        <h4>Available Production Time</h4>
+                        <div class="metric-value" id="available-value">-</div>
                     </div>
                 </div>
                 
-                <div class="demand-distribution" id="demand-distribution">
-                    <!-- Visualization will be added here by JavaScript -->
-                </div>
-                
-                <h4>Calculation Details</h4>
-                <table id="probability-table">
-                    <thead>
-                        <tr>
-                            <th>Demand</th>
-                            <th>Probability</th>
-                            <th>Cumulative Probability</th>
-                            <th>Optimal?</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Rows will be added by JavaScript -->
-                    </tbody>
-                </table>
-            </div>
-            
-            <div class="examples-section">
-                <h3>Practical Examples</h3>
-                
-                <div class="example">
-                    <h4>Example 1: Newspaper Sales</h4>
-                    <p>Cost: $0.50 | Price: $2.00 | Salvage: $0.10</p>
-                    <p>Discrete Demand: 100(0.2), 150(0.5), 200(0.3)</p>
-                    <p>Cu: $1.50 | Co: $0.40 | Critical Ratio: 0.789</p>
-                    <p>Optimal Quantity: 200 units</p>
-                </div>
-                
-                <div class="example">
-                    <h4>Example 2: Bakery Goods</h4>
-                    <p>Cost: $1.00 | Price: $3.00 | Salvage: $0.50</p>
-                    <p>Normal Demand: μ=200, σ=30</p>
-                    <p>Cu: $2.00 | Co: $0.50 | Critical Ratio: 0.8</p>
-                    <p>Optimal Quantity: ~215 units</p>
-                </div>
-                
-                <div class="example">
-                    <h4>Example 3: Seasonal Fashion</h4>
-                    <p>Cost: $20 | Price: $50 | Salvage: $5</p>
-                    <p>Uniform Demand: 100-300 units</p>
-                    <p>Cu: $30 | Co: $15 | Critical Ratio: 0.667</p>
-                    <p>Optimal Quantity: ~233 units</p>
+                <div id="detailed-results">
+                    <!-- Detailed results will be inserted here -->
                 </div>
             </div>
+        </section>
+
+            <script async="async" data-cfasync="false" src="//pl27511448.profitableratecpm.com/5d225b5e0b22c0980e365900e2390e1d/invoke.js"></script> <!-- adterra native banner -->
+            <div id="container-5d225b5e0b22c0980e365900e2390e1d"></div>    <!-- adterra native banner -->
+
+
+        <section class="content-section">   
+            <h2>How to Use This Calculator</h2>
+            <div class="info-section">
+                <p>Our Machine Utilization Rate Calculator helps you measure how effectively your equipment is being used. Follow these steps:</p>
+                
+                <ol style="padding-left: 1.5rem;">
+                    <li><strong>Enter Total Available Time</strong>: This is the maximum possible time the machine could operate (e.g., 24 hours per day, 168 hours per week)</li>
+                    <li><strong>Enter Actual Operating Time</strong>: The time the machine was actually producing output</li>
+                    <li><strong>Optionally enter downtime</strong>: Breakdown planned maintenance, changeover times, etc.</li>
+                    <li><strong>Calculate</strong>: Click the calculate button to see your machine utilization rate and analysis</li>
+                </ol>
+                
+                <p>The calculator will provide your utilization percentage along with insights into downtime and efficiency opportunities.</p>
+            </div>
+        </section>
+
+        <section class="content-section">       
+            <h2>Understanding Machine Utilization</h2>
+            <div>
+                <p>Machine utilization is a critical metric in manufacturing and industrial operations that measures how effectively equipment resources are being used. It's calculated as the ratio of actual operating time to total available time, expressed as a percentage.</p>
+                
+                <p>High utilization rates typically indicate efficient use of equipment, but extremely high rates (consistently above 85-90%) may signal potential problems:</p>
+                
+                <ul style="padding-left: 1.5rem;">
+                    <li>Insufficient time for preventive maintenance</li>
+                    <li>Limited capacity for unexpected orders or rush jobs</li>
+                    <li>Higher risk of equipment failure due to overuse</li>
+                    <li>Reduced flexibility in production scheduling</li>
+                </ul>
+                
+                <p>Optimal utilization rates vary by industry and equipment type but generally fall between 75-85% for most manufacturing operations.</p>
+            </div>
+        </section>
             
-            <div class="calculator-intro">
-                <h3>Newsvendor Model Interpretation</h3>
-                <table>
-                    <tr>
-                        <th>Critical Ratio Range</th>
-                        <th>Interpretation</th>
-                        <th>Business Implication</th>
-                    </tr>
-                    <tr>
-                        <td>Below 0.5</td>
-                        <td>High cost of overordering</td>
-                        <td>Conservative ordering strategy</td>
-                    </tr>
-                    <tr>
-                        <td>0.5</td>
-                        <td>Equal costs</td>
-                        <td>Median demand is optimal</td>
-                    </tr>
-                    <tr>
-                        <td>Above 0.5</td>
-                        <td>High cost of underordering</td>
-                        <td>Aggressive ordering strategy</td>
-                    </tr>
-                    <tr>
-                        <td>Approaching 1.0</td>
-                        <td>Very high cost of underordering</td>
-                        <td>Order to meet nearly all possible demand</td>
-                    </tr>
-                </table>
+        <section class="content-section">
+            <h2>Improving Machine Utilization</h2> 
+            <div>
+                <p>If your utilization rate is lower than desired, consider these improvement strategies:</p>
+                
+                <div class="info-section">
+                    <h3>Reducing Planned Downtime</h3>
+                    <ul style="padding-left: 1.5rem;">
+                        <li>Optimize changeover procedures through SMED (Single-Minute Exchange of Die)</li>
+                        <li>Schedule maintenance during natural breaks in production</li>
+                        <li>Implement predictive maintenance to reduce unexpected breakdowns</li>
+                    </ul>
+                </div>
+                
+                <div class="info-section">
+                    <h3>Minimizing Unplanned Downtime</h3>
+                    <ul style="padding-left: 1.5rem;">
+                        <li>Implement Total Productive Maintenance (TPM) practices</li>
+                        <li>Train operators on proper equipment operation and basic troubleshooting</li>
+                        <li>Maintain adequate inventory of critical spare parts</li>
+                    </ul>
+                </div>
+                
+                <div class="info-section">
+                    <h3>Optimizing Production Scheduling</h3>
+                    <ul style="padding-left: 1.5rem;">
+                        <li>Balance production loads across available equipment</li>
+                        <li>Implement lean manufacturing principles to reduce waste</li>
+                        <li>Use production planning software to optimize schedules</li>
+                    </ul>
+                </div>
+            </div>
+        </section>  
+            
+        <section class="content-section">
+            <h2>Related Production Calculators</h2>
+            <p>Explore these related calculators to optimize your production operations:</p>
+ 
+            <div>               
+                <div class="related-tools">
+                    <a href="oee-calculation.html" class="tool-chip">OEE Calculator</a>
+                    <a href="takt-time.html" class="tool-chip">Takt Time Calculator</a>
+                    <a href="line-balancing.html" class="tool-chip">Line Balancing Calculator</a>
+                    <a href="synchronous-servicing.html" class="tool-chip">Synchronous Servicing</a>
+                </div>
+            </div>
+        </section>
+            
+        <section class="content-section">
+            <h2>Frequently Asked Questions</h2>
+    
+            <div>
+                <div class="faq-item">
+                    <div class="faq-question">What is a good machine utilization rate? <span>+</span></div>
+                    <div class="faq-answer">
+                        <p>An optimal machine utilization rate depends on your industry and specific equipment, but generally:</p>
+                        <ul style="padding-left: 1.5rem;">
+                            <li><strong>70-80%</strong>: Good utilization with room for unexpected orders</li>
+                            <li><strong>80-85%</strong>: Excellent utilization for most manufacturing</li>
+                            <li><strong>Above 85%</strong>: May indicate insufficient maintenance time or limited flexibility</li>
+                            <li><strong>Below 60%</strong>: Suggests significant improvement opportunities</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How is utilization rate different from OEE? <span>+</span></div>
+                    <div class="faq-answer">
+                        <p>Utilization rate and OEE (Overall Equipment Effectiveness) are related but distinct metrics:</p>
+                        <ul style="padding-left: 1.5rem;">
+                            <li><strong>Utilization Rate</strong>: Measures time equipment is running vs. available time</li>
+                            <li><strong>OEE</strong>: Combines availability (similar to utilization), performance, and quality</li>
+                            <li><strong>Key difference</strong>: Utilization doesn't account for how efficiently the machine runs or the quality of output</li>
+                        </ul>
+                        <p>High utilization with low efficiency or poor quality may indicate running equipment just to show activity rather than value creation.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Should utilization always be maximized? <span>+</span></div>
+                    <div class="faq-answer">
+                        <p>Not necessarily. While low utilization typically indicates inefficiency, maximizing utilization can sometimes be counterproductive:</p>
+                        <ul style="padding-left: 1.5rem;">
+                            <li>Extremely high utilization leaves no buffer for unexpected orders or maintenance</li>
+                            <li>Running equipment at maximum capacity may increase wear and maintenance costs</li>
+                            <li>Focusing only on utilization might lead to overproduction and excess inventory</li>
+                        </ul>
+                        <p>The goal should be optimal utilization that balances efficiency with flexibility and equipment health.</p>
+                    </div>
+                </div>
             </div>
         </section>
         <section class="content-section">
             <h2>Related Tools</h2>
             <div>               
                 <div class="related-tools">
-                    <a href="abc-analysis-calculator.html" class="tool-chip">ABC Analysis</a>
-                    <a href="inventory-turnover-calculator.html" class="tool-chip">Inventory Turnover</a>
-                    <a href="eoq-formula.html" class="tool-chip">Economic Order Quantity</a>
-                    <a href="reorder-point-calculator.html" class="tool-chip">Reorder Point</a>
-                    <a href="kanban.html" class="tool-chip">Kanban Calculator</a>
-                    <a href="safety-stock-calculator.html" class="tool-chip">Safety Stock Calculator</a>
+                    <a href="flowshopsequencing.html" class="tool-chip">Flow Shop Sequencing</a>
+                    <a href="jobshopsequencing.html" class="tool-chip">Job Shop Sequencing</a>
+                    <a href="linebalancing.html" class="tool-chip">Line Balancing</a>
+                    <a href="takttime.html" class="tool-chip">Takt Time</a>
+                    <a href="synchronousservicing.html" class="tool-chip">Synchronous Servicing</a>
+                    <a href="manpower-calculator.html" class="tool-chip">Production Capacity</a>
+                    <a href="production-capacity-calculator.html" class="tool-chip">Synchronous Servicing</a>
                 </div>
             </div>
         </section>
@@ -809,11 +771,10 @@
                 
             </div>
             <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
-            <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
+            <p class="copyright">&copy; 2025 Industrial Engineering Calculators. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- xxxx navigation start xxxxx -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const sidebar = document.querySelector('.sidebar');
@@ -863,215 +824,117 @@
                     toggleSidebar();
                 }
             });
-        });
-    </script>
-    <!-- xxxx navigation end xxxxx -->
-
-    <script>
-        // Handle distribution type change
-        document.getElementById('distribution-type').addEventListener('change', function() {
-            const type = this.value;
-            document.getElementById('discrete-inputs').style.display = 'none';
-            document.getElementById('normal-inputs').style.display = 'none';
-            document.getElementById('uniform-inputs').style.display = 'none';
             
-            document.getElementById(`${type}-inputs`).style.display = 'block';
-        });
-        
-        // Calculate Newsvendor solution
-        document.getElementById('newsvendor-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get cost parameters
-            const unitCost = parseFloat(document.getElementById('unit-cost').value);
-            const sellingPrice = parseFloat(document.getElementById('selling-price').value);
-            const salvageValue = parseFloat(document.getElementById('salvage-value').value) || 0;
-            
-            // Validate inputs
-            if (isNaN(unitCost) || isNaN(sellingPrice) || isNaN(salvageValue)) {
-                alert('Please enter valid cost parameters');
-                return;
-            }
-            if (sellingPrice <= unitCost) {
-                alert('Selling price must be greater than unit cost');
-                return;
-            }
-            if (salvageValue > unitCost) {
-                alert('Salvage value cannot exceed unit cost');
-                return;
-            }
-            
-            // Calculate costs and critical ratio
-            const Cu = sellingPrice - unitCost; // Cost of underordering (profit per unit)
-            const Co = unitCost - salvageValue; // Cost of overordering (loss per unsold unit)
-            const criticalRatio = Cu / (Cu + Co);
-            
-            // Display cost metrics
-            document.getElementById('underorder-cost').textContent = '$' + Cu.toFixed(2);
-            document.getElementById('overorder-cost').textContent = '$' + Co.toFixed(2);
-            document.getElementById('critical-ratio').textContent = (criticalRatio * 100).toFixed(1) + '%';
-            
-            // Get demand distribution
-            const distributionType = document.getElementById('distribution-type').value;
-            let demandDistribution = [];
-            
-            if (distributionType === 'discrete') {
-                // Parse discrete distribution
-                const valuesText = document.getElementById('discrete-values').value;
-                const probsText = document.getElementById('discrete-probabilities').value;
-                
-                const values = valuesText.split(',').map(v => parseFloat(v.trim()));
-                const probs = probsText.split(',').map(p => parseFloat(p.trim()));
-                
-                if (values.length !== probs.length || values.some(isNaN) || probs.some(isNaN)) {
-                    alert('Please enter valid demand values and probabilities');
-                    return;
-                }
-                
-                const totalProb = probs.reduce((sum, p) => sum + p, 0);
-                if (Math.abs(totalProb - 1) > 0.001) {
-                    alert('Probabilities must sum to 1');
-                    return;
-                }
-                
-                // Combine and sort by demand
-                for (let i = 0; i < values.length; i++) {
-                    demandDistribution.push({
-                        demand: values[i],
-                        probability: probs[i]
-                    });
-                }
-                
-                demandDistribution.sort((a, b) => a.demand - b.demand);
-            }
-            else if (distributionType === 'normal') {
-                const mean = parseFloat(document.getElementById('normal-mean').value);
-                const stddev = parseFloat(document.getElementById('normal-stddev').value);
-                
-                if (isNaN(mean) || isNaN(stddev) || stddev <= 0) {
-                    alert('Please enter valid mean and standard deviation');
-                    return;
-                }
-                
-                // Create a discrete approximation of the normal distribution
-                const min = Math.max(0, Math.round(mean - 3 * stddev));
-                const max = Math.round(mean + 3 * stddev);
-                const step = Math.max(1, Math.round((max - min) / 20));
-                
-                let totalProb = 0;
-                for (let x = min; x <= max; x += step) {
-                    // Simple approximation of normal PDF (for demo purposes)
-                    const z = (x - mean) / stddev;
-                    const prob = Math.exp(-0.5 * z * z) / (stddev * Math.sqrt(2 * Math.PI)) * step;
-                    if (prob > 0.0001) {
-                        demandDistribution.push({
-                            demand: x,
-                            probability: prob
-                        });
-                        totalProb += prob;
-                    }
-                }
-                
-                // Normalize probabilities
-                demandDistribution.forEach(item => {
-                    item.probability /= totalProb;
+            // Toggle FAQ answers
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function() {
+                    const answer = this.nextElementSibling;
+                    answer.classList.toggle('show');
+                    const icon = this.querySelector('span');
+                    icon.textContent = answer.classList.contains('show') ? '−' : '+';
                 });
-            }
-            else if (distributionType === 'uniform') {
-                const min = parseFloat(document.getElementById('uniform-min').value);
-                const max = parseFloat(document.getElementById('uniform-max').value);
+            });
+            
+            // Utilization calculator functionality
+            const utilizationForm = document.getElementById('utilization-form');
+            const resultBox = document.getElementById('result-box');
+            
+            utilizationForm.addEventListener('submit', function(e) {
+                e.preventDefault();
                 
-                if (isNaN(min) || isNaN(max) || min >= max) {
-                    alert('Please enter valid min and max values');
+                const availableTime = parseFloat(document.getElementById('available-time').value);
+                const operatingTime = parseFloat(document.getElementById('operating-time').value);
+                const plannedDowntime = parseFloat(document.getElementById('planned-downtime').value) || 0;
+                const unplannedDowntime = parseFloat(document.getElementById('unplanned-downtime').value) || 0;
+                
+                // Validate inputs
+                if (operatingTime > availableTime) {
+                    alert('Operating time cannot exceed available time');
                     return;
                 }
                 
-                // Create discrete uniform distribution
-                const step = Math.max(1, Math.round((max - min) / 20));
-                const prob = 1 / (Math.floor((max - min) / step) + 1);
+                // Calculate utilization rate
+                const utilizationRate = (operatingTime / availableTime) * 100;
                 
-                for (let x = min; x <= max; x += step) {
-                    demandDistribution.push({
-                        demand: x,
-                        probability: prob
-                    });
-                }
-            }
-            
-            // Calculate cumulative probabilities and find optimal quantity
-            let cumulativeProb = 0;
-            let optimalQuantity = 0;
-            const tableBody = document.querySelector('#probability-table tbody');
-            tableBody.innerHTML = '';
-            
-            for (let i = 0; i < demandDistribution.length; i++) {
-                const item = demandDistribution[i];
-                cumulativeProb += item.probability;
+                // Calculate downtime percentages
+                const totalDowntime = availableTime - operatingTime;
+                const plannedDowntimePercentage = (plannedDowntime / availableTime) * 100;
+                const unplannedDowntimePercentage = (unplannedDowntime / availableTime) * 100;
+                const otherDowntime = totalDowntime - plannedDowntime - unplannedDowntime;
+                const otherDowntimePercentage = (otherDowntime / availableTime) * 100;
                 
-                const isOptimal = !optimalQuantity && cumulativeProb >= criticalRatio;
-                if (isOptimal) {
-                    optimalQuantity = item.demand;
-                }
+                // Display results
+                document.getElementById('utilization-value').textContent = utilizationRate.toFixed(1) + '%';
+                document.getElementById('downtime-value').textContent = totalDowntime.toFixed(1) + ' hours';
+                document.getElementById('available-value').textContent = availableTime.toFixed(1) + ' hours';
                 
-                // Add row to table
-                const row = document.createElement('tr');
-                if (isOptimal) {
-                    row.style.backgroundColor = 'rgba(46, 204, 113, 0.1)';
-                    row.style.fontWeight = 'bold';
-                }
-                
-                row.innerHTML = `
-                    <td>${item.demand}</td>
-                    <td>${(item.probability * 100).toFixed(1)}%</td>
-                    <td>${(cumulativeProb * 100).toFixed(1)}%</td>
-                    <td>${isOptimal ? '✓' : ''}</td>
+                // Create detailed results
+                let detailedResults = `
+                    <h4>Detailed Analysis</h4>
+                    <div style="background: white; padding: 1rem; border-radius: 5px; margin-top: 1rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Utilized Time:</span>
+                            <span><strong>${operatingTime.toFixed(1)} hours (${utilizationRate.toFixed(1)}%)</strong></span>
+                        </div>
                 `;
                 
-                tableBody.appendChild(row);
-            }
-            
-            // Display results
-            document.getElementById('optimal-quantity').textContent = optimalQuantity;
-            
-            // Simple visualization
-            const distributionEl = document.getElementById('demand-distribution');
-            distributionEl.innerHTML = '';
-            
-            if (demandDistribution.length > 0) {
-                const maxDemand = demandDistribution[demandDistribution.length - 1].demand;
-                const scale = 100 / maxDemand;
+                if (plannedDowntime > 0) {
+                    detailedResults += `
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Planned Downtime:</span>
+                            <span>${plannedDowntime.toFixed(1)} hours (${plannedDowntimePercentage.toFixed(1)}%)</span>
+                        </div>
+                    `;
+                }
                 
-                // Draw bars for each demand point
-                demandDistribution.forEach(item => {
-                    const bar = document.createElement('div');
-                    bar.style.position = 'absolute';
-                    bar.style.bottom = '0';
-                    bar.style.left = `${(item.demand / maxDemand) * 100}%`;
-                    bar.style.width = `${Math.max(2, scale)}%`;
-                    bar.style.height = `${item.probability * 1000}px`;
-                    bar.style.backgroundColor = 'rgba(52, 152, 219, 0.7)';
-                    distributionEl.appendChild(bar);
-                });
+                if (unplannedDowntime > 0) {
+                    detailedResults += `
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Unplanned Downtime:</span>
+                            <span>${unplannedDowntime.toFixed(1)} hours (${unplannedDowntimePercentage.toFixed(1)}%)</span>
+                        </div>
+                    `;
+                }
                 
-                // Draw optimal quantity line
-                const line = document.createElement('div');
-                line.className = 'optimal-quantity-line';
-                line.style.left = `${(optimalQuantity / maxDemand) * 100}%`;
-                distributionEl.appendChild(line);
+                if (otherDowntime > 0) {
+                    detailedResults += `
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Other Downtime:</span>
+                            <span>${otherDowntime.toFixed(1)} hours (${otherDowntimePercentage.toFixed(1)}%)</span>
+                        </div>
+                    `;
+                }
                 
-                const label = document.createElement('div');
-                label.className = 'optimal-quantity-label';
-                label.textContent = `Optimal: ${optimalQuantity}`;
-                label.style.left = `${(optimalQuantity / maxDemand) * 100}%`;
-                label.style.top = '10px';
-                distributionEl.appendChild(label);
-            }
-            
-            // Show results
-            document.getElementById('newsvendor-result').style.display = 'block';
+                detailedResults += `
+                        <div style="display: flex; justify-content: space-between; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid #eee;">
+                            <span>Total Available Time:</span>
+                            <span><strong>${availableTime.toFixed(1)} hours (100%)</strong></span>
+                        </div>
+                    </div>
+                `;
+                
+                // Add interpretation
+                let interpretation = '<div style="margin-top: 1.5rem; padding: 1rem; background: #e8f4f8; border-radius: 5px;">';
+                interpretation += '<h4 style="margin-bottom: 0.5rem;">Interpretation</h4>';
+                
+                if (utilizationRate >= 80) {
+                    interpretation += '<p style="color: #27ae60;"><strong>High Utilization</strong>: Your equipment is being well-utilized. Ensure you have adequate time for maintenance and flexibility for unexpected demand.</p>';
+                } else if (utilizationRate >= 60) {
+                    interpretation += '<p style="color: #f39c12;"><strong>Moderate Utilization</strong>: Reasonable equipment usage. Look for opportunities to optimize schedules and reduce unnecessary downtime.</p>';
+                } else {
+                    interpretation += '<p style="color: #e74c3c;"><strong>Low Utilization</strong>: Significant opportunity for improvement. Analyze downtime reasons and consider better production planning.</p>';
+                }
+                
+                interpretation += '</div>';
+                
+                detailedResults += interpretation;
+                
+                document.getElementById('detailed-results').innerHTML = detailedResults;
+                resultBox.style.display = 'block';
+            });
         });
     </script>
-
 
     <div id="cookie-banner" style="position:fixed;bottom:0;left:0;width:100%;background:#fffbe6;border-top:1px solid #e2c96f;padding:1rem;box-shadow:0 -2px 8px rgba(0,0,0,0.07);display:none;z-index:9999;">
         <span>
@@ -1091,7 +954,6 @@
             localStorage.setItem('cookieConsent', 'accepted');
             banner.style.display = 'none';
             // Place non-essential cookie scripts here, e.g. analytics
-            // Example: load Google Analytics only if accepted
             var gaScript = document.createElement('script');
             gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V";
             gaScript.async = true;
@@ -1286,6 +1148,6 @@
                 <a href="Articles/Quality-Assurance-vs-Quality-Control-Key-Differences-Explained.html" class="sidebar-link">Quality Assurance vs Quality Control: Key Differences Explained</a>
         </div>
     </aside>
-    <!-- xxxx navigation end xxxxx -->       
+    <!-- xxxx navigation end xxxxx --> 
 </body>
 </html>

@@ -608,6 +608,27 @@
             text-indent: -1.5rem;
         }
 
+        .related-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .tool-chip {
+            background-color: #e3f2fd;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .tool-chip:hover {
+            background-color: #bbdefb;
+        }             
+
         .bibliography li:before {
             content: "•";
             color: var(--secondary-color);
@@ -685,7 +706,7 @@
                     <li><a href="terms.html">Terms</a></li>
                     <li><a href="privacy.html">Privacy Policy</a></li>
                     <li><a href="contact.html">Contact</a></li>
-                    <li><a href="sitemap.html">Sitemap</a></li>
+                    <li></li>
                 </ul>
             </nav>
         </div>
@@ -1000,23 +1021,9 @@
                     <p>They should reorder when inventory reaches 314 units.</p>
                 </div>
             </div>
-
-
         </section>
 
-        <!-- Interlinking to Related Tools -->
-        <section class="content-section">
-                <h2>Related Inventory Management Calculators</h2>
-                <p>Reorder point is just one component of comprehensive inventory management. Explore these related calculators to optimize your inventory operations:</p>
-                <div class="related-tools" style="margin-top:1.2rem;">
-                    <a href="eoq-formula.html" class="tool-chip">Economic Order Quantity (EOQ)</a>
-                    <a href="kanban.html" class="tool-chip">Kanban Calculator</a>
-                    <a href="newsvendor.html" class="tool-chip">Newsvendor Model</a>
-                    <a href="safety-stock-calculator.html" class="tool-chip">Safety Stock</a>
-              
-                </div>
-            </div>
-        </section>
+
 
         <!-- Frequently Asked Questions -->
         <section class="content-section">
@@ -1175,6 +1182,19 @@
                 </p>
             </div>
         </section>
+        <section class="content-section">
+            <h2>Related Tools</h2>
+            <div>               
+                <div class="related-tools">
+                    <a href="abc-analysis-calculator.html" class="tool-chip">ABC Analysis</a>
+                    <a href="inventory-turnover-calculator.html" class="tool-chip">Inventory Turnover</a>
+                    <a href="eoq-formula.html" class="tool-chip">Economic Order Quantity</a>
+                    <a href="kanban.html" class="tool-chip">Kanban Calculator</a>
+                    <a href="newsvendor.html" class="tool-chip">Newsvendor Model</a>
+                    <a href="safety-stock-calculator.html" class="tool-chip">Safety Stock Calculator</a>
+                </div>
+            </div>
+        </section>
     </main>
 
 
@@ -1185,8 +1205,7 @@
             <a href="about.html">About</a>
             <a href="terms.html">Terms of Service</a>
             <a href="privacy.html">Privacy Policy</a>
-            <a href="contact.html">Contact Us</a>
-            <a href="sitemap.html">Sitemap</a>
+            <a href="contact.html">Contact Us</a>           
         </div>
         <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
         <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
@@ -1480,7 +1499,6 @@
             <a href="terms.html" class="sidebar-link">Terms of Service</a>
             <a href="privacy.html" class="sidebar-link">Privacy Policy</a>
             <a href="contact.html" class="sidebar-link">Contact Us</a>
-            <a href="sitemap.html" class="sidebar-link">Sitemap</a>
         </div>
     </div>
         
@@ -1496,6 +1514,9 @@
                 <a href="linebalancing.html" class="sidebar-link">Line Balancing</a>
                 <a href="takttime.html" class="sidebar-link">Takt Time</a>
                 <a href="synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+                <a href="machine-utilization-calculator.html" class="sidebar-link">Synchronous Servicing</a>
+                <a href="manpower-calculator.html" class="sidebar-link active">Production Capacity</a>
+                <a href="production-capacity-calculator.html" class="sidebar-link">Synchronous Servicing</a>
             </div>
         </div>
         
@@ -1522,7 +1543,7 @@
                 <a href="anova.html" class="sidebar-link">ANOVA</a>
                 <a href="chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
                 <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
-                
+                <a href="coefficient-of-variation-calculator.html" class="sidebar-link">Coefficient of Variation</a>
                 <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
                 <a href="regression.html" class="sidebar-link">Regression</a>
                 <a href="samplesize.html" class="sidebar-link">Sample Size</a>
@@ -1538,6 +1559,8 @@
                 <span>+</span>
             </div>
             <div class="sidebar-category-content">
+                <a href="abc-analysis-calculator.html" class="sidebar-link">ABC Analysis</a>
+                <a href="inventory-turnover-calculator.html" class="sidebar-link">Inventory Turnover</a>
                 <a href="eoq-formula.html" class="sidebar-link">Economic Order Quantity</a>
                 <a href="reorder-point-calculator.html" class="sidebar-link">Reorder Point</a>
                 <a href="kanban.html" class="sidebar-link">Kanban Calculator</a>

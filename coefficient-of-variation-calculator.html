@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coefficient of Variation Calculator | Industrial Engineering Calculators</title>
     <meta name="description" content="Calculate the coefficient of variation (CV) to measure relative variability of your data. Free online tool for industrial engineering professionals and students.">
-    
+    <meta name="keywords" content="Coefficient of Variation Calculator, CV Calculator, Relative Variability, Statistical Analysis Tool, Industrial Engineering Calculators">
+    <meta name="author" content="Industrial Engineering Calculators">
+
     <!--FAVICON-->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -60,7 +62,7 @@
             background-color: #f5f7fa;
         }
 
-        /* Navigation styles */
+         /* xxxx navigation start xxxxx */
         .sidebar-toggle {
             position: fixed;
             top: 15px;
@@ -73,7 +75,7 @@
             padding: 8px 12px;
             cursor: pointer;
             font-size: 1.2rem;
-            display: block;
+            display: block; /* Changed from none to block */
         }
         
         .sidebar {
@@ -171,9 +173,37 @@
         }
         
         /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
         .sidebar-category-header.statistics {
             color: var(--statistics-color);
         }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */  
         
         header {
             background-color: var(--primary-color);
@@ -316,6 +346,27 @@
             color: var(--text-light);
             margin-top: 0.5rem;
         }
+
+        .related-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .tool-chip {
+            background-color: #e3f2fd;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .tool-chip:hover {
+            background-color: #bbdefb;
+        }         
         
         .calculate-btn {
             background-color: var(--secondary-color);
@@ -372,6 +423,27 @@
             color: var(--primary-color);
             margin-bottom: 0.5rem;
         }
+
+        .related-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .tool-chip {
+            background-color: #e3f2fd;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .tool-chip:hover {
+            background-color: #bbdefb;
+        }       
         
         .interpretation {
             margin-top: 1.5rem;
@@ -428,6 +500,18 @@
             color: var(--text-light);
             font-size: 0.9rem;
         }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            display: block;
+        }
+            
+        body.sidebar-open {
+            margin-left: 0;
+            overflow: hidden;
+        }
+        /* xxxx navigation end xxxxx */
+        
         
         @media (max-width: 768px) {
             .header-content {
@@ -472,7 +556,7 @@
                         <li><a href="terms.html">Terms</a></li>
                         <li><a href="privacy.html">Privacy Policy</a></li>
                         <li><a href="contact.html">Contact</a></li>
-                        <li><a href="sitemap.html">Sitemap</a></li>
+                        <li></li>
                     </ul>
                 </nav>
             </div>
@@ -569,6 +653,10 @@
                     </tr>
                 </table>
             </div>
+
+            <script async="async" data-cfasync="false" src="//pl27511448.profitableratecpm.com/5d225b5e0b22c0980e365900e2390e1d/invoke.js"></script> <!-- adterra native banner -->
+            <div id="container-5d225b5e0b22c0980e365900e2390e1d"></div>    <!-- adterra native banner -->
+
             
             <div class="calculator-intro">
                 <h3>Understanding Coefficient of Variation</h3>
@@ -609,6 +697,23 @@
                 <p class="help-text" style="margin-top: 1rem;">Note: These interpretations are general guidelines. Specific acceptable CV ranges may vary by industry and application.</p>
             </div>
         </section>
+
+        <section class="content-section">
+            <h2>Related Tools</h2>
+            <div>               
+                <div class="related-tools">
+                    <a href="anova.html" class="tool-chip">ANOVA</a>
+                    <a href="chisquaretest.html" class="tool-chip">Chi-Square Test</a>
+                    <a href="correlation.html" class="tool-chip">Correlation Analysis</a>
+                    <a href="goodnessoffit.html" class="tool-chip">Goodness of Fit</a>
+                    <a href="regression.html" class="tool-chip">Regression</a>
+                    <a href="samplesize.html" class="tool-chip">Sample Size</a>
+                    <a href="taguchi.html" class="tool-chip">Taguchi</a>
+                    <a href="ttest.html" class="tool-chip">T-Test</a>
+                    <a href="ztest.html" class="tool-chip">Z-Test</a>
+                </div>
+            </div>
+        </section>
     </main>
     
     <footer>
@@ -619,7 +724,7 @@
                 <a href="terms.html">Terms of Service</a>
                 <a href="privacy.html">Privacy Policy</a>
                 <a href="contact.html">Contact Us</a>
-                <a href="sitemap.html">Sitemap</a>
+                
             </div>
             <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
             <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
@@ -789,7 +894,7 @@
     })();
     </script>
     
-    <!-- Navigation Sidebar -->
+    <!-- xxxx navigation start xxxxx -->
     <button class="sidebar-toggle">☰</button>
     <div class="overlay"></div>
     <aside class="sidebar">
@@ -798,20 +903,51 @@
             <button class="sidebar-close">×</button>
         </div>
 
+    <div class="sidebar-category">
+        <div class="sidebar-category-header">
+            <span>Site Navigation</span>
+            <span>+</span>
+        </div>
+        
+        <div class="sidebar-category-content">
+            <a href="index.html" class="sidebar-link">Home</a>
+            <a href="about.html" class="sidebar-link">About</a>
+            <a href="terms.html" class="sidebar-link">Terms of Service</a>
+            <a href="privacy.html" class="sidebar-link">Privacy Policy</a>
+            <a href="contact.html" class="sidebar-link">Contact Us</a>
+        </div>
+    </div>
+        
+        
         <div class="sidebar-category">
-            <div class="sidebar-category-header">
-                <span>Site Navigation</span>
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
                 <span>+</span>
             </div>
-            
             <div class="sidebar-category-content">
-                <a href="index.html" class="sidebar-link">Home</a>
-                <a href="about.html" class="sidebar-link">About</a>
-                <a href="terms.html" class="sidebar-link">Terms of Service</a>
-                <a href="privacy.html" class="sidebar-link">Privacy Policy</a>
-                <a href="contact.html" class="sidebar-link">Contact Us</a>
-                <a href="sitemap.html" class="sidebar-link">Sitemap</a>
+                <a href="flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="linebalancing.html" class="sidebar-link">Line Balancing</a>
+                <a href="takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+                <a href="machine-utilization-calculator.html" class="sidebar-link">Synchronous Servicing</a>
+                <a href="manpower-calculator.html" class="sidebar-link active">Production Capacity</a>
+                <a href="production-capacity-calculator.html" class="sidebar-link">Synchronous Servicing</a>
             </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="oee-calculation.html" class="sidebar-link">OEE Calculator</a>
+                <a href="quality-function-deployment" class="sidebar-link">Quality Function Deployment</a>            </div>
         </div>
         
         <div class="sidebar-category">
@@ -823,7 +959,7 @@
                 <a href="anova.html" class="sidebar-link">ANOVA</a>
                 <a href="chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
                 <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
-                <a href="coefficient-of-variation.html" class="sidebar-link">Coefficient of Variation</a>
+                <a href="coefficient-of-variation-calculator.html" class="sidebar-link">Coefficient of Variation</a>
                 <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
                 <a href="regression.html" class="sidebar-link">Regression</a>
                 <a href="samplesize.html" class="sidebar-link">Sample Size</a>
@@ -833,7 +969,108 @@
             </div>
         </div>
         
-        <!-- Additional categories would go here following your existing structure -->
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="abc-analysis-calculator.html" class="sidebar-link">ABC Analysis</a>
+                <a href="inventory-turnover-calculator.html" class="sidebar-link">Inventory Turnover</a>
+                <a href="eoq-formula.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="reorder-point-calculator.html" class="sidebar-link">Reorder Point</a>
+                <a href="kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+                <a href="safety-stock-calculator.html" class="sidebar-link">Safety Stock Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Study</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+                <a href="failure-mode-and-effects-analysis-fmea.html" class="sidebar-link">FMEA</a>           
+            </div>
+        </div>
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Articles</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="Articles/Negative-Correlation-Understanding-Inverse-Relationships-in-Data.html" class="sidebar-link">Negative Correlation: Understanding Inverse Relationships in Data</a>
+                <a href="Articles/Parameter-vs-Statistic-Understanding-the-Key-Differences.html" class="sidebar-link">Parameter vs Statistic: Understanding the Key Differences</a>
+                <a href="Articles/Quality-Assurance-vs-Quality-Control-Key-Differences-Explained.html" class="sidebar-link">Quality Assurance vs Quality Control: Key Differences Explained</a>
+        </div>
     </aside>
+    <!-- xxxx navigation end xxxxx -->   
 </body>
 </html>

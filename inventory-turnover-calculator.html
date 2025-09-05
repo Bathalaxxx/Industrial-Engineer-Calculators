@@ -1,38 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Turnover Calculator | Industrial Engineering Calculators</title>
+    <meta name="description" content="Calculate inventory turnover ratio and days in inventory to measure inventory management efficiency.">
+    <meta name="keywords" content="inventory turnover, inventory ratio, days in inventory, inventory management, inventory efficiency">
+    <meta name="author" content="Industrial Engineering Calculators">    
+    <meta name="google-adsense-account" content="ca-pub-5607576434988374">   
 
 
-
-    </script>
-    <!--FAVICON-->
+    <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
-  
+    
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-3BSHG1DE6V');
     </script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5607576434988374"
-     crossorigin="anonymous"></script>
-    <meta charset="UTF-8">
-    <meta name="google-adsense-account" content="ca-pub-5607576434988374">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Newsvendor Model Calculator - Determine optimal order quantity for perishable goods with probabilistic demand">
-    <title>Newsvendor Model Calculator | Industrial Engineering Calculators</title>
 
- 
-    
-
-    
-     <!-- Clarity tracking code for https://iecalculators.online/ -->
+    <!-- Clarity tracking code for https://iecalculators.online/ -->
     <script type="text/javascript">
         (function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -41,6 +34,7 @@
         })(window, document, "clarity", "script", "t31aicr9ep");
     </script>
 
+    
     <style>
         /* Consistent with existing style */
         :root {
@@ -64,10 +58,9 @@
             line-height: 1.6;
             color: var(--text-color);
             background-color: #f5f7fa;
-            transition: margin-left 0.3s;
         }
-        
-        /* xxxx navigation start xxxxx */
+
+                 /* xxxx navigation start xxxxx */
         .sidebar-toggle {
             position: fixed;
             top: 15px;
@@ -208,16 +201,29 @@
         .sidebar-category-header.reliability {
             color: var(--reliability-color);
         }
-        /* xxxx navigation end xxxxx */
+        /* xxxx navigation end xxxxx */       
+
+        /* Navigation styles */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block;
+        }
         
         header {
             background-color: var(--primary-color);
             color: white;
             padding: 1rem 0;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
         }
         
         .container {
@@ -374,15 +380,17 @@
             display: flex;
             justify-content: space-between;
             margin: 1.5rem 0;
+            flex-wrap: wrap;
         }
         
         .metric-card {
             flex: 1;
+            min-width: 200px;
             padding: 1rem;
             background-color: white;
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            margin: 0 0.5rem;
+            margin: 0.5rem;
             text-align: center;
         }
         
@@ -396,32 +404,25 @@
             font-weight: bold;
         }
         
-        .metric-card.cost .metric-value {
-            color: #e74c3c;
-        }
-        
-        .metric-card.price .metric-value {
-            color: #2ecc71;
-        }
-        
-        .metric-card.ratio .metric-value {
+        .metric-card.turnover .metric-value {
             color: #3498db;
         }
         
-        .examples-section {
-            margin-top: 3rem;
+        .metric-card.days .metric-value {
+            color: #f39c12;
         }
         
-        .example {
-            margin-bottom: 1.5rem;
+        .interpretation-box {
+            background-color: #e8f4fc;
+            border-left: 4px solid #3498db;
             padding: 1rem;
-            background-color: #f8f9fa;
-            border-radius: 5px;
+            margin-top: 1.5rem;
+            border-radius: 4px;
         }
         
-        .example h4 {
-            margin-bottom: 0.5rem;
+        .interpretation-box h4 {
             color: var(--primary-color);
+            margin-bottom: 0.5rem;
         }
         
         table {
@@ -443,31 +444,63 @@
             background-color: #f2f2f2;
         }
         
-        .demand-distribution {
-            width: 100%;
-            height: 300px;
-            margin: 1.5rem 0;
+        .info-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
             background-color: #f8f9fa;
-            border: 1px solid #ddd;
-            position: relative;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
         }
         
-        .optimal-quantity-line {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background-color: var(--accent-color);
+        .info-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
         }
         
-        .optimal-quantity-label {
-            position: absolute;
-            background-color: var(--accent-color);
-            color: white;
-            padding: 0.2rem 0.5rem;
-            border-radius: 3px;
-            font-size: 0.8rem;
-            transform: translateX(-50%);
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1.5rem;
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .faq-answer {
+            display: none;
+            padding-top: 0.5rem;
+        }
+        
+        .faq-answer.show {
+            display: block;
+        }
+        
+        .related-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .tool-chip {
+            background-color: #e3f2fd;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .tool-chip:hover {
+            background-color: #bbdefb;
         }
         
         footer {
@@ -498,6 +531,7 @@
             color: var(--text-light);
             font-size: 0.9rem;
         }
+        
         /* xxxx navigation start xxxxx */
         .sidebar-toggle {
             display: block;
@@ -561,225 +595,317 @@
     </style>
 </head>
 <body>
-</head>
-<body>
-    
     <header>
         <div class="container">
             <div class="header-content">
                 <div class="logo">Industrial Engineering <span>Calculators</span></div>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="terms.html">Terms</a></li>
-                    <li><a href="privacy.html">Privacy Policy</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                    <li></li>
-                </ul>
-            </nav>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="terms.html">Terms</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li></li>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </header>
     
     <section class="page-hero">
         <div class="container">
-            <h1>Newsvendor Model Calculator</h1>
-            <p>Determine optimal order quantity for perishable goods with probabilistic demand</p>
+            <h1>Inventory Turnover Calculator</h1>
+            <p>Calculate inventory turnover ratio and days in inventory to measure inventory management efficiency</p>
         </div>
     </section>
     
     <main class="container">
         <section class="content-section">
             <div class="calculator-intro">
-                <h2>Newsvendor Model</h2>
-                <p>The Newsvendor Model helps determine the optimal order quantity for perishable goods when demand is uncertain. It balances the costs of overordering (excess inventory) and underordering (lost sales).</p>
+                <h2>Inventory Turnover Ratio</h2>
+                <p>Inventory turnover is a financial ratio that shows how many times a company has sold and replaced inventory during a given period. It measures how efficiently inventory is managed.</p>
                 
                 <div class="formula-box">
-                    Critical Ratio = Cu / (Cu + Co)
+                    Inventory Turnover = Cost of Goods Sold / Average Inventory
+                </div>
+                
+                <div class="formula-box">
+                    Days in Inventory = 365 / Inventory Turnover
                 </div>
                 
                 <p>Where:</p>
-                <ul>
-                    <li><strong>Cu</strong> = Cost of underordering (profit per unit)</li>
-                    <li><strong>Co</strong> = Cost of overordering (loss per unsold unit)</li>
-                    <li><strong>Optimal Quantity</strong> = Smallest quantity where cumulative probability ≥ Critical Ratio</li>
+                <ul style="padding-left: 1.0em;">
+                    <li><strong>Cost of Goods Sold (COGS)</strong> = The direct costs attributable to the production of goods sold</li>
+                    <li><strong>Average Inventory</strong> = (Beginning Inventory + Ending Inventory) / 2</li>
                 </ul>
             </div>
+        </section>  
 
-            <script async="async" data-cfasync="false" src="//pl27511448.profitableratecpm.com/5d225b5e0b22c0980e365900e2390e1d/invoke.js"></script> <!-- adterra native banner -->
-            <div id="container-5d225b5e0b22c0980e365900e2390e1d"></div>    <!-- adterra native banner -->            
+        <section class="content-section">   
+            <h2>Inventory Turnover Calculator</h2>
             
-            <form id="newsvendor-form">
-                <h3>Cost Parameters</h3>
+            <form id="turnover-form">
                 <div class="input-row">
                     <div class="input-group">
-                        <label for="unit-cost">Unit Cost ($):</label>
-                        <input type="number" id="unit-cost" min="0" step="0.01" required>
-                    </div>
-                    
-                    <div class="input-group">
-                        <label for="selling-price">Selling Price ($):</label>
-                        <input type="number" id="selling-price" min="0" step="0.01" required>
-                    </div>
-                    
-                    <div class="input-group">
-                        <label for="salvage-value">Salvage Value ($):</label>
-                        <input type="number" id="salvage-value" min="0" step="0.01" value="0">
-                    </div>
-                </div>
-                
-                <h3>Demand Distribution</h3>
-                <div class="input-group">
-                    <label for="distribution-type">Demand Distribution:</label>
-                    <select id="distribution-type">
-                        <option value="discrete">Discrete (Manual Input)</option>
-                        <option value="normal">Normal Distribution</option>
-                        <option value="uniform">Uniform Distribution</option>
-                    </select>
-                </div>
-                
-                <!-- Discrete Distribution Inputs -->
-                <div id="discrete-inputs">
-                    <div class="input-group">
-                        <label>Enter demand values and probabilities (comma separated):</label>
-                        <textarea id="discrete-values" placeholder="Demand values (e.g., 100, 150, 200)"></textarea>
+                        <label for="cogs">Cost of Goods Sold (COGS):</label>
+                        <input type="number" id="cogs" min="0" step="0.01" required>
                     </div>
                     <div class="input-group">
-                        <textarea id="discrete-probabilities" placeholder="Probabilities (e.g., 0.3, 0.5, 0.2)"></textarea>
+                        <label for="period">Accounting Period (Days):</label>
+                        <input type="number" id="period" min="1" value="365" required>
                     </div>
                 </div>
                 
-                <!-- Normal Distribution Inputs -->
-                <div id="normal-inputs" style="display: none;">
-                    <div class="input-row">
-                        <div class="input-group">
-                            <label for="normal-mean">Mean Demand:</label>
-                            <input type="number" id="normal-mean" min="0" step="1">
-                        </div>
-                        <div class="input-group">
-                            <label for="normal-stddev">Standard Deviation:</label>
-                            <input type="number" id="normal-stddev" min="0" step="1">
-                        </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="beginning-inventory">Beginning Inventory:</label>
+                        <input type="number" id="beginning-inventory" min="0" step="0.01" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="ending-inventory">Ending Inventory:</label>
+                        <input type="number" id="ending-inventory" min="0" step="0.01" required>
                     </div>
                 </div>
                 
-                <!-- Uniform Distribution Inputs -->
-                <div id="uniform-inputs" style="display: none;">
-                    <div class="input-row">
-                        <div class="input-group">
-                            <label for="uniform-min">Minimum Demand:</label>
-                            <input type="number" id="uniform-min" min="0" step="1">
-                        </div>
-                        <div class="input-group">
-                            <label for="uniform-max">Maximum Demand:</label>
-                            <input type="number" id="uniform-max" min="0" step="1">
-                        </div>
-                    </div>
-                </div>
-                
-                <button type="submit" class="calculate-btn">Calculate Optimal Order Quantity</button>
+                <button type="submit" class="calculate-btn">Calculate Inventory Turnover</button>
             </form>
             
-            <div class="result-box" id="newsvendor-result">
-                <h3>Results</h3>
-                
-                <p>Optimal Order Quantity: <span class="result-value" id="optimal-quantity"></span> units</p>
-                
+            <div class="result-box" id="result-box">
+                <h3>Calculation Results</h3>
                 <div class="metric-results">
-                    <div class="metric-card cost">
-                        <h4>Cost of Underordering (Cu)</h4>
-                        <div class="metric-value" id="underorder-cost"></div>
-                        <p>Profit per unit</p>
+                    <div class="metric-card turnover">
+                        <h4>Inventory Turnover Ratio</h4>
+                        <div class="metric-value" id="turnover-value">-</div>
                     </div>
-                    
-                    <div class="metric-card price">
-                        <h4>Cost of Overordering (Co)</h4>
-                        <div class="metric-value" id="overorder-cost"></div>
-                        <p>Loss per unsold unit</p>
-                    </div>
-                    
-                    <div class="metric-card ratio">
-                        <h4>Critical Ratio</h4>
-                        <div class="metric-value" id="critical-ratio"></div>
-                        <p>Target service level</p>
+                    <div class="metric-card days">
+                        <h4>Days in Inventory</h4>
+                        <div class="metric-value" id="days-value">-</div>
                     </div>
                 </div>
                 
-                <div class="demand-distribution" id="demand-distribution">
-                    <!-- Visualization will be added here by JavaScript -->
+                <div class="interpretation-box" id="interpretation">
+                    <!-- Interpretation will be inserted here -->
                 </div>
                 
-                <h4>Calculation Details</h4>
-                <table id="probability-table">
-                    <thead>
-                        <tr>
-                            <th>Demand</th>
-                            <th>Probability</th>
-                            <th>Cumulative Probability</th>
-                            <th>Optimal?</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Rows will be added by JavaScript -->
-                    </tbody>
-                </table>
-            </div>
-            
-            <div class="examples-section">
-                <h3>Practical Examples</h3>
-                
-                <div class="example">
-                    <h4>Example 1: Newspaper Sales</h4>
-                    <p>Cost: $0.50 | Price: $2.00 | Salvage: $0.10</p>
-                    <p>Discrete Demand: 100(0.2), 150(0.5), 200(0.3)</p>
-                    <p>Cu: $1.50 | Co: $0.40 | Critical Ratio: 0.789</p>
-                    <p>Optimal Quantity: 200 units</p>
-                </div>
-                
-                <div class="example">
-                    <h4>Example 2: Bakery Goods</h4>
-                    <p>Cost: $1.00 | Price: $3.00 | Salvage: $0.50</p>
-                    <p>Normal Demand: μ=200, σ=30</p>
-                    <p>Cu: $2.00 | Co: $0.50 | Critical Ratio: 0.8</p>
-                    <p>Optimal Quantity: ~215 units</p>
-                </div>
-                
-                <div class="example">
-                    <h4>Example 3: Seasonal Fashion</h4>
-                    <p>Cost: $20 | Price: $50 | Salvage: $5</p>
-                    <p>Uniform Demand: 100-300 units</p>
-                    <p>Cu: $30 | Co: $15 | Critical Ratio: 0.667</p>
-                    <p>Optimal Quantity: ~233 units</p>
+                <div id="detailed-results">
+                    <!-- Detailed results will be inserted here -->
                 </div>
             </div>
+        </section>
+
+            <script async="async" data-cfasync="false" src="//pl27511448.profitableratecpm.com/5d225b5e0b22c0980e365900e2390e1d/invoke.js"></script> <!-- adterra native banner -->
+            <div id="container-5d225b5e0b22c0980e365900e2390e1d"></div>    <!-- adterra native banner -->
+
+
+        <!-- How to Use the Inventory Turnover Calculator -->
+        <section class="content-section">   
+            <h2>How to Use This Inventory Turnover Calculator</h2>
+            <div class="info-section">
+                <p>Our <strong>inventory turnover calculator</strong> helps you measure how efficiently your inventory is being managed. Follow these steps:</p>
+                
+                <ol style="padding-left: 1.0em;">
+                    <li><strong>Enter Cost of Goods Sold</strong>: Input your total cost of goods sold for the accounting period</li>
+                    <li><strong>Set Accounting Period</strong>: Specify the number of days in your accounting period (typically 365 for a year)</li>
+                    <li><strong>Enter Inventory Values</strong>: Provide your beginning and ending inventory values for the period</li>
+                    <li><strong>Calculate</strong>: Click the calculate button to see your inventory turnover ratio and days in inventory</li>
+                </ol>
+                
+                <p>The calculator will provide your inventory turnover ratio, days in inventory, and an interpretation of what these values mean for your business.</p>
+            </div>
+        </section>
+
+        <!-- What is Inventory Turnover Section -->
+        <section class="content-section">       
+            <h2>What is Inventory Turnover? Understanding Inventory Efficiency</h2>
+
+            <div>
+                <p><strong>Inventory turnover</strong> is a key performance indicator (KPI) that measures how many times a company's inventory is sold and replaced over a specific period. A higher turnover ratio generally indicates better inventory management and stronger sales, while a lower ratio may suggest overstocking, obsolescence, or weak sales.</p>
+                
+                <p>The <strong>inventory turnover ratio</strong> is important because:</p>
+                
+                <ol style="padding-left: 1.0em;">
+                    <li>It indicates how efficiently inventory is being managed</li>
+                    <li>It helps identify slow-moving or obsolete inventory</li>
+                    <li>It impacts cash flow - higher turnover means faster conversion of inventory into cash</li>
+                    <li>It influences storage costs and risk of inventory obsolescence</li>
+                    <li>It provides insights into sales performance and demand forecasting accuracy</li>
+                </ol>
+                
+                <p>Industry benchmarks vary significantly, so it's important to compare your ratio to industry averages and your own historical performance.</p>
+            </div>
+        </section>
             
-            <div class="calculator-intro">
-                <h3>Newsvendor Model Interpretation</h3>
+        <!-- Inventory Turnover Formula with Example Section -->
+        <section class="content-section">
+            <h2>Inventory Turnover Formula with Example</h2> 
+            <div>
+                <p>Let's examine the <strong>inventory turnover formula</strong> with a practical example:</p>
+                
+                <div class="formula-box">
+                    Inventory Turnover = Cost of Goods Sold / Average Inventory
+                </div>
+                
+                <div class="formula-box">
+                    Average Inventory = (Beginning Inventory + Ending Inventory) / 2
+                </div>
+                
+                <p><strong>Example:</strong> A company has the following financial data:</p>
+                <ul style="padding-left: 1.0em;">
+                    <li>Cost of Goods Sold: $500,000</li>
+                    <li>Beginning Inventory: $75,000</li>
+                    <li>Ending Inventory: $85,000</li>
+                    <li>Accounting Period: 365 days</li>
+                </ul>
+                
+                <p>Using the <strong>inventory turnover formula</strong>:</p>
+                <div class="formula-box">
+                    Average Inventory = ($75,000 + $85,000) / 2 = $80,000
+                </div>
+                
+                <div class="formula-box">
+                    Inventory Turnover = $500,000 / $80,000 = 6.25 times per year
+                </div>
+                
+                <div class="formula-box">
+                    Days in Inventory = 365 / 6.25 = 58.4 days
+                </div>
+                
+                <p>Therefore, the company turns over its inventory 6.25 times per year, and it takes approximately 58.4 days to sell through the average inventory.</p>
+            </div>
+        </section>  
+            
+        <!-- Related Tools Section -->
+        <section class="content-section">
+            <h2>Related Inventory Management Tools</h2>
+            <p>Explore these related calculators to optimize your inventory management:</p>
+ 
+            <div>               
+                <div class="related-tools">
+                    <a href="eoq-formula.html" class="tool-chip">Economic Order Quantity</a>
+                    <a href="reorder-point-calculator.html" class="tool-chip">Reorder Point Calculator</a>
+                    <a href="safety-stock-calculator.html" class="tool-chip">Safety Stock Calculator</a>
+                    <a href="kanban.html" class="tool-chip">Kanban Calculator</a>
+                </div>
+            </div>
+        </section>
+            
+        <!-- FAQs Section -->
+        <section class="content-section">
+            <h2>Frequently Asked Questions about Inventory Turnover</h2>
+    
+            <div>
+                <div class="faq-item">
+                    <div class="faq-question">What is a good inventory turnover ratio? <span>+</span></div>
+                    <div class="faq-answer">
+                        <p>The ideal inventory turnover ratio varies by industry:</p>
+                        <ul style="padding-left: 1.0em;">
+                            <li><strong>Retail grocery</strong>: 10-15 times per year</li>
+                            <li><strong>Automobile parts</strong>: 6-8 times per year</li>
+                            <li><strong>Furniture</strong>: 3-4 times per year</li>
+                            <li><strong>Luxury goods</strong>: 1-2 times per year</li>
+                        </ul>
+                        <p>A "good" ratio is one that is better than your industry average and shows improvement over time. Very high turnover might indicate stockouts, while very low turnover suggests overstocking.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How can I improve my inventory turnover ratio? <span>+</span></div>
+                    <div class="faq-answer">
+                        <p>Strategies to improve inventory turnover include:</p>
+                        <ol style="padding-left: 1.0em;">
+                            <li>Implement better demand forecasting</li>
+                            <li>Use inventory management software</li>
+                            <li>Establish optimal reorder points and quantities</li>
+                            <li>Run promotions on slow-moving items</li>
+                            <li>Improve supplier relationships for faster restocking</li>
+                            <li>Regularly review and adjust product assortment</li>
+                            <li>Implement just-in-time (JIT) inventory practices</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">What's the difference between inventory turnover and days in inventory? <span>+</span></div>
+                    <div class="faq-answer">
+                        <p>While related, these metrics provide different perspectives:</p>
+                        <ul style="padding-left: 1.0em;">
+                            <li><strong>Inventory Turnover Ratio</strong>: Measures how many times inventory is sold and replaced during a period</li>
+                            <li><strong>Days in Inventory</strong>: Measures the average number of days items remain in inventory before being sold</li>
+                        </ul>
+                        <p>They are mathematically related (Days in Inventory = 365 / Inventory Turnover), but days in inventory is often easier to interpret for operational planning.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Should I use cost of goods sold or sales in the formula? <span>+</span></div>
+                    <div class="faq-answer">
+                        <p>The standard formula uses <strong>Cost of Goods Sold (COGS)</strong> rather than sales because:</p>
+                        <ol style="padding-left: 1.0em;">
+                            <li>Inventory is valued at cost, not selling price</li>
+                            <li>Using sales would inflate the ratio and make comparisons difficult</li>
+                            <li>COGS provides a more accurate measure of inventory movement</li>
+                        </ol>
+                        <p>Some retailers use sales in the numerator, but this is non-standard and makes cross-company comparisons problematic.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How often should I calculate inventory turnover? <span>+</span></div>
+                    <div class="faq-answer">
+                        <p>Inventory turnover should be calculated:</p>
+                        <ol style="padding-left: 1.0em;">
+                            <li><strong>Monthly</strong>: For regular monitoring and quick adjustments</li>
+                            <li><strong>Quarterly</strong>: For formal reporting and trend analysis</li>
+                            <li><strong>Annually</strong>: For year-over-year comparisons and strategic planning</li>
+                        </ol>
+                        <p>Many businesses calculate it monthly to identify trends and make timely inventory decisions. Seasonal businesses should compare the same periods year-over-year rather than consecutive months.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+            
+        <!-- Definitions Section -->
+        <section class="content-section">
+            <h2>Key Inventory Turnover Terminology</h2>
+
+            <div>                
                 <table>
                     <tr>
-                        <th>Critical Ratio Range</th>
-                        <th>Interpretation</th>
-                        <th>Business Implication</th>
+                        <th>Term</th>
+                        <th>Definition</th>
                     </tr>
                     <tr>
-                        <td>Below 0.5</td>
-                        <td>High cost of overordering</td>
-                        <td>Conservative ordering strategy</td>
+                        <td>Inventory Turnover Ratio</td>
+                        <td>Measures how many times inventory is sold and replaced during a period</td>
                     </tr>
                     <tr>
-                        <td>0.5</td>
-                        <td>Equal costs</td>
-                        <td>Median demand is optimal</td>
+                        <td>Days in Inventory</td>
+                        <td>The average number of days items remain in inventory before being sold</td>
                     </tr>
                     <tr>
-                        <td>Above 0.5</td>
-                        <td>High cost of underordering</td>
-                        <td>Aggressive ordering strategy</td>
+                        <td>Cost of Goods Sold (COGS)</td>
+                        <td>The direct costs attributable to the production of goods sold</td>
                     </tr>
                     <tr>
-                        <td>Approaching 1.0</td>
-                        <td>Very high cost of underordering</td>
-                        <td>Order to meet nearly all possible demand</td>
+                        <td>Average Inventory</td>
+                        <td>The average value of inventory during a period, typically (Beginning + Ending)/2</td>
+                    </tr>
+                    <tr>
+                        <td>Beginning Inventory</td>
+                        <td>The value of inventory at the start of the accounting period</td>
+                    </tr>
+                    <tr>
+                        <td>Ending Inventory</td>
+                        <td>The value of inventory at the end of the accounting period</td>
+                    </tr>
+                    <tr>
+                        <td>Stockout</td>
+                        <td>When inventory is unavailable to meet customer demand</td>
+                    </tr>
+                    <tr>
+                        <td>Obsolescence</td>
+                        <td>When inventory becomes outdated or unsellable</td>
                     </tr>
                 </table>
             </div>
@@ -789,10 +915,10 @@
             <div>               
                 <div class="related-tools">
                     <a href="abc-analysis-calculator.html" class="tool-chip">ABC Analysis</a>
-                    <a href="inventory-turnover-calculator.html" class="tool-chip">Inventory Turnover</a>
                     <a href="eoq-formula.html" class="tool-chip">Economic Order Quantity</a>
                     <a href="reorder-point-calculator.html" class="tool-chip">Reorder Point</a>
                     <a href="kanban.html" class="tool-chip">Kanban Calculator</a>
+                    <a href="newsvendor.html" class="tool-chip">Newsvendor Model</a>
                     <a href="safety-stock-calculator.html" class="tool-chip">Safety Stock Calculator</a>
                 </div>
             </div>
@@ -809,7 +935,7 @@
                 
             </div>
             <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
-            <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
+            <p class="copyright">&copy; 2025 Industrial Engineering Calculators. All rights reserved.</p>
         </div>
     </footer>
 
@@ -868,247 +994,99 @@
     <!-- xxxx navigation end xxxxx -->
 
     <script>
-        // Handle distribution type change
-        document.getElementById('distribution-type').addEventListener('change', function() {
-            const type = this.value;
-            document.getElementById('discrete-inputs').style.display = 'none';
-            document.getElementById('normal-inputs').style.display = 'none';
-            document.getElementById('uniform-inputs').style.display = 'none';
+        document.addEventListener('DOMContentLoaded', function() {
+            const turnoverForm = document.getElementById('turnover-form');
+            const resultBox = document.getElementById('result-box');
+            const turnoverValue = document.getElementById('turnover-value');
+            const daysValue = document.getElementById('days-value');
+            const interpretation = document.getElementById('interpretation');
+            const detailedResults = document.getElementById('detailed-results');
             
-            document.getElementById(`${type}-inputs`).style.display = 'block';
-        });
-        
-        // Calculate Newsvendor solution
-        document.getElementById('newsvendor-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get cost parameters
-            const unitCost = parseFloat(document.getElementById('unit-cost').value);
-            const sellingPrice = parseFloat(document.getElementById('selling-price').value);
-            const salvageValue = parseFloat(document.getElementById('salvage-value').value) || 0;
-            
-            // Validate inputs
-            if (isNaN(unitCost) || isNaN(sellingPrice) || isNaN(salvageValue)) {
-                alert('Please enter valid cost parameters');
-                return;
-            }
-            if (sellingPrice <= unitCost) {
-                alert('Selling price must be greater than unit cost');
-                return;
-            }
-            if (salvageValue > unitCost) {
-                alert('Salvage value cannot exceed unit cost');
-                return;
-            }
-            
-            // Calculate costs and critical ratio
-            const Cu = sellingPrice - unitCost; // Cost of underordering (profit per unit)
-            const Co = unitCost - salvageValue; // Cost of overordering (loss per unsold unit)
-            const criticalRatio = Cu / (Cu + Co);
-            
-            // Display cost metrics
-            document.getElementById('underorder-cost').textContent = '$' + Cu.toFixed(2);
-            document.getElementById('overorder-cost').textContent = '$' + Co.toFixed(2);
-            document.getElementById('critical-ratio').textContent = (criticalRatio * 100).toFixed(1) + '%';
-            
-            // Get demand distribution
-            const distributionType = document.getElementById('distribution-type').value;
-            let demandDistribution = [];
-            
-            if (distributionType === 'discrete') {
-                // Parse discrete distribution
-                const valuesText = document.getElementById('discrete-values').value;
-                const probsText = document.getElementById('discrete-probabilities').value;
+            // Form submission handler
+            turnoverForm.addEventListener('submit', function(e) {
+                e.preventDefault();
                 
-                const values = valuesText.split(',').map(v => parseFloat(v.trim()));
-                const probs = probsText.split(',').map(p => parseFloat(p.trim()));
+                // Get input values
+                const cogs = parseFloat(document.getElementById('cogs').value);
+                const period = parseFloat(document.getElementById('period').value);
+                const beginningInventory = parseFloat(document.getElementById('beginning-inventory').value);
+                const endingInventory = parseFloat(document.getElementById('ending-inventory').value);
                 
-                if (values.length !== probs.length || values.some(isNaN) || probs.some(isNaN)) {
-                    alert('Please enter valid demand values and probabilities');
+                // Validate inputs
+                if (cogs <= 0 || period <= 0 || beginningInventory < 0 || endingInventory < 0) {
+                    alert('Please enter valid values. All values must be positive numbers.');
                     return;
                 }
                 
-                const totalProb = probs.reduce((sum, p) => sum + p, 0);
-                if (Math.abs(totalProb - 1) > 0.001) {
-                    alert('Probabilities must sum to 1');
-                    return;
+                // Calculate average inventory
+                const averageInventory = (beginningInventory + endingInventory) / 2;
+                
+                // Calculate inventory turnover
+                const inventoryTurnover = cogs / averageInventory;
+                
+                // Calculate days in inventory
+                const daysInInventory = period / inventoryTurnover;
+                
+                // Display results
+                turnoverValue.textContent = inventoryTurnover.toFixed(2);
+                daysValue.textContent = daysInInventory.toFixed(1);
+                
+                // Provide interpretation
+                let interpretationText = '<h4>Interpretation</h4><p>';
+                
+                if (inventoryTurnover > 10) {
+                    interpretationText += 'Your inventory turnover ratio is <strong>high</strong>, indicating efficient inventory management. You\'re selling through inventory quickly, which reduces holding costs and obsolescence risk. However, ensure you\'re not experiencing stockouts that could lead to lost sales.';
+                } else if (inventoryTurnover >= 4) {
+                    interpretationText += 'Your inventory turnover ratio is <strong>moderate</strong>, indicating reasonably efficient inventory management. This is a healthy range for many businesses, balancing inventory availability with carrying costs.';
+                } else {
+                    interpretationText += 'Your inventory turnover ratio is <strong>low</strong>, suggesting possible overstocking or slow-moving inventory. This ties up capital and increases storage costs. Consider reviewing your purchasing practices and promoting slow-moving items.';
                 }
                 
-                // Combine and sort by demand
-                for (let i = 0; i < values.length; i++) {
-                    demandDistribution.push({
-                        demand: values[i],
-                        probability: probs[i]
-                    });
-                }
+                interpretationText += ` You turn over your inventory approximately <strong>${inventoryTurnover.toFixed(2)} times</strong> per ${period} days, meaning items spend an average of <strong>${daysInInventory.toFixed(1)} days</strong> in inventory before being sold.</p>`;
                 
-                demandDistribution.sort((a, b) => a.demand - b.demand);
-            }
-            else if (distributionType === 'normal') {
-                const mean = parseFloat(document.getElementById('normal-mean').value);
-                const stddev = parseFloat(document.getElementById('normal-stddev').value);
+                interpretation.innerHTML = interpretationText;
                 
-                if (isNaN(mean) || isNaN(stddev) || stddev <= 0) {
-                    alert('Please enter valid mean and standard deviation');
-                    return;
-                }
-                
-                // Create a discrete approximation of the normal distribution
-                const min = Math.max(0, Math.round(mean - 3 * stddev));
-                const max = Math.round(mean + 3 * stddev);
-                const step = Math.max(1, Math.round((max - min) / 20));
-                
-                let totalProb = 0;
-                for (let x = min; x <= max; x += step) {
-                    // Simple approximation of normal PDF (for demo purposes)
-                    const z = (x - mean) / stddev;
-                    const prob = Math.exp(-0.5 * z * z) / (stddev * Math.sqrt(2 * Math.PI)) * step;
-                    if (prob > 0.0001) {
-                        demandDistribution.push({
-                            demand: x,
-                            probability: prob
-                        });
-                        totalProb += prob;
-                    }
-                }
-                
-                // Normalize probabilities
-                demandDistribution.forEach(item => {
-                    item.probability /= totalProb;
-                });
-            }
-            else if (distributionType === 'uniform') {
-                const min = parseFloat(document.getElementById('uniform-min').value);
-                const max = parseFloat(document.getElementById('uniform-max').value);
-                
-                if (isNaN(min) || isNaN(max) || min >= max) {
-                    alert('Please enter valid min and max values');
-                    return;
-                }
-                
-                // Create discrete uniform distribution
-                const step = Math.max(1, Math.round((max - min) / 20));
-                const prob = 1 / (Math.floor((max - min) / step) + 1);
-                
-                for (let x = min; x <= max; x += step) {
-                    demandDistribution.push({
-                        demand: x,
-                        probability: prob
-                    });
-                }
-            }
-            
-            // Calculate cumulative probabilities and find optimal quantity
-            let cumulativeProb = 0;
-            let optimalQuantity = 0;
-            const tableBody = document.querySelector('#probability-table tbody');
-            tableBody.innerHTML = '';
-            
-            for (let i = 0; i < demandDistribution.length; i++) {
-                const item = demandDistribution[i];
-                cumulativeProb += item.probability;
-                
-                const isOptimal = !optimalQuantity && cumulativeProb >= criticalRatio;
-                if (isOptimal) {
-                    optimalQuantity = item.demand;
-                }
-                
-                // Add row to table
-                const row = document.createElement('tr');
-                if (isOptimal) {
-                    row.style.backgroundColor = 'rgba(46, 204, 113, 0.1)';
-                    row.style.fontWeight = 'bold';
-                }
-                
-                row.innerHTML = `
-                    <td>${item.demand}</td>
-                    <td>${(item.probability * 100).toFixed(1)}%</td>
-                    <td>${(cumulativeProb * 100).toFixed(1)}%</td>
-                    <td>${isOptimal ? '✓' : ''}</td>
+                // Create detailed results
+                const detailedHTML = `
+                    <h4>Detailed Calculation</h4>
+                    <table>
+                        <tr>
+                            <th>Calculation Step</th>
+                            <th>Value</th>
+                        </tr>
+                        <tr>
+                            <td>Average Inventory</td>
+                            <td>$${averageInventory.toFixed(2)} (($${beginningInventory.toFixed(2)} + $${endingInventory.toFixed(2)}) / 2)</td>
+                        </tr>
+                        <tr>
+                            <td>Inventory Turnover Ratio</td>
+                            <td>${inventoryTurnover.toFixed(2)} ($${cogs.toFixed(2)} / $${averageInventory.toFixed(2)})</td>
+                        </tr>
+                        <tr>
+                            <td>Days in Inventory</td>
+                            <td>${daysInInventory.toFixed(1)} days (${period} / ${inventoryTurnover.toFixed(2)})</td>
+                        </tr>
+                    </table>
                 `;
                 
-                tableBody.appendChild(row);
-            }
+                detailedResults.innerHTML = detailedHTML;
+                resultBox.style.display = 'block';
+            });
             
-            // Display results
-            document.getElementById('optimal-quantity').textContent = optimalQuantity;
+            // FAQ functionality
+            const faqQuestions = document.querySelectorAll('.faq-question');
             
-            // Simple visualization
-            const distributionEl = document.getElementById('demand-distribution');
-            distributionEl.innerHTML = '';
-            
-            if (demandDistribution.length > 0) {
-                const maxDemand = demandDistribution[demandDistribution.length - 1].demand;
-                const scale = 100 / maxDemand;
-                
-                // Draw bars for each demand point
-                demandDistribution.forEach(item => {
-                    const bar = document.createElement('div');
-                    bar.style.position = 'absolute';
-                    bar.style.bottom = '0';
-                    bar.style.left = `${(item.demand / maxDemand) * 100}%`;
-                    bar.style.width = `${Math.max(2, scale)}%`;
-                    bar.style.height = `${item.probability * 1000}px`;
-                    bar.style.backgroundColor = 'rgba(52, 152, 219, 0.7)';
-                    distributionEl.appendChild(bar);
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function() {
+                    const answer = this.nextElementSibling;
+                    answer.classList.toggle('show');
+                    const icon = this.querySelector('span');
+                    icon.textContent = answer.classList.contains('show') ? '−' : '+';
                 });
-                
-                // Draw optimal quantity line
-                const line = document.createElement('div');
-                line.className = 'optimal-quantity-line';
-                line.style.left = `${(optimalQuantity / maxDemand) * 100}%`;
-                distributionEl.appendChild(line);
-                
-                const label = document.createElement('div');
-                label.className = 'optimal-quantity-label';
-                label.textContent = `Optimal: ${optimalQuantity}`;
-                label.style.left = `${(optimalQuantity / maxDemand) * 100}%`;
-                label.style.top = '10px';
-                distributionEl.appendChild(label);
-            }
-            
-            // Show results
-            document.getElementById('newsvendor-result').style.display = 'block';
+            });
         });
     </script>
 
-
-    <div id="cookie-banner" style="position:fixed;bottom:0;left:0;width:100%;background:#fffbe6;border-top:1px solid #e2c96f;padding:1rem;box-shadow:0 -2px 8px rgba(0,0,0,0.07);display:none;z-index:9999;">
-        <span>
-            We use cookies to improve your experience. Non-essential cookies (analytics, personalization) require your consent. 
-            <a href="privacy.html" target="_blank">Learn more</a>
-        </span>
-        <button id="cookie-accept" style="margin-left:1rem;">Accept</button>
-        <button id="cookie-reject" style="margin-left:0.5rem;">Reject</button>
-    </div>
-    <script>
-    (function() {
-        var banner = document.getElementById('cookie-banner');
-        var accepted = localStorage.getItem('cookieConsent');
-        if (!accepted) banner.style.display = 'block';
-
-        document.getElementById('cookie-accept').onclick = function() {
-            localStorage.setItem('cookieConsent', 'accepted');
-            banner.style.display = 'none';
-            // Place non-essential cookie scripts here, e.g. analytics
-            // Example: load Google Analytics only if accepted
-            var gaScript = document.createElement('script');
-            gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V";
-            gaScript.async = true;
-            document.head.appendChild(gaScript);
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-3BSHG1DE6V');
-        };
-        document.getElementById('cookie-reject').onclick = function() {
-            localStorage.setItem('cookieConsent', 'rejected');
-            banner.style.display = 'none';
-            // Do not load non-essential cookies/scripts
-        };
-    })();
-    </script>
-    
     <!-- xxxx navigation start xxxxx -->
     <button class="sidebar-toggle">☰</button>
     <div class="overlay"></div>
@@ -1286,6 +1264,7 @@
                 <a href="Articles/Quality-Assurance-vs-Quality-Control-Key-Differences-Explained.html" class="sidebar-link">Quality Assurance vs Quality Control: Key Differences Explained</a>
         </div>
     </aside>
-    <!-- xxxx navigation end xxxxx -->       
+    <!-- xxxx navigation end xxxxx -->   
+
 </body>
 </html>

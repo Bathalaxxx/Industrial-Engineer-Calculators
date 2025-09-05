@@ -1,37 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-
-
-    </script>
+    <title>ABC Analysis Calculator - Inventory Classification Tool | Industrial Engineering Calculators</title>
+    <meta name="description" content="Free ABC Analysis calculator for inventory management. Classify your inventory into A, B, and C categories based on annual consumption value.">
+    
     <!--FAVICON-->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
-  
+   
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-3BSHG1DE6V');
     </script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5607576434988374"
-     crossorigin="anonymous"></script>
+    <meta name='impact-site-verification' value='694e6735-2c94-4ab8-a7f7-78ac9bce77a1'>
     <meta charset="UTF-8">
     <meta name="google-adsense-account" content="ca-pub-5607576434988374">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Newsvendor Model Calculator - Determine optimal order quantity for perishable goods with probabilistic demand">
-    <title>Newsvendor Model Calculator | Industrial Engineering Calculators</title>
 
- 
-    
-
-    
      <!-- Clarity tracking code for https://iecalculators.online/ -->
     <script type="text/javascript">
         (function(c,l,a,r,i,t,y){
@@ -42,7 +33,6 @@
     </script>
 
     <style>
-        /* Consistent with existing style */
         :root {
             --primary-color: #2c3e50;
             --secondary-color: #3498db;
@@ -51,6 +41,18 @@
             --dark-color: #2c3e50;
             --text-color: #333;
             --text-light: #7f8c8d;
+            
+            /* Subject area colors */
+            --production-color: #3498db;
+            --quality-color: #2ecc71;
+            --statistics-color: #9b59b6;
+            --inventory-color: #e67e22;
+            --workstudy-color: #f1c40f;
+            --ergonomics-color: #1abc9c;
+            --operations-color: #34495e;
+            --economy-color: #27ae60;
+            --facilities-color: #8e44ad;
+            --reliability-color: #e74c3c;
         }
         
         * {
@@ -67,7 +69,7 @@
             transition: margin-left 0.3s;
         }
         
-        /* xxxx navigation start xxxxx */
+         /* xxxx navigation start xxxxx */
         .sidebar-toggle {
             position: fixed;
             top: 15px;
@@ -208,7 +210,8 @@
         .sidebar-category-header.reliability {
             color: var(--reliability-color);
         }
-        /* xxxx navigation end xxxxx */
+        /* xxxx navigation end xxxxx */       
+        
         
         header {
             background-color: var(--primary-color);
@@ -224,6 +227,7 @@
             width: 90%;
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 15px;
         }
         
         .header-content {
@@ -312,7 +316,7 @@
             font-weight: 500;
         }
         
-        .input-group input, .input-group select {
+        .input-group input, .input-group select, .input-group textarea {
             width: 100%;
             padding: 0.8rem;
             border: 1px solid #ddd;
@@ -320,7 +324,7 @@
             font-size: 1rem;
         }
         
-        .input-group input:focus, .input-group select:focus {
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
             outline: none;
             border-color: var(--secondary-color);
             box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
@@ -344,6 +348,7 @@
             font-size: 1rem;
             cursor: pointer;
             transition: background-color 0.3s;
+            margin-top: 1rem;
         }
         
         .calculate-btn:hover {
@@ -364,64 +369,56 @@
             color: var(--primary-color);
         }
         
-        .result-value {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--secondary-color);
-        }
-        
-        .metric-results {
+        .abc-categories {
             display: flex;
             justify-content: space-between;
             margin: 1.5rem 0;
+            flex-wrap: wrap;
         }
         
-        .metric-card {
+        .abc-category {
             flex: 1;
+            min-width: 200px;
             padding: 1rem;
-            background-color: white;
             border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            margin: 0 0.5rem;
+            margin: 0.5rem;
             text-align: center;
         }
         
-        .metric-card h4 {
-            color: var(--primary-color);
+        .abc-category.a {
+            background-color: rgba(231, 76, 60, 0.1);
+            border: 2px solid var(--reliability-color);
+        }
+        
+        .abc-category.b {
+            background-color: rgba(243, 156, 18, 0.1);
+            border: 2px solid var(--workstudy-color);
+        }
+        
+        .abc-category.c {
+            background-color: rgba(46, 204, 113, 0.1);
+            border: 2px solid var(--quality-color);
+        }
+        
+        .abc-category h4 {
             margin-bottom: 0.5rem;
         }
         
-        .metric-card .metric-value {
-            font-size: 1.5rem;
+        .abc-category .category-value {
+            font-size: 1.2rem;
             font-weight: bold;
         }
         
-        .metric-card.cost .metric-value {
-            color: #e74c3c;
+        .abc-category.a .category-value {
+            color: var(--reliability-color);
         }
         
-        .metric-card.price .metric-value {
-            color: #2ecc71;
+        .abc-category.b .category-value {
+            color: var(--workstudy-color);
         }
         
-        .metric-card.ratio .metric-value {
-            color: #3498db;
-        }
-        
-        .examples-section {
-            margin-top: 3rem;
-        }
-        
-        .example {
-            margin-bottom: 1.5rem;
-            padding: 1rem;
-            background-color: #f8f9fa;
-            border-radius: 5px;
-        }
-        
-        .example h4 {
-            margin-bottom: 0.5rem;
-            color: var(--primary-color);
+        .abc-category.c .category-value {
+            color: var(--quality-color);
         }
         
         table {
@@ -443,72 +440,79 @@
             background-color: #f2f2f2;
         }
         
-        .demand-distribution {
-            width: 100%;
-            height: 300px;
-            margin: 1.5rem 0;
-            background-color: #f8f9fa;
-            border: 1px solid #ddd;
-            position: relative;
+        tr.a-item {
+            background-color: rgba(231, 76, 60, 0.05);
         }
         
-        .optimal-quantity-line {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background-color: var(--accent-color);
+        tr.b-item {
+            background-color: rgba(243, 156, 18, 0.05);
         }
         
-        .optimal-quantity-label {
-            position: absolute;
-            background-color: var(--accent-color);
-            color: white;
+        tr.c-item {
+            background-color: rgba(46, 204, 113, 0.05);
+        }
+        
+        .item-category {
+            display: inline-block;
             padding: 0.2rem 0.5rem;
             border-radius: 3px;
+            font-weight: bold;
             font-size: 0.8rem;
-            transform: translateX(-50%);
         }
         
-        footer {
-            background-color: var(--dark-color);
+        .item-category.a {
+            background-color: var(--reliability-color);
             color: white;
-            padding: 2rem 0;
-            text-align: center;
-            margin-top: 2rem;
         }
         
-        .footer-links {
-            display: flex;
-            justify-content: center;
+        .item-category.b {
+            background-color: var(--workstudy-color);
+            color: white;
+        }
+        
+        .item-category.c {
+            background-color: var(--quality-color);
+            color: white;
+        }
+        
+        .info-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .info-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .faq-item {
             margin-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1.5rem;
         }
         
-        .footer-links a {
-            color: white;
-            margin: 0 1rem;
-            text-decoration: none;
+        .faq-question {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
-        .footer-links a:hover {
-            text-decoration: underline;
+        .faq-answer {
+            display: none;
+            padding-top: 0.5rem;
         }
         
-        .copyright {
-            color: var(--text-light);
-            font-size: 0.9rem;
-        }
-        /* xxxx navigation start xxxxx */
-        .sidebar-toggle {
+        .faq-answer.show {
             display: block;
         }
-            
-        body.sidebar-open {
-            margin-left: 0;
-            overflow: hidden;
-        }
-        /* xxxx navigation end xxxxx */
-
+        
         .related-tools {
             display: flex;
             flex-wrap: wrap;
@@ -528,8 +532,54 @@
         
         .tool-chip:hover {
             background-color: #bbdefb;
-        }            
+        }
+        
+        .data-format-example {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-top: 0.5rem;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
 
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            display: block;
+        }
+            
+        body.sidebar-open {
+            margin-left: 0;
+            overflow: hidden;
+        }
+        /* xxxx navigation end xxxxx */
+        
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
@@ -550,249 +600,228 @@
                 gap: 0;
             }
             
-            .metric-results {
+            .abc-categories {
                 flex-direction: column;
             }
             
-            .metric-card {
+            .abc-category {
                 margin: 0.5rem 0;
-            }
+            }            
+
         }
     </style>
 </head>
-<body>
-</head>
-<body>
+<body> 
     
     <header>
         <div class="container">
             <div class="header-content">
                 <div class="logo">Industrial Engineering <span>Calculators</span></div>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="terms.html">Terms</a></li>
-                    <li><a href="privacy.html">Privacy Policy</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                    <li></li>
-                </ul>
-            </nav>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms</a></li>
+                        <li></li>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </header>
-    
+
     <section class="page-hero">
         <div class="container">
-            <h1>Newsvendor Model Calculator</h1>
-            <p>Determine optimal order quantity for perishable goods with probabilistic demand</p>
+            <h1>ABC Analysis Calculator</h1>
+            <p>Classify your inventory items into A, B, and C categories based on their value</p>
         </div>
     </section>
     
     <main class="container">
         <section class="content-section">
             <div class="calculator-intro">
-                <h2>Newsvendor Model</h2>
-                <p>The Newsvendor Model helps determine the optimal order quantity for perishable goods when demand is uncertain. It balances the costs of overordering (excess inventory) and underordering (lost sales).</p>
+                <h2>Inventory ABC Analysis</h2>
+                <p>ABC Analysis is an inventory categorization technique that divides items into three categories (A, B, and C) based on their value and importance to the business.</p>
                 
                 <div class="formula-box">
-                    Critical Ratio = Cu / (Cu + Co)
+                    ABC Analysis: Classify items based on cumulative percentage of annual consumption value
                 </div>
                 
-                <p>Where:</p>
-                <ul>
-                    <li><strong>Cu</strong> = Cost of underordering (profit per unit)</li>
-                    <li><strong>Co</strong> = Cost of overordering (loss per unsold unit)</li>
-                    <li><strong>Optimal Quantity</strong> = Smallest quantity where cumulative probability ≥ Critical Ratio</li>
+                <p>Typically, the classification follows the Pareto principle:</p>
+                <ul style="padding-left: 1.5rem;">
+                    <li><strong>A-items</strong>: 20% of items, 80% of value</li>
+                    <li><strong>B-items</strong>: 30% of items, 15% of value</li>
+                    <li><strong>C-items</strong>: 50% of items, 5% of value</li>
                 </ul>
             </div>
+        </section>
 
-            <script async="async" data-cfasync="false" src="//pl27511448.profitableratecpm.com/5d225b5e0b22c0980e365900e2390e1d/invoke.js"></script> <!-- adterra native banner -->
-            <div id="container-5d225b5e0b22c0980e365900e2390e1d"></div>    <!-- adterra native banner -->            
+        <section class="content-section">
+            <h2>ABC Analysis Calculator</h2>
             
-            <form id="newsvendor-form">
-                <h3>Cost Parameters</h3>
-                <div class="input-row">
-                    <div class="input-group">
-                        <label for="unit-cost">Unit Cost ($):</label>
-                        <input type="number" id="unit-cost" min="0" step="0.01" required>
-                    </div>
-                    
-                    <div class="input-group">
-                        <label for="selling-price">Selling Price ($):</label>
-                        <input type="number" id="selling-price" min="0" step="0.01" required>
-                    </div>
-                    
-                    <div class="input-group">
-                        <label for="salvage-value">Salvage Value ($):</label>
-                        <input type="number" id="salvage-value" min="0" step="0.01" value="0">
-                    </div>
-                </div>
-                
-                <h3>Demand Distribution</h3>
+            <div class="input-group">
+                <label for="input-method">Input Method:</label>
+                <select id="input-method">
+                    <option value="manual">Manual Entry</option>
+                    <option value="csv">CSV Import</option>
+                </select>
+            </div>
+            
+            <div id="manual-input">
                 <div class="input-group">
-                    <label for="distribution-type">Demand Distribution:</label>
-                    <select id="distribution-type">
-                        <option value="discrete">Discrete (Manual Input)</option>
-                        <option value="normal">Normal Distribution</option>
-                        <option value="uniform">Uniform Distribution</option>
-                    </select>
-                </div>
-                
-                <!-- Discrete Distribution Inputs -->
-                <div id="discrete-inputs">
-                    <div class="input-group">
-                        <label>Enter demand values and probabilities (comma separated):</label>
-                        <textarea id="discrete-values" placeholder="Demand values (e.g., 100, 150, 200)"></textarea>
+                    <label for="item-data">Enter your items (Item ID, Annual Demand, Unit Cost):</label>
+                    <textarea id="item-data" rows="10" placeholder="Item1, 1000, 50
+Item2, 2000, 10
+Item3, 5000, 5
+Item4, 800, 75
+Item5, 1500, 25"></textarea>
+                    <div class="data-format-example">
+                        Format: Item ID, Annual Demand, Unit Cost (one item per line)
                     </div>
-                    <div class="input-group">
-                        <textarea id="discrete-probabilities" placeholder="Probabilities (e.g., 0.3, 0.5, 0.2)"></textarea>
-                    </div>
-                </div>
-                
-                <!-- Normal Distribution Inputs -->
-                <div id="normal-inputs" style="display: none;">
-                    <div class="input-row">
-                        <div class="input-group">
-                            <label for="normal-mean">Mean Demand:</label>
-                            <input type="number" id="normal-mean" min="0" step="1">
-                        </div>
-                        <div class="input-group">
-                            <label for="normal-stddev">Standard Deviation:</label>
-                            <input type="number" id="normal-stddev" min="0" step="1">
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Uniform Distribution Inputs -->
-                <div id="uniform-inputs" style="display: none;">
-                    <div class="input-row">
-                        <div class="input-group">
-                            <label for="uniform-min">Minimum Demand:</label>
-                            <input type="number" id="uniform-min" min="0" step="1">
-                        </div>
-                        <div class="input-group">
-                            <label for="uniform-max">Maximum Demand:</label>
-                            <input type="number" id="uniform-max" min="0" step="1">
-                        </div>
-                    </div>
-                </div>
-                
-                <button type="submit" class="calculate-btn">Calculate Optimal Order Quantity</button>
-            </form>
-            
-            <div class="result-box" id="newsvendor-result">
-                <h3>Results</h3>
-                
-                <p>Optimal Order Quantity: <span class="result-value" id="optimal-quantity"></span> units</p>
-                
-                <div class="metric-results">
-                    <div class="metric-card cost">
-                        <h4>Cost of Underordering (Cu)</h4>
-                        <div class="metric-value" id="underorder-cost"></div>
-                        <p>Profit per unit</p>
-                    </div>
-                    
-                    <div class="metric-card price">
-                        <h4>Cost of Overordering (Co)</h4>
-                        <div class="metric-value" id="overorder-cost"></div>
-                        <p>Loss per unsold unit</p>
-                    </div>
-                    
-                    <div class="metric-card ratio">
-                        <h4>Critical Ratio</h4>
-                        <div class="metric-value" id="critical-ratio"></div>
-                        <p>Target service level</p>
-                    </div>
-                </div>
-                
-                <div class="demand-distribution" id="demand-distribution">
-                    <!-- Visualization will be added here by JavaScript -->
-                </div>
-                
-                <h4>Calculation Details</h4>
-                <table id="probability-table">
-                    <thead>
-                        <tr>
-                            <th>Demand</th>
-                            <th>Probability</th>
-                            <th>Cumulative Probability</th>
-                            <th>Optimal?</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Rows will be added by JavaScript -->
-                    </tbody>
-                </table>
-            </div>
-            
-            <div class="examples-section">
-                <h3>Practical Examples</h3>
-                
-                <div class="example">
-                    <h4>Example 1: Newspaper Sales</h4>
-                    <p>Cost: $0.50 | Price: $2.00 | Salvage: $0.10</p>
-                    <p>Discrete Demand: 100(0.2), 150(0.5), 200(0.3)</p>
-                    <p>Cu: $1.50 | Co: $0.40 | Critical Ratio: 0.789</p>
-                    <p>Optimal Quantity: 200 units</p>
-                </div>
-                
-                <div class="example">
-                    <h4>Example 2: Bakery Goods</h4>
-                    <p>Cost: $1.00 | Price: $3.00 | Salvage: $0.50</p>
-                    <p>Normal Demand: μ=200, σ=30</p>
-                    <p>Cu: $2.00 | Co: $0.50 | Critical Ratio: 0.8</p>
-                    <p>Optimal Quantity: ~215 units</p>
-                </div>
-                
-                <div class="example">
-                    <h4>Example 3: Seasonal Fashion</h4>
-                    <p>Cost: $20 | Price: $50 | Salvage: $5</p>
-                    <p>Uniform Demand: 100-300 units</p>
-                    <p>Cu: $30 | Co: $15 | Critical Ratio: 0.667</p>
-                    <p>Optimal Quantity: ~233 units</p>
                 </div>
             </div>
             
-            <div class="calculator-intro">
-                <h3>Newsvendor Model Interpretation</h3>
-                <table>
-                    <tr>
-                        <th>Critical Ratio Range</th>
-                        <th>Interpretation</th>
-                        <th>Business Implication</th>
-                    </tr>
-                    <tr>
-                        <td>Below 0.5</td>
-                        <td>High cost of overordering</td>
-                        <td>Conservative ordering strategy</td>
-                    </tr>
-                    <tr>
-                        <td>0.5</td>
-                        <td>Equal costs</td>
-                        <td>Median demand is optimal</td>
-                    </tr>
-                    <tr>
-                        <td>Above 0.5</td>
-                        <td>High cost of underordering</td>
-                        <td>Aggressive ordering strategy</td>
-                    </tr>
-                    <tr>
-                        <td>Approaching 1.0</td>
-                        <td>Very high cost of underordering</td>
-                        <td>Order to meet nearly all possible demand</td>
-                    </tr>
-                </table>
+            <div id="csv-input" style="display: none;">
+                <div class="input-group">
+                    <label for="csv-file">Upload CSV File:</label>
+                    <input type="file" id="csv-file" accept=".csv">
+                    <div class="data-format-example">
+                        CSV should have columns: Item ID, Annual Demand, Unit Cost
+                    </div>
+                </div>
+            </div>
+            
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="a-threshold">A Category Threshold (% of value):</label>
+                    <input type="number" id="a-threshold" value="80" min="1" max="100">
+                </div>
+                <div class="input-group">
+                    <label for="b-threshold">B Category Threshold (% of value):</label>
+                    <input type="number" id="b-threshold" value="95" min="1" max="100">
+                </div>
+            </div>
+            
+            <button id="calculate-btn" class="calculate-btn">Perform ABC Analysis</button>
+            
+            <div class="result-box" id="result-box">
+                <h3>ABC Analysis Results</h3>
+                
+                <div class="abc-categories">
+                    <div class="abc-category a">
+                        <h4>A Items</h4>
+                        <div class="category-value" id="a-items-value">-</div>
+                        <div id="a-items-count">-</div>
+                    </div>
+                    <div class="abc-category b">
+                        <h4>B Items</h4>
+                        <div class="category-value" id="b-items-value">-</div>
+                        <div id="b-items-count">-</div>
+                    </div>
+                    <div class="abc-category c">
+                        <h4>C Items</h4>
+                        <div class="category-value" id="c-items-value">-</div>
+                        <div id="c-items-count">-</div>
+                    </div>
+                </div>
+                
+                <div id="detailed-results">
+                    <!-- Detailed results will be inserted here -->
+                </div>
             </div>
         </section>
+
+            <script async="async" data-cfasync="false" src="//pl27511448.profitableratecpm.com/5d225b5e0b22c0980e365900e2390e1d/invoke.js"></script> <!-- adterra native banner -->
+            <div id="container-5d225b5e0b22c0980e365900e2390e1d"></div>    <!-- adterra native banner -->
+
+
+        <section class="content-section">
+            <h2>How to Use This ABC Analysis Calculator</h2>
+            <div class="info-section">
+                <p>ABC Analysis helps prioritize inventory management efforts by classifying items based on their consumption value. Follow these steps:</p>
+                
+                <ol style="padding-left: 1.5rem;">
+                    <li><strong>Enter your item data</strong>: Either manually input your items or upload a CSV file with columns for Item ID, Annual Demand, and Unit Cost</li>
+                    <li><strong>Adjust thresholds (optional)</strong>: Modify the A and B category thresholds if needed (default is A: 80%, B: 95%)</li>
+                    <li><strong>Calculate</strong>: Click the "Perform ABC Analysis" button to see your results</li>
+                    <li><strong>Review the classification</strong>: The calculator will show which items fall into A, B, and C categories</li>
+                </ol>
+                
+                <p>The results will help you determine where to focus your inventory management efforts for maximum efficiency.</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>About ABC Analysis</h2>
+            <div class="info-section">
+                <p>ABC Analysis, also known as Pareto Analysis or the 80/20 rule, is a method of categorizing inventory items based on their importance and value to the business.</p>
+                
+                <h3>Category Definitions:</h3>
+                <ul style="padding-left: 1.5rem;">
+                    <li><strong>A Items</strong>: High-value items that represent a large portion of the total inventory value but a small percentage of total items. These require tight control, accurate records, and regular review.</li>
+                    <li><strong>B Items</strong>: Moderate-value items that fall between A and C categories. These require normal controls and good records.</li>
+                    <li><strong>C Items</strong>: Low-value items that represent a small portion of the total inventory value but a large percentage of total items. These require simple controls and periodic review.</li>
+                </ul>
+                
+                <p>By classifying inventory this way, businesses can optimize their inventory management efforts, reduce costs, and improve efficiency.</p>
+            </div>
+        </section>
+            
+        <section class="content-section">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">What is ABC Analysis? <span>+</span></div>
+                <div class="faq-answer">
+                    <p>ABC Analysis is an inventory categorization technique that divides items into three categories (A, B, and C) based on their value and importance. A-items are the most valuable, C-items are the least valuable.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">How are the categories determined? <span>+</span></div>
+                <div class="faq-answer">
+                    <p>Categories are determined by calculating the annual consumption value of each item (demand × unit cost), sorting items in descending order of value, and then classifying them based on cumulative percentage of total value.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">What are typical threshold values? <span>+</span></div>
+                <div class="faq-answer">
+                    <p>The most common thresholds are:</p>
+                    <ul style="padding-left: 1.5rem;">
+                        <li>A-items: Top 80% of total value</li>
+                        <li>B-items: Next 15% of total value</li>
+                        <li>C-items: Remaining 5% of total value</li>
+                    </ul>
+                    <p>These can be adjusted based on your specific inventory characteristics.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">How should I manage different categories? <span>+</span></div>
+                <div class="faq-answer">
+                    <p>Each category requires different management approaches:</p>
+                    <ul style="padding-left: 1.5rem;">
+                        <li><strong>A-items</strong>: Tight control, frequent review, accurate records, and optimized order quantities</li>
+                        <li><strong>B-items</strong>: Normal control, regular review, and good records</li>
+                        <li><strong>C-items</strong>: Simple control, periodic review, and minimal paperwork</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+            
+
         <section class="content-section">
             <h2>Related Tools</h2>
             <div>               
-                <div class="related-tools">
+                <div class="related-tools">       
                     <a href="abc-analysis-calculator.html" class="tool-chip">ABC Analysis</a>
                     <a href="inventory-turnover-calculator.html" class="tool-chip">Inventory Turnover</a>
                     <a href="eoq-formula.html" class="tool-chip">Economic Order Quantity</a>
                     <a href="reorder-point-calculator.html" class="tool-chip">Reorder Point</a>
                     <a href="kanban.html" class="tool-chip">Kanban Calculator</a>
+                    <a href="newsvendor.html" class="tool-chip">Newsvendor Model</a>
                     <a href="safety-stock-calculator.html" class="tool-chip">Safety Stock Calculator</a>
                 </div>
             </div>
@@ -809,306 +838,213 @@
                 
             </div>
             <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
-            <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
+            <p class="copyright">&copy; 2025 Industrial Engineering Calculators. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- xxxx navigation start xxxxx -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const sidebar = document.querySelector('.sidebar');
+            // Navigation functionality
             const sidebarToggle = document.querySelector('.sidebar-toggle');
             const sidebarClose = document.querySelector('.sidebar-close');
+            const sidebar = document.querySelector('.sidebar');
             const overlay = document.querySelector('.overlay');
-            const body = document.body;
+            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
+            const faqQuestions = document.querySelectorAll('.faq-question');
             
             // Toggle sidebar
-            function toggleSidebar() {
-                sidebar.classList.toggle('open');
-                overlay.classList.toggle('active');
-                body.classList.toggle('sidebar-open');
+            sidebarToggle.addEventListener('click', function() {
+                sidebar.classList.add('open');
+                overlay.classList.add('active');
+                document.body.classList.add('sidebar-open');
+            });
+            
+            // Close sidebar
+            function closeSidebar() {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+                document.body.classList.remove('sidebar-open');
             }
             
-            // Toggle category expansion
-            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
+            sidebarClose.addEventListener('click', closeSidebar);
+            overlay.addEventListener('click', closeSidebar);
+            
+            // Toggle category content
             categoryHeaders.forEach(header => {
                 header.addEventListener('click', function() {
                     const category = this.parentElement;
                     category.classList.toggle('open');
-                    
-                    // Update the expand/collapse icon
                     const icon = this.querySelector('span:last-child');
                     icon.textContent = category.classList.contains('open') ? '−' : '+';
                 });
             });
             
-            // Event listeners
-            sidebarToggle.addEventListener('click', toggleSidebar);
-            sidebarClose.addEventListener('click', toggleSidebar);
-            overlay.addEventListener('click', toggleSidebar);
-            
-            // Close sidebar when clicking outside on mobile
-            document.addEventListener('click', function(event) {
-                if (window.innerWidth <= 768 && 
-                    body.classList.contains('sidebar-open') && 
-                    !sidebar.contains(event.target) && 
-                    event.target !== sidebarToggle) {
-                    toggleSidebar();
-                }
-            });
-            
-            // Close sidebar when pressing Escape key
-            document.addEventListener('keydown', function(event) {
-                if (event.key === 'Escape' && body.classList.contains('sidebar-open')) {
-                    toggleSidebar();
-                }
-            });
-        });
-    </script>
-    <!-- xxxx navigation end xxxxx -->
-
-    <script>
-        // Handle distribution type change
-        document.getElementById('distribution-type').addEventListener('change', function() {
-            const type = this.value;
-            document.getElementById('discrete-inputs').style.display = 'none';
-            document.getElementById('normal-inputs').style.display = 'none';
-            document.getElementById('uniform-inputs').style.display = 'none';
-            
-            document.getElementById(`${type}-inputs`).style.display = 'block';
-        });
-        
-        // Calculate Newsvendor solution
-        document.getElementById('newsvendor-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get cost parameters
-            const unitCost = parseFloat(document.getElementById('unit-cost').value);
-            const sellingPrice = parseFloat(document.getElementById('selling-price').value);
-            const salvageValue = parseFloat(document.getElementById('salvage-value').value) || 0;
-            
-            // Validate inputs
-            if (isNaN(unitCost) || isNaN(sellingPrice) || isNaN(salvageValue)) {
-                alert('Please enter valid cost parameters');
-                return;
-            }
-            if (sellingPrice <= unitCost) {
-                alert('Selling price must be greater than unit cost');
-                return;
-            }
-            if (salvageValue > unitCost) {
-                alert('Salvage value cannot exceed unit cost');
-                return;
-            }
-            
-            // Calculate costs and critical ratio
-            const Cu = sellingPrice - unitCost; // Cost of underordering (profit per unit)
-            const Co = unitCost - salvageValue; // Cost of overordering (loss per unsold unit)
-            const criticalRatio = Cu / (Cu + Co);
-            
-            // Display cost metrics
-            document.getElementById('underorder-cost').textContent = '$' + Cu.toFixed(2);
-            document.getElementById('overorder-cost').textContent = '$' + Co.toFixed(2);
-            document.getElementById('critical-ratio').textContent = (criticalRatio * 100).toFixed(1) + '%';
-            
-            // Get demand distribution
-            const distributionType = document.getElementById('distribution-type').value;
-            let demandDistribution = [];
-            
-            if (distributionType === 'discrete') {
-                // Parse discrete distribution
-                const valuesText = document.getElementById('discrete-values').value;
-                const probsText = document.getElementById('discrete-probabilities').value;
-                
-                const values = valuesText.split(',').map(v => parseFloat(v.trim()));
-                const probs = probsText.split(',').map(p => parseFloat(p.trim()));
-                
-                if (values.length !== probs.length || values.some(isNaN) || probs.some(isNaN)) {
-                    alert('Please enter valid demand values and probabilities');
-                    return;
-                }
-                
-                const totalProb = probs.reduce((sum, p) => sum + p, 0);
-                if (Math.abs(totalProb - 1) > 0.001) {
-                    alert('Probabilities must sum to 1');
-                    return;
-                }
-                
-                // Combine and sort by demand
-                for (let i = 0; i < values.length; i++) {
-                    demandDistribution.push({
-                        demand: values[i],
-                        probability: probs[i]
-                    });
-                }
-                
-                demandDistribution.sort((a, b) => a.demand - b.demand);
-            }
-            else if (distributionType === 'normal') {
-                const mean = parseFloat(document.getElementById('normal-mean').value);
-                const stddev = parseFloat(document.getElementById('normal-stddev').value);
-                
-                if (isNaN(mean) || isNaN(stddev) || stddev <= 0) {
-                    alert('Please enter valid mean and standard deviation');
-                    return;
-                }
-                
-                // Create a discrete approximation of the normal distribution
-                const min = Math.max(0, Math.round(mean - 3 * stddev));
-                const max = Math.round(mean + 3 * stddev);
-                const step = Math.max(1, Math.round((max - min) / 20));
-                
-                let totalProb = 0;
-                for (let x = min; x <= max; x += step) {
-                    // Simple approximation of normal PDF (for demo purposes)
-                    const z = (x - mean) / stddev;
-                    const prob = Math.exp(-0.5 * z * z) / (stddev * Math.sqrt(2 * Math.PI)) * step;
-                    if (prob > 0.0001) {
-                        demandDistribution.push({
-                            demand: x,
-                            probability: prob
-                        });
-                        totalProb += prob;
-                    }
-                }
-                
-                // Normalize probabilities
-                demandDistribution.forEach(item => {
-                    item.probability /= totalProb;
+            // Toggle FAQ answers
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function() {
+                    const answer = this.nextElementSibling;
+                    answer.classList.toggle('show');
+                    const icon = this.querySelector('span');
+                    icon.textContent = answer.classList.contains('show') ? '−' : '+';
                 });
-            }
-            else if (distributionType === 'uniform') {
-                const min = parseFloat(document.getElementById('uniform-min').value);
-                const max = parseFloat(document.getElementById('uniform-max').value);
+            });
+            
+            // Input method toggle
+            const inputMethod = document.getElementById('input-method');
+            const manualInput = document.getElementById('manual-input');
+            const csvInput = document.getElementById('csv-input');
+            
+            inputMethod.addEventListener('change', function() {
+                if (this.value === 'manual') {
+                    manualInput.style.display = 'block';
+                    csvInput.style.display = 'none';
+                } else {
+                    manualInput.style.display = 'none';
+                    csvInput.style.display = 'block';
+                }
+            });
+            
+            // ABC Analysis calculation
+            const calculateBtn = document.getElementById('calculate-btn');
+            const resultBox = document.getElementById('result-box');
+            
+            calculateBtn.addEventListener('click', function() {
+                let items = [];
+                const aThreshold = parseFloat(document.getElementById('a-threshold').value);
+                const bThreshold = parseFloat(document.getElementById('b-threshold').value);
                 
-                if (isNaN(min) || isNaN(max) || min >= max) {
-                    alert('Please enter valid min and max values');
+                if (inputMethod.value === 'manual') {
+                    const itemData = document.getElementById('item-data').value;
+                    if (!itemData.trim()) {
+                        alert('Please enter item data');
+                        return;
+                    }
+                    
+                    const lines = itemData.split('\n');
+                    for (let line of lines) {
+                        line = line.trim();
+                        if (!line) continue;
+                        
+                        const parts = line.split(',');
+                        if (parts.length < 3) {
+                            alert(`Invalid data format: ${line}. Please use: Item ID, Annual Demand, Unit Cost`);
+                            return;
+                        }
+                        
+                        const id = parts[0].trim();
+                        const demand = parseFloat(parts[1].trim());
+                        const cost = parseFloat(parts[2].trim());
+                        
+                        if (isNaN(demand) || isNaN(cost)) {
+                            alert(`Invalid numeric values in: ${line}`);
+                            return;
+                        }
+                        
+                        items.push({
+                            id: id,
+                            demand: demand,
+                            cost: cost,
+                            value: demand * cost
+                        });
+                    }
+                } else {
+                    // CSV file processing would go here
+                    alert('CSV import functionality would be implemented here');
                     return;
                 }
                 
-                // Create discrete uniform distribution
-                const step = Math.max(1, Math.round((max - min) / 20));
-                const prob = 1 / (Math.floor((max - min) / step) + 1);
-                
-                for (let x = min; x <= max; x += step) {
-                    demandDistribution.push({
-                        demand: x,
-                        probability: prob
-                    });
+                if (items.length === 0) {
+                    alert('No valid items to analyze');
+                    return;
                 }
-            }
+                
+                // Perform ABC analysis
+                performABCAnalysis(items, aThreshold, bThreshold);
+            });
             
-            // Calculate cumulative probabilities and find optimal quantity
-            let cumulativeProb = 0;
-            let optimalQuantity = 0;
-            const tableBody = document.querySelector('#probability-table tbody');
-            tableBody.innerHTML = '';
-            
-            for (let i = 0; i < demandDistribution.length; i++) {
-                const item = demandDistribution[i];
-                cumulativeProb += item.probability;
+            function performABCAnalysis(items, aThreshold, bThreshold) {
+                // Calculate total value
+                const totalValue = items.reduce((sum, item) => sum + item.value, 0);
                 
-                const isOptimal = !optimalQuantity && cumulativeProb >= criticalRatio;
-                if (isOptimal) {
-                    optimalQuantity = item.demand;
+                // Sort items by value (descending)
+                items.sort((a, b) => b.value - a.value);
+                
+                // Calculate cumulative percentages
+                let cumulativeValue = 0;
+                let aItems = [], bItems = [], cItems = [];
+                
+                for (let i = 0; i < items.length; i++) {
+                    cumulativeValue += items[i].value;
+                    const cumulativePercentage = (cumulativeValue / totalValue) * 100;
+                    
+                    if (cumulativePercentage <= aThreshold) {
+                        items[i].category = 'A';
+                        aItems.push(items[i]);
+                    } else if (cumulativePercentage <= bThreshold) {
+                        items[i].category = 'B';
+                        bItems.push(items[i]);
+                    } else {
+                        items[i].category = 'C';
+                        cItems.push(items[i]);
+                    }
+                    
+                    items[i].cumulativePercentage = cumulativePercentage;
+                    items[i].percentage = (items[i].value / totalValue) * 100;
                 }
                 
-                // Add row to table
-                const row = document.createElement('tr');
-                if (isOptimal) {
-                    row.style.backgroundColor = 'rgba(46, 204, 113, 0.1)';
-                    row.style.fontWeight = 'bold';
-                }
+                // Update results
+                document.getElementById('a-items-value').textContent = `${((aItems.reduce((sum, item) => sum + item.value, 0) / totalValue) * 100).toFixed(1)}% of total value`;
+                document.getElementById('a-items-count').textContent = `${aItems.length} items (${((aItems.length / items.length) * 100).toFixed(1)}% of items)`;
                 
-                row.innerHTML = `
-                    <td>${item.demand}</td>
-                    <td>${(item.probability * 100).toFixed(1)}%</td>
-                    <td>${(cumulativeProb * 100).toFixed(1)}%</td>
-                    <td>${isOptimal ? '✓' : ''}</td>
+                document.getElementById('b-items-value').textContent = `${((bItems.reduce((sum, item) => sum + item.value, 0) / totalValue) * 100).toFixed(1)}% of total value`;
+                document.getElementById('b-items-count').textContent = `${bItems.length} items (${((bItems.length / items.length) * 100).toFixed(1)}% of items)`;
+                
+                document.getElementById('c-items-value').textContent = `${((cItems.reduce((sum, item) => sum + item.value, 0) / totalValue) * 100).toFixed(1)}% of total value`;
+                document.getElementById('c-items-count').textContent = `${cItems.length} items (${((cItems.length / items.length) * 100).toFixed(1)}% of items)`;
+                
+                // Create detailed results table
+                let detailedResults = `
+                    <h4>Item Classification Details</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Item ID</th>
+                                <th>Annual Demand</th>
+                                <th>Unit Cost</th>
+                                <th>Annual Value</th>
+                                <th>% of Total</th>
+                                <th>Cumulative %</th>
+                                <th>Category</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                 `;
                 
-                tableBody.appendChild(row);
-            }
-            
-            // Display results
-            document.getElementById('optimal-quantity').textContent = optimalQuantity;
-            
-            // Simple visualization
-            const distributionEl = document.getElementById('demand-distribution');
-            distributionEl.innerHTML = '';
-            
-            if (demandDistribution.length > 0) {
-                const maxDemand = demandDistribution[demandDistribution.length - 1].demand;
-                const scale = 100 / maxDemand;
-                
-                // Draw bars for each demand point
-                demandDistribution.forEach(item => {
-                    const bar = document.createElement('div');
-                    bar.style.position = 'absolute';
-                    bar.style.bottom = '0';
-                    bar.style.left = `${(item.demand / maxDemand) * 100}%`;
-                    bar.style.width = `${Math.max(2, scale)}%`;
-                    bar.style.height = `${item.probability * 1000}px`;
-                    bar.style.backgroundColor = 'rgba(52, 152, 219, 0.7)';
-                    distributionEl.appendChild(bar);
+                items.forEach(item => {
+                    detailedResults += `
+                        <tr class="${item.category.toLowerCase()}-item">
+                            <td>${item.id}</td>
+                            <td>${item.demand}</td>
+                            <td>${item.cost.toFixed(2)}</td>
+                            <td>${item.value.toFixed(2)}</td>
+                            <td>${item.percentage.toFixed(2)}%</td>
+                            <td>${item.cumulativePercentage.toFixed(2)}%</td>
+                            <td><span class="item-category ${item.category.toLowerCase()}">${item.category}</span></td>
+                        </tr>
+                    `;
                 });
                 
-                // Draw optimal quantity line
-                const line = document.createElement('div');
-                line.className = 'optimal-quantity-line';
-                line.style.left = `${(optimalQuantity / maxDemand) * 100}%`;
-                distributionEl.appendChild(line);
+                detailedResults += `
+                        </tbody>
+                    </table>
+                `;
                 
-                const label = document.createElement('div');
-                label.className = 'optimal-quantity-label';
-                label.textContent = `Optimal: ${optimalQuantity}`;
-                label.style.left = `${(optimalQuantity / maxDemand) * 100}%`;
-                label.style.top = '10px';
-                distributionEl.appendChild(label);
+                document.getElementById('detailed-results').innerHTML = detailedResults;
+                resultBox.style.display = 'block';
             }
-            
-            // Show results
-            document.getElementById('newsvendor-result').style.display = 'block';
         });
     </script>
 
-
-    <div id="cookie-banner" style="position:fixed;bottom:0;left:0;width:100%;background:#fffbe6;border-top:1px solid #e2c96f;padding:1rem;box-shadow:0 -2px 8px rgba(0,0,0,0.07);display:none;z-index:9999;">
-        <span>
-            We use cookies to improve your experience. Non-essential cookies (analytics, personalization) require your consent. 
-            <a href="privacy.html" target="_blank">Learn more</a>
-        </span>
-        <button id="cookie-accept" style="margin-left:1rem;">Accept</button>
-        <button id="cookie-reject" style="margin-left:0.5rem;">Reject</button>
-    </div>
-    <script>
-    (function() {
-        var banner = document.getElementById('cookie-banner');
-        var accepted = localStorage.getItem('cookieConsent');
-        if (!accepted) banner.style.display = 'block';
-
-        document.getElementById('cookie-accept').onclick = function() {
-            localStorage.setItem('cookieConsent', 'accepted');
-            banner.style.display = 'none';
-            // Place non-essential cookie scripts here, e.g. analytics
-            // Example: load Google Analytics only if accepted
-            var gaScript = document.createElement('script');
-            gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V";
-            gaScript.async = true;
-            document.head.appendChild(gaScript);
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-3BSHG1DE6V');
-        };
-        document.getElementById('cookie-reject').onclick = function() {
-            localStorage.setItem('cookieConsent', 'rejected');
-            banner.style.display = 'none';
-            // Do not load non-essential cookies/scripts
-        };
-    })();
-    </script>
-    
     <!-- xxxx navigation start xxxxx -->
     <button class="sidebar-toggle">☰</button>
     <div class="overlay"></div>
@@ -1162,7 +1098,8 @@
                 <a href="processcapability.html" class="sidebar-link">Process Capability</a>
                 <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
                 <a href="oee-calculation.html" class="sidebar-link">OEE Calculator</a>
-                <a href="quality-function-deployment" class="sidebar-link">Quality Function Deployment</a>            </div>
+                <a href="quality-function-deployment" class="sidebar-link">Quality Function Deployment</a>            
+            </div>
         </div>
         
         <div class="sidebar-category">
@@ -1286,6 +1223,7 @@
                 <a href="Articles/Quality-Assurance-vs-Quality-Control-Key-Differences-Explained.html" class="sidebar-link">Quality Assurance vs Quality Control: Key Differences Explained</a>
         </div>
     </aside>
-    <!-- xxxx navigation end xxxxx -->       
+    <!-- xxxx navigation end xxxxx -->  
+
 </body>
 </html>

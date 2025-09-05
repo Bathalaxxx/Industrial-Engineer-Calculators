@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-
-
     </script>
     <!--FAVICON-->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -23,14 +20,11 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5607576434988374"
      crossorigin="anonymous"></script>
     <meta charset="UTF-8">
-    <meta name="google-adsense-account" content="ca-pub-5607576434988374">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Newsvendor Model Calculator - Determine optimal order quantity for perishable goods with probabilistic demand">
-    <title>Newsvendor Model Calculator | Industrial Engineering Calculators</title>
-
- 
-    
-
+    <title>Production Capacity Calculator | Industrial Engineering Calculators</title>
+    <meta name="description" content="Calculate your production capacity considering efficiency, utilization, and scrap rates. Use our Production Capacity Calculator to optimize your manufacturing output.">
+    <meta name="keywords" content="production capacity calculator, manufacturing capacity, effective capacity, capacity planning, industrial engineering">
+    <meta name="author" content="IECalculators.online">        
     
      <!-- Clarity tracking code for https://iecalculators.online/ -->
     <script type="text/javascript">
@@ -39,8 +33,8 @@
             t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
             y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
         })(window, document, "clarity", "script", "t31aicr9ep");
-    </script>
-
+    </script>    
+    
     <style>
         /* Consistent with existing style */
         :root {
@@ -64,10 +58,9 @@
             line-height: 1.6;
             color: var(--text-color);
             background-color: #f5f7fa;
-            transition: margin-left 0.3s;
         }
         
-        /* xxxx navigation start xxxxx */
+         /* xxxx navigation start xxxxx */
         .sidebar-toggle {
             position: fixed;
             top: 15px;
@@ -208,16 +201,13 @@
         .sidebar-category-header.reliability {
             color: var(--reliability-color);
         }
-        /* xxxx navigation end xxxxx */
+        /* xxxx navigation end xxxxx */       
         
         header {
             background-color: var(--primary-color);
             color: white;
             padding: 1rem 0;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
         }
         
         .container {
@@ -374,15 +364,17 @@
             display: flex;
             justify-content: space-between;
             margin: 1.5rem 0;
+            flex-wrap: wrap;
         }
         
         .metric-card {
             flex: 1;
+            min-width: 200px;
             padding: 1rem;
             background-color: white;
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            margin: 0 0.5rem;
+            margin: 0.5rem;
             text-align: center;
         }
         
@@ -396,32 +388,20 @@
             font-weight: bold;
         }
         
-        .metric-card.cost .metric-value {
-            color: #e74c3c;
-        }
-        
-        .metric-card.price .metric-value {
-            color: #2ecc71;
-        }
-        
-        .metric-card.ratio .metric-value {
+        .metric-card.capacity .metric-value {
             color: #3498db;
         }
         
-        .examples-section {
-            margin-top: 3rem;
+        .metric-card.efficiency .metric-value {
+            color: #2ecc71;
         }
         
-        .example {
-            margin-bottom: 1.5rem;
-            padding: 1rem;
-            background-color: #f8f9fa;
-            border-radius: 5px;
+        .metric-card.utilization .metric-value {
+            color: #f39c12;
         }
         
-        .example h4 {
-            margin-bottom: 0.5rem;
-            color: var(--primary-color);
+        .metric-card.scrap .metric-value {
+            color: #e74c3c;
         }
         
         table {
@@ -443,31 +423,20 @@
             background-color: #f2f2f2;
         }
         
-        .demand-distribution {
-            width: 100%;
-            height: 300px;
-            margin: 1.5rem 0;
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
             background-color: #f8f9fa;
-            border: 1px solid #ddd;
-            position: relative;
+            border-radius: 5px;
         }
         
-        .optimal-quantity-line {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background-color: var(--accent-color);
-        }
-        
-        .optimal-quantity-label {
-            position: absolute;
-            background-color: var(--accent-color);
-            color: white;
-            padding: 0.2rem 0.5rem;
-            border-radius: 3px;
-            font-size: 0.8rem;
-            transform: translateX(-50%);
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
         }
         
         footer {
@@ -498,17 +467,45 @@
             color: var(--text-light);
             font-size: 0.9rem;
         }
-        /* xxxx navigation start xxxxx */
-        .sidebar-toggle {
+
+        .info-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .info-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1.5rem;
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .faq-answer {
+            display: none;
+            padding-top: 0.5rem;
+        }
+        
+        .faq-answer.show {
             display: block;
         }
-            
-        body.sidebar-open {
-            margin-left: 0;
-            overflow: hidden;
-        }
-        /* xxxx navigation end xxxxx */
-
+        
         .related-tools {
             display: flex;
             flex-wrap: wrap;
@@ -528,8 +525,40 @@
         
         .tool-chip:hover {
             background-color: #bbdefb;
-        }            
+        }
 
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            display: block;
+        }
+            
+        body.sidebar-open {
+            margin-left: 0;
+            overflow: hidden;
+        }
+        /* xxxx navigation end xxxxx */
+
+         .related-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .tool-chip {
+            background-color: #e3f2fd;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .tool-chip:hover {
+            background-color: #bbdefb;
+        }            
+        
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
@@ -561,239 +590,282 @@
     </style>
 </head>
 <body>
-</head>
-<body>
-    
     <header>
         <div class="container">
             <div class="header-content">
                 <div class="logo">Industrial Engineering <span>Calculators</span></div>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="terms.html">Terms</a></li>
-                    <li><a href="privacy.html">Privacy Policy</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                    <li></li>
-                </ul>
-            </nav>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="terms.html">Terms</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li></li>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </header>
     
     <section class="page-hero">
         <div class="container">
-            <h1>Newsvendor Model Calculator</h1>
-            <p>Determine optimal order quantity for perishable goods with probabilistic demand</p>
+            <h1>Production Capacity Calculator</h1>
+            <p>Calculate your production capacity considering efficiency, utilization, and scrap rates</p>
         </div>
     </section>
     
     <main class="container">
         <section class="content-section">
             <div class="calculator-intro">
-                <h2>Newsvendor Model</h2>
-                <p>The Newsvendor Model helps determine the optimal order quantity for perishable goods when demand is uncertain. It balances the costs of overordering (excess inventory) and underordering (lost sales).</p>
+                <h2>Production Capacity Calculation</h2>
+                <p>Production capacity is the maximum output that a production facility can produce under normal working conditions. Calculating accurate production capacity helps organizations plan production schedules, allocate resources efficiently, and meet customer demand.</p>
                 
                 <div class="formula-box">
-                    Critical Ratio = Cu / (Cu + Co)
+                    Effective Capacity = Theoretical Capacity × Efficiency Rate × Utilization Rate × (1 - Scrap Rate)
                 </div>
                 
                 <p>Where:</p>
-                <ul>
-                    <li><strong>Cu</strong> = Cost of underordering (profit per unit)</li>
-                    <li><strong>Co</strong> = Cost of overordering (loss per unsold unit)</li>
-                    <li><strong>Optimal Quantity</strong> = Smallest quantity where cumulative probability ≥ Critical Ratio</li>
+                <ul style="padding-left: 1.0em;">
+                    <li><strong>Theoretical Capacity</strong> = Maximum possible output without constraints</li>
+                    <li><strong>Efficiency Rate</strong> = Worker efficiency factor (%)</li>
+                    <li><strong>Utilization Rate</strong> = Equipment/machine utilization rate (%)</li>
+                    <li><strong>Scrap Rate</strong> = Percentage of defective products (%)</li>
                 </ul>
             </div>
+        </section>  
 
-            <script async="async" data-cfasync="false" src="//pl27511448.profitableratecpm.com/5d225b5e0b22c0980e365900e2390e1d/invoke.js"></script> <!-- adterra native banner -->
-            <div id="container-5d225b5e0b22c0980e365900e2390e1d"></div>    <!-- adterra native banner -->            
+        <section class="content-section">   
+            <h2>Capacity Calculator</h2>
             
-            <form id="newsvendor-form">
-                <h3>Cost Parameters</h3>
+            <form id="capacity-form">
                 <div class="input-row">
                     <div class="input-group">
-                        <label for="unit-cost">Unit Cost ($):</label>
-                        <input type="number" id="unit-cost" min="0" step="0.01" required>
-                    </div>
-                    
-                    <div class="input-group">
-                        <label for="selling-price">Selling Price ($):</label>
-                        <input type="number" id="selling-price" min="0" step="0.01" required>
-                    </div>
-                    
-                    <div class="input-group">
-                        <label for="salvage-value">Salvage Value ($):</label>
-                        <input type="number" id="salvage-value" min="0" step="0.01" value="0">
-                    </div>
-                </div>
-                
-                <h3>Demand Distribution</h3>
-                <div class="input-group">
-                    <label for="distribution-type">Demand Distribution:</label>
-                    <select id="distribution-type">
-                        <option value="discrete">Discrete (Manual Input)</option>
-                        <option value="normal">Normal Distribution</option>
-                        <option value="uniform">Uniform Distribution</option>
-                    </select>
-                </div>
-                
-                <!-- Discrete Distribution Inputs -->
-                <div id="discrete-inputs">
-                    <div class="input-group">
-                        <label>Enter demand values and probabilities (comma separated):</label>
-                        <textarea id="discrete-values" placeholder="Demand values (e.g., 100, 150, 200)"></textarea>
+                        <label for="theoretical-capacity">Theoretical Capacity (units/time period):</label>
+                        <input type="number" id="theoretical-capacity" min="1" step="1" required>
                     </div>
                     <div class="input-group">
-                        <textarea id="discrete-probabilities" placeholder="Probabilities (e.g., 0.3, 0.5, 0.2)"></textarea>
+                        <label for="time-period">Time Period:</label>
+                        <select id="time-period" required>
+                            <option value="hour">Per Hour</option>
+                            <option value="shift">Per Shift</option>
+                            <option value="day">Per Day</option>
+                            <option value="week">Per Week</option>
+                            <option value="month">Per Month</option>
+                        </select>
                     </div>
                 </div>
                 
-                <!-- Normal Distribution Inputs -->
-                <div id="normal-inputs" style="display: none;">
-                    <div class="input-row">
-                        <div class="input-group">
-                            <label for="normal-mean">Mean Demand:</label>
-                            <input type="number" id="normal-mean" min="0" step="1">
-                        </div>
-                        <div class="input-group">
-                            <label for="normal-stddev">Standard Deviation:</label>
-                            <input type="number" id="normal-stddev" min="0" step="1">
-                        </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="efficiency">Worker Efficiency Factor (%):</label>
+                        <input type="number" id="efficiency" min="0" max="100" step="0.1" value="85" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="utilization">Equipment/Machine Utilization Rate (%):</label>
+                        <input type="number" id="utilization" min="0" max="100" step="0.1" value="90" required>
                     </div>
                 </div>
                 
-                <!-- Uniform Distribution Inputs -->
-                <div id="uniform-inputs" style="display: none;">
-                    <div class="input-row">
-                        <div class="input-group">
-                            <label for="uniform-min">Minimum Demand:</label>
-                            <input type="number" id="uniform-min" min="0" step="1">
-                        </div>
-                        <div class="input-group">
-                            <label for="uniform-max">Maximum Demand:</label>
-                            <input type="number" id="uniform-max" min="0" step="1">
-                        </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="scrap-rate">Scrap Rate (%):</label>
+                        <input type="number" id="scrap-rate" min="0" max="100" step="0.1" value="5" required>
                     </div>
                 </div>
                 
-                <button type="submit" class="calculate-btn">Calculate Optimal Order Quantity</button>
+                <button type="submit" class="calculate-btn">Calculate Production Capacity</button>
             </form>
             
-            <div class="result-box" id="newsvendor-result">
-                <h3>Results</h3>
-                
-                <p>Optimal Order Quantity: <span class="result-value" id="optimal-quantity"></span> units</p>
-                
+            <div class="result-box" id="result-box">
+                <h3>Calculation Results</h3>
                 <div class="metric-results">
-                    <div class="metric-card cost">
-                        <h4>Cost of Underordering (Cu)</h4>
-                        <div class="metric-value" id="underorder-cost"></div>
-                        <p>Profit per unit</p>
+                    <div class="metric-card capacity">
+                        <h4>Effective Production Capacity</h4>
+                        <div class="metric-value" id="capacity-value">-</div>
                     </div>
-                    
-                    <div class="metric-card price">
-                        <h4>Cost of Overordering (Co)</h4>
-                        <div class="metric-value" id="overorder-cost"></div>
-                        <p>Loss per unsold unit</p>
+                    <div class="metric-card efficiency">
+                        <h4>Efficiency Impact</h4>
+                        <div class="metric-value" id="efficiency-value">-</div>
                     </div>
-                    
-                    <div class="metric-card ratio">
-                        <h4>Critical Ratio</h4>
-                        <div class="metric-value" id="critical-ratio"></div>
-                        <p>Target service level</p>
+                    <div class="metric-card utilization">
+                        <h4>Utilization Impact</h4>
+                        <div class="metric-value" id="utilization-value">-</div>
+                    </div>
+                    <div class="metric-card scrap">
+                        <h4>Scrap Impact</h4>
+                        <div class="metric-value" id="scrap-value">-</div>
                     </div>
                 </div>
                 
-                <div class="demand-distribution" id="demand-distribution">
-                    <!-- Visualization will be added here by JavaScript -->
-                </div>
-                
-                <h4>Calculation Details</h4>
-                <table id="probability-table">
-                    <thead>
-                        <tr>
-                            <th>Demand</th>
-                            <th>Probability</th>
-                            <th>Cumulative Probability</th>
-                            <th>Optimal?</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Rows will be added by JavaScript -->
-                    </tbody>
-                </table>
-            </div>
-            
-            <div class="examples-section">
-                <h3>Practical Examples</h3>
-                
-                <div class="example">
-                    <h4>Example 1: Newspaper Sales</h4>
-                    <p>Cost: $0.50 | Price: $2.00 | Salvage: $0.10</p>
-                    <p>Discrete Demand: 100(0.2), 150(0.5), 200(0.3)</p>
-                    <p>Cu: $1.50 | Co: $0.40 | Critical Ratio: 0.789</p>
-                    <p>Optimal Quantity: 200 units</p>
-                </div>
-                
-                <div class="example">
-                    <h4>Example 2: Bakery Goods</h4>
-                    <p>Cost: $1.00 | Price: $3.00 | Salvage: $0.50</p>
-                    <p>Normal Demand: μ=200, σ=30</p>
-                    <p>Cu: $2.00 | Co: $0.50 | Critical Ratio: 0.8</p>
-                    <p>Optimal Quantity: ~215 units</p>
-                </div>
-                
-                <div class="example">
-                    <h4>Example 3: Seasonal Fashion</h4>
-                    <p>Cost: $20 | Price: $50 | Salvage: $5</p>
-                    <p>Uniform Demand: 100-300 units</p>
-                    <p>Cu: $30 | Co: $15 | Critical Ratio: 0.667</p>
-                    <p>Optimal Quantity: ~233 units</p>
+                <div id="detailed-results">
+                    <!-- Detailed results will be inserted here -->
                 </div>
             </div>
+        </section>
+
+            <script async="async" data-cfasync="false" src="//pl27511448.profitableratecpm.com/5d225b5e0b22c0980e365900e2390e1d/invoke.js"></script> <!-- adterra native banner -->
+            <div id="container-5d225b5e0b22c0980e365900e2390e1d"></div>    <!-- adterra native banner -->
+
+
+        <!-- How to Use the Calculator -->
+        <section class="content-section">   
+            <h2>How to Use This Production Capacity Calculator</h2>
+            <div class="info-section">
+                <p>Follow these steps to calculate your production capacity:</p>
+                
+                <ol style="padding-left: 1.0em;">
+                    <li><strong>Enter Theoretical Capacity</strong>: Input the maximum possible output of your production system without any constraints</li>
+                    <li><strong>Select Time Period</strong>: Choose the time period for your capacity calculation (hour, shift, day, week, or month)</li>
+                    <li><strong>Enter Efficiency Rate</strong>: Provide the worker efficiency factor as a percentage (typically 80-95%)</li>
+                    <li><strong>Enter Utilization Rate</strong>: Provide the equipment/machine utilization rate as a percentage (typically 85-95%)</li>
+                    <li><strong>Enter Scrap Rate</strong>: Provide the percentage of defective products that need to be scrapped (typically 1-10%)</li>
+                    <li><strong>Calculate</strong>: Click the calculate button to see your effective production capacity</li>
+                </ol>
+                
+                <p>The calculator will provide your effective production capacity along with the individual impact of each factor on your overall capacity.</p>
+            </div>
+        </section>
+
+        <!-- What is Production Capacity Section -->
+        <section class="content-section">       
+            <h2>What is Production Capacity?</h2>
+
+            <div>
+                <p><strong>Production capacity</strong> refers to the maximum output that a production system can achieve under normal working conditions. It's a critical metric for manufacturing and operations management as it helps organizations:</p>
+                
+                <ul style="padding-left: 1.0em;">
+                    <li>Plan production schedules and meet customer demand</li>
+                    <li>Identify bottlenecks and capacity constraints</li>
+                    <li>Make informed decisions about capital investments</li>
+                    <li>Optimize resource allocation and workforce planning</li>
+                    <li>Evaluate the impact of process improvements</li>
+                </ul>
+                
+                <p>Several factors affect production capacity, including:</p>
+                
+                <ol style="padding-left: 1.0em;">
+                    <li><strong>Worker Efficiency</strong>: How effectively workers perform their tasks</li>
+                    <li><strong>Equipment Utilization</strong>: How well equipment and machinery are utilized</li>
+                    <li><strong>Quality Rates</strong>: The percentage of products that meet quality standards</li>
+                    <li><strong>Maintenance Downtime</strong>: Time when equipment is unavailable due to maintenance</li>
+                    <li><strong>Changeover Times</strong>: Time required to switch between different products</li>
+                </ol>
+            </div>
+        </section>
             
-            <div class="calculator-intro">
-                <h3>Newsvendor Model Interpretation</h3>
-                <table>
-                    <tr>
-                        <th>Critical Ratio Range</th>
-                        <th>Interpretation</th>
-                        <th>Business Implication</th>
-                    </tr>
-                    <tr>
-                        <td>Below 0.5</td>
-                        <td>High cost of overordering</td>
-                        <td>Conservative ordering strategy</td>
-                    </tr>
-                    <tr>
-                        <td>0.5</td>
-                        <td>Equal costs</td>
-                        <td>Median demand is optimal</td>
-                    </tr>
-                    <tr>
-                        <td>Above 0.5</td>
-                        <td>High cost of underordering</td>
-                        <td>Aggressive ordering strategy</td>
-                    </tr>
-                    <tr>
-                        <td>Approaching 1.0</td>
-                        <td>Very high cost of underordering</td>
-                        <td>Order to meet nearly all possible demand</td>
-                    </tr>
-                </table>
+        <!-- Production Capacity Formula with Example Section -->
+        <section class="content-section">
+            <h2>Production Capacity Formula with Example</h2> 
+            <div>
+                <p>Let's examine the <strong>production capacity formula</strong> with a practical example:</p>
+                
+                <div class="formula-box">
+                    Effective Capacity = Theoretical Capacity × (Efficiency/100) × (Utilization/100) × (1 - Scrap/100)
+                </div>
+                
+                <p><strong>Example:</strong> A manufacturing line has the following parameters:</p>
+                <ul style="padding-left: 1.0em;">
+                    <li>Theoretical Capacity: 1,000 units per day</li>
+                    <li>Worker Efficiency: 85%</li>
+                    <li>Machine Utilization: 90%</li>
+                    <li>Scrap Rate: 5%</li>
+                </ul>
+                
+                <p>Using the <strong>production capacity formula</strong>:</p>
+                <div class="formula-box">
+                    Effective Capacity = 1,000 × (85/100) × (90/100) × (1 - 5/100)<br>
+                    = 1,000 × 0.85 × 0.90 × 0.95 = 726.75 units per day
+                </div>
+                
+                <p>Therefore, the effective production capacity is approximately 727 units per day, which is about 72.7% of the theoretical capacity.</p>
+            </div>
+        </section>  
+            
+        <!-- Related Tools Section -->
+        <section class="content-section">
+            <h2>Related Production Planning Tools</h2>
+            <p>Explore these related calculators to optimize your production planning:</p>
+ 
+            <div>               
+                <div class="related-tools">
+                    <a href="oee-calculation.html" class="tool-chip">OEE Calculator</a>
+                    <a href="takt-time.html" class="tool-chip">Takt Time Calculator</a>
+                    <a href="line-balancing.html" class="tool-chip">Line Balancing Calculator</a>
+                    <a href="eoq-formula.html" class="tool-chip">Economic Order Quantity</a>                    
+                    <a href="machine-utilization-calculator.html" class="tool-chip">Machine Utilization</a>
+                    <a href="manpower-calculator.html" class="tool-chip">Manpower Calculator</a>
+                </div>
+            </div>
+        </section>
+            
+        <!-- FAQs Section -->
+        <section class="content-section">
+            <h2>Frequently Asked Questions about Production Capacity</h2>
+    
+            <div>
+                <div class="faq-item">
+                    <div class="faq-question">What is the difference between theoretical and effective capacity? <span>+</span></div>
+                    <div class="faq-answer">
+                        <p><strong>Theoretical capacity</strong> is the maximum output possible under ideal conditions with no interruptions, inefficiencies, or quality issues. It represents the absolute upper limit of what a production system could produce.</p>
+                        <p><strong>Effective capacity</strong> is the realistic output achievable under normal operating conditions, considering factors like worker efficiency, equipment utilization, scheduled maintenance, and quality rates. It's always less than theoretical capacity.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How can I improve my production capacity? <span>+</span></div>
+                    <div class="faq-answer">
+                        <p>Several strategies can help improve production capacity:</p>
+                        <ol style="padding-left: 1.0em;">
+                            <li>Improve worker efficiency through training and better work methods</li>
+                            <li>Increase equipment utilization through preventive maintenance and reduced changeover times</li>
+                            <li>Reduce scrap rates through quality improvement initiatives</li>
+                            <li>Implement lean manufacturing principles to eliminate waste</li>
+                            <li>Optimize production scheduling to balance workloads</li>
+                            <li>Invest in automation or equipment upgrades where appropriate</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">What is a good utilization rate for manufacturing equipment? <span>+</span></div>
+                    <div class="faq-answer">
+                        <p>An optimal utilization rate depends on your specific industry and equipment, but generally:</p>
+                        <ul style="padding-left: 1.0em;">
+                            <li>85-90% is excellent for most manufacturing operations</li>
+                            <li>Over 90% may indicate insufficient time for maintenance and increase the risk of breakdowns</li>
+                            <li>Below 80% may suggest inefficiencies or overcapacity</li>
+                        </ul>
+                        <p>It's important to balance high utilization with necessary maintenance and flexibility for unexpected issues.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How often should I calculate production capacity? <span>+</span></div>
+                    <div class="faq-answer">
+                        <p>The frequency of capacity calculations depends on your operation:</p>
+                        <ol style="padding-left: 1.0em;">
+                            <li><strong>Regularly</strong>: Monthly or quarterly to track performance trends</li>
+                            <li><strong>When changes occur</strong>: After implementing process improvements, adding new equipment, or changing workforce levels</li>
+                            <li><strong>For planning purposes</strong>: When introducing new products, entering new markets, or anticipating demand changes</li>
+                            <li><strong>When problems arise</strong>: If you're experiencing bottlenecks, missed deadlines, or quality issues</li>
+                        </ol>
+                        <p>Many organizations include capacity analysis as part of their regular operational reviews.</p>
+                    </div>
+                </div>
             </div>
         </section>
         <section class="content-section">
             <h2>Related Tools</h2>
             <div>               
                 <div class="related-tools">
-                    <a href="abc-analysis-calculator.html" class="tool-chip">ABC Analysis</a>
-                    <a href="inventory-turnover-calculator.html" class="tool-chip">Inventory Turnover</a>
-                    <a href="eoq-formula.html" class="tool-chip">Economic Order Quantity</a>
-                    <a href="reorder-point-calculator.html" class="tool-chip">Reorder Point</a>
-                    <a href="kanban.html" class="tool-chip">Kanban Calculator</a>
-                    <a href="safety-stock-calculator.html" class="tool-chip">Safety Stock Calculator</a>
+                    <a href="flowshopsequencing.html" class="tool-chip">Flow Shop Sequencing</a>
+                    <a href="jobshopsequencing.html" class="tool-chip">Job Shop Sequencing</a>
+                    <a href="linebalancing.html" class="tool-chip">Line Balancing</a>
+                    <a href="takttime.html" class="tool-chip">Takt Time</a>
+                    <a href="synchronousservicing.html" class="tool-chip">Synchronous Servicing</a>
+                    <a href="machine-utilization-calculator.html" class="tool-chip">Synchronous Servicing</a>
+                    <a href="manpower-calculator.html" class="tool-chip">Production Capacity</a>
                 </div>
             </div>
         </section>
@@ -809,7 +881,7 @@
                 
             </div>
             <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
-            <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
+            <p class="copyright">&copy; 2025 Industrial Engineering Calculators. All rights reserved.</p>
         </div>
     </footer>
 
@@ -867,248 +939,102 @@
     </script>
     <!-- xxxx navigation end xxxxx -->
 
+
     <script>
-        // Handle distribution type change
-        document.getElementById('distribution-type').addEventListener('change', function() {
-            const type = this.value;
-            document.getElementById('discrete-inputs').style.display = 'none';
-            document.getElementById('normal-inputs').style.display = 'none';
-            document.getElementById('uniform-inputs').style.display = 'none';
+        document.addEventListener('DOMContentLoaded', function() {
+            const capacityForm = document.getElementById('capacity-form');
+            const resultBox = document.getElementById('result-box');
             
-            document.getElementById(`${type}-inputs`).style.display = 'block';
-        });
-        
-        // Calculate Newsvendor solution
-        document.getElementById('newsvendor-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get cost parameters
-            const unitCost = parseFloat(document.getElementById('unit-cost').value);
-            const sellingPrice = parseFloat(document.getElementById('selling-price').value);
-            const salvageValue = parseFloat(document.getElementById('salvage-value').value) || 0;
-            
-            // Validate inputs
-            if (isNaN(unitCost) || isNaN(sellingPrice) || isNaN(salvageValue)) {
-                alert('Please enter valid cost parameters');
-                return;
-            }
-            if (sellingPrice <= unitCost) {
-                alert('Selling price must be greater than unit cost');
-                return;
-            }
-            if (salvageValue > unitCost) {
-                alert('Salvage value cannot exceed unit cost');
-                return;
-            }
-            
-            // Calculate costs and critical ratio
-            const Cu = sellingPrice - unitCost; // Cost of underordering (profit per unit)
-            const Co = unitCost - salvageValue; // Cost of overordering (loss per unsold unit)
-            const criticalRatio = Cu / (Cu + Co);
-            
-            // Display cost metrics
-            document.getElementById('underorder-cost').textContent = '$' + Cu.toFixed(2);
-            document.getElementById('overorder-cost').textContent = '$' + Co.toFixed(2);
-            document.getElementById('critical-ratio').textContent = (criticalRatio * 100).toFixed(1) + '%';
-            
-            // Get demand distribution
-            const distributionType = document.getElementById('distribution-type').value;
-            let demandDistribution = [];
-            
-            if (distributionType === 'discrete') {
-                // Parse discrete distribution
-                const valuesText = document.getElementById('discrete-values').value;
-                const probsText = document.getElementById('discrete-probabilities').value;
+            // Form submission handler
+            capacityForm.addEventListener('submit', function(e) {
+                e.preventDefault();
                 
-                const values = valuesText.split(',').map(v => parseFloat(v.trim()));
-                const probs = probsText.split(',').map(p => parseFloat(p.trim()));
+                // Get input values
+                const theoreticalCapacity = parseFloat(document.getElementById('theoretical-capacity').value);
+                const timePeriod = document.getElementById('time-period').value;
+                const efficiency = parseFloat(document.getElementById('efficiency').value) / 100;
+                const utilization = parseFloat(document.getElementById('utilization').value) / 100;
+                const scrapRate = parseFloat(document.getElementById('scrap-rate').value) / 100;
                 
-                if (values.length !== probs.length || values.some(isNaN) || probs.some(isNaN)) {
-                    alert('Please enter valid demand values and probabilities');
-                    return;
+                // Calculate effective capacity
+                const effectiveCapacity = theoreticalCapacity * efficiency * utilization * (1 - scrapRate);
+                
+                // Calculate individual impacts
+                const efficiencyImpact = theoreticalCapacity * efficiency;
+                const utilizationImpact = theoreticalCapacity * efficiency * utilization;
+                const scrapImpact = theoreticalCapacity * efficiency * utilization * scrapRate;
+                
+                // Format time period text
+                let timeText = '';
+                switch(timePeriod) {
+                    case 'hour': timeText = 'per hour'; break;
+                    case 'shift': timeText = 'per shift'; break;
+                    case 'day': timeText = 'per day'; break;
+                    case 'week': timeText = 'per week'; break;
+                    case 'month': timeText = 'per month'; break;
                 }
                 
-                const totalProb = probs.reduce((sum, p) => sum + p, 0);
-                if (Math.abs(totalProb - 1) > 0.001) {
-                    alert('Probabilities must sum to 1');
-                    return;
-                }
+                // Display results
+                document.getElementById('capacity-value').textContent = `${effectiveCapacity.toFixed(2)} units ${timeText}`;
+                document.getElementById('efficiency-value').textContent = `${(efficiency * 100).toFixed(1)}%`;
+                document.getElementById('utilization-value').textContent = `${(utilization * 100).toFixed(1)}%`;
+                document.getElementById('scrap-value').textContent = `${(scrapRate * 100).toFixed(1)}%`;
                 
-                // Combine and sort by demand
-                for (let i = 0; i < values.length; i++) {
-                    demandDistribution.push({
-                        demand: values[i],
-                        probability: probs[i]
-                    });
-                }
-                
-                demandDistribution.sort((a, b) => a.demand - b.demand);
-            }
-            else if (distributionType === 'normal') {
-                const mean = parseFloat(document.getElementById('normal-mean').value);
-                const stddev = parseFloat(document.getElementById('normal-stddev').value);
-                
-                if (isNaN(mean) || isNaN(stddev) || stddev <= 0) {
-                    alert('Please enter valid mean and standard deviation');
-                    return;
-                }
-                
-                // Create a discrete approximation of the normal distribution
-                const min = Math.max(0, Math.round(mean - 3 * stddev));
-                const max = Math.round(mean + 3 * stddev);
-                const step = Math.max(1, Math.round((max - min) / 20));
-                
-                let totalProb = 0;
-                for (let x = min; x <= max; x += step) {
-                    // Simple approximation of normal PDF (for demo purposes)
-                    const z = (x - mean) / stddev;
-                    const prob = Math.exp(-0.5 * z * z) / (stddev * Math.sqrt(2 * Math.PI)) * step;
-                    if (prob > 0.0001) {
-                        demandDistribution.push({
-                            demand: x,
-                            probability: prob
-                        });
-                        totalProb += prob;
-                    }
-                }
-                
-                // Normalize probabilities
-                demandDistribution.forEach(item => {
-                    item.probability /= totalProb;
-                });
-            }
-            else if (distributionType === 'uniform') {
-                const min = parseFloat(document.getElementById('uniform-min').value);
-                const max = parseFloat(document.getElementById('uniform-max').value);
-                
-                if (isNaN(min) || isNaN(max) || min >= max) {
-                    alert('Please enter valid min and max values');
-                    return;
-                }
-                
-                // Create discrete uniform distribution
-                const step = Math.max(1, Math.round((max - min) / 20));
-                const prob = 1 / (Math.floor((max - min) / step) + 1);
-                
-                for (let x = min; x <= max; x += step) {
-                    demandDistribution.push({
-                        demand: x,
-                        probability: prob
-                    });
-                }
-            }
-            
-            // Calculate cumulative probabilities and find optimal quantity
-            let cumulativeProb = 0;
-            let optimalQuantity = 0;
-            const tableBody = document.querySelector('#probability-table tbody');
-            tableBody.innerHTML = '';
-            
-            for (let i = 0; i < demandDistribution.length; i++) {
-                const item = demandDistribution[i];
-                cumulativeProb += item.probability;
-                
-                const isOptimal = !optimalQuantity && cumulativeProb >= criticalRatio;
-                if (isOptimal) {
-                    optimalQuantity = item.demand;
-                }
-                
-                // Add row to table
-                const row = document.createElement('tr');
-                if (isOptimal) {
-                    row.style.backgroundColor = 'rgba(46, 204, 113, 0.1)';
-                    row.style.fontWeight = 'bold';
-                }
-                
-                row.innerHTML = `
-                    <td>${item.demand}</td>
-                    <td>${(item.probability * 100).toFixed(1)}%</td>
-                    <td>${(cumulativeProb * 100).toFixed(1)}%</td>
-                    <td>${isOptimal ? '✓' : ''}</td>
+                // Create detailed results
+                const detailedResults = `
+                    <h4>Detailed Capacity Analysis</h4>
+                    <table>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Value</th>
+                            <th>Impact</th>
+                        </tr>
+                        <tr>
+                            <td>Theoretical Capacity</td>
+                            <td>${theoreticalCapacity} units ${timeText}</td>
+                            <td>Base capacity without constraints</td>
+                        </tr>
+                        <tr>
+                            <td>After Efficiency Adjustment</td>
+                            <td>${(theoreticalCapacity * efficiency).toFixed(2)} units ${timeText}</td>
+                            <td>${(efficiency * 100).toFixed(1)}% of theoretical capacity</td>
+                        </tr>
+                        <tr>
+                            <td>After Utilization Adjustment</td>
+                            <td>${(theoreticalCapacity * efficiency * utilization).toFixed(2)} units ${timeText}</td>
+                            <td>${(utilization * 100).toFixed(1)}% of efficiency-adjusted capacity</td>
+                        </tr>
+                        <tr>
+                            <td>Scrap Loss</td>
+                            <td>${scrapImpact.toFixed(2)} units ${timeText}</td>
+                            <td>${(scrapRate * 100).toFixed(1)}% of utilization-adjusted capacity</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Effective Capacity</strong></td>
+                            <td><strong>${effectiveCapacity.toFixed(2)} units ${timeText}</strong></td>
+                            <td><strong>${((effectiveCapacity/theoreticalCapacity)*100).toFixed(1)}% of theoretical capacity</strong></td>
+                        </tr>
+                    </table>
                 `;
                 
-                tableBody.appendChild(row);
-            }
+                document.getElementById('detailed-results').innerHTML = detailedResults;
+                resultBox.style.display = 'block';
+            });
             
-            // Display results
-            document.getElementById('optimal-quantity').textContent = optimalQuantity;
+            // FAQ functionality
+            const faqQuestions = document.querySelectorAll('.faq-question');
             
-            // Simple visualization
-            const distributionEl = document.getElementById('demand-distribution');
-            distributionEl.innerHTML = '';
-            
-            if (demandDistribution.length > 0) {
-                const maxDemand = demandDistribution[demandDistribution.length - 1].demand;
-                const scale = 100 / maxDemand;
-                
-                // Draw bars for each demand point
-                demandDistribution.forEach(item => {
-                    const bar = document.createElement('div');
-                    bar.style.position = 'absolute';
-                    bar.style.bottom = '0';
-                    bar.style.left = `${(item.demand / maxDemand) * 100}%`;
-                    bar.style.width = `${Math.max(2, scale)}%`;
-                    bar.style.height = `${item.probability * 1000}px`;
-                    bar.style.backgroundColor = 'rgba(52, 152, 219, 0.7)';
-                    distributionEl.appendChild(bar);
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function() {
+                    const answer = this.nextElementSibling;
+                    answer.classList.toggle('show');
+                    const icon = this.querySelector('span');
+                    icon.textContent = answer.classList.contains('show') ? '−' : '+';
                 });
-                
-                // Draw optimal quantity line
-                const line = document.createElement('div');
-                line.className = 'optimal-quantity-line';
-                line.style.left = `${(optimalQuantity / maxDemand) * 100}%`;
-                distributionEl.appendChild(line);
-                
-                const label = document.createElement('div');
-                label.className = 'optimal-quantity-label';
-                label.textContent = `Optimal: ${optimalQuantity}`;
-                label.style.left = `${(optimalQuantity / maxDemand) * 100}%`;
-                label.style.top = '10px';
-                distributionEl.appendChild(label);
-            }
-            
-            // Show results
-            document.getElementById('newsvendor-result').style.display = 'block';
+            });
         });
     </script>
 
-
-    <div id="cookie-banner" style="position:fixed;bottom:0;left:0;width:100%;background:#fffbe6;border-top:1px solid #e2c96f;padding:1rem;box-shadow:0 -2px 8px rgba(0,0,0,0.07);display:none;z-index:9999;">
-        <span>
-            We use cookies to improve your experience. Non-essential cookies (analytics, personalization) require your consent. 
-            <a href="privacy.html" target="_blank">Learn more</a>
-        </span>
-        <button id="cookie-accept" style="margin-left:1rem;">Accept</button>
-        <button id="cookie-reject" style="margin-left:0.5rem;">Reject</button>
-    </div>
-    <script>
-    (function() {
-        var banner = document.getElementById('cookie-banner');
-        var accepted = localStorage.getItem('cookieConsent');
-        if (!accepted) banner.style.display = 'block';
-
-        document.getElementById('cookie-accept').onclick = function() {
-            localStorage.setItem('cookieConsent', 'accepted');
-            banner.style.display = 'none';
-            // Place non-essential cookie scripts here, e.g. analytics
-            // Example: load Google Analytics only if accepted
-            var gaScript = document.createElement('script');
-            gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V";
-            gaScript.async = true;
-            document.head.appendChild(gaScript);
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-3BSHG1DE6V');
-        };
-        document.getElementById('cookie-reject').onclick = function() {
-            localStorage.setItem('cookieConsent', 'rejected');
-            banner.style.display = 'none';
-            // Do not load non-essential cookies/scripts
-        };
-    })();
-    </script>
-    
     <!-- xxxx navigation start xxxxx -->
     <button class="sidebar-toggle">☰</button>
     <div class="overlay"></div>
@@ -1286,6 +1212,9 @@
                 <a href="Articles/Quality-Assurance-vs-Quality-Control-Key-Differences-Explained.html" class="sidebar-link">Quality Assurance vs Quality Control: Key Differences Explained</a>
         </div>
     </aside>
-    <!-- xxxx navigation end xxxxx -->       
+    <!-- xxxx navigation end xxxxx -->   
+
+
+
 </body>
 </html>
