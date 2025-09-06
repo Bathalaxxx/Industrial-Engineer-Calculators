@@ -66,6 +66,27 @@
             background-color: #f5f7fa;
         }
 
+        .related-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .tool-chip {
+            background-color: #e3f2fd;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .tool-chip:hover {
+            background-color: #bbdefb;
+        }        
+
         /* xxxx navigation start xxxxx */
         .sidebar-toggle {
             position: fixed;
@@ -650,7 +671,7 @@
                         <li><a href="/terms.html">Terms</a></li>
                         <li><a href="/privacy.html">Privacy Policy</a></li>
                         <li><a href="/contact.html">Contact</a></li>
-                        <li><a href="/sitemap.html">Sitemap</a></li>
+                        
                     </ul>
                 </nav>
             </div>
@@ -902,6 +923,24 @@
             </ol>
         </div>
     </div>
+
+        <section class="content-section">
+            <h2>Related Tools</h2>
+            <div>               
+                <div class="related-tools">
+                    <a href="/anova.html" class="tool-chip">Chi-Square Test</a>
+                    <a href="/chisquaretest.html" class="tool-chip">Chi-Square Test</a>
+                    <a href="/correlation.html" class="tool-chip">Correlation Analysis</a>
+                    <a href="/coefficient-of-variation-calculator.html" class="tool-chip">Coefficient of Variation</a>
+                    <a href="/goodnessoffit.html" class="tool-chip">Goodness of Fit</a>
+                    <a href="/regression.html" class="tool-chip">Regression</a>
+                    <a href="/samplesize.html" class="tool-chip">Sample Size</a>
+                    <a href="/taguchi.html" class="tool-chip">Taguchi</a>
+                    <a href="/ttest.html" class="tool-chip">T-Test</a>
+                    <a href="/ztest.html" class="tool-chip">Z-Test</a>
+                </div>
+            </div>
+        </section>    
     
     <footer>
         <div class="container">
@@ -911,7 +950,6 @@
                 <a href="/terms.html">Terms of Service</a>
                 <a href="/privacy.html">Privacy Policy</a>
                 <a href="/contact.html">Contact Us</a>
-                <a href="/sitemap.html">Sitemap</a>
             </div>
             <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
             <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
@@ -1049,7 +1087,6 @@
             <a href="/terms.html" class="sidebar-link">Terms of Service</a>
             <a href="/privacy.html" class="sidebar-link">Privacy Policy</a>
             <a href="/contact.html" class="sidebar-link">Contact Us</a>
-            <a href="/sitemap.html" class="sidebar-link">Sitemap</a>
         </div>
     </div>
         
@@ -1065,9 +1102,9 @@
                 <a href="/linebalancing.html" class="sidebar-link">Line Balancing</a>
                 <a href="/takttime.html" class="sidebar-link">Takt Time</a>
                 <a href="/synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
-                <a href="/machine-utilization-calculator.html" class="sidebar-link">Synchronous Servicing</a>
-                <a href="/manpower-calculator.html" class="sidebar-link active">Production Capacity</a>
-                <a href="/production-capacity-calculator.html" class="sidebar-link">Synchronous Servicing</a>
+                <a href="/machine-utilization-calculator.html" class="sidebar-link">Machine Utilization</a>
+                <a href="/manpower-calculator.html" class="sidebar-link active">Manpower Calculator</a>
+                <a href="/production-capacity-calculator.html" class="sidebar-link">Production Capacity</a>
             </div>
         </div>
         
@@ -1083,16 +1120,6 @@
                 <a href="/sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
                 <a href="/oee-calculation.html" class="sidebar-link">OEE Calculator</a>
                 <a href="/quality-function-deployment" class="sidebar-link">Quality Function Deployment</a>
-            </div>
-
-            <div class="sidebar-category-content">
-                <a href="/acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
-                <a href="/controlcharts.html" class="sidebar-link">Control Charts</a>
-                <a href="/processcapability.html" class="sidebar-link">Process Capability</a>
-                <a href="/sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
-                <a href="/oee-calculation.html" class="sidebar-link">OEE Calculator</a>
-                <a href="/quality-function-deployment" class="sidebar-link">Quality Function Deployment</a>
-
             </div>
         </div>
         
@@ -1203,6 +1230,7 @@
             </div>
             <div class="sidebar-category-content">
                 <a href="/reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+                <a href="/failure-mode-and-effects-analysis-fmea.html" class="sidebar-link">FMEA</a>
             </div>
         </div>
         <div class="sidebar-category">
@@ -1214,6 +1242,8 @@
                 <a href="Negative-Correlation-Understanding-Inverse-Relationships-in-Data.html" class="sidebar-link">Negative Correlation: Understanding Inverse Relationships in Data</a>
                 <a href="Parameter-vs-Statistic-Understanding-the-Key-Differences.html" class="sidebar-link">Statistic vs Parameter: Understanding the Key Differences</a>
                 <a href="Quality-Assurance-vs-Quality-Control-Key-Differences-Explained.html" class="sidebar-link">Quality Assurance vs Quality Control: Key Differences Explained</a>
+                <a href="ABC-Analysis-Made-Easy.html" class="sidebar-link">ABC Analysis Made Easy: Classify Your Inventory in Minutes</a>
+                <a href="EOQ-Optimize-Your-Inventory-Costs.html" class="sidebar-link">EOQ Order Quantity: Optimize Your Inventory</a>
             </div>
         </div>
     </aside>         

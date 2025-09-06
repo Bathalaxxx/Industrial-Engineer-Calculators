@@ -35,7 +35,7 @@ This project provides easy-to-use tools to simplify production planning, quality
 2. Choose a category (Production, Quality, Inventory, etc.)  
 3. Click **Use Calculator** to open the tool  
 
-All calculators run directly in your browser — no installation needed.
+All calculators run directly in your browser, no installation needed.
 
 ---
 
