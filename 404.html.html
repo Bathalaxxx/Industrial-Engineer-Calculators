@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found - Industrial Engineering Calculators</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .error-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 3rem 0;
+        }
+        
+        .error-code {
+            font-size: 8rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+        
+        .error-message {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark-color);
+        }
+        
+        .error-description {
+            max-width: 600px;
+            margin-bottom: 2rem;
+            color: var(--text-light);
+        }
+        
+        .home-button {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .home-button:hover {
+            background-color: #2980b9;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .error-code {
+                font-size: 6rem;
+            }
+            
+            .error-message {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Industrial Engineering <span>Calculators</span></div>
+                <nav>
+                    <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="error-content">
+                <div class="error-code">404</div>
+                <h1 class="error-message">Page Not Found</h1>
+                <p class="error-description">
+                    The page you're looking for doesn't exist. It might have been moved, deleted, or perhaps you mistyped the URL.
+                </p>
+                <a href="index.html" class="home-button">Return to Homepage</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            <p class="copyright">&copy; 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
