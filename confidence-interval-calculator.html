@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-
-
-    </script>
     <!--FAVICON-->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -17,7 +13,6 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-3BSHG1DE6V');
     </script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5607576434988374"
@@ -25,15 +20,11 @@
     <meta charset="UTF-8">
     <meta name="google-adsense-account" content="ca-pub-5607576434988374">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>T-Test Calculator | Industrial Engineering Calculators</title>
-    <meta name="description" content="Perform one-sample and two-sample t-tests for statistical analysis in industrial engineering. Calculate t-statistics, p-values, and confidence intervals with ease.">
-    <meta name="keywords" content="t-test calculator, one-sample t-test, two-sample t-test, paired t-test, statistical analysis, hypothesis testing, industrial engineering, quality control, p-value calculation, confidence interval">
+    <meta name="description" content="Calculate confidence intervals for means and proportions with our easy-to-use industrial engineering calculator.">
+    <title>Confidence Interval Calculator | Industrial Engineering Calculators</title>
+    <meta name="keywords" content="confidence interval calculator, statistical analysis, industrial engineering, mean confidence interval, proportion confidence interval, statistics, quality control">
     <meta name="author" content="IECalculators.online">
 
- 
-    
-
-    
      <!-- Clarity tracking code for https://iecalculators.online/ -->
     <script type="text/javascript">
         (function(c,l,a,r,i,t,y){
@@ -608,27 +599,26 @@
     
     <section class="page-hero">
         <div class="container">
-            <h1>T-Test Calculator</h1>
-            <p>Perform one-sample and two-sample t-tests for statistical analysis</p>
+            <h1>Confidence Interval Calculator</h1>
+            <p>Calculate confidence intervals for means and proportions with statistical precision</p>
         </div>
     </section>
     
     <main class="container">
         <section class="content-section">
             <div class="calculator-intro">
-                <h2>Student's T-Test</h2>
-                <p>The t-test is a statistical test used to determine if there is a significant difference between the means of two groups or between a sample mean and a known value. It's widely used in hypothesis testing in industrial engineering and quality control applications.</p>
+                <h2>Confidence Intervals</h2>
+                <p>A confidence interval gives an estimated range of values which is likely to include an unknown population parameter. The width of the confidence interval gives us an idea of how uncertain we are about the unknown parameter.</p>
                 
                 <div class="formula-box">
-                    t = (X̄ - μ) / (s / √n)
+                    Confidence Interval = Point Estimate ± (Critical Value) × (Standard Error)
                 </div>
                 
                 <p>Where:</p>
                 <ul>
-                    <li><strong>X̄</strong> = Sample mean</li>
-                    <li><strong>μ</strong> = Population mean (or mean difference for paired tests)</li>
-                    <li><strong>s</strong> = Sample standard deviation</li>
-                    <li><strong>n</strong> = Sample size</li>
+                    <li><strong>Point Estimate</strong> = Sample mean or proportion</li>
+                    <li><strong>Critical Value</strong> = z* or t* value based on confidence level</li>
+                    <li><strong>Standard Error</strong> = Standard deviation of the sampling distribution</li>
                 </ul>
             </div>
 
@@ -636,289 +626,242 @@
             <div id="container-5d225b5e0b22c0980e365900e2390e1d"></div>    <!-- adterra native banner -->            
             
             <div class="scenario-selector">
-                <h3>Test Type</h3>
-                <p>Select the type of t-test you want to perform:</p>
+                <h3>Interval Type</h3>
+                <p>Select the type of confidence interval you want to calculate:</p>
                 
                 <div class="scenario-tabs">
-                    <div class="scenario-tab active" data-scenario="one-sample">One-Sample T-Test</div>
-                    <div class="scenario-tab" data-scenario="two-sample">Two-Sample T-Test</div>
-                    <div class="scenario-tab" data-scenario="paired">Paired T-Test</div>
+                    <div class="scenario-tab active" data-scenario="mean-known">Mean (σ Known)</div>
+                    <div class="scenario-tab" data-scenario="mean-unknown">Mean (σ Unknown)</div>
+                    <div class="scenario-tab" data-scenario="proportion">Proportion</div>
                 </div>
                 
-                <!-- One-Sample T-Test Scenario -->
-                <div class="scenario-content active" id="one-sample-scenario">
-                    <h3>One-Sample T-Test</h3>
-                    <p>Compare the mean of a single sample to a known value or hypothesized mean.</p>
+                <!-- Mean with Known σ Scenario -->
+                <div class="scenario-content active" id="mean-known-scenario">
+                    <h3>Confidence Interval for Mean (Population Standard Deviation Known)</h3>
+                    <p>Use this when you know the population standard deviation. This uses the z-distribution.</p>
                     
-                    <form id="one-sample-form">
+                    <form id="mean-known-form">
                         <div class="input-group">
-                            <label for="one-sample-data">Sample Data (comma-separated values):</label>
-                            <textarea id="one-sample-data" placeholder="Enter values like: 12.5, 13.2, 11.8, 14.1, 12.9" required></textarea>
+                            <label for="mean-known-data">Sample Data (comma-separated values):</label>
+                            <textarea id="mean-known-data" placeholder="Enter values like: 12.5, 13.2, 11.8, 14.1, 12.9"></textarea>
                             <p class="help-text">Enter numerical values separated by commas. You can also copy and paste from a spreadsheet.</p>
                         </div>
                         
                         <div class="input-row">
                             <div class="input-group">
-                                <label for="one-sample-hypothesized-mean">Hypothesized Mean (μ₀):</label>
-                                <input type="number" id="one-sample-hypothesized-mean" step="0.001" required>
+                                <label for="mean-known-mean">Sample Mean (X̄):</label>
+                                <input type="number" id="mean-known-mean" step="0.001" placeholder="Optional if providing data">
                             </div>
                             
                             <div class="input-group">
-                                <label for="one-sample-alpha">Significance Level (α):</label>
-                                <select id="one-sample-alpha">
-                                    <option value="0.01">0.01 (99% confidence)</option>
-                                    <option value="0.05" selected>0.05 (95% confidence)</option>
-                                    <option value="0.10">0.10 (90% confidence)</option>
-                                </select>
+                                <label for="mean-known-std">Population Standard Deviation (σ):</label>
+                                <input type="number" id="mean-known-std" step="0.001" required min="0">
                             </div>
-                        </div>
-                        
-                        <button type="submit" class="calculate-btn">Calculate T-Test</button>
-                    </form>
-                    
-                    <div class="result-box" id="one-sample-result">
-                        <h3>One-Sample T-Test Results</h3>
-                        
-                        <div class="result-grid">
-                            <div class="result-card">
-                                <h4>T-Statistic</h4>
-                                <div class="result-value" id="one-sample-t-value"></div>
-                            </div>
-                            
-                            <div class="result-card">
-                                <h4>Degrees of Freedom</h4>
-                                <div class="result-value" id="one-sample-df"></div>
-                            </div>
-                            
-                            <div class="result-card">
-                                <h4>P-Value</h4>
-                                <div class="result-value" id="one-sample-p-value"></div>
-                            </div>
-                            
-                            <div class="result-card">
-                                <h4>Critical Value</h4>
-                                <div class="result-value" id="one-sample-critical-value"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="interpretation">
-                            <h4>Interpretation</h4>
-                            <p id="one-sample-interpretation"></p>
-                        </div>
-                        
-                        <h4>Sample Statistics</h4>
-                        <table>
-                            <tr>
-                                <th>Statistic</th>
-                                <th>Value</th>
-                            </tr>
-                            <tr>
-                                <td>Sample Size (n)</td>
-                                <td id="one-sample-size"></td>
-                            </tr>
-                            <tr>
-                                <td>Sample Mean (X̄)</td>
-                                <td id="one-sample-mean"></td>
-                            </tr>
-                            <tr>
-                                <td>Sample Standard Deviation (s)</td>
-                                <td id="one-sample-std"></td>
-                            </tr>
-                            <tr>
-                                <td>Standard Error of Mean</td>
-                                <td id="one-sample-sem"></td>
-                            </tr>
-                            <tr>
-                                <td>95% Confidence Interval</td>
-                                <td id="one-sample-ci"></td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                
-                <!-- Two-Sample T-Test Scenario -->
-                <div class="scenario-content" id="two-sample-scenario">
-                    <h3>Two-Sample T-Test</h3>
-                    <p>Compare the means of two independent samples to determine if they are significantly different.</p>
-                    
-                    <form id="two-sample-form">
-                        <div class="input-group">
-                            <label for="sample1-data">Sample 1 Data (comma-separated values):</label>
-                            <textarea id="sample1-data" placeholder="Enter values like: 12.5, 13.2, 11.8, 14.1, 12.9" required></textarea>
-                        </div>
-                        
-                        <div class="input-group">
-                            <label for="sample2-data">Sample 2 Data (comma-separated values):</label>
-                            <textarea id="sample2-data" placeholder="Enter values like: 10.8, 11.5, 12.1, 10.9, 11.7" required></textarea>
                         </div>
                         
                         <div class="input-row">
                             <div class="input-group">
-                                <label for="two-sample-alpha">Significance Level (α):</label>
-                                <select id="two-sample-alpha">
-                                    <option value="0.01">0.01 (99% confidence)</option>
-                                    <option value="0.05" selected>0.05 (95% confidence)</option>
-                                    <option value="0.10">0.10 (90% confidence)</option>
-                                </select>
+                                <label for="mean-known-n">Sample Size (n):</label>
+                                <input type="number" id="mean-known-n" step="1" min="1" placeholder="Optional if providing data">
                             </div>
                             
                             <div class="input-group">
-                                <label for="equal-variances">Assume Equal Variances?</label>
-                                <select id="equal-variances">
-                                    <option value="yes">Yes</option>
-                                    <option value="no" selected>No (Welch's test)</option>
+                                <label for="mean-known-confidence">Confidence Level:</label>
+                                <select id="mean-known-confidence">
+                                    <option value="0.90">90%</option>
+                                    <option value="0.95" selected>95%</option>
+                                    <option value="0.99">99%</option>
                                 </select>
                             </div>
                         </div>
                         
-                        <button type="submit" class="calculate-btn">Calculate T-Test</button>
+                        <button type="submit" class="calculate-btn">Calculate Confidence Interval</button>
                     </form>
                     
-                    <div class="result-box" id="two-sample-result">
-                        <h3>Two-Sample T-Test Results</h3>
+                    <div class="result-box" id="mean-known-result">
+                        <h3>Confidence Interval Results</h3>
                         
                         <div class="result-grid">
                             <div class="result-card">
-                                <h4>T-Statistic</h4>
-                                <div class="result-value" id="two-sample-t-value"></div>
+                                <h4>Sample Mean (X̄)</h4>
+                                <div class="result-value" id="mean-known-calc-mean"></div>
                             </div>
                             
                             <div class="result-card">
-                                <h4>Degrees of Freedom</h4>
-                                <div class="result-value" id="two-sample-df"></div>
+                                <h4>Margin of Error</h4>
+                                <div class="result-value" id="mean-known-margin"></div>
                             </div>
                             
                             <div class="result-card">
-                                <h4>P-Value</h4>
-                                <div class="result-value" id="two-sample-p-value"></div>
+                                <h4>Confidence Interval</h4>
+                                <div class="result-value" id="mean-known-ci"></div>
                             </div>
                             
                             <div class="result-card">
-                                <h4>Critical Value</h4>
-                                <div class="result-value" id="two-sample-critical-value"></div>
+                                <h4>Sample Size (n)</h4>
+                                <div class="result-value" id="mean-known-calc-n"></div>
                             </div>
                         </div>
                         
                         <div class="interpretation">
                             <h4>Interpretation</h4>
-                            <p id="two-sample-interpretation"></p>
+                            <p id="mean-known-interpretation"></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mean with Unknown σ Scenario -->
+                <div class="scenario-content" id="mean-unknown-scenario">
+                    <h3>Confidence Interval for Mean (Population Standard Deviation Unknown)</h3>
+                    <p>Use this when you don't know the population standard deviation. This uses the t-distribution.</p>
+                    
+                    <form id="mean-unknown-form">
+                        <div class="input-group">
+                            <label for="mean-unknown-data">Sample Data (comma-separated values):</label>
+                            <textarea id="mean-unknown-data" placeholder="Enter values like: 12.5, 13.2, 11.8, 14.1, 12.9" required></textarea>
+                            <p class="help-text">Enter numerical values separated by commas. You can also copy and paste from a spreadsheet.</p>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="mean-unknown-confidence">Confidence Level:</label>
+                                <select id="mean-unknown-confidence">
+                                    <option value="0.90">90%</option>
+                                    <option value="0.95" selected>95%</option>
+                                    <option value="0.99">99%</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="calculate-btn">Calculate Confidence Interval</button>
+                    </form>
+                    
+                    <div class="result-box" id="mean-unknown-result">
+                        <h3>Confidence Interval Results</h3>
+                        
+                        <div class="result-grid">
+                            <div class="result-card">
+                                <h4>Sample Mean (X̄)</h4>
+                                <div class="result-value" id="mean-unknown-calc-mean"></div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <h4>Sample Standard Deviation (s)</h4>
+                                <div class="result-value" id="mean-unknown-std"></div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <h4>Margin of Error</h4>
+                                <div class="result-value" id="mean-unknown-margin"></div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <h4>Confidence Interval</h4>
+                                <div class="result-value" id="mean-unknown-ci"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="interpretation">
+                            <h4>Interpretation</h4>
+                            <p id="mean-unknown-interpretation"></p>
                         </div>
                         
                         <h4>Sample Statistics</h4>
                         <table>
                             <tr>
                                 <th>Statistic</th>
-                                <th>Sample 1</th>
-                                <th>Sample 2</th>
+                                <th>Value</th>
                             </tr>
                             <tr>
                                 <td>Sample Size (n)</td>
-                                <td id="two-sample1-size"></td>
-                                <td id="two-sample2-size"></td>
+                                <td id="mean-unknown-calc-n"></td>
                             </tr>
                             <tr>
-                                <td>Sample Mean (X̄)</td>
-                                <td id="two-sample1-mean"></td>
-                                <td id="two-sample2-mean"></td>
-                            </tr>
-                            <tr>
-                                <td>Sample Standard Deviation (s)</td>
-                                <td id="two-sample1-std"></td>
-                                <td id="two-sample2-std"></td>
+                                <td>Degrees of Freedom</td>
+                                <td id="mean-unknown-df"></td>
                             </tr>
                             <tr>
                                 <td>Standard Error of Mean</td>
-                                <td id="two-sample1-sem"></td>
-                                <td id="two-sample2-sem"></td>
+                                <td id="mean-unknown-sem"></td>
                             </tr>
                         </table>
                     </div>
                 </div>
                 
-                <!-- Paired T-Test Scenario -->
-                <div class="scenario-content" id="paired-scenario">
-                    <h3>Paired T-Test</h3>
-                    <p>Compare the means of two related samples (e.g., before and after measurements).</p>
+                <!-- Proportion Scenario -->
+                <div class="scenario-content" id="proportion-scenario">
+                    <h3>Confidence Interval for Proportion</h3>
+                    <p>Use this to estimate a population proportion based on a sample proportion.</p>
                     
-                    <form id="paired-form">
-                        <div class="input-group">
-                            <label for="before-data">Before Treatment Data (comma-separated values):</label>
-                            <textarea id="before-data" placeholder="Enter values like: 12.5, 13.2, 11.8, 14.1, 12.9" required></textarea>
+                    <form id="proportion-form">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="proportion-x">Number of Successes (x):</label>
+                                <input type="number" id="proportion-x" step="1" min="0" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="proportion-n">Sample Size (n):</label>
+                                <input type="number" id="proportion-n" step="1" min="1" required>
+                            </div>
                         </div>
                         
-                        <div class="input-group">
-                            <label for="after-data">After Treatment Data (comma-separated values):</label>
-                            <textarea id="after-data" placeholder="Enter values like: 10.8, 11.5, 12.1, 10.9, 11.7" required></textarea>
-                            <p class="help-text">Ensure the order of measurements matches the before treatment data.</p>
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="proportion-confidence">Confidence Level:</label>
+                                <select id="proportion-confidence">
+                                    <option value="0.90">90%</option>
+                                    <option value="0.95" selected>95%</option>
+                                    <option value="0.99">99%</option>
+                                </select>
+                            </div>
                         </div>
                         
-                        <div class="input-group">
-                            <label for="paired-alpha">Significance Level (α):</label>
-                            <select id="paired-alpha">
-                                <option value="0.01">0.01 (99% confidence)</option>
-                                <option value="0.05" selected>0.05 (95% confidence)</option>
-                                <option value="0.10">0.10 (90% confidence)</option>
-                            </select>
-                        </div>
-                        
-                        <button type="submit" class="calculate-btn">Calculate T-Test</button>
+                        <button type="submit" class="calculate-btn">Calculate Confidence Interval</button>
                     </form>
                     
-                    <div class="result-box" id="paired-result">
-                        <h3>Paired T-Test Results</h3>
+                    <div class="result-box" id="proportion-result">
+                        <h3>Confidence Interval Results</h3>
                         
                         <div class="result-grid">
                             <div class="result-card">
-                                <h4>T-Statistic</h4>
-                                <div class="result-value" id="paired-t-value"></div>
+                                <h4>Sample Proportion (p̂)</h4>
+                                <div class="result-value" id="proportion-p"></div>
                             </div>
                             
                             <div class="result-card">
-                                <h4>Degrees of Freedom</h4>
-                                <div class="result-value" id="paired-df"></div>
+                                <h4>Margin of Error</h4>
+                                <div class="result-value" id="proportion-margin"></div>
                             </div>
                             
                             <div class="result-card">
-                                <h4>P-Value</h4>
-                                <div class="result-value" id="paired-p-value"></div>
-                            </div>
-                            
-                            <div class="result-card">
-                                <h4>Critical Value</h4>
-                                <div class="result-value" id="paired-critical-value"></div>
+                                <h4>Confidence Interval</h4>
+                                <div class="result-value" id="proportion-ci"></div>
                             </div>
                         </div>
                         
                         <div class="interpretation">
                             <h4>Interpretation</h4>
-                            <p id="paired-interpretation"></p>
+                            <p id="proportion-interpretation"></p>
                         </div>
                         
-                        <h4>Difference Statistics</h4>
+                        <h4>Calculation Details</h4>
                         <table>
                             <tr>
                                 <th>Statistic</th>
                                 <th>Value</th>
                             </tr>
                             <tr>
-                                <td>Number of Pairs (n)</td>
-                                <td id="paired-size"></td>
+                                <td>Number of Successes (x)</td>
+                                <td id="proportion-calc-x"></td>
                             </tr>
                             <tr>
-                                <td>Mean Difference</td>
-                                <td id="paired-mean-diff"></td>
+                                <td>Sample Size (n)</td>
+                                <td id="proportion-calc-n"></td>
                             </tr>
                             <tr>
-                                <td>Standard Deviation of Differences</td>
-                                <td id="paired-std-diff"></td>
-                            </tr>
-                            <tr>
-                                <td>Standard Error of Mean Difference</td>
-                                <td id="paired-sem-diff"></td>
-                            </tr>
-                            <tr>
-                                <td>95% CI for Mean Difference</td>
-                                <td id="paired-ci-diff"></td>
+                                <td>Standard Error</td>
+                                <td id="proportion-se"></td>
                             </tr>
                         </table>
                     </div>
@@ -926,46 +869,46 @@
             </div>
             
             <div class="examples-section">
-                <h3>T-Test Examples in Industrial Engineering</h3>
+                <h3>Confidence Interval Examples in Industrial Engineering</h3>
                 
                 <div class="example">
                     <h4>Quality Control Example</h4>
-                    <p>A manufacturer wants to test if the mean diameter of produced bolts (sample: 10.1, 10.2, 9.9, 10.0, 10.1 mm) is significantly different from the specification of 10.0 mm (one-sample t-test).</p>
+                    <p>A quality engineer measures the diameter of 50 bolts and finds a sample mean of 10.2 mm with a known population standard deviation of 0.5 mm. They calculate a 95% confidence interval to estimate the true mean diameter of all bolts produced.</p>
                 </div>
                 
                 <div class="example">
                     <h4>Process Improvement Example</h4>
-                    <p>An engineer compares the output of two machines (Machine A: 105, 108, 110, 107, 106 units; Machine B: 100, 102, 99, 101, 103 units) to determine if there's a significant difference in productivity (two-sample t-test).</p>
+                    <p>An industrial engineer wants to estimate the proportion of defective items in a production process. From a sample of 200 items, 12 are found to be defective. They calculate a 99% confidence interval for the true proportion of defective items.</p>
                 </div>
                 
                 <div class="example">
-                    <h4>Before-After Study Example</h4>
-                    <p>A company measures processing time before (12.5, 13.0, 12.8, 13.2, 12.9 min) and after (11.8, 12.0, 11.7, 12.1, 11.9 min) implementing a new workflow to see if the change significantly reduced processing time (paired t-test).</p>
+                    <h4>Time Study Example</h4>
+                    <p>A work measurement analyst times 15 cycles of a task and wants to estimate the true average time with 90% confidence. Since the population standard deviation is unknown, they use the sample standard deviation and the t-distribution.</p>
                 </div>
             </div>
             
             <div class="calculator-intro">
-                <h3>Understanding T-Test Results</h3>
+                <h3>Understanding Confidence Intervals</h3>
                 <table>
                     <tr>
-                        <th>P-Value Range</th>
-                        <th>Interpretation</th>
+                        <th>Confidence Level</th>
+                        <th>Meaning</th>
+                        <th>Common z* Values</th>
                     </tr>
                     <tr>
-                        <td>p ≤ 0.01</td>
-                        <td>Strong evidence against the null hypothesis</td>
+                        <td>90%</td>
+                        <td>We are 90% confident that the interval contains the true parameter</td>
+                        <td>1.645</td>
                     </tr>
                     <tr>
-                        <td>0.01 < p ≤ 0.05</td>
-                        <td>Moderate evidence against the null hypothesis</td>
+                        <td>95%</td>
+                        <td>We are 95% confident that the interval contains the true parameter</td>
+                        <td>1.960</td>
                     </tr>
                     <tr>
-                        <td>0.05 < p ≤ 0.10</td>
-                        <td>Weak evidence against the null hypothesis</td>
-                    </tr>
-                    <tr>
-                        <td>p > 0.10</td>
-                        <td>Little or no evidence against the null hypothesis</td>
+                        <td>99%</td>
+                        <td>We are 99% confident that the interval contains the true parameter</td>
+                        <td>2.576</td>
                     </tr>
                 </table>
             </div>
@@ -983,6 +926,7 @@
                     <a href="regression.html" class="tool-chip">Regression</a>
                     <a href="samplesize.html" class="tool-chip">Sample Size</a>
                     <a href="taguchi.html" class="tool-chip">Taguchi</a>
+                    <a href="ttest.html" class="tool-chip">T-Test</a>
                     <a href="ztest.html" class="tool-chip">Z-Test</a>
                 </div>
             </div>
@@ -1091,240 +1035,180 @@
         
         function calculateStdDev(data, mean) {
             const squaredDiffs = data.map(val => Math.pow(val - mean, 2));
-            return Math.sqrt(squaredDiffs.reduce((sum, val) => sum + val, 0) / (data.length - 1));
+            const variance = squaredDiffs.reduce((sum, val) => sum + val, 0) / (data.length - 1);
+            return Math.sqrt(variance);
         }
         
-        function calculateTStatistic(mean, hypothesizedMean, stdDev, n) {
-            return (mean - hypothesizedMean) / (stdDev / Math.sqrt(n));
+        function getZValue(confidenceLevel) {
+            // For common confidence levels
+            const zValues = {
+                0.90: 1.645,
+                0.95: 1.960,
+                0.99: 2.576
+            };
+            return zValues[confidenceLevel] || 1.960;
         }
         
-        // Approximate p-value from t-distribution (simplified)
-        function calculatePValue(t, df) {
-            // Simplified approximation - in a real application, you'd use a proper statistical library
-            const tSquared = t * t;
-            const p = Math.exp(-0.5 * tSquared) / Math.sqrt(2 * Math.PI);
-            return Math.min(1, p * 2); // Two-tailed test
+        function getTValue(confidenceLevel, df) {
+            // For simplicity, using approximate t-values for common confidence levels
+            // In a real application, you'd use a proper t-distribution table or calculation
+            const tValues = {
+                0.90: [3.078, 1.886, 1.638, 1.533, 1.476, 1.440, 1.415, 1.397, 1.383, 1.372, 
+                       1.363, 1.356, 1.350, 1.345, 1.341, 1.337, 1.333, 1.330, 1.328, 1.325,
+                       1.323, 1.321, 1.319, 1.318, 1.316, 1.315, 1.314, 1.313, 1.311, 1.310,
+                       1.282], // Last value is for infinity (z-value)
+                0.95: [6.314, 2.920, 2.353, 2.132, 2.015, 1.943, 1.895, 1.860, 1.833, 1.812,
+                       1.796, 1.782, 1.771, 1.761, 1.753, 1.746, 1.740, 1.734, 1.729, 1.725,
+                       1.721, 1.717, 1.714, 1.711, 1.708, 1.706, 1.703, 1.701, 1.699, 1.697,
+                       1.645], // Last value is for infinity (z-value)
+                0.99: [31.821, 6.965, 4.541, 3.747, 3.365, 3.143, 2.998, 2.896, 2.821, 2.764,
+                       2.718, 2.681, 2.650, 2.624, 2.602, 2.583, 2.567, 2.552, 2.539, 2.528,
+                       2.518, 2.508, 2.500, 2.492, 2.485, 2.479, 2.473, 2.467, 2.462, 2.457,
+                       2.326]  // Last value is for infinity (z-value)
+            };
+            
+            const levelValues = tValues[confidenceLevel];
+            if (df >= 30) return levelValues[30]; // For df >= 30, use the last value (approximation)
+            if (df < 1) return levelValues[0]; // For df < 1, use the first value
+            return levelValues[df - 1] || levelValues[levelValues.length - 1];
         }
         
-        // One-sample t-test calculation
-        document.getElementById('one-sample-form').addEventListener('submit', function(e) {
+        // Mean with known σ form handling
+        document.getElementById('mean-known-form').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const dataString = document.getElementById('one-sample-data').value;
-            const data = parseData(dataString);
+            // Get form values
+            const dataString = document.getElementById('mean-known-data').value;
+            const inputMean = parseFloat(document.getElementById('mean-known-mean').value);
+            const std = parseFloat(document.getElementById('mean-known-std').value);
+            const inputN = parseInt(document.getElementById('mean-known-n').value);
+            const confidenceLevel = document.getElementById('mean-known-confidence').value;
             
-            if (data.length < 2) {
-                alert('Please enter at least 2 data values');
-                return;
+            let mean, n, data;
+            
+            // Process data if provided
+            if (dataString) {
+                data = parseData(dataString);
+                if (data.length < 2) {
+                    alert('Please enter at least 2 data points');
+                    return;
+                }
+                mean = calculateMean(data);
+                n = data.length;
+            } else {
+                // Use provided values
+                if (isNaN(inputMean) || isNaN(inputN) || inputN < 1) {
+                    alert('Please provide either data values or both mean and sample size');
+                    return;
+                }
+                mean = inputMean;
+                n = inputN;
             }
             
-            const hypothesizedMean = parseFloat(document.getElementById('one-sample-hypothesized-mean').value);
-            const alpha = parseFloat(document.getElementById('one-sample-alpha').value);
+            // Calculate confidence interval
+            const z = getZValue(confidenceLevel);
+            const margin = z * (std / Math.sqrt(n));
+            const lower = mean - margin;
+            const upper = mean + margin;
+            
+            // Display results
+            document.getElementById('mean-known-calc-mean').textContent = mean.toFixed(4);
+            document.getElementById('mean-known-margin').textContent = margin.toFixed(4);
+            document.getElementById('mean-known-ci').textContent = `${lower.toFixed(4)} to ${upper.toFixed(4)}`;
+            document.getElementById('mean-known-calc-n').textContent = n;
+            
+            const confidencePercent = parseFloat(confidenceLevel) * 100;
+            document.getElementById('mean-known-interpretation').textContent = 
+                `We are ${confidencePercent}% confident that the true population mean is between ${lower.toFixed(4)} and ${upper.toFixed(4)}.`;
+            
+            // Show result box
+            document.getElementById('mean-known-result').style.display = 'block';
+        });
+        
+        // Mean with unknown σ form handling
+        document.getElementById('mean-unknown-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const dataString = document.getElementById('mean-unknown-data').value;
+            const confidenceLevel = document.getElementById('mean-unknown-confidence').value;
+            
+            // Process data
+            const data = parseData(dataString);
+            if (data.length < 2) {
+                alert('Please enter at least 2 data points');
+                return;
+            }
             
             const n = data.length;
             const mean = calculateMean(data);
-            const stdDev = calculateStdDev(data, mean);
-            const t = calculateTStatistic(mean, hypothesizedMean, stdDev, n);
+            const std = calculateStdDev(data, mean);
             const df = n - 1;
-            const pValue = calculatePValue(t, df);
             
-            // Critical value approximation (for two-tailed test)
-            const criticalValue = 2.0; // Simplified - would normally use t-distribution table
+            // Calculate confidence interval
+            const t = getTValue(confidenceLevel, df);
+            const sem = std / Math.sqrt(n);
+            const margin = t * sem;
+            const lower = mean - margin;
+            const upper = mean + margin;
             
             // Display results
-            document.getElementById('one-sample-t-value').textContent = t.toFixed(4);
-            document.getElementById('one-sample-df').textContent = df;
-            document.getElementById('one-sample-p-value').textContent = pValue.toFixed(4);
-            document.getElementById('one-sample-critical-value').textContent = criticalValue.toFixed(4);
+            document.getElementById('mean-unknown-calc-mean').textContent = mean.toFixed(4);
+            document.getElementById('mean-unknown-std').textContent = std.toFixed(4);
+            document.getElementById('mean-unknown-margin').textContent = margin.toFixed(4);
+            document.getElementById('mean-unknown-ci').textContent = `${lower.toFixed(4)} to ${upper.toFixed(4)}`;
+            document.getElementById('mean-unknown-calc-n').textContent = n;
+            document.getElementById('mean-unknown-df').textContent = df;
+            document.getElementById('mean-unknown-sem').textContent = sem.toFixed(4);
             
-            // Interpretation
-            let interpretation = '';
-            if (pValue <= alpha) {
-                interpretation = `The difference is statistically significant (p = ${pValue.toFixed(4)} ≤ α = ${alpha}). We reject the null hypothesis that the population mean equals ${hypothesizedMean}.`;
-            } else {
-                interpretation = `The difference is not statistically significant (p = ${pValue.toFixed(4)} > α = ${alpha}). We fail to reject the null hypothesis that the population mean equals ${hypothesizedMean}.`;
-            }
-            document.getElementById('one-sample-interpretation').textContent = interpretation;
+            const confidencePercent = parseFloat(confidenceLevel) * 100;
+            document.getElementById('mean-unknown-interpretation').textContent = 
+                `We are ${confidencePercent}% confident that the true population mean is between ${lower.toFixed(4)} and ${upper.toFixed(4)}.`;
             
-            // Sample statistics
-            document.getElementById('one-sample-size').textContent = n;
-            document.getElementById('one-sample-mean').textContent = mean.toFixed(4);
-            document.getElementById('one-sample-std').textContent = stdDev.toFixed(4);
-            document.getElementById('one-sample-sem').textContent = (stdDev / Math.sqrt(n)).toFixed(4);
-            
-            // Confidence interval
-            const marginError = criticalValue * (stdDev / Math.sqrt(n));
-            document.getElementById('one-sample-ci').textContent = `(${(mean - marginError).toFixed(4)}, ${(mean + marginError).toFixed(4)})`;
-            
-            // Show results
-            document.getElementById('one-sample-result').style.display = 'block';
+            // Show result box
+            document.getElementById('mean-unknown-result').style.display = 'block';
         });
         
-        // Two-sample t-test calculation
-        document.getElementById('two-sample-form').addEventListener('submit', function(e) {
+        // Proportion form handling
+        document.getElementById('proportion-form').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const data1String = document.getElementById('sample1-data').value;
-            const data2String = document.getElementById('sample2-data').value;
-            const data1 = parseData(data1String);
-            const data2 = parseData(data2String);
+            // Get form values
+            const x = parseInt(document.getElementById('proportion-x').value);
+            const n = parseInt(document.getElementById('proportion-n').value);
+            const confidenceLevel = document.getElementById('proportion-confidence').value;
             
-            if (data1.length < 2 || data2.length < 2) {
-                alert('Please enter at least 2 data values for each sample');
+            // Validate inputs
+            if (x < 0 || n < 1 || x > n) {
+                alert('Number of successes must be between 0 and sample size');
                 return;
             }
             
-            const alpha = parseFloat(document.getElementById('two-sample-alpha').value);
-            
-            const n1 = data1.length;
-            const n2 = data2.length;
-            const mean1 = calculateMean(data1);
-            const mean2 = calculateMean(data2);
-            const stdDev1 = calculateStdDev(data1, mean1);
-            const stdDev2 = calculateStdDev(data2, mean2);
-            
-            // Simplified t-calculation for two samples
-            const meanDiff = mean1 - mean2;
-            const pooledVariance = ((n1 - 1) * stdDev1 * stdDev1 + (n2 - 1) * stdDev2 * stdDev2) / (n1 + n2 - 2);
-            const stdError = Math.sqrt(pooledVariance * (1/n1 + 1/n2));
-            const t = meanDiff / stdError;
-            const df = n1 + n2 - 2;
-            const pValue = calculatePValue(t, df);
-            
-            // Critical value approximation
-            const criticalValue = 2.0; // Simplified
+            // Calculate proportion and confidence interval
+            const p = x / n;
+            const z = getZValue(confidenceLevel);
+            const se = Math.sqrt((p * (1 - p)) / n);
+            const margin = z * se;
+            const lower = Math.max(0, p - margin);
+            const upper = Math.min(1, p + margin);
             
             // Display results
-            document.getElementById('two-sample-t-value').textContent = t.toFixed(4);
-            document.getElementById('two-sample-df').textContent = df;
-            document.getElementById('two-sample-p-value').textContent = pValue.toFixed(4);
-            document.getElementById('two-sample-critical-value').textContent = criticalValue.toFixed(4);
+            document.getElementById('proportion-p').textContent = p.toFixed(4);
+            document.getElementById('proportion-margin').textContent = margin.toFixed(4);
+            document.getElementById('proportion-ci').textContent = `${lower.toFixed(4)} to ${upper.toFixed(4)}`;
+            document.getElementById('proportion-calc-x').textContent = x;
+            document.getElementById('proportion-calc-n').textContent = n;
+            document.getElementById('proportion-se').textContent = se.toFixed(4);
             
-            // Interpretation
-            let interpretation = '';
-            if (pValue <= alpha) {
-                interpretation = `The difference between means is statistically significant (p = ${pValue.toFixed(4)} ≤ α = ${alpha}). We reject the null hypothesis that the population means are equal.`;
-            } else {
-                interpretation = `The difference between means is not statistically significant (p = ${pValue.toFixed(4)} > α = ${alpha}). We fail to reject the null hypothesis that the population means are equal.`;
-            }
-            document.getElementById('two-sample-interpretation').textContent = interpretation;
+            const confidencePercent = parseFloat(confidenceLevel) * 100;
+            document.getElementById('proportion-interpretation').textContent = 
+                `We are ${confidencePercent}% confident that the true population proportion is between ${lower.toFixed(4)} and ${upper.toFixed(4)}.`;
             
-            // Sample statistics
-            document.getElementById('two-sample1-size').textContent = n1;
-            document.getElementById('two-sample2-size').textContent = n2;
-            document.getElementById('two-sample1-mean').textContent = mean1.toFixed(4);
-            document.getElementById('two-sample2-mean').textContent = mean2.toFixed(4);
-            document.getElementById('two-sample1-std').textContent = stdDev1.toFixed(4);
-            document.getElementById('two-sample2-std').textContent = stdDev2.toFixed(4);
-            document.getElementById('two-sample1-sem').textContent = (stdDev1 / Math.sqrt(n1)).toFixed(4);
-            document.getElementById('two-sample2-sem').textContent = (stdDev2 / Math.sqrt(n2)).toFixed(4);
-            
-            // Show results
-            document.getElementById('two-sample-result').style.display = 'block';
-        });
-        
-        // Paired t-test calculation
-        document.getElementById('paired-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const beforeDataString = document.getElementById('before-data').value;
-            const afterDataString = document.getElementById('after-data').value;
-            const beforeData = parseData(beforeDataString);
-            const afterData = parseData(afterDataString);
-            
-            if (beforeData.length < 2 || afterData.length < 2) {
-                alert('Please enter at least 2 data values for each set');
-                return;
-            }
-            
-            if (beforeData.length !== afterData.length) {
-                alert('The number of before and after measurements must be equal');
-                return;
-            }
-            
-            const alpha = parseFloat(document.getElementById('paired-alpha').value);
-            
-            // Calculate differences
-            const differences = beforeData.map((val, idx) => val - afterData[idx]);
-            const n = differences.length;
-            const meanDiff = calculateMean(differences);
-            const stdDevDiff = calculateStdDev(differences, meanDiff);
-            
-            // Paired t-test
-            const t = meanDiff / (stdDevDiff / Math.sqrt(n));
-            const df = n - 1;
-            const pValue = calculatePValue(t, df);
-            
-            // Critical value approximation
-            const criticalValue = 2.0; // Simplified
-            
-            // Display results
-            document.getElementById('paired-t-value').textContent = t.toFixed(4);
-            document.getElementById('paired-df').textContent = df;
-            document.getElementById('paired-p-value').textContent = pValue.toFixed(4);
-            document.getElementById('paired-critical-value').textContent = criticalValue.toFixed(4);
-            
-            // Interpretation
-            let interpretation = '';
-            if (pValue <= alpha) {
-                interpretation = `The mean difference is statistically significant (p = ${pValue.toFixed(4)} ≤ α = ${alpha}). We reject the null hypothesis that the mean difference is zero.`;
-            } else {
-                interpretation = `The mean difference is not statistically significant (p = ${pValue.toFixed(4)} > α = ${alpha}). We fail to reject the null hypothesis that the mean difference is zero.`;
-            }
-            document.getElementById('paired-interpretation').textContent = interpretation;
-            
-            // Difference statistics
-            document.getElementById('paired-size').textContent = n;
-            document.getElementById('paired-mean-diff').textContent = meanDiff.toFixed(4);
-            document.getElementById('paired-std-diff').textContent = stdDevDiff.toFixed(4);
-            document.getElementById('paired-sem-diff').textContent = (stdDevDiff / Math.sqrt(n)).toFixed(4);
-            
-            // Confidence interval for mean difference
-            const marginError = criticalValue * (stdDevDiff / Math.sqrt(n));
-            document.getElementById('paired-ci-diff').textContent = `(${(meanDiff - marginError).toFixed(4)}, ${(meanDiff + marginError).toFixed(4)})`;
-            
-            // Show results
-            document.getElementById('paired-result').style.display = 'block';
+            // Show result box
+            document.getElementById('proportion-result').style.display = 'block';
         });
     </script>
 
-
-    <div id="cookie-banner" style="position:fixed;bottom:0;left:0;width:100%;background:#fffbe6;border-top:1px solid #e2c96f;padding:1rem;box-shadow:0 -2px 8px rgba(0,0,0,0.07);display:none;z-index:9999;">
-        <span>
-            We use cookies to improve your experience. Non-essential cookies (analytics, personalization) require your consent. 
-            <a href="privacy.html" target="_blank">Learn more</a>
-        </span>
-        <button id="cookie-accept" style="margin-left:1rem;">Accept</button>
-        <button id="cookie-reject" style="margin-left:0.5rem;">Reject</button>
-    </div>
-    <script>
-    (function() {
-        var banner = document.getElementById('cookie-banner');
-        var accepted = localStorage.getItem('cookieConsent');
-        if (!accepted) banner.style.display = 'block';
-
-        document.getElementById('cookie-accept').onclick = function() {
-            localStorage.setItem('cookieConsent', 'accepted');
-            banner.style.display = 'none';
-            // Place non-essential cookie scripts here, e.g. analytics
-            // Example: load Google Analytics only if accepted
-            var gaScript = document.createElement('script');
-            gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V";
-            gaScript.async = true;
-            document.head.appendChild(gaScript);
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-3BSHG1DE6V');
-        };
-        document.getElementById('cookie-reject').onclick = function() {
-            localStorage.setItem('cookieConsent', 'rejected');
-            banner.style.display = 'none';
-            // Do not load non-essential cookies/scripts
-        };
-    })();
-    </script>
-    
     <!-- xxxx navigation start xxxxx -->
     <button class="sidebar-toggle">☰</button>
     <div class="overlay"></div>
@@ -1488,6 +1372,7 @@
                     <a href="Articles/EOQ-Optimize-Your-Inventory-Costs.html" class="sidebar-link">EOQ Order Quantity: Optimize Your Inventory</a>
                 </div>
     </aside>
-    <!-- xxxx navigation end xxxxx -->       
+    <!-- xxxx navigation end xxxxx -->   
+
 </body>
 </html>

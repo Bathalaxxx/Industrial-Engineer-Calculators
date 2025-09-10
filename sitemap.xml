@@ -384,4 +384,16 @@
     <changefreq>yearly</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://iecalculators.online/Articles/EOQ-Optimize-Your-Inventory-Costs.html</loc>
+    <lastmod>2024-09-02</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://iecalculators.online/confidence-interval-calculator.html</loc>
+    <lastmod>2024-09-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>
