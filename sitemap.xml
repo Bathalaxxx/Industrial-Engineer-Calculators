@@ -408,4 +408,35 @@
     <changefreq>yearly</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://iecalculators.online/into-everything/age-calculator.html</loc>
+    <lastmod>2024-09-16</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://iecalculators.online/into-everything/bmi-calculator.html</loc>
+    <lastmod>2024-09-16</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://iecalculators.online/into-everything/calorie-calculator.html</loc>
+    <lastmod>2024-09-16</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://iecalculators.online/into-everything/tdee-calculator.html</loc>
+    <lastmod>2024-09-16</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://iecalculators.online/compound-interest-calculator.html</loc>
+    <lastmod>2024-09-16</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
 </urlset>

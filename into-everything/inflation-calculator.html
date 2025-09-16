@@ -1,888 +1,173 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inflation Calculator - Measure Purchasing Power Over Time</title>
-    <meta name="description" content="Calculate how inflation affects your money's value. Compare purchasing power across decades and understand why money loses value over time.">
-    <style>
-        :root {
-            --primary: #2c3e50;
-            --secondary: #e74c3c;
-            --accent: #3498db;
-            --light: #ecf0f1;
-            --dark: #2c3e50;
-            --text: #333;
-            --text-light: #777;
-            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            --radius: 8px;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #e74c3c;
+    --accent-color: #3498db;
+    --light-color: #ecf0f1;
+    --dark-color: #2c3e50;
+    --text-color: #333;
+    --text-light: #777;
+    --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    --radius: 8px;
+    --production-color: #e74c3c;
+    --quality-color: #3498db;
+    --statistics-color: #2ecc71;
+    --inventory-color: #f1c40f;
+    --workstudy-color: #9b59b6;
+    --ergonomics-color: #e67e22;
+    --operations-color: #1abc9c;
+    --economy-color: #34495e;
+    --facilities-color: #95a5a6;
+    --reliability-color: #16a085;
+}
 
-        /* xxxx navigation start xxxxx */
-        .sidebar-toggle {
-            position: fixed;
-            top: 15px;
-            left: 15px;
-            z-index: 1000;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            padding: 8px 12px;
-            cursor: pointer;
-            font-size: 1.2rem;
-            display: block; /* Changed from none to block */
-        }
-        
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: -300px;
-            width: 300px;
-            height: 100%;
-            background-color: var(--light-color);
-            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-            overflow-y: auto;
-            transition: left 0.3s;
-            z-index: 999;
-            padding: 20px 0;
-        }
-        
-        .sidebar.open {
-            left: 0;
-        }
-        
-        .sidebar-header {
-            padding: 0 20px 15px;
-            border-bottom: 1px solid #ddd;
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .sidebar-close {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text-color);
-        }
-        
-        .sidebar-category {
-            margin-bottom: 10px;
-        }
-        
-        .sidebar-category-header {
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background-color 0.3s;
-        }
-        
-        .sidebar-category-header:hover {
-            background-color: rgba(0,0,0,0.05);
-        }
-        
-        .sidebar-category-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-        
-        .sidebar-category.open .sidebar-category-content {
-            max-height: 1000px;
-        }
-        
-        .sidebar-link {
-            display: block;
-            padding: 8px 20px 8px 35px;
-            color: var(--text-color);
-            text-decoration: none;
-            transition: background-color 0.3s;
-        }
-        
-        .sidebar-link:hover {
-            background-color: rgba(0,0,0,0.05);
-        }
-        
-        body.sidebar-open {
-            overflow: hidden;
-        }
-        
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            z-index: 998;
-            display: none;
-        }
-        
-        .overlay.active {
-            display: block;
-        }
-        
-        /* Add color coding to sidebar categories */
-        .sidebar-category-header.production {
-            color: var(--production-color);
-        }
-        .sidebar-category-header.quality {
-            color: var(--quality-color);
-        }
-        .sidebar-category-header.statistics {
-            color: var(--statistics-color);
-        }
-        .sidebar-category-header.inventory {
-            color: var(--inventory-color);
-        }
-        .sidebar-category-header.workstudy {
-            color: var(--workstudy-color);
-        }
-        .sidebar-category-header.ergonomics {
-            color: var(--ergonomics-color);
-        }
-        .sidebar-category-header.operations {
-            color: var(--operations-color);
-        }
-        .sidebar-category-header.economy {
-            color: var(--economy-color);
-        }
-        .sidebar-category-header.facilities {
-            color: var(--facilities-color);
-        }
-        .sidebar-category-header.reliability {
-            color: var(--reliability-color);
-        }
-        /* xxxx navigation end xxxxx */
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text);
-            background-color: #f8f9fa;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
-            color: white;
-            padding: 2rem 0;
-            text-align: center;
-        }
-        
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .calculator-container {
-            background: white;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 2rem;
-            margin: -1.5rem auto 2rem;
-            position: relative;
-            max-width: 800px;
-        }
-        
-        .calculator-title {
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-        
-        .input-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--dark);
-        }
-        
-        input, select {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: var(--radius);
-            font-size: 1rem;
-            transition: border 0.3s;
-        }
-        
-        input:focus, select:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
-        }
-        
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        /* xxxx navigation start xxxxx */
-        .sidebar-toggle {
-            display: block;
-        }
-            
-        body.sidebar-open {
-            margin-left: 0;
-            overflow: hidden;
-        }
-        /* xxxx navigation end xxxxx */
-        
-        @media (min-width: 768px) {
-            .grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-        
-        button {
-            background: var(--secondary);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: var(--radius);
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s;
-            width: 100%;
-        }
-        
-        button:hover {
-            background: #c0392b;
-        }
-        
-        .result-container {
-            margin-top: 2rem;
-            padding: 1.5rem;
-            background: var(--light);
-            border-radius: var(--radius);
-            display: none;
-        }
-        
-        .result-container.active {
-            display: block;
-            animation: fadeIn 0.5s;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        .result-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--secondary);
-            text-align: center;
-            margin: 1rem 0;
-        }
-        
-        .result-text {
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-        
-        .info-section {
-            padding: 3rem 0;
-        }
-        
-        .info-section:nth-child(even) {
-            background: white;
-        }
-        
-        .section-title {
-            font-size: 1.8rem;
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-        
-        .faq-item {
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 1.5rem;
-        }
-        
-        .faq-question {
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--dark);
-        }
-        
-        footer {
-            background: var(--dark);
-            color: white;
-            padding: 2rem 0;
-            text-align: center;
-        }
-        
-        .disclaimer {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            margin-top: 2rem;
-            padding: 1rem;
-            background: rgba(0, 0, 0, 0.1);
-            border-radius: var(--radius);
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <div class="container">
-            <h1>Inflation Calculator</h1>
-            <p class="subtitle">Calculate how inflation affects your money's purchasing power over time. See what your money was worth in the past or what it will be worth in the future.</p>
-        </div>
-    </header>
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: #f8f9fa;
+}
 
-    <main class="container">
-        <section class="calculator-container">
-            <h2 class="calculator-title">Calculate Inflation's Impact</h2>
-            <form id="inflation-calculator">
-                <div class="grid">
-                    <div class="input-group">
-                        <label for="amount">Amount:</label>
-                        <input type="number" id="amount" placeholder="Enter amount" min="1" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="start-year">Start Year:</label>
-                        <select id="start-year" required>
-                            <option value="">Select start year</option>
-                        </select>
-                    </div>
-                    <div class="input-group">
-                        <label for="end-year">End Year:</label>
-                        <select id="end-year" required>
-                            <option value="">Select end year</option>
-                        </select>
-                    </div>
-                    <div class="input-group">
-                        <label for="calculation-type">Calculate:</label>
-                        <select id="calculation-type">
-                            <option value="future">Future Value (What will my money be worth?)</option>
-                            <option value="past">Past Value (What was money worth in the past?)</option>
-                        </select>
-                    </div>
-                </div>
-                <button type="submit">Calculate Inflation Impact</button>
-            </form>
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
 
-            <div class="result-container" id="result">
-                <div class="result-value" id="result-value">$0.00</div>
-                <p class="result-text" id="result-text"></p>
-            </div>
-        </section>
+header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--dark-color) 100%);
+    color: white;
+    padding: 2rem 0;
+    text-align: center;
+    margin-bottom: 2rem;
+}
 
-        <section class="info-section">
-            <h2 class="section-title">What is Inflation?</h2>
-            <p>Inflation is the rate at which the general level of prices for goods and services rises, eroding purchasing power. As inflation occurs, each unit of currency buys fewer goods and services. This is why the same amount of money buys less today than it did 10, 20, or 30 years ago.</p>
-            <p>Central banks attempt to limit inflation — and avoid deflation — to keep the economy running smoothly. Moderate inflation is a normal part of economic growth, but high inflation can be problematic for consumers and investors alike.</p>
-        </section>
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
 
-        <section class="info-section">
-            <h2 class="section-title">Why Does Money Lose Value Over Time?</h2>
-            <p>Money loses value over time primarily due to inflation. Several factors contribute to this phenomenon:</p>
-            <ul>
-                <li><strong>Increased money supply:</strong> When central banks print more money, each unit becomes less valuable</li>
-                <li><strong>Demand-pull inflation:</strong> When demand for goods and services exceeds supply, prices rise</li>
-                <li><strong>Cost-push inflation:</strong> When production costs increase, businesses pass these costs to consumers</li>
-                <li><strong>Built-in inflation:</strong> The expectation of future inflation leads to wage increases, creating a cycle</li>
-            </ul>
-            <p>Understanding why money loses value over time is crucial for financial planning, especially for long-term goals like retirement.</p>
-        </section>
+.subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    max-width: 800px;
+    margin: 0 auto;
+}
 
-        <section class="info-section">
-            <h2 class="section-title">How Inflation Impacts Long-Term Investments</h2>
-            <p>Inflation significantly affects long-term investments and savings. Even moderate inflation can substantially reduce the real value of money over decades. This is why historical prices matter for financial planning and why it's important to adjust for inflation in budgeting.</p>
-            <p>For example, if you saved $10,000 in 2000, it would only have the purchasing power of about $5,800 in 2000 dollars by 2020, assuming an average inflation rate of 2.5%.</p>
-            <p>To protect against inflation, investors often allocate portions of their portfolio to assets that tend to outpace inflation, such as stocks, real estate, and inflation-protected securities.</p>
-        </section>
+.calculator-container {
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 2rem;
+    margin: 0 auto 2rem;
+    max-width: 800px;
+}
 
-        <section class="info-section">
-            <h2 class="section-title">Frequently Asked Questions</h2>
-            
-            <div class="faq-item">
-                <p class="faq-question">What is my money worth after inflation?</p>
-                <p>Your money's worth after inflation depends on the inflation rate and time period. Use our calculator above to see exactly how much purchasing power your money has lost or gained over specific time periods.</p>
-            </div>
-            
-            <div class="faq-item">
-                <p class="faq-question">What was the value of a dollar in the past?</p>
-                <p>The value of a dollar in the past was significantly higher than today. For example, $1 in 1950 had the same purchasing power as about $12 in 2023. This calculator helps you compare historical prices with today's prices.</p>
-            </div>
-            
-            <div class="faq-item">
-                <p class="faq-question">How much has the cost of living changed over time?</p>
-                <p>The cost of living has increased dramatically over time due to inflation. Our calculator shows you exactly how much more expensive goods and services have become over any period since 1913.</p>
-            </div>
-            
-            <div class="faq-item">
-                <p class="faq-question">Why is tracking purchasing power important for retirement planning?</p>
-                <p>Tracking purchasing power helps with retirement planning because it shows how much income you'll really need in the future. If you don't account for inflation, you might significantly underestimate the amount required to maintain your standard of living in retirement.</p>
-            </div>
-            
-            <div class="faq-item">
-                <p class="faq-question">What does inflation do to savings over time?</p>
-                <p>Inflation erodes the value of savings over time. Money kept in low-interest savings accounts may actually lose purchasing power if the interest rate doesn't keep up with inflation. This is why it's important to consider investments that outpace inflation for long-term savings.</p>
-            </div>
-        </section>
+.input-group {
+    margin-bottom: 1.5rem;
+}
 
-        <section class="info-section">
-            <h2 class="section-title">Understanding the Consumer Price Index (CPI)</h2>
-            <p>Our calculator uses historical Consumer Price Index (CPI) data from the U.S. Bureau of Labor Statistics to measure inflation. The CPI measures the average change over time in the prices paid by urban consumers for a market basket of consumer goods and services.</p>
-            <p>While CPI is the most common measure of inflation, it's important to remember that it represents an average. Your personal inflation rate might differ based on your spending habits.</p>
-        </section>
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--dark-color);
+}
 
-        <div class="disclaimer">
-            <p><strong>Disclaimer:</strong> This inflation calculator provides approximate values based on historical CPI data. The results are for educational purposes only and should not be considered financial advice. For precise calculations and financial planning, consult with a qualified financial advisor.</p>
-        </div>
-    </main>
+input, select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: var(--radius);
+    font-size: 1rem;
+}
 
-    <footer>
-        <div class="footer-links">
-                <a href="index.html">Home</a>
-                <a href="about.html">About</a>
-                <a href="terms.html">Terms</a>
-                <a href="privacy.html">Privacy Policy</a>
-                <a href="contact.html">Contact Us</a>
-                
-            </div>
-            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
-            <p class="copyright">&copy; 2025 Industrial Engineering Calculators. All rights reserved.</p>
-        </div>
-    </footer>
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
 
-    <!-- xxxx navigation start xxxxx -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const sidebar = document.querySelector('.sidebar');
-            const sidebarToggle = document.querySelector('.sidebar-toggle');
-            const sidebarClose = document.querySelector('.sidebar-close');
-            const overlay = document.querySelector('.overlay');
-            const body = document.body;
-            
-            // Toggle sidebar
-            function toggleSidebar() {
-                sidebar.classList.toggle('open');
-                overlay.classList.toggle('active');
-                body.classList.toggle('sidebar-open');
-            }
-            
-            // Toggle category expansion
-            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
-            categoryHeaders.forEach(header => {
-                header.addEventListener('click', function() {
-                    const category = this.parentElement;
-                    category.classList.toggle('open');
-                    
-                    // Update the expand/collapse icon
-                    const icon = this.querySelector('span:last-child');
-                    icon.textContent = category.classList.contains('open') ? '−' : '+';
-                });
-            });
-            
-            // Event listeners
-            sidebarToggle.addEventListener('click', toggleSidebar);
-            sidebarClose.addEventListener('click', toggleSidebar);
-            overlay.addEventListener('click', toggleSidebar);
-            
-            // Close sidebar when clicking outside on mobile
-            document.addEventListener('click', function(event) {
-                if (window.innerWidth <= 768 && 
-                    body.classList.contains('sidebar-open') && 
-                    !sidebar.contains(event.target) && 
-                    event.target !== sidebarToggle) {
-                    toggleSidebar();
-                }
-            });
-            
-            // Close sidebar when pressing Escape key
-            document.addEventListener('keydown', function(event) {
-                if (event.key === 'Escape' && body.classList.contains('sidebar-open')) {
-                    toggleSidebar();
-                }
-            });
-        });
-    </script>
-    <!-- xxxx navigation end xxxxx -->
+button {
+    background: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: var(--radius);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.3s;
+}
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Populate year dropdowns
-            const startYearSelect = document.getElementById('start-year');
-            const endYearSelect = document.getElementById('end-year');
-            const currentYear = new Date().getFullYear();
-            
-            for (let year = 1913; year <= currentYear; year++) {
-                const option1 = document.createElement('option');
-                option1.value = year;
-                option1.textContent = year;
-                startYearSelect.appendChild(option1);
-                
-                const option2 = document.createElement('option');
-                option2.value = year;
-                option2.textContent = year;
-                endYearSelect.appendChild(option2);
-            }
-            
-            // Set default end year to current year
-            endYearSelect.value = currentYear;
-            
-            // Set default start year to 10 years ago
-            startYearSelect.value = currentYear - 10;
-            
-            // Handle form submission
-            document.getElementById('inflation-calculator').addEventListener('submit', function(e) {
-                e.preventDefault();
-                calculateInflation();
-            });
-            
-            // Sample inflation data (simplified for demonstration)
-            // In a real application, you would use more comprehensive historical CPI data
-            const inflationData = {
-                "2023": 304.7,
-                "2022": 292.7,
-                "2021": 270.0,
-                "2020": 258.8,
-                "2019": 255.7,
-                "2018": 251.1,
-                "2017": 245.1,
-                "2016": 240.0,
-                "2015": 237.0,
-                "2014": 236.7,
-                "2013": 233.0,
-                "2012": 229.6,
-                "2011": 224.9,
-                "2010": 218.1,
-                "2009": 214.5,
-                "2008": 215.3,
-                "2007": 207.3,
-                "2006": 201.6,
-                "2005": 195.3,
-                "2000": 172.2,
-                "1995": 152.4,
-                "1990": 130.7,
-                "1985": 107.6,
-                "1980": 82.4,
-                "1975": 53.8,
-                "1970": 38.8,
-                "1965": 31.5,
-                "1960": 29.6,
-                "1955": 26.8,
-                "1950": 24.1,
-                "1940": 14.0,
-                "1930": 16.7,
-                "1920": 20.0,
-                "1915": 10.1,
-                "1913": 9.9
-            };
-            
-            // Function to get CPI for any year (with interpolation for missing years)
-            function getCPI(year) {
-                if (inflationData[year]) {
-                    return inflationData[year];
-                }
-                
-                // Find closest lower and higher years with data
-                let lowerYear = year;
-                let higherYear = year;
-                
-                while (!inflationData[lowerYear] && lowerYear > 1913) {
-                    lowerYear--;
-                }
-                
-                while (!inflationData[higherYear] && higherYear < currentYear) {
-                    higherYear++;
-                }
-                
-                // If we have both bounds, interpolate
-                if (inflationData[lowerYear] && inflationData[higherYear]) {
-                    const range = higherYear - lowerYear;
-                    const position = year - lowerYear;
-                    const cpiRange = inflationData[higherYear] - inflationData[lowerYear];
-                    return inflationData[lowerYear] + (cpiRange * (position / range));
-                }
-                
-                // If only one bound, use that
-                if (inflationData[lowerYear]) {
-                    return inflationData[lowerYear];
-                }
-                
-                if (inflationData[higherYear]) {
-                    return inflationData[higherYear];
-                }
-                
-                // Fallback
-                return 100;
-            }
-            
-            function calculateInflation() {
-                const amount = parseFloat(document.getElementById('amount').value);
-                const startYear = parseInt(document.getElementById('start-year').value);
-                const endYear = parseInt(document.getElementById('end-year').value);
-                const calculationType = document.getElementById('calculation-type').value;
-                
-                if (!amount || !startYear || !endYear) {
-                    alert('Please fill in all fields');
-                    return;
-                }
-                
-                const startCPI = getCPI(startYear);
-                const endCPI = getCPI(endYear);
-                
-                let result;
-                let explanation;
-                
-                if (calculationType === 'future') {
-                    // Calculate future value
-                    result = amount * (endCPI / startCPI);
-                    explanation = `$${amount.toFixed(2)} in ${startYear} has the same purchasing power as $${result.toFixed(2)} in ${endYear}.`;
-                } else {
-                    // Calculate past value
-                    result = amount * (startCPI / endCPI);
-                    explanation = `$${amount.toFixed(2)} in ${endYear} has the same purchasing power as $${result.toFixed(2)} in ${startYear}.`;
-                }
-                
-                // Display result
-                document.getElementById('result-value').textContent = `$${result.toFixed(2)}`;
-                document.getElementById('result-text').textContent = explanation;
-                document.getElementById('result').classList.add('active');
-                
-                // Scroll to result
-                document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        });
-    </script>
+button:hover {
+    background: #c0392b;
+}
 
-    <!-- xxxx navigation start xxxxx -->
-    <button class="sidebar-toggle">☰</button>
-    <div class="overlay"></div>
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <h3>Navigation</h3>
-            <button class="sidebar-close">×</button>
-        </div>
+.result-container {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: var(--light-color);
+    border-radius: var(--radius);
+    display: none;
+}
 
-    <div class="sidebar-category">
-        <div class="sidebar-category-header">
-            <span>Site Navigation</span>
-            <span>+</span>
-        </div>
-        
-        <div class="sidebar-category-content">
-            <a href="index.html" class="sidebar-link">Home</a>
-            <a href="about.html" class="sidebar-link">About</a>
-            <a href="terms.html" class="sidebar-link">Terms</a>
-            <a href="privacy.html" class="sidebar-link">Privacy Policy</a>
-            <a href="contact.html" class="sidebar-link">Contact Us</a>
-        </div>
-    </div>
-        
-        
-        <div class="sidebar-category">
-            <div class="sidebar-category-header production">
-                <span>Production Planning</span>
-                <span>+</span>
-            </div>
-            <div class="sidebar-category-content">
-                <a href="flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
-                <a href="jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
-                <a href="linebalancing.html" class="sidebar-link">Line Balancing</a>
-                <a href="takttime.html" class="sidebar-link">Takt Time</a>
-                <a href="synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
-                <a href="machine-utilization-calculator.html" class="sidebar-link">Machine Utilization</a>
-                <a href="manpower-calculator.html" class="sidebar-link active">Manpower Requirements</a>
-                <a href="production-capacity-calculator.html" class="sidebar-link">Production Capacity</a>
+.result-container.active {
+    display: block;
+    animation: fadeIn 0.5s;
+}
 
-            </div>
-        </div>
-        
-        <div class="sidebar-category">
-            <div class="sidebar-category-header quality">
-                <span>Quality Control</span>
-                <span>+</span>
-            </div>
-            <div class="sidebar-category-content">
-                <a href="acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
-                <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
-                <a href="processcapability.html" class="sidebar-link">Process Capability</a>
-                <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
-                <a href="oee-calculation.html" class="sidebar-link">OEE Calculator</a>
-                <a href="quality-function-deployment" class="sidebar-link">Quality Function Deployment</a>
+.result-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+    text-align: center;
+    margin: 1rem 0;
+}
 
-            </div>
-        </div>
-        
-        <div class="sidebar-category">
-            <div class="sidebar-category-header statistics">
-                <span>Statistics & DOE</span>
-                <span>+</span>
-            </div>
-            <div class="sidebar-category-content">
-                <a href="anova.html" class="sidebar-link">ANOVA</a>
-                <a href="chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
-                <a href="confidence-interval-calculator.html" class="sidebar-link">Confidence Interval </a>
-                <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
-                <a href="coefficient-of-variation-calculator.html" class="sidebar-link">Coefficient of Variation</a>
-                <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
-                <a href="regression.html" class="sidebar-link">Regression</a>
-                <a href="samplesize.html" class="sidebar-link">Sample Size</a>
-                <a href="taguchi.html" class="sidebar-link">Taguchi</a>
-                <a href="ttest.html" class="sidebar-link">T-Test</a>
-                <a href="ztest.html" class="sidebar-link">Z-Test</a>
-            </div>
-        </div>
-        
-        <div class="sidebar-category">
-            <div class="sidebar-category-header inventory">
-                <span>Inventory Management</span>
-                <span>+</span>
-            </div>
-            <div class="sidebar-category-content">
-                <a href="abc-analysis-calculator.html" class="sidebar-link">ABC Analysis</a>
-                <a href="inventory-turnover-calculator.html" class="sidebar-link">Inventory Turnover</a>
-                <a href="eoq-formula.html" class="sidebar-link">Economic Order Quantity</a>
-                <a href="reorder-point-calculator.html" class="sidebar-link">Reorder Point</a>
-                <a href="kanban.html" class="sidebar-link">Kanban Calculator</a>
-                <a href="newsvendor.html" class="sidebar-link">Newsvendor Model</a>
-                <a href="safety-stock-calculator.html" class="sidebar-link">Safety Stock Calculator</a>
-            </div>
-        </div>
-        
-        <div class="sidebar-category">
-            <div class="sidebar-category-header workstudy">
-                <span>Work Measurement</span>
-                <span>+</span>
-            </div>
-            <div class="sidebar-category-content">
-                <a href="timestudy.html" class="sidebar-link">Time Study</a>
-                <a href="predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
-                <a href="learningcurve.html" class="sidebar-link">Learning Curve</a>
-                <a href="littleslaw.html" class="sidebar-link">Little's Law</a>
-                <a href="worksampling.html" class="sidebar-link">Work Sampling</a>
-            </div>
-        </div>
-        
-        <div class="sidebar-category">
-            <div class="sidebar-category-header ergonomics">
-                <span>Ergonomics</span>
-                <span>+</span>
-            </div>
-            <div class="sidebar-category-content">
-                <a href="biomechanics.html" class="sidebar-link">Biomechanics</a>
-                <a href="noisedose.html" class="sidebar-link">Noise Dose</a>
-                <a href="posture.html" class="sidebar-link">Posture Analysis</a>
-                <a href="workphysiology.html" class="sidebar-link">Work Physiology</a>
-                <a href="workrest.html" class="sidebar-link">Work-Rest Cycles</a>
-            </div>
-        </div>
-        
-        <div class="sidebar-category">
-            <div class="sidebar-category-header operations">
-                <span>Operations Research</span>
-                <span>+</span>
-            </div>
-            <div class="sidebar-category-content">
-                <a href="linearprogramming.html" class="sidebar-link">Linear Programming</a>
-                <a href="queueing.html" class="sidebar-link">Queueing Analysis</a>
-                <a href="decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
-                <a href="gametheory.html" class="sidebar-link">Game Theory</a>
-                <a href="markov.html" class="sidebar-link">Markov Analysis</a>
-            </div>
-        </div>
-        
-        <div class="sidebar-category">
-            <div class="sidebar-category-header economy">
-                <span>Engineering Economy</span>
-                <span>+</span>
-            </div>
-            <div class="sidebar-category-content">
-                <a href="breakeven.html" class="sidebar-link">Break-even Analysis</a>
-                <a href="costanalysis.html" class="sidebar-link">Cost Analysis</a>
-                <a href="depreciation.html" class="sidebar-link">Depreciation</a>
-                <a href="timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
-            </div>
-        </div>
-        
-        <div class="sidebar-category">
-            <div class="sidebar-category-header facilities">
-                <span>Facilities Planning</span>
-                <span>+</span>
-            </div>
-            <div class="sidebar-category-content">
-                <a href="facilitieslocation.html" class="sidebar-link">Facilities Location</a>
-            </div>
-        </div>
-        
-        <div class="sidebar-category">
-            <div class="sidebar-category-header reliability">
-                <span>Reliability & Maintenance</span>
-                <span>+</span>
-            </div>
-            <div class="sidebar-category-content">
-                <a href="reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
-                <a href="failure-mode-and-effects-analysis-fmea.html" class="sidebar-link">FMEA</a>           
-            </div>
-        </div>
-        
-        <div class="sidebar-category">
-            <div class="sidebar-category-header reliability">
-                <span>Other Calculators</span>
-                <span>+</span>
-            </div>
-            <div class="sidebar-category-content">
-                <a href="into-everything.html" class="sidebar-link">Into Everything Calculators</a>
-            </div>
-        </div>
-        <div class="sidebar-category">
-            <div class="sidebar-category-header reliability">
-                <span>Articles</span>
-                <span>+</span>
-            </div>
-                <div class="sidebar-category-content">
-                    <a href="Articles/Negative-Correlation-Understanding-Inverse-Relationships-in-Data.html" class="sidebar-link">Negative Correlation: Understanding Inverse Relationships in Data</a>
-                    <a href="Articles/Parameter-vs-Statistic-Understanding-the-Key-Differences.html" class="sidebar-link">Statistic vs Parameter: Understanding the Key Differences</a>
-                    <a href="Articles/Quality-Assurance-vs-Quality-Control-Key-Differences-Explained.html" class="sidebar-link">Quality Assurance vs Quality Control: Key Differences Explained</a>
-                    <a href="Articles/ABC-Analysis-Made-Easy.html" class="sidebar-link">ABC Analysis Made Easy: Classify Your Inventory in Minutes</a>
-                    <a href="Articles/EOQ-Optimize-Your-Inventory-Costs.html" class="sidebar-link">EOQ Order Quantity: Optimize Your Inventory</a>
-                    <a href="Articles/Linear-Programming-for-Supply-Chain-Optimization-A-Beginner's-Guide.html" class="sidebar-link">Linear Programming for Supply Chain Optimization: A Beginner's Guide</a>                
-                    <a href="Articles/How-Lean-Six-Sigma-Helps-Cut-Costs-Without-Cutting-Corners.html" class="sidebar-link">How Lean Six Sigma Helps Cut Costs Without Cutting Corners</a>  
-                    <a href="Articles/How-Lean-Six-Sigma-Helps-Cut-Costs-Without-Cutting-Corners.html" class="sidebar-link">How Lean Six Sigma Helps Cut Costs Without Cutting Corners</a>  
-                </div>
-    </aside>
-    <!-- xxxx navigation end xxxxx -->       
+.info-section {
+    padding: 2rem 0;
+    border-top: 1px solid #eee;
+}
 
-</body>
-</html>
+.section-title {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+footer {
+    background: var(--dark-color);
+    color: white;
+    padding: 2rem 0;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.footer-links a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+@media (min-width: 768px) {
+    .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

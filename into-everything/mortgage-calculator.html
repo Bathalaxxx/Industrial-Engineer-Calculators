@@ -926,46 +926,64 @@
                     </tr>
                 </table>
                 
-                <div class="tabs">
-                    <div class="tab active" data-tab="amortization">Amortization Schedule</div>
-                    <div class="tab" data-tab="extra-payments">Extra Payments</div>
-                    <div class="tab" data-tab="refinance">Refinance Comparison</div>
-                </div>
-                
-                <div class="tab-content active" id="amortization-content">
-                    <p>This table shows how each payment is split between principal and interest over the life of your loan.</p>
-                    <div style="overflow-x: auto;">
-                        <table class="amortization-table">
-                            <thead>
-                                <tr>
-                                    <th>Year</th>
-                                    <th>Principal</th>
-                                    <th>Interest</th>
-                                    <th>Total Interest</th>
-                                    <th>Balance</th>
-                                </tr>
-                            </thead>
-                            <tbody id="amortization-body">
-                                <!-- Will be populated by JavaScript -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                
-                <div class="tab-content" id="extra-payments-content">
-                    <h4>How extra payments affect your mortgage</h4>
-                    <p>Making additional payments toward your principal can significantly reduce the length of your loan and the total interest paid.</p>
+                function calculateExtraPayments() {
+                    // Get base mortgage values
+                    const loanAmount = parseFloat(document.getElementById('home-price').value) - 
+                                      parseFloat(document.getElementById('down-payment').value);
+                    const annualRate = parseFloat(document.getElementById('interest-rate').value) / 100;
+                    const monthlyRate = annualRate / 12;
+                    const loanTerm = parseInt(document.getElementById('loan-term').value);
+                    const monthlyPayment = loanAmount * (monthlyRate * Math.pow(1 + monthlyRate, loanTerm * 12)) / 
+                                          (Math.pow(1 + monthlyRate, loanTerm * 12) - 1);
                     
-                    <div class="input-row">
-                        <div class="input-group">
-                            <label for="extra-payment">Extra Monthly Payment ($):</label>
-                            <input type="number" id="extra-payment" min="0" step="10" value="100">
-                        </div>
-                    </div>
+                    // Get extra payment amount
+                    const extraPayment = parseFloat(document.getElementById('extra-payment').value) || 0;
                     
-                    <button class="calculate-btn" id="calculate-extra">Calculate Impact</button>
+                    // Calculate regular payment scenario
+                    let regularBalance = loanAmount;
+                    let regularTotalInterest = 0;
+                    let regularMonths = loanTerm * 12;
                     
-                    <div id="extra-results" style="margin-top: 1.5rem;">
+                    // Calculate extra payment scenario
+                    let extraBalance = loanAmount;
+                    let extraTotalInterest = 0;
+                    let extraMonths = 0;
+                    
+                    // Calculate both scenarios
+                    while (extraBalance > 0) {
+                        extraMonths++;
+                        
+                        // Regular payment scenario
+                        if (regularBalance > 0) {
+                            const regularInterest = regularBalance * monthlyRate;
+                            regularTotalInterest += regularInterest;
+                            regularBalance -= (monthlyPayment - regularInterest);
+                        }
+                        
+                        // Extra payment scenario
+                        const extraInterest = extraBalance * monthlyRate;
+                        extraTotalInterest += extraInterest;
+                        extraBalance -= (monthlyPayment - extraInterest + extraPayment);
+                        
+                        if (extraMonths > 600) break; // Safety break for extreme cases
+                    }
+                    
+                    // Calculate savings
+                    const monthsSaved = regularMonths - extraMonths;
+                    const interestSaved = regularTotalInterest - extraTotalInterest;
+                    
+                    // Update results
+                    document.getElementById('extra-term').textContent = 
+                        Math.floor(extraMonths / 12) + ' years, ' + (extraMonths % 12) + ' months';
+                    document.getElementById('regular-term').textContent = 
+                        Math.floor(regularMonths / 12) + ' years, ' + (regularMonths % 12) + ' months';
+                    document.getElementById('term-savings').textContent = 
+                        Math.floor(monthsSaved / 12) + ' years, ' + (monthsSaved % 12) + ' months';
+                    
+                    document.getElementById('extra-interest').textContent = '$' + extraTotalInterest.toFixed(2);
+                    document.getElementById('regular-interest').textContent = '$' + regularTotalInterest.toFixed(2);
+                    document.getElementById('interest-savings').textContent = '$' + interestSaved.toFixed(2);
+                }
                         <table>
                             <tr>
                                 <th>With Extra Payments</th>
@@ -1627,10 +1645,10 @@
             </div>
             <div class="sidebar-category-content">
                 <a href="breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="compound-interest-calculator.html" class="sidebar-link active">Compound Interest</a>
                 <a href="costanalysis.html" class="sidebar-link">Cost Analysis</a>
                 <a href="depreciation.html" class="sidebar-link">Depreciation</a>
-                <a href="timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
-            </div>
+                <a href="timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>            </div>
         </div>
         
         <div class="sidebar-category">

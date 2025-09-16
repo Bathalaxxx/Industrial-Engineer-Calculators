@@ -1354,31 +1354,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Navigation functionality
-            const sidebar = document.querySelector('.sidebar');
-            const sidebarToggle = document.querySelector('.sidebar-toggle');
-            const sidebarClose = document.querySelector('.sidebar-close');
-            const overlay = document.querySelector('.overlay');
-            const body = document.body;
-            
-            function toggleSidebar() {
-                sidebar.classList.toggle('open');
-                overlay.classList.toggle('active');
-                body.classList.toggle('sidebar-open');
-            }
-            
-            sidebarToggle.addEventListener('click', toggleSidebar);
-            sidebarClose.addEventListener('click', toggleSidebar);
-            overlay.addEventListener('click', toggleSidebar);
-            
-            // Toggle category expansion
-            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
-            categoryHeaders.forEach(header => {
-                header.addEventListener('click', function() {
-                    const category = this.parentElement;
-                    category.classList.toggle('open');
-                });
-            });
             
             // Calorie calculation
             const calorieForm = document.getElementById('calorie-form');
@@ -1494,11 +1469,11 @@
         </div>
         
         <div class="sidebar-category-content">
-            <a href="index.html" class="sidebar-link">Home</a>
-            <a href="about.html" class="sidebar-link">About</a>
-            <a href="terms.html" class="sidebar-link">Terms</a>
-            <a href="privacy.html" class="sidebar-link">Privacy Policy</a>
-            <a href="contact.html" class="sidebar-link">Contact Us</a>
+            <a href="/index.html" class="sidebar-link">Home</a>
+            <a href="/about.html" class="sidebar-link">About</a>
+            <a href="/terms.html" class="sidebar-link">Terms</a>
+            <a href="/privacy.html" class="sidebar-link">Privacy Policy</a>
+            <a href="/contact.html" class="sidebar-link">Contact Us</a>
         </div>
     </div>
         
@@ -1509,14 +1484,14 @@
                 <span>+</span>
             </div>
             <div class="sidebar-category-content">
-                <a href="flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
-                <a href="jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
-                <a href="linebalancing.html" class="sidebar-link">Line Balancing</a>
-                <a href="takttime.html" class="sidebar-link">Takt Time</a>
-                <a href="synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
-                <a href="machine-utilization-calculator.html" class="sidebar-link">Machine Utilization</a>
-                <a href="manpower-calculator.html" class="sidebar-link active">Manpower Requirements</a>
-                <a href="production-capacity-calculator.html" class="sidebar-link">Production Capacity</a>
+                <a href="/flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="/jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="/linebalancing.html" class="sidebar-link">Line Balancing</a>
+                <a href="/takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="/synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+                <a href="/machine-utilization-calculator.html" class="sidebar-link">Machine Utilization</a>
+                <a href="/manpower-calculator.html" class="sidebar-link active">Manpower Requirements</a>
+                <a href="/production-capacity-calculator.html" class="sidebar-link">Production Capacity</a>
 
             </div>
         </div>
@@ -1527,12 +1502,12 @@
                 <span>+</span>
             </div>
             <div class="sidebar-category-content">
-                <a href="acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
-                <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
-                <a href="processcapability.html" class="sidebar-link">Process Capability</a>
-                <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
-                <a href="oee-calculation.html" class="sidebar-link">OEE Calculator</a>
-                <a href="quality-function-deployment" class="sidebar-link">Quality Function Deployment</a>
+                <a href="/acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="/controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="/processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="/sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="/oee-calculation.html" class="sidebar-link">OEE Calculator</a>
+                <a href="/quality-function-deployment" class="sidebar-link">Quality Function Deployment</a>
 
             </div>
         </div>
@@ -1543,17 +1518,17 @@
                 <span>+</span>
             </div>
             <div class="sidebar-category-content">
-                <a href="anova.html" class="sidebar-link">ANOVA</a>
-                <a href="chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
-                <a href="confidence-interval-calculator.html" class="sidebar-link">Confidence Interval </a>
-                <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
-                <a href="coefficient-of-variation-calculator.html" class="sidebar-link">Coefficient of Variation</a>
-                <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
-                <a href="regression.html" class="sidebar-link">Regression</a>
-                <a href="samplesize.html" class="sidebar-link">Sample Size</a>
-                <a href="taguchi.html" class="sidebar-link">Taguchi</a>
-                <a href="ttest.html" class="sidebar-link">T-Test</a>
-                <a href="ztest.html" class="sidebar-link">Z-Test</a>
+                <a href="/anova.html" class="sidebar-link">ANOVA</a>
+                <a href="/chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="/confidence-interval-calculator.html" class="sidebar-link">Confidence Interval </a>
+                <a href="/correlation.html" class="sidebar-link">Correlation Analysis</a>
+                <a href="/coefficient-of-variation-calculator.html" class="sidebar-link">Coefficient of Variation</a>
+                <a href="/goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="/regression.html" class="sidebar-link">Regression</a>
+                <a href="/samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="/taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="/ttest.html" class="sidebar-link">T-Test</a>
+                <a href="/ztest.html" class="sidebar-link">Z-Test</a>
             </div>
         </div>
         
@@ -1563,13 +1538,13 @@
                 <span>+</span>
             </div>
             <div class="sidebar-category-content">
-                <a href="abc-analysis-calculator.html" class="sidebar-link">ABC Analysis</a>
-                <a href="inventory-turnover-calculator.html" class="sidebar-link">Inventory Turnover</a>
-                <a href="eoq-formula.html" class="sidebar-link">Economic Order Quantity</a>
-                <a href="reorder-point-calculator.html" class="sidebar-link">Reorder Point</a>
-                <a href="kanban.html" class="sidebar-link">Kanban Calculator</a>
-                <a href="newsvendor.html" class="sidebar-link">Newsvendor Model</a>
-                <a href="safety-stock-calculator.html" class="sidebar-link">Safety Stock Calculator</a>
+                <a href="/abc-analysis-calculator.html" class="sidebar-link">ABC Analysis</a>
+                <a href="/inventory-turnover-calculator.html" class="sidebar-link">Inventory Turnover</a>
+                <a href="/eoq-formula.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="/reorder-point-calculator.html" class="sidebar-link">Reorder Point</a>
+                <a href="/kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="/newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+                <a href="/safety-stock-calculator.html" class="sidebar-link">Safety Stock Calculator</a>
             </div>
         </div>
         
@@ -1579,11 +1554,11 @@
                 <span>+</span>
             </div>
             <div class="sidebar-category-content">
-                <a href="timestudy.html" class="sidebar-link">Time Study</a>
-                <a href="predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
-                <a href="learningcurve.html" class="sidebar-link">Learning Curve</a>
-                <a href="littleslaw.html" class="sidebar-link">Little's Law</a>
-                <a href="worksampling.html" class="sidebar-link">Work Sampling</a>
+                <a href="/timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="/predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="/learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="/littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="/worksampling.html" class="sidebar-link">Work Sampling</a>
             </div>
         </div>
         
@@ -1593,11 +1568,11 @@
                 <span>+</span>
             </div>
             <div class="sidebar-category-content">
-                <a href="biomechanics.html" class="sidebar-link">Biomechanics</a>
-                <a href="noisedose.html" class="sidebar-link">Noise Dose</a>
-                <a href="posture.html" class="sidebar-link">Posture Analysis</a>
-                <a href="workphysiology.html" class="sidebar-link">Work Physiology</a>
-                <a href="workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+                <a href="/biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="/noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="/posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="/workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="/workrest.html" class="sidebar-link">Work-Rest Cycles</a>
             </div>
         </div>
         
@@ -1607,11 +1582,11 @@
                 <span>+</span>
             </div>
             <div class="sidebar-category-content">
-                <a href="linearprogramming.html" class="sidebar-link">Linear Programming</a>
-                <a href="queueing.html" class="sidebar-link">Queueing Analysis</a>
-                <a href="decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
-                <a href="gametheory.html" class="sidebar-link">Game Theory</a>
-                <a href="markov.html" class="sidebar-link">Markov Analysis</a>
+                <a href="/linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="/queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="/decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="/gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="/markov.html" class="sidebar-link">Markov Analysis</a>
             </div>
         </div>
         
@@ -1621,10 +1596,10 @@
                 <span>+</span>
             </div>
             <div class="sidebar-category-content">
-                <a href="breakeven.html" class="sidebar-link">Break-even Analysis</a>
-                <a href="costanalysis.html" class="sidebar-link">Cost Analysis</a>
-                <a href="depreciation.html" class="sidebar-link">Depreciation</a>
-                <a href="timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+                <a href="/breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="/costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="/depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="/timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
             </div>
         </div>
         
@@ -1634,7 +1609,7 @@
                 <span>+</span>
             </div>
             <div class="sidebar-category-content">
-                <a href="facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+                <a href="/facilitieslocation.html" class="sidebar-link">Facilities Location</a>
             </div>
         </div>
         
@@ -1644,8 +1619,8 @@
                 <span>+</span>
             </div>
             <div class="sidebar-category-content">
-                <a href="reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
-                <a href="failure-mode-and-effects-analysis-fmea.html" class="sidebar-link">FMEA</a>           
+                <a href="/reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+                <a href="/failure-mode-and-effects-analysis-fmea.html" class="sidebar-link">FMEA</a>           
             </div>
         </div>
         
@@ -1655,7 +1630,7 @@
                 <span>+</span>
             </div>
             <div class="sidebar-category-content">
-                <a href="into-everything.html" class="sidebar-link">Into Everything Calculators</a>
+                <a href="/into-everything.html" class="sidebar-link">Into Everything Calculators</a>
             </div>
         </div>
         <div class="sidebar-category">
@@ -1674,7 +1649,7 @@
                     <a href="Articles/How-Lean-Six-Sigma-Helps-Cut-Costs-Without-Cutting-Corners.html" class="sidebar-link">How Lean Six Sigma Helps Cut Costs Without Cutting Corners</a>  
                 </div>
     </aside>
-    <!-- xxxx navigation end xxxxx -->       
+    <!-- xxxx navigation end xxxxx -->         
 
 </body>
 </html>
