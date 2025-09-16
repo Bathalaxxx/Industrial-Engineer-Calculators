@@ -1,7 +1,7 @@
 # Industrial Engineering Calculators
 
 Free, online calculators for **Industrial Engineering professionals and students**.  
-This project provides easy-to-use tools to simplify production planning, quality control, inventory management, work study, facilities planning, and reliability analysis.
+This project provides easy-to-use tools to simplify production planning, quality control, inventory management, Work Measurement, facilities planning, and reliability analysis.
 
 🌍 **Live site:** [iecalculators.online](https://iecalculators.online/)
 
@@ -18,7 +18,7 @@ This project provides easy-to-use tools to simplify production planning, quality
 - **Inventory Management Tools:**  
   EOQ, Reorder Point, Safety Stock, Kanban, Newsvendor Model
 
-- **Work Study Tools:**  
+- **Work Measurement Tools:**  
   Time Study, PMTS, Learning Curve, Little’s Law
 
 - **Facilities Planning Tools:**  

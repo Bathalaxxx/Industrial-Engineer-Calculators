@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-
-
-    </script>
     <!--FAVICON-->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -17,7 +13,6 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-3BSHG1DE6V');
     </script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5607576434988374"
@@ -25,14 +20,10 @@
     <meta charset="UTF-8">
     <meta name="google-adsense-account" content="ca-pub-5607576434988374">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Reliability Analysis Calculator - Calculate MTBF, failure rate, reliability, and more">
-    <title>Reliability Analysis Calculator | Industrial Engineering Calculators</title>
+    <meta name="description" content="BMI Calculator - Calculate your Body Mass Index and learn about healthy weight ranges">
+    <title>BMI Calculator | Health & Wellness Calculators</title>
 
- 
-    
-
-    
-     <!-- Clarity tracking code for https://iecalculators.online/ -->
+    <!-- Clarity tracking code for https://iecalculators.online/ -->
     <script type="text/javascript">
         (function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -42,7 +33,7 @@
     </script>
 
     <style>
-        /* Same CSS as landing page */
+        /* Consistent with existing style */
         :root {
             --primary-color: #2c3e50;
             --secondary-color: #3498db;
@@ -51,6 +42,10 @@
             --dark-color: #2c3e50;
             --text-color: #333;
             --text-light: #7f8c8d;
+            --underweight: #3498db;
+            --normal: #2ecc71;
+            --overweight: #f39c12;
+            --obese: #e74c3c;
         }
         
         * {
@@ -64,8 +59,9 @@
             line-height: 1.6;
             color: var(--text-color);
             background-color: #f5f7fa;
+            transition: margin-left 0.3s;
         }
-
+        
         /* xxxx navigation start xxxxx */
         .sidebar-toggle {
             position: fixed;
@@ -214,6 +210,9 @@
             color: white;
             padding: 1rem 0;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
         
         .container {
@@ -298,49 +297,6 @@
             font-size: 1.1rem;
         }
         
-        .scenario-selector {
-            margin-bottom: 2rem;
-        }
-        
-        .scenario-tabs {
-            display: flex;
-            border-bottom: 1px solid #ddd;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-        }
-        
-        .scenario-tab {
-            padding: 0.8rem 1.5rem;
-            cursor: pointer;
-            border: 1px solid transparent;
-            border-bottom: none;
-            margin-right: 0.5rem;
-            border-radius: 5px 5px 0 0;
-            background-color: #f1f1f1;
-            transition: all 0.3s;
-            margin-bottom: 0.5rem;
-        }
-        
-        .scenario-tab.active {
-            background-color: white;
-            border-color: #ddd;
-            border-bottom-color: white;
-            color: var(--secondary-color);
-            font-weight: 500;
-        }
-        
-        .scenario-tab:hover:not(.active) {
-            background-color: #e9e9e9;
-        }
-        
-        .scenario-content {
-            display: none;
-        }
-        
-        .scenario-content.active {
-            display: block;
-        }
-        
         .input-group {
             margin-bottom: 1.5rem;
         }
@@ -409,6 +365,98 @@
             color: var(--secondary-color);
         }
         
+        .metric-results {
+            display: flex;
+            justify-content: space-between;
+            margin: 1.5rem 0;
+        }
+        
+        .metric-card {
+            flex: 1;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 0 0.5rem;
+            text-align: center;
+        }
+        
+        .metric-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-card .metric-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .metric-card.demand .metric-value {
+            color: #3498db;
+        }
+        
+        .metric-card.leadtime .metric-value {
+            color: #f39c12;
+        }
+        
+        .metric-card.safety .metric-value {
+            color: #2ecc71;
+        }
+        
+        .bmi-visual {
+            width: 100%;
+            height: 50px;
+            background: linear-gradient(90deg, var(--underweight), var(--normal), var(--overweight), var(--obese));
+            border-radius: 25px;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+        
+        .bmi-marker {
+            position: absolute;
+            top: -10px;
+            width: 4px;
+            height: 70px;
+            background-color: black;
+            transform: translateX(-50%);
+        }
+        
+        .bmi-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        
+        .bmi-category {
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .underweight {
+            background-color: rgba(52, 152, 219, 0.2);
+            color: var(--underweight);
+        }
+        
+        .normal {
+            background-color: rgba(46, 204, 113, 0.2);
+            color: var(--normal);
+        }
+        
+        .overweight {
+            background-color: rgba(243, 156, 18, 0.2);
+            color: var(--overweight);
+        }
+        
+        .obese {
+            background-color: rgba(231, 76, 60, 0.2);
+            color: var(--obese);
+        }
+        
         .examples-section {
             margin-top: 3rem;
         }
@@ -423,6 +471,25 @@
         .example h4 {
             margin-bottom: 0.5rem;
             color: var(--primary-color);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
         }
         
         footer {
@@ -453,7 +520,7 @@
             color: var(--text-light);
             font-size: 0.9rem;
         }
-
+        
         /* xxxx navigation start xxxxx */
         .sidebar-toggle {
             display: block;
@@ -484,8 +551,57 @@
         
         .tool-chip:hover {
             background-color: #bbdefb;
-        }            
+        }
         
+        .faq-item {
+            margin-bottom: 1.5rem;
+        }
+        
+        .faq-question {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        .unit-toggle {
+            display: flex;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+            overflow: hidden;
+            width: fit-content;
+        }
+        
+        .unit-toggle button {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--secondary-color);
+            background-color: white;
+            cursor: pointer;
+        }
+        
+        .unit-toggle button.active {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .unit-toggle button:first-child {
+            border-radius: 4px 0 0 4px;
+        }
+        
+        .unit-toggle button:last-child {
+            border-radius: 0 4px 4px 0;
+        }             
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            display: block;
+        }
+            
+        body.sidebar-open {
+            margin-left: 0;
+            overflow: hidden;
+        }
+        /* xxxx navigation end xxxxx */
+
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
@@ -501,275 +617,304 @@
                 margin: 0 0.75rem;
             }
             
-            .scenario-tabs {
-                flex-direction: column;
-            }
-            
-            .scenario-tab {
-                border-radius: 0;
-                margin-right: 0;
-                border-bottom: 1px solid #ddd;
-            }
-            
             .input-row {
                 flex-direction: column;
                 gap: 0;
             }
+            
+            .metric-results {
+                flex-direction: column;
+            }
+            
+            .metric-card {
+                margin: 0.5rem 0;
+            }
+            
+            .bmi-visual {
+                height: 40px;
+            }
+            
+            .bmi-marker {
+                height: 60px;
+            }
         }
     </style>
 </head>
+
 <body>
     
     <header>
         <div class="container">
             <div class="header-content">
-                <div class="logo">Industrial Engineering <span>Calculators</span></div>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="terms.html">Terms</a></li>
-                    <li><a href="privacy.html">Privacy Policy</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                    <li></li>
-                </ul>
-            </nav>
+                <div class="logo">Into Everything <span>Calculators</span></div>
+                <nav>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </header>
     
-    <section class="page-hero">
-        <div class="container">
-            <h1>Reliability Analysis Calculator</h1>
-            <p>Calculate MTBF, failure rate, system reliability, and more for engineering systems</p>
-        </div>
-    </section>
+    <button class="sidebar-toggle">☰</button>
     
-    <main class="container">
-        <section class="content-section">
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h3>Calculators</h3>
+            <button class="sidebar-close">✕</button>
+        </div>
+        <div class="sidebar-category open">
+            <div class="sidebar-category-header">Health Calculators</div>
+            <div class="sidebar-category-content">
+                <a href="#" class="sidebar-link">BMI Calculator</a>
+                <a href="#" class="sidebar-link">Calorie Calculator</a>
+                <a href="#" class="sidebar-link">Body Fat Calculator</a>
+                <a href="#" class="sidebar-link">Ideal Weight Calculator</a>
+            </div>
+        </div>
+        <div class="sidebar-category">
+            <div class="sidebar-category-header">Fitness Calculators</div>
+            <div class="sidebar-category-content">
+                <a href="#" class="sidebar-link">Running Pace Calculator</a>
+                <a href="#" class="sidebar-link">1RM Calculator</a>
+                <a href="#" class="sidebar-link">VO2 Max Calculator</a>
+            </div>
+        </div>
+        <div class="sidebar-category">
+            <div class="sidebar-category-header">Nutrition Calculators</div>
+            <div class="sidebar-category-content">
+                <a href="#" class="sidebar-link">Macro Calculator</a>
+                <a href="#" class="sidebar-link">Protein Calculator</a>
+                <a href="#" class="sidebar-link">Water Intake Calculator</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="overlay"></div>
+    
+    <div class="page-hero">
+        <div class="container">
+            <h1>BMI Calculator</h1>
+            <p>Calculate your Body Mass Index and learn about healthy weight ranges</p>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="content-section">
             <div class="calculator-intro">
-                <h2>Reliability Analysis</h2>
-                <p>Reliability engineering deals with the ability of a system or component to perform its required functions under given conditions for a specified period of time. These calculators help you analyze and predict system reliability.</p>
+                <p>Body Mass Index (BMI) is a simple index of weight-for-height that is commonly used to classify underweight, overweight, and obesity in adults. It is defined as a person's weight in kilograms divided by the square of their height in meters (kg/m²).</p>
                 
                 <div class="formula-box">
-                    Reliability R(t) = e^(-λt)
+                    BMI = weight (kg) / [height (m)]²
                 </div>
                 
-                <p>Where:</p>
-                <ul>
-                    <li><strong>R(t)</strong> = Reliability at time t (probability of success)</li>
-                    <li><strong>λ</strong> = Failure rate (failures per unit time)</li>
-                    <li><strong>t</strong> = Mission time (time period of interest)</li>
-                    <li><strong>MTBF</strong> = Mean Time Between Failures = 1/λ</li>
-                </ul>
+                <p>While BMI is not a direct measure of body fat, it is a useful screening tool to identify potential weight problems. Use our calculator to determine your BMI and understand what it means for your health.</p>
             </div>
-
-            <script async="async" data-cfasync="false" src="//pl27511448.profitableratecpm.com/5d225b5e0b22c0980e365900e2390e1d/invoke.js"></script> <!-- adterra native banner -->
-            <div id="container-5d225b5e0b22c0980e365900e2390e1d"></div>    <!-- adterra native banner -->            
             
-            <div class="scenario-selector">
-                <h3>Calculation Scenario</h3>
-                <p>Select what you want to calculate:</p>
-                
-                <div class="scenario-tabs">
-                    <div class="scenario-tab active" data-scenario="reliability">Reliability</div>
-                    <div class="scenario-tab" data-scenario="failure-rate">Failure Rate</div>
-                    <div class="scenario-tab" data-scenario="mtbf">MTBF</div>
-                    <div class="scenario-tab" data-scenario="system-reliability">System Reliability</div>
-                    <div class="scenario-tab" data-scenario="mission-time">Mission Time</div>
-                </div>
-                
-                <!-- Reliability Calculation -->
-                <div class="scenario-content active" id="reliability-scenario">
-                    <h3>Calculate Reliability</h3>
-                    <p>Calculate the reliability (probability of success) given the failure rate and mission time.</p>
-                    
-                    <form id="reliability-form">
-                        <div class="input-row">
-                            <div class="input-group">
-                                <label for="reliability-failure-rate">Failure Rate (λ) - failures per unit time:</label>
-                                <input type="number" id="reliability-failure-rate" step="0.000001" min="0" required>
-                            </div>
-                            
-                            <div class="input-group">
-                                <label for="reliability-mission-time">Mission Time (t):</label>
-                                <input type="number" id="reliability-mission-time" step="0.01" min="0" required>
-                            </div>
-                        </div>
-                        
-                        <button type="submit" class="calculate-btn">Calculate Reliability</button>
-                    </form>
-                    
-                    <div class="result-box" id="reliability-result">
-                        <h3>Result</h3>
-                        <p>Reliability R(t): <span class="result-value" id="reliability-result-value"></span></p>
-                        <p>Probability of failure: <span class="result-value" id="reliability-failure-result-value"></span></p>
+            <div class="unit-toggle">
+                <button id="metric-btn" class="active">Metric (kg/cm)</button>
+                <button id="imperial-btn">Imperial (lbs/ft/in)</button>
+            </div>
+            
+            <div id="metric-inputs">
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="height-cm">Height (cm)</label>
+                        <input type="number" id="height-cm" placeholder="Enter height in centimeters">
                     </div>
-                </div>
-                
-                <!-- Failure Rate Calculation -->
-                <div class="scenario-content" id="failure-rate-scenario">
-                    <h3>Calculate Failure Rate</h3>
-                    <p>Calculate the failure rate (λ) given the reliability and mission time.</p>
-                    
-                    <form id="failure-rate-form">
-                        <div class="input-row">
-                            <div class="input-group">
-                                <label for="failure-rate-reliability">Reliability R(t) (0-1):</label>
-                                <input type="number" id="failure-rate-reliability" step="0.001" min="0" max="1" required>
-                            </div>
-                            
-                            <div class="input-group">
-                                <label for="failure-rate-mission-time">Mission Time (t):</label>
-                                <input type="number" id="failure-rate-mission-time" step="0.01" min="0" required>
-                            </div>
-                        </div>
-                        
-                        <button type="submit" class="calculate-btn">Calculate Failure Rate</button>
-                    </form>
-                    
-                    <div class="result-box" id="failure-rate-result">
-                        <h3>Result</h3>
-                        <p>Failure Rate (λ): <span class="result-value" id="failure-rate-result-value"></span> failures per unit time</p>
-                        <p>MTBF: <span class="result-value" id="failure-rate-mtbf-result-value"></span> time units</p>
-                    </div>
-                </div>
-                
-                <!-- MTBF Calculation -->
-                <div class="scenario-content" id="mtbf-scenario">
-                    <h3>Calculate MTBF</h3>
-                    <p>Calculate the Mean Time Between Failures (MTBF) given total operating time and number of failures.</p>
-                    
-                    <form id="mtbf-form">
-                        <div class="input-row">
-                            <div class="input-group">
-                                <label for="mtbf-total-time">Total Operating Time:</label>
-                                <input type="number" id="mtbf-total-time" step="0.01" min="0" required>
-                            </div>
-                            
-                            <div class="input-group">
-                                <label for="mtbf-failures">Number of Failures:</label>
-                                <input type="number" id="mtbf-failures" step="1" min="0" required>
-                            </div>
-                        </div>
-                        
-                        <button type="submit" class="calculate-btn">Calculate MTBF</button>
-                    </form>
-                    
-                    <div class="result-box" id="mtbf-result">
-                        <h3>Result</h3>
-                        <p>MTBF: <span class="result-value" id="mtbf-result-value"></span> time units</p>
-                        <p>Failure Rate (λ): <span class="result-value" id="mtbf-failure-rate-result-value"></span> failures per unit time</p>
-                    </div>
-                </div>
-                
-                <!-- System Reliability Calculation -->
-                <div class="scenario-content" id="system-reliability-scenario">
-                    <h3>Calculate System Reliability</h3>
-                    <p>Calculate the overall system reliability for series or parallel configurations.</p>
-                    
-                    <form id="system-reliability-form">
-                        <div class="input-group">
-                            <label for="system-config">System Configuration:</label>
-                            <select id="system-config" required>
-                                <option value="series">Series</option>
-                                <option value="parallel">Parallel</option>
-                                <option value="k-out-of-n">k-out-of-n</option>
-                            </select>
-                        </div>
-                        
-                        <div class="input-group" id="k-out-of-n-group" style="display: none;">
-                            <label for="k-value">k (minimum components needed):</label>
-                            <input type="number" id="k-value" step="1" min="1" value="1">
-                        </div>
-                        
-                        <div class="input-group">
-                            <label for="component-reliabilities">Component Reliabilities (comma separated, 0-1):</label>
-                            <input type="text" id="component-reliabilities" placeholder="0.95, 0.92, 0.98" required>
-                        </div>
-                        
-                        <div class="input-group">
-                            <label for="system-mission-time">Mission Time (t) - optional for failure rate calculation:</label>
-                            <input type="number" id="system-mission-time" step="0.01" min="0">
-                        </div>
-                        
-                        <button type="submit" class="calculate-btn">Calculate System Reliability</button>
-                    </form>
-                    
-                    <div class="result-box" id="system-reliability-result">
-                        <h3>Result</h3>
-                        <p>System Reliability: <span class="result-value" id="system-reliability-result-value"></span></p>
-                        <p>System Failure Rate (λ): <span class="result-value" id="system-failure-rate-result-value"></span></p>
-                        <p>System MTBF: <span class="result-value" id="system-mtbf-result-value"></span></p>
-                    </div>
-                </div>
-                
-                <!-- Mission Time Calculation -->
-                <div class="scenario-content" id="mission-time-scenario">
-                    <h3>Calculate Mission Time</h3>
-                    <p>Calculate the maximum mission time to achieve a target reliability given the failure rate.</p>
-                    
-                    <form id="mission-time-form">
-                        <div class="input-row">
-                            <div class="input-group">
-                                <label for="mission-time-reliability">Target Reliability (0-1):</label>
-                                <input type="number" id="mission-time-reliability" step="0.001" min="0" max="1" required>
-                            </div>
-                            
-                            <div class="input-group">
-                                <label for="mission-time-failure-rate">Failure Rate (λ) - failures per unit time:</label>
-                                <input type="number" id="mission-time-failure-rate" step="0.000001" min="0" required>
-                            </div>
-                        </div>
-                        
-                        <button type="submit" class="calculate-btn">Calculate Mission Time</button>
-                    </form>
-                    
-                    <div class="result-box" id="mission-time-result">
-                        <h3>Result</h3>
-                        <p>Maximum Mission Time: <span class="result-value" id="mission-time-result-value"></span> time units</p>
+                    <div class="input-group">
+                        <label for="weight-kg">Weight (kg)</label>
+                        <input type="number" id="weight-kg" placeholder="Enter weight in kilograms">
                     </div>
                 </div>
             </div>
             
-            <div class="examples-section">
-                <h3>Practical Examples</h3>
-                
-                <div class="example">
-                    <h4>Component Reliability</h4>
-                    <p>A component has a failure rate of 0.0002 failures per hour. What is its reliability for a 1000-hour mission?</p>
-                    <p>R(1000) = e^(-0.0002 × 1000) = e^(-0.2) ≈ 0.8187 (81.87%)</p>
+            <div id="imperial-inputs" style="display: none;">
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="height-ft">Height (feet)</label>
+                        <input type="number" id="height-ft" placeholder="Feet">
+                    </div>
+                    <div class="input-group">
+                        <label for="height-in">Height (inches)</label>
+                        <input type="number" id="height-in" placeholder="Inches">
+                    </div>
                 </div>
-                
-                <div class="example">
-                    <h4>Series System</h4>
-                    <p>A system has three components in series with reliabilities 0.95, 0.92, and 0.98. The system reliability is:</p>
-                    <p>R_system = 0.95 × 0.92 × 0.98 ≈ 0.857 (85.7%)</p>
-                </div>
-                
-                <div class="example">
-                    <h4>Parallel System</h4>
-                    <p>A system has two identical components in parallel, each with reliability 0.90. The system reliability is:</p>
-                    <p>R_system = 1 - (1 - 0.90) × (1 - 0.90) = 1 - 0.01 = 0.99 (99%)</p>
-                </div>
-                
-                <div class="example">
-                    <h4>MTBF Calculation</h4>
-                    <p>A machine operates for 10,000 hours with 4 failures. The MTBF is:</p>
-                    <p>MTBF = 10,000 hours / 4 failures = 2,500 hours</p>
+                <div class="input-group">
+                    <label for="weight-lbs">Weight (pounds)</label>
+                    <input type="number" id="weight-lbs" placeholder="Enter weight in pounds">
                 </div>
             </div>
-        </section>
-        <section class="content-section">
-            <h2>Related Tools</h2>
-            <div>               
-                <div class="related-tools">
-                    <a href="facilitieslocation.html" class="tool-chip">Facilities Location</a>
-                    <a href="failure-mode-and-effects-analysis-fmea.html" class="tool-chip">FMEA</a>                   
+            
+            <button class="calculate-btn" id="calculate-btn">Calculate BMI</button>
+            
+            <div class="result-box" id="result-box">
+                <h3>Your BMI Results</h3>
+                <div class="result-value" id="bmi-value">-</div>
+                
+                <div class="bmi-visual">
+                    <div class="bmi-marker" id="bmi-marker"></div>
+                </div>
+                
+                <div class="bmi-labels">
+                    <span>Underweight<br>&lt;18.5</span>
+                    <span>Normal<br>18.5-24.9</span>
+                    <span>Overweight<br>25-29.9</span>
+                    <span>Obese<br>30+</span>
+                </div>
+                
+                <div class="bmi-category" id="bmi-category">-</div>
+                
+                <div class="metric-results">
+                    <div class="metric-card demand">
+                        <h4>Healthy Weight Range</h4>
+                        <div class="metric-value" id="healthy-range">-</div>
+                    </div>
+                    <div class="metric-card leadtime">
+                        <h4>Weight Status</h4>
+                        <div class="metric-value" id="weight-status">-</div>
+                    </div>
                 </div>
             </div>
-        </section>
-
-    </main>
+        </div>
+        
+        <div class="content-section">
+            <h2>BMI Categories</h2>
+            <p>BMI values are grouped into categories that indicate your weight status and potential health risks:</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>BMI</th>
+                        <th>Category</th>
+                        <th>Health Risk</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Below 18.5</td>
+                        <td>Underweight</td>
+                        <td>Increased risk of nutritional deficiencies and osteoporosis</td>
+                    </tr>
+                    <tr>
+                        <td>18.5 - 24.9</td>
+                        <td>Normal weight</td>
+                        <td>Lowest health risk</td>
+                    </tr>
+                    <tr>
+                        <td>25.0 - 29.9</td>
+                        <td>Overweight</td>
+                        <td>Moderate risk of developing health problems</td>
+                    </tr>
+                    <tr>
+                        <td>30.0 and above</td>
+                        <td>Obese</td>
+                        <td>High risk of developing health problems like heart disease and diabetes</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="content-section">
+            <h2>How do I calculate my BMI?</h2>
+            <p>Calculating your BMI is straightforward. You can use the formula:</p>
+            
+            <div class="formula-box">
+                BMI = weight (kg) / [height (m)]²
+            </div>
+            
+            <p>For those using imperial measurements:</p>
+            
+            <div class="formula-box">
+                BMI = [weight (lbs) / [height (in)]²] × 703
+            </div>
+            
+            <p>Our calculator above does all the math for you. Simply enter your height and weight, and we'll calculate your BMI instantly.</p>
+        </div>
+        
+        <div class="content-section">
+            <h2>How should a 5'4" female weigh?</h2>
+            <p>For a woman who is 5 feet 4 inches tall (163 cm), the healthy weight range based on BMI is:</p>
+            
+            <div class="formula-box">
+                Normal BMI range (18.5-24.9): 108-145 lbs (49-66 kg)
+            </div>
+            
+            <p>This means a 5'4" female should ideally weigh between 108 and 145 pounds to be considered in the healthy BMI range. However, individual factors like muscle mass, body composition, and frame size can affect what weight is healthiest for a specific person.</p>
+        </div>
+        
+        <div class="content-section">
+            <h2>Is 20 the perfect BMI?</h2>
+            <p>A BMI of 20 falls within the normal weight category (18.5-24.9), which is generally considered healthy. While there's no single "perfect" BMI for everyone, values between 20-22 are often associated with the lowest health risks for most people.</p>
+            
+            <p>However, it's important to remember that BMI is just one indicator of health. Other factors like body composition, distribution of fat, fitness level, and overall lifestyle play significant roles in determining your health status.</p>
+        </div>
+        
+        <div class="content-section">
+            <h2>What is the correct BMI?</h2>
+            <p>The "correct" or healthy BMI range for adults is generally considered to be between 18.5 and 24.9. This range is associated with the lowest risk of health problems related to weight.</p>
+            
+            <p>It's important to note that:</p>
+            <ul>
+                <li>BMI ranges may differ for certain ethnic groups</li>
+                <li>BMI interpretations can vary for athletes with high muscle mass</li>
+                <li>BMI may not be appropriate for pregnant women, children, or the elderly</li>
+                <li>Health professionals may use slightly different ranges based on individual health factors</li>
+            </ul>
+        </div>
+        
+        <div class="content-section">
+            <h2>Is BMI a good indicator of health?</h2>
+            <p>BMI is a useful screening tool for weight categories, but it has limitations as a comprehensive health indicator:</p>
+            
+            <p><strong>Advantages of BMI:</strong></p>
+            <ul>
+                <li>Simple and inexpensive to calculate</li>
+                <li>Correlates with body fat for most people</li>
+                <li>Useful for identifying population-level trends</li>
+                <li>Helps identify potential weight-related health risks</li>
+            </ul>
+            
+            <p><strong>Limitations of BMI:</strong></p>
+            <ul>
+                <li>Doesn't distinguish between muscle and fat</li>
+                <li>Doesn't account for fat distribution</li>
+                <li>May misclassify athletes and muscular individuals</li>
+                <li>May not account for age, sex, or ethnic differences in body composition</li>
+            </ul>
+            
+            <p>For a more complete health assessment, BMI should be considered alongside other measurements like waist circumference, body fat percentage, blood pressure, cholesterol levels, and lifestyle factors.</p>
+        </div>
+        
+        <div class="content-section">
+            <h2>Is BMI outdated?</h2>
+            <p>While some critics argue that BMI is an outdated measurement, it remains widely used in healthcare and research because:</p>
+            
+            <ul>
+                <li>It has strong correlations with health outcomes at a population level</li>
+                <li>It's simple to calculate and understand</li>
+                <li>Extensive research has established connections between BMI categories and health risks</li>
+                <li>It provides a standardized measurement for comparisons</li>
+            </ul>
+            
+            <p>However, many health professionals now recommend using BMI in combination with other assessments for a more complete picture of health. Measurements like waist-to-hip ratio, body fat percentage, and metabolic health markers provide additional insights that BMI alone cannot offer.</p>
+            
+            <p>Rather than being completely outdated, BMI is best viewed as a starting point for health assessments rather than a definitive diagnosis tool.</p>
+        </div>
+        
+        <div class="content-section">
+            <h2>Related Health Calculators</h2>
+            <div class="related-tools">
+                <a href="#" class="tool-chip">Ideal Weight Calculator</a>
+                <a href="#" class="tool-chip">Body Fat Percentage Calculator</a>
+                <a href="#" class="tool-chip">Calorie Calculator</a>
+                <a href="#" class="tool-chip">Waist-to-Hip Ratio Calculator</a>
+                <a href="#" class="tool-chip">Basal Metabolic Rate Calculator</a>
+            </div>
+        </div>
+    </div>
     
     <footer>
         <div class="footer-links">
@@ -781,7 +926,7 @@
                 
             </div>
             <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
-            <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
+            <p class="copyright">&copy; 2025 Industrial Engineering Calculators. All rights reserved.</p>
         </div>
     </footer>
 
@@ -838,237 +983,157 @@
         });
     </script>
     <!-- xxxx navigation end xxxxx -->
-
+    
     <script>
-        // Scenario tab switching
-        const tabs = document.querySelectorAll('.scenario-tab');
-        const contents = document.querySelectorAll('.scenario-content');
-        
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                // Remove active class from all tabs and contents
-                tabs.forEach(t => t.classList.remove('active'));
-                contents.forEach(c => c.classList.remove('active'));
+        // Navigation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebarClose = document.querySelector('.sidebar-close');
+            const overlay = document.querySelector('.overlay');
+            const body = document.body;
+            
+            sidebarToggle.addEventListener('click', function() {
+                sidebar.classList.add('open');
+                overlay.classList.add('active');
+                body.classList.add('sidebar-open');
+            });
+            
+            sidebarClose.addEventListener('click', closeSidebar);
+            overlay.addEventListener('click', closeSidebar);
+            
+            function closeSidebar() {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+                body.classList.remove('sidebar-open');
+            }
+            
+            // Category toggles
+            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
+            categoryHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const category = this.parentElement;
+                    category.classList.toggle('open');
+                });
+            });
+            
+            // BMI Calculator functionality
+            const metricBtn = document.getElementById('metric-btn');
+            const imperialBtn = document.getElementById('imperial-btn');
+            const metricInputs = document.getElementById('metric-inputs');
+            const imperialInputs = document.getElementById('imperial-inputs');
+            const calculateBtn = document.getElementById('calculate-btn');
+            const resultBox = document.getElementById('result-box');
+            const bmiValue = document.getElementById('bmi-value');
+            const bmiCategory = document.getElementById('bmi-category');
+            const healthyRange = document.getElementById('healthy-range');
+            const weightStatus = document.getElementById('weight-status');
+            const bmiMarker = document.getElementById('bmi-marker');
+            
+            // Unit toggle
+            metricBtn.addEventListener('click', function() {
+                metricBtn.classList.add('active');
+                imperialBtn.classList.remove('active');
+                metricInputs.style.display = 'block';
+                imperialInputs.style.display = 'none';
+            });
+            
+            imperialBtn.addEventListener('click', function() {
+                imperialBtn.classList.add('active');
+                metricBtn.classList.remove('active');
+                imperialInputs.style.display = 'block';
+                metricInputs.style.display = 'none';
+            });
+            
+            // Calculate BMI
+            calculateBtn.addEventListener('click', function() {
+                let height, weight, bmi;
                 
-                // Add active class to clicked tab and corresponding content
-                tab.classList.add('active');
-                const scenario = tab.getAttribute('data-scenario');
-                document.getElementById(`${scenario}-scenario`).classList.add('active');
+                if (metricBtn.classList.contains('active')) {
+                    // Metric calculation
+                    const heightCm = parseFloat(document.getElementById('height-cm').value);
+                    const weightKg = parseFloat(document.getElementById('weight-kg').value);
+                    
+                    if (isNaN(heightCm) || isNaN(weightKg) || heightCm <= 0 || weightKg <= 0) {
+                        alert('Please enter valid height and weight values.');
+                        return;
+                    }
+                    
+                    height = heightCm / 100; // Convert cm to m
+                    weight = weightKg;
+                    bmi = weight / (height * height);
+                } else {
+                    // Imperial calculation
+                    const heightFt = parseFloat(document.getElementById('height-ft').value);
+                    const heightIn = parseFloat(document.getElementById('height-in').value);
+                    const weightLbs = parseFloat(document.getElementById('weight-lbs').value);
+                    
+                    if (isNaN(heightFt) || isNaN(heightIn) || isNaN(weightLbs) || 
+                        heightFt <= 0 || heightIn < 0 || weightLbs <= 0) {
+                        alert('Please enter valid height and weight values.');
+                        return;
+                    }
+                    
+                    height = heightFt * 12 + heightIn; // Total height in inches
+                    weight = weightLbs;
+                    bmi = (weight / (height * height)) * 703;
+                }
+                
+                // Display results
+                bmiValue.textContent = bmi.toFixed(1);
+                
+                // Determine category
+                let category, status;
+                let minHealthyWeight, maxHealthyWeight;
+                
+                if (bmi < 18.5) {
+                    category = 'Underweight';
+                    status = 'Increased health risk';
+                } else if (bmi >= 18.5 && bmi <= 24.9) {
+                    category = 'Normal weight';
+                    status = 'Low health risk';
+                } else if (bmi >= 25 && bmi <= 29.9) {
+                    category = 'Overweight';
+                    status = 'Moderate health risk';
+                } else {
+                    category = 'Obese';
+                    status = 'High health risk';
+                }
+                
+                bmiCategory.textContent = category;
+                bmiCategory.className = 'bmi-category ' + category.toLowerCase().replace(' ', '-');
+                weightStatus.textContent = status;
+                
+                // Calculate healthy weight range
+                if (metricBtn.classList.contains('active')) {
+                    const heightM = parseFloat(document.getElementById('height-cm').value) / 100;
+                    minHealthyWeight = (18.5 * heightM * heightM).toFixed(1);
+                    maxHealthyWeight = (24.9 * heightM * heightM).toFixed(1);
+                    healthyRange.textContent = `${minHealthyWeight} - ${maxHealthyWeight} kg`;
+                } else {
+                    const heightIn = parseFloat(document.getElementById('height-ft').value) * 12 + 
+                                    parseFloat(document.getElementById('height-in').value);
+                    minHealthyWeight = ((18.5 * heightIn * heightIn) / 703).toFixed(1);
+                    maxHealthyWeight = ((24.9 * heightIn * heightIn) / 703).toFixed(1);
+                    healthyRange.textContent = `${minHealthyWeight} - ${maxHealthyWeight} lbs`;
+                }
+                
+                // Position marker on BMI visual
+                // BMI scale from 15 to 40 for visualization purposes
+                const minBmi = 15;
+                const maxBmi = 40;
+                let markerPosition = ((bmi - minBmi) / (maxBmi - minBmi)) * 100;
+                
+                // Constrain marker to visual limits
+                markerPosition = Math.max(0, Math.min(100, markerPosition));
+                bmiMarker.style.left = `${markerPosition}%`;
+                
+                // Show results
+                resultBox.style.display = 'block';
             });
         });
-        
-        // Show/hide k-out-of-n field based on selection
-        document.getElementById('system-config').addEventListener('change', function() {
-            const kGroup = document.getElementById('k-out-of-n-group');
-            kGroup.style.display = this.value === 'k-out-of-n' ? 'block' : 'none';
-        });
-        
-        // Reliability calculation
-        document.getElementById('reliability-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const failureRate = parseFloat(document.getElementById('reliability-failure-rate').value);
-            const missionTime = parseFloat(document.getElementById('reliability-mission-time').value);
-            
-            if (isNaN(failureRate) || isNaN(missionTime)) {
-                alert('Please enter valid numbers');
-                return;
-            }
-            
-            const reliability = Math.exp(-failureRate * missionTime);
-            document.getElementById('reliability-result-value').textContent = reliability.toFixed(6);
-            document.getElementById('reliability-failure-result-value').textContent = (1 - reliability).toFixed(6);
-            document.getElementById('reliability-result').style.display = 'block';
-        });
-        
-        // Failure rate calculation
-        document.getElementById('failure-rate-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const reliability = parseFloat(document.getElementById('failure-rate-reliability').value);
-            const missionTime = parseFloat(document.getElementById('failure-rate-mission-time').value);
-            
-            if (isNaN(reliability) || isNaN(missionTime) || missionTime === 0 || reliability <= 0) {
-                alert('Please enter valid numbers (mission time cannot be zero, reliability must be positive)');
-                return;
-            }
-            
-            const failureRate = -Math.log(reliability) / missionTime;
-            const mtbf = 1 / failureRate;
-            
-            document.getElementById('failure-rate-result-value').textContent = failureRate.toFixed(6);
-            document.getElementById('failure-rate-mtbf-result-value').textContent = mtbf.toFixed(2);
-            document.getElementById('failure-rate-result').style.display = 'block';
-        });
-        
-        // MTBF calculation
-        document.getElementById('mtbf-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const totalTime = parseFloat(document.getElementById('mtbf-total-time').value);
-            const failures = parseFloat(document.getElementById('mtbf-failures').value);
-            
-            if (isNaN(totalTime) || isNaN(failures) || failures === 0) {
-                alert('Please enter valid numbers (number of failures cannot be zero)');
-                return;
-            }
-            
-            const mtbf = totalTime / failures;
-            const failureRate = 1 / mtbf;
-            
-            document.getElementById('mtbf-result-value').textContent = mtbf.toFixed(2);
-            document.getElementById('mtbf-failure-rate-result-value').textContent = failureRate.toFixed(6);
-            document.getElementById('mtbf-result').style.display = 'block';
-        });
-        
-        // System reliability calculation
-        document.getElementById('system-reliability-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const config = document.getElementById('system-config').value;
-            const reliabilitiesText = document.getElementById('component-reliabilities').value;
-            const missionTime = parseFloat(document.getElementById('system-mission-time').value) || 0;
-            
-            // Parse component reliabilities
-            const componentRs = reliabilitiesText.split(',')
-                .map(s => parseFloat(s.trim()))
-                .filter(r => !isNaN(r) && r >= 0 && r <= 1);
-                
-            if (componentRs.length === 0) {
-                alert('Please enter valid component reliabilities (comma separated, values between 0 and 1)');
-                return;
-            }
-            
-            let systemR = 0;
-            let failureRate = 0;
-            
-            if (config === 'series') {
-                // Series system: product of all reliabilities
-                systemR = componentRs.reduce((product, r) => product * r, 1);
-                
-                // For series system with constant failure rates
-                if (missionTime > 0) {
-                    const componentLambdas = componentRs.map(r => -Math.log(r) / missionTime);
-                    const systemLambda = componentLambdas.reduce((sum, lambda) => sum + lambda, 0);
-                    failureRate = systemLambda;
-                }
-            } 
-            else if (config === 'parallel') {
-                // Parallel system: 1 - product of (1 - Ri)
-                systemR = 1 - componentRs.reduce((product, r) => product * (1 - r), 1);
-                
-                // For parallel system, failure rate calculation is more complex
-                // We'll approximate it based on system reliability and mission time
-                if (missionTime > 0) {
-                    failureRate = -Math.log(systemR) / missionTime;
-                }
-            }
-            else if (config === 'k-out-of-n') {
-                const k = parseInt(document.getElementById('k-value').value) || 1;
-                const n = componentRs.length;
-                
-                if (k > n) {
-                    alert('k cannot be greater than the Top Speed (km/h)');
-                    return;
-                }
-                
-                // k-out-of-n system reliability calculation
-                // This is a simplified version assuming identical components
-                // For different component reliabilities, we'd need a more complex calculation
-                const avgR = componentRs.reduce((sum, r) => sum + r, 0) / n;
-                
-                // Binomial probability calculation
-                systemR = 0;
-                for (let i = k; i <= n; i++) {
-                    systemR += binomialCoefficient(n, i) * Math.pow(avgR, i) * Math.pow(1 - avgR, n - i);
-                }
-                
-                if (missionTime > 0) {
-                    failureRate = -Math.log(systemR) / missionTime;
-                }
-            }
-            
-            const mtbf = failureRate > 0 ? (1 / failureRate) : 0;
-            
-            document.getElementById('system-reliability-result-value').textContent = systemR.toFixed(6);
-            document.getElementById('system-failure-rate-result-value').textContent = 
-                failureRate > 0 ? failureRate.toFixed(6) : 'N/A (enter mission time)';
-            document.getElementById('system-mtbf-result-value').textContent = 
-                mtbf > 0 ? mtbf.toFixed(2) : 'N/A (enter mission time)';
-            document.getElementById('system-reliability-result').style.display = 'block';
-        });
-        
-        // Mission time calculation
-        document.getElementById('mission-time-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const reliability = parseFloat(document.getElementById('mission-time-reliability').value);
-            const failureRate = parseFloat(document.getElementById('mission-time-failure-rate').value);
-            
-            if (isNaN(reliability) || isNaN(failureRate) || failureRate === 0 || reliability <= 0) {
-                alert('Please enter valid numbers (failure rate cannot be zero, reliability must be positive)');
-                return;
-            }
-            
-            const missionTime = -Math.log(reliability) / failureRate;
-            
-            document.getElementById('mission-time-result-value').textContent = missionTime.toFixed(2);
-            document.getElementById('mission-time-result').style.display = 'block';
-        });
-        
-        // Helper function for binomial coefficient (n choose k)
-        function binomialCoefficient(n, k) {
-            if (k < 0 || k > n) return 0;
-            if (k === 0 || k === n) return 1;
-            
-            k = Math.min(k, n - k); // Take advantage of symmetry
-            let res = 1;
-            
-            for (let i = 1; i <= k; i++) {
-                res = res * (n - k + i) / i;
-            }
-            
-            return res;
-        }
     </script>
 
-
-    <div id="cookie-banner" style="position:fixed;bottom:0;left:0;width:100%;background:#fffbe6;border-top:1px solid #e2c96f;padding:1rem;box-shadow:0 -2px 8px rgba(0,0,0,0.07);display:none;z-index:9999;">
-        <span>
-            We use cookies to improve your experience. Non-essential cookies (analytics, personalization) require your consent. 
-            <a href="privacy.html" target="_blank">Learn more</a>
-        </span>
-        <button id="cookie-accept" style="margin-left:1rem;">Accept</button>
-        <button id="cookie-reject" style="margin-left:0.5rem;">Reject</button>
-    </div>
-    <script>
-    (function() {
-        var banner = document.getElementById('cookie-banner');
-        var accepted = localStorage.getItem('cookieConsent');
-        if (!accepted) banner.style.display = 'block';
-
-        document.getElementById('cookie-accept').onclick = function() {
-            localStorage.setItem('cookieConsent', 'accepted');
-            banner.style.display = 'none';
-            // Place non-essential cookie scripts here, e.g. analytics
-            // Example: load Google Analytics only if accepted
-            var gaScript = document.createElement('script');
-            gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V";
-            gaScript.async = true;
-            document.head.appendChild(gaScript);
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-3BSHG1DE6V');
-        };
-        document.getElementById('cookie-reject').onclick = function() {
-            localStorage.setItem('cookieConsent', 'rejected');
-            banner.style.display = 'none';
-            // Do not load non-essential cookies/scripts
-        };
-    })();
-    </script>
-    
     <!-- xxxx navigation start xxxxx -->
     <button class="sidebar-toggle">☰</button>
     <div class="overlay"></div>
@@ -1245,15 +1310,17 @@
                 <span>+</span>
             </div>
                 <div class="sidebar-category-content">
-                     <a href="Articles/Negative-Correlation-Understanding-Inverse-Relationships-in-Data.html" class="sidebar-link">Negative Correlation: Understanding Inverse Relationships in Data</a>
+                    <a href="Articles/Negative-Correlation-Understanding-Inverse-Relationships-in-Data.html" class="sidebar-link">Negative Correlation: Understanding Inverse Relationships in Data</a>
                     <a href="Articles/Parameter-vs-Statistic-Understanding-the-Key-Differences.html" class="sidebar-link">Statistic vs Parameter: Understanding the Key Differences</a>
                     <a href="Articles/Quality-Assurance-vs-Quality-Control-Key-Differences-Explained.html" class="sidebar-link">Quality Assurance vs Quality Control: Key Differences Explained</a>
                     <a href="Articles/ABC-Analysis-Made-Easy.html" class="sidebar-link">ABC Analysis Made Easy: Classify Your Inventory in Minutes</a>
                     <a href="Articles/EOQ-Optimize-Your-Inventory-Costs.html" class="sidebar-link">EOQ Order Quantity: Optimize Your Inventory</a>
                     <a href="Articles/Linear-Programming-for-Supply-Chain-Optimization-A-Beginner's-Guide.html" class="sidebar-link">Linear Programming for Supply Chain Optimization: A Beginner's Guide</a>                
                     <a href="Articles/How-Lean-Six-Sigma-Helps-Cut-Costs-Without-Cutting-Corners.html" class="sidebar-link">How Lean Six Sigma Helps Cut Costs Without Cutting Corners</a>  
+                    <a href="Articles/How-Lean-Six-Sigma-Helps-Cut-Costs-Without-Cutting-Corners.html" class="sidebar-link">How Lean Six Sigma Helps Cut Costs Without Cutting Corners</a>  
                 </div>
     </aside>
     <!-- xxxx navigation end xxxxx -->       
+
 </body>
 </html>

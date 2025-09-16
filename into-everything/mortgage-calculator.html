@@ -1,0 +1,1675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--FAVICON-->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+  
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-3BSHG1DE6V');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5607576434988374"
+     crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="google-adsense-account" content="ca-pub-5607576434988374">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mortgage Calculator - Calculate your monthly payments, amortization schedule, and understand your mortgage options">
+    <title>Mortgage Calculator | Financial Planning Calculators</title>
+
+    <!-- Clarity tracking code for https://iecalculators.online/ -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "t31aicr9ep");
+    </script>
+
+    <style>
+        /* Consistent with existing style */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+            transition: margin-left 0.3s;
+        }
+        
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block;
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .metric-results {
+            display: flex;
+            justify-content: space-between;
+            margin: 1.5rem 0;
+        }
+        
+        .metric-card {
+            flex: 1;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 0 0.5rem;
+            text-align: center;
+        }
+        
+        .metric-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-card .metric-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .metric-card.principal .metric-value {
+            color: #3498db;
+        }
+        
+        .metric-card.interest .metric-value {
+            color: #f39c12;
+        }
+        
+        .metric-card.tax .metric-value {
+            color: #2ecc71;
+        }
+        
+        .amortization-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        
+        .amortization-table th, 
+        .amortization-table td {
+            padding: 0.5rem;
+            text-align: right;
+            border: 1px solid #ddd;
+        }
+        
+        .amortization-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        
+        .amortization-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .payment-breakdown {
+            width: 100%;
+            height: 120px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            margin: 1.5rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            position: relative;
+        }
+        
+        .payment-section {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .payment-section.principal {
+            background-color: #3498db;
+        }
+        
+        .payment-section.interest {
+            background-color: #f39c12;
+        }
+        
+        .payment-section.tax {
+            background-color: #2ecc71;
+        }
+        
+        .payment-section.insurance {
+            background-color: #9b59b6;
+        }
+        
+        .payment-label {
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            position: absolute;
+            bottom: -25px;
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .related-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .tool-chip {
+            background-color: #e3f2fd;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .tool-chip:hover {
+            background-color: #bbdefb;
+        }
+        
+        .faq-item {
+            margin-bottom: 1.5rem;
+        }
+        
+        .faq-question {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tab {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab.active {
+            border-bottom: 3px solid var(--secondary-color);
+            font-weight: bold;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .chart-container {
+            width: 100%;
+            height: 300px;
+            margin: 1.5rem 0;
+        }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            display: block;
+        }
+            
+        body.sidebar-open {
+            margin-left: 0;
+            overflow: hidden;
+        }
+        /* xxxx navigation end xxxxx */
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .metric-results {
+                flex-direction: column;
+            }
+            
+            .metric-card {
+                margin: 0.5rem 0;
+            }
+            
+            .payment-breakdown {
+                height: auto;
+                flex-direction: column;
+                padding: 1rem 0;
+            }
+            
+            .payment-section {
+                width: 100%;
+                height: 40px;
+                margin: 0.25rem 0;
+            }
+            
+            .payment-label {
+                position: static;
+                margin-top: 0.25rem;
+            }
+            
+            .amortization-table {
+                font-size: 0.8rem;
+            }
+            
+            .amortization-table th, 
+            .amortization-table td {
+                padding: 0.25rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Financial Planning <span>Calculators</span></div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="terms.html">Terms</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+
+        <div class="sidebar-category">
+            <div class="sidebar-category-header">
+                <span>Site Navigation</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="index.html" class="sidebar-link">Home</a>
+                <a href="about.html" class="sidebar-link">About</a>
+                <a href="terms.html" class="sidebar-link">Terms of Service</a>
+                <a href="privacy.html" class="sidebar-link">Privacy Policy</a>
+                <a href="contact.html" class="sidebar-link">Contact Us</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header">
+                <span>Financial Calculators</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="#" class="sidebar-link active">Mortgage Calculator</a>
+                <a href="#" class="sidebar-link">Loan Calculator</a>
+                <a href="#" class="sidebar-link">Investment Calculator</a>
+                <a href="#" class="sidebar-link">Retirement Planner</a>
+                <a href="#" class="sidebar-link">Debt Payoff Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header">
+                <span>Real Estate Calculators</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="#" class="sidebar-link">Rent vs Buy Calculator</a>
+                <a href="#" class="sidebar-link">Refinance Calculator</a>
+                <a href="#" class="sidebar-link">Home Affordability Calculator</a>
+                <a href="#" class="sidebar-link">Closing Cost Calculator</a>
+            </div>
+        </div>
+    </aside>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Mortgage Calculator</h1>
+            <p>Calculate your monthly mortgage payments, understand amortization, and plan your home purchase</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Mortgage Payment Calculation</h2>
+                <p>A mortgage is a loan specifically used to purchase real estate, where the property itself serves as collateral. Use this calculator to estimate your monthly mortgage payments, understand how much interest you'll pay over the life of the loan, and see how extra payments can reduce your loan term.</p>
+                
+                <div class="formula-box">
+                    M = P [ i(1 + i)^n ] / [ (1 + i)^n – 1 ]
+                </div>
+                
+                <p>Where:</p>
+                <ul>
+                    <li><strong>M</strong> = Monthly mortgage payment</li>
+                    <li><strong>P</strong> = Principal loan amount</li>
+                    <li><strong>i</strong> = Monthly interest rate (annual rate divided by 12)</li>
+                    <li><strong>n</strong> = Number of monthly payments (loan term in years × 12)</li>
+                </ul>
+            </div>
+
+            <form id="mortgage-form">
+                <h3>Loan Details</h3>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="home-price">Home Price ($):</label>
+                        <input type="number" id="home-price" min="0" step="1000" value="300000" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="down-payment">Down Payment ($):</label>
+                        <input type="number" id="down-payment" min="0" step="1000" value="60000" required>
+                    </div>
+                </div>
+                
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="loan-term">Loan Term (years):</label>
+                        <select id="loan-term" required>
+                            <option value="30">30 years</option>
+                            <option value="20">20 years</option>
+                            <option value="15">15 years</option>
+                            <option value="10">10 years</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="interest-rate">Interest Rate (%):</label>
+                        <input type="number" id="interest-rate" min="0" max="20" step="0.125" value="6.5" required>
+                    </div>
+                </div>
+                
+                <h3>Additional Costs</h3>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="property-tax">Annual Property Tax ($):</label>
+                        <input type="number" id="property-tax" min="0" step="100" value="3600">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="home-insurance">Annual Home Insurance ($):</label>
+                        <input type="number" id="home-insurance" min="0" step="100" value="1200">
+                    </div>
+                </div>
+                
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="pmi">PMI (% of loan amount per year):</label>
+                        <input type="number" id="pmi" min="0" max="5" step="0.01" value="0.5">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="hoa">Monthly HOA Fees ($):</label>
+                        <input type="number" id="hoa" min="0" step="10" value="0">
+                    </div>
+                </div>
+                
+                <button type="submit" class="calculate-btn">Calculate Mortgage</button>
+            </form>
+            
+            <div class="result-box" id="mortgage-result">
+                <h3>Mortgage Calculation Results</h3>
+                
+                <div class="metric-results">
+                    <div class="metric-card principal">
+                        <h4>Monthly Payment</h4>
+                        <div class="metric-value" id="monthly-payment">-</div>
+                        <p>Principal & Interest</p>
+                    </div>
+                    
+                    <div class="metric-card interest">
+                        <h4>Total Interest</h4>
+                        <div class="metric-value" id="total-interest">-</div>
+                        <p>Over loan term</p>
+                    </div>
+                    
+                    <div class="metric-card tax">
+                        <h4>Total Payment</h4>
+                        <div class="metric-value" id="total-payment">-</div>
+                        <p>Principal + Interest</p>
+                    </div>
+                </div>
+                
+                <div class="payment-breakdown" id="payment-breakdown">
+                    <div class="payment-section principal" id="principal-section">
+                        <span id="principal-amount">Principal</span>
+                    </div>
+                    <div class="payment-section interest" id="interest-section">
+                        <span id="interest-amount">Interest</span>
+                    </div>
+                    <div class="payment-section tax" id="tax-section">
+                        <span id="tax-amount">Tax</span>
+                    </div>
+                    <div class="payment-section insurance" id="insurance-section">
+                        <span id="insurance-amount">Insurance</span>
+                    </div>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; margin-top: 30px;">
+                    <div class="payment-label">Principal & Interest</div>
+                    <div class="payment-label">Taxes & Insurance</div>
+                </div>
+                
+                <h4>Payment Details</h4>
+                <table>
+                    <tr>
+                        <th>Component</th>
+                        <th>Monthly Amount</th>
+                        <th>Annual Amount</th>
+                    </tr>
+                    <tr>
+                        <td>Principal & Interest</td>
+                        <td id="monthly-pi">-</td>
+                        <td id="annual-pi">-</td>
+                    </tr>
+                    <tr>
+                        <td>Property Taxes</td>
+                        <td id="monthly-tax">-</td>
+                        <td id="annual-tax">-</td>
+                    </tr>
+                    <tr>
+                        <td>Home Insurance</td>
+                        <td id="monthly-insurance">-</td>
+                        <td id="annual-insurance">-</td>
+                    </tr>
+                    <tr>
+                        <td>PMI</td>
+                        <td id="monthly-pmi">-</td>
+                        <td id="annual-pmi">-</td>
+                    </tr>
+                    <tr>
+                        <td>HOA Fees</td>
+                        <td id="monthly-hoa">-</td>
+                        <td id="annual-hoa">-</td>
+                    </tr>
+                    <tr>
+                        <th>Total Monthly Payment</th>
+                        <th id="total-monthly">-</th>
+                        <th id="total-annual">-</th>
+                    </tr>
+                </table>
+                
+                <h4>Amortization Overview</h4>
+                <table>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Value</th>
+                    </tr>
+                    <tr>
+                        <td>Loan Amount</td>
+                        <td id="loan-amount">-</td>
+                    </tr>
+                    <tr>
+                        <td>Loan-to-Value Ratio</td>
+                        <td id="ltv">-</td>
+                    </tr>
+                    <tr>
+                        <td>Total Interest Paid</td>
+                        <td id="total-interest-paid">-</td>
+                    </tr>
+                    <tr>
+                        <td>Total Cost of Loan</td>
+                        <td id="total-cost">-</td>
+                    </tr>
+                    <tr>
+                        <td>Pay-off Date</td>
+                        <td id="payoff-date">-</td>
+                    </tr>
+                </table>
+                
+                <div class="tabs">
+                    <div class="tab active" data-tab="amortization">Amortization Schedule</div>
+                    <div class="tab" data-tab="extra-payments">Extra Payments</div>
+                    <div class="tab" data-tab="refinance">Refinance Comparison</div>
+                </div>
+                
+                <div class="tab-content active" id="amortization-content">
+                    <p>This table shows how each payment is split between principal and interest over the life of your loan.</p>
+                    <div style="overflow-x: auto;">
+                        <table class="amortization-table">
+                            <thead>
+                                <tr>
+                                    <th>Year</th>
+                                    <th>Principal</th>
+                                    <th>Interest</th>
+                                    <th>Total Interest</th>
+                                    <th>Balance</th>
+                                </tr>
+                            </thead>
+                            <tbody id="amortization-body">
+                                <!-- Will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="extra-payments-content">
+                    <h4>How extra payments affect your mortgage</h4>
+                    <p>Making additional payments toward your principal can significantly reduce the length of your loan and the total interest paid.</p>
+                    
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="extra-payment">Extra Monthly Payment ($):</label>
+                            <input type="number" id="extra-payment" min="0" step="10" value="100">
+                        </div>
+                    </div>
+                    
+                    <button class="calculate-btn" id="calculate-extra">Calculate Impact</button>
+                    
+                    <div id="extra-results" style="margin-top: 1.5rem;">
+                        <table>
+                            <tr>
+                                <th>With Extra Payments</th>
+                                <th>Without Extra Payments</th>
+                                <th>Savings</th>
+                            </tr>
+                            <tr>
+                                <td id="extra-term">-</td>
+                                <td id="regular-term">-</td>
+                                <td id="term-savings">-</td>
+                            </tr>
+                            <tr>
+                                <td id="extra-interest">-</td>
+                                <td id="regular-interest">-</td>
+                                <td id="interest-savings">-</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="refinance-content">
+                    <h4>Refinance Comparison</h4>
+                    <p>Compare your current mortgage with a potential refinance option to see if refinancing makes financial sense for you.</p>
+                    
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="refi-rate">Refinance Interest Rate (%):</label>
+                            <input type="number" id="refi-rate" min="0" max="20" step="0.125" value="5.5">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="refi-term">Refinance Term (years):</label>
+                            <select id="refi-term">
+                                <option value="30">30 years</option>
+                                <option value="20">20 years</option>
+                                <option value="15">15 years</option>
+                                <option value="10">10 years</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="refi-costs">Refinance Costs ($):</label>
+                            <input type="number" id="refi-costs" min="0" step="100" value="5000">
+                        </div>
+                    </div>
+                    
+                    <button class="calculate-btn" id="calculate-refi">Compare Refinance</button>
+                    
+                    <div id="refi-results" style="margin-top: 1.5rem;">
+                        <table>
+                            <tr>
+                                <th>Metric</th>
+                                <th>Current Loan</th>
+                                <th>Refinance</th>
+                                <th>Difference</th>
+                            </tr>
+                            <tr>
+                                <td>Monthly Payment</td>
+                                <td id="current-payment">-</td>
+                                <td id="refi-payment">-</td>
+                                <td id="payment-diff">-</td>
+                            </tr>
+                            <tr>
+                                <td>Total Interest</td>
+                                <td id="current-interest">-</td>
+                                <td id="refi-interest">-</td>
+                                <td id="interest-diff">-</td>
+                            </tr>
+                            <tr>
+                                <td>Payoff Date</td>
+                                <td id="current-payoff">-</td>
+                                <td id="refi-payoff">-</td>
+                                <td id="payoff-diff">-</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="content-section">
+            <h2>How does this mortgage calculator work?</h2>
+            <p>Our mortgage calculator uses the standard formula for calculating fixed-rate mortgage payments. It takes into account:</p>
+            
+            <ul>
+                <li><strong>Home price</strong> - The purchase price of the home</li>
+                <li><strong>Down payment</strong> - The initial upfront payment you make</li>
+                <li><strong>Loan term</strong> - The length of the mortgage (typically 15 or 30 years)</li>
+                <li><strong>Interest rate</strong> - The annual interest rate on your loan</li>
+                <li><strong>Property taxes</strong> - Annual taxes based on your home's value</li>
+                <li><strong>Home insurance</strong> - Annual insurance premium for your property</li>
+                <li><strong>PMI</strong> - Private Mortgage Insurance (if your down payment is less than 20%)</li>
+                <li><strong>HOA fees</strong> - Monthly homeowners association fees, if applicable</li>
+            </ul>
+            
+            <p>The calculator provides a detailed breakdown of your monthly payment, shows how much you'll pay in interest over the life of the loan, and generates an amortization schedule that illustrates how each payment affects your loan balance.</p>
+        </section>
+        
+        <section class="content-section">
+            <h2>When to refinance mortgage</h2>
+            <p>Refinancing your mortgage can be a smart financial move in several situations:</p>
+            
+            <h4>1. Interest rates have dropped</h4>
+            <p>If mortgage rates are significantly lower than when you originally took out your loan (typically 1-2% lower), refinancing could save you thousands over the life of your loan.</p>
+            
+            <h4>2. Your credit score has improved</h4>
+            <p>If your credit score has increased substantially since you got your original mortgage, you may qualify for a better interest rate.</p>
+            
+            <h4>3. You want to change your loan term</h4>
+            <p>Refinancing from a 30-year to a 15-year mortgage can help you pay off your home faster and save on interest, though your monthly payments will be higher.</p>
+            
+            <h4>4. You want to tap into home equity</h4>
+            <p>A cash-out refinance allows you to borrow against your home's equity for major expenses like home improvements, education, or debt consolidation.</p>
+            
+            <h4>5. You want to eliminate PMI</h4>
+            <p>If your home has appreciated in value and you've built sufficient equity, refinancing can help you remove private mortgage insurance payments.</p>
+            
+            <p>Before refinancing, consider the closing costs and how long you plan to stay in the home. Use our refinance calculator above to determine if refinancing makes financial sense for your situation.</p>
+        </section>
+        
+        <section class="content-section">
+            <h2>What is reverse mortgage</h2>
+            <p>A reverse mortgage is a special type of home loan for homeowners aged 62 or older that allows them to convert part of their home equity into cash. Unlike a traditional mortgage where you make monthly payments to the lender, with a reverse mortgage, the lender makes payments to you.</p>
+            
+            <h4>Key features of reverse mortgages:</h4>
+            <ul>
+                <li>You must be at least 62 years old and own your home outright or have a low mortgage balance</li>
+                <li>You can receive funds as a lump sum, monthly payments, or line of credit</li>
+                <li>You retain title to your home and are responsible for property taxes, insurance, and maintenance</li>
+                <li>The loan becomes due when the last surviving borrower dies, sells the home, or moves out permanently</li>
+                <li>Most reverse mortgages are Home Equity Conversion Mortgages (HECMs) insured by the Federal Housing Administration</li>
+            </ul>
+            
+            <h4>Benefits of reverse mortgages:</h4>
+            <ul>
+                <li>Provides supplemental retirement income</li>
+                <li>No monthly mortgage payments required</li>
+                <li>Funds are generally tax-free</li>
+                <li>You can stay in your home while accessing your equity</li>
+            </ul>
+            
+            <h4>Risks and considerations:</h4>
+            <ul>
+                <li>Accruing interest and fees reduce your home equity over time</li>
+                <li>Heirs may inherit less equity or need to sell the home to repay the loan</li>
+                <li>You must continue to pay property taxes and insurance or risk foreclosure</li>
+                <li>Upfront costs can be high</li>
+            </ul>
+            
+            <p>Reverse mortgages can be complex financial products. It's important to consult with a HUD-approved counselor before deciding if a reverse mortgage is right for you.</p>
+        </section>
+        
+        <section class="content-section">
+            <h2>Should I prepay mortgage</h2>
+            <p>Prepaying your mortgage (making extra payments toward your principal) can be a smart financial strategy, but it's not the right choice for everyone. Consider these factors:</p>
+            
+            <h4>Reasons to prepay your mortgage:</h4>
+            <ul>
+                <li><strong>Interest savings</strong> - Even small extra payments can significantly reduce the total interest you pay over the life of the loan</li>
+                <li><strong>Faster equity building</strong> - You'll build equity in your home more quickly</li>
+                <li><strong>Debt-free sooner</strong> - You can own your home outright years earlier</li>
+                <li><strong>Peace of mind</strong> - Being mortgage-free provides financial security</li>
+                <li><strong>Guaranteed return</strong> - The "return" from prepaying equals your mortgage interest rate, which is guaranteed</li>
+            </ul>
+            
+            <h4>Reasons to reconsider prepaying:</h4>
+            <ul>
+                <li><strong>Higher-interest debt</strong> - If you have other debt with higher interest rates (like credit cards), pay those off first</li>
+                <li><strong>Retirement savings</strong> - If you're not maxing out retirement accounts, that might offer better long-term returns</li>
+                <li><strong>Emergency fund</strong> - Ensure you have 3-6 months of living expenses saved before prepaying your mortgage</li>
+                <li><strong>Investment opportunities</strong> - If you can earn a higher after-tax return elsewhere, investing might be better</li>
+                <li><strong>Liquidity needs</strong> - Mortgage prepayments tie up cash in your home, which can be hard to access</li>
+            </ul>
+            
+            <h4>Strategies for prepaying:</h4>
+            <ul>
+                <li>Make one extra payment per year</li>
+                <li>Round up your monthly payment (e.g., pay $1,500 instead of $1,432)</li>
+                <li>Apply windfalls (tax refunds, bonuses, gifts) to your principal</li>
+                <li>Make bi-weekly payments instead of monthly (results in 13 full payments per year)</li>
+            </ul>
+            
+            <p>Use our extra payments calculator above to see how prepaying could affect your mortgage term and total interest paid.</p>
+        </section>
+        
+        <section class="content-section">
+            <h2>How much should I spend on mortgage</h2>
+            <p>Determining how much you should spend on a mortgage payment depends on your financial situation, goals, and risk tolerance. Here are some common guidelines:</p>
+            
+            <h4>The 28/36 Rule</h4>
+            <p>This is a standard guideline used by many lenders:</p>
+            <ul>
+                <li><strong>28% Front-end ratio</strong> - Your monthly mortgage payment (including principal, interest, taxes, and insurance) should not exceed 28% of your gross monthly income.</li>
+                <li><strong>36% Back-end ratio</strong> - Your total monthly debt payments (including mortgage, car loans, student loans, credit cards, etc.) should not exceed 36% of your gross monthly income.</li>
+            </ul>
+            
+            <h4>Example calculation:</h4>
+            <p>If your gross annual income is $100,000 ($8,333 per month):</p>
+            <ul>
+                <li>Maximum mortgage payment: $8,333 × 0.28 = $2,333</li>
+                <li>Maximum total debt payments: $8,333 × 0.36 = $3,000</li>
+            </ul>
+            
+            <h4>Other considerations:</h4>
+            <ul>
+                <li><strong>Down payment</strong> - A larger down payment reduces your monthly mortgage payment</li>
+                <li><strong>Interest rate</strong> - Higher rates increase your monthly payment</li>
+                <li><strong>Loan term</strong> - Shorter terms mean higher monthly payments but less interest overall</li>
+                <li><strong>Other housing costs</strong> - Don't forget to budget for maintenance, repairs, and utilities</li>
+                <li><strong>Life goals</strong> - Consider how homeownership costs fit with other financial goals like retirement savings, education funds, and vacations</li>
+            </ul>
+            
+            <h4>Alternative approaches:</h4>
+            <ul>
+                <li><strong>25% post-tax rule</strong> - Limit your mortgage payment to 25% of your take-home pay</li>
+                <li><strong>15-year mortgage rule</strong> - If you can't afford the payments on a 15-year mortgage for the home you want, consider a less expensive home</li>
+                <li><strong>Emergency fund priority</strong> - Ensure you have adequate savings before taking on a large mortgage</li>
+            </ul>
+            
+            <p>Remember that these are guidelines, not strict rules. Your personal circumstances, risk tolerance, and financial goals should ultimately determine how much you spend on housing.</p>
+        </section>
+        
+        <section class="content-section">
+            <h2>Related Tools</h2>
+            <div class="related-tools">
+                <a href="#" class="tool-chip">Home Affordability Calculator</a>
+                <a href="#" class="tool-chip">Refinance Calculator</a>
+                <a href="#" class="tool-chip">Rent vs Buy Calculator</a>
+                <a href="#" class="tool-chip">Debt-to-Income Ratio Calculator</a>
+                <a href="#" class="tool-chip">Closing Cost Calculator</a>
+                <a href="#" class="tool-chip">Mortgage Comparison Calculator</a>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+                
+            </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            <p class="copyright">&copy; 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- xxxx navigation start xxxxx -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebarClose = document.querySelector('.sidebar-close');
+            const overlay = document.querySelector('.overlay');
+            const body = document.body;
+            
+            // Toggle sidebar
+            function toggleSidebar() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+                body.classList.toggle('sidebar-open');
+            }
+            
+            // Toggle category expansion
+            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
+            categoryHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const category = this.parentElement;
+                    category.classList.toggle('open');
+                    
+                    // Update the expand/collapse icon
+                    const icon = this.querySelector('span:last-child');
+                    icon.textContent = category.classList.contains('open') ? '−' : '+';
+                });
+            });
+            
+            // Event listeners
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            sidebarClose.addEventListener('click', toggleSidebar);
+            overlay.addEventListener('click', toggleSidebar);
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 768 && 
+                    body.classList.contains('sidebar-open') && 
+                    !sidebar.contains(event.target) && 
+                    event.target !== sidebarToggle) {
+                    toggleSidebar();
+                }
+            });
+            
+            // Close sidebar when pressing Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && body.classList.contains('sidebar-open')) {
+                    toggleSidebar();
+                }
+            });
+        });
+    </script>
+    <!-- xxxx navigation end xxxxx -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navigation functionality
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebarClose = document.querySelector('.sidebar-close');
+            const overlay = document.querySelector('.overlay');
+            const body = document.body;
+            
+            function toggleSidebar() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+                body.classList.toggle('sidebar-open');
+            }
+            
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            sidebarClose.addEventListener('click', toggleSidebar);
+            overlay.addEventListener('click', toggleSidebar);
+            
+            // Toggle category expansion
+            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
+            categoryHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const category = this.parentElement;
+                    category.classList.toggle('open');
+                });
+            });
+            
+            // Tab functionality
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs and content
+                    tabs.forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                    
+                    // Add active class to clicked tab and corresponding content
+                    this.classList.add('active');
+                    document.getElementById(this.dataset.tab + '-content').classList.add('active');
+                });
+            });
+            
+            // Mortgage calculation
+            const mortgageForm = document.getElementById('mortgage-form');
+            mortgageForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                calculateMortgage();
+            });
+            
+            // Extra payments calculation
+            document.getElementById('calculate-extra').addEventListener('click', calculateExtraPayments);
+            
+            // Refinance calculation
+            document.getElementById('calculate-refi').addEventListener('click', calculateRefinance);
+            
+            function calculateMortgage() {
+                // Get input values
+                const homePrice = parseFloat(document.getElementById('home-price').value);
+                const downPayment = parseFloat(document.getElementById('down-payment').value);
+                const loanTerm = parseInt(document.getElementById('loan-term').value);
+                const interestRate = parseFloat(document.getElementById('interest-rate').value) / 100;
+                const propertyTax = parseFloat(document.getElementById('property-tax').value);
+                const homeInsurance = parseFloat(document.getElementById('home-insurance').value);
+                const pmiRate = parseFloat(document.getElementById('pmi').value) / 100;
+                const hoa = parseFloat(document.getElementById('hoa').value);
+                
+                // Calculate loan amount
+                const loanAmount = homePrice - downPayment;
+                const ltv = (loanAmount / homePrice) * 100;
+                
+                // Calculate monthly interest rate
+                const monthlyRate = interestRate / 12;
+                
+                // Calculate number of payments
+                const numberOfPayments = loanTerm * 12;
+                
+                // Calculate monthly principal and interest
+                const monthlyPI = loanAmount * (monthlyRate * Math.pow(1 + monthlyRate, numberOfPayments)) / 
+                                 (Math.pow(1 + monthlyRate, numberOfPayments) - 1);
+                
+                // Calculate PMI (if LTV > 80%)
+                let monthlyPMI = 0;
+                if (ltv > 80) {
+                    monthlyPMI = (loanAmount * pmiRate) / 12;
+                }
+                
+                // Calculate monthly tax and insurance
+                const monthlyTax = propertyTax / 12;
+                const monthlyInsurance = homeInsurance / 12;
+                
+                // Calculate total monthly payment
+                const totalMonthly = monthlyPI + monthlyTax + monthlyInsurance + monthlyPMI + hoa;
+                
+                // Calculate total interest
+                const totalInterest = (monthlyPI * numberOfPayments) - loanAmount;
+                
+                // Calculate total payment
+                const totalPayment = monthlyPI * numberOfPayments;
+                
+                // Update results
+                document.getElementById('monthly-payment').textContent = '$' + monthlyPI.toFixed(2);
+                document.getElementById('total-interest').textContent = '$' + totalInterest.toFixed(2);
+                document.getElementById('total-payment').textContent = '$' + totalPayment.toFixed(2);
+                
+                document.getElementById('monthly-pi').textContent = '$' + monthlyPI.toFixed(2);
+                document.getElementById('annual-pi').textContent = '$' + (monthlyPI * 12).toFixed(2);
+                
+                document.getElementById('monthly-tax').textContent = '$' + monthlyTax.toFixed(2);
+                document.getElementById('annual-tax').textContent = '$' + propertyTax.toFixed(2);
+                
+                document.getElementById('monthly-insurance').textContent = '$' + monthlyInsurance.toFixed(2);
+                document.getElementById('annual-insurance').textContent = '$' + homeInsurance.toFixed(2);
+                
+                document.getElementById('monthly-pmi').textContent = ltv > 80 ? '$' + monthlyPMI.toFixed(2) : '$0.00';
+                document.getElementById('annual-pmi').textContent = ltv > 80 ? '$' + (monthlyPMI * 12).toFixed(2) : '$0.00';
+                
+                document.getElementById('monthly-hoa').textContent = '$' + hoa.toFixed(2);
+                document.getElementById('annual-hoa').textContent = '$' + (hoa * 12).toFixed(2);
+                
+                document.getElementById('total-monthly').textContent = '$' + totalMonthly.toFixed(2);
+                document.getElementById('total-annual').textContent = '$' + (totalMonthly * 12).toFixed(2);
+                
+                document.getElementById('loan-amount').textContent = '$' + loanAmount.toFixed(2);
+                document.getElementById('ltv').textContent = ltv.toFixed(2) + '%';
+                document.getElementById('total-interest-paid').textContent = '$' + totalInterest.toFixed(2);
+                document.getElementById('total-cost').textContent = '$' + (loanAmount + totalInterest).toFixed(2);
+                
+                // Calculate payoff date
+                const today = new Date();
+                const payoffDate = new Date();
+                payoffDate.setFullYear(today.getFullYear() + loanTerm);
+                document.getElementById('payoff-date').textContent = payoffDate.toLocaleDateString();
+                
+                // Update payment breakdown visualization
+                const principalPercent = (monthlyPI / totalMonthly) * 100;
+                const interestPercent = (monthlyTax / totalMonthly) * 100;
+                const taxPercent = (monthlyInsurance / totalMonthly) * 100;
+                const insurancePercent = ((monthlyPMI + hoa) / totalMonthly) * 100;
+                
+                document.getElementById('principal-section').style.width = principalPercent + '%';
+                document.getElementById('interest-section').style.width = interestPercent + '%';
+                document.getElementById('tax-section').style.width = taxPercent + '%';
+                document.getElementById('insurance-section').style.width = insurancePercent + '%';
+                
+                document.getElementById('principal-amount').textContent = '$' + monthlyPI.toFixed(0);
+                document.getElementById('interest-amount').textContent = '$' + monthlyTax.toFixed(0);
+                document.getElementById('tax-amount').textContent = '$' + monthlyInsurance.toFixed(0);
+                document.getElementById('insurance-amount').textContent = '$' + (monthlyPMI + hoa).toFixed(0);
+                
+                // Generate amortization schedule
+                generateAmortizationSchedule(loanAmount, interestRate, loanTerm, monthlyPI);
+                
+                // Show results
+                document.getElementById('mortgage-result').style.display = 'block';
+            }
+            
+            function generateAmortizationSchedule(principal, annualRate, years, monthlyPayment) {
+                const monthlyRate = annualRate / 12;
+                const numberOfPayments = years * 12;
+                let balance = principal;
+                let totalInterest = 0;
+                const amortizationBody = document.getElementById('amortization-body');
+                amortizationBody.innerHTML = '';
+                
+                for (let year = 1; year <= years; year++) {
+                    let yearPrincipal = 0;
+                    let yearInterest = 0;
+                    
+                    for (let month = 1; month <= 12; month++) {
+                        const interestPayment = balance * monthlyRate;
+                        const principalPayment = monthlyPayment - interestPayment;
+                        
+                        yearPrincipal += principalPayment;
+                        yearInterest += interestPayment;
+                        totalInterest += interestPayment;
+                        
+                        balance -= principalPayment;
+                        
+                        if (balance < 0) balance = 0;
+                    }
+                    
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${year}</td>
+                        <td>$${yearPrincipal.toFixed(2)}</td>
+                        <td>$${yearInterest.toFixed(2)}</td>
+                        <td>$${totalInterest.toFixed(2)}</td>
+                        <td>$${balance.toFixed(2)}</td>
+                    `;
+                    amortizationBody.appendChild(row);
+                    
+                    if (balance <= 0) break;
+                }
+            }
+            
+            function calculateExtraPayments() {
+                // This would calculate the impact of extra payments
+                // Implementation would be similar to calculateMortgage but with extra payment logic
+                alert('Extra payments calculation would be implemented here');
+            }
+            
+            function calculateRefinance() {
+                // This would calculate refinance comparison
+                // Implementation would compare current mortgage with proposed refinance
+                alert('Refinance comparison would be implemented here');
+            }
+            
+            // Initialize with a calculation
+            calculateMortgage();
+        });
+    </script>
+
+    <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+
+    <div class="sidebar-category">
+        <div class="sidebar-category-header">
+            <span>Site Navigation</span>
+            <span>+</span>
+        </div>
+        
+        <div class="sidebar-category-content">
+            <a href="index.html" class="sidebar-link">Home</a>
+            <a href="about.html" class="sidebar-link">About</a>
+            <a href="terms.html" class="sidebar-link">Terms of Service</a>
+            <a href="privacy.html" class="sidebar-link">Privacy Policy</a>
+            <a href="contact.html" class="sidebar-link">Contact Us</a>
+        </div>
+    </div>
+        
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="linebalancing.html" class="sidebar-link">Line Balancing</a>
+                <a href="takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+                <a href="machine-utilization-calculator.html" class="sidebar-link">Machine Utilization</a>
+                <a href="manpower-calculator.html" class="sidebar-link active">Manpower Requirements</a>
+                <a href="production-capacity-calculator.html" class="sidebar-link">Production Capacity</a>
+
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="oee-calculation.html" class="sidebar-link">OEE Calculator</a>
+                <a href="quality-function-deployment" class="sidebar-link">Quality Function Deployment</a>
+
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="anova.html" class="sidebar-link">ANOVA</a>
+                <a href="chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="confidence-interval-calculator.html" class="sidebar-link">Confidence Interval </a>
+                <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
+                <a href="coefficient-of-variation-calculator.html" class="sidebar-link">Coefficient of Variation</a>
+                <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="regression.html" class="sidebar-link">Regression</a>
+                <a href="samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="ttest.html" class="sidebar-link">T-Test</a>
+                <a href="ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="abc-analysis-calculator.html" class="sidebar-link">ABC Analysis</a>
+                <a href="inventory-turnover-calculator.html" class="sidebar-link">Inventory Turnover</a>
+                <a href="eoq-formula.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="reorder-point-calculator.html" class="sidebar-link">Reorder Point</a>
+                <a href="kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+                <a href="safety-stock-calculator.html" class="sidebar-link">Safety Stock Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Measurement</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+                <a href="failure-mode-and-effects-analysis-fmea.html" class="sidebar-link">FMEA</a>           
+            </div>
+        </div>
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Articles</span>
+                <span>+</span>
+            </div>
+                <div class="sidebar-category-content">
+                    <a href="Articles/Negative-Correlation-Understanding-Inverse-Relationships-in-Data.html" class="sidebar-link">Negative Correlation: Understanding Inverse Relationships in Data</a>
+                    <a href="Articles/Parameter-vs-Statistic-Understanding-the-Key-Differences.html" class="sidebar-link">Statistic vs Parameter: Understanding the Key Differences</a>
+                    <a href="Articles/Quality-Assurance-vs-Quality-Control-Key-Differences-Explained.html" class="sidebar-link">Quality Assurance vs Quality Control: Key Differences Explained</a>
+                    <a href="Articles/ABC-Analysis-Made-Easy.html" class="sidebar-link">ABC Analysis Made Easy: Classify Your Inventory in Minutes</a>
+                    <a href="Articles/EOQ-Optimize-Your-Inventory-Costs.html" class="sidebar-link">EOQ Order Quantity: Optimize Your Inventory</a>
+                    <a href="Articles/Linear-Programming-for-Supply-Chain-Optimization-A-Beginner's-Guide.html" class="sidebar-link">Linear Programming for Supply Chain Optimization: A Beginner's Guide</a>                
+                    <a href="Articles/How-Lean-Six-Sigma-Helps-Cut-Costs-Without-Cutting-Corners.html" class="sidebar-link">How Lean Six Sigma Helps Cut Costs Without Cutting Corners</a>  
+                    <a href="Articles/How-Lean-Six-Sigma-Helps-Cut-Costs-Without-Cutting-Corners.html" class="sidebar-link">How Lean Six Sigma Helps Cut Costs Without Cutting Corners</a>  
+                </div>
+    </aside>
+    <!-- xxxx navigation end xxxxx -->       
+
+</body>
+</html>

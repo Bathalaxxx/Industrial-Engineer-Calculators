@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Comprehensive Age Calculator - Calculate your chronological age, biological age, Korean age, and pet ages. Understand different aging systems and improve your health.">
+    <title>Age Calculator | Chronological, Biological, Korean & Pet Ages</title>
+    <meta name="author" content="IECalculators.online">
+
+    </script>
+    <!--FAVICON-->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+  
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-3BSHG1DE6V');
+    </script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5607576434988374"
+     crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-5607576434988374">
+
+     <!-- Clarity tracking code for https://iecalculators.online/ -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "t31aicr9ep");
+    </script>
+
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--primary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .calculator-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tab-btn {
+            padding: 0.8rem 1.2rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--text-light);
+            position: relative;
+        }
+        
+        .tab-btn.active {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+        
+        .calculator-content {
+            display: none;
+        }
+        
+        .calculator-content.active {
+            display: block;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .calculate-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--primary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .metric-results {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .metric-card {
+            flex: 1;
+            min-width: 200px;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .metric-card h4 {
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-card .metric-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .metric-card.chronological .metric-value {
+            color: #3498db;
+        }
+        
+        .metric-card.biological .metric-value {
+            color: #2ecc71;
+        }
+        
+        .metric-card.korean .metric-value {
+            color: #e74c3c;
+        }
+        
+        .age-visual {
+            width: 100%;
+            height: 120px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            margin: 1.5rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .age-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            z-index: 2;
+        }
+        
+        .age-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            z-index: 1;
+        }
+        
+        .info-section {
+            margin-top: 2rem;
+        }
+        
+        .info-box {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-box h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .faq-item {
+            margin-bottom: 1.5rem;
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+        
+        .pet-age-chart {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        .pet-age-chart th, .pet-age-chart td {
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        .pet-age-chart th {
+            background-color: #f2f2f2;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .metric-results {
+                flex-direction: column;
+            }
+            
+            .metric-card {
+                margin: 0.5rem 0;
+            }
+            
+            .tab-btn {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.9rem;
+            }
+            
+            .age-number {
+                font-size: 2rem;
+            }
+        }
+    </style>
+
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Into Everything <span>Calculators</span></div>
+                <nav>
+                    <ul>
+                        <li><a href="/index.html">Home</a></li>
+                        <li><a href="/about.html">About</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                        <li><a href="/terms.html">Terms</a></li>
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Age Calculator</h1>
+            <p>Calculate your chronological age, biological age, Korean age, and pet ages with our advanced calculator</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Age Calculation Methods</h2>
+                <p>Age can be calculated in different ways depending on cultural context and purpose. Our calculator helps you determine your age in various systems including chronological age, biological age, Korean age, and even your pet's age in human years.</p>
+            </div>
+
+            <div class="calculator-tabs">
+                <button class="tab-btn active" data-tab="chronological">Chronological Age</button>
+                <button class="tab-btn" data-tab="biological">Biological Age</button>
+                <button class="tab-btn" data-tab="korean">Korean Age</button>
+                <button class="tab-btn" data-tab="pet">Pet Age</button>
+            </div>
+            
+            <!-- Chronological Age Calculator -->
+            <div class="calculator-content active" id="chronological-calculator">
+                <h3>Chronological Age Calculator</h3>
+                <p>Calculate your exact age in years, months, weeks, and days based on your birth date.</p>
+                
+                <form id="chronological-form">
+                    <div class="input-group">
+                        <label for="birth-date">Enter Your Birth Date:</label>
+                        <input type="date" id="birth-date" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="current-date">Today's Date (or select another date):</label>
+                        <input type="date" id="current-date" required>
+                    </div>
+                    
+                    <button type="submit" class="calculate-btn">Calculate My Age</button>
+                </form>
+                
+                <div class="result-box" id="chronological-result">
+                    <h3>Your Chronological Age</h3>
+                    <div class="age-visual">
+                        <div class="age-background" style="background-color: #3498db;"></div>
+                        <div class="age-number" id="age-years">0</div>
+                    </div>
+                    
+                    <div class="metric-results">
+                        <div class="metric-card chronological">
+                            <h4>Years</h4>
+                            <div class="metric-value" id="years-result">0</div>
+                        </div>
+                        
+                        <div class="metric-card chronological">
+                            <h4>Months</h4>
+                            <div class="metric-value" id="months-result">0</div>
+                        </div>
+                        
+                        <div class="metric-card chronological">
+                            <h4>Weeks</h4>
+                            <div class="metric-value" id="weeks-result">0</div>
+                        </div>
+                        
+                        <div class="metric-card chronological">
+                            <h4>Days</h4>
+                            <div class="metric-value" id="days-result">0</div>
+                        </div>
+                    </div>
+                    
+                    <p>You were born on a <span id="birth-day"></span> and have lived approximately <span id="total-days"></span> days.</p>
+                </div>
+            </div>
+            
+            <!-- Biological Age Calculator -->
+            <div class="calculator-content" id="biological-calculator">
+                <h3>Biological Age Calculator</h3>
+                <p>Estimate your biological age based on lifestyle factors and health metrics. Biological age may differ from chronological age.</p>
+                
+                <form id="biological-form">
+                    <div class="input-group">
+                        <label for="bio-birth-date">Enter Your Birth Date:</label>
+                        <input type="date" id="bio-birth-date" required>
+                    </div>
+                    
+                    <h4>Lifestyle Factors</h4>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="sleep-hours">Average Sleep Hours per Night:</label>
+                            <input type="number" id="sleep-hours" min="0" max="24" step="0.5" value="7" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="exercise-hours">Exercise Hours per Week:</label>
+                            <input type="number" id="exercise-hours" min="0" max="50" value="3" required>
+                        </div>
+                    </div>
+                    
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="smoking">Smoking Status:</label>
+                            <select id="smoking" required>
+                                <option value="0">Non-smoker</option>
+                                <option value="1">Former smoker</option>
+                                <option value="2">Light smoker (1-5/day)</option>
+                                <option value="3">Moderate smoker (6-15/day)</option>
+                                <option value="4">Heavy smoker (16+/day)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="alcohol">Alcohol Consumption:</label>
+                            <select id="alcohol" required>
+                                <option value="0">Non-drinker</option>
+                                <option value="1">Light drinker (1-4 drinks/week)</option>
+                                <option value="2">Moderate drinker (5-10 drinks/week)</option>
+                                <option value="3">Heavy drinker (11+ drinks/week)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="diet">Diet Quality:</label>
+                            <select id="diet" required>
+                                <option value="-2">Excellent (mostly whole foods)</option>
+                                <option value="-1">Good (balanced diet)</option>
+                                <option value="0" selected>Average (mixed diet)</option>
+                                <option value="1">Poor (processed foods)</option>
+                                <option value="2">Very poor (fast food regularly)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="stress">Stress Level:</label>
+                            <select id="stress" required>
+                                <option value="-1">Low stress</option>
+                                <option value="0" selected>Moderate stress</option>
+                                <option value="1">High stress</option>
+                                <option value="2">Very high stress</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="calculate-btn">Calculate My Biological Age</button>
+                </form>
+                
+                <div class="result-box" id="biological-result">
+                    <h3>Your Biological Age Estimate</h3>
+                    <div class="age-visual">
+                        <div class="age-background" style="background-color: #2ecc71;"></div>
+                        <div class="age-number" id="bio-age-years">0</div>
+                    </div>
+                    
+                    <div class="metric-results">
+                        <div class="metric-card chronological">
+                            <h4>Chronological Age</h4>
+                            <div class="metric-value" id="chrono-age">0</div>
+                        </div>
+                        
+                        <div class="metric-card biological">
+                            <h4>Biological Age</h4>
+                            <div class="metric-value" id="biological-age">0</div>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <h4>Age Difference</h4>
+                            <div class="metric-value" id="age-difference">0</div>
+                        </div>
+                    </div>
+                    
+                    <div id="biological-interpretation">
+                        <p>Your biological age reflects how your body has aged compared to your chronological age based on lifestyle factors.</p>
+                    </div>
+                    
+                    <h4>Recommendations for Healthy Aging</h4>
+                    <ul id="health-recommendations">
+                        <li>Get 7-9 hours of quality sleep per night</li>
+                        <li>Engage in at least 150 minutes of moderate exercise weekly</li>
+                        <li>Eat a balanced diet rich in fruits, vegetables, and whole grains</li>
+                        <li>Manage stress through meditation, hobbies, or relaxation techniques</li>
+                        <li>Avoid smoking and limit alcohol consumption</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Korean Age Calculator -->
+            <div class="calculator-content" id="korean-calculator">
+                <h3>Korean Age Calculator</h3>
+                <p>In Korea, your age is calculated differently. You are considered 1 year old at birth, and everyone gains a year on New Year's Day.</p>
+                
+                <form id="korean-form">
+                    <div class="input-group">
+                        <label for="korean-birth-date">Enter Your Birth Date:</label>
+                        <input type="date" id="korean-birth-date" required>
+                    </div>
+                    
+                    <button type="submit" class="calculate-btn">Calculate My Korean Age</button>
+                </form>
+                
+                <div class="result-box" id="korean-result">
+                    <h3>Your Korean Age</h3>
+                    <div class="age-visual">
+                        <div class="age-background" style="background-color: #e74c3c;"></div>
+                        <div class="age-number" id="korean-age">0</div>
+                    </div>
+                    
+                    <div class="metric-results">
+                        <div class="metric-card chronological">
+                            <h4>International Age</h4>
+                            <div class="metric-value" id="international-age">0</div>
+                        </div>
+                        
+                        <div class="metric-card korean">
+                            <h4>Korean Age</h4>
+                            <div class="metric-value" id="korean-age-value">0</div>
+                        </div>
+                    </div>
+                    
+                    <p>In Korean culture, you are considered 1 year old at birth, and everyone gains a year on New Year's Day (January 1st), not on their individual birthday.</p>
+                </div>
+            </div>
+            
+            <!-- Pet Age Calculator -->
+            <div class="calculator-content" id="pet-calculator">
+                <h3>Pet Age Calculator</h3>
+                <p>Calculate your pet's age in human years. The calculation differs between dogs, cats, and other pets.</p>
+                
+                <form id="pet-form">
+                    <div class="input-group">
+                        <label for="pet-type">Pet Type:</label>
+                        <select id="pet-type" required>
+                            <option value="dog">Dog</option>
+                            <option value="cat">Cat</option>
+                            <option value="rabbit">Rabbit</option>
+                            <option value="hamster">Hamster</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="pet-birth-date">Pet's Birth Date (or approximate age):</label>
+                        <input type="date" id="pet-birth-date">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="pet-age">If unknown, enter approximate age in years:</label>
+                        <input type="number" id="pet-age" min="0" max="50" step="0.5" placeholder="Enter age in years">
+                    </div>
+                    
+                    <button type="submit" class="calculate-btn">Calculate Pet's Age in Human Years</button>
+                </form>
+                
+                <div class="result-box" id="pet-result">
+                    <h3>Your Pet's Age in Human Years</h3>
+                    <div class="age-visual">
+                        <div class="age-background" style="background-color: #f39c12;"></div>
+                        <div class="age-number" id="pet-human-age">0</div>
+                    </div>
+                    
+                    <div class="metric-results">
+                        <div class="metric-card">
+                            <h4>Pet's Actual Age</h4>
+                            <div class="metric-value" id="pet-actual-age">0</div>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <h4>Human Equivalent</h4>
+                            <div class="metric-value" id="human-equivalent">0</div>
+                        </div>
+                    </div>
+                    
+                    <h4>Life Stage:</h4>
+                    <p id="pet-life-stage">Puppy/Kitten</p>
+                    
+                    <h4>Age Comparison Chart</h4>
+                    <table class="pet-age-chart">
+                        <thead>
+                            <tr>
+                                <th>Pet's Age</th>
+                                <th>Human Equivalent (Small Dog)</th>
+                                <th>Human Equivalent (Medium Dog)</th>
+                                <th>Human Equivalent (Large Dog)</th>
+                                <th>Human Equivalent (Cat)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1 year</td>
+                                <td>15 years</td>
+                                <td>15 years</td>
+                                <td>15 years</td>
+                                <td>15 years</td>
+                            </tr>
+                            <tr>
+                                <td>2 years</td>
+                                <td>24 years</td>
+                                <td>24 years</td>
+                                <td>24 years</td>
+                                <td>24 years</td>
+                            </tr>
+                            <tr>
+                                <td>5 years</td>
+                                <td>36 years</td>
+                                <td>36 years</td>
+                                <td>36 years</td>
+                                <td>36 years</td>
+                            </tr>
+                            <tr>
+                                <td>10 years</td>
+                                <td>56 years</td>
+                                <td>60 years</td>
+                                <td>66 years</td>
+                                <td>56 years</td>
+                            </tr>
+                            <tr>
+                                <td>15 years</td>
+                                <td>76 years</td>
+                                <td>83 years</td>
+                                <td>93 years</td>
+                                <td>76 years</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        
+        <section class="content-section">
+            <h2>Understanding Different Age Calculations</h2>
+            
+            <div class="info-section">
+                <div class="info-box">
+                    <h3>What is Chronological Age?</h3>
+                    <p>Chronological age is the most common way to measure age. It's simply the number of years that have passed since your birth date. This is the standard method used for legal and official purposes worldwide.</p>
+                </div>
+                
+                <div class="info-box">
+                    <h3>What is Biological Age?</h3>
+                    <p>Biological age, also called physiological age, is a measure of how well your body is functioning relative to your chronological age. It considers various biomarkers and lifestyle factors that can cause your body to age faster or slower than your actual years.</p>
+                    <p>Factors that influence biological age include genetics, diet, exercise, sleep patterns, stress levels, and environmental exposures. A biological age younger than your chronological age suggests good health and longevity.</p>
+                </div>
+                
+                <div class="info-box">
+                    <h3>What is Korean Age?</h3>
+                    <p>In South Korea, a different age calculation system is used. According to this method:</p>
+                    <ul>
+                        <li>Everyone is considered 1 year old at birth</li>
+                        <li>Everyone gains a year on New Year's Day (January 1st), not on their individual birthday</li>
+                    </ul>
+                    <p>This means your Korean age is typically 1-2 years older than your international age. This traditional system is still widely used in social contexts in Korea, though official documents use the international system.</p>
+                </div>
+                
+                <div class="info-box">
+                    <h3>Pet Age Calculation</h3>
+                    <p>The old rule of "1 dog year = 7 human years" is an oversimplification. Different animals age at different rates, and even within species, size and breed affect aging.</p>
+                    <p>For dogs: Smaller breeds tend to live longer than larger breeds. The first year of a dog's life is roughly equivalent to 15 human years, the second year to about 9 human years, and each subsequent year to about 4-5 human years depending on size.</p>
+                    <p>For cats: The first year is approximately 15 human years, the second year about 9, and each additional year about 4 human years.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="content-section">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <p class="faq-question">What is my biological age and how is it calculated?</p>
+                <p>Biological age is an estimate of how old your body seems based on various health metrics and lifestyle factors. Our calculator estimates it based on factors like sleep patterns, exercise, diet, stress, and substance use that can accelerate or slow down the aging process.</p>
+            </div>
+            
+            <div class="faq-item">
+                <p class="faq-question">What is my Korean age and why is it different?</p>
+                <p>Your Korean age is typically 1-2 years older than your international age because in the Korean system, everyone is considered 1 year old at birth, and everyone gains a year on New Year's Day rather than on their individual birthday.</p>
+            </div>
+            
+            <div class="faq-item">
+                <p class="faq-question">How do I calculate my dog's age in human years?</p>
+                <p>The calculation depends on your dog's size and breed. Generally, the first year equals about 15 human years, the second year about 9, and each subsequent year about 4-5 human years. Smaller dogs tend to age more slowly than larger breeds.</p>
+            </div>
+            
+            <div class="faq-item">
+                <p class="faq-question">How do I calculate my cat's age in human years?</p>
+                <p>For cats, the first year is approximately 15 human years, the second year about 9, and each additional year about 4 human years. Cats reach adulthood around 2 years old and are considered seniors at about 11 years.</p>
+            </div>
+            
+            <div class="faq-item">
+                <p class="faq-question">Can I reduce my biological age?</p>
+                <p>Yes, lifestyle changes can potentially lower your biological age. Regular exercise, a healthy diet, quality sleep, stress management, and avoiding smoking and excessive alcohol can all contribute to slowing biological aging.</p>
+            </div>
+        </section>
+        
+        <section class="content-section">
+            <h2>History of Age Calculation</h2>
+            <p>The concept of measuring age has evolved throughout human history. Early civilizations tracked age through seasonal changes and lunar cycles. The development of calendars allowed for more precise age calculation.</p>
+            <p>Different cultures developed unique age systems. The Korean age system has its origins in ancient East Asian age reckoning methods. In Western societies, chronological age became standardized with the adoption of the Gregorian calendar.</p>
+            <p>The idea of "biological age" is a more recent development, emerging with advances in medicine and our understanding of the aging process. Scientists now recognize that aging occurs at different rates in different people based on genetics, environment, and lifestyle.</p>
+            <p>Pet age calculation has also evolved as veterinary science has improved our understanding of animal aging processes, moving beyond the simplistic "7 dog years per human year" formula to more nuanced calculations based on species, breed, and size.</p>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+                
+            </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            <p class="copyright">&copy; 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- xxxx navigation start xxxxx -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebarClose = document.querySelector('.sidebar-close');
+            const overlay = document.querySelector('.overlay');
+            const body = document.body;
+            
+            // Toggle sidebar
+            function toggleSidebar() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+                body.classList.toggle('sidebar-open');
+            }
+            
+            // Toggle category expansion
+            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
+            categoryHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const category = this.parentElement;
+                    category.classList.toggle('open');
+                    
+                    // Update the expand/collapse icon
+                    const icon = this.querySelector('span:last-child');
+                    icon.textContent = category.classList.contains('open') ? '−' : '+';
+                });
+            });
+            
+            // Event listeners
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            sidebarClose.addEventListener('click', toggleSidebar);
+            overlay.addEventListener('click', toggleSidebar);
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 768 && 
+                    body.classList.contains('sidebar-open') && 
+                    !sidebar.contains(event.target) && 
+                    event.target !== sidebarToggle) {
+                    toggleSidebar();
+                }
+            });
+            
+            // Close sidebar when pressing Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && body.classList.contains('sidebar-open')) {
+                    toggleSidebar();
+                }
+            });
+        });
+    </script>
+    <!-- xxxx navigation end xxxxx -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set current date as default for date inputs
+            const today = new Date();
+            const formattedDate = today.toISOString().split('T')[0];
+            document.getElementById('current-date').value = formattedDate;
+            
+            // Tab switching functionality
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const calculatorContents = document.querySelectorAll('.calculator-content');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabId = button.getAttribute('data-tab');
+                    
+                    // Update active tab button
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    
+                    // Show active calculator content
+                    calculatorContents.forEach(content => content.classList.remove('active'));
+                    document.getElementById(`${tabId}-calculator`).classList.add('active');
+                });
+            });
+            
+            // Chronological Age Calculator
+            const chronologicalForm = document.getElementById('chronological-form');
+            chronologicalForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const birthDate = new Date(document.getElementById('birth-date').value);
+                const currentDate = new Date(document.getElementById('current-date').value);
+                
+                if (birthDate > currentDate) {
+                    alert('Birth date cannot be in the future!');
+                    return;
+                }
+                
+                calculateChronologicalAge(birthDate, currentDate);
+            });
+            
+            // Biological Age Calculator
+            const biologicalForm = document.getElementById('biological-form');
+            biologicalForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const birthDate = new Date(document.getElementById('bio-birth-date').value);
+                const today = new Date();
+                
+                if (birthDate > today) {
+                    alert('Birth date cannot be in the future!');
+                    return;
+                }
+                
+                calculateBiologicalAge(birthDate);
+            });
+            
+            // Korean Age Calculator
+            const koreanForm = document.getElementById('korean-form');
+            koreanForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const birthDate = new Date(document.getElementById('korean-birth-date').value);
+                const today = new Date();
+                
+                if (birthDate > today) {
+                    alert('Birth date cannot be in the future!');
+                    return;
+                }
+                
+                calculateKoreanAge(birthDate);
+            });
+            
+            // Pet Age Calculator
+            const petForm = document.getElementById('pet-form');
+            petForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const petType = document.getElementById('pet-type').value;
+                const petBirthDate = document.getElementById('pet-birth-date').value;
+                const petAgeInput = document.getElementById('pet-age').value;
+                
+                if (!petBirthDate && !petAgeInput) {
+                    alert('Please enter either your pet\'s birth date or approximate age.');
+                    return;
+                }
+                
+                calculatePetAge(petType, petBirthDate, petAgeInput);
+            });
+            
+            function calculateChronologicalAge(birthDate, currentDate) {
+                // Calculate difference in years, months, and days
+                let years = currentDate.getFullYear() - birthDate.getFullYear();
+                let months = currentDate.getMonth() - birthDate.getMonth();
+                let days = currentDate.getDate() - birthDate.getDate();
+                
+                if (days < 0) {
+                    months--;
+                    // Get the number of days in the last month
+                    const lastMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 0);
+                    days += lastMonth.getDate();
+                }
+                
+                if (months < 0) {
+                    years--;
+                    months += 12;
+                }
+                
+                // Calculate total days
+                const diffTime = Math.abs(currentDate - birthDate);
+                const totalDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                
+                // Calculate weeks
+                const weeks = Math.floor(totalDays / 7);
+                
+                // Get day of week for birth date
+                const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                const birthDayOfWeek = daysOfWeek[birthDate.getDay()];
+                
+                // Update UI with results
+                document.getElementById('age-years').textContent = years;
+                document.getElementById('years-result').textContent = years;
+                document.getElementById('months-result').textContent = months;
+                document.getElementById('weeks-result').textContent = weeks;
+                document.getElementById('days-result').textContent = totalDays;
+                document.getElementById('birth-day').textContent = birthDayOfWeek;
+                document.getElementById('total-days').textContent = totalDays.toLocaleString();
+                
+                // Show result
+                document.getElementById('chronological-result').style.display = 'block';
+            }
+            
+            function calculateBiologicalAge(birthDate) {
+                const today = new Date();
+                const chronologicalAge = today.getFullYear() - birthDate.getFullYear();
+                
+                // Get lifestyle factors
+                const sleepHours = parseFloat(document.getElementById('sleep-hours').value);
+                const exerciseHours = parseFloat(document.getElementById('exercise-hours').value);
+                const smoking = parseInt(document.getElementById('smoking').value);
+                const alcohol = parseInt(document.getElementById('alcohol').value);
+                const diet = parseInt(document.getElementById('diet').value);
+                const stress = parseInt(document.getElementById('stress').value);
+                
+                // Calculate biological age adjustment based on factors
+                let adjustment = 0;
+                
+                // Sleep adjustment (optimal: 7-9 hours)
+                if (sleepHours < 6) adjustment += 2;
+                else if (sleepHours < 7) adjustment += 1;
+                else if (sleepHours > 9) adjustment += 1;
+                else if (sleepHours >= 7 && sleepHours <= 9) adjustment -= 1;
+                
+                // Exercise adjustment (optimal: 3+ hours per week)
+                if (exerciseHours < 1) adjustment += 2;
+                else if (exerciseHours < 3) adjustment += 1;
+                else if (exerciseHours >= 3 && exerciseHours <= 5) adjustment -= 1;
+                else if (exerciseHours > 5) adjustment -= 2;
+                
+                // Other factors
+                adjustment += smoking;
+                adjustment += alcohol;
+                adjustment += diet;
+                adjustment += stress;
+                
+                // Calculate biological age
+                const biologicalAge = Math.max(chronologicalAge + adjustment, 1);
+                
+                // Update UI with results
+                document.getElementById('chrono-age').textContent = chronologicalAge;
+                document.getElementById('biological-age').textContent = biologicalAge;
+                document.getElementById('bio-age-years').textContent = biologicalAge;
+                
+                const ageDifference = biologicalAge - chronologicalAge;
+                document.getElementById('age-difference').textContent = 
+                    (ageDifference > 0 ? '+' : '') + ageDifference + ' years';
+                
+                // Set interpretation
+                const interpretationEl = document.getElementById('biological-interpretation');
+                if (biologicalAge < chronologicalAge) {
+                    interpretationEl.innerHTML = '<p>Your biological age is <strong>younger</strong> than your chronological age. This suggests your lifestyle choices are helping you age more slowly!</p>';
+                } else if (biologicalAge > chronologicalAge) {
+                    interpretationEl.innerHTML = '<p>Your biological age is <strong>older</strong> than your chronological age. Consider improving your lifestyle factors to slow down biological aging.</p>';
+                } else {
+                    interpretationEl.innerHTML = '<p>Your biological age matches your chronological age. Your lifestyle is average for your age group.</p>';
+                }
+                
+                // Show result
+                document.getElementById('biological-result').style.display = 'block';
+            }
+            
+            function calculateKoreanAge(birthDate) {
+                const today = new Date();
+                const currentYear = today.getFullYear();
+                const birthYear = birthDate.getFullYear();
+                
+                // Korean age: current year - birth year + 1
+                const koreanAge = currentYear - birthYear + 1;
+                
+                // International age
+                let internationalAge = currentYear - birthYear;
+                // Adjust if birthday hasn't occurred yet this year
+                if (today.getMonth() < birthDate.getMonth() || 
+                    (today.getMonth() === birthDate.getMonth() && today.getDate() < birthDate.getDate())) {
+                    internationalAge--;
+                }
+                
+                // Update UI with results
+                document.getElementById('international-age').textContent = internationalAge;
+                document.getElementById('korean-age').textContent = koreanAge;
+                document.getElementById('korean-age-value').textContent = koreanAge;
+                
+                // Show result
+                document.getElementById('korean-result').style.display = 'block';
+            }
+            
+            function calculatePetAge(petType, birthDate, ageInput) {
+                let petAgeYears;
+                
+                if (birthDate) {
+                    const today = new Date();
+                    const birth = new Date(birthDate);
+                    petAgeYears = (today - birth) / (1000 * 60 * 60 * 24 * 365.25);
+                } else {
+                    petAgeYears = parseFloat(ageInput);
+                }
+                
+                let humanAge;
+                let lifeStage;
+                
+                // Calculate human equivalent age based on pet type
+                if (petType === 'dog') {
+                    if (petAgeYears <= 1) {
+                        humanAge = 15;
+                        lifeStage = "Puppy";
+                    } else if (petAgeYears <= 2) {
+                        humanAge = 24;
+                        lifeStage = "Young Adult";
+                    } else {
+                        humanAge = 24 + (petAgeYears - 2) * 5;
+                        if (petAgeYears < 7) lifeStage = "Adult";
+                        else if (petAgeYears < 10) lifeStage = "Mature";
+                        else lifeStage = "Senior";
+                    }
+                } else if (petType === 'cat') {
+                    if (petAgeYears <= 1) {
+                        humanAge = 15;
+                        lifeStage = "Kitten";
+                    } else if (petAgeYears <= 2) {
+                        humanAge = 24;
+                        lifeStage = "Young Adult";
+                    } else {
+                        humanAge = 24 + (petAgeYears - 2) * 4;
+                        if (petAgeYears < 7) lifeStage = "Adult";
+                        else if (petAgeYears < 11) lifeStage = "Mature";
+                        else lifeStage = "Senior";
+                    }
+                } else {
+                    // Simple calculation for other pets
+                    humanAge = petAgeYears * 5;
+                    lifeStage = petAgeYears < 2 ? "Young" : petAgeYears < 5 ? "Adult" : "Senior";
+                }
+                
+                // Update UI with results
+                document.getElementById('pet-actual-age').textContent = petAgeYears.toFixed(1) + ' years';
+                document.getElementById('human-equivalent').textContent = humanAge.toFixed(0) + ' years';
+                document.getElementById('pet-human-age').textContent = humanAge.toFixed(0);
+                document.getElementById('pet-life-stage').textContent = lifeStage;
+                
+                // Show result
+                document.getElementById('pet-result').style.display = 'block';
+            }
+        });
+    </script>
+
+    <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+
+    <div class="sidebar-category">
+        <div class="sidebar-category-header">
+            <span>Site Navigation</span>
+            <span>+</span>
+        </div>
+        
+        <div class="sidebar-category-content">
+            <a href="index.html" class="sidebar-link">Home</a>
+            <a href="about.html" class="sidebar-link">About</a>
+            <a href="terms.html" class="sidebar-link">Terms of Service</a>
+            <a href="privacy.html" class="sidebar-link">Privacy Policy</a>
+            <a href="contact.html" class="sidebar-link">Contact Us</a>
+        </div>
+    </div>
+        
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="linebalancing.html" class="sidebar-link">Line Balancing</a>
+                <a href="takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+                <a href="machine-utilization-calculator.html" class="sidebar-link">Machine Utilization</a>
+                <a href="manpower-calculator.html" class="sidebar-link active">Manpower Requirements</a>
+                <a href="production-capacity-calculator.html" class="sidebar-link">Production Capacity</a>
+
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="oee-calculation.html" class="sidebar-link">OEE Calculator</a>
+                <a href="quality-function-deployment" class="sidebar-link">Quality Function Deployment</a>
+
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="anova.html" class="sidebar-link">ANOVA</a>
+                <a href="chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="confidence-interval-calculator.html" class="sidebar-link">Confidence Interval </a>
+                <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
+                <a href="coefficient-of-variation-calculator.html" class="sidebar-link">Coefficient of Variation</a>
+                <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="regression.html" class="sidebar-link">Regression</a>
+                <a href="samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="ttest.html" class="sidebar-link">T-Test</a>
+                <a href="ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="abc-analysis-calculator.html" class="sidebar-link">ABC Analysis</a>
+                <a href="inventory-turnover-calculator.html" class="sidebar-link">Inventory Turnover</a>
+                <a href="eoq-formula.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="reorder-point-calculator.html" class="sidebar-link">Reorder Point</a>
+                <a href="kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+                <a href="safety-stock-calculator.html" class="sidebar-link">Safety Stock Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Measurement</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+                <a href="failure-mode-and-effects-analysis-fmea.html" class="sidebar-link">FMEA</a>           
+            </div>
+        </div>
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Articles</span>
+                <span>+</span>
+            </div>
+                <div class="sidebar-category-content">
+                    <a href="Articles/Negative-Correlation-Understanding-Inverse-Relationships-in-Data.html" class="sidebar-link">Negative Correlation: Understanding Inverse Relationships in Data</a>
+                    <a href="Articles/Parameter-vs-Statistic-Understanding-the-Key-Differences.html" class="sidebar-link">Statistic vs Parameter: Understanding the Key Differences</a>
+                    <a href="Articles/Quality-Assurance-vs-Quality-Control-Key-Differences-Explained.html" class="sidebar-link">Quality Assurance vs Quality Control: Key Differences Explained</a>
+                    <a href="Articles/ABC-Analysis-Made-Easy.html" class="sidebar-link">ABC Analysis Made Easy: Classify Your Inventory in Minutes</a>
+                    <a href="Articles/EOQ-Optimize-Your-Inventory-Costs.html" class="sidebar-link">EOQ Order Quantity: Optimize Your Inventory</a>
+                    <a href="Articles/Linear-Programming-for-Supply-Chain-Optimization-A-Beginner's-Guide.html" class="sidebar-link">Linear Programming for Supply Chain Optimization: A Beginner's Guide</a>                
+                    <a href="Articles/How-Lean-Six-Sigma-Helps-Cut-Costs-Without-Cutting-Corners.html" class="sidebar-link">How Lean Six Sigma Helps Cut Costs Without Cutting Corners</a>  
+                    <a href="Articles/How-Lean-Six-Sigma-Helps-Cut-Costs-Without-Cutting-Corners.html" class="sidebar-link">How Lean Six Sigma Helps Cut Costs Without Cutting Corners</a>  
+                </div>
+    </aside>
+    <!-- xxxx navigation end xxxxx -->       
+
+</body>
+</html>

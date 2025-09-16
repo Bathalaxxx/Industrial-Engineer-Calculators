@@ -1,48 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-
-    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="TDEE Calculator - Determine your Total Daily Energy Expenditure to optimize weight loss, maintenance, or muscle gain">
+    <title>TDEE Calculator | Fitness & Health Calculators</title>
+    
     <!--FAVICON-->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
-  
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-3BSHG1DE6V');
-    </script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5607576434988374"
-     crossorigin="anonymous"></script>
-    <meta charset="UTF-8">
-    <meta name="google-adsense-account" content="ca-pub-5607576434988374">
-    <meta name="google-adsense-account" content="ca-pub-5607576434988374">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Learn about Industrial Engineering Calculators - our mission, team, and purpose.">
-    <title>About Us - Industrial Engineering Calculators</title>
-
- 
     
-
-    
-     <!-- Clarity tracking code for https://iecalculators.online/ -->
-    <script type="text/javascript">
-        (function(c,l,a,r,i,t,y){
-            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-        })(window, document, "clarity", "script", "t31aicr9ep");
-    </script>
-
     <style>
-        /* Same CSS as original */
+        /* Consistent with existing style */
         :root {
             --primary-color: #2c3e50;
             --secondary-color: #3498db;
@@ -51,19 +22,9 @@
             --dark-color: #2c3e50;
             --text-color: #333;
             --text-light: #7f8c8d;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: #f5f7fa;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --info-color: #3498db;
         }
 
         /* xxxx navigation start xxxxx */
@@ -209,17 +170,34 @@
         }
         /* xxxx navigation end xxxxx */
         
-        header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 1rem 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+            transition: margin-left 0.3s;
         }
         
         .container {
             width: 90%;
             max-width: 1200px;
             margin: 0 auto;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
         
         .header-content {
@@ -279,30 +257,167 @@
         
         .content-section h2 {
             color: var(--secondary-color);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             padding-bottom: 0.5rem;
             border-bottom: 2px solid var(--light-color);
         }
         
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
         }
         
-        .team-member {
-            text-align: center;
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
             padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
         }
         
-        .team-member img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
             margin-bottom: 1rem;
-            border: 3px solid var(--secondary-color);
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .metric-results {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 1.5rem 0;
+            gap: 1rem;
+        }
+        
+        .metric-card {
+            flex: 1;
+            min-width: 200px;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .metric-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-card .metric-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .metric-card.maintenance .metric-value {
+            color: var(--info-color);
+        }
+        
+        .metric-card.weight-loss .metric-value {
+            color: var(--success-color);
+        }
+        
+        .metric-card.weight-gain .metric-value {
+            color: var(--warning-color);
+        }
+        
+        .activity-levels {
+            margin: 2rem 0;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .activity-levels h4 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .activity-item {
+            margin-bottom: 0.5rem;
+            padding: 0.5rem;
+            border-left: 3px solid var(--info-color);
+            background-color: white;
+        }
+        
+        .activity-item strong {
+            color: var(--primary-color);
+        }
+        
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1rem;
+        }
+        
+        .faq-item h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
         }
         
         footer {
@@ -317,6 +432,7 @@
             display: flex;
             justify-content: center;
             margin-bottom: 1.5rem;
+            flex-wrap: wrap;
         }
         
         .footer-links a {
@@ -333,6 +449,7 @@
             color: var(--text-light);
             font-size: 0.9rem;
         }
+
         /* xxxx navigation start xxxxx */
         .sidebar-toggle {
             display: block;
@@ -343,7 +460,7 @@
             overflow: hidden;
         }
         /* xxxx navigation end xxxxx */
-
+        
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
@@ -353,124 +470,220 @@
             nav ul {
                 margin-top: 1rem;
                 justify-content: center;
+                flex-wrap: wrap;
             }
             
             nav ul li {
-                margin: 0 0.75rem;
+                margin: 0 0.5rem;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .metric-results {
+                flex-direction: column;
+            }
+            
+            .metric-card {
+                margin: 0.5rem 0;
             }
         }
-
-        /* New styles */
-        .mission-statement {
-            font-style: italic;
-            background-color: var(--light-color);
-            padding: 1.5rem;
-            border-left: 4px solid var(--secondary-color);
-            margin: 1.5rem 0;
-        }
-        
-        .feature-list {
-            margin: 1rem 0 1rem 2rem;
-        }
-        
-        .feature-list li {
-            margin-bottom: 0.5rem;
-        }
-        /* xxxx navigation start xxxxx */
-        .sidebar-toggle {
-            display: block;
-        }
-            
-        body.sidebar-open {
-            margin-left: 0;
-            overflow: hidden;
-        }
-        /* xxxx navigation end xxxxx */
     </style>
 </head>
-<body>
 
-    
+<body>
     <header>
         <div class="container">
             <div class="header-content">
-                <div class="logo">Industrial Engineering <span>Calculators</span></div>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="terms.html">Terms</a></li>
-                    <li><a href="privacy.html">Privacy Policy</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </nav>
+                <div class="logo">Fitness & Health <span>Calculators</span></div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="terms.html">Terms</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </header>
     
     <section class="page-hero">
         <div class="container">
-            <h1>About Industrial Engineering Calculators</h1>
-            <p>Your digital companion for industrial engineering solutions</p>
+            <h1>TDEE Calculator</h1>
+            <p>Determine your Total Daily Energy Expenditure to optimize weight loss, maintenance, or muscle gain</p>
         </div>
     </section>
     
     <main class="container">
         <section class="content-section">
-            <h2>Our Mission</h2>
-            <div class="mission-statement">
-                "To provide free, easy-to-use calculators for industrial engineering professionals and students. All our tools are organized by subject area to help you quickly find what you need."
+            <div class="calculator-intro">
+                <h2>Total Daily Energy Expenditure (TDEE) Calculation</h2>
+                <p>Your Total Daily Energy Expenditure (TDEE) is an estimate of how many calories you burn per day when exercise is taken into account. It's calculated by first figuring out your Basal Metabolic Rate (BMR), then multiplying that value by an activity multiplier.</p>
+                
+                <div class="formula-box">
+                    TDEE = BMR × Activity Multiplier
+                </div>
+                
+                <p>Where BMR is calculated using the Mifflin-St Jeor Equation:</p>
+                <ul>
+                    <li><strong>For men:</strong> BMR = 10 × weight(kg) + 6.25 × height(cm) - 5 × age(y) + 5</li>
+                    <li><strong>For women:</strong> BMR = 10 × weight(kg) + 6.25 × height(cm) - 5 × age(y) - 161</li>
+                </ul>
             </div>
-            <p>Industrial Engineering Calculators was created by Eugene James G. Palmes, an industrial engineer from the Philippines, to make IE accessible and easy to learn for everyone. This platform was designed with three key audiences in mind:</p>
-            <ul class="feature-list">
-                <li><strong>Professionals</strong> who need calculation assistance during their workday</li>
-                <li><strong>Students</strong> learning industrial engineering concepts and applications</li>
-                <li><strong>Aspiring IEs</strong> looking for fields to specialize in</li>
-            </ul>
-            <p>This is the only site catering to industrial engineering calculators, our tools are specifically tailored to the unique challenges of industrial engineering.</p>
-        </section>
-        
-        <section class="content-section">
-            <h2>Why These Calculators Matter</h2>
-            <p>In industrial engineering, we often find ourselves recreating the same calculations repeatedly. This project eliminates that redundancy by providing:</p>
-            <ul class="feature-list">
-                <li><strong>Specialized tools</strong> you won't find on other engineering sites</li>
-                <li><strong>Time-saving solutions</strong> for common IE problems</li>
-                <li><strong>Practical applications</strong> of industrial engineering theory</li>
-                <li><strong>Mobile-friendly access</strong> to calculations in the field</li>
-            </ul>
-            <p>The calculators cover essential areas including queueing models, line balancing, and linear programming - concepts that form the backbone of operational decision-making in manufacturing and service industries.</p>
-        </section>
-        
-        <section class="content-section">
-            <h2>Our Commitment to Quality</h2>
-            <p>Every calculator on this site is developed and tested with care, but industrial engineering is a complex field with many variables. We're committed to:</p>
-            <ul class="feature-list">
-                <li><strong>Continuous improvement</strong> based on user feedback</li>
-                <li><strong>Practical accuracy</strong> for real-world applications</li>
-                <li><strong>Clear explanations</strong> of calculations and assumptions</li>
-                <li><strong>No-cost access</strong> to all tools</li>
-            </ul>
-            <p>While we rigorously test each calculator, we acknowledge that industrial engineering problems can be complex. We welcome feedback from users to help improve these tools.</p>
-        </section>
-        
-        <section class="content-section">
-            <h2>Join Our Community</h2>
-            <p>This project thrives on community participation. Here's how you can contribute:</p>
-            <ul class="feature-list">
-                <li><strong>Share your expertise</strong> - Suggest improvements or new calculator ideas</li>
-                <li><strong>Tell your friends</strong> - Tell everyone about these resources</li>
-                <li><strong>Give us feedback</strong> - Help us identify your needs so that we can cater your experience better</li>
-            </ul>
-            <p>Our vision is to build the most comprehensive collection of industrial engineering calculators available anywhere. With your help, we can make this the go-to resource for IE professionals and students worldwide.</p>
-        </section>
 
+            <form id="tdee-form">
+                <h3>Personal Information</h3>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="gender">Gender:</label>
+                        <select id="gender" required>
+                            <option value="">Select Gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="age">Age (years):</label>
+                        <input type="number" id="age" min="15" max="80" step="1" required>
+                    </div>
+                </div>
+                
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="height">Height (cm):</label>
+                        <input type="number" id="height" min="100" max="250" step="0.1" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="weight">Weight (kg):</label>
+                        <input type="number" id="weight" min="30" max="200" step="0.1" required>
+                    </div>
+                </div>
+                
+                <h3>Activity Level</h3>
+                <div class="input-group">
+                    <label for="activity">Select Your Activity Level:</label>
+                    <select id="activity" required>
+                        <option value="">Select Activity Level</option>
+                        <option value="1.2">Sedentary (little or no exercise)</option>
+                        <option value="1.375">Lightly active (light exercise 1-3 days/week)</option>
+                        <option value="1.55">Moderately active (moderate exercise 3-5 days/week)</option>
+                        <option value="1.725">Very active (hard exercise 6-7 days/week)</option>
+                        <option value="1.9">Extremely active (very hard exercise, physical job)</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="calculate-btn">Calculate My TDEE</button>
+            </form>
+            
+            <div class="result-box" id="tdee-result">
+                <h3>Your TDEE Results</h3>
+                
+                <p>Your Total Daily Energy Expenditure: <span class="result-value" id="tdee-value"></span> calories/day</p>
+                <p>Your Basal Metabolic Rate (BMR): <span class="result-value" id="bmr-value"></span> calories/day</p>
+                
+                <div class="metric-results">
+                    <div class="metric-card maintenance">
+                        <h4>Maintenance Calories</h4>
+                        <div class="metric-value" id="maintenance-calories"></div>
+                        <p>To maintain your current weight</p>
+                    </div>
+                    
+                    <div class="metric-card weight-loss">
+                        <h4>Mild Weight Loss</h4>
+                        <div class="metric-value" id="weight-loss-calories"></div>
+                        <p>0.5 kg/week deficit</p>
+                    </div>
+                    
+                    <div class="metric-card weight-gain">
+                        <h4>Weight Gain</h4>
+                        <div class="metric-value" id="weight-gain-calories"></div>
+                        <p>0.5 kg/week surplus</p>
+                    </div>
+                </div>
+                
+                <h4>Activity Level Information</h4>
+                <div class="activity-levels">
+                    <div class="activity-item">
+                        <strong>Sedentary (little or no exercise)</strong> - Desk job with little or no exercise
+                    </div>
+                    <div class="activity-item">
+                        <strong>Lightly active (light exercise 1-3 days/week)</strong> - Light exercise or sports 1-3 days/week
+                    </div>
+                    <div class="activity-item">
+                        <strong>Moderately active (moderate exercise 3-5 days/week)</strong> - Moderate exercise or sports 3-5 days/week
+                    </div>
+                    <div class="activity-item">
+                        <strong>Very active (hard exercise 6-7 days/week)</strong> - Hard exercise or sports 6-7 days/week
+                    </div>
+                    <div class="activity-item">
+                        <strong>Extremely active (very hard exercise, physical job)</strong> - Very hard exercise, physical job, or training twice daily
+                    </div>
+                </div>
+            </div>
+            
+            <div class="calculator-intro">
+                <h3>What is TDEE and Why Is It Important?</h3>
+                <p>Total Daily Energy Expenditure (TDEE) represents the total number of calories your body burns in a day, including all activities from basic bodily functions to physical exercise. Understanding your TDEE is crucial for:</p>
+                
+                <ul>
+                    <li><strong>Weight management:</strong> Knowing whether you need to consume more or fewer calories to reach your goals</li>
+                    <li><strong>Muscle gain:</strong> Ensuring you're eating enough to support muscle growth</li>
+                    <li><strong>Weight loss:</strong> Creating an appropriate calorie deficit without sacrificing health</li>
+                    <li><strong>Maintenance:</strong> Understanding how to maintain your current weight</li>
+                </ul>
+                
+                <h3>Frequently Asked Questions</h3>
+                
+                <div class="faq-item">
+                    <h4>What is considered light exercise?</h4>
+                    <p>Light exercise typically includes activities like walking, gentle yoga, golf, or light housework. These activities increase your heart rate slightly but don't cause heavy breathing. Light exercise usually burns 3-4 METs (Metabolic Equivalent of Task).</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h4>What is considered moderate exercise?</h4>
+                    <p>Moderate exercise includes activities that noticeably increase your heart rate and breathing, such as brisk walking, cycling at a moderate pace, swimming, or dancing. You should be able to talk but not sing during these activities. Moderate exercise typically burns 4-6 METs.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h4>What should my TDEE be to lose weight?</h4>
+                    <p>To lose weight, you need to consume fewer calories than your TDEE. A safe and sustainable deficit is typically 500 calories per day, which should result in about 0.5 kg (1 lb) of weight loss per week. Extreme deficits can be counterproductive and may lead to muscle loss.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h4>Why is my TDEE so high?</h4>
+                    <p>Several factors can contribute to a high TDEE: having more muscle mass (muscle burns more calories at rest than fat), being taller or heavier, having an active job or lifestyle, being younger (metabolism tends to slow with age), or having a genetic predisposition to a faster metabolism.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h4>How often should I calculate my TDEE?</h4>
+                    <p>You should recalculate your TDEE whenever your weight changes significantly (5+ kg), your activity level changes substantially, or every 3-6 months to account for natural metabolic changes. If you're actively trying to lose or gain weight, recalculating every 4-6 weeks can help adjust your calorie targets.</p>
+                </div>
+                
+                <h3>Understanding Your Results</h3>
+                <p>Your TDEE calculation provides an estimate of your daily calorie needs based on the information you provided. Remember that this is an estimate, and individual variations can occur due to factors like genetics, hormone levels, and metabolic health.</p>
+                
+                <p>For best results with weight management:</p>
+                <ul>
+                    <li>Track your food intake accurately using a food scale or measuring cups</li>
+                    <li>Monitor your weight trends over time (weekly averages are more useful than daily weights)</li>
+                    <li>Adjust your calorie intake based on your progress</li>
+                    <li>Combine proper nutrition with appropriate exercise for optimal results</li>
+                </ul>
+            </div>
+        </section>
     </main>
     
     <footer>
         <div class="footer-links">
                 <a href="index.html">Home</a>
                 <a href="about.html">About</a>
-                <a href="terms.html">Terms</a>
+                <a href="terms.html">Terms of Service</a>
                 <a href="privacy.html">Privacy Policy</a>
                 <a href="contact.html">Contact Us</a>
                 
@@ -479,6 +692,7 @@
             <p class="copyright">&copy; 2025 Industrial Engineering Calculators. All rights reserved.</p>
         </div>
     </footer>
+
     <!-- xxxx navigation start xxxxx -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -532,44 +746,49 @@
         });
     </script>
     <!-- xxxx navigation end xxxxx -->
-
-
-    <div id="cookie-banner" style="position:fixed;bottom:0;left:0;width:100%;background:#fffbe6;border-top:1px solid #e2c96f;padding:1rem;box-shadow:0 -2px 8px rgba(0,0,0,0.07);display:none;z-index:9999;">
-        <span>
-            We use cookies to improve your experience. Non-essential cookies (analytics, personalization) require your consent. 
-            <a href="privacy.html" target="_blank">Learn more</a>
-        </span>
-        <button id="cookie-accept" style="margin-left:1rem;">Accept</button>
-        <button id="cookie-reject" style="margin-left:0.5rem;">Reject</button>
-    </div>
-    <script>
-    (function() {
-        var banner = document.getElementById('cookie-banner');
-        var accepted = localStorage.getItem('cookieConsent');
-        if (!accepted) banner.style.display = 'block';
-
-        document.getElementById('cookie-accept').onclick = function() {
-            localStorage.setItem('cookieConsent', 'accepted');
-            banner.style.display = 'none';
-            // Place non-essential cookie scripts here, e.g. analytics
-            // Example: load Google Analytics only if accepted
-            var gaScript = document.createElement('script');
-            gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V";
-            gaScript.async = true;
-            document.head.appendChild(gaScript);
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-3BSHG1DE6V');
-        };
-        document.getElementById('cookie-reject').onclick = function() {
-            localStorage.setItem('cookieConsent', 'rejected');
-            banner.style.display = 'none';
-            // Do not load non-essential cookies/scripts
-        };
-    })();
-    </script>
     
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tdeeForm = document.getElementById('tdee-form');
+            const resultBox = document.getElementById('tdee-result');
+            
+            tdeeForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const gender = document.getElementById('gender').value;
+                const age = parseFloat(document.getElementById('age').value);
+                const height = parseFloat(document.getElementById('height').value);
+                const weight = parseFloat(document.getElementById('weight').value);
+                const activity = parseFloat(document.getElementById('activity').value);
+                
+                // Calculate BMR using Mifflin-St Jeor Equation
+                let bmr;
+                if (gender === 'male') {
+                    bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+                } else {
+                    bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161;
+                }
+                
+                // Calculate TDEE
+                const tdee = Math.round(bmr * activity);
+                
+                // Update result elements
+                document.getElementById('bmr-value').textContent = Math.round(bmr);
+                document.getElementById('tdee-value').textContent = tdee;
+                document.getElementById('maintenance-calories').textContent = tdee + ' calories';
+                document.getElementById('weight-loss-calories').textContent = (tdee - 500) + ' calories';
+                document.getElementById('weight-gain-calories').textContent = (tdee + 500) + ' calories';
+                
+                // Show result box
+                resultBox.style.display = 'block';
+                
+                // Scroll to results
+                resultBox.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+
     <!-- xxxx navigation start xxxxx -->
     <button class="sidebar-toggle">☰</button>
     <div class="overlay"></div>
@@ -746,16 +965,17 @@
                 <span>+</span>
             </div>
                 <div class="sidebar-category-content">
-                     <a href="Articles/Negative-Correlation-Understanding-Inverse-Relationships-in-Data.html" class="sidebar-link">Negative Correlation: Understanding Inverse Relationships in Data</a>
+                    <a href="Articles/Negative-Correlation-Understanding-Inverse-Relationships-in-Data.html" class="sidebar-link">Negative Correlation: Understanding Inverse Relationships in Data</a>
                     <a href="Articles/Parameter-vs-Statistic-Understanding-the-Key-Differences.html" class="sidebar-link">Statistic vs Parameter: Understanding the Key Differences</a>
                     <a href="Articles/Quality-Assurance-vs-Quality-Control-Key-Differences-Explained.html" class="sidebar-link">Quality Assurance vs Quality Control: Key Differences Explained</a>
                     <a href="Articles/ABC-Analysis-Made-Easy.html" class="sidebar-link">ABC Analysis Made Easy: Classify Your Inventory in Minutes</a>
                     <a href="Articles/EOQ-Optimize-Your-Inventory-Costs.html" class="sidebar-link">EOQ Order Quantity: Optimize Your Inventory</a>
                     <a href="Articles/Linear-Programming-for-Supply-Chain-Optimization-A-Beginner's-Guide.html" class="sidebar-link">Linear Programming for Supply Chain Optimization: A Beginner's Guide</a>                
                     <a href="Articles/How-Lean-Six-Sigma-Helps-Cut-Costs-Without-Cutting-Corners.html" class="sidebar-link">How Lean Six Sigma Helps Cut Costs Without Cutting Corners</a>  
+                    <a href="Articles/How-Lean-Six-Sigma-Helps-Cut-Costs-Without-Cutting-Corners.html" class="sidebar-link">How Lean Six Sigma Helps Cut Costs Without Cutting Corners</a>  
                 </div>
-            </div>
     </aside>
     <!-- xxxx navigation end xxxxx -->       
+
 </body>
 </html>

@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--FAVICON-->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+  
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-3BSHG1DE6V');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5607576434988374"
+     crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="google-adsense-account" content="ca-pub-5607576434988374">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calorie Calculator - Calculate your daily calorie needs for weight loss, maintenance, or muscle gain">
+    <title>Calorie Calculator | Health & Nutrition Calculators</title>
+
+    <!-- Clarity tracking code for https://iecalculators.online/ -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "t31aicr9ep");
+    </script>
+
+    <style>
+        /* Consistent with existing style */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+            --weight-loss: #3498db;
+            --maintenance: #2ecc71;
+            --weight-gain: #f39c12;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+            transition: margin-left 0.3s;
+        }
+        
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block;
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .metric-results {
+            display: flex;
+            justify-content: space-between;
+            margin: 1.5rem 0;
+        }
+        
+        .metric-card {
+            flex: 1;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 0 0.5rem;
+            text-align: center;
+        }
+        
+        .metric-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-card .metric-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .metric-card.bmr .metric-value {
+            color: #3498db;
+        }
+        
+        .metric-card.tdee .metric-value {
+            color: #f39c12;
+        }
+        
+        .metric-card.goal .metric-value {
+            color: #2ecc71;
+        }
+        
+        .calorie-visual {
+            width: 100%;
+            height: 50px;
+            background: linear-gradient(90deg, var(--weight-loss), var(--maintenance), var(--weight-gain));
+            border-radius: 25px;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+        
+        .calorie-marker {
+            position: absolute;
+            top: -10px;
+            width: 4px;
+            height: 70px;
+            background-color: black;
+            transform: translateX(-50%);
+        }
+        
+        .calorie-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        
+        .goal-category {
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .weight-loss {
+            background-color: rgba(52, 152, 219, 0.2);
+            color: var(--weight-loss);
+        }
+        
+        .maintenance {
+            background-color: rgba(46, 204, 113, 0.2);
+            color: var(--maintenance);
+        }
+        
+        .weight-gain {
+            background-color: rgba(243, 156, 18, 0.2);
+            color: var(--weight-gain);
+        }
+        
+        .macronutrient-chart {
+            width: 100%;
+            height: 200px;
+            margin: 1.5rem 0;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+        }
+        
+        .macronutrient-bar {
+            width: 60px;
+            background-color: #3498db;
+            margin: 0 0.5rem;
+            position: relative;
+            border-radius: 4px 4px 0 0;
+        }
+        
+        .macronutrient-bar.protein {
+            background-color: #3498db;
+        }
+        
+        .macronutrient-bar.carbs {
+            background-color: #2ecc71;
+        }
+        
+        .macronutrient-bar.fat {
+            background-color: #f39c12;
+        }
+        
+        .macronutrient-label {
+            position: absolute;
+            bottom: -25px;
+            width: 100%;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        .examples-section {
+            margin-top: 3rem;
+        }
+        
+        .example {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .related-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .tool-chip {
+            background-color: #e3f2fd;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .tool-chip:hover {
+            background-color: #bbdefb;
+        }
+        
+        .faq-item {
+            margin-bottom: 1.5rem;
+        }
+        
+        .faq-question {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tab {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab.active {
+            border-bottom: 3px solid var(--secondary-color);
+            font-weight: bold;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            display: block;
+        }
+            
+        body.sidebar-open {
+            margin-left: 0;
+            overflow: hidden;
+        }
+        /* xxxx navigation end xxxxx */
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .metric-results {
+                flex-direction: column;
+            }
+            
+            .metric-card {
+                margin: 0.5rem 0;
+            }
+            
+            .calorie-visual {
+                height: 40px;
+            }
+            
+            .calorie-marker {
+                height: 60px;
+            }
+            
+            .macronutrient-chart {
+                height: 150px;
+                flex-wrap: wrap;
+            }
+            
+            .macronutrient-bar {
+                width: 40px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Health & Nutrition <span>Calculators</span></div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="terms.html">Terms</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+
+        <div class="sidebar-category">
+            <div class="sidebar-category-header">
+                <span>Site Navigation</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="index.html" class="sidebar-link">Home</a>
+                <a href="about.html" class="sidebar-link">About</a>
+                <a href="terms.html" class="sidebar-link">Terms of Service</a>
+                <a href="privacy.html" class="sidebar-link">Privacy Policy</a>
+                <a href="contact.html" class="sidebar-link">Contact Us</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header">
+                <span>Health Calculators</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="#" class="sidebar-link active">Calorie Calculator</a>
+                <a href="#" class="sidebar-link">BMI Calculator</a>
+                <a href="#" class="sidebar-link">Body Fat Calculator</a>
+                <a href="#" class="sidebar-link">Ideal Weight Calculator</a>
+                <a href="#" class="sidebar-link">Macro Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header">
+                <span>Fitness Calculators</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="#" class="sidebar-link">TDEE Calculator</a>
+                <a href="#" class="sidebar-link">BMR Calculator</a>
+                <a href="#" class="sidebar-link">Running Pace Calculator</a>
+                <a href="#" class="sidebar-link">1RM Calculator</a>
+            </div>
+        </div>
+    </aside>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Calorie Calculator</h1>
+            <p>Calculate your daily calorie needs for weight loss, maintenance, or muscle gain</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Daily Calorie Needs Calculation</h2>
+                <p>Calories are units of energy that our bodies use to function properly. Understanding your daily calorie needs is essential for achieving your weight goals, whether you want to lose, maintain, or gain weight. This calculator estimates your Basal Metabolic Rate (BMR) and Total Daily Energy Expenditure (TDEE) to provide personalized calorie recommendations.</p>
+                
+                <div class="formula-box">
+                    For Men: BMR = 10 × weight(kg) + 6.25 × height(cm) - 5 × age(y) + 5<br>
+                    For Women: BMR = 10 × weight(kg) + 6.25 × height(cm) - 5 × age(y) - 161<br>
+                    TDEE = BMR × Activity Multiplier
+                </div>
+                
+                <p>Where:</p>
+                <ul>
+                    <li><strong>BMR</strong> = Basal Metabolic Rate (calories burned at rest)</li>
+                    <li><strong>TDEE</strong> = Total Daily Energy Expenditure (calories burned including activity)</li>
+                    <li><strong>Activity Multiplier</strong> = Factor based on your daily activity level</li>
+                </ul>
+            </div>
+
+            <form id="calorie-form">
+                <h3>Personal Information</h3>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="gender">Gender:</label>
+                        <select id="gender" required>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="age">Age (years):</label>
+                        <input type="number" id="age" min="15" max="80" step="1" value="30" required>
+                    </div>
+                </div>
+                
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="height">Height (cm):</label>
+                        <input type="number" id="height" min="100" max="250" step="1" value="170" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="weight">Weight (kg):</label>
+                        <input type="number" id="weight" min="30" max="200" step="0.1" value="70" required>
+                    </div>
+                </div>
+                
+                <h3>Activity Level</h3>
+                <div class="input-group">
+                    <label for="activity">Select your activity level:</label>
+                    <select id="activity" required>
+                        <option value="1.2">Sedentary (little or no exercise)</option>
+                        <option value="1.375">Lightly active (light exercise 1-3 days/week)</option>
+                        <option value="1.55" selected>Moderately active (moderate exercise 3-5 days/week)</option>
+                        <option value="1.725">Very active (hard exercise 6-7 days/week)</option>
+                        <option value="1.9">Extremely active (very hard exercise, physical job)</option>
+                    </select>
+                </div>
+                
+                <h3>Goal</h3>
+                <div class="input-group">
+                    <label for="goal">Select your goal:</label>
+                    <select id="goal" required>
+                        <option value="-500">Weight loss (1kg/week)</option>
+                        <option value="-250">Weight loss (0.5kg/week)</option>
+                        <option value="0" selected>Maintain weight</option>
+                        <option value="250">Weight gain (0.5kg/week)</option>
+                        <option value="500">Weight gain (1kg/week)</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="calculate-btn">Calculate Calories</button>
+            </form>
+            
+            <div class="result-box" id="calorie-result">
+                <h3>Your Calorie Calculation Results</h3>
+                
+                <div class="metric-results">
+                    <div class="metric-card bmr">
+                        <h4>Basal Metabolic Rate (BMR)</h4>
+                        <div class="metric-value" id="bmr-value">-</div>
+                        <p>Calories burned at rest</p>
+                    </div>
+                    
+                    <div class="metric-card tdee">
+                        <h4>Total Daily Energy Expenditure (TDEE)</h4>
+                        <div class="metric-value" id="tdee-value">-</div>
+                        <p>Calories burned with activity</p>
+                    </div>
+                    
+                    <div class="metric-card goal">
+                        <h4>Recommended Daily Calories</h4>
+                        <div class="metric-value" id="goal-value">-</div>
+                        <p>For your selected goal</p>
+                    </div>
+                </div>
+                
+                <div class="calorie-visual">
+                    <div class="calorie-marker" id="calorie-marker"></div>
+                </div>
+                
+                <div class="calorie-labels">
+                    <span>Weight Loss<br>1200-1500</span>
+                    <span>Maintenance<br>2000-2500</span>
+                    <span>Weight Gain<br>2800-3300</span>
+                </div>
+                
+                <div class="goal-category" id="goal-category">-</div>
+                
+                <h4>Macronutrient Breakdown</h4>
+                <p>For optimal results, consider distributing your calories across macronutrients:</p>
+                
+                <div class="macronutrient-chart" id="macronutrient-chart">
+                    <div class="macronutrient-bar protein" id="protein-bar">
+                        <div class="macronutrient-label">Protein</div>
+                    </div>
+                    <div class="macronutrient-bar carbs" id="carbs-bar">
+                        <div class="macronutrient-label">Carbs</div>
+                    </div>
+                    <div class="macronutrient-bar fat" id="fat-bar">
+                        <div class="macronutrient-label">Fat</div>
+                    </div>
+                </div>
+                
+                <table>
+                    <tr>
+                        <th>Macronutrient</th>
+                        <th>Recommended Percentage</th>
+                        <th>Grams per day</th>
+                        <th>Calories per day</th>
+                    </tr>
+                    <tr>
+                        <td>Protein</td>
+                        <td>25-35%</td>
+                        <td id="protein-grams">-</td>
+                        <td id="protein-calories">-</td>
+                    </tr>
+                    <tr>
+                        <td>Carbohydrates</td>
+                        <td>45-55%</td>
+                        <td id="carbs-grams">-</td>
+                        <td id="carbs-calories">-</td>
+                    </tr>
+                    <tr>
+                        <td>Fat</td>
+                        <td>20-30%</td>
+                        <td id="fat-grams">-</td>
+                        <td id="fat-calories">-</td>
+                    </tr>
+                </table>
+                
+                <h4>Weekly Projection</h4>
+                <table>
+                    <tr>
+                        <th>Timeframe</th>
+                        <th>Projected Weight Change</th>
+                        <th>Calorie Balance</th>
+                    </tr>
+                    <tr>
+                        <td>1 week</td>
+                        <td id="weekly-change">-</td>
+                        <td id="weekly-balance">-</td>
+                    </tr>
+                    <tr>
+                        <td>1 month (4 weeks)</td>
+                        <td id="monthly-change">-</td>
+                        <td id="monthly-balance">-</td>
+                    </tr>
+                    <tr>
+                        <td>3 months (12 weeks)</td>
+                        <td id="quarterly-change">-</td>
+                        <td id="quarterly-balance">-</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+        
+        <section class="content-section">
+            <h2>Can I cut calories and build muscle?</h2>
+            <p>This is a common question among fitness enthusiasts, and the answer is nuanced. While it's challenging to build significant muscle while in a calorie deficit, it is possible under certain conditions:</p>
+            
+            <h4>When you can build muscle while cutting calories:</h4>
+            <ul>
+                <li><strong>Beginners</strong> - Those new to resistance training can often build muscle while losing fat due to "newbie gains"</li>
+                <li><strong>Overweight individuals</strong> - Those with higher body fat percentages have more stored energy to support muscle growth</li>
+                <li><strong>Proper protein intake</strong> - Consuming adequate protein (1.6-2.2g per kg of body weight) helps preserve and build muscle</li>
+                <li><strong>Strategic training</strong> - Resistance training with progressive overload stimulates muscle growth even in a deficit</li>
+                <li><strong>Moderate deficit</strong> - A small calorie deficit (200-500 calories) is more conducive to muscle preservation</li>
+            </ul>
+            
+            <h4>When it's challenging to build muscle while cutting:</h4>
+            <ul>
+                <li><strong>Advanced trainees</strong> - Those with years of training experience find it harder to build muscle in a deficit</li>
+                <li><strong>Very lean individuals</strong> - Those with low body fat have less energy reserves for muscle growth</li>
+                <li><strong>Large calorie deficits</strong> - Deficits greater than 500 calories make muscle growth difficult</li>
+                <li><strong>Inadequate protein</strong> - Without sufficient protein, the body may break down muscle for energy</li>
+            </ul>
+            
+            <p>For most people looking to simultaneously lose fat and build muscle, a modest calorie deficit with high protein intake and resistance training is the most effective approach.</p>
+        </section>
+        
+        <section class="content-section">
+            <h2>How much weight can I lose?</h2>
+            <p>Weight loss depends on several factors including your calorie deficit, metabolism, starting weight, and consistency. Here's what you can typically expect:</p>
+            
+            <h4>Safe and sustainable weight loss rates:</h4>
+            <ul>
+                <li><strong>0.5-1 kg (1-2 lbs) per week</strong> - This is considered a safe and sustainable rate of weight loss</li>
+                <li><strong>1-2% of body weight per week</strong> - A percentage-based approach accounts for different starting weights</li>
+            </ul>
+            
+            <h4>Factors that influence weight loss:</h4>
+            <ul>
+                <li><strong>Starting weight</strong> - Heavier individuals typically lose weight faster initially</li>
+                <li><strong>Calorie deficit</strong> - A deficit of 500-1000 calories per day typically results in 0.5-1 kg loss per week</li>
+                <li><strong>Metabolic rate</strong> - Those with higher metabolisms may lose weight faster</li>
+                <li><strong>Consistency</strong> - Regular adherence to your calorie goals is crucial</li>
+                <li><strong>Exercise</strong> - Physical activity increases calorie expenditure and can accelerate weight loss</li>
+            </ul>
+            
+            <h4>Realistic expectations:</h4>
+            <ul>
+                <li><strong>First 1-2 weeks</strong> - Often show rapid weight loss due to water weight reduction</li>
+                <li><strong>Weeks 3-12</strong> - Steady weight loss at the expected rate (0.5-1 kg per week)</li>
+                <li><strong>After 3 months</strong> - Weight loss may slow as metabolism adapts</li>
+                <li><strong>Plateaus</strong> - Periods where weight doesn't change are common and normal</li>
+            </ul>
+            
+            <p>Use our calorie calculator above to estimate how much weight you can lose based on your specific calorie deficit.</p>
+        </section>
+        
+        <section class="content-section">
+            <h2>Can calorie deficit cause constipation?</h2>
+            <p>Yes, a calorie deficit can sometimes lead to constipation. Several factors contribute to this:</p>
+            
+            <h4>Reasons calorie deficits may cause constipation:</h4>
+            <ul>
+                <li><strong>Reduced food volume</strong> - Eating less food means less bulk in the digestive system</li>
+                <li><strong>Inadequate fiber intake</strong> - If your reduced calorie diet lacks fiber-rich foods</li>
+                <li><strong>Dehydration</strong> - Some people forget to drink enough water when eating less</li>
+                <li><strong>Changes in gut microbiota</strong> - Dietary changes can affect the balance of gut bacteria</li>
+                <li><strong>Reduced fat intake</strong> - Very low-fat diets may slow digestion</li>
+            </ul>
+            
+            <h4>How to prevent constipation during calorie restriction:</h4>
+            <ul>
+                <li><strong>Prioritize fiber-rich foods</strong> - Include vegetables, fruits, whole grains, and legumes</li>
+                <li><strong>Stay hydrated</strong> - Drink plenty of water throughout the day</li>
+                <li><strong>Include healthy fats</strong> - Sources like avocados, nuts, and olive oil can help</li>
+                <li><strong>Stay active</strong> - Physical activity stimulates bowel movements</li>
+                <li><strong>Consider probiotics</strong> - Yogurt, kefir, or supplements can support gut health</li>
+                <li><strong>Don't eliminate carbs drastically</strong> - Very low-carb diets can cause constipation</li>
+            </ul>
+            
+            <p>If constipation persists despite these measures, consult a healthcare professional to rule out other causes.</p>
+        </section>
+        
+        <section class="content-section">
+            <h2>Can calorie deficit cause anxiety?</h2>
+            <p>Yes, a significant calorie deficit can contribute to feelings of anxiety. Several mechanisms explain this connection:</p>
+            
+            <h4>How calorie deficits may cause anxiety:</h4>
+            <ul>
+                <li><strong>Blood sugar fluctuations</strong> - Irregular eating patterns can cause blood sugar swings that trigger anxiety</li>
+                <li><strong>Nutrient deficiencies</strong> - Inadequate intake of certain nutrients like magnesium, B vitamins, and omega-3s can affect mood</li>
+                <li><strong>Increased cortisol</strong> - Calorie restriction can elevate stress hormones</li>
+                <li><strong>Psychological factors</strong> - Hunger and food preoccupation can be stressful</li>
+                <li><strong>Sleep disruption</strong> - Hunger can interfere with sleep quality, exacerbating anxiety</li>
+            </ul>
+            
+            <h4>Strategies to manage anxiety during calorie restriction:</h4>
+            <ul>
+                <li><strong>Avoid extreme deficits</strong> - Stick to a moderate deficit of 500 calories or less</li>
+                <li><strong>Eat regularly</strong> - Don't skip meals; aim for consistent eating patterns</li>
+                <li><strong>Prioritize nutrient-dense foods</strong> - Ensure adequate intake of vitamins and minerals</li>
+                <li><strong>Include complex carbohydrates</li>
+                <li><strong>Practice stress management</strong> - Meditation, yoga, or deep breathing exercises</li>
+                <li><strong>Ensure adequate sleep</strong> - Aim for 7-9 hours of quality sleep per night</li>
+                <li><strong>Consider professional support</strong> - If anxiety persists, consult a healthcare provider</li>
+            </ul>
+            
+            <p>Remember that sustainable weight loss shouldn't come at the cost of your mental health. If calorie restriction consistently causes anxiety, you may need to adjust your approach.</p>
+        </section>
+        
+        <section class="content-section">
+            <h2>Can calorie counting help lose weight?</h2>
+            <p>Yes, calorie counting can be an effective tool for weight loss when done correctly. Here's what the research shows:</p>
+            
+            <h4>Benefits of calorie counting for weight loss:</h4>
+            <ul>
+                <li><strong>Creates awareness</strong> - Many people underestimate their calorie intake without tracking</li>
+                <li><strong>Provides structure</strong> - Helps establish appropriate portion sizes</li>
+                <li><strong>Identifies patterns</strong> - Reveals high-calorie foods or eating patterns</li>
+                <li><strong>Facilitates accountability</strong> - Tracking creates a sense of responsibility</li>
+                <li><strong>Allows flexibility</strong> - No foods are off-limits if they fit within your calorie budget</li>
+            </ul>
+            
+            <h4>Potential drawbacks of calorie counting:</h4>
+            <ul>
+                <li><strong>Can become obsessive</strong> - For some, it may contribute to disordered eating patterns</li>
+                <li><strong>Time-consuming</strong> - Requires consistent effort and attention</li>
+                <li><strong>Not always accurate</strong> - Food labels and databases can have errors</li>
+                <li><strong>Doesn't account for food quality</strong> - 100 calories of vegetables affects health differently than 100 calories of candy</li>
+                <li><strong>May reduce intuitive eating skills</strong> - Over-reliance on numbers rather than hunger cues</li>
+            </ul>
+            
+            <h4>Tips for effective calorie counting:</h4>
+            <ul>
+                <li><strong>Use a reliable app</strong> - Many apps have extensive food databases</li>
+                <li><strong>Weigh and measure foods</strong> - Estimates are often inaccurate</li>
+                <li><strong>Focus on nutrient density</strong> - Prioritize foods that provide vitamins and minerals</li>
+                <li><strong>Be consistent but flexible</strong> - Track consistently but don't stress over occasional deviations</li>
+                <li><strong>Combine with other strategies</strong> - Pair with mindful eating and physical activity</li>
+            </ul>
+            
+            <p>Calorie counting works well for many people, but it's not the only approach to weight loss. The best method is one that you can sustain long-term.</p>
+        </section>
+        
+        <section class="content-section">
+            <h2>Can calorie deficit cause weight gain?</h2>
+            <p>While a calorie deficit should theoretically lead to weight loss, several factors can make it seem like a deficit is causing weight gain:</p>
+            
+            <h4>Why you might gain weight despite a calorie deficit:</h4>
+            <ul>
+                <li><strong>Water retention</strong> - Changes in diet, exercise, or hormones can cause temporary water weight gain</li>
+                <li><strong>Muscle gain</strong> - If you're new to exercise, you might be gaining muscle while losing fat</li>
+                <li><strong>Inaccurate tracking</strong> - Underestimating intake or overestimating expenditure</li>
+                <li><strong>Metabolic adaptation</strong> - Your metabolism may slow down in response to prolonged deficit</li>
+                <li><strong>Hormonal factors</strong> - Conditions like thyroid issues or PCOS can affect weight</li>
+                <li><strong>Medications</strong> - Some medications promote weight gain</li>
+                <li><strong>Stress and sleep</strong> - Poor sleep and high stress can hinder weight loss</li>
+            </ul>
+            
+            <h4>What to do if you're not losing weight in a deficit:</h4>
+            <ul>
+                <li><strong>Reassess your calorie tracking</strong> - Be meticulous for a week to ensure accuracy</li>
+                <li><strong>Consider body composition measurements</strong> - You might be losing fat but gaining muscle</li>
+                <li><strong>Be patient</strong> - Weight loss isn't linear; plateaus are normal</li>
+                <li><strong>Review your activity level</strong> - Non-exercise activity might have decreased</li>
+                <li><strong>Consult a professional</strong> - A doctor or dietitian can identify potential issues</li>
+            </ul>
+            
+            <p>True weight gain in a sustained calorie deficit is rare. More often, the apparent gain is due to other factors that create the illusion of weight gain despite fat loss.</p>
+        </section>
+        
+        <section class="content-section">
+            <h2>How to estimate calorie needs</h2>
+            <p>Estimating your calorie needs is essential for setting appropriate nutrition goals. Here are the primary methods:</p>
+            
+            <h4>1. Formulas and equations:</h4>
+            <p>The most common equations for estimating Basal Metabolic Rate (BMR):</p>
+            <div class="formula-box">
+                Mifflin-St Jeor Equation (most accurate for most people):<br>
+                Men: BMR = 10 × weight(kg) + 6.25 × height(cm) - 5 × age(y) + 5<br>
+                Women: BMR = 10 × weight(kg) + 6.25 × height(cm) - 5 × age(y) - 161
+            </div>
+            
+            <div class="formula-box">
+                Harris-Benedict Equation (older but still used):<br>
+                Men: BMR = 88.362 + (13.397 × weight in kg) + (4.799 × height in cm) - (5.677 × age in years)<br>
+                Women: BMR = 447.593 + (9.247 × weight in kg) + (3.098 × height in cm) - (4.330 × age in years)
+            </div>
+            
+            <h4>2. Activity multipliers:</h4>
+            <p>Once you have your BMR, multiply it by an activity factor to get your Total Daily Energy Expenditure (TDEE):</p>
+            <ul>
+                <li><strong>Sedentary (little or no exercise)</strong> × 1.2</li>
+                <li><strong>Lightly active (light exercise 1-3 days/week)</strong> × 1.375</li>
+                <li><strong>Moderately active (moderate exercise 3-5 days/week)</strong> × 1.55</li>
+                <li><strong>Very active (hard exercise 6-7 days/week)</strong> × 1.725</li>
+                <li><strong>Extremely active (very hard exercise, physical job)</strong> × 1.9</li>
+            </ul>
+            
+            <h4>3. Calorie tracking method:</h4>
+            <p>For a more personalized approach:</p>
+            <ol>
+                <li>Track your food intake accurately for 1-2 weeks</li>
+                <li>Weigh yourself daily under consistent conditions</li>
+                <li>Calculate your average daily calorie intake</li>
+                <li>Note whether your weight is stable, increasing, or decreasing</li>
+                <li>Adjust based on your goals (add/subtract calories as needed)</li>
+            </ol>
+            
+            <h4>4. Technology-assisted methods:</h4>
+            <ul>
+                <li><strong>Wearable devices</strong> - Fitness trackers estimate calorie expenditure</li>
+                <li><strong>Metabolic testing</strong> - Professional assessment of your metabolic rate</li>
+                <li><strong>Smart scales</strong> - Some scales estimate BMR based on body composition</li>
+            </ul>
+            
+            <p>Our calorie calculator above uses the Mifflin-St Jeor equation with activity multipliers to provide a good estimate of your calorie needs.</p>
+        </section>
+        
+        <section class="content-section">
+            <h2>When calorie deficit doesn't work</h2>
+            <p>Sometimes, despite maintaining a calorie deficit, weight loss stalls or doesn't occur. Here are common reasons why and what to do:</p>
+            
+            <h4>Reasons a calorie deficit might not work:</h4>
+            <ul>
+                <li><strong>Metabolic adaptation</strong> - Your metabolism slows down in response to prolonged deficit</li>
+                <li><strong>Inaccurate tracking</strong> - Underestimating food intake or overestimating exercise calories</li>
+                <li><strong>Water retention</strong> - Masking fat loss on the scale</li>
+                <li><strong>Hormonal factors</strong> - Thyroid issues, insulin resistance, or cortisol imbalances</li>
+                <li><strong>Medications</strong> - Some drugs promote weight gain or hinder loss</li>
+                <li><strong>Insufficient protein</strong> - Leading to muscle loss and metabolic slowdown</li>
+                <li><strong>Adaptive thermogenesis</strong> - Unconscious reduction in non-exercise activity</li>
+            </ul>
+            
+            <h4>Strategies to overcome weight loss plateaus:</h4>
+            <ul>
+                <li><strong>Diet break</strong> - Return to maintenance calories for 1-2 weeks to reset metabolism</li>
+                <li><strong>Reassess your TDEE</strong> - Your calorie needs may have decreased as you lost weight</li>
+                <li><strong>Increase protein intake</strong> - Aim for 1.6-2.2g per kg of body weight</li>
+                <li><strong>Vary your calorie intake</strong> - Try calorie cycling (higher and lower days)</li>
+                <li><strong>Focus on strength training</strong> - Preserve muscle mass which supports metabolism</li>
+                <li><strong>Manage stress and sleep</strong> - Both significantly impact weight loss</li>
+                <li><strong>Be patient</strong> - Plateaus are normal and often temporary</li>
+            </ul>
+            
+            <p>If you've tried these strategies and still aren't seeing progress, consider consulting with a healthcare provider or registered dietitian to rule out medical issues.</p>
+        </section>
+        
+        <section class="content-section">
+            <h2>Will calorie deficit burn fat?</h2>
+            <p>Yes, a sustained calorie deficit will ultimately lead to fat loss. However, the process is complex and involves several physiological mechanisms:</p>
+            
+            <h4>How calorie deficits lead to fat loss:</h4>
+            <ul>
+                <li><strong>Energy balance</strong> - When you consume fewer calories than you expend, your body must use stored energy (fat)</li>
+                <li><strong>Hormonal changes</strong> - Insulin decreases while glucagon and catecholamines increase, promoting fat breakdown</li>
+                <li><strong>Lipolysis</strong> - Fat cells release fatty acids into the bloodstream to be used for energy</li>
+                <li><strong>Beta-oxidation</strong> - Fatty acids are broken down in the mitochondria to produce ATP (energy)</li>
+            </ul>
+            
+            <h4>What gets burned during a calorie deficit:</h4>
+            <ul>
+                <li><strong>Primarily fat</strong> - Under most conditions, fat is the main energy source in a deficit</li>
+                <li><strong>Some muscle</strong> - Without adequate protein and resistance training, some muscle loss may occur</li>
+                <li><strong>Glycogen</strong> - Stored carbohydrates are used first, which also releases water</li>
+            </ul>
+            
+            <h4>Factors that influence what gets burned:</h4>
+            <ul>
+                <li><strong>Protein intake</strong> - Adequate protein helps preserve muscle mass</li>
+                <li><strong>Exercise type</strong> - Resistance training preserves muscle; cardio burns more calories</li>
+                <li><strong>Deficit size</strong> - Very large deficits increase the risk of muscle loss</li>
+                <li><strong>Sleep and stress</strong> - Poor sleep and high cortisol can promote muscle breakdown</li>
+                <li><strong>Nutrient timing</strong> - Spreading protein throughout the day supports muscle maintenance</li>
+            </ul>
+            
+            <p>To maximize fat loss while preserving muscle, combine a moderate calorie deficit with high protein intake and resistance training.</p>
+        </section>
+        
+        <section class="content-section">
+            <h2>Related Tools</h2>
+            <div class="related-tools">
+                <a href="#" class="tool-chip">Macro Calculator</a>
+                <a href="#" class="tool-chip">BMI Calculator</a>
+                <a href="#" class="tool-chip">Body Fat Calculator</a>
+                <a href="#" class="tool-chip">TDEE Calculator</a>
+                <a href="#" class="tool-chip">Ideal Weight Calculator</a>
+                <a href="#" class="tool-chip">Weight Loss Predictor</a>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact Us</a>
+                
+            </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            <p class="copyright">&copy; 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- xxxx navigation start xxxxx -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebarClose = document.querySelector('.sidebar-close');
+            const overlay = document.querySelector('.overlay');
+            const body = document.body;
+            
+            // Toggle sidebar
+            function toggleSidebar() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+                body.classList.toggle('sidebar-open');
+            }
+            
+            // Toggle category expansion
+            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
+            categoryHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const category = this.parentElement;
+                    category.classList.toggle('open');
+                    
+                    // Update the expand/collapse icon
+                    const icon = this.querySelector('span:last-child');
+                    icon.textContent = category.classList.contains('open') ? '−' : '+';
+                });
+            });
+            
+            // Event listeners
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            sidebarClose.addEventListener('click', toggleSidebar);
+            overlay.addEventListener('click', toggleSidebar);
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 768 && 
+                    body.classList.contains('sidebar-open') && 
+                    !sidebar.contains(event.target) && 
+                    event.target !== sidebarToggle) {
+                    toggleSidebar();
+                }
+            });
+            
+            // Close sidebar when pressing Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && body.classList.contains('sidebar-open')) {
+                    toggleSidebar();
+                }
+            });
+        });
+    </script>
+    <!-- xxxx navigation end xxxxx -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navigation functionality
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebarClose = document.querySelector('.sidebar-close');
+            const overlay = document.querySelector('.overlay');
+            const body = document.body;
+            
+            function toggleSidebar() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+                body.classList.toggle('sidebar-open');
+            }
+            
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            sidebarClose.addEventListener('click', toggleSidebar);
+            overlay.addEventListener('click', toggleSidebar);
+            
+            // Toggle category expansion
+            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
+            categoryHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const category = this.parentElement;
+                    category.classList.toggle('open');
+                });
+            });
+            
+            // Calorie calculation
+            const calorieForm = document.getElementById('calorie-form');
+            calorieForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                calculateCalories();
+            });
+            
+            function calculateCalories() {
+                // Get input values
+                const gender = document.getElementById('gender').value;
+                const age = parseFloat(document.getElementById('age').value);
+                const height = parseFloat(document.getElementById('height').value);
+                const weight = parseFloat(document.getElementById('weight').value);
+                const activity = parseFloat(document.getElementById('activity').value);
+                const goal = parseFloat(document.getElementById('goal').value);
+                
+                // Calculate BMR (Mifflin-St Jeor Equation)
+                let bmr;
+                if (gender === 'male') {
+                    bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+                } else {
+                    bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+                }
+                
+                // Calculate TDEE
+                const tdee = bmr * activity;
+                
+                // Calculate goal calories
+                const goalCalories = tdee + goal;
+                
+                // Update results
+                document.getElementById('bmr-value').textContent = Math.round(bmr) + ' calories';
+                document.getElementById('tdee-value').textContent = Math.round(tdee) + ' calories';
+                document.getElementById('goal-value').textContent = Math.round(goalCalories) + ' calories';
+                
+                // Update goal category
+                const goalCategory = document.getElementById('goal-category');
+                if (goal < 0) {
+                    goalCategory.textContent = 'Weight Loss Goal';
+                    goalCategory.className = 'goal-category weight-loss';
+                } else if (goal === 0) {
+                    goalCategory.textContent = 'Weight Maintenance Goal';
+                    goalCategory.className = 'goal-category maintenance';
+                } else {
+                    goalCategory.textContent = 'Weight Gain Goal';
+                    goalCategory.className = 'goal-category weight-gain';
+                }
+                
+                // Update calorie visual marker
+                // Simple positioning based on goal calories (for demonstration)
+                const markerPosition = ((goalCalories - 1200) / (3300 - 1200)) * 100;
+                document.getElementById('calorie-marker').style.left = Math.min(Math.max(markerPosition, 0), 100) + '%';
+                
+                // Calculate macronutrients (simplified)
+                const proteinCalories = goalCalories * 0.3; // 30% protein
+                const carbsCalories = goalCalories * 0.5;   // 50% carbs
+                const fatCalories = goalCalories * 0.2;     // 20% fat
+                
+                // Convert to grams
+                const proteinGrams = Math.round(proteinCalories / 4);
+                const carbsGrams = Math.round(carbsCalories / 4);
+                const fatGrams = Math.round(fatCalories / 9);
+                
+                // Update macronutrient table
+                document.getElementById('protein-grams').textContent = proteinGrams + 'g';
+                document.getElementById('protein-calories').textContent = Math.round(proteinCalories) + ' calories';
+                document.getElementById('carbs-grams').textContent = carbsGrams + 'g';
+                document.getElementById('carbs-calories').textContent = Math.round(carbsCalories) + ' calories';
+                document.getElementById('fat-grams').textContent = fatGrams + 'g';
+                document.getElementById('fat-calories').textContent = Math.round(fatCalories) + ' calories';
+                
+                // Update macronutrient chart bars
+                document.getElementById('protein-bar').style.height = (proteinGrams / 200 * 100) + '%';
+                document.getElementById('carbs-bar').style.height = (carbsGrams / 300 * 100) + '%';
+                document.getElementById('fat-bar').style.height = (fatGrams / 100 * 100) + '%';
+                
+                // Calculate weekly projection
+                const weeklyDeficit = goal * 7;
+                const weeklyWeightChange = weeklyDeficit / 7700; // 7700 calories ≈ 1kg
+                
+                document.getElementById('weekly-change').textContent = weeklyWeightChange.toFixed(2) + ' kg';
+                document.getElementById('weekly-balance').textContent = weeklyDeficit + ' calories';
+                
+                document.getElementById('monthly-change').textContent = (weeklyWeightChange * 4).toFixed(2) + ' kg';
+                document.getElementById('monthly-balance').textContent = (weeklyDeficit * 4) + ' calories';
+                
+                document.getElementById('quarterly-change').textContent = (weeklyWeightChange * 12).toFixed(2) + ' kg';
+                document.getElementById('quarterly-balance').textContent = (weeklyDeficit * 12) + ' calories';
+                
+                // Show results
+                document.getElementById('calorie-result').style.display = 'block';
+            }
+            
+            // Initialize with a calculation
+            calculateCalories();
+        });
+    </script>
+
+    <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+
+    <div class="sidebar-category">
+        <div class="sidebar-category-header">
+            <span>Site Navigation</span>
+            <span>+</span>
+        </div>
+        
+        <div class="sidebar-category-content">
+            <a href="index.html" class="sidebar-link">Home</a>
+            <a href="about.html" class="sidebar-link">About</a>
+            <a href="terms.html" class="sidebar-link">Terms of Service</a>
+            <a href="privacy.html" class="sidebar-link">Privacy Policy</a>
+            <a href="contact.html" class="sidebar-link">Contact Us</a>
+        </div>
+    </div>
+        
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="linebalancing.html" class="sidebar-link">Line Balancing</a>
+                <a href="takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+                <a href="machine-utilization-calculator.html" class="sidebar-link">Machine Utilization</a>
+                <a href="manpower-calculator.html" class="sidebar-link active">Manpower Requirements</a>
+                <a href="production-capacity-calculator.html" class="sidebar-link">Production Capacity</a>
+
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="oee-calculation.html" class="sidebar-link">OEE Calculator</a>
+                <a href="quality-function-deployment" class="sidebar-link">Quality Function Deployment</a>
+
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="anova.html" class="sidebar-link">ANOVA</a>
+                <a href="chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="confidence-interval-calculator.html" class="sidebar-link">Confidence Interval </a>
+                <a href="correlation.html" class="sidebar-link">Correlation Analysis</a>
+                <a href="coefficient-of-variation-calculator.html" class="sidebar-link">Coefficient of Variation</a>
+                <a href="goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="regression.html" class="sidebar-link">Regression</a>
+                <a href="samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="ttest.html" class="sidebar-link">T-Test</a>
+                <a href="ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="abc-analysis-calculator.html" class="sidebar-link">ABC Analysis</a>
+                <a href="inventory-turnover-calculator.html" class="sidebar-link">Inventory Turnover</a>
+                <a href="eoq-formula.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="reorder-point-calculator.html" class="sidebar-link">Reorder Point</a>
+                <a href="kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+                <a href="safety-stock-calculator.html" class="sidebar-link">Safety Stock Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Measurement</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+                <a href="failure-mode-and-effects-analysis-fmea.html" class="sidebar-link">FMEA</a>           
+            </div>
+        </div>
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Articles</span>
+                <span>+</span>
+            </div>
+                <div class="sidebar-category-content">
+                    <a href="Articles/Negative-Correlation-Understanding-Inverse-Relationships-in-Data.html" class="sidebar-link">Negative Correlation: Understanding Inverse Relationships in Data</a>
+                    <a href="Articles/Parameter-vs-Statistic-Understanding-the-Key-Differences.html" class="sidebar-link">Statistic vs Parameter: Understanding the Key Differences</a>
+                    <a href="Articles/Quality-Assurance-vs-Quality-Control-Key-Differences-Explained.html" class="sidebar-link">Quality Assurance vs Quality Control: Key Differences Explained</a>
+                    <a href="Articles/ABC-Analysis-Made-Easy.html" class="sidebar-link">ABC Analysis Made Easy: Classify Your Inventory in Minutes</a>
+                    <a href="Articles/EOQ-Optimize-Your-Inventory-Costs.html" class="sidebar-link">EOQ Order Quantity: Optimize Your Inventory</a>
+                    <a href="Articles/Linear-Programming-for-Supply-Chain-Optimization-A-Beginner's-Guide.html" class="sidebar-link">Linear Programming for Supply Chain Optimization: A Beginner's Guide</a>                
+                    <a href="Articles/How-Lean-Six-Sigma-Helps-Cut-Costs-Without-Cutting-Corners.html" class="sidebar-link">How Lean Six Sigma Helps Cut Costs Without Cutting Corners</a>  
+                    <a href="Articles/How-Lean-Six-Sigma-Helps-Cut-Costs-Without-Cutting-Corners.html" class="sidebar-link">How Lean Six Sigma Helps Cut Costs Without Cutting Corners</a>  
+                </div>
+    </aside>
+    <!-- xxxx navigation end xxxxx -->       
+
+</body>
+</html>
