@@ -37,8 +37,531 @@
         })(window, document, "clarity", "script", "t31aicr9ep");
     </script>
 
-    <link rel="stylesheet" href="style.css">
-    
+
+<style>
+
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+            
+            /* Subject area colors */
+            --production-color: #3498db;
+            --quality-color: #2ecc71;
+            --statistics-color: #9b59b6;
+            --inventory-color: #e67e22;
+            --workstudy-color: #f1c40f;
+            --ergonomics-color: #1abc9c;
+            --operations-color: #34495e;
+            --economy-color: #27ae60;
+            --facilities-color: #8e44ad;
+            --reliability-color: #e74c3c;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+            transition: margin-left 0.3s;
+        }
+        
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block; /* Changed from none to block */
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+        
+        .donate-btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .donate-btn:hover {
+            background-color: #c0392b;
+        }
+        
+        .subject-section {
+            padding: 3rem 0;
+        }
+        
+        .subject-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid;
+        }
+        
+        .subject-title {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+        
+        .subject-icon {
+            font-size: 2rem;
+            margin-right: 1rem;
+        }
+        
+        /* Subject-specific colors */
+        .production {
+            border-color: var(--production-color);
+        }
+        .production .subject-title {
+            color: var(--production-color);
+        }
+        
+        .quality {
+            border-color: var(--quality-color);
+        }
+        .quality .subject-title {
+            color: var(--quality-color);
+        }
+        
+        .statistics {
+            border-color: var(--statistics-color);
+        }
+        .statistics .subject-title {
+            color: var(--statistics-color);
+        }
+        
+        .inventory {
+            border-color: var(--inventory-color);
+        }
+        .inventory .subject-title {
+            color: var(--inventory-color);
+        }
+        
+        .workstudy {
+            border-color: var(--workstudy-color);
+        }
+        .workstudy .subject-title {
+            color: var(--workstudy-color);
+        }
+        
+        .ergonomics {
+            border-color: var(--ergonomics-color);
+        }
+        .ergonomics .subject-title {
+            color: var(--ergonomics-color);
+        }
+        
+        .operations {
+            border-color: var(--operations-color);
+        }
+        .operations .subject-title {
+            color: var(--operations-color);
+        }
+        
+        .economy {
+            border-color: var(--economy-color);
+        }
+        .economy .subject-title {
+            color: var(--economy-color);
+        }
+        
+        .facilities {
+            border-color: var(--facilities-color);
+        }
+        .facilities .subject-title {
+            color: var(--facilities-color);
+        }
+        
+        .reliability {
+            border-color: var(--reliability-color);
+        }
+        .reliability .subject-title {
+            color: var(--reliability-color);
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .tool-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 4px solid;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        /* Tool card colors by subject */
+        .tool-card.production {
+            border-top-color: var(--production-color);
+        }
+        .tool-card.quality {
+            border-top-color: var(--quality-color);
+        }
+        .tool-card.statistics {
+            border-top-color: var(--statistics-color);
+        }
+        .tool-card.inventory {
+            border-top-color: var(--inventory-color);
+        }
+        .tool-card.workstudy {
+            border-top-color: var(--workstudy-color);
+        }
+        .tool-card.ergonomics {
+            border-top-color: var(--ergonomics-color);
+        }
+        .tool-card.operations {
+            border-top-color: var(--operations-color);
+        }
+        .tool-card.economy {
+            border-top-color: var(--economy-color);
+        }
+        .tool-card.facilities {
+            border-top-color: var(--facilities-color);
+        }
+        .tool-card.reliability {
+            border-top-color: var(--reliability-color);
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .tool-card h3 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .tool-card.production h3 {
+            color: var(--production-color);
+        }
+        .tool-card.quality h3 {
+            color: var(--quality-color);
+        }
+        .tool-card.statistics h3 {
+            color: var(--statistics-color);
+        }
+        .tool-card.inventory h3 {
+            color: var(--inventory-color);
+        }
+        .tool-card.workstudy h3 {
+            color: var(--workstudy-color);
+        }
+        .tool-card.ergonomics h3 {
+            color: var(--ergonomics-color);
+        }
+        .tool-card.operations h3 {
+            color: var(--operations-color);
+        }
+        .tool-card.economy h3 {
+            color: var(--economy-color);
+        }
+        .tool-card.facilities h3 {
+            color: var(--facilities-color);
+        }
+        .tool-card.reliability h3 {
+            color: var(--reliability-color);
+        }
+        
+        .tool-card p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+        
+        .tool-link {
+            display: inline-block;
+            background-color: var(--light-color);
+            color: var(--primary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            align-self: flex-start;
+        }
+        
+        .tool-link:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .about-section {
+            background-color: var(--light-color);
+            padding: 3rem 0;
+        }
+        
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .about-content h2 {
+            margin-bottom: 1.5rem;
+            color: var(--dark-color);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .method-tabs {
+                flex-direction: column;
+            }
+            
+            .method-tab {
+                border-radius: 0;
+                margin-right: 0;
+                border-bottom: 1px solid #ddd;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+        
+    }
+
+</style>    
+
 </head>
 <body> 
     
@@ -607,7 +1130,7 @@
         <div class="sidebar-category-content">
             <a href="index.html" class="sidebar-link">Home</a>
             <a href="about.html" class="sidebar-link">About</a>
-            <a href="terms.html" class="sidebar-link">Terms of Service</a>
+            <a href="terms.html" class="sidebar-link">Terms</a>
             <a href="privacy.html" class="sidebar-link">Privacy Policy</a>
             <a href="contact.html" class="sidebar-link">Contact Us</a>
         </div>
@@ -757,6 +1280,16 @@
             <div class="sidebar-category-content">
                 <a href="reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
                 <a href="failure-mode-and-effects-analysis-fmea.html" class="sidebar-link">FMEA</a>           
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Other Calculators</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="into-everything.html" class="sidebar-link">Into Everything Calculators</a>
             </div>
         </div>
         <div class="sidebar-category">
