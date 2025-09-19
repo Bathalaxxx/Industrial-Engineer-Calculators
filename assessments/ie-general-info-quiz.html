@@ -6379,6 +6379,1073 @@
     correctAnswer: 2,
     explanation: "Little’s Law (L = λW) requires the system to be stable and in steady state, regardless of distributional assumptions."
 },
+
+
+
+
+{
+    question: "A hospital ER faces long patient wait times despite adding more doctors. What if patient arrivals are highly variable?",
+    options: [
+        "Adding capacity always solves delays",
+        "Waiting times may still remain high",
+        "The system will automatically stabilize",
+        "Cycle times become predictable"
+    ],
+    correctAnswer: 1,
+    explanation: "High arrival variability can overwhelm even increased capacity, leading to persistent delays."
+},
+{
+    question: "A warehouse adopts Just-in-Time deliveries. What if supplier reliability is low?",
+    options: [
+        "Safety stock can be eliminated",
+        "Stockouts become more frequent",
+        "Lead times shorten",
+        "WIP inventory increases"
+    ],
+    correctAnswer: 1,
+    explanation: "JIT requires reliable suppliers; poor reliability increases stockout risk."
+},
+{
+    question: "A factory automates material handling. What scenario best illustrates a risk if variability in machine breakdowns remains high?",
+    options: [
+        "Improved cycle times",
+        "Reduced labor requirements",
+        "Flow interruptions despite automation",
+        "Automatic balancing of workloads"
+    ],
+    correctAnswer: 2,
+    explanation: "Unreliable equipment causes disruptions even if handling is automated."
+},
+{
+    question: "What if demand is seasonal but a company uses a simple moving average forecast?",
+    options: [
+        "The forecast will adapt quickly",
+        "Forecast error will increase",
+        "The model will capture seasonality",
+        "Inventory turns improve automatically"
+    ],
+    correctAnswer: 1,
+    explanation: "Moving averages smooth trends but cannot capture seasonality well."
+},
+{
+    question: "An assembly line operates near full capacity. What if one workstation has significantly higher variability?",
+    options: [
+        "The line remains stable",
+        "That station becomes the bottleneck",
+        "Throughput automatically increases",
+        "Cycle times always decrease"
+    ],
+    correctAnswer: 1,
+    explanation: "The most variable station often limits throughput, acting as the bottleneck."
+},
+{
+    question: "In project scheduling, what if activity time estimates are highly uncertain?",
+    options: [
+        "CPM is the best tool",
+        "PERT provides better modeling",
+        "Slack times become irrelevant",
+        "The project duration becomes deterministic"
+    ],
+    correctAnswer: 1,
+    explanation: "PERT is designed for uncertainty using probabilistic activity time estimates."
+},
+{
+    question: "A company reduces batch size using SMED. What scenario might result?",
+    options: [
+        "Lower inventory levels",
+        "Higher carrying costs",
+        "Reduced responsiveness",
+        "Longer setup times"
+    ],
+    correctAnswer: 0,
+    explanation: "Smaller batches reduce WIP and inventory holding."
+},
+{
+    question: "What if inspection is only performed after final assembly instead of in-process?",
+    options: [
+        "Defects are caught earlier",
+        "Scrap and rework costs increase",
+        "Process quality improves automatically",
+        "Customer complaints disappear"
+    ],
+    correctAnswer: 1,
+    explanation: "Late inspection delays detection, leading to higher scrap and rework."
+},
+{
+    question: "A production line applies Kanban cards. What if too many cards circulate?",
+    options: [
+        "Lead times shrink",
+        "Excess WIP accumulates",
+        "Flow improves automatically",
+        "Demand variability decreases"
+    ],
+    correctAnswer: 1,
+    explanation: "Too many Kanbans raise WIP, undermining lean efficiency."
+},
+{
+    question: "A manager faces repeated bottlenecks. What scenario illustrates a Theory of Constraints approach?",
+    options: [
+        "Adding workers everywhere",
+        "Identifying and elevating the slowest station",
+        "Balancing every station equally",
+        "Randomly sequencing jobs"
+    ],
+    correctAnswer: 1,
+    explanation: "TOC focuses on finding and improving the system’s true constraint."
+},
+{
+    question: "What if a company eliminates safety stock entirely?",
+    options: [
+        "Service levels decrease",
+        "Inventory costs rise",
+        "Stockouts vanish",
+        "Reorder points become irrelevant"
+    ],
+    correctAnswer: 0,
+    explanation: "Safety stock protects against variability; without it, service levels fall."
+},
+{
+    question: "A software company faces delays. Scenario: frequent design changes are introduced mid-project. Which tool is most impacted?",
+    options: [
+        "PERT",
+        "CPM",
+        "Gantt chart",
+        "Critical ratio scheduling"
+    ],
+    correctAnswer: 1,
+    explanation: "Frequent changes disrupt deterministic CPM schedules most severely."
+},
+{
+    question: "What if a process has zero variability?",
+    options: [
+        "Safety stock is unnecessary",
+        "Queues get longer",
+        "Forecast error increases",
+        "Process capability declines"
+    ],
+    correctAnswer: 0,
+    explanation: "With no variability, safety stock is redundant."
+},
+{
+    question: "A factory adopts cellular layout. Scenario: demand mix changes frequently. Which risk arises?",
+    options: [
+        "Inflexibility in handling product variety",
+        "Improved material flow",
+        "Reduced lead times",
+        "Higher responsiveness"
+    ],
+    correctAnswer: 0,
+    explanation: "Cellular layouts are efficient for stable mixes but less flexible with frequent changes."
+},
+{
+    question: "What if reorder points are set too high?",
+    options: [
+        "Carrying costs increase",
+        "Stockouts rise",
+        "Service levels collapse",
+        "Inventory turns increase"
+    ],
+    correctAnswer: 0,
+    explanation: "Reordering too early increases carrying costs."
+},
+{
+    question: "A call center sees long wait times. Scenario: arrivals exceed service rate. What happens?",
+    options: [
+        "Queue length stabilizes",
+        "System fails to reach steady state",
+        "Wait times decrease",
+        "Utilization drops below 1"
+    ],
+    correctAnswer: 1,
+    explanation: "When arrival exceeds service, the system is unstable and queues grow indefinitely."
+},
+{
+    question: "What if labor standards are set unrealistically high?",
+    options: [
+        "Employees exceed expectations",
+        "Morale decreases",
+        "Productivity rises sustainably",
+        "Turnover falls"
+    ],
+    correctAnswer: 1,
+    explanation: "Unrealistic standards cause stress, lowering morale."
+},
+{
+    question: "A hospital triage uses FIFO. Scenario: critical patients arrive after mild cases. What happens?",
+    options: [
+        "Efficiency improves",
+        "Urgent cases wait too long",
+        "Patient satisfaction rises",
+        "Queue length decreases"
+    ],
+    correctAnswer: 1,
+    explanation: "FIFO may be unfair when urgency differs; critical patients may wait dangerously long."
+},
+{
+    question: "What if variability in processing time increases significantly?",
+    options: [
+        "WIP decreases",
+        "Throughput decreases",
+        "Balancing becomes easier",
+        "Queues vanish"
+    ],
+    correctAnswer: 1,
+    explanation: "Greater variability disrupts flow, reducing throughput."
+},
+{
+    question: "Scenario: a plant faces high setup costs. What happens if setup times are reduced?",
+    options: [
+        "Larger lot sizes are needed",
+        "Smaller batches become feasible",
+        "EOQ increases",
+        "Inventory must rise"
+    ],
+    correctAnswer: 1,
+    explanation: "Lower setup times enable smaller economical lot sizes."
+},
+{
+    question: "What if supplier lead times suddenly increase?",
+    options: [
+        "Reorder points must increase",
+        "Safety stock can be reduced",
+        "Service level improves",
+        "Inventory shrinks"
+    ],
+    correctAnswer: 0,
+    explanation: "Longer lead times require higher reorder points to avoid stockouts."
+},
+{
+    question: "Scenario: a project shortens its critical path. What happens?",
+    options: [
+        "Project duration decreases",
+        "Slack disappears",
+        "Resource use drops",
+        "Project duration increases"
+    ],
+    correctAnswer: 0,
+    explanation: "Shorter critical path reduces project duration."
+},
+{
+    question: "What if workers experience steep learning curves?",
+    options: [
+        "Unit times improve rapidly",
+        "Productivity declines",
+        "Output stagnates",
+        "Cycle time stabilizes"
+    ],
+    correctAnswer: 0,
+    explanation: "Steep learning means faster improvements in performance."
+},
+{
+    question: "A quality engineer widens control chart limits. What scenario results?",
+    options: [
+        "More false alarms",
+        "Less sensitivity to process shifts",
+        "Every point flagged",
+        "Process average drifts upward"
+    ],
+    correctAnswer: 1,
+    explanation: "Wide limits miss smaller shifts in process performance."
+},
+{
+    question: "What if holding costs drop to near zero?",
+    options: [
+        "EOQ decreases",
+        "Larger order quantities are feasible",
+        "Lot-for-lot is optimal",
+        "Safety stock shrinks"
+    ],
+    correctAnswer: 1,
+    explanation: "Low holding cost encourages larger economical orders."
+},
+{
+    question: "Scenario: engineers use work sampling. What if too few observations are taken?",
+    options: [
+        "Accuracy improves",
+        "Estimates become unreliable",
+        "Variance decreases",
+        "Results stabilize quickly"
+    ],
+    correctAnswer: 1,
+    explanation: "Too few observations yield high error and variance."
+},
+{
+    question: "What if bottleneck capacity increases in a line?",
+    options: [
+        "Throughput increases",
+        "Cycle time increases",
+        "Flow stops",
+        "Line balancing fails"
+    ],
+    correctAnswer: 0,
+    explanation: "Raising bottleneck capacity boosts throughput until a new constraint arises."
+},
+{
+    question: "A retailer uses EOQ. Scenario: demand uncertainty rises. What must change?",
+    options: [
+        "EOQ stays constant",
+        "Safety stock must increase",
+        "Holding cost decreases",
+        "Order frequency drops"
+    ],
+    correctAnswer: 1,
+    explanation: "Demand uncertainty requires larger safety stock to maintain service levels."
+},
+{
+    question: "What if a queuing system has zero arrival variability?",
+    options: [
+        "Wait times shrink",
+        "System capacity decreases",
+        "Queues lengthen",
+        "Blocking increases"
+    ],
+    correctAnswer: 0,
+    explanation: "Regular arrivals smooth flow, lowering waiting times."
+},
+{
+    question: "Scenario: a project team uses Gantt charts. What is the risk if dependencies are ignored?",
+    options: [
+        "Accurate scheduling",
+        "Infeasible task sequencing",
+        "Automatic efficiency",
+        "Slack increases"
+    ],
+    correctAnswer: 1,
+    explanation: "Ignoring dependencies makes the schedule unrealistic."
+},
+{
+    question: "What if reorder points are underestimated?",
+    options: [
+        "Stockouts increase",
+        "Carrying costs increase",
+        "Service level rises",
+        "Inventory turns decrease"
+    ],
+    correctAnswer: 0,
+    explanation: "Too-low reorder points cause late orders and stockouts."
+},
+{
+    question: "Scenario: an ergonomic workstation is poorly designed. What if anthropometric data is ignored?",
+    options: [
+        "Worker fatigue increases",
+        "Efficiency improves",
+        "Productivity rises",
+        "Posture discomfort disappears"
+    ],
+    correctAnswer: 0,
+    explanation: "Ignoring anthropometrics leads to poor fit, increasing fatigue."
+},
+{
+    question: "What if EOQ assumptions of constant demand are violated?",
+    options: [
+        "Model still applies perfectly",
+        "Model becomes inaccurate",
+        "Order quantities remain optimal",
+        "Stockouts disappear"
+    ],
+    correctAnswer: 1,
+    explanation: "EOQ relies on stable demand; variability makes it unreliable."
+},
+{
+    question: "Scenario: a process uses Poka-Yoke. What if it is removed?",
+    options: [
+        "Defects increase",
+        "Quality improves",
+        "Scrap disappears",
+        "Process speed rises"
+    ],
+    correctAnswer: 0,
+    explanation: "Error-proofing prevents mistakes; without it, defects rise."
+},
+{
+    question: "What if cycle time is longer than takt time?",
+    options: [
+        "System cannot meet demand",
+        "Demand is satisfied",
+        "Excess capacity exists",
+        "WIP decreases"
+    ],
+    correctAnswer: 0,
+    explanation: "If cycle time > takt time, demand cannot be met."
+},
+{
+    question: "Scenario: engineers simulate a system. What if only one replication is run?",
+    options: [
+        "Results are reliable",
+        "Variance is underestimated",
+        "Bias disappears",
+        "All outcomes are captured"
+    ],
+    correctAnswer: 1,
+    explanation: "One replication underestimates variability, making results unreliable."
+},
+{
+    question: "What if a facility layout ignores material handling distances?",
+    options: [
+        "Handling costs increase",
+        "Productivity rises",
+        "Throughput improves",
+        "Inventory decreases"
+    ],
+    correctAnswer: 0,
+    explanation: "Ignoring distances often increases handling costs."
+},
+{
+    question: "Scenario: management introduces Kaizen. What happens if employee involvement is low?",
+    options: [
+        "Continuous improvement fails",
+        "Waste decreases anyway",
+        "Quality rises automatically",
+        "Cycle time improves"
+    ],
+    correctAnswer: 0,
+    explanation: "Kaizen depends on active employee participation."
+},
+{
+    question: "What if exponential distribution is assumed for failures but the hazard rate increases with time?",
+    options: [
+        "Model is still valid",
+        "Model misrepresents reliability",
+        "System becomes memoryless",
+        "Downtime disappears"
+    ],
+    correctAnswer: 1,
+    explanation: "Exponential assumes constant hazard; increasing hazard violates it."
+},
+{
+    question: "Scenario: product demand surges unexpectedly. What happens if MRP ignores this change?",
+    options: [
+        "System adjusts automatically",
+        "Stockouts occur",
+        "Inventory increases",
+        "Lead times shrink"
+    ],
+    correctAnswer: 1,
+    explanation: "Unupdated MRP leads to shortages during demand surges."
+},
+{
+    question: "What if Kanban cards are too few?",
+    options: [
+        "WIP decreases excessively",
+        "Queues grow",
+        "Throughput stabilizes",
+        "Lead times shrink"
+    ],
+    correctAnswer: 0,
+    explanation: "Too few cards starve stations, reducing WIP and throughput."
+},
+{
+    question: "Scenario: operators skip SMED steps. What happens?",
+    options: [
+        "Setup times rise",
+        "Batch sizes shrink",
+        "Flexibility improves",
+        "WIP decreases"
+    ],
+    correctAnswer: 0,
+    explanation: "Skipping SMED undermines setup reduction, raising changeover time."
+},
+{
+    question: "What if discount rates rise in economic analysis?",
+    options: [
+        "Future cash flows are less valuable",
+        "Present values increase",
+        "NPV rises",
+        "Payback period shortens"
+    ],
+    correctAnswer: 0,
+    explanation: "Higher discount rates reduce present values of future benefits."
+},
+{
+    question: "Scenario: an airline overbooks flights. What if no-shows decrease suddenly?",
+    options: [
+        "Fewer empty seats",
+        "More denied boardings",
+        "Higher utilization",
+        "Improved customer satisfaction"
+    ],
+    correctAnswer: 1,
+    explanation: "Lower no-show rates increase denied boarding cases."
+},
+{
+    question: "What if control charts are used on non-random data?",
+    options: [
+        "They remain valid",
+        "False alarms occur",
+        "Process stays stable",
+        "All points remain inside limits"
+    ],
+    correctAnswer: 1,
+    explanation: "Control charts assume random variation; patterns cause misleading alarms."
+},
+{
+    question: "Scenario: workers face repetitive motion tasks. What if ergonomics is ignored?",
+    options: [
+        "Repetitive strain injuries increase",
+        "Productivity rises",
+        "Fatigue decreases",
+        "Quality improves"
+    ],
+    correctAnswer: 0,
+    explanation: "Ignoring ergonomics leads to higher injury rates and fatigue."
+},
+{
+    question: "What if exponential smoothing uses a very high alpha value?",
+    options: [
+        "Forecasts respond slowly",
+        "Forecasts overreact to recent data",
+        "Trend disappears",
+        "Error variance shrinks"
+    ],
+    correctAnswer: 1,
+    explanation: "High alpha makes forecasts overly sensitive to the most recent observation."
+},
+{
+    question: "Scenario: a company adopts pull production. What if demand data is inaccurate?",
+    options: [
+        "System adapts seamlessly",
+        "Stockouts or excess WIP occur",
+        "Lead times vanish",
+        "Process flexibility improves"
+    ],
+    correctAnswer: 1,
+    explanation: "Pull relies on accurate demand signals; bad data leads to mismatched output."
+}, 
+
+
+
+
+
+{
+    question: "A plant uses EOQ but demand is highly seasonal. What if managers ignore seasonality?",
+    options: [
+        "Order quantities remain optimal",
+        "Carrying costs decline",
+        "Stockouts disappear",
+        "The model produces poor inventory decisions"
+    ],
+    correctAnswer: 3,
+    explanation: "Ignoring seasonality causes EOQ to misalign with real demand, leading to bad inventory outcomes."
+},
+{
+    question: "Scenario: A service center uses FIFO queuing. What if arrival variability spikes dramatically?",
+    options: [
+        "Average wait times shrink",
+        "Service rate increases",
+        "System utilization decreases",
+        "Long queues and waiting become more likely"
+    ],
+    correctAnswer: 3,
+    explanation: "With high arrival variability, queues grow and waiting worsens even under FIFO."
+},
+{
+    question: "What if a company introduces JIT but supplier reliability is unstable?",
+    options: [
+        "Inventory levels naturally balance",
+        "Forecast accuracy improves",
+        "Order sizes increase automatically",
+        "Frequent stockouts and disruptions occur"
+    ],
+    correctAnswer: 3,
+    explanation: "JIT relies heavily on reliable suppliers; unreliability causes shortages."
+},
+{
+    question: "Scenario: An engineer widens control chart limits to reduce false alarms. What if small shifts occur?",
+    options: [
+        "Detection improves",
+        "Variance decreases",
+        "Process capability rises",
+        "The chart becomes less sensitive to real issues"
+    ],
+    correctAnswer: 3,
+    explanation: "Wider limits mean subtle shifts go undetected, hurting quality monitoring."
+},
+{
+    question: "What if workers face unrealistic labor standards?",
+    options: [
+        "Sustainable productivity increases",
+        "Morale improves",
+        "Turnover decreases",
+        "Stress and dissatisfaction rise"
+    ],
+    correctAnswer: 3,
+    explanation: "Overly strict standards create pressure and dissatisfaction among workers."
+},
+{
+    question: "Scenario: A hospital applies strict FIFO triage. What if critical cases arrive behind mild ones?",
+    options: [
+        "Throughput improves",
+        "Satisfaction rises",
+        "Resource use balances",
+        "Urgent patients wait dangerously long"
+    ],
+    correctAnswer: 3,
+    explanation: "FIFO is unfair for variable urgency; critical patients risk waiting too long."
+},
+{
+    question: "What if an MRP system is not updated with new demand spikes?",
+    options: [
+        "Excess capacity develops",
+        "Inventory holding cost shrinks",
+        "Lead times automatically drop",
+        "Stockouts and shortages occur"
+    ],
+    correctAnswer: 3,
+    explanation: "Outdated demand data in MRP causes shortages and planning errors."
+},
+{
+    question: "Scenario: A plant invests in automation but keeps a highly variable upstream process. What happens?",
+    options: [
+        "Variability decreases automatically",
+        "Cycle times stabilize",
+        "Quality improves universally",
+        "Automation amplifies variability impact"
+    ],
+    correctAnswer: 3,
+    explanation: "Automation can magnify variability if upstream issues aren’t stabilized first."
+},
+{
+    question: "What if a queuing system operates with arrival rate = service rate?",
+    options: [
+        "Queue stabilizes",
+        "Utilization drops below 1",
+        "Wait time shrinks",
+        "Queue length grows indefinitely"
+    ],
+    correctAnswer: 3,
+    explanation: "When arrival matches service rate, queues theoretically grow without bound."
+},
+{
+    question: "Scenario: A project manager uses CPM but ignores uncertainty. What if activity times vary widely?",
+    options: [
+        "Slack increases",
+        "Network remains valid",
+        "Schedule holds firm",
+        "Completion time estimates become unreliable"
+    ],
+    correctAnswer: 3,
+    explanation: "CPM assumes deterministic times, making it weak under wide uncertainty."
+},
+{
+    question: "What if suppliers extend lead times but reorder points stay unchanged?",
+    options: [
+        "Carrying cost rises",
+        "Safety stock shrinks",
+        "Service level improves",
+        "Stockouts occur more often"
+    ],
+    correctAnswer: 3,
+    explanation: "Longer lead times require higher reorder points; without adjustment, stockouts increase."
+},
+{
+    question: "Scenario: A company adopts pull production. What if demand data is inaccurate?",
+    options: [
+        "WIP balances naturally",
+        "Utilization improves",
+        "Lead times vanish",
+        "Excess or insufficient inventory results"
+    ],
+    correctAnswer: 3,
+    explanation: "Pull depends on accurate demand signals; poor data creates mismatches."
+},
+{
+    question: "What if a facility layout ignores material flow distance?",
+    options: [
+        "Handling costs drop",
+        "Throughput rises",
+        "Inventory shrinks",
+        "Material handling cost skyrockets"
+    ],
+    correctAnswer: 3,
+    explanation: "Poor layouts increase material handling time and cost."
+},
+{
+    question: "Scenario: Engineers simulate a system but run only one replication. What happens?",
+    options: [
+        "Variance disappears",
+        "Accuracy improves",
+        "Output stabilizes",
+        "Results become unreliable due to lack of replication"
+    ],
+    correctAnswer: 3,
+    explanation: "Single replication underestimates uncertainty and variance."
+},
+{
+    question: "What if EOQ assumptions of constant demand are violated?",
+    options: [
+        "EOQ still works perfectly",
+        "Carrying cost decreases",
+        "Order frequency drops",
+        "Model accuracy declines significantly"
+    ],
+    correctAnswer: 3,
+    explanation: "EOQ loses validity when demand is variable."
+},
+{
+    question: "Scenario: A company applies Kaizen but employee engagement is low. What happens?",
+    options: [
+        "Waste decreases anyway",
+        "Quality improves automatically",
+        "Lead times shorten",
+        "Continuous improvement efforts fail"
+    ],
+    correctAnswer: 3,
+    explanation: "Kaizen requires worker involvement; without it, initiatives collapse."
+},
+{
+    question: "What if too few Kanban cards circulate in a system?",
+    options: [
+        "Excess WIP accumulates",
+        "Queue times increase",
+        "Cycle time improves",
+        "Stations starve, reducing throughput"
+    ],
+    correctAnswer: 3,
+    explanation: "Too few Kanbans starve processes, limiting flow."
+},
+{
+    question: "Scenario: A factory reduces setup times dramatically. What if demand remains stable?",
+    options: [
+        "Batch sizes must increase",
+        "Safety stock grows",
+        "EOQ rises",
+        "Smaller lot sizes become practical"
+    ],
+    correctAnswer: 3,
+    explanation: "Lower setup times allow smaller lots and lower WIP."
+},
+{
+    question: "What if bottleneck capacity is increased?",
+    options: [
+        "Cycle time increases",
+        "Line balancing fails",
+        "Flow halts",
+        "Throughput rises until another constraint dominates"
+    ],
+    correctAnswer: 3,
+    explanation: "Throughput rises only until a new bottleneck appears elsewhere."
+},
+{
+    question: "Scenario: Exponential smoothing uses very high alpha. What happens?",
+    options: [
+        "Forecasts stabilize",
+        "Forecast error shrinks",
+        "Trend disappears",
+        "Forecasts overreact to recent changes"
+    ],
+    correctAnswer: 3,
+    explanation: "High alpha makes forecasts overly sensitive to recent data."
+},
+{
+    question: "What if anthropometric data is ignored in workstation design?",
+    options: [
+        "Posture improves",
+        "Efficiency increases",
+        "Comfort rises",
+        "Fatigue and injuries escalate"
+    ],
+    correctAnswer: 3,
+    explanation: "Ignoring ergonomics causes strain, fatigue, and injury."
+},
+{
+    question: "Scenario: A project shortens its critical path by crashing activities. What if resource costs skyrocket?",
+    options: [
+        "Slack rises",
+        "Schedule holds",
+        "Project duration extends",
+        "Project costs become unsustainable"
+    ],
+    correctAnswer: 3,
+    explanation: "Crashing reduces time but often at very high cost."
+},
+{
+    question: "What if learning curves are very steep?",
+    options: [
+        "Output stagnates",
+        "Fatigue rises",
+        "Productivity decreases",
+        "Performance improves rapidly"
+    ],
+    correctAnswer: 3,
+    explanation: "Steep curves indicate quick improvement with repetition."
+},
+{
+    question: "Scenario: Workers skip SMED steps. What if setup times rise again?",
+    options: [
+        "Lot size shrinks",
+        "Flexibility improves",
+        "Inventory drops",
+        "Batch sizes grow larger again"
+    ],
+    correctAnswer: 3,
+    explanation: "Skipping SMED erodes benefits, increasing setup and lot size."
+},
+{
+    question: "What if exponential failure distribution is used when hazard rate increases with time?",
+    options: [
+        "Model stays valid",
+        "Reliability improves",
+        "Downtime shrinks",
+        "The model misrepresents true reliability"
+    ],
+    correctAnswer: 3,
+    explanation: "Exponential assumes constant hazard, so it fails under increasing risk."
+},
+{
+    question: "Scenario: Airlines overbook but no-shows drop suddenly. What happens?",
+    options: [
+        "Seats remain empty",
+        "Utilization improves",
+        "Customer satisfaction rises",
+        "More passengers are denied boarding"
+    ],
+    correctAnswer: 3,
+    explanation: "Lower no-shows mean higher risk of overbooking passengers."
+},
+{
+    question: "What if reorder points are underestimated?",
+    options: [
+        "Carrying cost increases",
+        "Turns decrease",
+        "Service level rises",
+        "Frequent stockouts occur"
+    ],
+    correctAnswer: 3,
+    explanation: "Too-low reorder points delay ordering, causing stockouts."
+},
+{
+    question: "Scenario: Quality engineer narrows control limits excessively. What happens?",
+    options: [
+        "Sensitivity decreases",
+        "Process average shifts",
+        "Stability improves",
+        "False alarms increase dramatically"
+    ],
+    correctAnswer: 3,
+    explanation: "Narrow limits overreact to natural variation, raising false alarms."
+},
+{
+    question: "What if takt time is shorter than cycle time?",
+    options: [
+        "System easily meets demand",
+        "Excess capacity exists",
+        "WIP drops",
+        "Line cannot keep up with demand"
+    ],
+    correctAnswer: 3,
+    explanation: "Cycle longer than takt = demand cannot be met."
+},
+{
+    question: "Scenario: Workers perform repetitive tasks without ergonomic design. What happens?",
+    options: [
+        "Injuries drop",
+        "Comfort improves",
+        "Efficiency rises",
+        "Repetitive strain injuries increase"
+    ],
+    correctAnswer: 3,
+    explanation: "Ignoring ergonomics increases RSIs and fatigue."
+},
+{
+    question: "What if discount rates rise during project evaluation?",
+    options: [
+        "Payback period shortens",
+        "NPV rises",
+        "Present values grow",
+        "Future cash flows lose value"
+    ],
+    correctAnswer: 3,
+    explanation: "Higher discounting reduces the present value of future returns."
+},
+{
+    question: "Scenario: Managers ignore variability in queuing systems. What happens?",
+    options: [
+        "Wait times vanish",
+        "Flow stabilizes",
+        "Service levels rise",
+        "Real waiting times are underestimated"
+    ],
+    correctAnswer: 3,
+    explanation: "Ignoring variability underestimates delays in queues."
+},
+{
+    question: "What if demand data is smoothed too heavily in moving averages?",
+    options: [
+        "Noise increases",
+        "Forecast error shrinks",
+        "Trends sharpen",
+        "Forecast lags behind real demand"
+    ],
+    correctAnswer: 3,
+    explanation: "Heavy smoothing causes delayed response to demand changes."
+},
+{
+    question: "Scenario: Managers ignore worker fatigue in time studies. What if allowances are not included?",
+    options: [
+        "Standards remain fair",
+        "Cycle time decreases",
+        "Morale improves",
+        "Standards become unrealistic"
+    ],
+    correctAnswer: 3,
+    explanation: "Ignoring allowances produces unfair, unachievable standards."
+},
+{
+    question: "What if reorder points are set too high?",
+    options: [
+        "Stockouts rise",
+        "Turns improve",
+        "Service level falls",
+        "Carrying costs increase unnecessarily"
+    ],
+    correctAnswer: 3,
+    explanation: "Excessively high reorder points inflate inventory holding costs."
+},
+{
+    question: "Scenario: Management removes Poka-Yoke devices. What happens?",
+    options: [
+        "Defects decrease",
+        "Productivity rises",
+        "Scrap vanishes",
+        "Error rates increase"
+    ],
+    correctAnswer: 3,
+    explanation: "Without error-proofing, defect rates climb again."
+},
+{
+    question: "What if safety stock is eliminated entirely?",
+    options: [
+        "Carrying costs explode",
+        "Turns decline",
+        "Service level improves",
+        "Risk of stockouts rises"
+    ],
+    correctAnswer: 3,
+    explanation: "Safety stock protects against uncertainty; without it, shortages occur."
+},
+{
+    question: "Scenario: Line balancing ignores variability. What happens?",
+    options: [
+        "Throughput increases",
+        "Flow stabilizes",
+        "Cycle time shrinks",
+        "Bottlenecks appear despite balancing"
+    ],
+    correctAnswer: 3,
+    explanation: "Ignoring variability leads to hidden bottlenecks."
+},
+{
+    question: "What if Gantt charts are used without considering dependencies?",
+    options: [
+        "Schedule remains feasible",
+        "Slack grows",
+        "Efficiency improves",
+        "Sequence conflicts make it unrealistic"
+    ],
+    correctAnswer: 3,
+    explanation: "Ignoring dependencies creates infeasible schedules."
+},
+{
+    question: "Scenario: Demand spikes but forecasting models assume stability. What happens?",
+    options: [
+        "Accuracy improves",
+        "Inventory shrinks",
+        "Safety stock decreases",
+        "Forecast error rises sharply"
+    ],
+    correctAnswer: 3,
+    explanation: "Stable-demand models perform poorly under volatile conditions."
+},
+{
+    question: "What if Lean tools are applied without cultural adoption?",
+    options: [
+        "Waste vanishes",
+        "Cycle time drops",
+        "Throughput soars",
+        "Improvements fail to sustain"
+    ],
+    correctAnswer: 3,
+    explanation: "Without culture change, Lean collapses over time."
+},
+{
+    question: "Scenario: Service demand follows Poisson arrivals. What if assumption breaks?",
+    options: [
+        "Queue model holds",
+        "Wait times stabilize",
+        "System utilization improves",
+        "Queue predictions become invalid"
+    ],
+    correctAnswer: 3,
+    explanation: "Queueing models rely on Poisson assumptions; breaking them invalidates predictions."
+},
+{
+    question: "What if capacity utilization rises above 100%?",
+    options: [
+        "Cycle time shrinks",
+        "Backlogs vanish",
+        "Lead times shorten",
+        "Backlogs and delays grow rapidly"
+    ],
+    correctAnswer: 3,
+    explanation: "Utilization >100% means backlog and long delays."
+},
+{
+    question: "Scenario: Engineers design for average anthropometry only. What if population variance is large?",
+    options: [
+        "Comfort improves",
+        "Fit is universal",
+        "Efficiency increases",
+        "Many workers are poorly accommodated"
+    ],
+    correctAnswer: 3,
+    explanation: "Designing for the average excludes a large share of users."
+},
+{
+    question: "What if exponential smoothing uses alpha near zero?",
+    options: [
+        "Forecast follows demand instantly",
+        "Noise increases",
+        "Variance rises",
+        "Forecast lags heavily behind demand"
+    ],
+    correctAnswer: 3,
+    explanation: "Very low alpha makes forecasts slow to adjust."
+},
+{
+    question: "Scenario: A project uses PERT. What if optimistic and pessimistic estimates are extreme?",
+    options: [
+        "Uncertainty vanishes",
+        "CPM performs better",
+        "Duration stabilizes",
+        "Variance of project time grows"
+    ],
+    correctAnswer: 3,
+    explanation: "Extreme estimates increase project duration variance."
+},
+{
+    question: "What if variability in processing is completely eliminated?",
+    options: [
+        "WIP increases",
+        "Cycle time grows",
+        "Throughput falls",
+        "Safety stock is no longer needed"
+    ],
+    correctAnswer: 3,
+    explanation: "With no variability, buffers like safety stock are unnecessary."
+},
+{
+    question: "Scenario: Managers overemphasize efficiency metrics. What happens?",
+    options: [
+        "Effectiveness improves",
+        "Quality improves",
+        "Customer satisfaction rises",
+        "Local optimization undermines overall system performance"
+    ],
+    correctAnswer: 3,
+    explanation: "Chasing efficiency often sacrifices system-wide effectiveness."
+}, 
+
+    
 {
     question: "In quality control, what is the fundamental difference between attribute and variable inspection?",
     options: [
