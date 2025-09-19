@@ -1,0 +1,3661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Test your Industrial Engineering knowledge with our comprehensive 50-question quiz. Get personalized feedback and learn key IE concepts.">
+    <title>Industrial Engineering Quiz | Test Your IE Expertise</title>
+    
+    </script>
+    <!--FAVICON-->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+  
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-3BSHG1DE6V');
+    </script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5607576434988374"
+     crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-5607576434988374">
+
+     <!-- Clarity tracking code for https://iecalculators.online/ -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "t31aicr9ep");
+    </script>   
+    
+    
+    <style>
+        /* Consistent with existing style */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block; /* Changed from none to block */
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .page-hero p {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        /* Quiz Styles */
+        .quiz-container {
+            position: relative;
+            min-height: 400px;
+        }
+        
+        .quiz-progress {
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        
+        .quiz-progress-bar {
+            height: 100%;
+            background-color: var(--secondary-color);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .question-number {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        
+        .options-container {
+            margin-bottom: 2rem;
+        }
+        
+        .option {
+            display: block;
+            padding: 1rem;
+            margin-bottom: 0.8rem;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .option:hover {
+            background-color: #e9ecef;
+        }
+        
+        .option.selected {
+            background-color: #d1ecf1;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .option.correct {
+            background-color: #d4edda;
+            border-color: var(--success-color);
+        }
+        
+        .option.incorrect {
+            background-color: #f8d7da;
+            border-color: var(--danger-color);
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .nav-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-btn.prev {
+            background-color: #f8f9fa;
+            color: var(--text-color);
+        }
+        
+        .nav-btn.next {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .nav-btn.submit {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .nav-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .nav-btn.prev:hover:not(:disabled) {
+            background-color: #e2e6ea;
+        }
+        
+        .nav-btn.next:hover:not(:disabled),
+        .nav-btn.submit:hover:not(:disabled) {
+            opacity: 0.9;
+        }
+        
+        /* Results Section */
+        .results-container {
+            display: none;
+        }
+        
+        .score-display {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .score-value {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .score-text {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .performance-feedback {
+            background-color: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        
+        .performance-feedback h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .review-section {
+            margin-top: 2rem;
+        }
+        
+        .review-item {
+            padding: 1rem;
+            border-left: 4px solid var(--secondary-color);
+            background-color: #f8f9fa;
+            margin-bottom: 1rem;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .review-item.incorrect {
+            border-left-color: var(--danger-color);
+        }
+        
+        .review-question {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .review-answer {
+            margin-bottom: 0.5rem;
+        }
+        
+        .review-explanation {
+            font-style: italic;
+            color: var(--text-light);
+        }
+        
+        /* Blog Section */
+        .blog-section {
+            margin-top: 3rem;
+        }
+        
+        .blog-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .blog-subheading {
+            color: var(--primary-color);
+            margin: 1.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .blog-conclusion {
+            margin-top: 2rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            font-style: italic;
+        }
+        
+        .related-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .tool-chip {
+            background-color: #e3f2fd;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .tool-chip:hover {
+            background-color: #bbdefb;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            nav ul li {
+                margin: 0 0.5rem 0.5rem;
+            }
+            
+            .question-text {
+                font-size: 1.1rem;
+            }
+            
+            .option {
+                padding: 0.8rem;
+            }
+            
+            .navigation-buttons {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .nav-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Industrial Engineering <span>Calculators</span></div>
+                <nav>
+                    <ul>
+                        <div style="display: flex; gap: 1rem;"></div>
+                            <a href="/index.html" style="color: white; padding: 0.5rem 1rem; text-decoration: none;">Home</a>
+                            <a href="/about.html" style="color: white; padding: 0.5rem 1rem; text-decoration: none;">About</a>
+                            <a href="/contact.html" style="color: white; padding: 0.5rem 1rem; text-decoration: none;">Contact</a>
+                            <a href="/privacy.html" style="color: white; padding: 0.5rem 1rem; text-decoration: none;">Privacy Policy</a>
+                            <a href="/terms.html" style="color: white; padding: 0.5rem 1rem; text-decoration: none;">Terms</a>
+                        </div>
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Industrial Engineering Quiz</h1>
+            <p>Test your expertise with our comprehensive 50-question quiz covering fundamental IE concepts and applications</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <h2>How Much Do You Know About Industrial Engineering?</h2>
+            
+            <div class="quiz-container">
+                <div class="quiz-progress">
+                    <div class="quiz-progress-bar" id="progress-bar"></div>
+                </div>
+                
+                <div id="question-container">
+                    <div class="question-number" id="question-number">Question 1 of 50</div>
+                    <div class="question-text" id="question-text"></div>
+                    
+                    <div class="options-container" id="options-container"></div>
+                    
+                    <div class="navigation-buttons">
+                        <button class="nav-btn prev" id="prev-btn" disabled>Back</button>
+                        <button class="nav-btn next" id="next-btn">Next</button>
+                    </div>
+                </div>
+                
+                <div class="results-container" id="results-container">
+                    <div class="score-display">
+                        <div class="score-value" id="score-value">0/50</div>
+                        <div class="score-text" id="score-text"></div>
+                    </div>
+                    
+                    <div class="performance-feedback">
+                        <h3>Your Performance Analysis</h3>
+                        <p id="performance-feedback"></p>
+                    </div>
+                    
+                    <div class="review-section">
+                        <h3>Review Incorrect Answers</h3>
+                        <div id="incorrect-answers-review"></div>
+                    </div>
+                    
+                    <div class="navigation-buttons">
+                        <button class="nav-btn prev" id="restart-btn">Take Quiz Again</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="content-section blog-section">
+            <h2>Expanding Your Industrial Engineering Knowledge</h2>
+            
+            <div class="blog-intro">
+                <p>Industrial Engineering is a diverse field that focuses on optimizing complex systems and processes. Whether you're a student, professional, or simply curious about IE, understanding its core concepts can significantly improve problem-solving capabilities in various domains.</p>
+            </div>
+            
+            <h3 class="blog-subheading">What Industrial Engineering Encompasses</h3>
+            <p>Industrial engineering integrates knowledge from multiple disciplines to improve systems and processes. Unlike specialized engineering fields that focus on specific technologies, IE applies principles from mathematics, physics, psychology, and management to design, improve, and install integrated systems of people, materials, information, equipment, and energy.</p>
+            
+            <h3 class="blog-subheading">Core Components of Industrial Engineering</h3>
+            <p>The field encompasses several key areas including operations research, production planning, quality control, ergonomics, supply chain management, and systems engineering. Industrial engineers use tools like statistical analysis, simulation, mathematical modeling, and quality control methods to optimize systems.</p>
+            
+            <h3 class="blog-subheading">Industrial Engineering vs. Related Fields</h3>
+            <p>While data science focuses on extracting insights from data and analytics emphasizes interpreting data patterns, industrial engineering applies these insights to improve real-world systems. IE professionals bridge the gap between technical processes and human factors, ensuring systems are both efficient and people-friendly.</p>
+            
+            <h3 class="blog-subheading">Essential Tools for Industrial Engineers</h3>
+            <p>Industrial engineers utilize various tools including Excel for data analysis, statistical software like Minitab and Python, simulation tools such as Arena, process mapping software, and dashboard visualization tools. These tools help in analyzing processes, identifying bottlenecks, and presenting data in actionable formats.</p>
+                                                
+            <h3 class="blog-subheading">Industrial Engineering vs. Related Fields</h3> 
+            <p>Industrial engineering (IE) is often compared to other disciplines because it overlaps with areas such as data science, operations research, business analytics, supply chain management, and systems engineering. While <strong>data science</strong> focuses on extracting knowledge and patterns from raw data, and <strong>analytics</strong> emphasizes interpreting these results for decision-making, IE goes further by applying these insights to design, optimize, and manage real-world processes. Unlike <strong>operations research</strong>, which is highly mathematical and centered on building models, IE integrates those models with practical implementation in industries ranging from manufacturing to healthcare. Compared to <strong>systems engineering</strong>, which deals with designing and managing complex technical systems, IE places stronger emphasis on efficiency, cost-effectiveness, and the interaction between technology and human operators. In contrast with <strong>supply chain management</strong>, which narrows its focus to logistics and product flow, IE takes a more holistic approach by improving end-to-end organizational systems. This makes industrial engineers uniquely positioned to bridge technical processes, data-driven insights, and human factors, ensuring that systems are not only optimized but also adaptable and user-friendly.</p>
+
+            </div>
+        </section>
+        
+        <section class="content-section">
+            <h2>Related Tools & Resources</h2>
+            <div class="related-tools">
+                <a href="kanban.html" class="tool-chip">Kanban Calculator</a>
+                <a href="linebalancing.html" class="tool-chip">Line Balancing</a>
+                <a href="oee-calculation.html" class="tool-chip">OEE Calculator</a>
+                <a href="sixsigmadpmo.html" class="tool-chip">Six Sigma DPMO</a>
+                <a href="abc-analysis-calculator.html" class="tool-chip">ABC Analysis</a>
+                <a href="inventory-turnover-calculator.html" class="tool-chip">Inventory Turnover</a>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-links">
+                <a href="/index.html">Home</a>
+                <a href="/about.html">About</a>
+                <a href="/terms.html">Terms</a>
+                <a href="/privacy.html">Privacy Policy</a>
+                <a href="/contact.html">Contact Us</a>
+                
+            </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            <p class="copyright">&copy; 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- xxxx navigation start xxxxx -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebarClose = document.querySelector('.sidebar-close');
+            const overlay = document.querySelector('.overlay');
+            const body = document.body;
+            
+            // Toggle sidebar
+            function toggleSidebar() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+                body.classList.toggle('sidebar-open');
+            }
+            
+            // Toggle category expansion
+            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
+            categoryHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const category = this.parentElement;
+                    category.classList.toggle('open');
+                    
+                    // Update the expand/collapse icon
+                    const icon = this.querySelector('span:last-child');
+                    icon.textContent = category.classList.contains('open') ? '−' : '+';
+                });
+            });
+            
+            // Event listeners
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            sidebarClose.addEventListener('click', toggleSidebar);
+            overlay.addEventListener('click', toggleSidebar);
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 768 && 
+                    body.classList.contains('sidebar-open') && 
+                    !sidebar.contains(event.target) && 
+                    event.target !== sidebarToggle) {
+                    toggleSidebar();
+                }
+            });
+            
+            // Close sidebar when pressing Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && body.classList.contains('sidebar-open')) {
+                    toggleSidebar();
+                }
+            });
+        });
+    </script>
+    <!-- xxxx navigation end xxxxx -->
+
+
+    <script>
+        // Quiz questions data (66 total)
+        const allQuestions = [
+            {
+                question: "What is the primary focus of Industrial Engineering?",
+                options: [
+                    "Designing electrical systems",
+                    "Optimizing complex systems and processes",
+                    "Developing chemical compounds",
+                    "Building structural frameworks"
+                ],
+                correctAnswer: 1,
+                explanation: "Industrial Engineering focuses on optimizing complex systems and processes by integrating people, materials, equipment, and energy."
+            },
+            {
+                question: "Which of these is a key tool used in time studies?",
+                options: [
+                    "Oscilloscope",
+                    "Stopwatch",
+                    "Microscope",
+                    "Thermometer"
+                ],
+                correctAnswer: 1,
+                explanation: "Stopwatches are fundamental tools for conducting time studies to measure how long tasks take to complete."
+            },
+            {
+                question: "What does the acronym 'SMED' stand for?",
+                options: [
+                    "Standardized Manufacturing Equipment Design",
+                    "Single-Minute Exchange of Die",
+                    "Systematic Maintenance and Equipment Deployment",
+                    "Statistical Methods for Engineering Development"
+                ],
+                correctAnswer: 1,
+                explanation: "SMED stands for Single-Minute Exchange of Die, a lean manufacturing technique aimed at reducing equipment changeover times."
+            },
+            {
+                question: "Which chart is commonly used to identify the most significant factors in a process?",
+                options: [
+                    "Pareto Chart",
+                    "Scatter Plot",
+                    "Histogram",
+                    "Run Chart"
+                ],
+                correctAnswer: 0,
+                explanation: "A Pareto Chart helps identify the most significant factors in a process by displaying categories in descending order of frequency or impact."
+            },
+            {
+                question: "What is the primary purpose of a control chart?",
+                options: [
+                    "To track production output over time",
+                    "To monitor process stability and variation",
+                    "To compare actual performance against budget",
+                    "To schedule maintenance activities"
+                ],
+                correctAnswer: 1,
+                explanation: "Control charts are used to monitor process stability and variation, distinguishing between common cause and special cause variation."
+            },
+            // Additional questions would be added here to reach 50 total
+            // For brevity, I'm showing 5 questions but the actual implementation would have 50
+            {
+                question: "What does the term 'takt time' represent in lean manufacturing?",
+                options: [
+                    "The time to complete one unit",
+                    "The maximum time allowed for production",
+                    "The rate at which customers require products",
+                    "The time between machine breakdowns"
+                ],
+                correctAnswer: 2,
+                explanation: "Takt time is the rate at which customers require products, calculated as available production time divided by customer demand."
+            },
+            {
+                question: "Which statistical concept is essential for understanding process variation in quality control?",
+                options: [
+                    "Mean",
+                    "Standard Deviation",
+                    "Median",
+                    "Mode"
+                ],
+                correctAnswer: 1,
+                explanation: "Standard deviation measures the amount of variation or dispersion in a set of values, which is critical for quality control analysis."
+            },
+            {
+                question: "In operations research, what is the main purpose of sensitivity analysis?",
+                options: [
+                    "To solve linear equations",
+                    "To determine how changes in input affect the optimal solution",
+                    "To maximize profit",
+                    "To minimize cost"
+                ],
+                correctAnswer: 1,
+                explanation: "Sensitivity analysis examines how changes in model parameters impact the optimal solution, helping decision-makers understand model robustness."
+            },
+            {
+                question: "Which ergonomic principle is most important when designing a workstation to reduce musculoskeletal disorders?",
+                options: [
+                    "Maximizing speed",
+                    "Adjustability for different users",
+                    "Increasing automation",
+                    "Minimizing cost"
+                ],
+                correctAnswer: 1,
+                explanation: "Adjustability allows workstations to accommodate different users, reducing the risk of musculoskeletal disorders."
+            },
+            {
+                question: "What is the primary goal of production leveling (Heijunka) in lean manufacturing?",
+                options: [
+                    "Increase batch sizes",
+                    "Reduce inventory costs",
+                    "Smooth production flow and reduce variability",
+                    "Maximize machine utilization"
+                ],
+                correctAnswer: 2,
+                explanation: "Production leveling (Heijunka) aims to smooth production flow and reduce variability, improving efficiency and responsiveness."
+            },
+            {
+                question: "Which inventory management approach focuses on minimizing stockouts while reducing excess inventory?",
+                options: [
+                    "Just-In-Time (JIT)",
+                    "Economic Order Quantity (EOQ)",
+                    "ABC Analysis",
+                    "Safety Stock Calculation"
+                ],
+                correctAnswer: 0,
+                explanation: "Just-In-Time (JIT) aims to minimize inventory levels and stockouts by synchronizing production with demand."
+            },
+            {
+                question: "In statistical process control, what does a point outside the control limits on a control chart indicate?",
+                options: [
+                    "Normal process variation",
+                    "Special cause variation",
+                    "Measurement error",
+                    "Improved process performance"
+                ],
+                correctAnswer: 1,
+                explanation: "A point outside the control limits suggests special cause variation, indicating that the process may be out of control."
+            },
+            {
+                question: "Which ergonomic assessment tool is commonly used to evaluate repetitive motion risk in the workplace?",
+                options: [
+                    "RULA (Rapid Upper Limb Assessment)",
+                    "SWOT Analysis",
+                    "PERT Chart",
+                    "Gantt Chart"
+                ],
+                correctAnswer: 0,
+                explanation: "RULA is designed to assess exposure to risk factors associated with upper limb disorders due to repetitive motion."
+            },
+            {
+                question: "What is the main objective of a job rotation program in industrial settings?",
+                options: [
+                    "Increase specialization",
+                    "Reduce worker fatigue and injury risk",
+                    "Maximize production speed",
+                    "Minimize training costs"
+                ],
+                correctAnswer: 1,
+                explanation: "Job rotation helps reduce fatigue and injury risk by varying tasks and muscle groups used by workers."
+            },
+            {
+                question: "Which production system is characterized by producing goods only in response to actual customer demand?",
+                options: [
+                    "Push System",
+                    "Pull System",
+                    "Batch System",
+                    "Continuous System"
+                ],
+                correctAnswer: 1,
+                explanation: "A pull system produces goods only when there is actual demand, minimizing inventory and waste."
+            },
+            {
+                question: "What does the term 'Kaizen' refer to in lean manufacturing?",
+                options: [
+                    "Large-scale process redesign",
+                    "Continuous incremental improvement",
+                    "Inventory reduction",
+                    "Quality inspection"
+                ],
+                correctAnswer: 1,
+                explanation: "Kaizen is a philosophy of continuous, incremental improvement involving all employees."
+            },
+            {
+                question: "Which statistical tool is best for identifying relationships between two variables?",
+                options: [
+                    "Histogram",
+                    "Scatter Plot",
+                    "Pareto Chart",
+                    "Control Chart"
+                ],
+                correctAnswer: 1,
+                explanation: "Scatter plots visually display the relationship between two variables, helping identify correlations."
+            },
+            {
+                question: "In experimental design, what is the purpose of randomization?",
+                options: [
+                    "Increase sample size",
+                    "Reduce bias and confounding",
+                    "Maximize treatment effect",
+                    "Minimize cost"
+                ],
+                correctAnswer: 1,
+                explanation: "Randomization helps reduce bias and confounding, ensuring valid experimental results."
+            },
+            {
+                question: "Which inventory strategy is most suitable for high-value, low-demand items?",
+                options: [
+                    "Just-In-Time",
+                    "Safety Stock",
+                    "Periodic Review",
+                    "Vendor Managed Inventory"
+                ],
+                correctAnswer: 0,
+                explanation: "Just-In-Time is suitable for high-value, low-demand items to minimize holding costs."
+            },
+            {
+                question: "What is the main advantage of using a moving average in forecasting?",
+                options: [
+                    "Captures seasonal trends",
+                    "Smooths out short-term fluctuations",
+                    "Predicts long-term growth",
+                    "Identifies outliers"
+                ],
+                correctAnswer: 1,
+                explanation: "Moving averages smooth out short-term fluctuations, making trends easier to identify."
+            },
+            {
+                question: "Which type of layout is most appropriate for manufacturing a wide variety of products in low volumes?",
+                options: [
+                    "Product Layout",
+                    "Process Layout",
+                    "Cellular Layout",
+                    "Fixed-Position Layout"
+                ],
+                correctAnswer: 1,
+                explanation: "Process layouts are ideal for low-volume, high-variety production environments."
+            },
+            {
+                question: "In statistical process control, what does a run of seven points on one side of the mean indicate?",
+                options: [
+                    "Normal variation",
+                    "A non-random pattern",
+                    "Measurement error",
+                    "Improved process performance"
+                ],
+                correctAnswer: 1,
+                explanation: "A run of seven points on one side of the mean suggests a non-random pattern and possible process shift."
+            },
+            {
+                question: "Which method is commonly used to prioritize improvement projects in Six Sigma?",
+                options: [
+                    "SWOT Analysis",
+                    "FMEA (Failure Mode and Effects Analysis)",
+                    "Brainstorming",
+                    "Root Cause Analysis"
+                ],
+                correctAnswer: 1,
+                explanation: "FMEA helps prioritize projects by evaluating the risk and impact of potential failures."
+            },
+            {
+                question: "What is the main purpose of benchmarking in industrial engineering?",
+                options: [
+                    "Set production quotas",
+                    "Compare performance against best practices",
+                    "Increase automation",
+                    "Reduce labor costs"
+                ],
+                correctAnswer: 1,
+                explanation: "Benchmarking compares performance against industry best practices to identify improvement opportunities."
+            },
+            {
+                question: "Which forecasting method is best suited for products with stable demand and no trend?",
+                options: [
+                    "Exponential Smoothing",
+                    "Regression Analysis",
+                    "Delphi Method",
+                    "Moving Average"
+                ],
+                correctAnswer: 3,
+                explanation: "Moving average is effective for stable demand without trend or seasonality."
+            },
+            {
+                question: "What is the main goal of a 5S program in the workplace?",
+                options: [
+                    "Increase production speed",
+                    "Improve workplace organization and efficiency",
+                    "Reduce material costs",
+                    "Enhance product quality"
+                ],
+                correctAnswer: 1,
+                explanation: "5S focuses on workplace organization, cleanliness, and efficiency."
+            },
+            {
+                question: "Which type of experimental design allows for the study of two or more factors simultaneously?",
+                options: [
+                    "Completely Randomized Design",
+                    "Factorial Design",
+                    "Matched Pairs Design",
+                    "Latin Square Design"
+                ],
+                correctAnswer: 1,
+                explanation: "Factorial designs study the effects of two or more factors and their interactions."
+            },
+            {
+                question: "What is the main purpose of a Gantt chart in project management?",
+                options: [
+                    "Track inventory levels",
+                    "Visualize project schedule and task dependencies",
+                    "Analyze process flow",
+                    "Monitor quality control"
+                ],
+                correctAnswer: 1,
+                explanation: "Gantt charts visualize project schedules, tasks, and dependencies."
+            },
+            {
+                question: "Which inventory control system triggers orders when stock reaches a predetermined level?",
+                options: [
+                    "Periodic Review System",
+                    "Continuous Review System",
+                    "Push System",
+                    "Pull System"
+                ],
+                correctAnswer: 1,
+                explanation: "Continuous review systems trigger orders when inventory hits a reorder point."
+            },
+            {
+                question: "What is the main benefit of using a control group in experimental design?",
+                options: [
+                    "Increase sample size",
+                    "Provide a baseline for comparison",
+                    "Reduce cost",
+                    "Maximize treatment effect"
+                ],
+                correctAnswer: 1,
+                explanation: "Control groups provide a baseline to compare the effects of experimental treatments."
+            },
+            {
+                question: "Which lean tool is used to visually track progress and identify bottlenecks in a process?",
+                options: [
+                    "Kanban Board",
+                    "Scatter Plot",
+                    "Histogram",
+                    "Fishbone Diagram"
+                ],
+                correctAnswer: 0,
+                explanation: "Kanban boards visually track work progress and help identify bottlenecks."
+            },
+            {
+                question: "What is the main objective of process mapping?",
+                options: [
+                    "Increase production speed",
+                    "Visualize and analyze workflow",
+                    "Reduce labor costs",
+                    "Monitor inventory levels"
+                ],
+                correctAnswer: 1,
+                explanation: "Process mapping helps visualize and analyze workflow for improvement."
+            },
+            {
+                question: "Which ergonomic principle is most important for computer workstation design?",
+                options: [
+                    "Maximizing speed",
+                    "Proper monitor height and distance",
+                    "Increasing automation",
+                    "Minimizing cost"
+                ],
+                correctAnswer: 1,
+                explanation: "Proper monitor height and distance reduce eye strain and musculoskeletal disorders."
+            },
+            {
+                question: "What is the main purpose of a value stream map?",
+                options: [
+                    "Track inventory levels",
+                    "Identify waste and improvement opportunities",
+                    "Monitor quality control",
+                    "Set production quotas"
+                ],
+                correctAnswer: 1,
+                explanation: "Value stream mapping identifies waste and improvement opportunities in processes."
+            },
+            {
+                question: "Which forecasting method relies on expert opinion to predict future trends?",
+                options: [
+                    "Delphi Method",
+                    "Exponential Smoothing",
+                    "Regression Analysis",
+                    "Moving Average"
+                ],
+                correctAnswer: 0,
+                explanation: "The Delphi Method uses expert opinion to forecast future trends."
+            },
+            {
+                question: "What is the main advantage of cellular manufacturing?",
+                options: [
+                    "Reduces setup time and improves flow",
+                    "Increases batch sizes",
+                    "Maximizes machine utilization",
+                    "Minimizes labor costs"
+                ],
+                correctAnswer: 0,
+                explanation: "Cellular manufacturing reduces setup time and improves process flow."
+            },
+            {
+                question: "Which type of chart is best for displaying the frequency distribution of data?",
+                options: [
+                    "Scatter Plot",
+                    "Histogram",
+                    "Pareto Chart",
+                    "Control Chart"
+                ],
+                correctAnswer: 1,
+                explanation: "Histograms display the frequency distribution of data."
+            },
+            {
+                question: "What is the main purpose of a cause-and-effect diagram?",
+                options: [
+                    "Track production output",
+                    "Identify root causes of problems",
+                    "Schedule maintenance activities",
+                    "Compare actual performance against budget"
+                ],
+                correctAnswer: 1,
+                explanation: "Cause-and-effect diagrams help identify and organize potential root causes of problems."
+            },
+            {
+                question: "Which production strategy is best for highly customized products?",
+                options: [
+                    "Make-to-Stock",
+                    "Make-to-Order",
+                    "Batch Production",
+                    "Continuous Flow"
+                ],
+                correctAnswer: 1,
+                explanation: "Make-to-Order is ideal for highly customized products."
+            },
+            {
+                question: "What is the main benefit of using a Pareto chart in quality improvement?",
+                options: [
+                    "Visualize process flow",
+                    "Identify the most significant problems",
+                    "Track inventory levels",
+                    "Monitor project schedules"
+                ],
+                correctAnswer: 1,
+                explanation: "Pareto charts help identify the most significant problems or causes."
+            },
+            {
+                question: "Which ergonomic risk factor is most associated with carpal tunnel syndrome?",
+                options: [
+                    "Heavy lifting",
+                    "Repetitive wrist motion",
+                    "Standing for long periods",
+                    "Exposure to loud noise"
+                ],
+                correctAnswer: 1,
+                explanation: "Repetitive wrist motion is a major risk factor for carpal tunnel syndrome."
+            },
+            {
+                question: "What is the main purpose of a pilot study in experimental design?",
+                options: [
+                    "Increase sample size",
+                    "Test feasibility and refine procedures",
+                    "Maximize treatment effect",
+                    "Reduce cost"
+                ],
+                correctAnswer: 1,
+                explanation: "Pilot studies test feasibility and help refine experimental procedures."
+            },
+            {
+                question: "Which inventory management technique classifies items based on their usage value?",
+                options: [
+                    "ABC Analysis",
+                    "Just-In-Time",
+                    "EOQ Model",
+                    "Safety Stock Calculation"
+                ],
+                correctAnswer: 0,
+                explanation: "ABC analysis classifies inventory items by usage value."
+            },
+            {
+                question: "What is the main objective of Total Productive Maintenance (TPM)?",
+                options: [
+                    "Increase batch sizes",
+                    "Maximize equipment effectiveness",
+                    "Reduce labor costs",
+                    "Monitor quality control"
+                ],
+                correctAnswer: 1,
+                explanation: "TPM aims to maximize equipment effectiveness and minimize downtime."
+            },
+            {
+                question: "Which statistical concept is used to measure the central tendency of a dataset?",
+                options: [
+                    "Standard Deviation",
+                    "Mean",
+                    "Variance",
+                    "Range"
+                ],
+                correctAnswer: 1,
+                explanation: "Mean measures the central tendency of a dataset."
+            },
+            {
+                question: "What is the main purpose of a control chart in quality management?",
+                options: [
+                    "Track production output",
+                    "Monitor process stability and variation",
+                    "Compare actual performance against budget",
+                    "Schedule maintenance activities"
+                ],
+                correctAnswer: 1,
+                explanation: "Control charts monitor process stability and variation."
+            },
+            {
+                question: "Which production planning method is best for seasonal products?",
+                options: [
+                    "Level Production",
+                    "Chase Demand",
+                    "Batch Production",
+                    "Continuous Flow"
+                ],
+                correctAnswer: 1,
+                explanation: "Chase demand matches production to fluctuating seasonal demand."
+            },
+            {
+                question: "What is the main benefit of using simulation modeling in operations research?",
+                options: [
+                    "Solves linear equations",
+                    "Analyzes complex, dynamic systems",
+                    "Maximizes profit",
+                    "Minimizes cost"
+                ],
+                correctAnswer: 1,
+                explanation: "Simulation modeling analyzes complex, dynamic systems that are difficult to solve analytically."
+            },
+            {
+                question: "Which ergonomic assessment tool evaluates manual handling tasks?",
+                options: [
+                    "NIOSH Lifting Equation",
+                    "SWOT Analysis",
+                    "PERT Chart",
+                    "Gantt Chart"
+                ],
+                correctAnswer: 0,
+                explanation: "The NIOSH Lifting Equation assesses manual handling and lifting tasks."
+            },
+            {
+                question: "What is the main objective of Statistical Process Control (SPC)?",
+                options: [
+                    "Increase production speed",
+                    "Monitor and control process variation",
+                    "Reduce labor costs",
+                    "Track inventory levels"
+                ],
+                correctAnswer: 1,
+                explanation: "SPC monitors and controls process variation to maintain quality."
+            },
+            {
+                question: "Which forecasting method is best for predicting demand with a strong trend component?",
+                options: [
+                    "Moving Average",
+                    "Exponential Smoothing with Trend",
+                    "Delphi Method",
+                    "Regression Analysis"
+                ],
+                correctAnswer: 1,
+                explanation: "Exponential smoothing with trend accounts for both level and trend in demand."
+            },
+            {
+                question: "What is the main purpose of a spaghetti diagram in process improvement?",
+                options: [
+                    "Track inventory levels",
+                    "Visualize movement and identify inefficiencies",
+                    "Monitor quality control",
+                    "Set production quotas"
+                ],
+                correctAnswer: 1,
+                explanation: "Spaghetti diagrams visualize movement to identify inefficiencies in layouts."
+            },
+            {
+                question: "Which type of experimental design is used to control for two blocking factors?",
+                options: [
+                    "Completely Randomized Design",
+                    "Latin Square Design",
+                    "Factorial Design",
+                    "Matched Pairs Design"
+                ],
+                correctAnswer: 1,
+                explanation: "Latin Square designs control for two blocking factors in experiments."
+            },
+            {
+                question: "What is the main benefit of using a process flowchart?",
+                options: [
+                    "Increase production speed",
+                    "Visualize process steps and decision points",
+                    "Reduce labor costs",
+                    "Monitor inventory levels"
+                ],
+                correctAnswer: 1,
+                explanation: "Process flowcharts visualize steps and decision points for analysis."
+            },
+            {
+                question: "Which inventory management approach is most effective for minimizing holding costs?",
+                options: [
+                    "Just-In-Time",
+                    "Safety Stock Calculation",
+                    "ABC Analysis",
+                    "EOQ Model"
+                ],
+                correctAnswer: 0,
+                explanation: "Just-In-Time minimizes holding costs by synchronizing inventory with demand."
+            },
+            {
+                question: "What is the main objective of a time study?",
+                options: [
+                    "Increase batch sizes",
+                    "Determine standard times for tasks",
+                    "Maximize machine utilization",
+                    "Minimize labor costs"
+                ],
+                correctAnswer: 1,
+                explanation: "Time studies determine standard times for tasks to improve efficiency."
+            },
+            {
+                question: "Which ergonomic principle is most important for reducing lower back injuries in manual lifting?",
+                options: [
+                    "Proper lifting technique",
+                    "Maximizing speed",
+                    "Increasing automation",
+                    "Minimizing cost"
+                ],
+                correctAnswer: 0,
+                explanation: "Proper lifting technique reduces the risk of lower back injuries."
+            },
+            {
+                question: "What is the main purpose of a check sheet in quality control?",
+                options: [
+                    "Track production output",
+                    "Collect and organize data systematically",
+                    "Schedule maintenance activities",
+                    "Compare actual performance against budget"
+                ],
+                correctAnswer: 1,
+                explanation: "Check sheets systematically collect and organize data for analysis."
+            },
+            {
+                question: "Which production system is best for continuous, high-volume manufacturing?",
+                options: [
+                    "Batch Production",
+                    "Continuous Flow",
+                    "Make-to-Order",
+                    "Process Layout"
+                ],
+                correctAnswer: 1,
+                explanation: "Continuous flow systems are ideal for high-volume, uninterrupted production."
+            },
+            {
+                question: "What is the main benefit of using a cause-and-effect matrix?",
+                options: [
+                    "Visualize process flow",
+                    "Prioritize causes based on impact",
+                    "Track inventory levels",
+                    "Monitor project schedules"
+                ],
+                correctAnswer: 1,
+                explanation: "Cause-and-effect matrices prioritize causes based on their impact on outcomes."
+            },
+            {
+                question: "Which inventory management technique is best for items with unpredictable demand?",
+                options: [
+                    "Safety Stock Calculation",
+                    "Just-In-Time",
+                    "ABC Analysis",
+                    "EOQ Model"
+                ],
+                correctAnswer: 0,
+                explanation: "Safety stock helps buffer against unpredictable demand."
+            },
+            {
+                question: "What is the main objective of a design of experiments (DOE)?",
+                options: [
+                    "Increase production speed",
+                    "Identify factors affecting process outcomes",
+                    "Reduce labor costs",
+                    "Monitor inventory levels"
+                ],
+                correctAnswer: 1,
+                explanation: "DOE identifies factors and their effects on process outcomes."
+            },
+            {
+                question: "Which ergonomic assessment tool is used for evaluating risk in office environments?",
+                options: [
+                    "RULA",
+                    "REBA",
+                    "NIOSH Lifting Equation",
+                    "SWOT Analysis"
+                ],
+                correctAnswer: 0,
+                explanation: "RULA is commonly used for assessing ergonomic risk in office environments."
+            },
+            {
+                question: "What is the main purpose of a control plan in quality management?",
+                options: [
+                    "Track production output",
+                    "Document process controls and monitoring methods",
+                    "Schedule maintenance activities",
+                    "Compare actual performance against budget"
+                ],
+                correctAnswer: 1,
+                explanation: "Control plans document process controls and monitoring methods."
+            },
+            {
+                question: "Which forecasting method is best for new products with no historical data?",
+                options: [
+                    "Delphi Method",
+                    "Exponential Smoothing",
+                    "Regression Analysis",
+                    "Moving Average"
+                ],
+                correctAnswer: 0,
+                explanation: "The Delphi Method uses expert opinion for forecasting new products."
+            },
+            {
+                question: "What is the main benefit of using a process capability index (Cp, Cpk)?",
+                options: [
+                    "Track inventory levels",
+                    "Assess process ability to meet specifications",
+                    "Monitor project schedules",
+                    "Visualize process flow"
+                ],
+                correctAnswer: 1,
+                explanation: "Process capability indices assess how well a process meets specifications."
+            },
+            {
+                question: "Which production strategy is best for minimizing lead time?",
+                options: [
+                    "Make-to-Stock",
+                    "Make-to-Order",
+                    "Batch Production",
+                    "Continuous Flow"
+                ],
+                correctAnswer: 0,
+                explanation: "Make-to-Stock minimizes lead time by producing in advance of demand."
+            },
+            {
+                question: "What is the main objective of a root cause analysis?",
+                options: [
+                    "Increase production speed",
+                    "Identify underlying causes of problems",
+                    "Reduce labor costs",
+                    "Monitor inventory levels"
+                ],
+                correctAnswer: 1,
+                explanation: "Root cause analysis identifies underlying causes of problems for effective solutions."
+            },
+            {
+                question: "Which ergonomic principle is most important for reducing neck strain at a computer workstation?",
+                options: [
+                    "Minimizing cost",
+                    "Maximizing speed",
+                    "Increasing automation",
+                    "Proper monitor height"
+                ],
+                correctAnswer: 3,
+                explanation: "Proper monitor height reduces neck strain at computer workstations."
+            },
+            {
+                question: "What is the main purpose of a run chart?",
+                options: [
+                    "Track changes in data over time",
+                    "Visualize process flow",
+                    "Monitor inventory levels",
+                    "Schedule maintenance activities"
+                ],
+                correctAnswer: 0,
+                explanation: "Run charts track changes in data over time to identify trends."
+            },
+            {
+                question: "Which inventory management technique is best for items with consistent, predictable demand?",
+                options: [
+                    "EOQ Model",
+                    "Safety Stock Calculation",
+                    "Just-In-Time",
+                    "ABC Analysis"
+                ],
+                correctAnswer: 0,
+                explanation: "EOQ is best for items with consistent, predictable demand."
+            },
+            {
+                question: "What is the main objective of a process audit?",
+                options: [
+                    "Increase production speed",
+                    "Verify compliance with procedures and standards",
+                    "Reduce labor costs",
+                    "Monitor inventory levels"
+                ],
+                correctAnswer: 1,
+                explanation: "Process audits verify compliance with procedures and standards."
+            },
+            {
+                question: "Which ergonomic assessment tool evaluates whole body postural risk?",
+                options: [
+                    "RULA",
+                    "REBA",
+                    "NIOSH Lifting Equation",
+                    "SWOT Analysis"
+                ],
+                correctAnswer: 1,
+                explanation: "REBA evaluates whole body postural risk in various tasks."
+            },
+            {
+                question: "What is the main purpose of a SIPOC diagram?",
+                options: [
+                    "Track inventory levels",
+                    "Identify suppliers, inputs, process, outputs, and customers",
+                    "Monitor project schedules",
+                    "Visualize process flow"
+                ],
+                correctAnswer: 1,
+                explanation: "SIPOC diagrams identify suppliers, inputs, process, outputs, and customers for process analysis."
+            },
+            {
+                question: "Which production system is best for large, complex products like airplanes?",
+                options: [
+                    "Batch Production",
+                    "Fixed-Position Layout",
+                    "Continuous Flow",
+                    "Process Layout"
+                ],
+                correctAnswer: 1,
+                explanation: "Fixed-position layouts are used for large, complex products assembled in one location."
+            },
+            {
+                question: "What is the main benefit of using a control chart for attribute data?",
+                options: [
+                    "Monitor process stability for non-numeric data",
+                    "Visualize process flow",
+                    "Track inventory levels",
+                    "Schedule maintenance activities"
+                ],
+                correctAnswer: 0,
+                explanation: "Control charts for attribute data monitor process stability for non-numeric data like defects."
+            },
+            {
+                question: "Which inventory management approach is best for minimizing stockouts?",
+                options: [
+                    "EOQ Model",
+                    "Just-In-Time",
+                    "ABC Analysis",
+                    "Safety Stock Calculation"
+                ],
+                correctAnswer: 3,
+                explanation: "Safety stock calculation helps minimize stockouts by providing a buffer."
+            },
+            {
+                question: "What is the main objective of a process improvement team?",
+                options: [
+                    "Increase production speed",
+                    "Identify and implement process enhancements",
+                    "Reduce labor costs",
+                    "Monitor inventory levels"
+                ],
+                correctAnswer: 1,
+                explanation: "Process improvement teams identify and implement process enhancements."
+            },
+            {
+                question: "Which ergonomic principle is most important for reducing shoulder strain in overhead work?",
+                options: [
+                    "Limit overhead tasks",
+                    "Maximizing speed",
+                    "Increasing automation",
+                    "Minimizing cost"
+                ],
+                correctAnswer: 0,
+                explanation: "Limiting overhead tasks reduces shoulder strain and injury risk."
+            },
+            {
+                question: "What is the main purpose of a process capability study?",
+                options: [
+                    "Track inventory levels",
+                    "Assess process ability to meet specifications",
+                    "Monitor project schedules",
+                    "Visualize process flow"
+                ],
+                correctAnswer: 1,
+                explanation: "Process capability studies assess how well a process meets specifications."
+            },
+            {
+                question: "Which production strategy is best for products with highly variable demand and customization?",
+                options: [
+                    "Make-to-Order",
+                    "Make-to-Stock",
+                    "Batch Production",
+                    "Continuous Flow"
+                ],
+                correctAnswer: 0,
+                explanation: "Make-to-Order is best for variable demand and customization."
+            },
+            {
+                question: "What is the main benefit of using a process FMEA?",
+                options: [
+                    "Identify and prioritize process risks",
+                    "Track inventory levels",
+                    "Monitor project schedules",
+                    "Visualize process flow"
+                ],
+                correctAnswer: 0,
+                explanation: "Process FMEA identifies and prioritizes process risks for mitigation."
+            },
+            {
+                question: "Which ergonomic assessment tool is best for evaluating repetitive tasks in manufacturing?",
+                options: [
+                    "RULA",
+                    "REBA",
+                    "NIOSH Lifting Equation",
+                    "SWOT Analysis"
+                ],
+                correctAnswer: 0,
+                explanation: "RULA is best for evaluating repetitive tasks in manufacturing."
+            },
+            {
+                question: "What is the main purpose of a process control chart?",
+                options: [
+                    "Track production output",
+                    "Monitor process stability and variation",
+                    "Schedule maintenance activities",
+                    "Compare actual performance against budget"
+                ],
+                correctAnswer: 1,
+                explanation: "Process control charts monitor process stability and variation."
+            },
+            {
+                question: "Which inventory management technique is best for items with high demand variability?",
+                options: [
+                    "Safety Stock Calculation",
+                    "Just-In-Time",
+                    "ABC Analysis",
+                    "EOQ Model"
+                ],
+                correctAnswer: 0,
+                explanation: "Safety stock calculation helps buffer against high demand variability."
+            },
+            {
+                question: "What is the main objective of a process improvement initiative?",
+                options: [
+                    "Increase production speed",
+                    "Enhance efficiency and reduce waste",
+                    "Reduce labor costs",
+                    "Monitor inventory levels"
+                ],
+                correctAnswer: 1,
+                explanation: "Process improvement initiatives aim to enhance efficiency and reduce waste."
+            },
+            {
+                question: "Which ergonomic principle is most important for reducing wrist strain in keyboard use?",
+                options: [
+                    "Proper wrist alignment",
+                    "Maximizing speed",
+                    "Increasing automation",
+                    "Minimizing cost"
+                ],
+                correctAnswer: 0,
+                explanation: "Proper wrist alignment reduces strain and risk of injury during keyboard use."
+            },
+            {
+                question: "What is the main purpose of a process audit checklist?",
+                options: [
+                    "Track production output",
+                    "Verify compliance with procedures and standards",
+                    "Schedule maintenance activities",
+                    "Compare actual performance against budget"
+                ],
+                correctAnswer: 1,
+                explanation: "Process audit checklists verify compliance with procedures and standards."
+            },
+            {
+                question: "Which production system is best for small batch, high variety manufacturing?",
+                options: [
+                    "Process Layout",
+                    "Continuous Flow",
+                    "Make-to-Order",
+                    "Batch Production"
+                ],
+                correctAnswer: 3,
+                explanation: "Batch production is best for small batch, high variety manufacturing."
+            },
+            {
+                question: "What is the main benefit of using a process flow diagram?",
+                options: [
+                    "Visualize process steps and decision points",
+                    "Track inventory levels",
+                    "Monitor project schedules",
+                    "Schedule maintenance activities"
+                ],
+                correctAnswer: 0,
+                explanation: "Process flow diagrams visualize steps and decision points for analysis."
+            },
+            {
+                question: "Which inventory management technique is best for items with low value and high volume?",
+                options: [
+                    "ABC Analysis",
+                    "Just-In-Time",
+                    "EOQ Model",
+                    "Safety Stock Calculation"
+                ],
+                correctAnswer: 0,
+                explanation: "ABC analysis helps manage low value, high volume items efficiently."
+            },
+            {
+                question: "What is the main objective of a process improvement workshop?",
+                options: [
+                    "Increase production speed",
+                    "Identify and implement process enhancements",
+                    "Reduce labor costs",
+                    "Monitor inventory levels"
+                ],
+                correctAnswer: 1,
+                explanation: "Process improvement workshops identify and implement process enhancements."
+            },
+            {
+                question: "Which ergonomic principle is most important for reducing eye strain at a computer workstation?",
+                options: [
+                    "Minimizing cost",
+                    "Maximizing speed",
+                    "Increasing automation",
+                    "Proper monitor distance and lighting"
+                ],
+                correctAnswer: 3,
+                explanation: "Proper monitor distance and lighting reduce eye strain at computer workstations."
+            },
+            {
+                question: "What is the main purpose of a process capability analysis?",
+                options: [
+                    "Assess process ability to meet specifications",
+                    "Track inventory levels",
+                    "Monitor project schedules",
+                    "Visualize process flow"
+                ],
+                correctAnswer: 0,
+                explanation: "Process capability analysis assesses how well a process meets specifications."
+            },
+            {
+                question: "Which production strategy is best for minimizing inventory costs?",
+                options: [
+                    "Just-In-Time",
+                    "Make-to-Stock",
+                    "Batch Production",
+                    "Continuous Flow"
+                ],
+                correctAnswer: 0,
+                explanation: "Just-In-Time minimizes inventory costs by synchronizing production with demand."
+            },
+            {
+                question: "What is the main benefit of using a process improvement team?",
+                options: [
+                    "Identify and implement process enhancements",
+                    "Track inventory levels",
+                    "Monitor project schedules",
+                    "Visualize process flow"
+                ],
+                correctAnswer: 0,
+                explanation: "Process improvement teams identify and implement process enhancements."
+            },
+            {
+                question: "Which work measurement technique uses a predetermined set of basic motions and times?",
+                options: [
+                    "Time Study",
+                    "Work Sampling",
+                    "Predetermined Motion Time System (PMTS)",
+                    "Continuous Observation"
+                ],
+                correctAnswer: 2,
+                explanation: "PMTS uses a database of basic motions and times to estimate task duration without direct observation."
+            },
+            {
+                question: "In advanced statistics, what does the p-value represent in hypothesis testing?",
+                options: [
+                    "Probability the null hypothesis is true",
+                    "Probability of observing the data if the null hypothesis is true",
+                    "Sample mean",
+                    "Standard deviation"
+                ],
+                correctAnswer: 1,
+                explanation: "The p-value is the probability of obtaining results at least as extreme as those observed, assuming the null hypothesis is true."
+            },
+            {
+                question: "Which design of experiments (DOE) method allows for studying the effect of multiple factors at different levels?",
+                options: [
+                    "One-Factor-at-a-Time",
+                    "Matched Pairs Design",
+                    "Randomized Block Design",
+                    "Full Factorial Design"
+                ],
+                correctAnswer: 3,
+                explanation: "Full factorial designs study all possible combinations of factor levels."
+            },
+            {
+                question: "What is the main advantage of using Monte Carlo simulation in process analysis?",
+                options: [
+                    "Solves linear equations",
+                    "Models uncertainty and variability",
+                    "Maximizes profit",
+                    "Minimizes cost"
+                ],
+                correctAnswer: 1,
+                explanation: "Monte Carlo simulation models uncertainty and variability by running many random scenarios."
+            },
+            {
+                question: "Which supply chain strategy focuses on reducing lead time and increasing responsiveness?",
+                options: [
+                    "Lean Supply Chain",
+                    "Agile Supply Chain",
+                    "Push Strategy",
+                    "Make-to-Stock"
+                ],
+                correctAnswer: 1,
+                explanation: "Agile supply chains prioritize responsiveness and flexibility to demand changes."
+            },
+            {
+                question: "In statistical process control, what does a Western Electric rule violation indicate?",
+                options: [
+                    "Normal process variation",
+                    "Potential out-of-control process",
+                    "Improved process performance",
+                    "Measurement error"
+                ],
+                correctAnswer: 1,
+                explanation: "Western Electric rules help detect non-random patterns indicating a process may be out of control."
+            },
+            {
+                question: "Which work measurement method is best for tasks with highly variable cycle times?",
+                options: [
+                    "Time Study",
+                    "Continuous Observation",
+                    "PMTS",
+                    "Work Sampling"
+                ],
+                correctAnswer: 3,
+                explanation: "Work sampling is suitable for tasks with variable cycle times and random work patterns."
+            },
+            {
+                question: "What is the main purpose of blocking in experimental design?",
+                options: [
+                    "Increase sample size",
+                    "Control for nuisance variables",
+                    "Maximize treatment effect",
+                    "Reduce cost"
+                ],
+                correctAnswer: 1,
+                explanation: "Blocking controls for nuisance variables that could affect the outcome."
+            },
+            {
+                question: "Which simulation tool is commonly used for modeling discrete event systems in manufacturing?",
+                options: [
+                    "Arena",
+                    "Excel",
+                    "Minitab",
+                    "AutoCAD"
+                ],
+                correctAnswer: 0,
+                explanation: "Arena is widely used for discrete event simulation in manufacturing and logistics."
+            },
+            {
+                question: "In supply chain management, what is the bullwhip effect?",
+                options: [
+                    "Reduction in inventory costs",
+                    "Amplification of demand variability upstream",
+                    "Improved supplier relationships",
+                    "Shorter lead times"
+                ],
+                correctAnswer: 1,
+                explanation: "The bullwhip effect is the amplification of demand variability as orders move up the supply chain."
+            },
+            {
+                question: "Which control chart is used for monitoring the proportion of defective items?",
+                options: [
+                    "X-bar Chart",
+                    "p-Chart",
+                    "R Chart",
+                    "C Chart"
+                ],
+                correctAnswer: 1,
+                explanation: "p-Charts monitor the proportion of defective items in a sample."
+            },
+            {
+                question: "What is the main objective of a method study in work measurement?",
+                options: [
+                    "Increase production speed",
+                    "Monitor inventory levels",
+                    "Reduce labor costs",
+                    "Improve the way work is performed"
+                ],
+                correctAnswer: 3,
+                explanation: "Method study aims to improve the way work is performed for greater efficiency."
+            },
+            {
+                question: "Which advanced statistical method is used to analyze the relationship between multiple independent variables and one dependent variable?",
+                options: [
+                    "Simple Regression",
+                    "Multiple Regression",
+                    "ANOVA",
+                    "Chi-Square Test"
+                ],
+                correctAnswer: 1,
+                explanation: "Multiple regression analyzes the relationship between several independent variables and one dependent variable."
+            },
+            {
+                question: "What is the main benefit of using a fractional factorial design in DOE?",
+                options: [
+                    "Studies all possible factor combinations",
+                    "Reduces the number of experimental runs",
+                    "Maximizes treatment effect",
+                    "Minimizes cost"
+                ],
+                correctAnswer: 1,
+                explanation: "Fractional factorial designs reduce the number of runs needed to study multiple factors."
+            },
+            {
+                question: "Which simulation output is most useful for identifying bottlenecks in a process?",
+                options: [
+                    "Average cycle time",
+                    "Resource utilization",
+                    "Inventory levels",
+                    "Lead time"
+                ],
+                correctAnswer: 1,
+                explanation: "Resource utilization helps identify bottlenecks where resources are overused."
+            },
+            {
+                question: "In supply chain optimization, what is the purpose of network modeling?",
+                options: [
+                    "Visualize process flow",
+                    "Schedule maintenance activities",
+                    "Monitor inventory levels",
+                    "Determine optimal facility locations and flows"
+                ],
+                correctAnswer: 3,
+                explanation: "Network modeling determines optimal facility locations and product flows."
+            },
+            {
+                question: "Which statistical process control tool helps detect shifts in process mean over time?",
+                options: [
+                    "X-bar Chart",
+                    "Histogram",
+                    "Scatter Plot",
+                    "Fishbone Diagram"
+                ],
+                correctAnswer: 0,
+                explanation: "X-bar charts monitor shifts in process mean over time."
+            },
+            {
+                question: "What is the main purpose of rating in time study?",
+                options: [
+                    "Adjust observed times for worker performance",
+                    "Increase sample size",
+                    "Reduce labor costs",
+                    "Monitor inventory levels"
+                ],
+                correctAnswer: 0,
+                explanation: "Rating adjusts observed times to account for worker performance relative to standard."
+            },
+            {
+                question: "Which advanced statistical technique is used to reduce the dimensionality of large datasets?",
+                options: [
+                    "Principal Component Analysis (PCA)",
+                    "Multiple Regression",
+                    "ANOVA",
+                    "Chi-Square Test"
+                ],
+                correctAnswer: 0,
+                explanation: "PCA reduces dimensionality by transforming variables into principal components."
+            },
+            {
+                question: "In DOE, what is an interaction effect?",
+                options: [
+                    "Effect of one factor alone",
+                    "Combined effect of two or more factors",
+                    "Random error",
+                    "Blocking variable"
+                ],
+                correctAnswer: 1,
+                explanation: "Interaction effects occur when the effect of one factor depends on the level of another."
+            },
+            {
+                question: "Which simulation method is best for modeling continuous processes?",
+                options: [
+                    "Discrete Event Simulation",
+                    "Agent-Based Simulation",
+                    "Monte Carlo Simulation",
+                    "Continuous Simulation"
+                ],
+                correctAnswer: 3,
+                explanation: "Continuous simulation models processes that change continuously over time."
+            },
+            {
+                question: "What is the main objective of vendor-managed inventory (VMI) in supply chain management?",
+                options: [
+                    "Increase production speed",
+                    "Allow suppliers to manage inventory levels",
+                    "Reduce labor costs",
+                    "Monitor project schedules"
+                ],
+                correctAnswer: 1,
+                explanation: "VMI allows suppliers to manage inventory levels at the customer's location."
+            },
+            {
+                question: "Which control chart is used for monitoring the number of defects per unit?",
+                options: [
+                    "X-bar Chart",
+                    "p-Chart",
+                    "c-Chart",
+                    "R Chart"
+                ],
+                correctAnswer: 2,
+                explanation: "c-Charts monitor the number of defects per unit."
+            },
+            {
+                question: "In work measurement, what is the main purpose of a standard data system?",
+                options: [
+                    "Increase production speed",
+                    "Provide time standards for common tasks",
+                    "Reduce labor costs",
+                    "Monitor inventory levels"
+                ],
+                correctAnswer: 1,
+                explanation: "Standard data systems provide time standards for frequently performed tasks."
+            },
+            {
+                question: "Which advanced statistical method is used to classify observations into groups based on predictor variables?",
+                options: [
+                    "Cluster Analysis",
+                    "Discriminant Analysis",
+                    "Multiple Regression",
+                    "ANOVA"
+                ],
+                correctAnswer: 1,
+                explanation: "Discriminant analysis classifies observations into groups based on predictors."
+            },
+            {
+                question: "What is the main benefit of using a randomized block design in DOE?",
+                options: [
+                    "Controls for nuisance variables",
+                    "Maximizes treatment effect",
+                    "Reduces cost",
+                    "Increases sample size"
+                ],
+                correctAnswer: 0,
+                explanation: "Randomized block designs control for nuisance variables by grouping similar experimental units."
+            },
+            {
+                question: "Which simulation technique is best for evaluating risk in project management?",
+                options: [
+                    "Discrete Event Simulation",
+                    "Monte Carlo Simulation",
+                    "Continuous Simulation",
+                    "Agent-Based Simulation"
+                ],
+                correctAnswer: 1,
+                explanation: "Monte Carlo simulation evaluates risk by modeling many random scenarios."
+            },
+            {
+                question: "In supply chain management, what is postponement?",
+                options: [
+                    "Delaying production until demand is known",
+                    "Reducing inventory costs",
+                    "Improving supplier relationships",
+                    "Shortening lead times"
+                ],
+                correctAnswer: 0,
+                explanation: "Postponement delays production or customization until demand is known."
+            },
+            {
+                question: "Which statistical process control chart is best for monitoring process variability?",
+                options: [
+                    "X-bar Chart",
+                    "c-Chart",
+                    "p-Chart",
+                    "R Chart"
+                ],
+                correctAnswer: 3,
+                explanation: "R Charts monitor process variability (range) over time."
+            },
+            {
+                question: "What is the main purpose of a work sampling study?",
+                options: [
+                    "Determine proportion of time spent on activities",
+                    "Increase production speed",
+                    "Reduce labor costs",
+                    "Monitor inventory levels"
+                ],
+                correctAnswer: 0,
+                explanation: "Work sampling estimates the proportion of time spent on various activities."
+            },
+            {
+                question: "Which advanced statistical method is used to test differences among three or more group means?",
+                options: [
+                    "ANOVA",
+                    "Multiple Regression",
+                    "Chi-Square Test",
+                    "Principal Component Analysis"
+                ],
+                correctAnswer: 0,
+                explanation: "ANOVA tests differences among three or more group means."
+            },
+            {
+                question: "In DOE, what is the main purpose of replication?",
+                options: [
+                    "Increase sample size",
+                    "Estimate experimental error",
+                    "Maximize treatment effect",
+                    "Reduce cost"
+                ],
+                correctAnswer: 1,
+                explanation: "Replication estimates experimental error and improves reliability."
+            },
+            {
+                question: "Which simulation output is most useful for evaluating system throughput?",
+                options: [
+                    "Resource utilization",
+                    "Average cycle time",
+                    "Throughput rate",
+                    "Inventory levels"
+                ],
+                correctAnswer: 2,
+                explanation: "Throughput rate measures the number of units processed per time period."
+            },
+            {
+                question: "In supply chain analytics, what is ABC classification used for?",
+                options: [
+                    "Classify suppliers",
+                    "Classify inventory items by value and usage",
+                    "Classify customers",
+                    "Classify production lines"
+                ],
+                correctAnswer: 1,
+                explanation: "ABC classification groups inventory items by value and usage frequency."
+            },
+            {
+                question: "Which control chart is used for monitoring the number of nonconformities in a constant sample size?",
+                options: [
+                    "X-bar Chart",
+                    "p-Chart",
+                    "c-Chart",
+                    "u-Chart"
+                ],
+                correctAnswer: 2,
+                explanation: "c-Charts monitor the number of nonconformities in a constant sample size."
+            },
+            {
+                question: "What is the main objective of a synthetic time study?",
+                options: [
+                    "Increase production speed",
+                    "Estimate task times using standard data",
+                    "Reduce labor costs",
+                    "Monitor inventory levels"
+                ],
+                correctAnswer: 1,
+                explanation: "Synthetic time studies estimate task times using standard data rather than direct observation."
+            },
+            {
+                question: "Which advanced statistical method is used for predicting categorical outcomes?",
+                options: [
+                    "Logistic Regression",
+                    "Multiple Regression",
+                    "ANOVA",
+                    "Principal Component Analysis"
+                ],
+                correctAnswer: 0,
+                explanation: "Logistic regression predicts categorical outcomes (e.g., pass/fail)."
+            },
+            {
+                question: "In DOE, what is confounding?",
+                options: [
+                    "Effect of one factor alone",
+                    "Mixing effects of factors so they cannot be separated",
+                    "Random error",
+                    "Blocking variable"
+                ],
+                correctAnswer: 1,
+                explanation: "Confounding occurs when effects of factors cannot be separated due to experimental design."
+            },
+            {
+                question: "Which simulation technique is best for modeling interactions among autonomous agents?",
+                options: [
+                    "Discrete Event Simulation",
+                    "Monte Carlo Simulation",
+                    "Continuous Simulation",
+                    "Agent-Based Simulation"
+                ],
+                correctAnswer: 3,
+                explanation: "Agent-based simulation models interactions among autonomous agents."
+            },
+            {
+                question: "In supply chain management, what is the main purpose of cross-docking?",
+                options: [
+                    "Increase inventory levels",
+                    "Reduce storage time and costs",
+                    "Improve supplier relationships",
+                    "Shorten lead times"
+                ],
+                correctAnswer: 1,
+                explanation: "Cross-docking reduces storage time and costs by transferring goods directly from inbound to outbound transport."
+            },
+            {
+                question: "Which statistical process control chart is best for monitoring defects per unit in varying sample sizes?",
+                options: [
+                    "X-bar Chart",
+                    "p-Chart",
+                    "u-Chart",
+                    "c-Chart"
+                ],
+                correctAnswer: 2,
+                explanation: "u-Charts monitor defects per unit in varying sample sizes."
+            },
+            {
+                question: "What is the main purpose of a predetermined motion time system (PMTS)?",
+                options: [
+                    "Increase production speed",
+                    "Estimate task times using basic motions",
+                    "Reduce labor costs",
+                    "Monitor inventory levels"
+                ],
+                correctAnswer: 1,
+                explanation: "PMTS estimates task times using basic motions and standard times."
+            },
+            {
+                question: "Which advanced statistical method is used to group similar observations based on characteristics?",
+                options: [
+                    "ANOVA",
+                    "Discriminant Analysis",
+                    "Multiple Regression",
+                    "Cluster Analysis"
+                ],
+                correctAnswer: 3,
+                explanation: "Cluster analysis groups similar observations based on characteristics."
+            },
+            {
+                question: "In DOE, what is the main purpose of randomization?",
+                options: [
+                    "Reduce bias",
+                    "Increase sample size",
+                    "Maximize treatment effect",
+                    "Reduce cost"
+                ],
+                correctAnswer: 0,
+                explanation: "Randomization reduces bias and confounding in experiments."
+            },
+            {
+                question: "Which simulation output is most useful for evaluating system reliability?",
+                options: [
+                    "Resource utilization",
+                    "Average cycle time",
+                    "Failure rate",
+                    "Inventory levels"
+                ],
+                correctAnswer: 2,
+                explanation: "Failure rate measures system reliability in simulations."
+            },
+            {
+                question: "In supply chain management, what is the main benefit of using RFID technology?",
+                options: [
+                    "Increase production speed",
+                    "Improve inventory tracking and visibility",
+                    "Reduce labor costs",
+                    "Monitor project schedules"
+                ],
+                correctAnswer: 1,
+                explanation: "RFID improves inventory tracking and visibility throughout the supply chain."
+            },
+            {
+                question: "Which control chart is used for monitoring the mean of a process with small sample sizes?",
+                options: [
+                    "X-bar Chart",
+                    "Individuals (I) Chart",
+                    "p-Chart",
+                    "R Chart"
+                ],
+                correctAnswer: 1,
+                explanation: "Individuals (I) charts monitor the mean of processes with small sample sizes."
+            },
+            {
+                question: "What is the main objective of a work measurement system?",
+                options: [
+                    "Increase production speed",
+                    "Monitor inventory levels",
+                    "Reduce labor costs",
+                    "Establish time standards for tasks"
+                ],
+                correctAnswer: 3,
+                explanation: "Work measurement systems establish time standards for tasks."
+            },
+            {
+                question: "Which advanced statistical method is used to test independence between categorical variables?",
+                options: [
+                    "Chi-Square Test",
+                    "Multiple Regression",
+                    "ANOVA",
+                    "Principal Component Analysis"
+                ],
+                correctAnswer: 0,
+                explanation: "Chi-square tests independence between categorical variables."
+            },
+            {
+                question: "In DOE, what is the main purpose of center points?",
+                options: [
+                    "Estimate curvature in response surface",
+                    "Increase sample size",
+                    "Maximize treatment effect",
+                    "Reduce cost"
+                ],
+                correctAnswer: 0,
+                explanation: "Center points estimate curvature in response surface designs."
+            },
+            {
+                question: "Which simulation technique is best for modeling supply chain networks?",
+                options: [
+                    "Monte Carlo Simulation",
+                    "Agent-Based Simulation",
+                    "Continuous Simulation",
+                    "Discrete Event Simulation"
+                ],
+                correctAnswer: 3,
+                explanation: "Discrete event simulation is commonly used for modeling supply chain networks."
+            },
+            {
+                question: "In supply chain management, what is the main purpose of safety stock?",
+                options: [
+                    "Increase inventory levels",
+                    "Buffer against demand and supply variability",
+                    "Improve supplier relationships",
+                    "Shorten lead times"
+                ],
+                correctAnswer: 1,
+                explanation: "Safety stock buffers against demand and supply variability."
+            },
+            {
+                question: "Which statistical process control chart is best for monitoring individual measurements?",
+                options: [
+                    "X-bar Chart",
+                    "Individuals (I) Chart",
+                    "p-Chart",
+                    "R Chart"
+                ],
+                correctAnswer: 1,
+                explanation: "Individuals (I) charts monitor individual measurements over time."
+            },
+            {
+                question: "What is the main purpose of a work sampling study in service industries?",
+                options: [
+                    "Estimate proportion of time spent on activities",
+                    "Increase production speed",
+                    "Reduce labor costs",
+                    "Monitor inventory levels"
+                ],
+                correctAnswer: 0,
+                explanation: "Work sampling estimates the proportion of time spent on various activities in service industries."
+            },
+            {
+                question: "Which advanced statistical method is used to analyze variance among groups with repeated measures?",
+                options: [
+                    "Principal Component Analysis",
+                    "Multiple Regression",
+                    "Chi-Square Test",
+                    "Repeated Measures ANOVA"
+                ],
+                correctAnswer: 3,
+                explanation: "Repeated measures ANOVA analyzes variance among groups with repeated measurements."
+            },
+            {
+                question: "In DOE, what is the main purpose of a response surface methodology?",
+                options: [
+                    "Optimize process parameters",
+                    "Increase sample size",
+                    "Maximize treatment effect",
+                    "Reduce cost"
+                ],
+                correctAnswer: 0,
+                explanation: "Response surface methodology optimizes process parameters using experimental data."
+            },
+            {
+                question: "Which simulation output is most useful for evaluating customer wait times?",
+                options: [
+                    "Resource utilization",
+                    "Average cycle time",
+                    "Queue length",
+                    "Inventory levels"
+                ],
+                correctAnswer: 1,
+                explanation: "Average cycle time measures customer wait times in simulations."
+            },
+            {
+                question: "In supply chain management, what is the main benefit of collaborative planning, forecasting, and replenishment (CPFR)?",
+                options: [
+                    "Increase inventory levels",
+                    "Improve coordination and reduce stockouts",
+                    "Improve supplier relationships",
+                    "Shorten lead times"
+                ],
+                correctAnswer: 1,
+                explanation: "CPFR improves coordination between supply chain partners and reduces stockouts."
+            },
+            {
+                question: "Which layout type is most suitable for manufacturing a single, large product such as a ship or airplane?",
+                options: [
+                    "Product layout",
+                    "Process layout",
+                    "Fixed-position layout",
+                    "Cellular layout"
+                ],
+                correctAnswer: 2,
+                explanation: "Fixed-position layouts are used for large products that remain stationary while workers and equipment come to the product."
+            },
+            {
+                question: "What is the main advantage of a cellular manufacturing layout?",
+                options: [
+                    "Reduces material handling and improves flow",
+                    "Maximizes batch sizes",
+                    "Increases inventory levels",
+                    "Requires less training"
+                ],
+                correctAnswer: 0,
+                explanation: "Cellular layouts group machines by product families, reducing handling and improving flow."
+            },
+            {
+                question: "Which facility layout is best for producing a high variety of products in low volumes?",
+                options: [
+                    "Product layout",
+                    "Cellular layout",
+                    "Fixed-position layout",
+                    "Process layout"
+                ],
+                correctAnswer: 3,
+                explanation: "Process layouts are ideal for low-volume, high-variety production."
+            },
+            {
+                question: "What is the primary goal of facilities planning?",
+                options: [
+                    "Increase labor costs",
+                    "Optimize space utilization and workflow",
+                    "Maximize inventory",
+                    "Reduce product quality"
+                ],
+                correctAnswer: 1,
+                explanation: "Facilities planning aims to optimize space and workflow for efficiency."
+            },
+            {
+                question: "Which factor is most important when designing aisles in a manufacturing facility?",
+                options: [
+                    "Aisle color",
+                    "Aisle width for safe material movement",
+                    "Aisle length",
+                    "Aisle temperature"
+                ],
+                correctAnswer: 1,
+                explanation: "Aisle width must accommodate safe movement of materials and personnel."
+            },
+            {
+                question: "What is the main purpose of a flow diagram in facilities design?",
+                options: [
+                    "Increase production speed",
+                    "Visualize movement of materials and people",
+                    "Monitor equipment maintenance",
+                    "Track inventory levels"
+                ],
+                correctAnswer: 1,
+                explanation: "Flow diagrams help visualize movement to identify inefficiencies."
+            },
+            {
+                question: "Which type of layout is most appropriate for mass production of standardized products?",
+                options: [
+                    "Product layout",
+                    "Process layout",
+                    "Fixed-position layout",
+                    "Cellular layout"
+                ],
+                correctAnswer: 0,
+                explanation: "Product layouts are used for mass production of standardized items."
+            },
+            {
+                question: "What is the main benefit of using a relationship chart (REL chart) in facilities planning?",
+                options: [
+                    "Determines optimal equipment speed",
+                    "Shows closeness requirements between departments",
+                    "Calculates labor costs",
+                    "Tracks inventory"
+                ],
+                correctAnswer: 1,
+                explanation: "REL charts show which departments should be close together for efficiency."
+            },
+            {
+                question: "Which factor is least likely to influence the location of a new manufacturing facility?",
+                options: [
+                    "Proximity to suppliers",
+                    "Access to skilled labor",
+                    "Color of the building",
+                    "Transportation infrastructure"
+                ],
+                correctAnswer: 2,
+                explanation: "Building color is not a significant factor in facility location decisions."
+            },
+            {
+                question: "What is the main objective of material handling system design?",
+                options: [
+                    "Increase manual lifting",
+                    "Minimize movement and handling costs",
+                    "Maximize inventory levels",
+                    "Reduce product quality"
+                ],
+                correctAnswer: 1,
+                explanation: "Material handling design aims to minimize movement and associated costs."
+            },
+            {
+                question: "Which layout type is most flexible for changes in product design?",
+                options: [
+                    "Product layout",
+                    "Process layout",
+                    "Fixed-position layout",
+                    "Cellular layout"
+                ],
+                correctAnswer: 1,
+                explanation: "Process layouts are flexible and can accommodate changes in product design."
+            },
+            {
+                question: "What is the primary purpose of a spaghetti diagram in facilities design?",
+                options: [
+                    "Visualize movement paths to identify inefficiencies",
+                    "Track inventory levels",
+                    "Monitor equipment maintenance",
+                    "Increase production speed"
+                ],
+                correctAnswer: 0,
+                explanation: "Spaghetti diagrams visualize movement paths to identify layout inefficiencies."
+            },
+            {
+                question: "Which factor is most important for ensuring safety in facility design?",
+                options: [
+                    "Adequate lighting and signage",
+                    "Low ceilings",
+                    "Narrow aisles",
+                    "Unmarked exits"
+                ],
+                correctAnswer: 0,
+                explanation: "Adequate lighting and signage are critical for safety."
+            },
+            {
+                question: "What is the main advantage of modular office design in manufacturing facilities?",
+                options: [
+                    "Allows easy reconfiguration",
+                    "Increases fixed costs",
+                    "Reduces communication",
+                    "Limits expansion"
+                ],
+                correctAnswer: 0,
+                explanation: "Modular offices can be reconfigured as needs change."
+            },
+            {
+                question: "Which facility layout is best for assembling large equipment that cannot be moved?",
+                options: [
+                    "Product layout",
+                    "Process layout",
+                    "Fixed-position layout",
+                    "Cellular layout"
+                ],
+                correctAnswer: 2,
+                explanation: "Fixed-position layouts are used for assembling large, immobile equipment."
+            },
+            {
+                question: "What is the main purpose of a block layout in facilities planning?",
+                options: [
+                    "Visualize department locations and adjacencies",
+                    "Track inventory levels",
+                    "Monitor equipment maintenance",
+                    "Increase production speed"
+                ],
+                correctAnswer: 0,
+                explanation: "Block layouts visualize department locations and adjacencies."
+            },
+            {
+                question: "Which factor is most important when designing storage areas in a facility?",
+                options: [
+                    "Storage area color",
+                    "Accessibility and space utilization",
+                    "Storage area temperature",
+                    "Storage area height"
+                ],
+                correctAnswer: 1,
+                explanation: "Accessibility and space utilization are key for storage area design."
+            },
+            {
+                question: "What is the main benefit of using automated guided vehicles (AGVs) in facilities?",
+                options: [
+                    "Reduce manual handling and improve efficiency",
+                    "Increase labor costs",
+                    "Decrease safety",
+                    "Limit flexibility"
+                ],
+                correctAnswer: 0,
+                explanation: "AGVs reduce manual handling and improve material movement efficiency."
+            },
+            {
+                question: "Which layout type is most suitable for a job shop producing custom products?",
+                options: [
+                    "Product layout",
+                    "Process layout",
+                    "Fixed-position layout",
+                    "Cellular layout"
+                ],
+                correctAnswer: 1,
+                explanation: "Process layouts are ideal for job shops with custom products."
+            },
+            {
+                question: "What is the main objective of using visual management tools in facilities?",
+                options: [
+                    "Increase confusion",
+                    "Enhance communication and process control",
+                    "Reduce safety",
+                    "Limit productivity"
+                ],
+                correctAnswer: 1,
+                explanation: "Visual management tools enhance communication and process control."
+            },
+            {
+                question: "Which factor is most important for designing break areas in a facility?",
+                options: [
+                    "Proximity to workstations",
+                    "Break area color",
+                    "Break area temperature",
+                    "Break area height"
+                ],
+                correctAnswer: 0,
+                explanation: "Break areas should be conveniently located near workstations."
+            },
+            {
+                question: "What is the main benefit of cross-docking in a distribution facility?",
+                options: [
+                    "Reduces storage time and handling",
+                    "Increases inventory levels",
+                    "Limits flexibility",
+                    "Decreases safety"
+                ],
+                correctAnswer: 0,
+                explanation: "Cross-docking reduces storage time and handling by moving goods directly from receiving to shipping."
+            },
+            {
+                question: "Which facility layout is best for continuous production of liquids or chemicals?",
+                options: [
+                    "Product layout",
+                    "Process layout",
+                    "Fixed-position layout",
+                    "Cellular layout"
+                ],
+                correctAnswer: 0,
+                explanation: "Product layouts are used for continuous production processes."
+            },
+            {
+                question: "What is the main purpose of a site selection analysis for a new facility?",
+                options: [
+                    "Identify optimal location based on multiple criteria",
+                    "Determine building color",
+                    "Increase labor costs",
+                    "Limit expansion"
+                ],
+                correctAnswer: 0,
+                explanation: "Site selection analysis identifies the optimal location based on criteria like cost, access, and labor."
+            },
+            {
+                question: "Which factor is most important for designing receiving docks in a facility?",
+                options: [
+                    "Dock color",
+                    "Accessibility for trucks and material flow",
+                    "Dock temperature",
+                    "Dock height"
+                ],
+                correctAnswer: 1,
+                explanation: "Receiving docks must be accessible for trucks and support efficient material flow."
+            },
+            {
+                question: "What is the main benefit of using flexible manufacturing systems (FMS)?",
+                options: [
+                    "Adapt quickly to changes in product mix",
+                    "Increase fixed costs",
+                    "Reduce communication",
+                    "Limit productivity"
+                ],
+                correctAnswer: 0,
+                explanation: "FMS allows quick adaptation to changes in product mix and volume."
+            },
+            {
+                question: "Which layout type is most suitable for repetitive assembly of small products?",
+                options: [
+                    "Product layout",
+                    "Process layout",
+                    "Fixed-position layout",
+                    "Cellular layout"
+                ],
+                correctAnswer: 0,
+                explanation: "Product layouts are ideal for repetitive assembly of small products."
+            },
+            {
+                question: "What is the main objective of using kanban systems in facilities?",
+                options: [
+                    "Visualize and control inventory flow",
+                    "Increase inventory levels",
+                    "Limit flexibility",
+                    "Decrease safety"
+                ],
+                correctAnswer: 0,
+                explanation: "Kanban systems visualize and control inventory flow for efficiency."
+            },
+            {
+                question: "Which factor is most important for designing restrooms in a facility?",
+                options: [
+                    "Proximity to work areas and accessibility",
+                    "Restroom color",
+                    "Restroom temperature",
+                    "Restroom height"
+                ],
+                correctAnswer: 0,
+                explanation: "Restrooms should be accessible and conveniently located near work areas."
+            },
+            {
+                question: "What is the main benefit of using simulation in facilities design?",
+                options: [
+                    "Test layout alternatives before implementation",
+                    "Increase labor costs",
+                    "Limit productivity",
+                    "Reduce communication"
+                ],
+                correctAnswer: 0,
+                explanation: "Simulation allows testing of layout alternatives before actual implementation."
+            },
+            {
+                question: "Which facility layout is best for a bakery producing several types of bread in batches?",
+                options: [
+                    "Product layout",
+                    "Process layout",
+                    "Fixed-position layout",
+                    "Cellular layout"
+                ],
+                correctAnswer: 1,
+                explanation: "Process layouts are suitable for batch production of multiple product types."
+            },
+            {
+                question: "What is the main purpose of a facility layout redesign?",
+                options: [
+                    "Improve workflow and reduce bottlenecks",
+                    "Increase labor costs",
+                    "Limit productivity",
+                    "Reduce communication"
+                ],
+                correctAnswer: 0,
+                explanation: "Layout redesign aims to improve workflow and reduce bottlenecks."
+            },
+            {
+                question: "Which factor is most important for designing emergency exits in a facility?",
+                options: [
+                    "Visibility and accessibility",
+                    "Exit color",
+                    "Exit temperature",
+                    "Exit height"
+                ],
+                correctAnswer: 0,
+                explanation: "Emergency exits must be visible and accessible for safety."
+            },
+            {
+                question: "Which production planning method is best for products with a strong seasonal trend?",
+                options: [
+                    "Level Production",
+                    "Chase Demand",
+                    "Batch Production",
+                    "Continuous Flow"
+                ],
+                correctAnswer: 2,
+                explanation: "Batch production is suitable for products with strong seasonal trends, allowing flexibility in production volumes."
+            },
+            {
+                question: "Which inventory management technique is best for items with highly unpredictable demand?",
+                options: [
+                    "EOQ Model",
+                    "Just-In-Time",
+                    "Safety Stock Calculation",
+                    "ABC Analysis"
+                ],
+                correctAnswer: 2,
+                explanation: "Safety stock calculation helps buffer against highly unpredictable demand."
+            },
+            {
+                question: "Which ergonomic assessment tool is best for evaluating whole body postural risk?",
+                options: [
+                    "RULA",
+                    "NIOSH Lifting Equation",
+                    "REBA",
+                    "SWOT Analysis"
+                ],
+                correctAnswer: 2,
+                explanation: "REBA evaluates whole body postural risk in various tasks."
+            },
+            {
+                question: "Which simulation technique is best for modeling interactions among autonomous agents?",
+                options: [
+                    "Discrete Event Simulation",
+                    "Monte Carlo Simulation",
+                    "Continuous Simulation",
+                    "Agent-Based Simulation"
+                ],
+                correctAnswer: 3,
+                explanation: "Agent-based simulation models interactions among autonomous agents."
+            },
+            {
+                question: "Which control chart is used for monitoring defects per unit in varying sample sizes?",
+                options: [
+                    "X-bar Chart",
+                    "p-Chart",
+                    "u-Chart",
+                    "c-Chart"
+                ],
+                correctAnswer: 2,
+                explanation: "u-Charts monitor defects per unit in varying sample sizes."
+            },
+            {
+                question: "Which advanced statistical method is used to analyze variance among groups with repeated measures?",
+                options: [
+                    "Principal Component Analysis",
+                    "Multiple Regression",
+                    "Chi-Square Test",
+                    "Repeated Measures ANOVA"
+                ],
+                correctAnswer: 3,
+                explanation: "Repeated measures ANOVA analyzes variance among groups with repeated measurements."
+            },
+            {
+                question: "Which layout type is most suitable for manufacturing a single, large product such as a ship or airplane?",
+                options: [
+                    "Product layout",
+                    "Process layout",
+                    "Fixed-position layout",
+                    "Cellular layout"
+                ],
+                correctAnswer: 2,
+                explanation: "Fixed-position layouts are used for large products that remain stationary while workers and equipment come to the product."
+            },
+            {
+                question: "Which facility layout is best for assembling large equipment that cannot be moved?",
+                options: [
+                    "Product layout",
+                    "Process layout",
+                    "Fixed-position layout",
+                    "Cellular layout"
+                ],
+                correctAnswer: 2,
+                explanation: "Fixed-position layouts are used for assembling large, immobile equipment."
+            },
+            {
+                question: "Which factor is most important for designing storage areas in a facility?",
+                options: [
+                    "Storage area color",
+                    "Accessibility and space utilization",
+                    "Storage area temperature",
+                    "Storage area height"
+                ],
+                correctAnswer: 2,
+                explanation: "Storage area temperature is important for certain products, but accessibility and space utilization are generally more critical."
+            },
+            {
+                question: "Which simulation output is most useful for evaluating customer wait times?",
+                options: [
+                    "Resource utilization",
+                    "Average cycle time",
+                    "Queue length",
+                    "Inventory levels"
+                ],
+                correctAnswer: 1,
+                explanation: "Average cycle time measures customer wait times in simulations."
+            },
+            {
+                question: "Which advanced statistical method is used to group similar observations based on characteristics?",
+                options: [
+                    "ANOVA",
+                    "Discriminant Analysis",
+                    "Multiple Regression",
+                    "Cluster Analysis"
+                ],
+                correctAnswer: 3,
+                explanation: "Cluster analysis groups similar observations based on characteristics."
+            },
+            {
+                question: "Which simulation technique is best for modeling supply chain networks?",
+                options: [
+                    "Monte Carlo Simulation",
+                    "Agent-Based Simulation",
+                    "Continuous Simulation",
+                    "Discrete Event Simulation"
+                ],
+                correctAnswer: 3,
+                explanation: "Discrete event simulation is commonly used for modeling supply chain networks."
+            },
+            {
+                question: "Which layout type is most suitable for repetitive assembly of small products?",
+                options: [
+                    "Product layout",
+                    "Process layout",
+                    "Fixed-position layout",
+                    "Cellular layout"
+                ],
+                correctAnswer: 0,
+                explanation: "Product layouts are ideal for repetitive assembly of small products."
+            },
+            {
+                question: "Which factor is most important for designing restrooms in a facility?",
+                options: [
+                    "Proximity to work areas and accessibility",
+                    "Restroom color",
+                    "Restroom temperature",
+                    "Restroom height"
+                ],
+                correctAnswer: 2,
+                explanation: "Restroom temperature is important for comfort, but proximity and accessibility are generally more critical."
+            },
+            {
+                question: "Which facility layout is best for a bakery producing several types of bread in batches?",
+                options: [
+                    "Product layout",
+                    "Process layout",
+                    "Fixed-position layout",
+                    "Cellular layout"
+                ],
+                correctAnswer: 1,
+                explanation: "Process layouts are suitable for batch production of multiple product types."
+            },
+            {
+                question: "Which factor is most important for designing emergency exits in a facility?",
+                options: [
+                    "Visibility and accessibility",
+                    "Exit color",
+                    "Exit temperature",
+                    "Exit height"
+                ],
+                correctAnswer: 2,
+                explanation: "Exit temperature is not a major factor; visibility and accessibility are most important."
+            },
+            {
+                question: "Which inventory management technique is best for items with low value and high volume?",
+                options: [
+                    "ABC Analysis",
+                    "Just-In-Time",
+                    "EOQ Model",
+                    "Safety Stock Calculation"
+                ],
+                correctAnswer: 0,
+                explanation: "ABC analysis helps manage low value, high volume items efficiently."
+            },
+            {
+                question: "Which factor is most important for designing break areas in a facility?",
+                options: [
+                    "Proximity to workstations",
+                    "Break area color",
+                    "Break area temperature",
+                    "Break area height"
+                ],
+                correctAnswer: 2,
+                explanation: "Break area temperature is important for comfort, but proximity is generally more critical."
+            },
+            {
+                question: "Which layout type is most flexible for changes in product design?",
+                options: [
+                    "Product layout",
+                    "Process layout",
+                    "Fixed-position layout",
+                    "Cellular layout"
+                ],
+                correctAnswer: 1,
+                explanation: "Process layouts are flexible and can accommodate changes in product design."
+            },
+            {
+                question: "Which factor is most important when designing aisles in a manufacturing facility?",
+                options: [
+                    "Aisle color",
+                    "Aisle width for safe material movement",
+                    "Aisle length",
+                    "Aisle temperature"
+                ],
+                correctAnswer: 2,
+                explanation: "Aisle length can affect efficiency, but aisle width for safe material movement is generally more critical."
+            },
+            {
+                question: "Which control chart is used for monitoring the proportion of defective items in varying sample sizes?",
+                options: [
+                    "X-bar Chart",
+                    "p-Chart",
+                    "u-Chart",
+                    "c-Chart"
+                ],
+                correctAnswer: 1,
+                explanation: "p-Charts monitor the proportion of defective items in varying sample sizes."
+            },
+            {
+                question: "What is the main objective of a work measurement program?",
+                options: [
+                    "Increase production speed",
+                    "Establish time standards and improve productivity",
+                    "Reduce labor costs",
+                    "Monitor inventory levels"
+                ],
+                correctAnswer: 1,
+                explanation: "Work measurement programs establish time standards and improve productivity."
+            },
+            {
+                question: "In operations research, what is the main purpose of a decision tree?",
+                options: [
+                    "To visualize possible outcomes and decisions",
+                    "To calculate inventory turnover",
+                    "To measure employee productivity",
+                    "To design facility layouts"
+                ],
+                correctAnswer: 0,
+                explanation: "Decision trees help visualize possible outcomes and decisions in complex scenarios."
+            },
+            {
+                question: "Which operations research tool is best for analyzing queuing situations?",
+                options: [
+                    "Linear programming",
+                    "Queuing theory",
+                    "Simulation modeling",
+                    "Control charts"
+                ],
+                correctAnswer: 1,
+                explanation: "Queuing theory analyzes waiting lines and service systems."
+            },
+            {
+                question: "What is the main benefit of using a sensitivity analysis in decision making?",
+                options: [
+                    "It identifies how changes in assumptions affect outcomes",
+                    "It increases production speed",
+                    "It reduces labor costs",
+                    "It monitors inventory levels"
+                ],
+                correctAnswer: 0,
+                explanation: "Sensitivity analysis shows how changes in assumptions impact decision outcomes."
+            },
+            {
+                question: "Which operations research technique is most suitable for project scheduling?",
+                options: [
+                    "PERT/CPM",
+                    "Regression analysis",
+                    "ABC analysis",
+                    "Monte Carlo simulation"
+                ],
+                correctAnswer: 0,
+                explanation: "PERT/CPM are used for project scheduling and management."
+            },
+            {
+                question: "In industrial engineering, what is the main purpose of a bottleneck analysis?",
+                options: [
+                    "To identify the process step that limits overall output",
+                    "To reduce labor costs",
+                    "To increase inventory levels",
+                    "To improve product quality"
+                ],
+                correctAnswer: 0,
+                explanation: "Bottleneck analysis identifies the step that limits system throughput."
+            },
+            {
+                question: "Which operations research concept helps managers allocate limited resources among competing activities?",
+                options: [
+                    "Process mapping",
+                    "Control charts",
+                    "Work sampling",
+                    "Linear programming"
+                ],
+                correctAnswer: 3,
+                explanation: "Linear programming allocates limited resources optimally."
+            },
+            {
+                question: "What is the main advantage of using simulation in operations research?",
+                options: [
+                    "It allows testing of scenarios without disrupting real operations",
+                    "It increases labor costs",
+                    "It reduces product quality",
+                    "It limits flexibility"
+                ],
+                correctAnswer: 0,
+                explanation: "Simulation allows testing scenarios and predicting outcomes safely."
+            },
+            {
+                question: "In a facility, what is the best approach to reduce waiting times at a service counter?",
+                options: [
+                    "Decrease signage",
+                    "Reduce lighting",
+                    "Increase inventory levels",
+                    "Increase the number of service staff"
+                ],
+                correctAnswer: 3,
+                explanation: "Increasing service staff can reduce customer waiting times."
+            },
+            {
+                question: "Which operations research method is used to determine the optimal mix of products to manufacture?",
+                options: [
+                    "Work measurement",
+                    "Queuing theory",
+                    "Linear programming",
+                    "Process mapping"
+                ],
+                correctAnswer: 2,
+                explanation: "Linear programming finds the optimal product mix given constraints."
+            },
+            {
+                question: "What is the main purpose of a payoff table in decision analysis?",
+                options: [
+                    "To compare possible outcomes for different decisions",
+                    "To track inventory levels",
+                    "To measure employee productivity",
+                    "To design facility layouts"
+                ],
+                correctAnswer: 0,
+                explanation: "Payoff tables compare outcomes for various decision alternatives."
+            },
+            {
+                question: "In operations research, what does the term 'constraint' refer to?",
+                options: [
+                    "A limitation or requirement in a mathematical model",
+                    "A type of inventory",
+                    "A production technique",
+                    "A quality control tool"
+                ],
+                correctAnswer: 0,
+                explanation: "Constraints are limitations or requirements in optimization models."
+            },
+            {
+                question: "Which situation best illustrates the use of queuing theory?",
+                options: [
+                    "Calculating inventory turnover",
+                    "Designing a new product",
+                    "Measuring employee satisfaction",
+                    "Analyzing customer wait times at a bank"
+                ],
+                correctAnswer: 3,
+                explanation: "Queuing theory is used to analyze waiting lines, such as at a bank."
+            },
+            {
+                question: "What is the main goal of a process improvement initiative in industrial engineering?",
+                options: [
+                    "To limit flexibility",
+                    "To increase labor costs",
+                    "To enhance efficiency and reduce waste",
+                    "To reduce product quality"
+                ],
+                correctAnswer: 2,
+                explanation: "Process improvement initiatives aim to enhance efficiency and reduce waste."
+            },
+            {
+                question: "Which operations research tool is most useful for evaluating alternative facility locations?",
+                options: [
+                    "Work sampling",
+                    "Control charts",
+                    "Location analysis models",
+                    "Process mapping"
+                ],
+                correctAnswer: 2,
+                explanation: "Location analysis models evaluate alternative facility locations."
+            },
+            {
+                question: "In a manufacturing plant, what is the best way to identify the cause of frequent machine breakdowns?",
+                options: [
+                    "Conduct a root cause analysis",
+                    "Increase inventory levels",
+                    "Reduce lighting",
+                    "Limit flexibility"
+                ],
+                correctAnswer: 0,
+                explanation: "Root cause analysis helps identify underlying causes of breakdowns."
+            },
+            {
+                question: "Which operations research concept is used to analyze trade-offs between cost and service level in inventory management?",
+                options: [
+                    "Work measurement",
+                    "Process mapping",
+                    "Inventory optimization",
+                    "Control charts"
+                ],
+                correctAnswer: 2,
+                explanation: "Inventory optimization analyzes cost and service level trade-offs."
+            },
+            {
+                question: "What is the main purpose of a network diagram in project management?",
+                options: [
+                    "To visualize task dependencies and project flow",
+                    "To track inventory levels",
+                    "To measure employee productivity",
+                    "To design facility layouts"
+                ],
+                correctAnswer: 0,
+                explanation: "Network diagrams visualize task dependencies and project flow."
+            },
+            {
+                question: "Which operations research technique is best for analyzing the impact of uncertainty in supply chain decisions?",
+                options: [
+                    "Simulation modeling",
+                    "Linear programming",
+                    "Work measurement",
+                    "Process mapping"
+                ],
+                correctAnswer: 0,
+                explanation: "Simulation modeling analyzes the impact of uncertainty in supply chains."
+            },
+            {
+                question: "In industrial engineering, what is the main benefit of using a process flowchart?",
+                options: [
+                    "It limits flexibility",
+                    "It increases labor costs",
+                    "It helps visualize and analyze workflow for improvement",
+                    "It reduces product quality"
+                ],
+                correctAnswer: 2,
+                explanation: "Process flowcharts help visualize and analyze workflow for improvement."
+            },
+
+        ];
+
+        // Shuffle and select 50 questions
+        function getRandomQuestions(arr, count) {
+            // Fisher-Yates shuffle
+            const shuffled = arr.slice();
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled.slice(0, count);
+        }
+
+        const questions = getRandomQuestions(allQuestions, 50);
+
+        // Initialize quiz variables
+        let currentQuestion = 0;
+        let userAnswers = Array(questions.length).fill(null);
+        let quizCompleted = false;
+
+        // DOM Elements
+        const questionNumberElement = document.getElementById('question-number');
+        const questionTextElement = document.getElementById('question-text');
+        const optionsContainerElement = document.getElementById('options-container');
+        const prevButton = document.getElementById('prev-btn');
+        const nextButton = document.getElementById('next-btn');
+        const progressBar = document.getElementById('progress-bar');
+        const questionContainer = document.getElementById('question-container');
+        const resultsContainer = document.getElementById('results-container');
+        const scoreValueElement = document.getElementById('score-value');
+        const scoreTextElement = document.getElementById('score-text');
+        const performanceFeedbackElement = document.getElementById('performance-feedback');
+        const incorrectAnswersReviewElement = document.getElementById('incorrect-answers-review');
+        const restartButton = document.getElementById('restart-btn');
+
+        // Initialize the quiz
+        function initializeQuiz() {
+            showQuestion(currentQuestion);
+            updateProgressBar();
+            prevButton.addEventListener('click', goToPreviousQuestion);
+            nextButton.addEventListener('click', goToNextQuestion);
+            restartButton.addEventListener('click', restartQuiz);
+        }
+
+        // Display question
+        function showQuestion(index) {
+            const question = questions[index];
+            questionNumberElement.textContent = `Question ${index + 1} of ${questions.length}`;
+            questionTextElement.textContent = question.question;
+            optionsContainerElement.innerHTML = '';
+            question.options.forEach((option, optionIndex) => {
+                const optionElement = document.createElement('div');
+                optionElement.classList.add('option');
+                if (userAnswers[index] === optionIndex) {
+                    optionElement.classList.add('selected');
+                }
+                optionElement.textContent = option;
+                optionElement.addEventListener('click', () => selectOption(optionIndex));
+                optionsContainerElement.appendChild(optionElement);
+            });
+            prevButton.disabled = index === 0;
+            if (index === questions.length - 1) {
+                nextButton.textContent = 'Submit';
+                nextButton.classList.add('submit');
+            } else {
+                nextButton.textContent = 'Next';
+                nextButton.classList.remove('submit');
+            }
+        }
+
+        function selectOption(optionIndex) {
+            userAnswers[currentQuestion] = optionIndex;
+            const options = optionsContainerElement.querySelectorAll('.option');
+            options.forEach((option, index) => {
+                if (index === optionIndex) {
+                    option.classList.add('selected');
+                } else {
+                    option.classList.remove('selected');
+                }
+            });
+            if (nextButton.disabled) {
+                nextButton.disabled = false;
+            }
+        }
+
+        function goToNextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+                updateProgressBar();
+            } else {
+                submitQuiz();
+            }
+        }
+
+        function goToPreviousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+                updateProgressBar();
+            }
+        }
+
+        function updateProgressBar() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        function submitQuiz() {
+            quizCompleted = true;
+            const score = calculateScore();
+            showResults(score);
+            questionContainer.style.display = 'none';
+            resultsContainer.style.display = 'block';
+        }
+
+        function calculateScore() {
+            let correctCount = 0;
+            userAnswers.forEach((answer, index) => {
+                if (answer === questions[index].correctAnswer) {
+                    correctCount++;
+                }
+            });
+            return correctCount;
+        }
+
+        function showResults(score) {
+            scoreValueElement.textContent = `${score}/${questions.length}`;
+            const percentage = (score / questions.length) * 100;
+            let performanceText = '';
+            let feedbackText = '';
+            if (percentage >= 90) {
+                performanceText = 'Expert Level!';
+                feedbackText = 'Your knowledge of Industrial Engineering is exceptional. You demonstrate deep understanding of key concepts and their applications. Consider pursuing advanced certifications or mentoring others in the field.';
+            } else if (percentage >= 70) {
+                performanceText = 'Proficient Level';
+                feedbackText = 'You have a solid grasp of Industrial Engineering fundamentals. Focus on expanding your knowledge in specialized areas like lean manufacturing, quality control, or operations research to further enhance your expertise.';
+            } else if (percentage >= 50) {
+                performanceText = 'Intermediate Level';
+                feedbackText = 'You have a basic understanding of Industrial Engineering concepts but would benefit from more focused study. Consider reviewing production planning, process improvement methodologies, and statistical quality control.';
+            } else {
+                performanceText = 'Beginner Level';
+                feedbackText = 'You\'re just starting your Industrial Engineering journey. Focus on learning the fundamental concepts like process mapping, time studies, and basic quality tools. The field offers many rewarding opportunities for those who develop these skills.';
+            }
+            scoreTextElement.textContent = performanceText;
+            performanceFeedbackElement.textContent = feedbackText;
+            showIncorrectAnswersReview();
+        }
+
+        function showIncorrectAnswersReview() {
+            incorrectAnswersReviewElement.innerHTML = '';
+            userAnswers.forEach((answer, index) => {
+                if (answer !== questions[index].correctAnswer) {
+                    const reviewItem = document.createElement('div');
+                    reviewItem.classList.add('review-item', 'incorrect');
+                    const questionElement = document.createElement('div');
+                    questionElement.classList.add('review-question');
+                    questionElement.textContent = `Question ${index + 1}: ${questions[index].question}`;
+                    const userAnswerElement = document.createElement('div');
+                    userAnswerElement.classList.add('review-answer');
+                    userAnswerElement.innerHTML = `<strong>Your answer:</strong> ${questions[index].options[answer] || 'Not answered'}`;
+                    const correctAnswerElement = document.createElement('div');
+                    correctAnswerElement.classList.add('review-answer');
+                    correctAnswerElement.innerHTML = `<strong>Correct answer:</strong> ${questions[index].options[questions[index].correctAnswer]}`;
+                    const explanationElement = document.createElement('div');
+                    explanationElement.classList.add('review-explanation');
+                    explanationElement.innerHTML = `<strong>Explanation:</strong> ${questions[index].explanation}`;
+                    reviewItem.appendChild(questionElement);
+                    reviewItem.appendChild(userAnswerElement);
+                    reviewItem.appendChild(correctAnswerElement);
+                    reviewItem.appendChild(explanationElement);
+                    incorrectAnswersReviewElement.appendChild(reviewItem);
+                }
+            });
+            if (incorrectAnswersReviewElement.children.length === 0) {
+                incorrectAnswersReviewElement.innerHTML = '<p>Congratulations! You answered all questions correctly.</p>';
+            }
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            userAnswers = Array(questions.length).fill(null);
+            quizCompleted = false;
+            questionContainer.style.display = 'block';
+            resultsContainer.style.display = 'none';
+            showQuestion(currentQuestion);
+            updateProgressBar();
+        }
+
+        document.addEventListener('DOMContentLoaded', initializeQuiz);
+    </script>
+
+        <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+
+    <div class="sidebar-category">
+        <div class="sidebar-category-header">
+            <span>Site Navigation</span>
+            <span>+</span>
+        </div>
+        
+        <div class="sidebar-category-content">
+            <a href="/index.html" class="sidebar-link">Home</a>
+            <a href="/about.html" class="sidebar-link">About</a>
+            <a href="/terms.html" class="sidebar-link">Terms</a>
+            <a href="/privacy.html" class="sidebar-link">Privacy Policy</a>
+            <a href="/contact.html" class="sidebar-link">Contact Us</a>
+        </div>
+    </div>
+        
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>IE Assessments</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="ie-career-quiz.html" class="sidebar-link">IE Career Quiz</a>
+                <a href="ie-general-info-quiz.html" class="sidebar-link">IE General Info Quiz</a>
+                <a href="should-i-study-industrial-engineering-quiz.html" class="sidebar-link">Should I Study Industrial Engineering Quiz</a>
+            </div>
+        </div>  
+    
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="/jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="/linebalancing.html" class="sidebar-link">Line Balancing</a>
+                <a href="/takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="/synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+                <a href="/machine-utilization-calculator.html" class="sidebar-link">Machine Utilization</a>
+                <a href="/manpower-calculator.html" class="sidebar-link active">Manpower Calculator</a>
+                <a href="/production-capacity-calculator.html" class="sidebar-link">Production Capacity</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="/controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="/processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="/sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="/oee-calculation.html" class="sidebar-link">OEE Calculator</a>
+                <a href="/quality-function-deployment" class="sidebar-link">Quality Function Deployment</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/anova.html" class="sidebar-link">ANOVA</a>
+                <a href="/chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="/confidence-interval-calculator.html" class="sidebar-link">Confidence Interval</a>
+                <a href="/correlation.html" class="sidebar-link">Correlation Analysis</a>
+                <a href="/coefficient-of-variation-calculator.html" class="sidebar-link">Coefficient of Variation</a>
+                <a href="/goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="/regression.html" class="sidebar-link">Regression</a>
+                <a href="/samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="/taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="/ttest.html" class="sidebar-link">T-Test</a>
+                <a href="/ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/abc-analysis-calculator.html" class="sidebar-link">ABC Analysis</a>
+                <a href="/inventory-turnover-calculator.html" class="sidebar-link">Inventory Turnover</a>
+                <a href="/eoq-formula.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="/reorder-point-calculator.html" class="sidebar-link">Reorder Point</a>
+                <a href="/kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="/newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+                <a href="/safety-stock-calculator.html" class="sidebar-link">Safety Stock Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Measurement</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="/predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="/learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="/littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="/worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="/noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="/posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="/workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="/workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="/queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="/decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="/gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="/markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="/costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="/depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="/timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+                <a href="/failure-mode-and-effects-analysis-fmea.html" class="sidebar-link">FMEA</a>
+            </div>
+        </div>
+
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Other Calculators</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/into-everything.html" class="sidebar-link">Into Everything Calculators</a>
+            </div>
+        </div>
+
+ 
+
+
+</body>
+</html>

@@ -438,5 +438,17 @@
     <changefreq>yearly</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://iecalculators.online/into-everything/atar-calculator.html</loc>
+    <lastmod>2024-09-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://iecalculators.online/into-everything/gpa-calculator.html</loc>
+    <lastmod>2024-09-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>1.0</priority>
+  </url>
 
 </urlset>

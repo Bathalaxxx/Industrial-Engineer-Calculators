@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Discover which industrial engineering career path suits you best with our comprehensive career quiz for IE graduates.">
+    <title>Industrial Engineering Career Quiz | Find Your Ideal Career Path</title>
+
+    </script>
+    <!--FAVICON-->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+  
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-3BSHG1DE6V');
+    </script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5607576434988374"
+     crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-5607576434988374">
+
+     <!-- Clarity tracking code for https://iecalculators.online/ -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "t31aicr9ep");
+    </script>  
+
+    <style>
+        /* Consistent with existing style */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block; /* Changed from none to block */
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        /* Quiz Styles */
+        .quiz-container {
+            position: relative;
+            min-height: 400px;
+        }
+        
+        .quiz-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .question-container {
+            display: none;
+        }
+        
+        .question-container.active {
+            display: block;
+        }
+        
+        .question-text {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+        
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+        }
+        
+        .option {
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .option:hover {
+            background-color: #f5f7fa;
+            border-color: var(--secondary-color);
+        }
+        
+        .option.selected {
+            background-color: #e3f2fd;
+            border-color: var(--secondary-color);
+        }
+        
+        .quiz-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+        
+        .quiz-btn {
+            padding: 0.8rem 1.5rem;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .quiz-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .quiz-btn:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+        
+        .results-container {
+            display: none;
+        }
+        
+        .score-display {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .score-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .career-recommendation {
+            background-color: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 5px;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .career-recommendation h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .review-section {
+            margin-top: 2rem;
+        }
+        
+        .review-item {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .review-item.correct {
+            border-left: 4px solid #2ecc71;
+        }
+        
+        .review-item.incorrect {
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .review-question {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .review-answer {
+            margin-bottom: 0.5rem;
+        }
+        
+        .review-explanation {
+            font-style: italic;
+            color: var(--text-light);
+        }
+        
+        /* Blog Section */
+        .blog-section {
+            margin-top: 3rem;
+        }
+        
+        .blog-intro {
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+        
+        .blog-subheading {
+            color: var(--primary-color);
+            margin: 1.5rem 0 1rem;
+        }
+        
+        .blog-conclusion {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid #ddd;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            nav ul li {
+                margin: 0.5rem;
+            }
+            
+            .quiz-navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .quiz-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Industrial Engineering <span>Calculators</span></div>
+                <nav>
+                    <ul>
+                        <div style="display: flex; gap: 1rem;"></div>
+                            <a href="/index.html" style="color: white; padding: 0.5rem 1rem; text-decoration: none;">Home</a>
+                            <a href="/about.html" style="color: white; padding: 0.5rem 1rem; text-decoration: none;">About</a>
+                            <a href="/contact.html" style="color: white; padding: 0.5rem 1rem; text-decoration: none;">Contact</a>
+                            <a href="/privacy.html" style="color: white; padding: 0.5rem 1rem; text-decoration: none;">Privacy Policy</a>
+                            <a href="/terms.html" style="color: white; padding: 0.5rem 1rem; text-decoration: none;">Terms</a>
+                        </div>
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Industrial Engineering Career Quiz</h1>
+            <p>Discover which career path aligns with your skills, interests, and personality</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="quiz-intro">
+                <h2>Find Your Ideal Industrial Engineering Career</h2>
+                <p>As an industrial engineering graduate, you have a wide range of career options available. This quiz will help you identify which career paths align best with your skills, interests, and personality traits. Answer honestly for the most accurate results!</p>
+            </div>
+            
+            <div class="quiz-container">
+                <div class="question-container active" data-question="1">
+                    <div class="question-text">1. Which aspect of industrial engineering interests you the most?</div>
+                    <div class="options-container">
+                        <div class="option" data-value="traditional">Optimizing processes and improving efficiency</div>
+                        <div class="option" data-value="supplychain">Managing logistics and supply chain operations</div>
+                        <div class="option" data-value="data">Analyzing data and creating models</div>
+                        <div class="option" data-value="technology">Implementing technology and automation solutions</div>
+                        <div class="option" data-value="management">Leading teams and strategic planning</div>
+                    </div>
+                </div>
+                
+                <div class="question-container" data-question="2">
+                    <div class="question-text">2. What type of work environment do you prefer?</div>
+                    <div class="options-container">
+                        <div class="option" data-value="traditional">Manufacturing floor or production facility</div>
+                        <div class="option" data-value="supplychain">Warehouse or distribution center</div>
+                        <div class="option" data-value="data">Office setting with analytical tools</div>
+                        <div class="option" data-value="technology">Tech-focused environment with new systems</div>
+                        <div class="option" data-value="management">Corporate office with cross-functional teams</div>
+                    </div>
+                </div>
+                
+                <div class="question-container" data-question="3">
+                    <div class="question-text">3. Which skill set do you consider your strongest?</div>
+                    <div class="options-container">
+                        <div class="option" data-value="traditional">Process improvement and optimization</div>
+                        <div class="option" data-value="supplychain">Logistics and inventory management</div>
+                        <div class="option" data-value="data">Statistical analysis and modeling</div>
+                        <div class="option" data-value="technology">Systems implementation and technical solutions</div>
+                        <div class="option" data-value="management">Leadership and strategic thinking</div>
+                    </div>
+                </div>
+                
+                <div class="question-container" data-question="4">
+                    <div class="question-text">4. What is your preferred way of solving problems?</div>
+                    <div class="options-container">
+                        <div class="option" data-value="traditional">Hands-on approach with direct implementation</div>
+                        <div class="option" data-value="supplychain">Creating efficient systems and workflows</div>
+                        <div class="option" data-value="data">Data-driven analysis and evidence-based solutions</div>
+                        <div class="option" data-value="technology">Leveraging technology and automation</div>
+                        <div class="option" data-value="management">Collaborating with teams to develop strategies</div>
+                    </div>
+                </div>
+                
+                <div class="question-container" data-question="5">
+                    <div class="question-text">5. Which of these certifications interests you most?</div>
+                    <div class="options-container">
+                        <div class="option" data-value="traditional">Six Sigma Black Belt</div>
+                        <div class="option" data-value="supplychain">APICS CPIM (Certified in Production and Inventory Management)</div>
+                        <div class="option" data-value="data">Certified Analytics Professional</div>
+                        <div class="option" data-value="technology">ERP certification (SAP, Oracle)</div>
+                        <div class="option" data-value="management">Project Management Professional (PMP)</div>
+                    </div>
+                </div>
+                
+                <div class="quiz-navigation">
+                    <button class="quiz-btn" id="prev-btn" disabled>Back</button>
+                    <button class="quiz-btn" id="next-btn">Next</button>
+                    <button class="quiz-btn" id="submit-btn" style="display: none;">See Results</button>
+                </div>
+            </div>
+            
+            <div class="results-container" id="results-container">
+                <div class="score-display">
+                    <h2>Your Career Match Results</h2>
+                    <p>Based on your answers, your career compatibility score is:</p>
+                    <div class="score-value" id="score-value">0%</div>
+                </div>
+                
+                <div class="career-recommendation" id="career-recommendation">
+                    <!-- Content will be populated by JavaScript -->
+                </div>
+                
+                <div class="review-section">
+                    <h3>Review of Your Answers</h3>
+                    <div id="answers-review">
+                        <!-- Content will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="content-section blog-section">
+            <h2>Exploring Industrial Engineering Career Paths</h2>
+            <div class="blog-intro">
+                <p>Industrial engineering offers diverse career opportunities across multiple industries. Understanding the various specializations can help graduates make informed decisions about their professional journey.</p>
+            </div>
+            
+            <h3 class="blog-subheading">What Does Industrial Engineering Career Diversity Mean and Why Is It Important?</h3>
+            <p>Industrial engineering is unique among engineering disciplines for its breadth of application. Unlike more specialized fields, IE graduates can work in manufacturing, healthcare, logistics, technology, finance, and countless other sectors. This diversity is important because it allows professionals to align their careers with their specific interests while applying fundamental IE principles of optimization, efficiency, and systems thinking.</p>
+            
+            <h3 class="blog-subheading">What Are the Core Components of Industrial Engineering Careers?</h3>
+            <p>Despite the diversity, most industrial engineering careers share common foundational elements:</p>
+            <ul id="health-recommendations" style="padding-left: 1.5rem;">
+                <li><strong>Systems Optimization</strong>: Improving processes for better efficiency and productivity</li>
+                <li><strong>Data Analysis</strong>: Using statistical tools to inform decision-making</li>
+                <li><strong>Resource Management</strong>: Effectively allocating people, materials, and equipment</li>
+                <li><strong>Quality Control</strong>: Ensuring products and services meet standards</li>
+                <li><strong>Project Management</strong>: Planning and executing improvement initiatives</li>
+            </ul>
+            
+            <h3 class="blog-subheading">How Is Industrial Engineering Different From Data Science and Analytics?</h3>
+            <p>While industrial engineers often work with data, their approach differs from pure data scientists. IEs focus on the practical application of data to improve physical and organizational systems. They consider not just the numbers but also human factors, physical constraints, and business objectives. Data science tends to be more focused on algorithmic models and predictive analytics, while industrial engineering emphasizes holistic system improvement.</p>
+            
+            <h3 class="blog-subheading">Which Tools Help Industrial Engineers Excel in Their Careers?</h3>
+            <p>Industrial engineers leverage various tools depending on their specialization:</p>
+            <ul id="health-recommendations" style="padding-left: 1.5rem;">
+                <li><strong>Process Improvement</strong>: Value stream mapping, Six Sigma methodologies, time study tools</li>
+                <li><strong>Data Analysis</strong>: Excel, R, Python, Minitab, SQL</li>
+                <li><strong>Simulation & Modeling</strong>: Arena, Simul8, AnyLogic</li>
+                <li><strong>ERP Systems</strong>: SAP, Oracle, Microsoft Dynamics</li>
+                <li><strong>Project Management</strong>: Microsoft Project, JIRA, Asana</li>
+            </ul>
+            
+            <h3 class="blog-subheading">Can Industrial Engineers Transition to Non-Technical Roles?</h3>
+            <p>Absolutely. The systems thinking and problem-solving skills developed in industrial engineering are highly valued in non-technical roles. Many IEs transition to management consulting, business analysis, operations management, and executive positions. The analytical mindset combined with understanding of operational realities makes IEs particularly well-suited for leadership roles that bridge technical and business functions.</p>
+            
+            <h3 class="blog-subheading">What Are Common Career Advancement Paths for Industrial Engineers?</h3>
+            <p>Industrial engineers typically advance through one of three paths: technical specialization, management, or consulting. Technical specialists deepen their expertise in areas like quality engineering, supply chain analytics, or ergonomics. Management tracks lead to roles like operations manager, plant manager, or director of continuous improvement. Consultants often work with multiple organizations to solve diverse challenges.</p>
+            
+            <h3 class="blog-subheading">How Do You Build a Successful Career in Industrial Engineering?</h3>
+            <p>Building a successful IE career involves:</p>
+            <ol id="health-recommendations" style="padding-left: 1.5rem;">
+                <li>Gaining diverse experience across different functions and industries</li>
+                <li>Developing both technical and soft skills (communication, leadership)</li>
+                <li>Pursuing relevant certifications (Six Sigma, PMP, PE license)</li>
+                <li>Building a professional network through organizations like Institute of Industrial and Systems Engineers (IISE)</li>
+                <li>Staying current with emerging technologies like IoT, AI, and automation</li>
+            </ol>
+            
+            <div class="blog-conclusion">
+                <p>Industrial engineering offers one of the most versatile and future-proof career foundations. Whether you're interested in hands-on process improvement, data analytics, supply chain management, or executive leadership, an IE background provides the systems thinking and problem-solving skills needed to succeed. The key is to identify which aspect of IE aligns with your interests and strengths, then pursue targeted experiences and development opportunities in that direction.</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-links">
+                <a href="/index.html">Home</a>
+                <a href="/about.html">About</a>
+                <a href="/terms.html">Terms</a>
+                <a href="/privacy.html">Privacy Policy</a>
+                <a href="/contact.html">Contact Us</a>
+                
+            </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            <p class="copyright">&copy; 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- xxxx navigation start xxxxx -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebarClose = document.querySelector('.sidebar-close');
+            const overlay = document.querySelector('.overlay');
+            const body = document.body;
+            
+            // Toggle sidebar
+            function toggleSidebar() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+                body.classList.toggle('sidebar-open');
+            }
+            
+            // Toggle category expansion
+            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
+            categoryHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const category = this.parentElement;
+                    category.classList.toggle('open');
+                    
+                    // Update the expand/collapse icon
+                    const icon = this.querySelector('span:last-child');
+                    icon.textContent = category.classList.contains('open') ? '−' : '+';
+                });
+            });
+            
+            // Event listeners
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            sidebarClose.addEventListener('click', toggleSidebar);
+            overlay.addEventListener('click', toggleSidebar);
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 768 && 
+                    body.classList.contains('sidebar-open') && 
+                    !sidebar.contains(event.target) && 
+                    event.target !== sidebarToggle) {
+                    toggleSidebar();
+                }
+            });
+            
+            // Close sidebar when pressing Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && body.classList.contains('sidebar-open')) {
+                    toggleSidebar();
+                }
+            });
+        });
+    </script>
+    <!-- xxxx navigation end xxxxx -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Quiz variables
+            const questions = document.querySelectorAll('.question-container');
+            const options = document.querySelectorAll('.option');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const submitBtn = document.getElementById('submit-btn');
+            const resultsContainer = document.getElementById('results-container');
+            const scoreValue = document.getElementById('score-value');
+            const careerRecommendation = document.getElementById('career-recommendation');
+            const answersReview = document.getElementById('answers-review');
+            
+            let currentQuestion = 0;
+            const userAnswers = [];
+            const careerScores = {
+                traditional: 0,
+                supplychain: 0,
+                data: 0,
+                technology: 0,
+                management: 0
+            };
+            
+            // Career definitions
+            const careerDefinitions = {
+                traditional: {
+                    title: "Traditional IE Careers",
+                    description: "You're suited for roles focused on process improvement, manufacturing efficiency, and quality control.",
+                    careers: [
+                        "Process Engineer – streamline workflows, improve efficiency in manufacturing or service systems.",
+                        "Quality Engineer / Quality Assurance Analyst – ensure product/service quality using Six Sigma, Lean, TQM.",
+                        "Production/Manufacturing Engineer – optimize production lines, factory layouts, and resource allocation.",
+                        "Plant Engineer – manage operations, equipment maintenance, and process reliability.",
+                        "Facilities Planner – design layouts, workplace ergonomics, and capacity planning."
+                    ]
+                },
+                supplychain: {
+                    title: "Operations & Supply Chain",
+                    description: "Your strengths align with logistics, inventory management, and supply chain optimization.",
+                    careers: [
+                        "Supply Chain Analyst / Supply Chain Manager – logistics, procurement, and vendor management.",
+                        "Operations Manager – oversee daily operations, improve throughput and service delivery.",
+                        "Logistics Engineer – design transportation and distribution networks.",
+                        "Inventory Control Specialist – manage stock levels, forecasting, and warehouse operations.",
+                        "Procurement / Sourcing Specialist – optimize supplier selection and cost savings."
+                    ]
+                },
+                data: {
+                    title: "Data & Analytics",
+                    description: "You excel at data-driven decision making, statistical analysis, and mathematical modeling.",
+                    careers: [
+                        "Data Analyst / Business Analyst – apply statistical tools to decision-making.",
+                        "Operations Research Analyst – use mathematical modeling, simulations, optimization techniques.",
+                        "Decision Science Specialist – support management decisions with data-driven insights.",
+                        "Process Improvement Consultant – Lean, Six Sigma, Kaizen projects across industries."
+                    ]
+                },
+                technology: {
+                    title: "Technology & Systems",
+                    description: "You're suited for roles that implement technology solutions, automation, and systems integration.",
+                    careers: [
+                        "Systems Engineer – design and optimize integrated systems (people, machines, software).",
+                        "ERP/Business Systems Analyst – implement and manage enterprise resource planning (SAP, Oracle).",
+                        "Automation Engineer – robotics, industrial automation, and smart manufacturing.",
+                        "Human Factors Engineer (Ergonomics) – optimize human-machine interactions.",
+                        "Project Engineer – lead cross-functional projects, manage timelines and resources."
+                    ]
+                },
+                management: {
+                    title: "Finance, Management & Consulting",
+                    description: "Your strengths lie in strategic planning, leadership, and business consulting.",
+                    careers: [
+                        "Management Consultant – efficiency, operations strategy, and restructuring.",
+                        "Operations/Strategy Analyst – corporate decision-making support.",
+                        "Financial Analyst (Industrial focus) – cost analysis, budgeting, operations finance.",
+                        "Risk & Compliance Analyst – improve safety, regulations, and process reliability.",
+                        "Lean Six Sigma Consultant – specialized process improvement expertise."
+                    ]
+                }
+            };
+            
+            // Question explanations
+            const questionExplanations = [
+                "This question identifies your primary area of interest within industrial engineering, which strongly influences career satisfaction.",
+                "Work environment preference is crucial for long-term job satisfaction and performance.",
+                "Understanding your strongest skills helps match you with careers that leverage those abilities.",
+                "Problem-solving approach reveals whether you're more hands-on, analytical, technical, or strategic.",
+                "Certification interests often align with specific career paths and specializations."
+            ];
+            
+            // Initialize quiz
+            function initQuiz() {
+                showQuestion(currentQuestion);
+                updateNavigation();
+            }
+            
+            // Show specific question
+            function showQuestion(index) {
+                questions.forEach((question, i) => {
+                    question.classList.toggle('active', i === index);
+                });
+            }
+            
+            // Update navigation buttons
+            function updateNavigation() {
+                prevBtn.disabled = currentQuestion === 0;
+                
+                if (currentQuestion === questions.length - 1) {
+                    nextBtn.style.display = 'none';
+                    submitBtn.style.display = 'block';
+                } else {
+                    nextBtn.style.display = 'block';
+                    submitBtn.style.display = 'none';
+                }
+            }
+            
+            // Move to next question
+            function nextQuestion() {
+                if (currentQuestion < questions.length - 1) {
+                    currentQuestion++;
+                    showQuestion(currentQuestion);
+                    updateNavigation();
+                }
+            }
+            
+            // Move to previous question
+            function prevQuestion() {
+                if (currentQuestion > 0) {
+                    currentQuestion--;
+                    showQuestion(currentQuestion);
+                    updateNavigation();
+                }
+            }
+            
+            // Calculate results
+            function calculateResults() {
+                // Find the career category with the highest score
+                let maxScore = 0;
+                let recommendedCareer = '';
+                
+                for (const career in careerScores) {
+                    if (careerScores[career] > maxScore) {
+                        maxScore = careerScores[career];
+                        recommendedCareer = career;
+                    }
+                }
+                
+                // Calculate percentage score (max possible is 5 points per career path)
+                const percentage = Math.round((maxScore / 5) * 100);
+                scoreValue.textContent = `${percentage}%`;
+                
+                // Display career recommendation
+                const careerData = careerDefinitions[recommendedCareer];
+                let careerHTML = `
+                    <h3>${careerData.title}</h3>
+                    <p>${careerData.description}</p>
+                    <h4>Recommended Career Paths:</h4>
+                    <ul style="padding-left: 1.5rem;">
+                `;
+                
+                careerData.careers.forEach(career => {
+                    careerHTML += `<li>${career}</li>`;
+                });
+                
+                careerHTML += `</ul>`;
+                careerRecommendation.innerHTML = careerHTML;
+                
+                // Generate answer review
+                let reviewHTML = '';
+                
+                for (let i = 0; i < userAnswers.length; i++) {
+                    const answer = userAnswers[i];
+                    const explanation = questionExplanations[i];
+                    
+                    reviewHTML += `
+                        <div class="review-item">
+                            <div class="review-question">Question ${i + 1}: ${questions[i].querySelector('.question-text').textContent}</div>
+                            <div class="review-answer">Your selection: ${answer.text}</div>
+                            <div class="review-explanation">${explanation}</div>
+                        </div>
+                    `;
+                }
+                
+                answersReview.innerHTML = reviewHTML;
+                
+                // Show results container
+                resultsContainer.style.display = 'block';
+            }
+            
+            // Event listeners for options
+            options.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove selected class from all options in this question
+                    const parentQuestion = this.closest('.question-container');
+                    parentQuestion.querySelectorAll('.option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    
+                    // Add selected class to clicked option
+                    this.classList.add('selected');
+                    
+                    // Store the answer
+                    const questionIndex = parseInt(parentQuestion.dataset.question) - 1;
+                    userAnswers[questionIndex] = {
+                        value: this.dataset.value,
+                        text: this.textContent
+                    };
+                    
+                    // Update career scores
+                    careerScores[this.dataset.value]++;
+                });
+            });
+            
+            // Event listeners for navigation buttons
+            nextBtn.addEventListener('click', function() {
+                // Ensure an option is selected before proceeding
+                const currentOptions = questions[currentQuestion].querySelectorAll('.option');
+                let optionSelected = false;
+                
+                currentOptions.forEach(option => {
+                    if (option.classList.contains('selected')) {
+                        optionSelected = true;
+                    }
+                });
+                
+                if (optionSelected) {
+                    nextQuestion();
+                } else {
+                    alert('Please select an option before continuing.');
+                }
+            });
+            
+            prevBtn.addEventListener('click', prevQuestion);
+            
+            submitBtn.addEventListener('click', function() {
+                // Ensure an option is selected for the last question
+                const currentOptions = questions[currentQuestion].querySelectorAll('.option');
+                let optionSelected = false;
+                
+                currentOptions.forEach(option => {
+                    if (option.classList.contains('selected')) {
+                        optionSelected = true;
+                    }
+                });
+                
+                if (optionSelected) {
+                    calculateResults();
+                    // Scroll to results
+                    resultsContainer.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    alert('Please select an option before submitting.');
+                }
+            });
+            
+            // Initialize the quiz
+            initQuiz();
+        });
+    </script>
+
+        <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+
+    <div class="sidebar-category">
+        <div class="sidebar-category-header">
+            <span>Site Navigation</span>
+            <span>+</span>
+        </div>
+        
+        <div class="sidebar-category-content">
+            <a href="/index.html" class="sidebar-link">Home</a>
+            <a href="/about.html" class="sidebar-link">About</a>
+            <a href="/terms.html" class="sidebar-link">Terms</a>
+            <a href="/privacy.html" class="sidebar-link">Privacy Policy</a>
+            <a href="/contact.html" class="sidebar-link">Contact Us</a>
+        </div>
+    </div>
+        
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>IE Assessments</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="ie-career-quiz.html" class="sidebar-link">IE Career Quiz</a>
+                <a href="ie-general-info-quiz.html" class="sidebar-link">IE General Info Quiz</a>
+                <a href="should-i-study-industrial-engineering-quiz.html" class="sidebar-link">Should I Study Industrial Engineering Quiz</a>
+            </div>
+        </div>  
+    
+    
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="/jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="/linebalancing.html" class="sidebar-link">Line Balancing</a>
+                <a href="/takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="/synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+                <a href="/machine-utilization-calculator.html" class="sidebar-link">Machine Utilization</a>
+                <a href="/manpower-calculator.html" class="sidebar-link active">Manpower Calculator</a>
+                <a href="/production-capacity-calculator.html" class="sidebar-link">Production Capacity</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="/controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="/processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="/sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="/oee-calculation.html" class="sidebar-link">OEE Calculator</a>
+                <a href="/quality-function-deployment" class="sidebar-link">Quality Function Deployment</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/anova.html" class="sidebar-link">ANOVA</a>
+                <a href="/chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="/confidence-interval-calculator.html" class="sidebar-link">Confidence Interval</a>
+                <a href="/correlation.html" class="sidebar-link">Correlation Analysis</a>
+                <a href="/coefficient-of-variation-calculator.html" class="sidebar-link">Coefficient of Variation</a>
+                <a href="/goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="/regression.html" class="sidebar-link">Regression</a>
+                <a href="/samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="/taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="/ttest.html" class="sidebar-link">T-Test</a>
+                <a href="/ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/abc-analysis-calculator.html" class="sidebar-link">ABC Analysis</a>
+                <a href="/inventory-turnover-calculator.html" class="sidebar-link">Inventory Turnover</a>
+                <a href="/eoq-formula.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="/reorder-point-calculator.html" class="sidebar-link">Reorder Point</a>
+                <a href="/kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="/newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+                <a href="/safety-stock-calculator.html" class="sidebar-link">Safety Stock Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Measurement</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="/predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="/learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="/littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="/worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="/noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="/posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="/workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="/workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="/queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="/decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="/gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="/markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="/costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="/depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="/timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+                <a href="/failure-mode-and-effects-analysis-fmea.html" class="sidebar-link">FMEA</a>
+            </div>
+        </div>
+
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Other Calculators</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/into-everything.html" class="sidebar-link">Into Everything Calculators</a>
+            </div>
+        </div>
+
+
+
+</body>
+</html>

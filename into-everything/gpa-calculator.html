@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- HowTo Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "How to Calculate GPA",
+      "description": "Step-by-step guide to manually calculate your Grade Point Average (GPA).",
+      "image": "https://iecalculators.online/favicon-32x32.png",
+      "totalTime": "PT5M",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "Convert Letter Grades",
+          "text": "Convert each letter grade to its numerical equivalent (A=4, B=3, etc.)."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Multiply by Credit Hours",
+          "text": "Multiply each course's grade points by its credit hours."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Sum Grade Points",
+          "text": "Sum all the grade points."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Sum Credit Hours",
+          "text": "Sum all the credit hours."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Divide for GPA",
+          "text": "Divide total grade points by total credit hours to get your GPA."
+        }
+      ]
+    }
+    </script>
+    <!-- FAQPage Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How to calculate GPA manually?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Convert each letter grade to its numerical equivalent, multiply by credit hours, sum grade points and credit hours, then divide total grade points by total credit hours."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a good GPA for college?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Generally, 3.5+ is excellent, 3.0-3.5 is good, 2.5-3.0 is average, and below 2.0 may put you on academic probation."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "When is GPA important for scholarships?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "GPA is crucial for most academic scholarships, with many requiring a minimum GPA of 3.0 or higher."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which GPA is required for Ivy League schools?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ivy League schools typically require GPAs of 3.9 or higher on an unweighted 4.0 scale, but also consider other factors."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Who invented the GPA grading system?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Mount Holyoke College is credited with implementing one of the first standardized grading scales in 1897."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is weighted GPA vs unweighted GPA?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Unweighted GPA uses a 4.0 scale; weighted GPA accounts for course difficulty, often using a 5.0 scale for advanced courses."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "When do employers check GPA?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Employers check GPA for recent graduates, internships, entry-level positions, and graduate programs at large companies."
+          }
+        }
+      ]
+    }
+    </script>
+    <!-- SEO Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "GPA Calculator | Education Tools",
+      "url": "https://iecalculators.online/gpa-calculator.html",
+      "description": "GPA Calculator - Calculate your Grade Point Average easily. Learn about GPA importance, how to improve it, and its role in education and career.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Education Calculators",
+        "url": "https://iecalculators.online",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://iecalculators.online/favicon-32x32.png"
+        }
+      },
+      "mainEntity": {
+        "@type": "WebApplication",
+        "name": "GPA Calculator",
+        "applicationCategory": "EducationApplication",
+        "operatingSystem": "All",
+        "url": "https://iecalculators.online/gpa-calculator.html",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    }
+    </script>
+    <!-- Breadcrumb Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://iecalculators.online/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "GPA Calculator",
+          "item": "https://iecalculators.online/into-everything/gpa-calculator.html"
+        }
+      ]
+    }
+    </script>
+
+    <!--FAVICON-->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GPA Calculator - Calculate your Grade Point Average easily. Learn about GPA importance, how to improve it, and its role in education and career.">
+    <title>GPA Calculator | Education Tools</title>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-3BSHG1DE6V');
+    </script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5607576434988374"
+     crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-5607576434988374">
+
+    <!-- Clarity tracking code for https://iecalculators.online/ -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "t31aicr9ep");
+    </script>
+    
+    
+    
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block;
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .course-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            align-items: center;
+        }
+        
+        .course-name {
+            flex: 2;
+        }
+        
+        .course-credits, .course-grade {
+            flex: 1;
+        }
+        
+        .remove-course {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .remove-course:hover {
+            background-color: #c0392b;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .calculate-btn, .add-course-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .add-course-btn {
+            background-color: #2ecc71;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .add-course-btn:hover {
+            background-color: #27ae60;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .gpa-scale {
+            display: flex;
+            justify-content: space-between;
+            margin: 1.5rem 0;
+            position: relative;
+            height: 30px;
+            background: linear-gradient(to right, #e74c3c, #f39c12, #2ecc71, #27ae60);
+            border-radius: 15px;
+        }
+        
+        .gpa-marker {
+            position: absolute;
+            top: -10px;
+            width: 4px;
+            height: 50px;
+            background-color: var(--primary-color);
+            transform: translateX(-50%);
+        }
+        
+        .gpa-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+        
+        .grade-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        .grade-table, .grade-table th, .grade-table td {
+            border: 1px solid #ddd;
+        }
+        
+        .grade-table th, .grade-table td {
+            padding: 0.75rem;
+            text-align: center;
+        }
+        
+        .grade-table th {
+            background-color: #f2f2f2;
+        }
+        
+        .faq-item {
+            margin-bottom: 1.5rem;
+        }
+        
+        .faq-question {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .info-card {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .info-card h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            nav ul li {
+                margin: 0 0.5rem;
+            }
+            
+            .course-row {
+                flex-direction: column;
+                gap: 0.5rem;
+                align-items: stretch;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .info-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .footer-links a {
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Into Everything <span>Calculators</span></div>
+                <nav>
+                    <ul>
+                        <div style="display: flex; gap: 1rem;"></div>
+                            <a href="/index.html" style="color: white; padding: 0.5rem 1rem; text-decoration: none;">Home</a>
+                            <a href="/about.html" style="color: white; padding: 0.5rem 1rem; text-decoration: none;">About</a>
+                            <a href="/contact.html" style="color: white; padding: 0.5rem 1rem; text-decoration: none;">Contact</a>
+                            <a href="/privacy.html" style="color: white; padding: 0.5rem 1rem; text-decoration: none;">Privacy Policy</a>
+                            <a href="/terms.html" style="color: white; padding: 0.5rem 1rem; text-decoration: none;">Terms</a>
+                        </div>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>GPA Calculator</h1>
+            <p>Calculate your Grade Point Average and understand its importance in your academic journey</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>GPA Calculation</h2>
+                <p>Your Grade Point Average (GPA) is a numerical representation of your academic achievement. It's calculated by dividing the total grade points earned by the total credit hours attempted.</p>
+                
+                <div class="formula-box">
+                    GPA = Total Grade Points ÷ Total Credit Hours
+                </div>
+                
+                <p>Where grade points are calculated by multiplying the grade value (A=4, B=3, etc.) by the credit hours for each course.</p>
+            </div>
+
+            <form id="gpa-form">
+                <h3>Your Courses</h3>
+                <div id="courses-container">
+                    <div class="course-row">
+                        <div class="input-group course-name">
+                            <label for="course-name-1">Course Name (optional)</label>
+                            <input type="text" id="course-name-1" placeholder="e.g., Mathematics 101">
+                        </div>
+                        
+                        <div class="input-group course-credits">
+                            <label for="course-credits-1">Credit Hours</label>
+                            <input type="number" id="course-credits-1" min="0.5" step="0.5" value="3" required>
+                        </div>
+                        
+                        <div class="input-group course-grade">
+                            <label for="course-grade-1">Grade</label>
+                            <select id="course-grade-1" required>
+                                <option value="4.0">A (4.0)</option>
+                                <option value="3.7">A- (3.7)</option>
+                                <option value="3.3">B+ (3.3)</option>
+                                <option value="3.0" selected>B (3.0)</option>
+                                <option value="2.7">B- (2.7)</option>
+                                <option value="2.3">C+ (2.3)</option>
+                                <option value="2.0">C (2.0)</option>
+                                <option value="1.7">C- (1.7)</option>
+                                <option value="1.3">D+ (1.3)</option>
+                                <option value="1.0">D (1.0)</option>
+                                <option value="0.0">F (0.0)</option>
+                            </select>
+                        </div>
+                        
+                        <button type="button" class="remove-course" style="visibility: hidden;">×</button>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button type="button" class="add-course-btn" id="add-course">Add Another Course</button>
+                    <button type="submit" class="calculate-btn">Calculate GPA</button>
+                </div>
+            </form>
+            
+            <div class="result-box" id="gpa-result">
+                <h3>Your GPA Results</h3>
+                
+                <p>Your GPA: <span class="result-value" id="gpa-value"></span></p>
+                <p>Total Credit Hours: <span id="total-credits"></span></p>
+                <p>Total Grade Points: <span id="total-grade-points"></span></p>
+                
+                <div class="gpa-scale" id="gpa-scale">
+                    <div class="gpa-marker" id="gpa-marker"></div>
+                </div>
+                <div class="gpa-labels">
+                    <span>0.0</span>
+                    <span>1.0</span>
+                    <span>2.0</span>
+                    <span>3.0</span>
+                    <span>4.0</span>
+                </div>
+                
+                <h4>Letter Grade Equivalent</h4>
+                <table class="grade-table">
+                    <tr>
+                        <th>GPA Range</th>
+                        <th>Letter Grade</th>
+                        <th>Performance</th>
+                    </tr>
+                    <tr>
+                        <td>3.7 - 4.0</td>
+                        <td>A</td>
+                        <td>Excellent</td>
+                    </tr>
+                    <tr>
+                        <td>3.0 - 3.6</td>
+                        <td>B</td>
+                        <td>Good</td>
+                    </tr>
+                    <tr>
+                        <td>2.0 - 2.9</td>
+                        <td>C</td>
+                        <td>Satisfactory</td>
+                    </tr>
+                    <tr>
+                        <td>1.0 - 1.9</td>
+                        <td>D</td>
+                        <td>Poor</td>
+                    </tr>
+                    <tr>
+                        <td>0.0 - 0.9</td>
+                        <td>F</td>
+                        <td>Failing</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+        
+        <section class="content-section">
+            <h2>What is GPA?</h2>
+            <p>GPA (Grade Point Average) is a standardized metric used by educational institutions to measure a student's academic performance. It provides a quick overview of a student's overall achievement by converting letter grades into numerical values and calculating their average.</p>
+            
+            <div class="info-cards">
+                <div class="info-card">
+                    <h3>Weighted vs Unweighted GPA</h3>
+                    <p><strong>Unweighted GPA:</strong> Uses a standard 4.0 scale where an A is always 4.0, regardless of course difficulty.</p>
+                    <p><strong>Weighted GPA:</strong> Takes course difficulty into account, often using a 5.0 scale where honors or AP classes can earn up to 5.0 for an A.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3>Why GPA Matters</h3>
+                    <p>Your GPA is important for:</p>
+                    <ul style="padding-left: 1.5rem;">
+                        <li>College admissions</li>
+                        <li>Scholarship eligibility</li>
+                        <li>Graduate school applications</li>
+                        <li>Some employment opportunities</li>
+                        <li>Academic standing</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section class="content-section">
+            <h2>How to Improve Your GPA</h2>
+            <p>If your GPA isn't where you want it to be, here are some strategies to improve it:</p>
+            
+            <div class="info-cards">
+                <div class="info-card">
+                    <h3>Academic Strategies</h3>
+                    <ul style="padding-left: 1.5rem;">
+                        <li>Attend all classes regularly</li>
+                        <li>Develop effective study habits</li>
+                        <li>Seek help from professors during office hours</li>
+                        <li>Form study groups with classmates</li>
+                        <li>Use campus academic support services</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3>Course Selection</h3>
+                    <ul style="padding-left: 1.5rem;">
+                        <li>Balance difficult courses with easier ones</li>
+                        <li>Consider taking summer courses to spread out workload</li>
+                        <li>Retake courses where you performed poorly (if allowed)</li>
+                        <li>Choose courses that align with your strengths</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3>Time Management</h3>
+                    <ul style="padding-left: 1.5rem;">
+                        <li>Create a study schedule and stick to it</li>
+                        <li>Break large assignments into manageable tasks</li>
+                        <li>Avoid procrastination</li>
+                        <li>Prioritize assignments based on weight and deadline</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section class="content-section">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">How to calculate GPA manually?</div>
+                <p>To calculate GPA manually: 
+                <ol style="padding-left: 1.5rem;">
+                    <li>Convert each letter grade to its numerical equivalent (A=4, B=3, etc.)</li>
+                    <li>Multiply each course's grade points by its credit hours</li>
+                    <li>Sum all the grade points</li>
+                    <li>Sum all the credit hours</li>
+                    <li>Divide total grade points by total credit hours</li>
+                </ol>
+                </p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">What is a good GPA for college?</div>
+                <p>A "good" GPA depends on your goals. Generally:
+                <ul style="padding-left: 1.5rem;">
+                    <li>3.5+ is excellent for most colleges</li>
+                    <li>3.0-3.5 is good</li>
+                    <li>2.5-3.0 is average</li>
+                    <li>Below 2.0 may put you on academic probation</li>
+                </ul>
+                Competitive programs often require 3.7+ for admission.
+                </p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">When is GPA important for scholarships?</div>
+                <p>GPA is crucial for most academic scholarships. Many scholarships have minimum GPA requirements (often 3.0 or higher). Merit-based scholarships typically consider GPA as a primary factor along with test scores, extracurricular activities, and essays.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Which GPA is required for Ivy League schools?</div>
+                <p>Ivy League schools are highly competitive and typically require GPAs of 3.9 or higher on an unweighted 4.0 scale. However, they consider many factors beyond GPA, including course rigor, extracurricular achievements, essays, and letters of recommendation.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Who invented the GPA grading system?</div>
+                <p>The modern GPA system was developed in the late 19th century. Mount Holyoke College is often credited with implementing one of the first standardized grading scales in 1897, using the A-E letter grade system that eventually evolved into the 4.0 scale we use today.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">What is weighted GPA vs unweighted GPA?</div>
+                <p>Unweighted GPA uses a standard 4.0 scale where the highest possible grade is 4.0. Weighted GPA accounts for course difficulty, typically using a 5.0 scale where students can earn more than 4.0 for advanced courses like AP, IB, or honors classes.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">When do employers check GPA?</div>
+                <p>Employers are most likely to check GPA for:
+                <ul style="padding-left: 1.5rem;">
+                    <li>Recent graduates with limited work experience</li>
+                    <li>Internship applications</li>
+                    <li>Entry-level positions in competitive fields</li>
+                    <li>Graduate programs at large companies</li>
+                </ul>
+                Typically, employers care less about GPA as you gain more work experience.
+                </p>
+            </div>
+        </section>
+        
+        <section class="content-section">
+            <h2>GPA Scale Reference</h2>
+            <table class="grade-table">
+                <tr>
+                    <th>Letter Grade</th>
+                    <th>Percentage Range</th>
+                    <th>Grade Points (4.0 Scale)</th>
+                </tr>
+                <tr>
+                    <td>A</td>
+                    <td>93-100%</td>
+                    <td>4.0</td>
+                </tr>
+                <tr>
+                    <td>A-</td>
+                    <td>90-92%</td>
+                    <td>3.7</td>
+                </tr>
+                <tr>
+                    <td>B+</td>
+                    <td>87-89%</td>
+                    <td>3.3</td>
+                </tr>
+                <tr>
+                    <td>B</td>
+                    <td>83-86%</td>
+                    <td>3.0</td>
+                </tr>
+                <tr>
+                    <td>B-</td>
+                    <td>80-82%</td>
+                    <td>2.7</td>
+                </tr>
+                <tr>
+                    <td>C+</td>
+                    <td>77-79%</td>
+                    <td>2.3</td>
+                </tr>
+                <tr>
+                    <td>C</td>
+                    <td>73-76%</td>
+                    <td>2.0</td>
+                </tr>
+                <tr>
+                    <td>C-</td>
+                    <td>70-72%</td>
+                    <td>1.7</td>
+                </tr>
+                <tr>
+                    <td>D+</td>
+                    <td>67-69%</td>
+                    <td>1.3</td>
+                </tr>
+                <tr>
+                    <td>D</td>
+                    <td>65-66%</td>
+                    <td>1.0</td>
+                </tr>
+                <tr>
+                    <td>F</td>
+                    <td>Below 65%</td>
+                    <td>0.0</td>
+                </tr>
+            </table>
+            
+            <p style="margin-top: 1rem;"><strong>Note:</strong> Grading scales may vary by institution. Always check your school's specific grading policy.</p>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-links">
+                <a href="/index.html">Home</a>
+                <a href="/about.html">About</a>
+                <a href="/terms.html">Terms</a>
+                <a href="/privacy.html">Privacy Policy</a>
+                <a href="/contact.html">Contact Us</a>
+                
+            </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            <p class="copyright">&copy; 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- xxxx navigation start xxxxx -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebarClose = document.querySelector('.sidebar-close');
+            const overlay = document.querySelector('.overlay');
+            const body = document.body;
+            
+            // Toggle sidebar
+            function toggleSidebar() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+                body.classList.toggle('sidebar-open');
+            }
+            
+            // Toggle category expansion
+            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
+            categoryHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const category = this.parentElement;
+                    category.classList.toggle('open');
+                    
+                    // Update the expand/collapse icon
+                    const icon = this.querySelector('span:last-child');
+                    icon.textContent = category.classList.contains('open') ? '−' : '+';
+                });
+            });
+            
+            // Event listeners
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            sidebarClose.addEventListener('click', toggleSidebar);
+            overlay.addEventListener('click', toggleSidebar);
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 768 && 
+                    body.classList.contains('sidebar-open') && 
+                    !sidebar.contains(event.target) && 
+                    event.target !== sidebarToggle) {
+                    toggleSidebar();
+                }
+            });
+            
+            // Close sidebar when pressing Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && body.classList.contains('sidebar-open')) {
+                    toggleSidebar();
+                }
+            });
+        });
+    </script>
+    <!-- xxxx navigation end xxxxx -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const coursesContainer = document.getElementById('courses-container');
+            const addCourseBtn = document.getElementById('add-course');
+            const gpaForm = document.getElementById('gpa-form');
+            const resultBox = document.getElementById('gpa-result');
+            const gpaValue = document.getElementById('gpa-value');
+            const totalCredits = document.getElementById('total-credits');
+            const totalGradePoints = document.getElementById('total-grade-points');
+            const gpaMarker = document.getElementById('gpa-marker');
+            const gpaScale = document.getElementById('gpa-scale');
+            
+            let courseCount = 1;
+            
+            // Add a new course row
+            addCourseBtn.addEventListener('click', function() {
+                courseCount++;
+                const newRow = document.createElement('div');
+                newRow.className = 'course-row';
+                newRow.innerHTML = `
+                    <div class="input-group course-name">
+                        <label for="course-name-${courseCount}">Course Name (optional)</label>
+                        <input type="text" id="course-name-${courseCount}" placeholder="e.g., Mathematics 101">
+                    </div>
+                    
+                    <div class="input-group course-credits">
+                        <label for="course-credits-${courseCount}">Credit Hours</label>
+                        <input type="number" id="course-credits-${courseCount}" min="0.5" step="0.5" value="3" required>
+                    </div>
+                    
+                    <div class="input-group course-grade">
+                        <label for="course-grade-${courseCount}">Grade</label>
+                        <select id="course-grade-${courseCount}" required>
+                            <option value="4.0">A (4.0)</option>
+                            <option value="3.7">A- (3.7)</option>
+                            <option value="3.3">B+ (3.3)</option>
+                            <option value="3.0" selected>B (3.0)</option>
+                            <option value="2.7">B- (2.7)</option>
+                            <option value="2.3">C+ (2.3)</option>
+                            <option value="2.0">C (2.0)</option>
+                            <option value="1.7">C- (1.7)</option>
+                            <option value="1.3">D+ (1.3)</option>
+                            <option value="1.0">D (1.0)</option>
+                            <option value="0.0">F (0.0)</option>
+                        </select>
+                    </div>
+                    
+                    <button type="button" class="remove-course">×</button>
+                `;
+                
+                coursesContainer.appendChild(newRow);
+                
+                // Add event listener to the remove button
+                newRow.querySelector('.remove-course').addEventListener('click', function() {
+                    coursesContainer.removeChild(newRow);
+                });
+            });
+            
+            // Calculate GPA
+            gpaForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                let totalCreditHours = 0;
+                let totalPoints = 0;
+                
+                // Get all course rows
+                const courseRows = coursesContainer.querySelectorAll('.course-row');
+                
+                // Loop through each course row
+                courseRows.forEach(row => {
+                    const credits = parseFloat(row.querySelector('.course-credits input').value);
+                    const grade = parseFloat(row.querySelector('.course-grade select').value);
+                    
+                    totalCreditHours += credits;
+                    totalPoints += credits * grade;
+                });
+                
+                // Calculate GPA
+                const gpa = totalPoints / totalCreditHours;
+                
+                // Display results
+                gpaValue.textContent = gpa.toFixed(2);
+                totalCredits.textContent = totalCreditHours.toFixed(1);
+                totalGradePoints.textContent = totalPoints.toFixed(1);
+                
+                // Position the GPA marker
+                const scaleWidth = gpaScale.offsetWidth;
+                const markerPosition = (gpa / 4.0) * scaleWidth;
+                gpaMarker.style.left = `${markerPosition}px`;
+                
+                // Show results
+                resultBox.style.display = 'block';
+                
+                // Scroll to results
+                resultBox.scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            // Add event listeners to existing remove buttons
+            document.querySelectorAll('.remove-course').forEach(button => {
+                button.addEventListener('click', function() {
+                    if (coursesContainer.querySelectorAll('.course-row').length > 1) {
+                        coursesContainer.removeChild(this.parentElement);
+                    }
+                });
+            });
+        });
+    </script>
+
+    <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+
+    <div class="sidebar-category">
+        <div class="sidebar-category-header">
+            <span>Site Navigation</span>
+            <span>+</span>
+        </div>
+        
+        <div class="sidebar-category-content">
+            <a href="/index.html" class="sidebar-link">Home</a>
+            <a href="/about.html" class="sidebar-link">About</a>
+            <a href="/terms.html" class="sidebar-link">Terms</a>
+            <a href="/privacy.html" class="sidebar-link">Privacy Policy</a>
+            <a href="/contact.html" class="sidebar-link">Contact Us</a>
+        </div>
+    </div>
+        
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="/jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="/linebalancing.html" class="sidebar-link">Line Balancing</a>
+                <a href="/takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="/synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+                <a href="/machine-utilization-calculator.html" class="sidebar-link">Machine Utilization</a>
+                <a href="/manpower-calculator.html" class="sidebar-link active">Manpower Requirements</a>
+                <a href="/production-capacity-calculator.html" class="sidebar-link">Production Capacity</a>
+
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="/controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="/processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="/sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="/oee-calculation.html" class="sidebar-link">OEE Calculator</a>
+                <a href="/quality-function-deployment" class="sidebar-link">Quality Function Deployment</a>
+
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/anova.html" class="sidebar-link">ANOVA</a>
+                <a href="/chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="/confidence-interval-calculator.html" class="sidebar-link">Confidence Interval </a>
+                <a href="/correlation.html" class="sidebar-link">Correlation Analysis</a>
+                <a href="/coefficient-of-variation-calculator.html" class="sidebar-link">Coefficient of Variation</a>
+                <a href="/goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="/regression.html" class="sidebar-link">Regression</a>
+                <a href="/samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="/taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="/ttest.html" class="sidebar-link">T-Test</a>
+                <a href="/ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/abc-analysis-calculator.html" class="sidebar-link">ABC Analysis</a>
+                <a href="/inventory-turnover-calculator.html" class="sidebar-link">Inventory Turnover</a>
+                <a href="/eoq-formula.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="/reorder-point-calculator.html" class="sidebar-link">Reorder Point</a>
+                <a href="/kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="/newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+                <a href="/safety-stock-calculator.html" class="sidebar-link">Safety Stock Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Measurement</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="/predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="/learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="/littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="/worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="/noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="/posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="/workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="/workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="/queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="/decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="/gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="/markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="/costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="/depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="/timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+                <a href="/failure-mode-and-effects-analysis-fmea.html" class="sidebar-link">FMEA</a>           
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Other Calculators</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/into-everything.html" class="sidebar-link">Into Everything Calculators</a>
+            </div>
+        </div>
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Articles</span>
+                <span>+</span>
+            </div>
+                <div class="sidebar-category-content">
+                    <a href="Articles/Negative-Correlation-Understanding-Inverse-Relationships-in-Data.html" class="sidebar-link">Negative Correlation: Understanding Inverse Relationships in Data</a>
+                    <a href="Articles/Parameter-vs-Statistic-Understanding-the-Key-Differences.html" class="sidebar-link">Statistic vs Parameter: Understanding the Key Differences</a>
+                    <a href="Articles/Quality-Assurance-vs-Quality-Control-Key-Differences-Explained.html" class="sidebar-link">Quality Assurance vs Quality Control: Key Differences Explained</a>
+                    <a href="Articles/ABC-Analysis-Made-Easy.html" class="sidebar-link">ABC Analysis Made Easy: Classify Your Inventory in Minutes</a>
+                    <a href="Articles/EOQ-Optimize-Your-Inventory-Costs.html" class="sidebar-link">EOQ Order Quantity: Optimize Your Inventory</a>
+                    <a href="Articles/Linear-Programming-for-Supply-Chain-Optimization-A-Beginner's-Guide.html" class="sidebar-link">Linear Programming for Supply Chain Optimization: A Beginner's Guide</a>                
+                    <a href="Articles/How-Lean-Six-Sigma-Helps-Cut-Costs-Without-Cutting-Corners.html" class="sidebar-link">How Lean Six Sigma Helps Cut Costs Without Cutting Corners</a>  
+                </div>
+    </aside>
+    <!-- xxxx navigation end xxxxx -->  
+
+</body>
+</html>

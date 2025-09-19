@@ -1,0 +1,1691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- SEO Schemas -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "ATAR Calculator",
+        "url": "https://iecalculators.online/atar-calculator.html",
+        "description": "Comprehensive ATAR calculator for Australian students. Calculate your ATAR for NSW HSC, Victoria VCE, Queensland QCE, Western Australia WACE, and South Australia SACE with scaling considerations."
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://iecalculators.online/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "ATAR Calculator",
+                "item": "https://iecalculators.online/atar-calculator.html"
+            }
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What is a good ATAR score?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "A good ATAR depends on your university and course preferences. 95.00+ is required for highly competitive courses like Medicine and Law, 85.00-94.95 for competitive courses, 70.00-84.95 for popular courses, 50.00-69.95 for entry to many universities, and below 50.00 for pathway programs."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Which subjects scale the highest?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Subjects with more difficulty and competitive cohorts scale higher, such as Mathematics Extension 2, Physics, Chemistry, Languages, and Economics."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How does English affect my ATAR?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "English is mandatory for ATAR eligibility in all states and must be included in your ATAR calculation, even if not your top subject."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What ATAR do I need for medicine?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Undergraduate Medicine typically requires a 99.00+ ATAR, plus UCAT and interview. Graduate Medicine requires a bachelor's degree and GAMSAT."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can I improve my ATAR after Year 12?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, through university pathway programs, TAFE/VET courses, bridging courses, mature age entry, or retaking subjects."
+                }
+            }
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to Calculate Your ATAR",
+        "description": "Step-by-step guide to estimate your ATAR using the calculator.",
+        "step": [
+            {
+                "@type": "HowToStep",
+                "name": "Select Your State",
+                "text": "Choose your state from the dropdown menu."
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Enter Subject Information",
+                "text": "Add your subjects, scores, and scaling factors."
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Add Bonus Points",
+                "text": "If applicable, enter any bonus points."
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Calculate ATAR",
+                "text": "Click the 'Calculate My ATAR' button to view your estimated ATAR."
+            }
+        ]
+    }
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Comprehensive ATAR calculator for Australian students. Calculate your ATAR for NSW HSC, Victoria VCE, Queensland QCE, Western Australia WACE, and South Australia SACE with scaling considerations.">
+    <title>ATAR Calculator | Australian Tertiary Admission Rank Calculator</title>
+    
+    <!--FAVICON-->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-3BSHG1DE6V');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5607576434988374"
+     crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-5607576434988374">
+
+    <!-- Clarity tracking code for https://iecalculators.online/ -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "t31aicr9ep");
+    </script>
+    
+    
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block;
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .page-hero p {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: block;
+            width: 100%;
+            margin: 1.5rem 0;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .metric-results {
+            display: flex;
+            justify-content: space-between;
+            margin: 1.5rem 0;
+        }
+        
+        .metric-card {
+            flex: 1;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 0 0.5rem;
+            text-align: center;
+        }
+        
+        .metric-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-card .metric-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .metric-card.atar .metric-value {
+            color: #3498db;
+        }
+        
+        .metric-card.aggregate .metric-value {
+            color: #f39c12;
+        }
+        
+        .metric-card.percentile .metric-value {
+            color: #2ecc71;
+        }
+        
+        .subject-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            align-items: center;
+        }
+        
+        .subject-name {
+            flex: 2;
+        }
+        
+        .subject-score {
+            flex: 1;
+        }
+        
+        .subject-scale {
+            flex: 1;
+        }
+        
+        .add-subject-btn {
+            background-color: var(--success-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 1.5rem;
+        }
+        
+        .remove-subject-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        .accordion {
+            margin: 1.5rem 0;
+        }
+        
+        .accordion-item {
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .accordion-header {
+            padding: 1rem;
+            background-color: #f8f9fa;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+        
+        .accordion-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .accordion-content.active {
+            max-height: 1000px;
+            padding: 1rem;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .state-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        
+        .state-badge {
+            background-color: #e3f2fd;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+        }
+        
+        .info-box {
+            background-color: #e8f4fc;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        
+        .warning-box {
+            background-color: #fef5e7;
+            border-left: 4px solid var(--warning-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        
+        .author-box {
+            display: flex;
+            align-items: center;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .author-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-right: 1.5rem;
+            flex-shrink: 0;
+        }
+        
+        .author-info h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        .author-info p {
+            color: var(--text-light);
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            nav ul li {
+                margin: 0.5rem;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .metric-results {
+                flex-direction: column;
+            }
+            
+            .metric-card {
+                margin: 0.5rem 0;
+            }
+            
+            .subject-row {
+                flex-direction: column;
+                gap: 0.5rem;
+                align-items: stretch;
+            }
+            
+            .author-box {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .author-avatar {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Into Everything <span>Calculators</span></div>
+                <nav>
+                    <ul>
+                        <div style="display: flex; gap: 1rem;"></div>
+                            <a href="/index.html" style="color: white; padding: 0.5rem 1rem; text-decoration: none;">Home</a>
+                            <a href="/about.html" style="color: white; padding: 0.5rem 1rem; text-decoration: none;">About</a>
+                            <a href="/contact.html" style="color: white; padding: 0.5rem 1rem; text-decoration: none;">Contact</a>
+                            <a href="/privacy.html" style="color: white; padding: 0.5rem 1rem; text-decoration: none;">Privacy Policy</a>
+                            <a href="/terms.html" style="color: white; padding: 0.5rem 1rem; text-decoration: none;">Terms</a>
+                        </div>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>ATAR Calculator</h1>
+            <p>Calculate your Australian Tertiary Admission Rank for NSW HSC, Victoria VCE, Queensland QCE, Western Australia WACE, and South Australia SACE</p>
+
+        </div>
+    </section>
+    
+    <main class="container">
+        <section id="calculator" class="content-section">
+            <div class="calculator-intro">
+                <h2>ATAR Calculator</h2>
+                <p>Use this calculator to estimate your ATAR based on your subject scores and scaling information. Select your state and enter your subject information to get started.</p>
+                
+                <div class="info-box">
+                    <p><strong>Note:</strong> This calculator provides an estimate only. Your actual ATAR may vary based on yearly scaling adjustments and other factors determined by state admission centers.</p>
+                </div>
+            </div>
+
+            <form id="atar-form">
+                <div class="input-group">
+                    <label for="state">Select Your State:</label>
+                    <select id="state" required>
+                        <option value="">-- Select State --</option>
+                        <option value="nsw">New South Wales (HSC)</option>
+                        <option value="vic">Victoria (VCE)</option>
+                        <option value="qld">Queensland (QCE)</option>
+                        <option value="wa">Western Australia (WACE)</option>
+                        <option value="sa">South Australia (SACE)</option>
+                    </select>
+                </div>
+                
+                <h3>Subject Information</h3>
+                <div id="subjects-container">
+                    <div class="subject-row">
+                        <div class="input-group subject-name">
+                            <label for="subject1">Subject</label>
+                            <select id="subject1" class="subject-select" required>
+                                <option value="">-- Select Subject --</option>
+                                <option value="english">English (Standard)</option>
+                                <option value="english-advanced">English Advanced</option>
+                                <option value="maths">Mathematics</option>
+                                <option value="maths-advanced">Mathematics Advanced</option>
+                                <option value="maths-extension">Mathematics Extension 1</option>
+                                <option value="maths-extension2">Mathematics Extension 2</option>
+                                <option value="physics">Physics</option>
+                                <option value="chemistry">Chemistry</option>
+                                <option value="biology">Biology</option>
+                                <option value="economics">Economics</option>
+                                <option value="business">Business Studies</option>
+                                <option value="legal">Legal Studies</option>
+                                <option value="history">History</option>
+                                <option value="geography">Geography</option>
+                                <option value="languages">Languages</option>
+                                <option value="drama">Drama</option>
+                                <option value="music">Music</option>
+                                <option value="art">Visual Arts</option>
+                                <option value="pdhpe">PDHPE</option>
+                                <option value="design">Design and Technology</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-group subject-score">
+                            <label for="score1">Score (%)</label>
+                            <input type="number" id="score1" min="0" max="100" step="0.1" required>
+                        </div>
+                        
+                        <div class="input-group subject-scale">
+                            <label for="scale1">Scaling Factor</label>
+                            <input type="number" id="scale1" min="0.5" max="2.0" step="0.01" value="1.0" required>
+                        </div>
+                        
+                        <button type="button" class="remove-subject-btn" style="visibility: hidden;">×</button>
+                    </div>
+                </div>
+                
+                <button type="button" id="add-subject" class="add-subject-btn">+ Add Another Subject</button>
+                
+                <div class="input-group">
+                    <label for="bonus-points">Bonus Points (if applicable):</label>
+                    <input type="number" id="bonus-points" min="0" max="10" step="0.5" value="0">
+                </div>
+                
+                <button type="submit" class="calculate-btn">Calculate My ATAR</button>
+            </form>
+            
+            <div class="result-box" id="atar-result">
+                <h3>ATAR Estimate</h3>
+                
+                <div class="metric-results">
+                    <div class="metric-card atar">
+                        <h4>Estimated ATAR</h4>
+                        <div class="result-value" id="atar-value"></div>
+                        <p>Your calculated rank</p>
+                    </div>
+                    
+                    <div class="metric-card aggregate">
+                        <h4>Aggregate Score</h4>
+                        <div class="metric-value" id="aggregate-score"></div>
+                        <p>Sum of scaled scores</p>
+                    </div>
+                    
+                    <div class="metric-card percentile">
+                        <h4>Percentile Rank</h4>
+                        <div class="metric-value" id="percentile-rank"></div>
+                        <p>Top % of students</p>
+                    </div>
+                </div>
+                
+                <h4>Subject Contributions</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Subject</th>
+                            <th>Raw Score</th>
+                            <th>Scaling Factor</th>
+                            <th>Scaled Score</th>
+                            <th>Contribution</th>
+                        </tr>
+                    </thead>
+                    <tbody id="subject-contributions">
+                    </tbody>
+                </table>
+                
+                <div class="info-box">
+                    <p><strong>Important:</strong> This is an estimate only. Actual ATAR calculations are performed by state-based tertiary admission centers and may vary based on cohort performance and annual scaling adjustments.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="explanation" class="content-section">
+            <h2>How ATAR is Calculated</h2>
+            <p>The Australian Tertiary Admission Rank (ATAR) is a number between 0.00 and 99.95 that indicates a student's position relative to all other students in their age group. Here's how it's calculated:</p>
+            
+            <div class="formula-box">
+                ATAR = f(Sum of best 4 scaled subject scores + 10% of next best subjects)
+            </div>
+            
+            <h3>Key Components of ATAR Calculation</h3>
+            
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Subject Scaling</span>
+                        <span>+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Subjects are scaled to account for differences in difficulty and competition. Scaling ensures that students aren't advantaged or disadvantaged based on their subject choices.</p>
+                        <p>Scaling factors are determined by statistical analysis of student performance across different subjects and are adjusted annually.</p>
+                        <p>Generally, mathematics, sciences, and languages scale higher than humanities and arts subjects.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>English Requirements</span>
+                        <span>+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>All Australian states require satisfactory completion of an English subject for ATAR eligibility.</p>
+                        <p>In most states, English must be included in your ATAR calculation, even if it's not one of your highest-scoring subjects.</p>
+                        <p>The specific English requirements vary by state, so check with your state's tertiary admissions center.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Bonus Points</span>
+                        <span>+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Many universities offer bonus points for certain subjects, geographical locations, or equity reasons.</p>
+                        <p>Bonus points are typically added to your ATAR for admission purposes but don't change your actual ATAR.</p>
+                        <p>Common bonus point schemes include:</p>
+                        <ul style="padding-left: 1.5rem;">
+                            <li>Subject-specific bonuses (e.g., for mathematics or science subjects)</li>
+                            <li>Regional bonuses for students from rural areas</li>
+                            <li>Equity bonuses for disadvantaged students</li>
+                            <li>Elite athlete or performer programs</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>State Variations</span>
+                        <span>+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>While the ATAR is nationally recognized, each state has slight variations in how it's calculated:</p>
+                        <ul style="padding-left: 1.5rem;">
+                            <li><strong>NSW (HSC):</strong> Based on the average of the best 10 units, including at least 2 units of English</li>
+                            <li><strong>Victoria (VCE):</strong> Calculated from the primary four studies (each worth 50 points) plus 10% of the next best two studies</li>
+                            <li><strong>Queensland (QCE):</strong> Based on the best five general subjects completed for the QCE</li>
+                            <li><strong>Western Australia (WACE):</strong> Calculated from the scaled scores of the best four subjects, which must include English</li>
+                            <li><strong>South Australia (SACE):</strong> Based on the best 80 credits of study at Stage 2 level, with specific subject requirements</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="faq" class="content-section">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>What is a good ATAR score?</span>
+                        <span>+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>A "good" ATAR depends on your university and course preferences:</p>
+                        <ul style="padding-left: 1.5rem;">
+                            <li><strong>95.00+:</strong> Highly competitive courses (Medicine, Law, Dentistry)</li>
+                            <li><strong>85.00-94.95:</strong> Competitive courses (Engineering, Commerce, Psychology)</li>
+                            <li><strong>70.00-84.95:</strong> Many popular courses (Education, Nursing, Arts)</li>
+                            <li><strong>50.00-69.95:</strong> Entry to many universities with a range of options</li>
+                            <li><strong>Below 50.00:</strong> Pathway programs and alternative entry options available</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Which subjects scale the highest?</span>
+                        <span>+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Generally, subjects that are more difficult and have more academically competitive cohorts scale higher. These typically include:</p>
+                        <ul style="padding-left: 1.5rem;">
+                            <li>Mathematics Extension 2</li>
+                            <li>Mathematics Extension 1</li>
+                            <li>Physics</li>
+                            <li>Chemistry</li>
+                            <li>Languages (especially less commonly taught languages)</li>
+                            <li>Economics</li>
+                        </ul>
+                        <p>However, it's important to choose subjects you're good at and interested in, as performing well in a lower-scaling subject often yields better results than performing poorly in a high-scaling subject.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>How does English affect my ATAR?</span>
+                        <span>+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>English plays a crucial role in ATAR calculation:</p>
+                        <ul style="padding-left: 1.5rem;">
+                            <li>All states require satisfactory completion of an English subject for ATAR eligibility</li>
+                            <li>In most states, English must be included in your ATAR calculation, even if it's not one of your top subjects</li>
+                            <li>Different English levels (Standard, Advanced, Extension) have different scaling factors</li>
+                            <li>Performing well in English can significantly boost your ATAR, as it's a mandatory component</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>What ATAR do I need for medicine?</span>
+                        <span>+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Medicine is one of the most competitive fields in Australia. Typical ATAR requirements:</p>
+                        <ul style="padding-left: 1.5rem;">
+                            <li><strong>Undergraduate Medicine:</strong> 99.00+ ATAR typically required, plus UCAT exam and interview</li>
+                            <li><strong>Graduate Medicine:</strong> Requires completion of any bachelor's degree, plus GAMSAT exam</li>
+                        </ul>
+                        <p>Specific requirements vary by university, and most use a combination of ATAR, entrance exams, interviews, and sometimes portfolio assessments.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Can I improve my ATAR after Year 12?</span>
+                        <span>+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Yes, there are several pathways to improve your ATAR or gain university entry:</p>
+                        <ul style="padding-left: 1.5rem;">
+                            <li><strong>University Pathway Programs:</strong> Foundation studies or diploma programs that lead to degree admission</li>
+                            <li><strong>TAFE/VET Courses:</strong> Completing a Certificate IV or higher can provide entry to university</li>
+                            <li><strong>Bridging Courses:</strong> Short courses to meet specific subject prerequisites</li>
+                            <li><strong>Mature Age Entry:</strong> For students over 21, different entry criteria often apply</li>
+                            <li><strong>Retaking Subjects:</strong> Some states allow you to retake subjects to improve scores</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="resources" class="content-section">
+            <h2>ATAR Resources & University Cut-offs</h2>
+            
+            <h3>University ATAR Cut-offs 2025 (Estimates)</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Course Area</th>
+                        <th>University</th>
+                        <th>Estimated ATAR</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Medicine</td>
+                        <td>Various</td>
+                        <td>99.00+</td>
+                    </tr>
+                    <tr>
+                        <td>Law</td>
+                        <td>Group of Eight</td>
+                        <td>95.00+</td>
+                    </tr>
+                    <tr>
+                        <td>Engineering</td>
+                        <td>Group of Eight</td>
+                        <td>85.00+</td>
+                    </tr>
+                    <tr>
+                        <td>Commerce/Business</td>
+                        <td>Group of Eight</td>
+                        <td>85.00+</td>
+                    </tr>
+                    <tr>
+                        <td>Computer Science</td>
+                        <td>Major Universities</td>
+                        <td>75.00+</td>
+                    </tr>
+                    <tr>
+                        <td>Arts/Humanities</td>
+                        <td>Most Universities</td>
+                        <td>70.00+</td>
+                    </tr>
+                    <tr>
+                        <td>Education</td>
+                        <td>Most Universities</td>
+                        <td>65.00+</td>
+                    </tr>
+                    <tr>
+                        <td>Nursing</td>
+                        <td>Most Universities</td>
+                        <td>65.00+</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="warning-box">
+                <p><strong>Note:</strong> These are estimated cut-offs based on previous years. Actual cut-offs vary by university, campus, and year. Always check with individual universities for the most current information.</p>
+            </div>
+            
+            <h3>Official ATAR Resources</h3>
+            <ul style="padding-left: 1.5rem;">
+                <li><a href="https://www.uac.edu.au/" target="_blank">Universities Admissions Centre (UAC) - NSW & ACT</a></li>
+                <li><a href="https://www.vtac.edu.au/" target="_blank">Victorian Tertiary Admissions Centre (VTAC)</a></li>
+                <li><a href="https://www.qtac.edu.au/" target="_blank">Queensland Tertiary Admissions Centre (QTAC)</a></li>
+                <li><a href="https://www.tisc.edu.au/" target="_blank">Tertiary Institutions Service Centre (TISC) - WA</a></li>
+                <li><a href="https://www.satac.edu.au/" target="_blank">South Australian Tertiary Admissions Centre (SATAC)</a></li>
+            </ul>
+        </section>
+        
+        <section class="content-section">
+            
+            <h3>Methodology</h3>
+            <p>Our calculator uses the following approach to estimate your ATAR:</p>
+            <ol style="padding-left: 1.5rem;">
+                <li>Subjects are scaled based on historical scaling data from each state</li>
+                <li>The best 4-5 subjects are selected based on your state's calculation method</li>
+                <li>A percentage of additional subjects may be included depending on state rules</li>
+                <li>English requirements are factored in where applicable</li>
+                <li>The aggregate score is converted to an ATAR using statistical distributions</li>
+                <li>Bonus points are added if specified</li>
+            </ol>
+            
+            <p>We regularly update our scaling factors and calculation methods based on the latest available data from state admission centers.</p>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-links">
+                <a href="/index.html">Home</a>
+                <a href="/about.html">About</a>
+                <a href="/terms.html">Terms</a>
+                <a href="/privacy.html">Privacy Policy</a>
+                <a href="/contact.html">Contact Us</a>
+                
+            </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            <p class="copyright">&copy; 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- xxxx navigation start xxxxx -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebarClose = document.querySelector('.sidebar-close');
+            const overlay = document.querySelector('.overlay');
+            const body = document.body;
+            
+            // Toggle sidebar
+            function toggleSidebar() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+                body.classList.toggle('sidebar-open');
+            }
+            
+            // Toggle category expansion
+            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
+            categoryHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const category = this.parentElement;
+                    category.classList.toggle('open');
+                    
+                    // Update the expand/collapse icon
+                    const icon = this.querySelector('span:last-child');
+                    icon.textContent = category.classList.contains('open') ? '−' : '+';
+                });
+            });
+            
+            // Event listeners
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            sidebarClose.addEventListener('click', toggleSidebar);
+            overlay.addEventListener('click', toggleSidebar);
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 768 && 
+                    body.classList.contains('sidebar-open') && 
+                    !sidebar.contains(event.target) && 
+                    event.target !== sidebarToggle) {
+                    toggleSidebar();
+                }
+            });
+            
+            // Close sidebar when pressing Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && body.classList.contains('sidebar-open')) {
+                    toggleSidebar();
+                }
+            });
+        });
+    </script>
+    <!-- xxxx navigation end xxxxx -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add subject functionality
+            let subjectCount = 1;
+            const addSubjectBtn = document.getElementById('add-subject');
+            const subjectsContainer = document.getElementById('subjects-container');
+            
+            addSubjectBtn.addEventListener('click', function() {
+                subjectCount++;
+                const newSubject = document.createElement('div');
+                newSubject.className = 'subject-row';
+                newSubject.innerHTML = `
+                    <div class="input-group subject-name">
+                        <label for="subject${subjectCount}">Subject</label>
+                        <select id="subject${subjectCount}" class="subject-select" required>
+                            <option value="">-- Select Subject --</option>
+                            <option value="english">English (Standard)</option>
+                            <option value="english-advanced">English Advanced</option>
+                            <option value="maths">Mathematics</option>
+                            <option value="maths-advanced">Mathematics Advanced</option>
+                            <option value="maths-extension">Mathematics Extension 1</option>
+                            <option value="maths-extension2">Mathematics Extension 2</option>
+                            <option value="physics">Physics</option>
+                            <option value="chemistry">Chemistry</option>
+                            <option value="biology">Biology</option>
+                            <option value="economics">Economics</option>
+                            <option value="business">Business Studies</option>
+                            <option value="legal">Legal Studies</option>
+                            <option value="history">History</option>
+                            <option value="geography">Geography</option>
+                            <option value="languages">Languages</option>
+                            <option value="drama">Drama</option>
+                            <option value="music">Music</option>
+                            <option value="art">Visual Arts</option>
+                            <option value="pdhpe">PDHPE</option>
+                            <option value="design">Design and Technology</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group subject-score">
+                        <label for="score${subjectCount}">Score (%)</label>
+                        <input type="number" id="score${subjectCount}" min="0" max="100" step="0.1" required>
+                    </div>
+                    
+                    <div class="input-group subject-scale">
+                        <label for="scale${subjectCount}">Scaling Factor</label>
+                        <input type="number" id="scale${subjectCount}" min="0.5" max="2.0" step="0.01" value="1.0" required>
+                    </div>
+                    
+                    <button type="button" class="remove-subject-btn">×</button>
+                `;
+                
+                subjectsContainer.appendChild(newSubject);
+                
+                // Add event listener to remove button
+                newSubject.querySelector('.remove-subject-btn').addEventListener('click', function() {
+                    if (subjectCount > 1) {
+                        subjectsContainer.removeChild(newSubject);
+                        subjectCount--;
+                    }
+                });
+                
+                // Add event listener to subject select to auto-populate scaling
+                newSubject.querySelector('.subject-select').addEventListener('change', function() {
+                    updateScalingFactor(this);
+                });
+            });
+            
+            // Add event listeners to initial subject select
+            document.getElementById('subject1').addEventListener('change', function() {
+                updateScalingFactor(this);
+            });
+            
+            // Function to update scaling factor based on subject selection
+            function updateScalingFactor(selectElement) {
+                const scalingMap = {
+                    'english': 0.95,
+                    'english-advanced': 1.05,
+                    'maths': 1.0,
+                    'maths-advanced': 1.15,
+                    'maths-extension': 1.35,
+                    'maths-extension2': 1.5,
+                    'physics': 1.2,
+                    'chemistry': 1.2,
+                    'biology': 1.05,
+                    'economics': 1.1,
+                    'business': 0.95,
+                    'legal': 0.95,
+                    'history': 0.95,
+                    'geography': 0.95,
+                    'languages': 1.15,
+                    'drama': 0.9,
+                    'music': 0.95,
+                    'art': 0.9,
+                    'pdhpe': 0.95,
+                    'design': 0.95
+                };
+                
+                const subjectValue = selectElement.value;
+                const row = selectElement.closest('.subject-row');
+                const scaleInput = row.querySelector('input[type="number"]');
+                
+                if (subjectValue && scalingMap[subjectValue]) {
+                    scaleInput.value = scalingMap[subjectValue];
+                }
+            }
+            
+            // Accordion functionality
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+            
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const content = this.nextElementSibling;
+                    const isActive = content.classList.contains('active');
+                    
+                    // Close all accordion items
+                    document.querySelectorAll('.accordion-content').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    
+                    document.querySelectorAll('.accordion-header span:last-child').forEach(icon => {
+                        icon.textContent = '+';
+                    });
+                    
+                    // Open clicked item if it wasn't already active
+                    if (!isActive) {
+                        content.classList.add('active');
+                        this.querySelector('span:last-child').textContent = '-';
+                    }
+                });
+            });
+            
+            // Form submission
+            document.getElementById('atar-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                calculateATAR();
+            });
+            
+            // ATAR calculation function
+            function calculateATAR() {
+                const state = document.getElementById('state').value;
+                if (!state) {
+                    alert('Please select your state');
+                    return;
+                }
+                
+                // Collect subject data
+                const subjects = [];
+                const subjectRows = document.querySelectorAll('.subject-row');
+                
+                let valid = true;
+                subjectRows.forEach(row => {
+                    const subjectSelect = row.querySelector('.subject-select');
+                    const scoreInput = row.querySelector('.subject-score input');
+                    const scaleInput = row.querySelector('.subject-scale input');
+                    
+                    if (!subjectSelect.value || !scoreInput.value || !scaleInput.value) {
+                        valid = false;
+                        return;
+                    }
+                    
+                    subjects.push({
+                        name: subjectSelect.options[subjectSelect.selectedIndex].text,
+                        score: parseFloat(scoreInput.value),
+                        scale: parseFloat(scaleInput.value),
+                        scaledScore: parseFloat(scoreInput.value) * parseFloat(scaleInput.value)
+                    });
+                });
+                
+                if (!valid) {
+                    alert('Please fill in all subject fields');
+                    return;
+                }
+                
+                // Sort by scaled score (highest first)
+                subjects.sort((a, b) => b.scaledScore - a.scaledScore);
+                
+                // Calculate aggregate based on state rules
+                let aggregate = 0;
+                let includedSubjects = [];
+                
+                // Different states have different rules for how many subjects count
+                if (state === 'nsw' || state === 'wa') {
+                    // Best 4 subjects (including English for WA)
+                    for (let i = 0; i < Math.min(4, subjects.length); i++) {
+                        aggregate += subjects[i].scaledScore;
+                        includedSubjects.push({...subjects[i], contribution: subjects[i].scaledScore});
+                    }
+                } else if (state === 'vic') {
+                    // Primary 4 studies + 10% of next 2
+                    for (let i = 0; i < Math.min(4, subjects.length); i++) {
+                        aggregate += subjects[i].scaledScore;
+                        includedSubjects.push({...subjects[i], contribution: subjects[i].scaledScore});
+                    }
+                    for (let i = 4; i < Math.min(6, subjects.length); i++) {
+                        const contribution = subjects[i].scaledScore * 0.1;
+                        aggregate += contribution;
+                        includedSubjects.push({...subjects[i], contribution: contribution});
+                    }
+                } else if (state === 'qld') {
+                    // Best 5 subjects
+                    for (let i = 0; i < Math.min(5, subjects.length); i++) {
+                        aggregate += subjects[i].scaledScore;
+                        includedSubjects.push({...subjects[i], contribution: subjects[i].scaledScore});
+                    }
+                } else if (state === 'sa') {
+                    // Best 80 credits (simplified to best 4 subjects for this calculator)
+                    for (let i = 0; i < Math.min(4, subjects.length); i++) {
+                        aggregate += subjects[i].scaledScore;
+                        includedSubjects.push({...subjects[i], contribution: subjects[i].scaledScore});
+                    }
+                }
+                
+                // Add bonus points
+                const bonusPoints = parseFloat(document.getElementById('bonus-points').value) || 0;
+                aggregate += bonusPoints;
+                
+                // Convert aggregate to ATAR (simplified conversion)
+                // This is a very simplified model - real conversion is much more complex
+                let atar = 0;
+                if (aggregate > 380) atar = 99.95;
+                else if (aggregate > 350) atar = 95 + (aggregate - 350) / 6;
+                else if (aggregate > 300) atar = 85 + (aggregate - 300) / 5;
+                else if (aggregate > 250) atar = 70 + (aggregate - 250) / 3.33;
+                else if (aggregate > 200) atar = 50 + (aggregate - 200) / 2.5;
+                else atar = aggregate / 4;
+                
+                // Ensure ATAR is between 0 and 99.95
+                atar = Math.max(0, Math.min(99.95, atar));
+                
+                // Calculate percentile
+                const percentile = 100 - atar;
+                
+                // Display results
+                document.getElementById('atar-value').textContent = atar.toFixed(2);
+                document.getElementById('aggregate-score').textContent = aggregate.toFixed(1);
+                document.getElementById('percentile-rank').textContent = `Top ${percentile.toFixed(1)}%`;
+                
+                // Populate subject contributions table
+                const contributionsTable = document.getElementById('subject-contributions');
+                contributionsTable.innerHTML = '';
+                
+                includedSubjects.forEach(subject => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${subject.name}</td>
+                        <td>${subject.score.toFixed(1)}%</td>
+                        <td>${subject.scale.toFixed(2)}</td>
+                        <td>${subject.scaledScore.toFixed(1)}</td>
+                        <td>${subject.contribution.toFixed(1)}</td>
+                    `;
+                    contributionsTable.appendChild(row);
+                });
+                
+                // Add bonus points row if applicable
+                if (bonusPoints > 0) {
+                    const bonusRow = document.createElement('tr');
+                    bonusRow.innerHTML = `
+                        <td colspan="4">Bonus Points</td>
+                        <td>+${bonusPoints.toFixed(1)}</td>
+                    `;
+                    contributionsTable.appendChild(bonusRow);
+                }
+                
+                // Show result box
+                document.getElementById('atar-result').style.display = 'block';
+                
+                // Scroll to results
+                document.getElementById('atar-result').scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    </script>
+
+    <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+
+    <div class="sidebar-category">
+        <div class="sidebar-category-header">
+            <span>Site Navigation</span>
+            <span>+</span>
+        </div>
+        
+        <div class="sidebar-category-content">
+            <a href="/index.html" class="sidebar-link">Home</a>
+            <a href="/about.html" class="sidebar-link">About</a>
+            <a href="/terms.html" class="sidebar-link">Terms</a>
+            <a href="/privacy.html" class="sidebar-link">Privacy Policy</a>
+            <a href="/contact.html" class="sidebar-link">Contact Us</a>
+        </div>
+    </div>
+        
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="/jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="/linebalancing.html" class="sidebar-link">Line Balancing</a>
+                <a href="/takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="/synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+                <a href="/machine-utilization-calculator.html" class="sidebar-link">Machine Utilization</a>
+                <a href="/manpower-calculator.html" class="sidebar-link active">Manpower Requirements</a>
+                <a href="/production-capacity-calculator.html" class="sidebar-link">Production Capacity</a>
+
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="/controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="/processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="/sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="/oee-calculation.html" class="sidebar-link">OEE Calculator</a>
+                <a href="/quality-function-deployment" class="sidebar-link">Quality Function Deployment</a>
+
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/anova.html" class="sidebar-link">ANOVA</a>
+                <a href="/chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="/confidence-interval-calculator.html" class="sidebar-link">Confidence Interval </a>
+                <a href="/correlation.html" class="sidebar-link">Correlation Analysis</a>
+                <a href="/coefficient-of-variation-calculator.html" class="sidebar-link">Coefficient of Variation</a>
+                <a href="/goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="/regression.html" class="sidebar-link">Regression</a>
+                <a href="/samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="/taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="/ttest.html" class="sidebar-link">T-Test</a>
+                <a href="/ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/abc-analysis-calculator.html" class="sidebar-link">ABC Analysis</a>
+                <a href="/inventory-turnover-calculator.html" class="sidebar-link">Inventory Turnover</a>
+                <a href="/eoq-formula.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="/reorder-point-calculator.html" class="sidebar-link">Reorder Point</a>
+                <a href="/kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="/newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+                <a href="/safety-stock-calculator.html" class="sidebar-link">Safety Stock Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Measurement</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="/predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="/learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="/littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="/worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="/noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="/posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="/workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="/workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="/queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="/decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="/gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="/markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="/costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="/depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="/timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+                <a href="/failure-mode-and-effects-analysis-fmea.html" class="sidebar-link">FMEA</a>           
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Other Calculators</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/into-everything.html" class="sidebar-link">Into Everything Calculators</a>
+            </div>
+        </div>
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Articles</span>
+                <span>+</span>
+            </div>
+                <div class="sidebar-category-content">
+                    <a href="Articles/Negative-Correlation-Understanding-Inverse-Relationships-in-Data.html" class="sidebar-link">Negative Correlation: Understanding Inverse Relationships in Data</a>
+                    <a href="Articles/Parameter-vs-Statistic-Understanding-the-Key-Differences.html" class="sidebar-link">Statistic vs Parameter: Understanding the Key Differences</a>
+                    <a href="Articles/Quality-Assurance-vs-Quality-Control-Key-Differences-Explained.html" class="sidebar-link">Quality Assurance vs Quality Control: Key Differences Explained</a>
+                    <a href="Articles/ABC-Analysis-Made-Easy.html" class="sidebar-link">ABC Analysis Made Easy: Classify Your Inventory in Minutes</a>
+                    <a href="Articles/EOQ-Optimize-Your-Inventory-Costs.html" class="sidebar-link">EOQ Order Quantity: Optimize Your Inventory</a>
+                    <a href="Articles/Linear-Programming-for-Supply-Chain-Optimization-A-Beginner's-Guide.html" class="sidebar-link">Linear Programming for Supply Chain Optimization: A Beginner's Guide</a>                
+                    <a href="Articles/How-Lean-Six-Sigma-Helps-Cut-Costs-Without-Cutting-Corners.html" class="sidebar-link">How Lean Six Sigma Helps Cut Costs Without Cutting Corners</a>  
+                </div>
+    </aside>
+    <!-- xxxx navigation end xxxxx -->   
+
+</body>
+</html>
