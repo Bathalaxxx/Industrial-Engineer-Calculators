@@ -793,6 +793,343 @@
                 correctAnswer: 1,
                 explanation: "SMED stands for Single-Minute Exchange of Die, a lean manufacturing technique aimed at reducing equipment changeover times."
             },
+
+
+{
+    question: "Coca-Cola runs high-speed bottling lines where jams cascade through upstream processes. Which control method best prevents system-wide downtime?",
+    options: [
+        "Poka-yoke design",
+        "Kanban control",
+        "Andon system with line stop",
+        "Drum-buffer-rope scheduling"
+    ],
+    correctAnswer: 3,
+    explanation: "Drum-buffer-rope buffers protect bottlenecks and prevent small jams from cascading."
+},
+{
+    question: "At Disney’s Space Mountain, ride downtime causes long recovery queues. Which stochastic property explains why clearing backlog takes longer than expected?",
+    options: [
+        "Queue length is linear in arrivals",
+        "Little’s Law underestimates backlog",
+        "System recovery is nonlinear due to batching",
+        "Arrival rate drops during downtime"
+    ],
+    correctAnswer: 2,
+    explanation: "Backlogs build faster than they clear because batching and synchronization delay recovery."
+},
+{
+    question: "At Mayo Clinic, triage nurses prioritize patients. Which queue discipline is applied?",
+    options: [
+        "First Come First Served",
+        "Priority-based queuing",
+        "Shortest Processing Time",
+        "Round Robin"
+    ],
+    correctAnswer: 1,
+    explanation: "Triage applies medical priority, not FCFS."
+},
+{
+    question: "Amazon uses randomized storage for high-turnover items. Why does this improve performance?",
+    options: [
+        "It maximizes ergonomic consistency",
+        "It balances robot travel loads across the warehouse",
+        "It ensures FIFO accuracy",
+        "It reduces pick accuracy variance"
+    ],
+    correctAnswer: 1,
+    explanation: "Random storage balances travel distances and avoids congestion at popular zones."
+},
+{
+    question: "At FedEx, sortation hubs run on strict overnight schedules. Which IE concept explains why increasing throughput after peak hours has limited value?",
+    options: [
+        "Little’s Law invariance",
+        "Fixed cycle scheduling",
+        "Time-window constrained optimization",
+        "Slack time principle"
+    ],
+    correctAnswer: 2,
+    explanation: "Throughput gains outside the committed time window don’t add value due to delivery deadlines."
+},
+{
+    question: "Starbucks baristas handle drinks with high product variety. Which IE strategy most directly improves consistency?",
+    options: [
+        "Statistical process control",
+        "Job enrichment",
+        "Work sampling",
+        "Standard work instructions"
+    ],
+    correctAnswer: 3,
+    explanation: "Standard work ensures consistent preparation across product variety."
+},
+{
+    question: "Toyota uses Jidoka (autonomation). Which benefit is unique compared to pure automation?",
+    options: [
+        "It eliminates all variability",
+        "It separates humans from machines entirely",
+        "It allows machines to detect and stop on abnormal conditions",
+        "It requires no human oversight"
+    ],
+    correctAnswer: 2,
+    explanation: "Jidoka empowers machines to stop automatically when abnormalities occur."
+},
+{
+    question: "UPS designs routes to minimize left turns in the U.S. Why does this improve efficiency?",
+    options: [
+        "It reduces driver fatigue",
+        "It shortens overall travel distance",
+        "It reduces waiting due to traffic signal delays",
+        "It avoids stochastic variability in demand"
+    ],
+    correctAnswer: 2,
+    explanation: "Avoiding left turns reduces idling time at intersections, improving fuel efficiency."
+},
+{
+    question: "Disneyland sets maximum park capacity. Which queue management concept is being applied?",
+    options: [
+        "Demand smoothing",
+        "Finite population modeling",
+        "Blocking probability",
+        "Overbooking strategy"
+    ],
+    correctAnswer: 2,
+    explanation: "Capacity limits control blocking probability by preventing overload."
+},
+{
+    question: "Boeing uses Failure Mode and Effects Analysis (FMEA). Which metric is central to prioritizing risks?",
+    options: [
+        "Process capability index",
+        "Defects per million opportunities",
+        "Risk priority number",
+        "Lead time variance"
+    ],
+    correctAnswer: 2,
+    explanation: "RPN = severity × occurrence × detection guides prioritization."
+},
+{
+    question: "At Amazon, some packing stations show higher injury rates. Which IE tool helps pinpoint root ergonomic risks?",
+    options: [
+        "RULA/REBA assessments",
+        "Monte Carlo simulation",
+        "PERT analysis",
+        "ABC classification"
+    ],
+    correctAnswer: 0,
+    explanation: "RULA/REBA are ergonomic analysis tools to evaluate posture and strain."
+},
+{
+    question: "Tesla’s assembly lines switch between multiple car models. What scheduling method is most appropriate?",
+    options: [
+        "Flow shop scheduling",
+        "Mixed-model sequencing",
+        "Job-shop scheduling",
+        "Open-shop scheduling"
+    ],
+    correctAnswer: 1,
+    explanation: "Mixed-model sequencing allows different car models to be produced on the same line."
+},
+{
+    question: "McDonald’s applies Six Sigma to reduce order errors. What statistical measure best tracks this?",
+    options: [
+        "Defects per million opportunities",
+        "Process capability ratio",
+        "X-bar chart variance",
+        "Work sampling confidence interval"
+    ],
+    correctAnswer: 0,
+    explanation: "Six Sigma tracks errors in terms of DPMO."
+},
+{
+    question: "Disney uses time-stamped ticketing for popular rides. Which queuing problem does this solve?",
+    options: [
+        "Balking",
+        "Reneging",
+        "Jockeying",
+        "Overdispersion"
+    ],
+    correctAnswer: 1,
+    explanation: "Time tickets reduce reneging by preventing excessively long waits."
+},
+{
+    question: "Amazon’s same-day delivery is constrained by last-mile logistics. Which optimization category does this fall under?",
+    options: [
+        "Network flow optimization",
+        "Facility location optimization",
+        "Vehicle routing optimization",
+        "Ergonomic design optimization"
+    ],
+    correctAnswer: 2,
+    explanation: "Last-mile delivery is a vehicle routing optimization challenge."
+},
+{
+    question: "At Boeing, design teams collaborate across continents. Which IE method ensures coordination under timezone delays?",
+    options: [
+        "PERT analysis",
+        "Critical chain project management",
+        "Monte Carlo simulation",
+        "Work study"
+    ],
+    correctAnswer: 1,
+    explanation: "Critical chain accounts for buffer management across uncertain and distributed schedules."
+},
+{
+    question: "Disney uses 'single-rider lines.' Which queuing effect is reduced?",
+    options: [
+        "Blocking",
+        "Jockeying",
+        "Balking",
+        "Reneging"
+    ],
+    correctAnswer: 0,
+    explanation: "Single-rider lines reduce blocking by filling empty ride capacity."
+},
+{
+    question: "At Starbucks, barista motion tracking reveals wasted movement. Which IE tool addresses this?",
+    options: [
+        "Therbligs analysis",
+        "Poka-yoke",
+        "Pareto chart",
+        "Kaizen event"
+    ],
+    correctAnswer: 0,
+    explanation: "Therbligs break down human motion to identify inefficiencies."
+},
+{
+    question: "Amazon’s robotics team models stochastic order arrivals. Which distribution is most often assumed?",
+    options: [
+        "Normal distribution",
+        "Poisson distribution",
+        "Uniform distribution",
+        "Exponential distribution"
+    ],
+    correctAnswer: 1,
+    explanation: "Poisson arrivals are a common assumption for random customer orders."
+},
+{
+    question: "At Disneyland, long queues generate customer dissatisfaction. Which service design strategy addresses this?",
+    options: [
+        "Perceived wait management",
+        "Service time optimization",
+        "Ergonomic redesign",
+        "Flow line balancing"
+    ],
+    correctAnswer: 0,
+    explanation: "Perceived wait management uses entertainment/distractions to reduce dissatisfaction."
+},
+{
+    question: "Coca-Cola plants adopt line balancing. What is the main performance metric?",
+    options: [
+        "Throughput ratio",
+        "Line efficiency",
+        "Defects per unit",
+        "Work sampling rate"
+    ],
+    correctAnswer: 1,
+    explanation: "Line balancing measures how evenly work is distributed—captured by line efficiency."
+},
+{
+    question: "At FedEx, flight maintenance follows strict preventive schedules. Which maintenance strategy is this?",
+    options: [
+        "Reliability-centered maintenance",
+        "Corrective maintenance",
+        "Predictive maintenance",
+        "Condition-based maintenance"
+    ],
+    correctAnswer: 0,
+    explanation: "Preventive schedules based on reliability data = reliability-centered maintenance."
+},
+{
+    question: "Tesla’s Gigafactory scales rapidly. Which facility planning issue dominates?",
+    options: [
+        "Material handling minimization",
+        "Demand forecasting accuracy",
+        "Space-constrained optimization",
+        "Cellular layout design"
+    ],
+    correctAnswer: 2,
+    explanation: "Massive scaling stresses space-constrained optimization."
+},
+{
+    question: "Disney parks stagger showtimes across theaters. Which system behavior are they smoothing?",
+    options: [
+        "Arrival peaks",
+        "Queue discipline",
+        "Service rate",
+        "Ergonomic strain"
+    ],
+    correctAnswer: 0,
+    explanation: "Staggering showtimes smooths arrival peaks at attractions."
+},
+{
+    question: "Amazon applies ABC analysis in inventory. What classification would iPhone chargers most likely fall under?",
+    options: [
+        "A items",
+        "B items",
+        "C items",
+        "Unclassified items"
+    ],
+    correctAnswer: 0,
+    explanation: "High-demand, high-value items like iPhone chargers are A items."
+},
+{
+    question: "McDonald’s uses dual-lane drive-thrus. Which queuing measure improves most directly?",
+    options: [
+        "Service discipline",
+        "Arrival rate",
+        "System capacity",
+        "Queue length variance"
+    ],
+    correctAnswer: 2,
+    explanation: "Adding lanes increases system capacity."
+},
+{
+    question: "At Boeing, simulations of supply chain delays show nonlinear impacts on final delivery. Which modeling tool best handles this?",
+    options: [
+        "Discrete-event simulation",
+        "Regression analysis",
+        "Linear programming",
+        "PERT charts"
+    ],
+    correctAnswer: 0,
+    explanation: "DES captures nonlinear, stochastic interactions in supply chains."
+},
+{
+    question: "Disney parks apply virtual reality in training staff. Which IE advantage does this provide?",
+    options: [
+        "Standardized ergonomic assessment",
+        "Risk-free environment for system trials",
+        "Reduced material handling",
+        "Improved throughput ratios"
+    ],
+    correctAnswer: 1,
+    explanation: "VR training enables system testing without real-world risk."
+},
+{
+    question: "Walmart’s distribution centers use cross-docking. Which inventory concept is minimized?",
+    options: [
+        "Cycle stock",
+        "Pipeline stock",
+        "Safety stock",
+        "Dead stock"
+    ],
+    correctAnswer: 0,
+    explanation: "Cross-docking minimizes cycle stock by transferring goods directly."
+},
+{
+    question: "At Amazon, last-mile delivery uses crowdsourced drivers. Which risk is increased?",
+    options: [
+        "Ergonomic fatigue",
+        "Variability in service quality",
+        "Reduced routing complexity",
+        "Improved takt time"
+    ],
+    correctAnswer: 1,
+    explanation: "Crowdsourced delivery introduces service quality variability."
+}, 
+
+
+
+
+        
             {
                 question: "Which chart is commonly used to identify the most significant factors in a process?",
                 options: [
