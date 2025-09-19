@@ -1070,6 +1070,232 @@
     correctAnswer: 0,
     explanation: "High-demand, high-value items like iPhone chargers are A items."
 },
+
+
+
+{
+    question: "In a single-server queuing system, as the utilization factor (ρ) approaches 1, what happens to the expected waiting time?",
+    options: [
+        "It approaches zero",
+        "It stabilizes at a finite level",
+        "It oscillates depending on arrival variability",
+        "It grows without bound"
+    ],
+    correctAnswer: 3,
+    explanation: "As utilization approaches 1, the expected waiting time tends to infinity."
+},
+{
+    question: "In the EOQ model, what happens to the order quantity as holding cost tends to zero?",
+    options: [
+        "It approaches infinity",
+        "It approaches zero",
+        "It stabilizes at a fixed value",
+        "It becomes undefined"
+    ],
+    correctAnswer: 0,
+    explanation: "With negligible holding cost, the model suggests ordering infinitely large quantities."
+},
+{
+    question: "In project management, if every activity duration increases by a constant value, what happens to the critical path length?",
+    options: [
+        "It remains unchanged",
+        "It increases by that constant value times the number of activities on the path",
+        "It decreases due to float absorption",
+        "It becomes undefined"
+    ],
+    correctAnswer: 1,
+    explanation: "Critical path length increases by the sum of duration increments along that path."
+},
+{
+    question: "In a line balancing problem, if task times are all much smaller than the cycle time, what becomes the primary challenge?",
+    options: [
+        "Worker idle time",
+        "Task precedence constraints",
+        "Cycle time calculation",
+        "Equipment reliability"
+    ],
+    correctAnswer: 1,
+    explanation: "When tasks are small, the real limitation is precedence, not time allocation."
+},
+{
+    question: "In an M/M/1 queue, what happens to the system if the service rate is only infinitesimally higher than the arrival rate?",
+    options: [
+        "Queue stabilizes with low waiting time",
+        "Queue length still tends to infinity over long time horizons",
+        "System behaves like a deterministic process",
+        "System becomes self-regulating"
+    ],
+    correctAnswer: 1,
+    explanation: "Even slight overload risks lead to long queues; performance degrades heavily near ρ ≈ 1."
+},
+{
+    question: "In forecasting, if the smoothing constant in exponential smoothing is set close to 1, what trade-off occurs?",
+    options: [
+        "Forecasts lag less but become more sensitive to random noise",
+        "Forecasts lag more but are less sensitive to randomness",
+        "Forecasts remain unaffected by α",
+        "Forecasts converge instantly to the mean"
+    ],
+    correctAnswer: 0,
+    explanation: "High α makes forecasts highly reactive but also noisy."
+},
+{
+    question: "In job shop scheduling, what is the trade-off when applying the SPT (Shortest Processing Time) rule?",
+    options: [
+        "It minimizes lateness but increases work-in-process",
+        "It minimizes average flow time but may delay longer jobs",
+        "It minimizes tardiness but maximizes cycle time",
+        "It balances flow time and due dates equally"
+    ],
+    correctAnswer: 1,
+    explanation: "SPT reduces average flow time but penalizes long jobs waiting too long."
+},
+{
+    question: "In reliability engineering, what happens to system reliability as the number of series components increases?",
+    options: [
+        "It increases exponentially",
+        "It decreases exponentially",
+        "It stays constant",
+        "It oscillates depending on component redundancy"
+    ],
+    correctAnswer: 1,
+    explanation: "Series reliability is the product of component reliabilities, which declines as n grows."
+},
+{
+    question: "In inventory systems, what is the trade-off between ordering cost and holding cost in the EOQ model?",
+    options: [
+        "Both decrease with larger order sizes",
+        "Both increase with smaller order sizes",
+        "Ordering cost decreases with larger orders while holding cost increases",
+        "Ordering cost increases with larger orders while holding cost decreases"
+    ],
+    correctAnswer: 2,
+    explanation: "Larger orders reduce order frequency (lower ordering cost) but raise inventory levels (higher holding cost)."
+},
+{
+    question: "In ergonomics, what happens to worker capacity if task demands consistently exceed maximum voluntary capacity?",
+    options: [
+        "Capacity stabilizes at a higher level",
+        "Capacity gradually declines due to fatigue",
+        "Capacity oscillates randomly",
+        "Capacity becomes independent of task demand"
+    ],
+    correctAnswer: 1,
+    explanation: "Sustained overload leads to fatigue and reduced capacity."
+},
+{
+    question: "In JIT environments, what is the trade-off of holding zero safety stock?",
+    options: [
+        "Lower carrying cost but higher risk of stockouts",
+        "Higher carrying cost but lower service levels",
+        "Faster response times but increased demand variability",
+        "Lower production flexibility but higher cash flow"
+    ],
+    correctAnswer: 0,
+    explanation: "Zero safety stock reduces cost but makes the system vulnerable to variability."
+},
+{
+    question: "In simulation modeling, what happens if the number of replications is increased indefinitely?",
+    options: [
+        "Randomness increases",
+        "Variance of estimates decreases",
+        "Bias of estimates increases",
+        "System dynamics change"
+    ],
+    correctAnswer: 1,
+    explanation: "More replications reduce sampling error, improving estimate precision."
+},
+{
+    question: "In facility layout, what is the trade-off between product layout and process layout?",
+    options: [
+        "Product layout gives high flexibility but low efficiency",
+        "Product layout gives high efficiency but low flexibility",
+        "Process layout gives both high efficiency and high flexibility",
+        "Process layout gives high efficiency but low scalability"
+    ],
+    correctAnswer: 1,
+    explanation: "Product layouts are efficient but inflexible, while process layouts are flexible but less efficient."
+},
+{
+    question: "In control charts, what happens to Type I error as control limits are tightened?",
+    options: [
+        "It decreases",
+        "It increases",
+        "It becomes zero",
+        "It stays constant"
+    ],
+    correctAnswer: 1,
+    explanation: "Narrower limits cause more false alarms, increasing Type I error."
+},
+{
+    question: "In work measurement, what happens if performance rating is consistently set too high?",
+    options: [
+        "Standard times are overstated",
+        "Standard times are understated",
+        "Allowances compensate perfectly",
+        "Standard times become meaningless"
+    ],
+    correctAnswer: 1,
+    explanation: "High ratings make workers seem faster, leading to lower standard times."
+},
+{
+    question: "In production systems, what trade-off does increasing batch size create?",
+    options: [
+        "Higher setup frequency but lower inventory",
+        "Lower setup frequency but higher inventory",
+        "Higher flexibility but higher WIP",
+        "Lower cycle time but higher demand variability"
+    ],
+    correctAnswer: 1,
+    explanation: "Larger batches reduce setups but increase inventory."
+},
+{
+    question: "In scheduling, what happens if due dates are extremely tight for all jobs?",
+    options: [
+        "EDD becomes optimal",
+        "Lateness becomes inevitable regardless of rule",
+        "SPT guarantees zero tardiness",
+        "Johnson’s Rule ensures on-time delivery"
+    ],
+    correctAnswer: 1,
+    explanation: "If due dates are impossible, no rule avoids lateness."
+},
+{
+    question: "In Little’s Law, what happens to cycle time if throughput is fixed and WIP increases?",
+    options: [
+        "Cycle time decreases",
+        "Cycle time increases",
+        "Cycle time remains constant",
+        "Cycle time becomes unpredictable"
+    ],
+    correctAnswer: 1,
+    explanation: "Little’s Law states CT = WIP / Throughput, so higher WIP increases cycle time."
+},
+{
+    question: "In supply chain management, what is the trade-off when using multiple suppliers instead of a single supplier?",
+    options: [
+        "Lower risk but higher coordination cost",
+        "Lower coordination cost but higher risk",
+        "Lower transportation cost but higher demand variability",
+        "Lower lead time but higher holding cost"
+    ],
+    correctAnswer: 0,
+    explanation: "Multiple suppliers spread risk but complicate coordination."
+},
+{
+    question: "In ergonomics design, what happens when equipment is designed only for the 50th percentile user?",
+    options: [
+        "It fits most users comfortably",
+        "It fits only about half the users well",
+        "It fits 95% of users by default",
+        "It ensures extreme users are always accommodated"
+    ],
+    correctAnswer: 1,
+    explanation: "Designing for the 50th percentile excludes people at the extremes."
+    }, 
+
+
+            
 {
     question: "McDonald’s uses dual-lane drive-thrus. Which queuing measure improves most directly?",
     options: [
