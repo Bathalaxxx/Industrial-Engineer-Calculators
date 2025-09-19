@@ -1106,6 +1106,542 @@
     correctAnswer: 1,
     explanation: "Critical path length increases by the sum of duration increments along that path."
 },
+
+
+
+{
+    question: "In an M/M/1 queue, what happens to the system time when arrival rate equals service rate?",
+    options: [
+        "It stabilizes at the mean service time",
+        "It becomes independent of arrival variability",
+        "It converges to a constant finite value",
+        "It diverges to infinity"
+    ],
+    correctAnswer: 3,
+    explanation: "When arrival rate equals service rate, utilization reaches 1, and expected system time tends to infinity."
+},
+{
+    question: "In EOQ, if demand variability becomes extremely high, what happens to the model's usefulness?",
+    options: [
+        "It becomes more accurate",
+        "It eliminates stockouts",
+        "It yields the same fixed order quantity",
+        "It loses practical relevance"
+    ],
+    correctAnswer: 3,
+    explanation: "EOQ assumes stable demand, so extreme variability makes it impractical."
+},
+{
+    question: "In project scheduling, if every activity has identical duration, what determines the critical path?",
+    options: [
+        "The shortest activity sequence",
+        "The earliest starting activity",
+        "The task with the smallest slack",
+        "The path with the largest number of tasks"
+    ],
+    correctAnswer: 3,
+    explanation: "With equal durations, the longest sequence (most tasks) defines the critical path."
+},
+{
+    question: "In line balancing, if the cycle time is much larger than task times, what dominates line efficiency?",
+    options: [
+        "Worker speed variability",
+        "Material handling times",
+        "Cycle time adjustments",
+        "Precedence constraints"
+    ],
+    correctAnswer: 3,
+    explanation: "Precedence rules dominate when tasks are much smaller than cycle time."
+},
+{
+    question: "In forecasting, if α = 0 in exponential smoothing, what does the forecast become?",
+    options: [
+        "Perfectly reactive",
+        "Equal to the last actual demand",
+        "A weighted average of recent demands",
+        "The initial forecast repeated forever"
+    ],
+    correctAnswer: 3,
+    explanation: "With α = 0, the forecast never updates and stays at the initial forecast."
+},
+{
+    question: "In reliability, if all components are in series and one has reliability zero, what is the system reliability?",
+    options: [
+        "Equal to the average component reliability",
+        "Equal to one minus the failure rate",
+        "Unaffected by the zero component",
+        "Zero"
+    ],
+    correctAnswer: 3,
+    explanation: "A zero-reliability component in series drives the entire system reliability to zero."
+},
+{
+    question: "In inventory models, what happens if holding cost tends to infinity?",
+    options: [
+        "Larger optimal lot sizes are ordered",
+        "Stockouts are completely eliminated",
+        "Reorder points remain unchanged",
+        "Lot size approaches one unit"
+    ],
+    correctAnswer: 3,
+    explanation: "With infinite holding cost, firms minimize inventory by ordering nearly one unit at a time."
+},
+{
+    question: "In process layouts, what is the biggest disadvantage compared to product layouts?",
+    options: [
+        "High equipment utilization",
+        "Smooth material flow",
+        "Lower flexibility",
+        "High material handling cost"
+    ],
+    correctAnswer: 3,
+    explanation: "Process layouts require more movement of materials, increasing handling cost."
+},
+{
+    question: "In control charts, if the sample size increases significantly, what happens to the control limits?",
+    options: [
+        "They widen",
+        "They remain unchanged",
+        "They disappear",
+        "They narrow"
+    ],
+    correctAnswer: 3,
+    explanation: "Larger samples reduce variability of the mean, narrowing the control limits."
+},
+{
+    question: "In Little’s Law, if throughput decreases while WIP remains constant, what happens to cycle time?",
+    options: [
+        "It decreases",
+        "It remains the same",
+        "It becomes unpredictable",
+        "It increases"
+    ],
+    correctAnswer: 3,
+    explanation: "Cycle time = WIP / Throughput; decreasing throughput increases cycle time."
+},
+{
+    question: "In work measurement, if allowances are set to zero, what happens to standard time?",
+    options: [
+        "It inflates",
+        "It decreases slightly",
+        "It remains unchanged",
+        "It becomes equal to normal time"
+    ],
+    correctAnswer: 3,
+    explanation: "Standard time = normal time × (1 + allowance); with zero allowance, standard time = normal time."
+},
+{
+    question: "In scheduling, when all due dates are equal, which rule minimizes lateness?",
+    options: [
+        "FCFS",
+        "EDD",
+        "CR",
+        "SPT"
+    ],
+    correctAnswer: 3,
+    explanation: "SPT minimizes lateness when due dates are equal."
+},
+{
+    question: "In queuing, what happens if arrival variability is eliminated but service variability remains?",
+    options: [
+        "Waiting lines become unstable",
+        "System becomes deterministic",
+        "Utilization becomes zero",
+        "Waiting times reduce but do not disappear"
+    ],
+    correctAnswer: 3,
+    explanation: "Without arrival variability, queues are reduced, but service variability still causes delays."
+},
+{
+    question: "In facility location, what is the primary trade-off considered in the center-of-gravity method?",
+    options: [
+        "Fixed cost vs. variable cost",
+        "Labor vs. material cost",
+        "Quality vs. flexibility",
+        "Transportation distance vs. demand weight"
+    ],
+    correctAnswer: 3,
+    explanation: "The method balances weighted distances based on demand points."
+},
+{
+    question: "In lean production, what is the major drawback of Kanban in highly variable demand?",
+    options: [
+        "Excess labor requirements",
+        "High setup costs",
+        "Slow equipment changeovers",
+        "Poor adaptability"
+    ],
+    correctAnswer: 3,
+    explanation: "Kanban systems struggle with adaptability under demand variability."
+},
+{
+    question: "In simulation, what happens if warm-up periods are ignored?",
+    options: [
+        "Output remains unbiased",
+        "System time shrinks",
+        "Results stabilize faster",
+        "Initial conditions bias results"
+    ],
+    correctAnswer: 3,
+    explanation: "Ignoring warm-up introduces bias because transient conditions affect results."
+},
+{
+    question: "In ergonomics, what happens if workstation height is set too high for most workers?",
+    options: [
+        "Increased cycle efficiency",
+        "Reduced material handling",
+        "Reduced reach time",
+        "Increased shoulder strain"
+    ],
+    correctAnswer: 3,
+    explanation: "Workstation height that is too high increases upper body strain."
+},
+{
+    question: "In decision analysis, what happens if decision maker ignores opportunity loss?",
+    options: [
+        "They always minimize expected payoff",
+        "They eliminate all variability",
+        "They maximize profit under all scenarios",
+        "They may miss better strategies"
+    ],
+    correctAnswer: 3,
+    explanation: "Ignoring opportunity loss risks missing superior alternatives."
+},
+{
+    question: "In supply chain design, what happens if bullwhip effect is not controlled?",
+    options: [
+        "Inventory shrinks",
+        "Lead times disappear",
+        "Forecasting improves",
+        "Inventory amplification occurs"
+    ],
+    correctAnswer: 3,
+    explanation: "Bullwhip amplifies demand variability, leading to excess inventory."
+},
+{
+    question: "In facility layout, what is the greatest weakness of fixed-position layouts?",
+    options: [
+        "High labor specialization",
+        "Poor material utilization",
+        "Low transportation cost",
+        "High coordination complexity"
+    ],
+    correctAnswer: 3,
+    explanation: "Fixed-position layouts require coordinating many resources in one place."
+},
+{
+    question: "In reliability engineering, adding redundancy in parallel creates what trade-off?",
+    options: [
+        "Lower reliability but higher cost",
+        "Shorter lead times but less safety",
+        "Higher downtime but lower complexity",
+        "Higher reliability but higher cost"
+    ],
+    correctAnswer: 3,
+    explanation: "Parallel redundancy boosts reliability but increases system cost."
+},
+{
+    question: "In scheduling, what happens if CR rule is applied when due dates are extremely relaxed?",
+    options: [
+        "It worsens average flow time",
+        "It reduces utilization",
+        "It reduces variability",
+        "It behaves like SPT"
+    ],
+    correctAnswer: 3,
+    explanation: "With relaxed due dates, CR reduces to SPT."
+},
+{
+    question: "In control charting, if process mean shifts slightly, what happens to detection probability with large sample sizes?",
+    options: [
+        "It decreases",
+        "It stays unchanged",
+        "It becomes zero",
+        "It increases"
+    ],
+    correctAnswer: 3,
+    explanation: "Larger samples improve sensitivity, increasing detection probability."
+},
+{
+    question: "In time study, what happens if the observer consistently underestimates performance rating?",
+    options: [
+        "Standard time inflates",
+        "Standard time shrinks slightly",
+        "Standard time remains unaffected",
+        "Standard time inflates significantly"
+    ],
+    correctAnswer: 3,
+    explanation: "Low ratings make workers appear slower, inflating standard times."
+},
+{
+    question: "In inventory systems, what happens if lead time is highly variable?",
+    options: [
+        "Safety stock shrinks",
+        "Stockouts disappear",
+        "Order frequency increases",
+        "Safety stock grows"
+    ],
+    correctAnswer: 3,
+    explanation: "Lead time variability requires more safety stock to prevent shortages."
+},
+{
+    question: "In ergonomics, designing only for the 95th percentile user causes what issue?",
+    options: [
+        "High inclusivity",
+        "Reduced operator strain",
+        "Complete universality",
+        "Poor accommodation of smaller users"
+    ],
+    correctAnswer: 3,
+    explanation: "Designing for extremes excludes smaller users."
+},
+{
+    question: "In project crashing, what happens if indirect costs are ignored?",
+    options: [
+        "Crash cost decreases",
+        "Normal duration increases",
+        "Resource allocation stabilizes",
+        "Optimal crash point is miscalculated"
+    ],
+    correctAnswer: 3,
+    explanation: "Indirect costs influence total project cost; ignoring them miscalculates the optimum."
+},
+{
+    question: "In queuing, if service times are deterministic, what happens to waiting time variability?",
+    options: [
+        "It increases",
+        "It oscillates",
+        "It becomes undefined",
+        "It decreases"
+    ],
+    correctAnswer: 3,
+    explanation: "Deterministic service times reduce variability and lower waiting time."
+},
+{
+    question: "In JIT, what happens if supplier reliability decreases significantly?",
+    options: [
+        "Safety stock shrinks",
+        "Lead time becomes zero",
+        "Inventory costs disappear",
+        "Stockouts increase"
+    ],
+    correctAnswer: 3,
+    explanation: "JIT requires reliable suppliers; poor reliability causes stockouts."
+},
+{
+    question: "In SPC, what happens if special causes are ignored?",
+    options: [
+        "Process stays stable",
+        "Control limits shrink",
+        "Sampling errors vanish",
+        "Process shifts persist"
+    ],
+    correctAnswer: 3,
+    explanation: "Ignoring special causes allows process shifts to remain undetected."
+},
+{
+    question: "In work sampling, what happens if observation frequency is too low?",
+    options: [
+        "Estimates become unbiased",
+        "Confidence increases",
+        "Cycle time decreases",
+        "Estimates lose precision"
+    ],
+    correctAnswer: 3,
+    explanation: "Too few samples give poor precision."
+},
+{
+    question: "In decision trees, pruning branches has what trade-off?",
+    options: [
+        "Higher complexity but lower clarity",
+        "Lower clarity but higher bias",
+        "Higher accuracy but higher overfitting",
+        "Lower complexity but potential loss of accuracy"
+    ],
+    correctAnswer: 3,
+    explanation: "Pruning reduces complexity but risks losing predictive accuracy."
+},
+{
+    question: "In ergonomics, what happens if illumination is too high?",
+    options: [
+        "Visual accuracy improves infinitely",
+        "Fatigue disappears",
+        "Work pace doubles",
+        "Glare and visual discomfort occur"
+    ],
+    correctAnswer: 3,
+    explanation: "Excessive illumination causes glare and discomfort."
+},
+{
+    question: "In multi-objective optimization, what is the challenge of Pareto efficiency?",
+    options: [
+        "It guarantees one unique solution",
+        "It eliminates all trade-offs",
+        "It ignores system constraints",
+        "It yields multiple non-dominated solutions"
+    ],
+    correctAnswer: 3,
+    explanation: "Pareto efficiency produces sets of solutions without a single optimum."
+},
+{
+    question: "In facility planning, what happens if space is allocated strictly by current demand?",
+    options: [
+        "Long-term scalability improves",
+        "Layout flexibility increases",
+        "Future demand is perfectly matched",
+        "Expansion becomes constrained"
+    ],
+    correctAnswer: 3,
+    explanation: "Allocating only for current demand limits future scalability."
+},
+{
+    question: "In EOQ, if ordering cost tends to zero, what happens?",
+    options: [
+        "Lot size increases",
+        "Lead time vanishes",
+        "Safety stock grows",
+        "Lot size approaches one unit"
+    ],
+    correctAnswer: 3,
+    explanation: "Zero ordering cost implies frequent ordering, ideally one unit at a time."
+},
+{
+    question: "In PERT, what happens if pessimistic and optimistic times are equal?",
+    options: [
+        "Variance increases",
+        "Uncertainty grows",
+        "Distribution becomes exponential",
+        "Activity duration becomes deterministic"
+    ],
+    correctAnswer: 3,
+    explanation: "Equal optimistic and pessimistic times yield a fixed duration."
+},
+{
+    question: "In ergonomics, what happens if task cycle times are shorter than human reaction time?",
+    options: [
+        "Error rates decline",
+        "Efficiency improves",
+        "Fatigue disappears",
+        "Errors increase"
+    ],
+    correctAnswer: 3,
+    explanation: "Tasks faster than reaction time cause high error rates."
+},
+{
+    question: "In scheduling, if all processing times are equal, which rule minimizes average flow time?",
+    options: [
+        "EDD",
+        "CR",
+        "Johnson’s rule",
+        "Any rule"
+    ],
+    correctAnswer: 3,
+    explanation: "When processing times are equal, all rules perform identically."
+},
+{
+    question: "In ergonomics, designing for the 1st percentile in door height results in what?",
+    options: [
+        "Perfect fit for all users",
+        "No clearance issues",
+        "Standard anthropometry",
+        "Most users hitting their heads"
+    ],
+    correctAnswer: 3,
+    explanation: "Using the 1st percentile excludes taller users, causing clearance problems."
+},
+{
+    question: "In queueing, what happens when service rate is doubled but arrival rate stays constant?",
+    options: [
+        "Utilization rises",
+        "Waiting times increase",
+        "System becomes unstable",
+        "Waiting times decrease"
+    ],
+    correctAnswer: 3,
+    explanation: "Doubling service rate lowers utilization and reduces waiting times."
+},
+{
+    question: "In forecasting, what happens when seasonality is ignored in highly seasonal demand?",
+    options: [
+        "Forecast accuracy improves",
+        "Random error decreases",
+        "Trend estimates stabilize",
+        "Forecast bias increases"
+    ],
+    correctAnswer: 3,
+    explanation: "Ignoring seasonality causes persistent bias in forecasts."
+},
+{
+    question: "In project management, what happens if slack is zero across all paths?",
+    options: [
+        "Any delay is absorbed",
+        "Project duration shrinks",
+        "Resource leveling becomes trivial",
+        "All paths are critical"
+    ],
+    correctAnswer: 3,
+    explanation: "Zero slack across paths means all are critical."
+},
+{
+    question: "In SPC, what happens if only common causes are present?",
+    options: [
+        "Process shifts randomly",
+        "Control limits vanish",
+        "Process mean drifts",
+        "Variation remains predictable"
+    ],
+    correctAnswer: 3,
+    explanation: "Common causes result in predictable, stable variation."
+},
+{
+    question: "In lean production, what happens if setup times are reduced to nearly zero?",
+    options: [
+        "Batch sizes must increase",
+        "Carrying costs increase",
+        "Cycle times explode",
+        "Batch sizes shrink"
+    ],
+    correctAnswer: 3,
+    explanation: "Setup reduction enables smaller batches."
+},
+{
+    question: "In queuing networks, what happens if routing is purely random?",
+    options: [
+        "Bottlenecks vanish",
+        "Flow time decreases",
+        "Utilization equalizes perfectly",
+        "Some nodes may become overloaded"
+    ],
+    correctAnswer: 3,
+    explanation: "Random routing risks overloading some nodes."
+},
+{
+    question: "In ergonomics, what happens if reach distance exceeds the 95th percentile?",
+    options: [
+        "All users can reach comfortably",
+        "Reach variability shrinks",
+        "Efficiency increases",
+        "Many users cannot reach safely"
+    ],
+    correctAnswer: 3,
+    explanation: "Exceeding the 95th percentile excludes many users."
+},
+{
+    question: "In EOQ with backorders allowed, what happens if backorder cost tends to infinity?",
+    options: [
+        "Stockouts increase",
+        "Lot size shrinks",
+        "Reorder point vanishes",
+        "No backorders occur"
+    ],
+    correctAnswer: 3,
+    explanation: "Infinite backorder cost prevents any shortages."
+}, 
+
+
+
+
+        
 {
     question: "In a line balancing problem, if task times are all much smaller than the cycle time, what becomes the primary challenge?",
     options: [
