@@ -3906,6 +3906,228 @@
 
 
 
+{
+    question: "At Toyota, takt time is strictly enforced to synchronize production with demand. If takt time is reduced below realistic process capability, what unintended system behavior is most likely?",
+    options: [
+        "Improved ergonomic outcomes",
+        "Excessive work-in-process buildup",
+        "Reduced variability in cycle time",
+        "Improved labor utilization"
+    ],
+    correctAnswer: 1,
+    explanation: "Setting takt below process capability causes backlog and excess WIP accumulation."
+},
+{
+    question: "Amazon deploys Kiva robots for dynamic warehouse operations. Which queuing network property best models these robots when traffic increases sharply during peak seasons?",
+    options: [
+        "Jackson networks with infinite servers",
+        "Closed queuing networks with finite servers",
+        "Deterministic push systems",
+        "Single-server FIFO models"
+    ],
+    correctAnswer: 1,
+    explanation: "Kiva robots act as finite resources circulating in a closed queuing network."
+},
+{
+    question: "Mayo Clinic tests parallel patient flow systems for diagnostics. From a systems modeling perspective, what risk does parallelization create?",
+    options: [
+        "Increased throughput variance",
+        "Reduced bottleneck sensitivity",
+        "Guaranteed cycle time reduction",
+        "Ergonomic load balancing"
+    ],
+    correctAnswer: 0,
+    explanation: "Parallel systems increase throughput variability due to synchronization delays."
+},
+{
+    question: "FedEx hub operations in Memphis depend on tightly scheduled sortation. Which IE concept explains why a single delayed inbound flight can propagate disruptions across the network?",
+    options: [
+        "Theory of Constraints",
+        "Queuing independence",
+        "Ergonomic mismatch",
+        "Work sampling bias"
+    ],
+    correctAnswer: 0,
+    explanation: "Theory of Constraints highlights how one bottleneck (delayed plane) limits system throughput."
+},
+{
+    question: "At Disneyland, crowd simulations show that funnel-shaped pathways near ride entrances worsen congestion. Which principle is being violated?",
+    options: [
+        "Little’s Law",
+        "Fundamental ergonomic principles",
+        "Bottleneck avoidance in facility layout",
+        "Queuing priority rules"
+    ],
+    correctAnswer: 2,
+    explanation: "Layout design that converges flows at entrances amplifies bottleneck effects."
+},
+{
+    question: "Samsung’s semiconductor fabs rely on extremely low defect tolerances. In this context, which statistical assumption makes traditional p-charts less effective?",
+    options: [
+        "Defects are rare, causing low sample counts",
+        "Defects follow a Gaussian distribution",
+        "Process capability always exceeds 1.33",
+        "Sample sizes are excessively large"
+    ],
+    correctAnswer: 0,
+    explanation: "When defects are rare, p-charts lose sensitivity due to low counts and require alternatives like c-charts or g-charts."
+},
+{
+    question: "At UPS, routing software optimizes driver schedules. Why is this problem mathematically classified as NP-hard?",
+    options: [
+        "It involves continuous optimization over convex sets",
+        "It is a special case of queuing with infinite servers",
+        "It is equivalent to the traveling salesman problem with constraints",
+        "It uses linear programming relaxations"
+    ],
+    correctAnswer: 2,
+    explanation: "Driver routing resembles the traveling salesman problem with constraints, which is NP-hard."
+},
+{
+    question: "At Boeing, critical path analysis shows multiple parallel activities finishing early, yet project delays still occur. What explains this?",
+    options: [
+        "Critical path underestimates non-critical float consumption",
+        "Ergonomics delays not modeled",
+        "Line balancing errors",
+        "Queuing models applied incorrectly"
+    ],
+    correctAnswer: 0,
+    explanation: "Project delays arise when float is consumed on near-critical paths, making them critical later."
+},
+{
+    question: "At Starbucks, customer arrival patterns deviate from Poisson assumptions during promotions. Which queuing implication follows?",
+    options: [
+        "Erlang models underestimate wait times",
+        "FIFO service discipline becomes unstable",
+        "Little’s Law no longer applies",
+        "Queue length variance decreases"
+    ],
+    correctAnswer: 0,
+    explanation: "When arrivals cluster, Erlang-based Poisson assumptions underestimate wait times."
+},
+{
+    question: "Disneyland models ride queues with virtual reservations. Which queuing property is effectively altered?",
+    options: [
+        "Service rate distribution",
+        "Arrival process",
+        "Queue discipline",
+        "Network topology"
+    ],
+    correctAnswer: 2,
+    explanation: "Virtual reservations shift queues from FIFO to reservation-based service discipline."
+},
+{
+    question: "At Tesla, digital twin simulations are used to test production scenarios. Which core limitation must be considered?",
+    options: [
+        "They assume stochastic independence across processes",
+        "They cannot model human-machine interactions",
+        "They always underestimate variance",
+        "They lack visual realism"
+    ],
+    correctAnswer: 0,
+    explanation: "Most digital twins assume independence, which may not hold across interdependent processes."
+},
+{
+    question: "In Amazon’s fulfillment centers, zone picking creates batching delays. Which IE trade-off does this illustrate?",
+    options: [
+        "Reduced walking vs increased waiting",
+        "Increased ergonomics vs lower productivity",
+        "Improved takt time vs lower throughput",
+        "Kanban accuracy vs higher lead times"
+    ],
+    correctAnswer: 0,
+    explanation: "Zone picking reduces walking but increases waiting as orders must batch before shipping."
+},
+{
+    question: "Mayo Clinic deploys simulation to test ICU capacity. Which ethical constraint complicates this modeling?",
+    options: [
+        "Data scarcity in controlled trials",
+        "Human subjects cannot be randomized",
+        "System costs are non-linear",
+        "Little’s Law does not apply in healthcare"
+    ],
+    correctAnswer: 1,
+    explanation: "Randomization in patient assignment is ethically limited, reducing data realism."
+},
+{
+    question: "FedEx relies on buffer inventories of spare aircraft parts. Which queuing concept justifies this?",
+    options: [
+        "Blocking probability",
+        "Service-level optimization",
+        "Jackson network decomposition",
+        "FIFO violation"
+    ],
+    correctAnswer: 1,
+    explanation: "Spare part buffers ensure high service levels by minimizing downtime risk."
+},
+{
+    question: "At Disney, engineers design ride vehicle loading to balance throughput and safety. What optimization type is this?",
+    options: [
+        "Multi-objective optimization",
+        "Queuing theory",
+        "Deterministic programming",
+        "ABC analysis"
+    ],
+    correctAnswer: 0,
+    explanation: "Balancing throughput with safety involves multi-objective optimization."
+},
+{
+    question: "Walmart’s just-in-time strategy struggles during supplier disruption. Which reliability measure applies?",
+    options: [
+        "Redundancy optimization",
+        "Mean time between failures",
+        "System availability",
+        "Supply chain resilience"
+    ],
+    correctAnswer: 3,
+    explanation: "Supply chain resilience measures how quickly systems recover after disruption."
+},
+{
+    question: "At Tesla, battery production bottlenecks affect car delivery schedules. Which operations principle explains the linkage?",
+    options: [
+        "Theory of Constraints",
+        "Work sampling",
+        "Kaizen",
+        "Job enlargement"
+    ],
+    correctAnswer: 0,
+    explanation: "A single bottleneck (battery production) constrains the entire delivery schedule."
+},
+{
+    question: "At Mayo Clinic, nurse schedules are optimized using integer programming. What makes the problem computationally challenging?",
+    options: [
+        "Linear relaxations overestimate wait times",
+        "Discrete decision variables make the problem combinatorial",
+        "Stochastic arrivals are impossible to model",
+        "Little’s Law assumptions break down"
+    ],
+    correctAnswer: 1,
+    explanation: "Integer programming is difficult due to combinatorial complexity of discrete shifts."
+},
+{
+    question: "Disney uses real-time crowd tracking. What advanced mathematical model captures pedestrian dynamics more realistically than queuing?",
+    options: [
+        "Fluid dynamics models",
+        "Jackson networks",
+        "PERT",
+        "Monte Carlo random walks"
+    ],
+    correctAnswer: 0,
+    explanation: "Fluid dynamics treat pedestrian crowds like flow systems, capturing density-dependent delays."
+},
+{
+    question: "Amazon’s supply chain simulations reveal bullwhip effects from demand variability. Which control strategy mitigates this?",
+    options: [
+        "Decentralized order processing",
+        "Increased forecasting error",
+        "Information sharing across tiers",
+        "FIFO batching"
+    ],
+    correctAnswer: 2,
+    explanation: "Sharing information reduces amplification of demand fluctuations (bullwhip effect)."  
+}, 
+            
+    
 
 
 {
