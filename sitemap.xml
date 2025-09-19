@@ -450,5 +450,24 @@
     <changefreq>yearly</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://iecalculators.online/assessments/should-I-study-industrial-engineering-quiz.html</loc>
+    <lastmod>2024-09-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://iecalculators.online/assessments/ie-career-quiz.html</loc>
+    <lastmod>2024-09-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://iecalculators.online/assessments/ie-general-info-quiz.html</loc>
+    <lastmod>2024-09-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
 
 </urlset>
