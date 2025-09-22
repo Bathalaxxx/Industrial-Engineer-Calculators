@@ -49,16 +49,16 @@
             --text-color: #000000;
             --text-light: #000000;
             
---production-color: #1a56db;    /* Darker blue */
---quality-color: #1a7f41;       /* Darker green */
---statistics-color: #6b46c1;    /* Darker purple */
---inventory-color: #c05621;     /* Darker orange */
---workstudy-color: #b7791f;     /* Darker yellow */
---ergonomics-color: #0d9488;    /* Darker teal */
---operations-color: #2d3748;    /* Darker gray-blue */
---economy-color: #1a7f41;       /* Darker green */
---facilities-color: #6b46c1;    /* Darker purple */
---reliability-color: #c53030;   /* Darker red */
+            --production-color: #1a56db;    /* Darker blue */
+            --quality-color: #1a7f41;       /* Darker green */
+            --statistics-color: #6b46c1;    /* Darker purple */
+            --inventory-color: #c05621;     /* Darker orange */
+            --workstudy-color: #b7791f;     /* Darker yellow */
+            --ergonomics-color: #0d9488;    /* Darker teal */
+            --operations-color: #2d3748;    /* Darker gray-blue */
+            --economy-color: #1a7f41;       /* Darker green */
+            --facilities-color: #6b46c1;    /* Darker purple */
+            --reliability-color: #c53030;   /* Darker red */
         
         * {
             margin: 0;
@@ -659,7 +659,7 @@
             .result-grid {
                 grid-template-columns: 1fr;
             }
-        
+        }
     }  
 
 </style>    
@@ -1428,71 +1428,84 @@
         </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const popupOverlay = document.getElementById('popupOverlay');
-            const emailForm = document.getElementById('emailForm');
-            const closePopup = document.getElementById('closePopup');
-            const successMessage = document.getElementById('successMessage');
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const popupOverlay = document.getElementById('popupOverlay');
+    const emailForm = document.getElementById('emailForm');
+    const closePopup = document.getElementById('closePopup');
+    const successMessage = document.getElementById('successMessage');
 
-            function hasSubscribed() {
-                return localStorage.getItem('ieCalcSubscribed') === 'true';
+    // --- LocalStorage helpers ---
+    function hasSubscribed() {
+        return localStorage.getItem('ieCalcSubscribed') === 'true';
+    }
+    function setSubscribed() {
+        localStorage.setItem('ieCalcSubscribed', 'true');
+    }
+    function hasDismissed() {
+        return localStorage.getItem('ieCalcDismissed') === 'true';
+    }
+    function setDismissed() {
+        localStorage.setItem('ieCalcDismissed', 'true');
+    }
+
+    // --- Show / hide popup ---
+    function showPopup() {
+        if (!hasSubscribed() && !hasDismissed()) {
+            popupOverlay.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+    }
+    function hidePopup() {
+        popupOverlay.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    // --- Auto-show after 30s ---
+    if (!hasSubscribed() && !hasDismissed()) {
+        setTimeout(showPopup, 60000);
+    }
+
+    // --- Close with X → mark dismissed ---
+    closePopup.addEventListener('click', function() {
+        setDismissed();
+        hidePopup();
+    });
+
+    // --- Prevent closing via ESC or overlay click ---
+    popupOverlay.addEventListener('click', e => e.stopPropagation());
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') e.preventDefault();
+    });
+
+    // --- Form submission ---
+    emailForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Mark as subscribed so popup never shows again
+        setSubscribed();
+        hidePopup();
+
+        const formData = new FormData(emailForm);
+        fetch(emailForm.action, {
+            method: 'POST',
+            body: formData,
+            headers: { 'Accept': 'application/json' }
+        })
+        .then(res => {
+            if (res.ok) {
+                emailForm.style.display = 'none';
+                successMessage.style.display = 'block';
+            } else {
+                alert('Submission failed, but you are already marked as subscribed.');
             }
-            function setSubscribed() {
-                localStorage.setItem('ieCalcSubscribed', 'true');
-            }
-
-            function showPopup() {
-                if (!hasSubscribed()) {
-                    popupOverlay.style.display = 'flex';
-                    document.body.style.overflow = 'hidden';
-                }
-            }
-            function hidePopup() {
-                popupOverlay.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-
-            // Show popup after 30s
-            setTimeout(showPopup, 30000);
-
-            // Only allow close with X
-            closePopup.addEventListener('click', hidePopup);
-
-            // Prevent closing via overlay click
-            popupOverlay.addEventListener('click', function(e) {
-                e.stopPropagation(); // disable background close
-            });
-
-            // Prevent closing via ESC key
-            document.addEventListener('keydown', e => {
-                if (e.key === 'Escape') {
-                    e.preventDefault();
-                }
-            });
-
-            // Form submission
-            emailForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                const formData = new FormData(emailForm);
-
-                fetch(emailForm.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: { 'Accept': 'application/json' }
-                })
-                .then(res => {
-                    if (res.ok) {
-                        emailForm.style.display = 'none';
-                        successMessage.style.display = 'block';
-                        setSubscribed();
-                        setTimeout(hidePopup, 1000);
-                    } else throw new Error('Form submission failed');
-                })
-                .catch(err => alert('Submission error, please try again.'));
-            });
+        })
+        .catch(() => {
+            alert('Network error, but you are already marked as subscribed.');
         });
-    </script>
+    });
+});
+</script>
 
 
 </body>
