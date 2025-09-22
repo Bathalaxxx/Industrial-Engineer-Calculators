@@ -592,21 +592,21 @@
             background-color: #2980b9;
         }
 
-        /* Close button smaller + subtle */
+        /* Make the close (X) button less noticeable */
         .popup-close {
             position: absolute;
-            top: 8px;
-            right: 10px;
+            top: 5px;
+            right: 7px;
             background: none;
             border: none;
-            font-size: 1.2rem;
+            font-size: 0.8rem;       /* smaller */
+            color: #f9f9f9;          /* nearly blends with background */
             cursor: pointer;
-            color: #888;
-            transition: color 0.2s;
+            opacity: 0.4;            /* faint */
+            transition: opacity 0.2s;
         }
-
         .popup-close:hover {
-            color: #333;
+            opacity: 0.8;            /* only more visible when hovered */
         }
 
         .success-message {
@@ -1446,25 +1446,34 @@
 
             function showPopup() {
                 if (!hasSubscribed()) {
-                    popupOverlay.style.display = 'flex'; // flex centers popup
-                    document.body.style.overflow = 'hidden'; // lock scroll
+                    popupOverlay.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
                 }
             }
             function hidePopup() {
                 popupOverlay.style.display = 'none';
-                document.body.style.overflow = 'auto'; // restore scroll
+                document.body.style.overflow = 'auto';
             }
 
-            // Show popup after 30 seconds
+            // Show popup after 30s
             setTimeout(showPopup, 30000);
 
-            // Close popup when clicking X or background
+            // Only allow close with X
             closePopup.addEventListener('click', hidePopup);
+
+            // Prevent closing via overlay click
             popupOverlay.addEventListener('click', function(e) {
-                if (e.target === popupOverlay) hidePopup();
+                e.stopPropagation(); // disable background close
             });
 
-            // Form submit
+            // Prevent closing via ESC key
+            document.addEventListener('keydown', e => {
+                if (e.key === 'Escape') {
+                    e.preventDefault();
+                }
+            });
+
+            // Form submission
             emailForm.addEventListener('submit', function(e) {
                 e.preventDefault();
                 const formData = new FormData(emailForm);
@@ -1479,15 +1488,10 @@
                         emailForm.style.display = 'none';
                         successMessage.style.display = 'block';
                         setSubscribed();
-                        setTimeout(hidePopup, 2000);
+                        setTimeout(hidePopup, 1000);
                     } else throw new Error('Form submission failed');
                 })
                 .catch(err => alert('Submission error, please try again.'));
-            });
-
-            // Close with Escape key
-            document.addEventListener('keydown', e => {
-                if (e.key === 'Escape') hidePopup();
             });
         });
     </script>
