@@ -558,121 +558,107 @@
                 grid-template-columns: 1fr;
             }
         
-        /* Popup Styles */
+        /* Overlay (acts like paywall backdrop) */
         .popup-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.85);
-            z-index: 10000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 9999;
             display: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
         }
-        
+
+        /* Popup box */
         .email-popup {
             background-color: white;
-            padding: 2.5rem 2rem 2rem;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-            max-width: 500px;
-            width: 90%;
-            text-align: center;
-            border-top: 6px solid var(--secondary-color);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+            max-width: 450px;
+            width: 100%;
+            z-index: 10000;
             position: relative;
-            margin: 20px;
-            max-height: 90vh;
-            overflow-y: auto;
+            text-align: center;
         }
-        
+
         .email-popup h3 {
             margin-bottom: 1rem;
-            color: var(--primary-color);
-            font-size: 1.8rem;
+            color: var(--primary-color, #2c3e50);
         }
-        
+
         .email-popup p {
             margin-bottom: 1.5rem;
-            color: var(--text-color);
-            line-height: 1.6;
-            font-size: 1.1rem;
+            color: var(--text-color, #555);
         }
-        
+
         .email-popup form {
             display: flex;
             flex-direction: column;
-            margin: 0 auto;
-            max-width: 350px;
         }
-        
+
         .email-popup input {
-            padding: 1rem;
-            margin-bottom: 1.2rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 6px;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
             font-size: 1rem;
-            transition: border-color 0.3s;
         }
-        
-        .email-popup input:focus {
-            border-color: var(--secondary-color);
-            outline: none;
-        }
-        
+
         .email-popup button {
-            background-color: var(--secondary-color);
+            background-color: var(--secondary-color, #3498db);
             color: white;
             border: none;
-            padding: 1rem;
-            border-radius: 6px;
+            padding: 0.8rem;
+            border-radius: 4px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 1.1rem;
             transition: background-color 0.3s;
         }
-        
+
         .email-popup button:hover {
             background-color: #2980b9;
         }
-        
+
+        /* Close button smaller + subtle */
         .popup-close {
             position: absolute;
-            top: 12px;
-            right: 12px;
+            top: 8px;
+            right: 10px;
             background: none;
             border: none;
             font-size: 1.2rem;
             cursor: pointer;
-            color: var(--text-light);
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background-color 0.2s;
-            z-index: 10001;
+            color: #888;
+            transition: color 0.2s;
         }
-        
+
         .popup-close:hover {
-            background-color: #f5f5f5;
+            color: #333;
         }
-        
+
         .success-message {
             display: none;
-            color: var(--quality-color);
+            color: var(--quality-color, green);
             margin-top: 1rem;
             text-align: center;
-            font-weight: 500;
         }
-        
-        .popup-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: var(--secondary-color);
+
+        /* Responsive tweak */
+        @media (max-width: 480px) {
+            .email-popup {
+                padding: 1.5rem;
+            }
+            .popup-close {
+                font-size: 1rem;
+                top: 5px;
+                right: 8px;
+            }
         }
     }  
 
@@ -732,9 +718,6 @@
             </div>
         </div>
     </section>
-
-    <script async="async" data-cfasync="false" src="//pl27511448.profitableratecpm.com/5d225b5e0b22c0980e365900e2390e1d/invoke.js"></script> <!-- adterra native banner -->
-    <div id="container-5d225b5e0b22c0980e365900e2390e1d"></div>    <!-- adterra native banner -->
     
     <section class="subject-section production">
         <div class="container">
@@ -1429,105 +1412,81 @@
     </aside>
     <!-- xxxx navigation end xxxxx -->
      
-    <!-- Email Subscription Popup -->
-    <div class="popup-overlay" id="popupOverlay"></div>
-    <div class="email-popup" id="emailPopup">
-        <button class="popup-close" id="closePopup">×</button>
-        <div class="popup-icon">📧</div>
-        <h3>Stay Updated with Industrial Engineering Calculators</h3>
-        <p>Join our newsletter to get notified about new calculators, updates, and exclusive industrial engineering resources.</p>
-        <form id="emailForm" action="https://formspree.io/f/mvgqjoyg" method="POST">
-            <input type="email" name="email" placeholder="Your email address" required>
-            <button type="submit">Subscribe Now</button>
-        </form>
-        <div class="success-message" id="successMessage">
-            Thank you for subscribing! You'll hear from us soon.
+    <!-- Paywall Popup -->
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="email-popup" id="emailPopup">
+            <button class="popup-close" id="closePopup">×</button>
+            <h3>Stay Updated with IE Calculators</h3>
+            <p>Subscribe to get notified about new calculators, updates, and resources.</p>
+            <form id="emailForm" action="https://formspree.io/f/mvgqjoyg" method="POST">
+                <input type="email" name="email" placeholder="Your email address" required>
+                <button type="submit">Subscribe</button>
+            </form>
+            <div class="success-message" id="successMessage">
+                Thank you for subscribing!
+            </div>
         </div>
     </div>
 
     <script>
-        // Email popup functionality
         document.addEventListener('DOMContentLoaded', function() {
-            const emailPopup = document.getElementById('emailPopup');
             const popupOverlay = document.getElementById('popupOverlay');
+            const emailPopup = document.getElementById('emailPopup');
             const closePopup = document.getElementById('closePopup');
             const emailForm = document.getElementById('emailForm');
             const successMessage = document.getElementById('successMessage');
-            
-            // Check if user has already subscribed
+
             function hasSubscribed() {
                 return localStorage.getItem('ieCalcSubscribed') === 'true';
             }
-            
-            // Set subscribed status
             function setSubscribed() {
                 localStorage.setItem('ieCalcSubscribed', 'true');
             }
-            
-            // Show popup function
+
             function showPopup() {
                 if (!hasSubscribed()) {
-                    emailPopup.style.display = 'block';
-                    popupOverlay.style.display = 'block';
+                    popupOverlay.style.display = 'flex';
                     document.body.style.overflow = 'hidden';
                 }
             }
-            
-            // Hide popup function
             function hidePopup() {
-                emailPopup.style.display = 'none';
                 popupOverlay.style.display = 'none';
                 document.body.style.overflow = 'auto';
             }
-            
-            // Show popup after 30 seconds if not subscribed
+
+            // Trigger after 30s
             setTimeout(showPopup, 30000);
-            
-            // Close popup when clicking close button or overlay
+
+            // Close handlers
             closePopup.addEventListener('click', hidePopup);
-            popupOverlay.addEventListener('click', hidePopup);
-            
-            // Handle form submission
+            popupOverlay.addEventListener('click', function(e) {
+                if (e.target === popupOverlay) hidePopup();
+            });
+
+            // Form submit
             emailForm.addEventListener('submit', function(e) {
                 e.preventDefault();
-                
-                // Create form data
                 const formData = new FormData(emailForm);
-                
-                // Send to Formspree
+
                 fetch(emailForm.action, {
                     method: 'POST',
                     body: formData,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
+                    headers: { 'Accept': 'application/json' }
                 })
-                .then(response => {
-                    if (response.ok) {
-                        // Show success message
+                .then(res => {
+                    if (res.ok) {
                         emailForm.style.display = 'none';
                         successMessage.style.display = 'block';
-                        
-                        // Set subscribed status
                         setSubscribed();
-                        
-                        // Hide popup after 2 seconds
                         setTimeout(hidePopup, 2000);
-                    } else {
-                        throw new Error('Form submission failed');
-                    }
+                    } else throw new Error('Form submission failed');
                 })
-                .catch(error => {
-                    alert('Sorry, there was an error with your submission. Please try again.');
-                    console.error('Form submission error:', error);
-                });
+                .catch(err => alert('Submission error, please try again.'));
             });
-            
-            // Close with Escape key
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && emailPopup.style.display === 'block') {
-                    hidePopup();
-                }
+
+            // Esc key close
+            document.addEventListener('keydown', e => {
+                if (e.key === 'Escape') hidePopup();
             });
         });
     </script>
