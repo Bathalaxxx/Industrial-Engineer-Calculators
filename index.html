@@ -626,6 +626,7 @@
             }
         }
 
+
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
@@ -1429,81 +1430,89 @@
     </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const popupOverlay = document.getElementById('popupOverlay');
-    const emailForm = document.getElementById('emailForm');
-    const closePopup = document.getElementById('closePopup');
-    const successMessage = document.getElementById('successMessage');
+document.addEventListener("DOMContentLoaded", function () {
+    const popupOverlay = document.getElementById("popupOverlay");
+    const closePopup = document.getElementById("closePopup");
+    const emailForm = document.getElementById("emailForm");
 
-    // --- LocalStorage helpers ---
-    function hasSubscribed() {
-        return localStorage.getItem('ieCalcSubscribed') === 'true';
-    }
-    function setSubscribed() {
-        localStorage.setItem('ieCalcSubscribed', 'true');
-    }
-    function hasDismissed() {
-        return localStorage.getItem('ieCalcDismissed') === 'true';
-    }
-    function setDismissed() {
-        localStorage.setItem('ieCalcDismissed', 'true');
+    // Check if already subscribed
+    if (localStorage.getItem("ieCalcSubscribed") === "true") {
+        if (popupOverlay) popupOverlay.style.display = "none";
+        return;
     }
 
-    // --- Show / hide popup ---
-    function showPopup() {
-        if (!hasSubscribed() && !hasDismissed()) {
-            popupOverlay.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-    }
-    function hidePopup() {
-        popupOverlay.style.display = 'none';
-        document.body.style.overflow = 'auto';
-    }
+    // Show popup (delayed)
+    setTimeout(() => {
+        if (popupOverlay) popupOverlay.style.display = "flex";
+    }, 2000);
 
-    // --- Auto-show after 30s ---
-    if (!hasSubscribed() && !hasDismissed()) {
-        setTimeout(showPopup, 60000);
-    }
-
-    // --- Close with X → mark dismissed ---
-    closePopup.addEventListener('click', function() {
-        setDismissed();
-        hidePopup();
-    });
-
-    // --- Prevent closing via ESC or overlay click ---
-    popupOverlay.addEventListener('click', e => e.stopPropagation());
-    document.addEventListener('keydown', e => {
-        if (e.key === 'Escape') e.preventDefault();
-    });
-
-    // --- Form submission ---
-    emailForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        // Mark as subscribed so popup never shows again
-        setSubscribed();
-        hidePopup();
-
-        const formData = new FormData(emailForm);
-        fetch(emailForm.action, {
-            method: 'POST',
-            body: formData,
-            headers: { 'Accept': 'application/json' }
-        })
-        .then(res => {
-            if (res.ok) {
-                emailForm.style.display = 'none';
-                successMessage.style.display = 'block';
-            } else {
-                alert('Submission failed, but you are already marked as subscribed.');
-            }
-        })
-        .catch(() => {
-            alert('Network error, but you are already marked as subscribed.');
+    // Close button
+    if (closePopup) {
+        closePopup.addEventListener("click", () => {
+            popupOverlay.style.display = "none";
         });
-    });
+    }
+
+    // Form submit
+    if (emailForm) {
+        emailForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            localStorage.setItem("ieCalcSubscribed", "true");
+            popupOverlay.style.display = "none";
+        });
+    }
+});
+</script>
+
+
+    <!-- Paywall Popup -->
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="email-popup" id="emailPopup">
+            <button class="popup-close" id="closePopup">×</button>
+            <h3>Stay Updated with IE Calculators</h3>
+            <p>Subscribe to get notified about new calculators, updates, and resources.</p>
+            <form id="emailForm" action="https://formspree.io/f/mvgqjoyg" method="POST">
+                <input type="email" name="email" placeholder="Your email address" required>
+                <button type="submit">Subscribe</button>
+            </form>
+            <div class="success-message" id="successMessage">
+                Thank you for subscribing!
+            </div>
+        </div>
+    </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const popupOverlay = document.getElementById("popupOverlay");
+    const closePopup = document.getElementById("closePopup");
+    const emailForm = document.getElementById("emailForm");
+
+    // Check if already subscribed
+    if (localStorage.getItem("ieCalcSubscribed") === "true") {
+        if (popupOverlay) popupOverlay.style.display = "none";
+        return;
+    }
+
+    // Show popup (delayed)
+    setTimeout(() => {
+        if (popupOverlay) popupOverlay.style.display = "flex";
+    }, 2000);
+
+    // Close button
+    if (closePopup) {
+        closePopup.addEventListener("click", () => {
+            popupOverlay.style.display = "none";
+        });
+    }
+
+    // Form submit
+    if (emailForm) {
+        emailForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            localStorage.setItem("ieCalcSubscribed", "true");
+            popupOverlay.style.display = "none";
+        });
+    }
 });
 </script>
 

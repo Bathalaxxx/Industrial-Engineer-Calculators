@@ -210,5 +210,57 @@
                 </div>
     </aside>
     <!-- xxxx navigation end xxxxx -->       
+    <!-- Paywall Popup -->
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="email-popup" id="emailPopup">
+            <button class="popup-close" id="closePopup">×</button>
+            <h3>Stay Updated with IE Calculators</h3>
+            <p>Subscribe to get notified about new calculators, updates, and resources.</p>
+            <form id="emailForm" action="https://formspree.io/f/mvgqjoyg" method="POST">
+                <input type="email" name="email" placeholder="Your email address" required>
+                <button type="submit">Subscribe</button>
+            </form>
+            <div class="success-message" id="successMessage">
+                Thank you for subscribing!
+            </div>
+        </div>
+    </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const popupOverlay = document.getElementById("popupOverlay");
+    const closePopup = document.getElementById("closePopup");
+    const emailForm = document.getElementById("emailForm");
+
+    // Check if already subscribed
+    if (localStorage.getItem("ieCalcSubscribed") === "true") {
+        if (popupOverlay) popupOverlay.style.display = "none";
+        return;
+    }
+
+    // Show popup (delayed)
+    setTimeout(() => {
+        if (popupOverlay) popupOverlay.style.display = "flex";
+    }, 2000);
+
+    // Close button
+    if (closePopup) {
+        closePopup.addEventListener("click", () => {
+            popupOverlay.style.display = "none";
+        });
+    }
+
+    // Form submit
+    if (emailForm) {
+        emailForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            localStorage.setItem("ieCalcSubscribed", "true");
+            popupOverlay.style.display = "none";
+        });
+    }
+});
+</script>
+
+
 </body>
 </html>
