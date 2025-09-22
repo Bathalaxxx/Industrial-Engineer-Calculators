@@ -565,46 +565,60 @@
             left: 50%;
             transform: translate(-50%, -50%);
             background-color: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+            padding: 2.5rem 2rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
             z-index: 10000;
-            max-width: 450px;
+            max-width: 500px;
             width: 90%;
             display: none;
+            text-align: center;
+            border-top: 6px solid var(--secondary-color);
         }
         
         .email-popup h3 {
             margin-bottom: 1rem;
             color: var(--primary-color);
+            font-size: 1.8rem;
         }
         
         .email-popup p {
             margin-bottom: 1.5rem;
             color: var(--text-color);
+            line-height: 1.6;
+            font-size: 1.1rem;
         }
         
         .email-popup form {
             display: flex;
             flex-direction: column;
+            margin: 0 auto;
+            max-width: 350px;
         }
         
         .email-popup input {
-            padding: 0.8rem;
-            margin-bottom: 1rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            padding: 1rem;
+            margin-bottom: 1.2rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
             font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .email-popup input:focus {
+            border-color: var(--secondary-color);
+            outline: none;
         }
         
         .email-popup button {
             background-color: var(--secondary-color);
             color: white;
             border: none;
-            padding: 0.8rem;
-            border-radius: 4px;
+            padding: 1rem;
+            border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
+            font-size: 1.1rem;
             transition: background-color 0.3s;
         }
         
@@ -614,13 +628,24 @@
         
         .popup-close {
             position: absolute;
-            top: 10px;
-            right: 15px;
+            top: 12px;
+            right: 12px;
             background: none;
             border: none;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             cursor: pointer;
             color: var(--text-light);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+        }
+        
+        .popup-close:hover {
+            background-color: #f5f5f5;
         }
         
         .popup-overlay {
@@ -629,7 +654,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.7);
+            background-color: rgba(0,0,0,0.85);
             z-index: 9999;
             display: none;
         }
@@ -639,7 +664,14 @@
             color: var(--quality-color);
             margin-top: 1rem;
             text-align: center;
-        }  
+            font-weight: 500;
+        }
+        
+        .popup-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
     }  
 
 </style>    
@@ -1395,17 +1427,19 @@
     </aside>
     <!-- xxxx navigation end xxxxx -->
      
+    <!-- Email Subscription Popup -->
     <div class="popup-overlay" id="popupOverlay"></div>
     <div class="email-popup" id="emailPopup">
         <button class="popup-close" id="closePopup">×</button>
-        <h3>Stay Updated with IE Calculators</h3>
-        <p>Subscribe to get notified about new calculators, updates, and industrial engineering resources.</p>
+        <div class="popup-icon">📧</div>
+        <h3>Stay Updated with Industrial Engineering Calculators</h3>
+        <p>Join our newsletter to get notified about new calculators, updates, and exclusive industrial engineering resources.</p>
         <form id="emailForm" action="https://formspree.io/f/mvgqjoyg" method="POST">
             <input type="email" name="email" placeholder="Your email address" required>
-            <button type="submit">Subscribe</button>
+            <button type="submit">Subscribe Now</button>
         </form>
         <div class="success-message" id="successMessage">
-            Thank you for subscribing!
+            Thank you for subscribing! You'll hear from us soon.
         </div>
     </div>
 
