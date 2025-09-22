@@ -524,40 +524,6 @@
             font-size: 0.9rem;
         }
 
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            nav ul {
-                margin-top: 1rem;
-                justify-content: center;
-            }
-            
-            nav ul li {
-                margin: 0 0.75rem;
-            }
-            
-            .method-tabs {
-                flex-direction: column;
-            }
-            
-            .method-tab {
-                border-radius: 0;
-                margin-right: 0;
-                border-bottom: 1px solid #ddd;
-            }
-            
-            .input-row {
-                flex-direction: column;
-                gap: 0;
-            }
-            
-            .result-grid {
-                grid-template-columns: 1fr;
-            }
-        
         /* Overlay (acts like paywall backdrop) */
         .popup-overlay {
             position: fixed;
@@ -567,7 +533,9 @@
             height: 100%;
             background-color: rgba(0,0,0,0.7);
             z-index: 9999;
-            display: none;
+            display: none; /* hidden by default */
+
+            /* Flexbox for perfect centering */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -582,7 +550,6 @@
             box-shadow: 0 5px 25px rgba(0,0,0,0.2);
             max-width: 450px;
             width: 100%;
-            z-index: 10000;
             position: relative;
             text-align: center;
         }
@@ -649,7 +616,7 @@
             text-align: center;
         }
 
-        /* Responsive tweak */
+        /* Responsive tweak for mobile */
         @media (max-width: 480px) {
             .email-popup {
                 padding: 1.5rem;
@@ -660,6 +627,41 @@
                 right: 8px;
             }
         }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .method-tabs {
+                flex-direction: column;
+            }
+            
+            .method-tab {
+                border-radius: 0;
+                margin-right: 0;
+                border-bottom: 1px solid #ddd;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+        
     }  
 
 </style>    
@@ -1431,9 +1433,8 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const popupOverlay = document.getElementById('popupOverlay');
-            const emailPopup = document.getElementById('emailPopup');
-            const closePopup = document.getElementById('closePopup');
             const emailForm = document.getElementById('emailForm');
+            const closePopup = document.getElementById('closePopup');
             const successMessage = document.getElementById('successMessage');
 
             function hasSubscribed() {
@@ -1445,19 +1446,19 @@
 
             function showPopup() {
                 if (!hasSubscribed()) {
-                    popupOverlay.style.display = 'flex';
-                    document.body.style.overflow = 'hidden';
+                    popupOverlay.style.display = 'flex'; // flex centers popup
+                    document.body.style.overflow = 'hidden'; // lock scroll
                 }
             }
             function hidePopup() {
                 popupOverlay.style.display = 'none';
-                document.body.style.overflow = 'auto';
+                document.body.style.overflow = 'auto'; // restore scroll
             }
 
-            // Trigger after 30s
+            // Show popup after 30 seconds
             setTimeout(showPopup, 30000);
 
-            // Close handlers
+            // Close popup when clicking X or background
             closePopup.addEventListener('click', hidePopup);
             popupOverlay.addEventListener('click', function(e) {
                 if (e.target === popupOverlay) hidePopup();
@@ -1484,7 +1485,7 @@
                 .catch(err => alert('Submission error, please try again.'));
             });
 
-            // Esc key close
+            // Close with Escape key
             document.addEventListener('keydown', e => {
                 if (e.key === 'Escape') hidePopup();
             });
