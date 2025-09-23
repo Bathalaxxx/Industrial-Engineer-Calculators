@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--FAVICON-->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+  
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-3BSHG1DE6V');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5607576434988374"
+     crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="google-adsense-account" content="ca-pub-5607576434988374">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="5S Audit Checklist - Customizable checklist for different workplace environments">
+    <title>5S Audit Checklist | Industrial Engineering Calculators</title>
+
+    <!-- Clarity tracking code for https://iecalculators.online/ -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "t31aicr9ep");
+    </script>
+
+    <style>
+        /* Consistent with existing style */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+            transition: margin-left 0.3s;
+        }
+        
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block; /* Changed from none to block */
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .setup-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .setup-option {
+            flex: 1;
+            min-width: 150px;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .setup-option:hover {
+            background-color: #e9ecef;
+            border-color: var(--secondary-color);
+        }
+        
+        .setup-option.active {
+            background-color: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+        
+        .setup-option i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        .checklist-container {
+            margin-top: 2rem;
+        }
+        
+        .checklist-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .checklist-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .checklist-item input[type="checkbox"] {
+            margin-right: 1rem;
+            margin-top: 0.3rem;
+        }
+        
+        .checklist-item label {
+            flex: 1;
+            cursor: pointer;
+        }
+        
+        .rating-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .rating-btn {
+            padding: 0.3rem 0.6rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: white;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .rating-btn:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .rating-btn.active {
+            background-color: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+        
+        .comments-section {
+            margin-top: 1rem;
+            width: 100%;
+        }
+        
+        .comments-section textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+            resize: vertical;
+        }
+        
+        .comments-section textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .photo-upload {
+            margin-top: 0.5rem;
+        }
+        
+        .photo-upload input {
+            display: none;
+        }
+        
+        .photo-upload label {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .photo-upload label:hover {
+            background-color: #e9ecef;
+        }
+        
+        .results-summary {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .results-summary h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .score-breakdown {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .score-card {
+            flex: 1;
+            min-width: 150px;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .score-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .score-card .score-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .overall-score {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        .overall-score .score-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .action-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-secondary {
+            background-color: #f8f9fa;
+            color: var(--text-color);
+            border: 1px solid #ddd;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #e9ecef;
+        }
+        
+        .btn-success {
+            background-color: #2ecc71;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background-color: #27ae60;
+        }
+        
+        .custom-setup-form {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .custom-setup-form input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        
+        .custom-setup-form button {
+            padding: 0.5rem 1rem;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .related-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .tool-chip {
+            background-color: #e3f2fd;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .tool-chip:hover {
+            background-color: #bbdefb;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .setup-option {
+                min-width: 120px;
+            }
+            
+            .score-card {
+                min-width: 100%;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Industrial Engineering <span>Calculators</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>5S Audit Checklist</h1>
+            <p>Customizable checklist for different workplace environments</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>5S System Audit</h2>
+                <p>5S is a workplace organization method that uses a list of five Japanese words: Seiri (Sort), Seiton (Set in order), Seiso (Shine), Seiketsu (Standardize), and Shitsuke (Sustain). This checklist helps you audit and improve your 5S implementation.</p>
+                
+                <h3>Select Your Workplace Setup</h3>
+                <div class="setup-selector">
+                    <div class="setup-option active" data-setup="factory">
+                        <i class="fas fa-industry"></i>
+                        <span>Factory</span>
+                    </div>
+                    <div class="setup-option" data-setup="hospital">
+                        <i class="fas fa-hospital"></i>
+                        <span>Hospital</span>
+                    </div>
+                    <div class="setup-option" data-setup="warehouse">
+                        <i class="fas fa-warehouse"></i>
+                        <span>Warehouse</span>
+                    </div>
+                    <div class="setup-option" data-setup="service">
+                        <i class="fas fa-tools"></i>
+                        <span>Service Shop</span>
+                    </div>
+                    <div class="setup-option" data-setup="office">
+                        <i class="fas fa-building"></i>
+                        <span>Office</span>
+                    </div>
+                    <div class="setup-option" data-setup="custom">
+                        <i class="fas fa-cog"></i>
+                        <span>Custom</span>
+                    </div>
+                </div>
+                
+                <div class="custom-setup-form" id="custom-setup-form">
+                    <input type="text" id="custom-setup-name" placeholder="Enter custom setup name">
+                    <button id="save-custom-setup">Save Custom Setup</button>
+                </div>
+            </div>
+
+            <div class="checklist-container" id="checklist-container">
+                <!-- Checklist will be dynamically generated here -->
+            </div>
+            
+            <div class="action-buttons">
+                <button class="action-btn btn-primary" id="calculate-score">Calculate Score</button>
+                <button class="action-btn btn-secondary" id="reset-checklist">Reset Checklist</button>
+                <button class="action-btn btn-success" id="save-checklist">Save Checklist</button>
+            </div>
+            
+            <div class="results-summary" id="results-summary">
+                <h3>5S Audit Results</h3>
+                
+                <div class="overall-score">
+                    <h4>Overall 5S Score</h4>
+                    <div class="score-value" id="overall-score">0%</div>
+                </div>
+                
+                <div class="score-breakdown">
+                    <div class="score-card">
+                        <h4>Sort Score</h4>
+                        <div class="score-value" id="sort-score">0%</div>
+                    </div>
+                    <div class="score-card">
+                        <h4>Set in Order Score</h4>
+                        <div class="score-value" id="set-score">0%</div>
+                    </div>
+                    <div class="score-card">
+                        <h4>Shine Score</h4>
+                        <div class="score-value" id="shine-score">0%</div>
+                    </div>
+                    <div class="score-card">
+                        <h4>Standardize Score</h4>
+                        <div class="score-value" id="standardize-score">0%</div>
+                    </div>
+                    <div class="score-card">
+                        <h4>Sustain Score</h4>
+                        <div class="score-value" id="sustain-score">0%</div>
+                    </div>
+                </div>
+                
+                <h4>Recommendations</h4>
+                <div id="recommendations">
+                    <!-- Recommendations will be dynamically generated here -->
+                </div>
+            </div>
+        </section>
+        
+        <section class="content-section">
+            <h2>Related Tools</h2>
+            <div>               
+                <div class="related-tools">
+                    <a href="kanban.html" class="tool-chip">Kanban Calculator</a>
+                    <a href="oee-calculation.html" class="tool-chip">OEE Calculator</a>
+                    <a href="linebalancing.html" class="tool-chip">Line Balancing</a>
+                    <a href="timestudy.html" class="tool-chip">Time Study</a>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="terms.html">Terms of Service</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="contact.html">Contact Us</a>
+        </div>
+        <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+        <p class="copyright">© 2025 Industrial Engineering Calculators. All rights reserved.</p>
+    </footer>
+
+    <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+
+        <div class="sidebar-category">
+            <div class="sidebar-category-header">
+                <span>Site Navigation</span>
+                <span>+</span>
+            </div>
+            
+            <div class="sidebar-category-content">
+                <a href="index.html" class="sidebar-link">Home</a>
+                <a href="about.html" class="sidebar-link">About</a>
+                <a href="terms.html" class="sidebar-link">Terms of Service</a>
+                <a href="privacy.html" class="sidebar-link">Privacy Policy</a>
+                <a href="contact.html" class="sidebar-link">Contact Us</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="linebalancing.html" class="sidebar-link">Line Balancing</a>
+                <a href="takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+                <a href="machine-utilization-calculator.html" class="sidebar-link">Machine Utilization</a>
+                <a href="manpower-calculator.html" class="sidebar-link active">Manpower Requirements</a>
+                <a href="production-capacity-calculator.html" class="sidebar-link">Production Capacity</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="oee-calculation.html" class="sidebar-link">OEE Calculator</a>
+                <a href="quality-function-deployment" class="sidebar-link">Quality Function Deployment</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="abc-analysis-calculator.html" class="sidebar-link">ABC Analysis</a>
+                <a href="inventory-turnover-calculator.html" class="sidebar-link">Inventory Turnover</a>
+                <a href="eoq-formula.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="reorder-point-calculator.html" class="sidebar-link">Reorder Point</a>
+                <a href="kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+                <a href="safety-stock-calculator.html" class="sidebar-link">Safety Stock Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Study</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+                <a href="failure-mode-and-effects-analysis-fmea.html" class="sidebar-link">FMEA</a>           
+            </div>
+        </div>
+
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Discrete Event Simulation</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="des-queue-simulator.html" class="sidebar-link">Queueing Simulator</a>
+                </div>
+        </div>
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Articles</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="Articles/Negative-Correlation-Understanding-Inverse-Relationships-in-Data.html" class="sidebar-link">Negative Correlation: Understanding Inverse Relationships in Data</a>
+                <a href="Articles/Parameter-vs-Statistic-Understanding-the-Key-Differences.html" class="sidebar-link">Statistic vs Parameter: Understanding the Key Differences</a>
+                <a href="Articles/Quality-Assurance-vs-Quality-Control-Key-Differences-Explained.html" class="sidebar-link">Quality Assurance vs Quality Control: Key Differences Explained</a>
+                <a href="Articles/ABC-Analysis-Made-Easy.html" class="sidebar-link">ABC Analysis Made Easy: Classify Your Inventory in Minutes</a>
+                <a href="Articles/EOQ-Optimize-Your-Inventory-Costs.html" class="sidebar-link">EOQ Order Quantity: Optimize Your Inventory</a>
+                <a href="Articles/Linear-Programming-for-Supply-Chain-Optimization-A-Beginner's-Guide.html" class="sidebar-link">Linear Programming for Supply Chain Optimization: A Beginner's Guide</a>                
+                <a href="Articles/How-Lean-Six-Sigma-Helps-Cut-Costs-Without-Cutting-Corners.html" class="sidebar-link">How Lean Six Sigma Helps Cut Costs Without Cutting Corners</a>  
+            </div>
+        </div>
+    </aside>
+    <!-- xxxx navigation end xxxxx -->
+    
+    <div id="cookie-banner" style="position:fixed;bottom:0;left:0;width:100%;background:#fffbe6;border-top:1px solid #e2c96f;padding:1rem;box-shadow:0 -2px 8px rgba(0,0,0,0.07);display:none;z-index:9999;">
+        <span>
+            We use cookies to improve your experience. Non-essential cookies (analytics, personalization) require your consent. 
+            <a href="privacy.html" target="_blank">Learn more</a>
+        </span>
+        <button id="cookie-accept" style="margin-left:1rem;">Accept</button>
+        <button id="cookie-reject" style="margin-left:0.5rem;">Reject</button>
+    </div>
+
+    <script>
+        // 5S Checklist Data
+        const checklistData = {
+            factory: {
+                name: "Factory",
+                items: {
+                    sort: [
+                        "All unnecessary tools, equipment, and materials have been removed from the work area",
+                        "Red tag area is established and properly maintained",
+                        "Only necessary items are present at the workstation",
+                        "Obsolete equipment and materials have been identified and removed",
+                        "Work areas are free of clutter and unnecessary items"
+                    ],
+                    set: [
+                        "All tools and equipment have designated storage locations",
+                        "Shadow boards or outlines are used to indicate proper tool placement",
+                        "Frequently used items are easily accessible",
+                        "Storage areas are clearly labeled and organized",
+                        "Aisles and walkways are clearly marked and free of obstructions"
+                    ],
+                    shine: [
+                        "Work areas are clean and free of dirt, debris, and spills",
+                        "Cleaning schedules are established and followed",
+                        "Equipment is regularly cleaned and maintained",
+                        "Floors are clean and in good condition",
+                        "Windows and lighting fixtures are clean and functional"
+                    ],
+                    standardize: [
+                        "5S standards are documented and visually displayed",
+                        "Checklists are used for daily 5S activities",
+                        "Color coding is consistently applied throughout the facility",
+                        "Procedures are in place for maintaining the first three S's",
+                        "All employees follow the same 5S procedures"
+                    ],
+                    sustain: [
+                        "Regular 5S audits are conducted and documented",
+                        "Employees are trained in 5S principles and practices",
+                        "5S is part of the daily routine and culture",
+                        "Continuous improvement is encouraged and recognized",
+                        "Management supports and participates in 5S activities"
+                    ]
+                }
+            },
+            hospital: {
+                name: "Hospital",
+                items: {
+                    sort: [
+                        "Unnecessary equipment and supplies have been removed from patient care areas",
+                        "Expired medications and supplies are regularly removed",
+                        "Storage areas contain only essential items",
+                        "Clutter is eliminated from nursing stations and work areas",
+                        "Redundant or obsolete equipment has been identified and removed"
+                    ],
+                    set: [
+                        "Medical supplies are organized and stored in designated locations",
+                        "Medication carts are standardized and well-organized",
+                        "Emergency equipment is easily accessible and clearly marked",
+                        "Patient records and documents have designated storage areas",
+                        "Workstations are organized for efficient workflow"
+                    ],
+                    shine: [
+                        "Patient rooms and common areas are clean and sanitized",
+                        "Medical equipment is regularly cleaned and disinfected",
+                        "Floors are clean and free of spills or debris",
+                        "Restrooms and hygiene stations are maintained to high standards",
+                        "Waste disposal procedures are followed correctly"
+                    ],
+                    standardize: [
+                        "Standard procedures for organization and cleaning are established",
+                        "Color-coding is used for different areas or types of supplies",
+                        "Checklists are used for daily cleaning and organization tasks",
+                        "All staff follow the same procedures for equipment storage",
+                        "Visual management tools are consistently applied"
+                    ],
+                    sustain: [
+                        "Regular audits of cleanliness and organization are conducted",
+                        "Staff receive ongoing training on organization standards",
+                        "5S is integrated into daily routines and responsibilities",
+                        "Feedback mechanisms are in place for continuous improvement",
+                        "Leadership demonstrates commitment to maintaining standards"
+                    ]
+                }
+            },
+            warehouse: {
+                name: "Warehouse",
+                items: {
+                    sort: [
+                        "Obsolete inventory has been identified and removed",
+                        "Aisles and storage areas are free of unnecessary items",
+                        "Broken or damaged equipment has been tagged for repair or disposal",
+                        "Work areas contain only essential tools and equipment",
+                        "Excess packaging materials have been removed"
+                    ],
+                    set: [
+                        "Inventory is stored in designated locations with clear labeling",
+                        "Storage locations are organized for optimal material flow",
+                        "Heavy or frequently accessed items are stored at ergonomic heights",
+                        "Aisle markings are clear and consistent throughout the facility",
+                        "Tools and equipment have designated storage locations"
+                    ],
+                    shine: [
+                        "Floors are clean and free of debris, spills, or trip hazards",
+                        "Storage racks and shelves are clean and in good condition",
+                        "Equipment is regularly cleaned and maintained",
+                        "Lighting is adequate and fixtures are clean",
+                        "Dock areas are clean and organized"
+                    ],
+                    standardize: [
+                        "Standard procedures for receiving, storage, and shipping are followed",
+                        "Color-coding and labeling systems are consistent throughout",
+                        "Visual management tools (signs, labels, floor markings) are used consistently",
+                        "All staff follow the same organization and cleaning procedures",
+                        "Documentation standards are maintained across all areas"
+                    ],
+                    sustain: [
+                        "Regular 5S audits are conducted with documented results",
+                        "Employees are trained in organization and safety procedures",
+                        "5S is integrated into daily work routines",
+                        "Performance metrics track 5S implementation effectiveness",
+                        "Continuous improvement initiatives are regularly implemented"
+                    ]
+                }
+            },
+            service: {
+                name: "Service Shop",
+                items: {
+                    sort: [
+                        "Unnecessary tools and equipment have been removed from work areas",
+                        "Obsolete or broken tools are identified and removed",
+                        "Workbenches are free of clutter and unnecessary items",
+                        "Customer waiting areas are free of unnecessary items",
+                        "Storage areas contain only essential supplies"
+                    ],
+                    set: [
+                        "Tools have designated storage locations with shadow boards or outlines",
+                        "Frequently used items are easily accessible",
+                        "Parts and supplies are organized and clearly labeled",
+                        "Work areas are arranged for efficient workflow",
+                        "Customer service areas are organized with necessary materials"
+                    ],
+                    shine: [
+                        "Work areas are clean and free of grease, dirt, and debris",
+                        "Tools and equipment are clean and in good working condition",
+                        "Floors are clean and free of trip hazards",
+                        "Windows and displays are clean and well-maintained",
+                        "Restrooms and customer areas are clean and tidy"
+                    ],
+                    standardize: [
+                        "Standard procedures for tool storage and organization are followed",
+                        "Color-coding systems are used where appropriate",
+                        "Checklists are used for opening/closing and cleaning procedures",
+                        "All technicians follow the same organization standards",
+                        "Visual management tools are consistently applied"
+                    ],
+                    sustain: [
+                        "Regular 5S audits are conducted and documented",
+                        "Employees receive ongoing training on organization standards",
+                        "5S is part of the daily routine for all staff",
+                        "Management regularly reviews and supports 5S activities",
+                        "Recognition programs acknowledge 5S achievements"
+                    ]
+                }
+            },
+            office: {
+                name: "Office",
+                items: {
+                    sort: [
+                        "Desks are free of unnecessary items and clutter",
+                        "Unnecessary paperwork has been removed or filed appropriately",
+                        "Obsolete equipment and supplies have been removed",
+                        "Shared areas contain only essential items",
+                        "Digital files are organized with unnecessary files archived or deleted"
+                    ],
+                    set: [
+                        "Office supplies have designated storage locations",
+                        "Frequently used items are within easy reach",
+                        "Filing systems are organized and clearly labeled",
+                        "Workspaces are arranged for efficient workflow",
+                        "Common areas are organized with clear purpose"
+                    ],
+                    shine: [
+                        "Desks and work surfaces are clean and organized",
+                        "Floors are clean and free of clutter",
+                        "Electronic equipment is dust-free and well-maintained",
+                        "Windows and lighting fixtures are clean",
+                        "Break rooms and common areas are clean and tidy"
+                    ],
+                    standardize: [
+                        "Standard procedures for document management are followed",
+                        "Color-coding systems are used for filing or categorization",
+                        "Checklists are used for daily organization tasks",
+                        "All employees follow the same organization standards",
+                        "Digital file structures are consistent across the organization"
+                    ],
+                    sustain: [
+                        "Regular audits of workspace organization are conducted",
+                        "Employees receive training on organization best practices",
+                        "5S is integrated into daily work routines",
+                        "Management supports and participates in organization initiatives",
+                        "Continuous improvement of office processes is encouraged"
+                    ]
+                }
+            }
+        };
+
+        // DOM Elements
+        const setupOptions = document.querySelectorAll('.setup-option');
+        const checklistContainer = document.getElementById('checklist-container');
+        const customSetupForm = document.getElementById('custom-setup-form');
+        const saveCustomSetupBtn = document.getElementById('save-custom-setup');
+        const calculateScoreBtn = document.getElementById('calculate-score');
+        const resetChecklistBtn = document.getElementById('reset-checklist');
+        const saveChecklistBtn = document.getElementById('save-checklist');
+        const resultsSummary = document.getElementById('results-summary');
+        
+        // Current setup
+        let currentSetup = 'factory';
+        
+        // Initialize the checklist
+        function initChecklist() {
+            generateChecklist(currentSetup);
+            setupEventListeners();
+        }
+        
+        // Generate checklist based on selected setup
+        function generateChecklist(setup) {
+            const setupData = checklistData[setup];
+            checklistContainer.innerHTML = '';
+            
+            // Create sections for each of the 5S's
+            const sTitles = {
+                sort: '1. Sort (Seiri)',
+                set: '2. Set in Order (Seiton)',
+                shine: '3. Shine (Seiso)',
+                standardize: '4. Standardize (Seiketsu)',
+                sustain: '5. Sustain (Shitsuke)'
+            };
+            
+            for (const [sKey, sTitle] of Object.entries(sTitles)) {
+                const sectionDiv = document.createElement('div');
+                sectionDiv.className = 'checklist-section';
+                
+                const sectionTitle = document.createElement('h3');
+                sectionTitle.textContent = sTitle;
+                sectionDiv.appendChild(sectionTitle);
+                
+                setupData.items[sKey].forEach((item, index) => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'checklist-item';
+                    itemDiv.dataset.s = sKey;
+                    itemDiv.dataset.itemId = index;
+                    
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.id = `${sKey}-${index}`;
+                    
+                    const label = document.createElement('label');
+                    label.htmlFor = `${sKey}-${index}`;
+                    label.textContent = item;
+                    
+                    const ratingDiv = document.createElement('div');
+                    ratingDiv.className = 'rating-buttons';
+                    
+                    const ratings = [
+                        {value: 0, text: 'Not Implemented'},
+                        {value: 1, text: 'Poor'},
+                        {value: 2, text: 'Fair'},
+                        {value: 3, text: 'Good'},
+                        {value: 4, text: 'Excellent'}
+                    ];
+                    
+                    ratings.forEach(rating => {
+                        const btn = document.createElement('button');
+                        btn.type = 'button';
+                        btn.className = 'rating-btn';
+                        btn.dataset.rating = rating.value;
+                        btn.textContent = rating.value;
+                        btn.title = rating.text;
+                        ratingDiv.appendChild(btn);
+                    });
+                    
+                    const commentsDiv = document.createElement('div');
+                    commentsDiv.className = 'comments-section';
+                    
+                    const commentsTextarea = document.createElement('textarea');
+                    commentsTextarea.placeholder = 'Add comments or observations...';
+                    commentsTextarea.rows = 2;
+                    commentsDiv.appendChild(commentsTextarea);
+                    
+                    
+                    const photoInput = document.createElement('input');
+                    photoInput.type = 'file';
+                    photoInput.accept = 'image/*';
+                    photoInput.capture = 'environment';
+                    
+
+                    
+                    itemDiv.appendChild(checkbox);
+                    itemDiv.appendChild(label);
+                    itemDiv.appendChild(ratingDiv);
+                    itemDiv.appendChild(commentsDiv);
+                    
+                    sectionDiv.appendChild(itemDiv);
+                });
+                
+                checklistContainer.appendChild(sectionDiv);
+            }
+        }
+        
+        // Setup event listeners
+        function setupEventListeners() {
+            // Setup selection
+            setupOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    const setup = option.dataset.setup;
+                    
+                    if (setup === 'custom') {
+                        customSetupForm.style.display = 'block';
+                        return;
+                    }
+                    
+                    setupOptions.forEach(opt => opt.classList.remove('active'));
+                    option.classList.add('active');
+                    
+                    currentSetup = setup;
+                    generateChecklist(currentSetup);
+                    setupEventListeners();
+                    resultsSummary.style.display = 'none';
+                });
+            });
+            
+            // Save custom setup
+            saveCustomSetupBtn.addEventListener('click', () => {
+                const customName = document.getElementById('custom-setup-name').value.trim();
+                
+                if (customName) {
+                    // Clone factory setup as template
+                    checklistData[customName.toLowerCase()] = JSON.parse(JSON.stringify(checklistData.factory));
+                    checklistData[customName.toLowerCase()].name = customName;
+                    
+                    currentSetup = customName.toLowerCase();
+                    generateChecklist(currentSetup);
+                    setupEventListeners();
+                    
+                    customSetupForm.style.display = 'none';
+                    setupOptions.forEach(opt => opt.classList.remove('active'));
+                    
+                    // Add the new custom option if it doesn't exist
+                    let customOptionExists = false;
+                    setupOptions.forEach(opt => {
+                        if (opt.dataset.setup === currentSetup) {
+                            opt.classList.add('active');
+                            customOptionExists = true;
+                        }
+                    });
+                    
+                    if (!customOptionExists) {
+                        // Create a new option for the custom setup
+                        const newOption = document.createElement('div');
+                        newOption.className = 'setup-option active';
+                        newOption.dataset.setup = currentSetup;
+                        newOption.innerHTML = `<i class="fas fa-cog"></i><span>${customName}</span>`;
+                        
+                        newOption.addEventListener('click', () => {
+                            setupOptions.forEach(opt => opt.classList.remove('active'));
+                            newOption.classList.add('active');
+                            currentSetup = newOption.dataset.setup;
+                            generateChecklist(currentSetup);
+                            setupEventListeners();
+                            resultsSummary.style.display = 'none';
+                        });
+                        
+                        document.querySelector('.setup-selector').appendChild(newOption);
+                    }
+                }
+            });
+            
+            // Rating buttons
+            document.querySelectorAll('.rating-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Remove active class from all buttons in this group
+                    btn.parentElement.querySelectorAll('.rating-btn').forEach(b => {
+                        b.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked button
+                    btn.classList.add('active');
+                });
+            });
+            
+            // Calculate score
+            calculateScoreBtn.addEventListener('click', calculateScore);
+            
+            // Reset checklist
+            resetChecklistBtn.addEventListener('click', () => {
+                if (confirm('Are you sure you want to reset the checklist? All your inputs will be lost.')) {
+                    generateChecklist(currentSetup);
+                    setupEventListeners();
+                    resultsSummary.style.display = 'none';
+                }
+            });
+            
+            // Save checklist
+            saveChecklistBtn.addEventListener('click', () => {
+                alert('Checklist saved successfully! (This would typically export to PDF or save to database in a real application)');
+            });
+        }
+        
+        // Calculate scores
+        function calculateScore() {
+            const sScores = {
+                sort: { total: 0, max: 0 },
+                set: { total: 0, max: 0 },
+                shine: { total: 0, max: 0 },
+                standardize: { total: 0, max: 0 },
+                sustain: { total: 0, max: 0 }
+            };
+            
+            // Calculate scores for each S
+            document.querySelectorAll('.checklist-item').forEach(item => {
+                const sKey = item.dataset.s;
+                const ratingBtn = item.querySelector('.rating-btn.active');
+                
+                if (ratingBtn) {
+                    const rating = parseInt(ratingBtn.dataset.rating);
+                    sScores[sKey].total += rating;
+                    sScores[sKey].max += 4; // Maximum rating is 4 for each item
+                } else {
+                    sScores[sKey].max += 4; // Still add to max even if not rated
+                }
+            });
+            
+            // Calculate percentages
+            let overallTotal = 0;
+            let overallMax = 0;
+            
+            for (const [sKey, score] of Object.entries(sScores)) {
+                const percentage = score.max > 0 ? Math.round((score.total / score.max) * 100) : 0;
+                
+                document.getElementById(`${sKey}-score`).textContent = `${percentage}%`;
+                
+                overallTotal += score.total;
+                overallMax += score.max;
+            }
+            
+            const overallPercentage = overallMax > 0 ? Math.round((overallTotal / overallMax) * 100) : 0;
+            document.getElementById('overall-score').textContent = `${overallPercentage}%`;
+            
+            // Generate recommendations
+            generateRecommendations(sScores);
+            
+            // Show results
+            resultsSummary.style.display = 'block';
+        }
+        
+        // Generate recommendations based on scores
+        function generateRecommendations(scores) {
+            const recommendationsDiv = document.getElementById('recommendations');
+            recommendationsDiv.innerHTML = '';
+            
+            const sNames = {
+                sort: 'Sort',
+                set: 'Set in Order',
+                shine: 'Shine',
+                standardize: 'Standardize',
+                sustain: 'Sustain'
+            };
+            
+            for (const [sKey, score] of Object.entries(scores)) {
+                const percentage = score.max > 0 ? Math.round((score.total / score.max) * 100) : 0;
+                
+                const recDiv = document.createElement('div');
+                recDiv.style.marginBottom = '1rem';
+                
+                const sName = document.createElement('strong');
+                sName.textContent = `${sNames[sKey]} (${percentage}%): `;
+                
+                let recommendation = '';
+                
+                if (percentage >= 80) {
+                    recommendation = 'Excellent! Maintain your current practices and look for opportunities to share best practices with other areas.';
+                } else if (percentage >= 60) {
+                    recommendation = 'Good progress. Focus on standardizing your improvements and ensuring consistent application across all areas.';
+                } else if (percentage >= 40) {
+                    recommendation = 'Fair implementation. Identify specific areas for improvement and develop an action plan with clear responsibilities.';
+                } else if (percentage >= 20) {
+                    recommendation = 'Needs significant improvement. Start with basic organization and cleaning activities. Provide training and set clear expectations.';
+                } else {
+                    recommendation = 'Critical improvement needed. Immediate attention required. Begin with awareness training and simple 5S projects to demonstrate benefits.';
+                }
+                
+                recDiv.appendChild(sName);
+                recDiv.appendChild(document.createTextNode(recommendation));
+                
+                recommendationsDiv.appendChild(recDiv);
+            }
+            
+            // Add overall recommendation
+            const overallRecDiv = document.createElement('div');
+            overallRecDiv.style.marginTop = '1.5rem';
+            overallRecDiv.style.padding = '1rem';
+            overallRecDiv.style.backgroundColor = '#e3f2fd';
+            overallRecDiv.style.borderLeft = '4px solid #2196f3';
+            overallRecDiv.style.borderRadius = '4px';
+            
+            const overallTitle = document.createElement('h4');
+            overallTitle.textContent = 'Overall Recommendation';
+            overallTitle.style.marginBottom = '0.5rem';
+            
+            const overallPercentage = parseInt(document.getElementById('overall-score').textContent);
+            let overallRecommendation = '';
+            
+            if (overallPercentage >= 80) {
+                overallRecommendation = 'Your 5S implementation is excellent. Focus on sustaining the gains and integrating 5S with other continuous improvement initiatives. Consider pursuing certification or recognition for your 5S program.';
+            } else if (overallPercentage >= 60) {
+                overallRecommendation = 'You have a good foundation for 5S. Work on standardizing practices across all areas and addressing any weak points identified in the audit. Regular audits and management reviews will help sustain and improve your results.';
+            } else if (overallPercentage >= 40) {
+                overallRecommendation = 'Your 5S implementation needs improvement. Develop a clear action plan with priorities, responsibilities, and timelines. Provide additional training and ensure management is visibly supporting the 5S initiative.';
+            } else if (overallPercentage >= 20) {
+                overallRecommendation = 'Significant improvement is needed in your 5S implementation. Start with awareness training and simple, high-impact projects to demonstrate the benefits of 5S. Secure management commitment and allocate necessary resources.';
+            } else {
+                overallRecommendation = 'Immediate action is required to implement 5S. Begin with basic training and select a pilot area to demonstrate the benefits. Management must take a visible leadership role in driving the 5S initiative.';
+            }
+            
+            overallRecDiv.appendChild(overallTitle);
+            overallRecDiv.appendChild(document.createTextNode(overallRecommendation));
+            
+            recommendationsDiv.appendChild(overallRecDiv);
+        }
+        
+        // Initialize the checklist when the page loads
+        document.addEventListener('DOMContentLoaded', initChecklist);
+    </script>
+</body>
+</html>

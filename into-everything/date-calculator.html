@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!--FAVICON-->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-3BSHG1DE6V');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5607576434988374"
+     crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-5607576434988374">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date Calculator | Industrial Engineering Calculators</title>
+    <meta name="description" content="Free Date Calculator — calculate the number of days between two dates, add or subtract days, weeks, months, or years, and compute business or working days. Accurate, fast, and easy to use.">
+    
+     <!-- Clarity tracking code for https://iecalculators.online/ -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "t31aicr9ep");
+    </script>   
+    
+    
+    <script type="application/ld+json">
+        {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+            "@type": "WebSite",
+            "@id": "https://iecalculators.online/#website",
+            "url": "https://iecalculators.online/",
+            "name": "IE Calculators",
+            "inLanguage": "en"
+            },
+            {
+            "@type": "WebPage",
+            "@id": "https://iecalculators.online/date-calculator.html#webpage",
+            "url": "https://iecalculators.online/date-calculator.html",
+            "name": "Date Calculator",
+            "isPartOf": { "@id": "https://iecalculators.online/#website" },
+            "inLanguage": "en",
+            "breadcrumb": {
+                "@id": "https://iecalculators.online/date-calculator.html#breadcrumb"
+            }
+            },
+            {
+            "@type": "BreadcrumbList",
+            "@id": "https://iecalculators.online/date-calculator.html#breadcrumb",
+            "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://iecalculators.online/" },
+                { "@type": "ListItem", "position": 2, "name": "Date Calculator", "item": "https://iecalculators.online/date-calculator.html" }
+            ]
+            },
+            {
+            "@type": "FAQPage",
+            "@id": "https://iecalculators.online/date-calculator.html#faq",
+            "mainEntity": [
+                {
+                "@type": "Question",
+                "name": "How do I calculate the number of days between two dates?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Select the start and end dates in the calculator and click Calculate. The tool shows the total days and breaks down years, months, and days."
+                }
+                },
+                {
+                "@type": "Question",
+                "name": "Can I calculate business (working) days only?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes — use the 'Calculate in business days' option to include only Monday to Friday in the calculation."
+                }
+                },
+                {
+                "@type": "Question",
+                "name": "How do I add or subtract days, weeks, months, or years from a date?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Switch to the Add/Subtract calculator, enter the base date and quantities to add or subtract, then click Calculate to get the resulting date."
+                }
+                }
+            ]
+            }
+        ]
+        }
+    </script>
+    
+    
+    
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block;
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .date-calculator-section {
+            margin-bottom: 2rem;
+        }
+        
+        .calculator-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .calculator-type {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .calculator-option {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid var(--light-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .calculator-option.active {
+            border-color: var(--secondary-color);
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+        
+        .calculator-option h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .date-inputs {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        
+        .date-inputs select, .date-inputs input {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .operation-inputs {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .operation-inputs input {
+            width: 80px;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            text-align: center;
+        }
+        
+        .operation-inputs select {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .related-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .tool-chip {
+            background-color: #e3f2fd;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .tool-chip:hover {
+            background-color: #bbdefb;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            align-self: flex-start;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .result-details {
+            margin-top: 1rem;
+        }
+        
+        .business-days-info {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-top: 0.5rem;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .calculator-type {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .date-inputs {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Industrial Engineering <span>Calculators</span></div>
+                <nav>
+                    <ul>
+                        <li><a href="/index.html">Home</a></li>
+                        <li><a href="/about.html">About</a></li>
+                        <li><a href="/terms.html">Terms</a></li>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Date Calculator</h1>
+            <p>Calculate days between dates or add/subtract days from a date</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Date Calculation Tools</h2>
+                <p>Use these calculators to find the number of days between two dates or to add/subtract days from a specific date.</p>
+            </div>
+
+            <div class="calculator-type">
+                <div class="calculator-option active" id="days-between-option">
+                    <h3>Days Between Two Dates</h3>
+                    <p>Find years, months, and days between two dates.</p>
+                </div>
+                <div class="calculator-option" id="add-subtract-option">
+                    <h3>Add to or Subtract from a Date</h3>
+                    <p>Calculate a date by adding or subtracting days, weeks, months, or years.</p>
+                </div>
+            </div>
+
+            <div class="date-calculator-section">
+                <div id="days-between-calculator">
+                    <form class="calculator-form" id="days-between-form">
+                        <div class="input-group">
+                            <label for="start-date">Start Date</label>
+                            <div class="date-inputs">
+                                <select id="start-month">
+                                    <option value="0">Jan</option>
+                                    <option value="1">Feb</option>
+                                    <option value="2">Mar</option>
+                                    <option value="3">Apr</option>
+                                    <option value="4">May</option>
+                                    <option value="5">Jun</option>
+                                    <option value="6">Jul</option>
+                                    <option value="7">Aug</option>
+                                    <option value="8">Sep</option>
+                                    <option value="9">Oct</option>
+                                    <option value="10">Nov</option>
+                                    <option value="11">Dec</option>
+                                </select>
+                                <select id="start-day">
+                                    <!-- Days will be populated by JavaScript -->
+                                </select>
+                                <select id="start-year">
+                                    <!-- Years will be populated by JavaScript -->
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="end-date">End Date</label>
+                            <div class="date-inputs">
+                                <select id="end-month">
+                                    <option value="0">Jan</option>
+                                    <option value="1">Feb</option>
+                                    <option value="2">Mar</option>
+                                    <option value="3">Apr</option>
+                                    <option value="4">May</option>
+                                    <option value="5">Jun</option>
+                                    <option value="6">Jul</option>
+                                    <option value="7">Aug</option>
+                                    <option value="8">Sep</option>
+                                    <option value="9">Oct</option>
+                                    <option value="10">Nov</option>
+                                    <option value="11">Dec</option>
+                                </select>
+                                <select id="end-day">
+                                    <!-- Days will be populated by JavaScript -->
+                                </select>
+                                <select id="end-year">
+                                    <!-- Years will be populated by JavaScript -->
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="include-end-day">
+                            <label for="include-end-day">Include end day (add 1 day)</label>
+                        </div>
+
+                        <button type="submit" class="calculate-btn">Calculate</button>
+                    </form>
+                </div>
+
+                <div id="add-subtract-calculator" style="display: none;">
+                    <form class="calculator-form" id="add-subtract-form">
+                        <div class="input-group">
+                            <label for="base-date">Base Date</label>
+                            <div class="date-inputs">
+                                <select id="base-month">
+                                    <option value="0">Jan</option>
+                                    <option value="1">Feb</option>
+                                    <option value="2">Mar</option>
+                                    <option value="3">Apr</option>
+                                    <option value="4">May</option>
+                                    <option value="5">Jun</option>
+                                    <option value="6">Jul</option>
+                                    <option value="7">Aug</option>
+                                    <option value="8">Sep</option>
+                                    <option value="9">Oct</option>
+                                    <option value="10">Nov</option>
+                                    <option value="11">Dec</option>
+                                </select>
+                                <select id="base-day">
+                                    <!-- Days will be populated by JavaScript -->
+                                </select>
+                                <select id="base-year">
+                                    <!-- Years will be populated by JavaScript -->
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Add or Subtract</label>
+                            <div class="operation-inputs">
+                                <input type="number" id="years-value" min="0" value="0">
+                                <select id="years-type">
+                                    <option value="years">years</option>
+                                </select>
+                                
+                                <input type="number" id="months-value" min="0" value="0">
+                                <select id="months-type">
+                                    <option value="months">months</option>
+                                </select>
+                                
+                                <input type="number" id="weeks-value" min="0" value="0">
+                                <select id="weeks-type">
+                                    <option value="weeks">weeks</option>
+                                </select>
+                                
+                                <input type="number" id="days-value" min="0" value="0">
+                                <select id="days-type">
+                                    <option value="days">days</option>
+                                </select>
+                                
+                                <select id="operation-type">
+                                    <option value="add">+</option>
+                                    <option value="subtract">-</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="business-days">
+                            <label for="business-days">Calculate in business days</label>
+                        </div>
+
+                        <button type="submit" class="calculate-btn">Calculate</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="result-box" id="result-container">
+                <h3>Results</h3>
+                <div id="result-content"></div>
+            </div>
+        </section>
+
+        <section class="content-section" id="faq" aria-labelledby="faq-heading">
+            <h2 id="faq-heading">Frequently Asked Questions — Date Calculator</h2>
+
+            <div class="faq-item">
+                <h3>How do I calculate the number of days between two dates?</h3>
+                <p>Select start and end dates, then click Calculate. The result shows total days and a breakdown of years, months, and days.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Does it account for leap years and different month lengths?</h3>
+                <p>Yes — the calculator uses real calendar arithmetic, so February 29 on leap years is handled correctly.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>How can I calculate only working days?</h3>
+                <p>Use the "Calculate in business days" checkbox when adding or subtracting days — weekends are skipped automatically.</p>
+            </div>
+            </section>
+
+        <section class="content-section">
+            <h2>Related Tools</h2>
+            <div>               
+                <div class="related-tools">
+                    <a href="age-calculator.html" class="tool-chip">Age Calculator</a>
+                    <a href="hours-calculator.html" class="tool-chip">Hours Calculator</a>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer>
+        <div class="footer-links">
+                <a href="/index.html">Home</a>
+                <a href="/about.html">About</a>
+                <a href="/terms.html">Terms</a>
+                <a href="/privacy.html">Privacy Policy</a>
+                <a href="/contact.html">Contact Us</a>
+                
+            </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            <p class="copyright">&copy; 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- xxxx navigation start xxxxx -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebarClose = document.querySelector('.sidebar-close');
+            const overlay = document.querySelector('.overlay');
+            const body = document.body;
+            
+            // Toggle sidebar
+            function toggleSidebar() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+                body.classList.toggle('sidebar-open');
+            }
+            
+            // Toggle category expansion
+            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
+            categoryHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const category = this.parentElement;
+                    category.classList.toggle('open');
+                    
+                    // Update the expand/collapse icon
+                    const icon = this.querySelector('span:last-child');
+                    icon.textContent = category.classList.contains('open') ? '−' : '+';
+                });
+            });
+            
+            // Event listeners
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            sidebarClose.addEventListener('click', toggleSidebar);
+            overlay.addEventListener('click', toggleSidebar);
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 768 && 
+                    body.classList.contains('sidebar-open') && 
+                    !sidebar.contains(event.target) && 
+                    event.target !== sidebarToggle) {
+                    toggleSidebar();
+                }
+            });
+            
+            // Close sidebar when pressing Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && body.classList.contains('sidebar-open')) {
+                    toggleSidebar();
+                }
+            });
+        });
+    </script>
+    <!-- xxxx navigation end xxxxx -->
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize date dropdowns
+            initializeDateDropdowns();
+            
+            // Set current date as default
+            setCurrentDate();
+            
+            // Calculator type toggle
+            const daysBetweenOption = document.getElementById('days-between-option');
+            const addSubtractOption = document.getElementById('add-subtract-option');
+            const daysBetweenCalculator = document.getElementById('days-between-calculator');
+            const addSubtractCalculator = document.getElementById('add-subtract-calculator');
+            
+            daysBetweenOption.addEventListener('click', function() {
+                daysBetweenOption.classList.add('active');
+                addSubtractOption.classList.remove('active');
+                daysBetweenCalculator.style.display = 'block';
+                addSubtractCalculator.style.display = 'none';
+            });
+            
+            addSubtractOption.addEventListener('click', function() {
+                addSubtractOption.classList.add('active');
+                daysBetweenOption.classList.remove('active');
+                addSubtractCalculator.style.display = 'block';
+                daysBetweenCalculator.style.display = 'none';
+            });
+            
+            // Form submissions
+            document.getElementById('days-between-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                calculateDaysBetween();
+            });
+            
+            document.getElementById('add-subtract-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                calculateAddSubtract();
+            });
+            
+            // Update day dropdowns when month/year changes
+            const monthSelects = document.querySelectorAll('select[id$="month"], select[id$="year"]');
+            monthSelects.forEach(select => {
+                select.addEventListener('change', function() {
+                    const id = this.id;
+                    if (id.includes('month') || id.includes('year')) {
+                        const prefix = id.replace(/month|year/, '');
+                        updateDayDropdown(prefix + 'day', 
+                                         parseInt(document.getElementById(prefix + 'month').value),
+                                         parseInt(document.getElementById(prefix + 'year').value));
+                    }
+                });
+            });
+        });
+        
+        function initializeDateDropdowns() {
+            // Initialize day and year dropdowns for all date selectors
+            const prefixes = ['start-', 'end-', 'base-'];
+            const currentDate = new Date();
+            const currentYear = currentDate.getFullYear();
+            
+            prefixes.forEach(prefix => {
+                // Initialize year dropdown (from current year - 10 to current year + 10)
+                const yearSelect = document.getElementById(prefix + 'year');
+                for (let year = currentYear - 1000; year <= currentYear + 1000; year++) {
+                    const option = document.createElement('option');
+                    option.value = year;
+                    option.textContent = year;
+                    yearSelect.appendChild(option);
+                }
+                
+                // Set current month and update day dropdown
+                const monthSelect = document.getElementById(prefix + 'month');
+                monthSelect.value = currentDate.getMonth();
+                updateDayDropdown(prefix + 'day', currentDate.getMonth(), currentYear);
+            });
+        }
+        
+        function setCurrentDate() {
+            const currentDate = new Date();
+            const currentDay = currentDate.getDate();
+            const currentMonth = currentDate.getMonth();
+            const currentYear = currentDate.getFullYear();
+            
+            // Set start date to current date
+            document.getElementById('start-month').value = currentMonth;
+            document.getElementById('start-day').value = currentDay;
+            document.getElementById('start-year').value = currentYear;
+            
+            // Set end date to current date
+            document.getElementById('end-month').value = currentMonth;
+            document.getElementById('end-day').value = currentDay;
+            document.getElementById('end-year').value = currentYear;
+            
+            // Set base date to current date
+            document.getElementById('base-month').value = currentMonth;
+            document.getElementById('base-day').value = currentDay;
+            document.getElementById('base-year').value = currentYear;
+            
+            // Update day dropdowns
+            updateDayDropdown('start-day', currentMonth, currentYear);
+            updateDayDropdown('end-day', currentMonth, currentYear);
+            updateDayDropdown('base-day', currentMonth, currentYear);
+        }
+        
+        function updateDayDropdown(daySelectId, month, year) {
+            const daySelect = document.getElementById(daySelectId);
+            const selectedDay = parseInt(daySelect.value) || 1;
+            
+            // Clear existing options
+            daySelect.innerHTML = '';
+            
+            // Get number of days in the selected month/year
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            
+            // Add day options
+            for (let day = 1; day <= daysInMonth; day++) {
+                const option = document.createElement('option');
+                option.value = day;
+                option.textContent = day;
+                if (day === selectedDay) {
+                    option.selected = true;
+                }
+                daySelect.appendChild(option);
+            }
+            
+            // If selected day is greater than days in month, select last day
+            if (selectedDay > daysInMonth) {
+                daySelect.value = daysInMonth;
+            }
+        }
+        
+        function calculateDaysBetween() {
+            // Get start date values
+            const startMonth = parseInt(document.getElementById('start-month').value);
+            const startDay = parseInt(document.getElementById('start-day').value);
+            const startYear = parseInt(document.getElementById('start-year').value);
+            
+            // Get end date values
+            const endMonth = parseInt(document.getElementById('end-month').value);
+            const endDay = parseInt(document.getElementById('end-day').value);
+            const endYear = parseInt(document.getElementById('end-year').value);
+            
+            // Check if include end day
+            const includeEndDay = document.getElementById('include-end-day').checked;
+            
+            // Create date objects
+            const startDate = new Date(startYear, startMonth, startDay);
+            const endDate = new Date(endYear, endMonth, endDay);
+            
+            // Validate dates
+            if (startDate > endDate) {
+                showError("Start date must be before end date");
+                return;
+            }
+            
+            // Calculate difference in milliseconds
+            let diffTime = Math.abs(endDate - startDate);
+            let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            // Adjust if including end day
+            if (includeEndDay) {
+                diffDays += 1;
+            }
+            
+            // Calculate years, months, and days
+            let years = 0;
+            let months = 0;
+            let days = 0;
+            
+            let tempDate = new Date(startDate);
+            
+            // Calculate years
+            while (tempDate <= endDate) {
+                const nextYear = new Date(tempDate);
+                nextYear.setFullYear(nextYear.getFullYear() + 1);
+                
+                if (nextYear <= endDate) {
+                    years++;
+                    tempDate = new Date(nextYear);
+                } else {
+                    break;
+                }
+            }
+            
+            // Calculate months
+            while (tempDate <= endDate) {
+                const nextMonth = new Date(tempDate);
+                nextMonth.setMonth(nextMonth.getMonth() + 1);
+                
+                if (nextMonth <= endDate) {
+                    months++;
+                    tempDate = new Date(nextMonth);
+                } else {
+                    break;
+                }
+            }
+            
+            // Calculate remaining days
+            days = Math.ceil((endDate - tempDate) / (1000 * 60 * 60 * 24));
+            if (includeEndDay) {
+                days += 1;
+            }
+            
+            // Display results
+            const resultContainer = document.getElementById('result-container');
+            const resultContent = document.getElementById('result-content');
+            
+            resultContent.innerHTML = `
+                <p>Between ${formatDate(startDate)} and ${formatDate(endDate)}:</p>
+                <p class="result-value">${diffDays} day${diffDays !== 1 ? 's' : ''}</p>
+                <div class="result-details">
+                    <p>${years} year${years !== 1 ? 's' : ''}, ${months} month${months !== 1 ? 's' : ''}, ${days} day${days !== 1 ? 's' : ''}</p>
+                </div>
+            `;
+            
+            resultContainer.style.display = 'block';
+        }
+        
+        function calculateAddSubtract() {
+            // Get base date values
+            const baseMonth = parseInt(document.getElementById('base-month').value);
+            const baseDay = parseInt(document.getElementById('base-day').value);
+            const baseYear = parseInt(document.getElementById('base-year').value);
+            
+            // Get operation values
+            const years = parseInt(document.getElementById('years-value').value) || 0;
+            const months = parseInt(document.getElementById('months-value').value) || 0;
+            const weeks = parseInt(document.getElementById('weeks-value').value) || 0;
+            const days = parseInt(document.getElementById('days-value').value) || 0;
+            
+            // Get operation type (add or subtract)
+            const operationType = document.getElementById('operation-type').value;
+            
+            // Check if business days calculation
+            const businessDaysOnly = document.getElementById('business-days').checked;
+            
+            // Create base date object
+            const baseDate = new Date(baseYear, baseMonth, baseDay);
+            
+            // Calculate result date
+            let resultDate = new Date(baseDate);
+            
+            if (businessDaysOnly) {
+                // Calculate business days
+                const totalDays = days + (weeks * 7) + (months * 30) + (years * 365);
+                const direction = operationType === 'add' ? 1 : -1;
+                
+                let daysCount = Math.abs(totalDays);
+                let currentDate = new Date(baseDate);
+                
+                while (daysCount > 0) {
+                    currentDate.setDate(currentDate.getDate() + direction);
+                    
+                    // Check if it's a business day (Monday to Friday)
+                    if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6) {
+                        daysCount--;
+                    }
+                }
+                
+                resultDate = currentDate;
+            } else {
+                // Regular date calculation
+                if (operationType === 'add') {
+                    resultDate.setFullYear(resultDate.getFullYear() + years);
+                    resultDate.setMonth(resultDate.getMonth() + months);
+                    resultDate.setDate(resultDate.getDate() + days + (weeks * 7));
+                } else {
+                    resultDate.setFullYear(resultDate.getFullYear() - years);
+                    resultDate.setMonth(resultDate.getMonth() - months);
+                    resultDate.setDate(resultDate.getDate() - days - (weeks * 7));
+                }
+            }
+            
+            // Display results
+            const resultContainer = document.getElementById('result-container');
+            const resultContent = document.getElementById('result-content');
+            
+            let operationText = operationType === 'add' ? 'added to' : 'subtracted from';
+            let calculationDetails = '';
+            
+            if (businessDaysOnly) {
+                calculationDetails = `<p class="business-days-info">Calculation performed using business days only (Monday-Friday)</p>`;
+            }
+            
+            resultContent.innerHTML = `
+                <p>${years} year${years !== 1 ? 's' : ''}, ${months} month${months !== 1 ? 's' : ''}, ${weeks} week${weeks !== 1 ? 's' : ''}, ${days} day${days !== 1 ? 's' : ''} ${operationText} ${formatDate(baseDate)}:</p>
+                <p class="result-value">${formatDate(resultDate)}</p>
+                ${calculationDetails}
+            `;
+            
+            resultContainer.style.display = 'block';
+        }
+        
+        function formatDate(date) {
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+        }
+        
+        function showError(message) {
+            const resultContainer = document.getElementById('result-container');
+            const resultContent = document.getElementById('result-content');
+            
+            resultContent.innerHTML = `<p style="color: var(--accent-color);">${message}</p>`;
+            resultContainer.style.display = 'block';
+        }
+    </script>
+
+        <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+
+    <div class="sidebar-category">
+        <div class="sidebar-category-header">
+            <span>Site Navigation</span>
+            <span>+</span>
+        </div>
+        
+        <div class="sidebar-category-content">
+            <a href="/index.html" class="sidebar-link">Home</a>
+            <a href="/about.html" class="sidebar-link">About</a>
+            <a href="/terms.html" class="sidebar-link">Terms</a>
+            <a href="/privacy.html" class="sidebar-link">Privacy Policy</a>
+            <a href="/contact.html" class="sidebar-link">Contact Us</a>
+        </div>
+    </div>
+        
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>IE Assessments</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="assessments/ie-career-quiz.html" class="sidebar-link">IE Career Quiz</a>
+                <a href="assessments/ie-general-info-quiz.html" class="sidebar-link">IE General Info Quiz</a>
+                <a href="assessments/should-i-study-industrial-engineering-quiz.html" class="sidebar-link">Should I Study Industrial Engineering Quiz</a>
+            </div>
+        </div>  
+    
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="/jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="/linebalancing.html" class="sidebar-link">Line Balancing</a>
+                <a href="/takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="/synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+                <a href="/machine-utilization-calculator.html" class="sidebar-link">Machine Utilization</a>
+                <a href="/manpower-calculator.html" class="sidebar-link active">Manpower Calculator</a>
+                <a href="/production-capacity-calculator.html" class="sidebar-link">Production Capacity</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="/controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="/processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="/sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="/oee-calculation.html" class="sidebar-link">OEE Calculator</a>
+                <a href="/quality-function-deployment" class="sidebar-link">Quality Function Deployment</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/anova.html" class="sidebar-link">ANOVA</a>
+                <a href="/chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="/confidence-interval-calculator.html" class="sidebar-link">Confidence Interval</a>
+                <a href="/correlation.html" class="sidebar-link">Correlation Analysis</a>
+                <a href="/coefficient-of-variation-calculator.html" class="sidebar-link">Coefficient of Variation</a>
+                <a href="/goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="/regression.html" class="sidebar-link">Regression</a>
+                <a href="/samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="/taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="/ttest.html" class="sidebar-link">T-Test</a>
+                <a href="/ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/abc-analysis-calculator.html" class="sidebar-link">ABC Analysis</a>
+                <a href="/inventory-turnover-calculator.html" class="sidebar-link">Inventory Turnover</a>
+                <a href="/eoq-formula.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="/reorder-point-calculator.html" class="sidebar-link">Reorder Point</a>
+                <a href="/kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="/newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+                <a href="/safety-stock-calculator.html" class="sidebar-link">Safety Stock Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Measurement</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="/predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="/learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="/littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="/worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="/noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="/posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="/workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="/workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="/queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="/decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="/gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="/markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="/costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="/depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="/timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+                <a href="/failure-mode-and-effects-analysis-fmea.html" class="sidebar-link">FMEA</a>
+            </div>
+        </div>
+
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Other Calculators</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/into-everything.html" class="sidebar-link">Into Everything Calculators</a>
+            </div>
+        </div>
+    </aside>
+    <!-- xxxx navigation end xxxxx -->
+
+</body>
+</html>

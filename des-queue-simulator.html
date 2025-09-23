@@ -1,0 +1,1090 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Queueing Discrete Event Simulator</title>
+  <style>
+    /* -------------------- GENERAL STYLES -------------------- */
+    :root{--bg:#0f172a;--card:#0b1220;--muted:#94a3b8;--accent:#06b6d4;--accent-2:#7c3aed}
+    *{box-sizing:border-box;font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif}
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#071129 0%,#061123 100%);color:#e6eef6}
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    h1{margin:0;font-size:20px}
+    .grid{display:grid;gap:12px}
+    .cols-3{grid-template-columns:360px 1fr 320px}
+    .card{background:rgba(240, 238, 238, 0.03);border-radius:12px;padding:12px;box-shadow:0 6px 18px rgba(0,0,0,0.5)}
+    label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px}
+    input[type=number],select,input[type=text],button{width:100%;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit}
+    .row{display:flex;gap:8px}
+    .muted{color:var(--muted);font-size:12px}
+    .btn{background:linear-gradient(90deg,var(--accent),var(--accent-2));border:none;color:#042026;padding:8px 10px;border-radius:8px;cursor:pointer}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06)}
+    .preset-row{display:flex;gap:8px;margin-top:8px}
+    .controls-scroll{max-height:74vh;overflow:auto;padding-right:6px}/* VISUAL AREA */
+#visual{height:520px;display:flex;flex-direction:column;gap:8px}
+.lane{flex:1;background:linear-gradient(180deg,#021026,#041425);border-radius:10px;padding:12px;display:flex;flex-direction:column}
+.counters{display:flex;gap:8px;align-items:flex-end;height:100%}
+.counter{flex:1;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border-radius:8px;padding:8px;position:relative;min-width:90px}
+.counter .header{display:flex;justify-content:space-between;align-items:center}
+.queue{display:flex;flex-direction:column;gap:6px;margin-top:10px;min-height:80px}
+.customer{width:36px;height:36px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#58c7ff,#2ea7c5);color:#012;box-shadow:0 3px 8px rgba(2,6,23,0.6);font-weight:700}
+.customer.small{width:28px;height:28px;font-size:11px}
+.status-busy{color:#ffd1a6}
+.status-idle{color:#b7f5ea}
+
+.guide-section {
+  line-height: 1.6;
+}
+
+.guide-section h2 {
+  color: var(--accent);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 8px;
+  margin-top: 24px;
+}
+
+.guide-section h3 {
+  color: #e6eef6;
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+.guide-section h4 {
+  color: #b7f5ea;
+  margin-top: 16px;
+  font-size: 16px;
+}
+
+.guide-section ol, .guide-section ul {
+  padding-left: 20px;
+  margin: 12px 0;
+}
+
+.guide-section li {
+  margin-bottom: 8px;
+}
+
+.guide-section table {
+  margin: 15px 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.guide-section code {
+  background: rgba(255,255,255,0.05);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 14px;
+}
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }   
+
+/* DASHBOARD */
+.metric{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px dashed rgba(255,255,255,0.02)}
+.metric strong{font-size:14px}
+.charts{display:flex;flex-direction:column;gap:8px}
+canvas{background:linear-gradient(180deg,#021228,#081728);border-radius:8px;padding:8px}
+
+footer{margin-top:12px;color:var(--muted);font-size:12px}
+
+/* small responsive tweaks */
+@media (max-width:1000px){.cols-3{grid-template-columns:1fr;grid-auto-rows:auto}.controls-scroll{max-height:none}}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Industrial Engineering <span>Calculators</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li></li>
+                </ul>
+            </nav>
+        </div>
+
+       <div>
+        <h1>Queueing — Discrete Event Simulator</h1>
+        <div class="muted">Interactive, event-driven, animated — seedable RNG, distributions, routing policies, CSV export.</div>
+      </div>
+    </header><main class="grid cols-3" style="margin-top:12px">
+  <!-- LEFT: Controls -->
+  <section class="card controls-scroll">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <strong>Controls</strong>
+      <div class="muted">Mode: <span id="modeLabel">Real-time</span></div>
+    </div>
+
+    <!-- BATCH 1 — UI / Layout / Controls -->
+    <!-- ---------------------------------- -->
+    <div style="margin-top:12px">
+      <label>Number of queue counters</label>
+      <input id="numCounters" type="number" min="1" max="10" value="3" />
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
+      <div>
+        <label>Arrival distribution</label>
+        <select id="arrivalDist">
+          <option value="exp">Exponential (mean)</option>
+          <option value="uni">Uniform (min,max)</option>
+          <option value="norm">Normal (mean,sd)</option>
+          <option value="det">Deterministic (fixed)</option>
+        </select>
+      </div>
+      <div>
+        <label>Service distribution</label>
+        <select id="serviceDist">
+          <option value="exp">Exponential (mean)</option>
+          <option value="uni">Uniform (min,max)</option>
+          <option value="norm">Normal (mean,sd)</option>
+          <option value="det">Deterministic (fixed)</option>
+        </select>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
+      <div>
+        <label id="arrivalParamLabel">Arrival param (mean)</label>
+        <input id="arrivalParam1" type="number" step="0.1" value="5" />
+      </div>
+      <div>
+        <label id="arrivalParamLabel2">Arrival param 2</label>
+        <input id="arrivalParam2" type="number" step="0.1" value="5" />
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
+      <div>
+        <label id="serviceParamLabel">Service param (mean)</label>
+        <input id="serviceParam1" type="number" step="0.1" value="4" />
+      </div>
+      <div>
+        <label id="serviceParamLabel2">Service param 2</label>
+        <input id="serviceParam2" type="number" step="0.1" value="1" />
+      </div>
+    </div>
+
+    <div style="margin-top:8px">
+      <label>Routing policy</label>
+      <select id="routing">
+        <option value="single">Single shared queue</option>
+        <option value="separate">Separate queues</option>
+        <option value="short">Shortest queue</option>
+      </select>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
+      <div>
+        <label>Time scale (0.1 - 100)</label>
+        <input id="timeScale" type="number" step="0.1" value="1" min="0.1" max="10" />
+      </div>
+      <div>
+        <label>Seed (optional)</label>
+        <input id="seedInput" type="text" placeholder="e.g., 12345" />
+      </div>
+    </div>
+
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <button id="startBtn" class="btn">Start</button>
+      <button id="pauseBtn" class="btn-ghost">Pause</button>
+      <button id="stepBtn" class="btn-ghost">Step</button>
+      <button id="resetBtn" class="btn-ghost">Reset</button>
+    </div>
+
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button id="exportCsv" class="btn-ghost">Export CSV</button>
+      <button id="toggleLog" class="btn-ghost">Toggle Event Log</button>
+    </div>
+
+    <div class="preset-row">
+      <button class="btn-ghost preset" data-preset="light">Light load</button>
+      <button class="btn-ghost preset" data-preset="heavy">Heavy load</button>
+      <button class="btn-ghost preset" data-preset="burst">Burst arrivals</button>
+      <button class="btn-ghost preset" data-preset="multi">Many servers</button>
+    </div>
+
+    <div style="margin-top:12px">
+      <details>
+        <summary>Presets & validation</summary>
+        <div class="muted" style="margin-top:8px">Presets fill inputs to common test cases. Input validation warns on impossible values.</div>
+      </details>
+    </div>
+
+    <!-- END BATCH 1 -->
+  </section>
+
+  <!-- MIDDLE: Visualizer -->
+  <section class="card" id="visual">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <strong>Live Visuals</strong>
+      <div class="muted">Sim time: <span id="simTime">0.00</span> sec</div>
+    </div>
+
+    <div class="lane">
+      <div class="counters" id="countersContainer">
+        <!-- counters populated by JS -->
+      </div>
+    </div>
+
+    <div style="display:flex;gap:8px;margin-top:8px;align-items:center">
+      <div class="muted">Legend:</div>
+      <div style="display:flex;gap:6px;align-items:center"><div class="customer small"></div><div class="muted">Customer</div></div>
+      <div style="display:flex;gap:6px;align-items:center"><div class="status-busy">●</div><div class="muted">Busy</div></div>
+      <div style="display:flex;gap:6px;align-items:center"><div class="status-idle">●</div><div class="muted">Idle</div></div>
+    </div>
+
+    <div style="margin-top:8px;display:flex;gap:8px;align-items:center">
+      <div class="muted">Event log:</div>
+      <div id="logContainer" style="flex:1;height:90px;overflow:auto;background:rgba(255,255,255,0.02);padding:8px;border-radius:6px;display:none"></div>
+    </div>
+
+  </section>
+
+  <!-- RIGHT: Metrics & Charts -->
+  <aside class="card">
+    <strong>Dashboard</strong>
+    <div class="muted" style="margin-top:6px">Real-time & cumulative metrics</div>
+
+    <div style="margin-top:8px">
+      <div class="metric"><div>Customers arrived</div><div id="metricArrived">0</div></div>
+      <div class="metric"><div>Customers served</div><div id="metricServed">0</div></div>
+      <div class="metric"><div>Avg waiting (Wq)</div><div id="metricWq">0.00</div></div>
+      <div class="metric"><div>Avg time in system (W)</div><div id="metricW">0.00</div></div>
+      <div class="metric"><div>Throughput (per sec)</div><div id="metricThroughput">0.00</div></div>
+      <div class="metric"><div>System utilization</div><div id="metricUtilization">0.0%</div></div>
+    </div>
+
+    <div style="margin-top:8px">
+      <strong class="muted">Per-counter</strong>
+      <div id="perCounterMetrics" style="margin-top:6px"></div>
+    </div>
+
+    <div style="margin-top:8px" class="charts">
+      <div>
+        <label class="muted">Queue length vs time</label>
+        <canvas id="chartQueue" width="280" height="120"></canvas>
+      </div>
+      <div>
+        <label class="muted">Avg waiting vs time</label>
+        <canvas id="chartWait" width="280" height="120"></canvas>
+      </div>
+    </div>
+
+    <!-- quick guidance -->
+    <div style="margin-top:8px" class="muted">Presets: Light (ρ&lt;&lt;1), Heavy (ρ≈1), Burst (high variability), Multi (more servers).</div>
+  </aside>
+</main>
+
+  </div>  <script>
+  /* =========================================================
+     BATCH 2 — Simulation Engine & Distributions
+     ========================================================= */
+  // Implementation notes: modular but all in one script. Main classes: RNG, Distributions, EventList, Server, Simulation
+
+  // ---------------- RNG (seedable) ----------------
+  class RNG {
+    constructor(seed){
+      if(seed==null) seed = Math.floor(Math.random()*1e9).toString();
+      this.seed = this._hash(seed.toString());
+      this.state = this.seed;
+    }
+    // simple xorshift32 based on a seed hash
+    _hash(str){
+      let h=2166136261>>>0;
+      for(let i=0;i<str.length;i++) h = Math.imul(h^str.charCodeAt(i),16777619)>>>0;
+      return h || 1;
+    }
+    next(){
+      // xorshift
+      let x = this.state;
+      x ^= x << 13; x = x >>> 0;
+      x ^= x >>> 17; x = x >>> 0;
+      x ^= x << 5; x = x >>> 0;
+      this.state = x;
+      return (x >>> 0) / 4294967296;
+    }
+    // helpers
+    uniform(a=0,b=1){ return a + (b-a)*this.next(); }
+    normal(mean=0,sd=1){ // Box-Muller
+      let u1 = this.next() || 1e-10;
+      let u2 = this.next();
+      let z0 = Math.sqrt(-2*Math.log(u1)) * Math.cos(2*Math.PI*u2);
+      return mean + z0*sd;
+    }
+    exponential(mean){
+      let u = this.next() || 1e-10;
+      return -mean * Math.log(u);
+    }
+  }
+
+  // ---------------- Distributions ----------------
+  function sampleFrom(dist, params, rng){
+    switch(dist){
+      case 'exp': return Math.max(0.000001, rng.exponential(params.mean));
+      case 'uni': return rng.uniform(params.min, params.max);
+      case 'norm': return Math.max(0.000001, rng.normal(params.mean, params.sd));
+      case 'det': return Math.max(0.000001, params.value);
+      default: return rng.uniform(0,1);
+    }
+  }
+
+  // ---------------- Event List (min-heap) ----------------
+  class EventList {
+    constructor(){ this.heap = []; }
+    push(evt){ this.heap.push(evt); this._siftUp(this.heap.length-1); }
+    pop(){ if(this.heap.length===0) return null; const top=this.heap[0]; const last=this.heap.pop(); if(this.heap.length) { this.heap[0]=last; this._siftDown(0);} return top; }
+    peek(){ return this.heap[0]||null; }
+    clear(){ this.heap.length=0; }
+    _siftUp(i){ while(i>0){ let p=Math.floor((i-1)/2); if(this.heap[p].time <= this.heap[i].time) break; [this.heap[p],this.heap[i]]=[this.heap[i],this.heap[p]]; i=p; }}
+    _siftDown(i){ while(true){ let l=2*i+1, r=2*i+2, smallest=i; if(l<this.heap.length && this.heap[l].time < this.heap[smallest].time) smallest = l; if(r<this.heap.length && this.heap[r].time < this.heap[smallest].time) smallest = r; if(smallest===i) break; [this.heap[smallest],this.heap[i]]=[this.heap[i],this.heap[smallest]]; i=smallest; }}
+  }
+
+  // ---------------- Simulation Entities ----------------
+  class Customer {
+    constructor(id, arrivalTime){ this.id=id; this.arrival=arrivalTime; this.serviceStart=null; this.departure=null; }
+  }
+
+  class Server {
+    constructor(id){ this.id=id; this.busy=false; this.currentCustomer=null; this.totalBusyTime=0; this.lastStart=0; this.servedCount=0; }
+  }
+
+  // ---------------- Simulation ----------------
+  class Simulation {
+    constructor(ui){
+      this.ui = ui; // reference to UI helpers
+      this.reset();
+    }
+    reset(){
+      this.eventList = new EventList();
+      this.now = 0;
+      this.nextCustId = 1;
+      this.servers = [];
+      this.queue = []; // used for shared queue
+      this.queuesByServer = []; // per-server queues
+      this.running = false;
+      this.cumulative = {arrived:0,served:0, totalWait:0, totalSystemTime:0};
+      this.logEnabled = false;
+      this.eventLog = [];
+      this.history = {time:[], queueLen:[], avgWait:[]};
+    }
+
+    initFromUI(settings){
+      this.reset();
+      this.settings = settings;
+      // RNG
+      this.rng = new RNG(settings.seed || Math.floor(Math.random()*1e9).toString());
+      // create servers
+      for(let i=0;i<settings.numCounters;i++){
+        this.servers.push(new Server(i));
+        this.queuesByServer.push([]);
+      }
+      // schedule first arrival
+      const firstIA = sampleFrom(settings.arrivalDist, settings.arrivalParams, this.rng);
+      this.eventList.push({time:this.now + firstIA, type:'arrival'});
+      this.running = false;
+      this.ui.updateSimTime(this.now);
+      this.ui.renderServers(this.servers, this.queuesByServer, this.queue);
+    }
+
+    toggleLog(){ this.logEnabled = !this.logEnabled; this.ui.setLogVisible(this.logEnabled); }
+
+    scheduleArrival(at){ this.eventList.push({time:at, type:'arrival'}); }
+
+    handleArrival(evt){
+      const t = evt.time; this.now = t;
+      const cust = new Customer(this.nextCustId++, t);
+      this.cumulative.arrived++;
+      this.log(`t=${t.toFixed(3)}: Customer ${cust.id} arrived`);
+
+      // routing
+      if(this.settings.routing === 'single'){
+        // if any idle server and queue empty -> go straight to server
+        const idle = this.servers.find(s => !s.busy);
+        if(idle && this.queue.length===0){ this.startService(idle, cust, t); }
+        else { this.queue.push(cust); }
+      } else if(this.settings.routing === 'separate'){
+        // pick server by modulo or round-robin (here: simple equal distribution by id)
+        const idx = (cust.id-1) % this.servers.length;
+        const q = this.queuesByServer[idx];
+        if(!this.servers[idx].busy && q.length===0){ this.startService(this.servers[idx], cust, t); }
+        else q.push(cust);
+      } else if(this.settings.routing === 'short'){
+        // push to shortest queue or idle server
+        let bestIdx = 0; let bestLen = Infinity;
+        for(let i=0;i<this.servers.length;i++){
+          const len = (this.servers[i].busy?1:0) + this.queuesByServer[i].length;
+          if(len < bestLen){ bestLen = len; bestIdx = i; }
+        }
+        if(!this.servers[bestIdx].busy && this.queuesByServer[bestIdx].length===0){ this.startService(this.servers[bestIdx], cust, t); }
+        else this.queuesByServer[bestIdx].push(cust);
+      }
+
+      // record
+      // schedule next arrival
+      const ia = sampleFrom(this.settings.arrivalDist, this.settings.arrivalParams, this.rng);
+      this.eventList.push({time: t + ia, type: 'arrival'});
+
+      // update UI
+      this.ui.onStatsUpdate(this);
+    }
+
+    startService(server, cust, t){
+      server.busy = true; server.currentCustomer = cust; server.lastStart = t; server.servedCount++;
+      cust.serviceStart = t;
+      this.log(`t=${t.toFixed(3)}: Customer ${cust.id} started service on server ${server.id}`);
+      // draw service end
+      const serviceTime = sampleFrom(this.settings.serviceDist, this.settings.serviceParams, this.rng);
+      this.eventList.push({time: t + serviceTime, type: 'service_end', serverId: server.id});
+      this.ui.onStatsUpdate(this);
+    }
+
+    handleServiceEnd(evt){
+      const t = evt.time; this.now = t;
+      const s = this.servers[evt.serverId];
+      if(!s || !s.busy) return; // defensive
+      const cust = s.currentCustomer; cust.departure = t;
+      s.busy = false; s.currentCustomer = null; s.totalBusyTime += (t - s.lastStart);
+      this.cumulative.served++;
+      const wait = (cust.serviceStart - cust.arrival);
+      const sysTime = (cust.departure - cust.arrival);
+      this.cumulative.totalWait += wait;
+      this.cumulative.totalSystemTime += sysTime;
+      this.log(`t=${t.toFixed(3)}: Customer ${cust.id} departed (wait=${wait.toFixed(3)}s, serviceTime=${(t-cust.serviceStart).toFixed(3)}s)`);
+
+      // check queue to start next
+      if(this.settings.routing === 'single'){
+        if(this.queue.length>0){ const next = this.queue.shift(); this.startService(s, next, t); }
+      } else if(this.settings.routing === 'separate'){
+        const q = this.queuesByServer[s.id]; if(q.length>0){ const next = q.shift(); this.startService(s, next, t); }
+      } else if(this.settings.routing === 'short'){
+        const q = this.queuesByServer[s.id]; if(q.length>0){ const next = q.shift(); this.startService(s, next, t); }
+      }
+
+      this.ui.onStatsUpdate(this);
+    }
+
+    stepOnce(){
+      const evt = this.eventList.pop(); if(!evt) return false; // nothing
+      if(evt.type === 'arrival') this.handleArrival(evt);
+      else if(evt.type === 'service_end') this.handleServiceEnd(evt);
+      return true;
+    }
+
+    runFor(realDt){
+      // advance simulated events up to now + realDt * timeScale
+      const target = this.now + realDt * this.settings.timeScale;
+      let steps=0;
+      while(this.eventList.peek() && this.eventList.peek().time <= target){
+        const evt = this.eventList.pop();
+        if(evt.type === 'arrival') this.handleArrival(evt);
+        else if(evt.type === 'service_end') this.handleServiceEnd(evt);
+        steps++; if(steps>10000) break; // safety
+      }
+      // if nothing processed, we still advance now to min(peek.time, target)
+      const nextTime = this.eventList.peek() ? Math.min(this.eventList.peek().time, target) : target;
+      this.now = nextTime;
+      this.ui.updateSimTime(this.now);
+      this.ui.onStatsUpdate(this);
+    }
+
+    log(msg){ this.eventLog.push(msg); if(this.logEnabled) this.ui.pushLog(msg); }
+
+exportCSV(){
+  // Comprehensive CSV with event history, metrics, and configuration
+  let rows = [];
+  
+  // === SECTION 1: Simulation Configuration ===
+  rows.push('=== SIMULATION CONFIGURATION ===');
+  rows.push(`Number of counters,${this.settings?.numCounters || 'N/A'}`);
+  rows.push(`Arrival distribution,${this.settings?.arrivalDist || 'N/A'}`);
+  rows.push(`Arrival parameters,${JSON.stringify(this.settings?.arrivalParams || {})}`);
+  rows.push(`Service distribution,${this.settings?.serviceDist || 'N/A'}`);
+  rows.push(`Service parameters,${JSON.stringify(this.settings?.serviceParams || {})}`);
+  rows.push(`Routing policy,${this.settings?.routing || 'N/A'}`);
+  rows.push(`Time scale,${this.settings?.timeScale || 'N/A'}`);
+  rows.push(`RNG seed,${this.settings?.seed || 'N/A'}`);
+  rows.push(`Simulation time,${this.now.toFixed(3)}`);
+  rows.push('');
+  
+  // === SECTION 2: Cumulative Statistics ===
+  rows.push('=== CUMULATIVE STATISTICS ===');
+  rows.push('Metric,Value,Units');
+  rows.push(`Customers arrived,${this.cumulative.arrived},count`);
+  rows.push(`Customers served,${this.cumulative.served},count`);
+  rows.push(`Customers in system,${this.cumulative.arrived - this.cumulative.served},count`);
+  rows.push(`Average waiting time (Wq),${this.cumulative.served ? (this.cumulative.totalWait / this.cumulative.served).toFixed(3) : 0},seconds`);
+  rows.push(`Average system time (W),${this.cumulative.served ? (this.cumulative.totalSystemTime / this.cumulative.served).toFixed(3) : 0},seconds`);
+  rows.push(`Throughput,${this.now > 0 ? (this.cumulative.served / this.now).toFixed(3) : 0},customers/sec`);
+  
+  // System utilization
+  const totalBusyTime = this.servers.reduce((sum, server) => sum + server.totalBusyTime, 0);
+  const totalCapacityTime = this.now * this.servers.length;
+  const systemUtilization = totalCapacityTime > 0 ? (totalBusyTime / totalCapacityTime) * 100 : 0;
+  rows.push(`System utilization,${systemUtilization.toFixed(1)},%`);
+  rows.push('');
+  
+  // === SECTION 3: Per-Server Statistics ===
+  rows.push('=== PER-SERVER STATISTICS ===');
+  rows.push('Server ID,Customers Served,Busy Time,Utilization %,Current Status');
+  this.servers.forEach((server, index) => {
+    const utilization = this.now > 0 ? (server.totalBusyTime / this.now) * 100 : 0;
+    const status = server.busy ? `Serving C${server.currentCustomer?.id || '?'}` : 'Idle';
+    rows.push(`${index + 1},${server.servedCount},${server.totalBusyTime.toFixed(3)},${utilization.toFixed(1)},${status}`);
+  });
+  rows.push('');
+  
+  // === SECTION 4: Queue Information ===
+  rows.push('=== QUEUE INFORMATION ===');
+  if (this.settings?.routing === 'single') {
+    rows.push(`Shared queue length,${this.queue.length}`);
+    rows.push(`Next customer in queue,${this.queue.length > 0 ? this.queue[0].id : 'None'}`);
+  } else {
+    rows.push('Server ID,Queue Length,Next Customer');
+    this.queuesByServer.forEach((queue, index) => {
+      const nextCustomer = queue.length > 0 ? queue[0].id : 'None';
+      rows.push(`${index + 1},${queue.length},${nextCustomer}`);
+    });
+  }
+  rows.push(`Total customers waiting,${this.getTotalQueueLength()}`);
+  rows.push('');
+  
+  // === SECTION 5: Event History (Sample) ===
+  rows.push('=== EVENT HISTORY (LAST 100 EVENTS) ===');
+  rows.push('Event Time,Event Type,Customer ID,Server ID,Details');
+  
+  // Get last 100 events from log
+  const recentEvents = this.eventLog.slice(-100);
+  recentEvents.forEach(event => {
+    // Parse event log entries into CSV format
+    const match = event.match(/t=([\d.]+): (.*)/);
+    if (match) {
+      const time = match[1];
+      const details = match[2];
+      // Try to extract event type and customer ID
+      let eventType = 'Unknown';
+      let customerId = '';
+      let serverId = '';
+      
+      if (details.includes('arrived')) {
+        eventType = 'Arrival';
+        const custMatch = details.match(/Customer (\d+)/);
+        if (custMatch) customerId = custMatch[1];
+      } else if (details.includes('started service')) {
+        eventType = 'Service Start';
+        const custMatch = details.match(/Customer (\d+)/);
+        const serverMatch = details.match(/server (\d+)/);
+        if (custMatch) customerId = custMatch[1];
+        if (serverMatch) serverId = serverMatch[1];
+      } else if (details.includes('departed')) {
+        eventType = 'Departure';
+        const custMatch = details.match(/Customer (\d+)/);
+        if (custMatch) customerId = custMatch[1];
+      }
+      
+      rows.push(`${time},${eventType},${customerId},${serverId},"${details}"`);
+    }
+  });
+  rows.push('');
+  
+  // === SECTION 6: Performance Metrics Over Time ===
+  rows.push('=== PERFORMANCE OVER TIME ===');
+  rows.push('Time,Queue Length,Avg Wait Time,System Utilization');
+  // Sample data points (every 10th point to avoid huge files)
+  const sampleRate = Math.max(1, Math.floor(this.history.time.length / 50));
+  for (let i = 0; i < this.history.time.length; i += sampleRate) {
+    const utilAtTime = this.history.time[i] > 0 ? 
+      (this.servers.reduce((sum, s) => sum + (s.busyTimeHistory?.[i] || 0), 0) / (this.history.time[i] * this.servers.length)) * 100 : 0;
+    rows.push(`${this.history.time[i].toFixed(3)},${this.history.queueLen[i] || 0},${this.history.avgWait[i] || 0},${utilAtTime.toFixed(1)}`);
+  }
+  
+  return rows.join('\n');
+}
+
+// Helper method to get total queue length
+getTotalQueueLength() {
+  if (this.settings?.routing === 'single') {
+    return this.queue.length;
+  } else {
+    return this.queuesByServer.reduce((sum, queue) => sum + queue.length, 0);
+  }
+}
+  }
+
+  /* =========================================================
+     BATCH 3 — Metrics, Charts & Visuals
+     ========================================================= */
+  // UI helpers and main loop
+  (function(){
+    // --- UI element refs ---
+    const numCounters = document.getElementById('numCounters');
+    const arrivalDist = document.getElementById('arrivalDist');
+    const serviceDist = document.getElementById('serviceDist');
+    const arrivalParam1 = document.getElementById('arrivalParam1');
+    const arrivalParam2 = document.getElementById('arrivalParam2');
+    const serviceParam1 = document.getElementById('serviceParam1');
+    const serviceParam2 = document.getElementById('serviceParam2');
+    const routing = document.getElementById('routing');
+    const startBtn = document.getElementById('startBtn');
+    const pauseBtn = document.getElementById('pauseBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const stepBtn = document.getElementById('stepBtn');
+    const chartQueue = document.getElementById('chartQueue');
+    const chartWait = document.getElementById('chartWait');
+    const metricArrived = document.getElementById('metricArrived');
+    const metricServed = document.getElementById('metricServed');
+    const metricWq = document.getElementById('metricWq');
+    const metricW = document.getElementById('metricW');
+    const metricThroughput = document.getElementById('metricThroughput');
+    const perCounterMetrics = document.getElementById('perCounterMetrics');
+    const countersContainer = document.getElementById('countersContainer');
+    const simTimeLabel = document.getElementById('simTime');
+    const exportCsvBtn = document.getElementById('exportCsv');
+    const toggleLogBtn = document.getElementById('toggleLog');
+    const logContainer = document.getElementById('logContainer');
+    const seedInput = document.getElementById('seedInput');
+    const timeScaleInput = document.getElementById('timeScale');
+    const modeLabel = document.getElementById('modeLabel');
+
+    let animationId = null;
+    let lastReal = null;
+
+    const ui = {
+      renderServers(servers, queuesByServer, sharedQueue){
+        // create visual blocks
+        countersContainer.innerHTML = '';
+        for(let i=0;i<servers.length;i++){
+          const s = servers[i];
+          const box = document.createElement('div'); box.className='counter'; box.dataset.counterId = i;
+          box.innerHTML = `<div class="header"><div>Queue ${i+1}</div><div class="muted status ${s.busy? 'status-busy' : 'status-idle'}">${s.busy? 'Busy' : 'Idle'}</div></div><div class="queue" data-queue-id="${i}"></div>`;
+          countersContainer.appendChild(box);
+        }
+        // if shared queue create a visible queue area above or below counters
+        if(sharedQueue && sharedQueue.length>=0){ /* the queue is represented by queue elements left of counters; we will update below */ }
+        this.updateCustomerVisuals(servers, queuesByServer, sharedQueue);
+      },
+      updateCustomerVisuals(servers, queuesByServer, sharedQueue){
+        // update server blocks
+        for(let i=0;i<servers.length;i++){
+          const box = countersContainer.querySelector(`[data-counter-id='${i}']`);
+          if(!box) continue;
+          const status = box.querySelector('.status');
+          status.className = 'muted status ' + (servers[i].busy? 'status-busy' : 'status-idle');
+          status.textContent = servers[i].busy? 'Busy' : 'Idle';
+          const qElem = box.querySelector('[data-queue-id]'); qElem.innerHTML='';
+          // draw queued customers for this server
+          const q = queuesByServer[i] || [];
+          for(let j=0;j<q.length;j++){
+            const c = document.createElement('div'); c.className='customer small'; c.textContent = q[j].id; qElem.appendChild(c);
+          }
+          // show current customer atop (if busy)
+          if(servers[i].busy && servers[i].currentCustomer){
+            const c = document.createElement('div'); c.className='customer'; c.textContent = servers[i].currentCustomer.id; qElem.insertBefore(c, qElem.firstChild);
+          }
+        }
+        // shared queue visual: prepend above counters as small stack
+        // For simplicity, show shared queue as overlay in first counter's queue
+        if(sharedQueue && sharedQueue.length>=0 && servers.length>0){
+          const box = countersContainer.querySelector(`[data-counter-id='0']`);
+          if(box){
+            const top = box.querySelector('.queue');
+            // show shared queue at top
+            const sharedWrapper = document.createElement('div'); sharedWrapper.style.display='flex'; sharedWrapper.style.gap='6px'; sharedWrapper.style.flexWrap='wrap';
+            const display = sharedQueue.slice(0,8);
+            for(const cst of display){ const d=document.createElement('div'); d.className='customer small'; d.textContent=cst.id; sharedWrapper.appendChild(d); }
+            // insert as first element
+            if(top.firstChild) top.insertBefore(sharedWrapper, top.firstChild); else top.appendChild(sharedWrapper);
+          }
+        }
+      },
+      onStatsUpdate(sim){
+        // update metrics
+        metricArrived.textContent = sim.cumulative.arrived;
+        metricServed.textContent = sim.cumulative.served;
+        const avgWq = sim.cumulative.served ? sim.cumulative.totalWait / sim.cumulative.served : 0;
+        const avgW = sim.cumulative.served ? sim.cumulative.totalSystemTime / sim.cumulative.served : 0;
+        metricWq.textContent = avgWq.toFixed(3);
+        metricW.textContent = avgW.toFixed(3);
+        const runtime = sim.now || 0;
+        const throughput = runtime>0 ? sim.cumulative.served / runtime : 0;
+        metricThroughput.textContent = throughput.toFixed(3);
+
+        // Add this line in the onStatsUpdate function, after the throughput calculation
+        const totalBusyTime = sim.servers.reduce((sum, server) => sum + server.totalBusyTime, 0);
+        const totalCapacityTime = sim.now * sim.servers.length;
+        const systemUtilization = totalCapacityTime > 0 ? (totalBusyTime / totalCapacityTime) * 100 : 0;
+        document.getElementById('metricUtilization').textContent = systemUtilization.toFixed(1) + '%';
+
+        // per-counter
+        perCounterMetrics.innerHTML = '';
+        for(const s of sim.servers){
+          const div = document.createElement('div'); div.className='metric'; div.innerHTML = `<div>Server ${s.id+1}</div><div>${s.servedCount} served</div>`; perCounterMetrics.appendChild(div);
+        }
+
+        // charts: record history
+        sim.history.time.push(sim.now);
+        const totalQueueLen = sim.settings.routing === 'single' ? sim.queue.length : sim.queuesByServer.reduce((a,b)=>a+b.length,0);
+        sim.history.queueLen.push(totalQueueLen);
+        sim.history.avgWait.push(avgWq);
+        // trim history length
+        if(sim.history.time.length>200){ sim.history.time.shift(); sim.history.queueLen.shift(); sim.history.avgWait.shift(); }
+        renderCharts(sim.history);
+
+        // render visuals
+        this.updateCustomerVisuals(sim.servers, sim.queuesByServer, sim.settings.routing==='single' ? sim.queue : []);
+      },
+      updateSimTime(t){ simTimeLabel.textContent = t.toFixed(3); },
+      pushLog(msg){ const d=document.createElement('div'); d.textContent=msg; logContainer.appendChild(d); logContainer.scrollTop = logContainer.scrollHeight; },
+      setLogVisible(v){ logContainer.style.display = v? 'block':'none'; }
+    };
+
+    // chart rendering (simple line chart) — canvas-based, no libs
+    function renderCharts(history){
+      drawLine(chartQueue, history.queueLen);
+      drawLine(chartWait, history.avgWait);
+    }
+
+    function drawLine(canvas, data){
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      // background
+      ctx.fillStyle = 'rgba(255,255,255,0.02)'; ctx.fillRect(0,0,canvas.width,canvas.height);
+      if(data.length===0) return;
+      const max = Math.max(...data,1);
+      ctx.beginPath();
+      for(let i=0;i<data.length;i++){
+        const x = (i/(data.length-1))*(canvas.width-12)+6;
+        const y = canvas.height - 6 - (data[i]/max)*(canvas.height-12);
+        if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+      }
+      ctx.strokeStyle = 'rgba(0,200,220,0.9)'; ctx.lineWidth = 2; ctx.stroke();
+      // latest value
+      const latest = data[data.length-1]; ctx.fillStyle='white'; ctx.font='12px monospace'; ctx.fillText(latest.toFixed(2), 8, 14);
+    }
+
+    // instantiate sim
+    const sim = new Simulation(ui);
+
+    // --- UI wiring ---
+    function readSettings(){
+      // parse distribution parameters according to selected dist
+      const s = {
+        numCounters: Math.max(1, Math.min(10, parseInt(numCounters.value||3))),
+        arrivalDist: arrivalDist.value,
+        serviceDist: serviceDist.value,
+        routing: routing.value,
+        timeScale: Math.max(0.01, parseFloat(timeScaleInput.value)||1),
+        seed: seedInput.value || (Date.now()%1000000).toString()
+      };
+      // arrival params
+      if(s.arrivalDist==='exp'){ s.arrivalParams = {mean: parseFloat(arrivalParam1.value)||1}; }
+      else if(s.arrivalDist==='uni'){ s.arrivalParams = {min: parseFloat(arrivalParam1.value)||1, max: parseFloat(arrivalParam2.value)||2}; }
+      else if(s.arrivalDist==='norm'){ s.arrivalParams = {mean: parseFloat(arrivalParam1.value)||1, sd: Math.max(0.0001, parseFloat(arrivalParam2.value)||0.5)}; }
+      else if(s.arrivalDist==='det'){ s.arrivalParams = {value: parseFloat(arrivalParam1.value)||1}; }
+      // service params
+      if(s.serviceDist==='exp'){ s.serviceParams = {mean: parseFloat(serviceParam1.value)||1}; }
+      else if(s.serviceDist==='uni'){ s.serviceParams = {min: parseFloat(serviceParam1.value)||0.5, max: parseFloat(serviceParam2.value)||1.5}; }
+      else if(s.serviceDist==='norm'){ s.serviceParams = {mean: parseFloat(serviceParam1.value)||1, sd: Math.max(0.0001, parseFloat(serviceParam2.value)||0.5)}; }
+      else if(s.serviceDist==='det'){ s.serviceParams = {value: parseFloat(serviceParam1.value)||1}; }
+      return s;
+    }
+
+    // update labels when distribution changes
+    arrivalDist.addEventListener('change', ()=>{
+      const v = arrivalDist.value;
+      if(v==='exp'){ arrivalParamLabel.textContent = 'Arrival mean (sec)'; arrivalParamLabel2.textContent = 'unused'; arrivalParam2.style.display='none'; }
+      else if(v==='uni'){ arrivalParamLabel.textContent='Arrival min (sec)'; arrivalParamLabel2.textContent='Arrival max (sec)'; arrivalParam2.style.display='inline-block'; }
+      else if(v==='norm'){ arrivalParamLabel.textContent='Arrival mean (sec)'; arrivalParamLabel2.textContent='Arrival sd (sec)'; arrivalParam2.style.display='inline-block'; }
+      else { arrivalParamLabel.textContent='Arrival value (sec)'; arrivalParamLabel2.textContent='unused'; arrivalParam2.style.display='none'; }
+    });
+    serviceDist.addEventListener('change', ()=>{
+      const v = serviceDist.value;
+      if(v==='exp'){ serviceParamLabel.textContent = 'Service mean (sec)'; serviceParamLabel2.textContent='unused'; serviceParam2.style.display='none'; }
+      else if(v==='uni'){ serviceParamLabel.textContent='Service min (sec)'; serviceParamLabel2.textContent='Service max (sec)'; serviceParam2.style.display='inline-block'; }
+      else if(v==='norm'){ serviceParamLabel.textContent='Service mean (sec)'; serviceParamLabel2.textContent='Service sd (sec)'; serviceParam2.style.display='inline-block'; }
+      else { serviceParamLabel.textContent='Service value (sec)'; serviceParamLabel2.textContent='unused'; serviceParam2.style.display='none'; }
+    });
+
+    // Preset buttons
+    document.querySelectorAll('.preset').forEach(b=>b.addEventListener('click', (ev)=>{
+      const p = ev.currentTarget.dataset.preset;
+      if(p==='light'){
+        numCounters.value=3; arrivalDist.value='exp'; arrivalParam1.value='8'; serviceDist.value='exp'; serviceParam1.value='4'; routing.value='single'; timeScaleInput.value='1';
+      } else if(p==='heavy'){
+        numCounters.value=2; arrivalDist.value='exp'; arrivalParam1.value='3.5'; serviceDist.value='exp'; serviceParam1.value='4'; routing.value='single'; timeScaleInput.value='1';
+      } else if(p==='burst'){
+        numCounters.value=3; arrivalDist.value='norm'; arrivalParam1.value='4'; arrivalParam2.value='3'; serviceDist.value='exp'; serviceParam1.value='3'; routing.value='short'; timeScaleInput.value='1';
+      } else if(p==='multi'){
+        numCounters.value=6; arrivalDist.value='exp'; arrivalParam1.value='6'; serviceDist.value='exp'; serviceParam1.value='5'; routing.value='separate'; timeScaleInput.value='1';
+      }
+      arrivalDist.dispatchEvent(new Event('change')); serviceDist.dispatchEvent(new Event('change'));
+    }));
+
+    // Start
+    startBtn.addEventListener('click', ()=>{
+      const settings = readSettings();
+      sim.initFromUI(settings);
+      // set UI mode
+      modeLabel.textContent = 'Real-time';
+      sim.running = true;
+      lastReal = performance.now();
+      runLoop();
+    });
+    pauseBtn.addEventListener('click', ()=>{
+      sim.running = !sim.running; pauseBtn.textContent = sim.running? 'Pause':'Resume'; if(sim.running){ lastReal = performance.now(); runLoop(); }
+    });
+    resetBtn.addEventListener('click', ()=>{
+      cancelAnimationFrame(animationId); sim.reset(); ui.updateSimTime(0); ui.renderServers(sim.servers, sim.queuesByServer, []); metricArrived.textContent=0; metricServed.textContent=0; perCounterMetrics.innerHTML=''; logContainer.innerHTML='';
+    });
+    stepBtn.addEventListener('click', ()=>{ const settings = readSettings(); if(!sim.settings) sim.initFromUI(settings); sim.stepOnce(); ui.onStatsUpdate(sim); });
+
+    // export CSV
+    exportCsvBtn.addEventListener('click', ()=>{
+      const csv = sim.exportCSV(); const blob = new Blob([csv],{type:'text/csv'}); const url = URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='sim_summary.csv'; a.click(); URL.revokeObjectURL(url);
+    });
+
+    toggleLogBtn.addEventListener('click', ()=>{ sim.toggleLog(); toggleLogBtn.textContent = sim.logEnabled? 'Hide Event Log':'Show Event Log'; });
+
+    // main run loop: uses requestAnimationFrame but advances simulation time by real elapsed * timeScale
+    function runLoop(now){
+      animationId = requestAnimationFrame(runLoop);
+      if(!sim.running) return;
+      const realNow = performance.now();
+      const dt = (realNow - (lastReal||realNow))/1000; lastReal = realNow;
+      // advance simulation by dt seconds scaled
+      sim.runFor(dt);
+    }
+
+    // hook to render initial servers UI
+    ui.renderServers([],[],[]);
+
+    // small accessibility: keyboard shortcuts
+    window.addEventListener('keydown', (e)=>{
+      if(e.key===' ') { startBtn.click(); e.preventDefault(); }
+      if(e.key==='p') { pauseBtn.click(); }
+      if(e.key==='r') { resetBtn.click(); }
+    });
+
+    // initial dist label update
+    arrivalDist.dispatchEvent(new Event('change')); serviceDist.dispatchEvent(new Event('change'));
+
+  })();
+
+  </script>
+
+<section class="container" style="margin-top: 40px; max-width: 1200px;">
+  <div class="card">
+    <h2>How to Use the Queueing Simulator</h2>
+    
+    <h3>Getting Started</h3>
+    <p>This discrete event simulator models queueing operations with various configurations. Follow these steps to begin:</p>
+    <ol>
+      <li><strong>Configure Parameters</strong>: Set the number of queue counters, arrival and service distributions, and routing policy.</li>
+      <li><strong>Choose Distributions</strong>: Select probability distributions for customer arrivals and service times.</li>
+      <li><strong>Set Parameters</strong>: Adjust distribution parameters based on your selected distributions.</li>
+      <li><strong>Start Simulation</strong>: Click "Start" to begin the real-time simulation.</li>
+    </ol>
+    
+    <h3>Understanding the Interface</h3>
+    <p>The simulator is divided into three main panels:</p>
+    <ul>
+      <li><strong>Left Panel (Controls)</strong>: Configure all simulation parameters and access presets</li>
+      <li><strong>Center Panel (Visualization)</strong>: Watch customers move through the system in real-time</li>
+      <li><strong>Right Panel (Metrics)</strong>: Monitor performance indicators and charts</li>
+    </ul>
+    
+    <h3>Distribution Types Explained</h3>
+    
+    <h4>Exponential Distribution</h4>
+    <p>Models random events with a constant average rate. Commonly used for arrival processes where events occur independently.</p>
+    <ul>
+      <li><strong>Parameter</strong>: Mean time between events</li>
+      <li><strong>Example</strong>: If mean=5, average time between arrivals is 5 seconds</li>
+    </ul>
+    
+    <h4>Uniform Distribution</h4>
+    <p>Events occur with equal probability within a specified range.</p>
+    <ul>
+      <li><strong>Parameters</strong>: Minimum and maximum values</li>
+      <li><strong>Example</strong>: min=3, max=7 means service times between 3-7 seconds, all equally likely</li>
+    </ul>
+    
+    <h4>Normal Distribution</h4>
+    <p>Models events that cluster around a mean value with symmetric variation.</p>
+    <ul>
+      <li><strong>Parameters</strong>: Mean (center) and standard deviation (spread)</li>
+      <li><strong>Example</strong>: mean=4, sd=1 means most service times are between 3-5 seconds</li>
+    </ul>
+    
+    <h4>Deterministic Distribution</h4>
+    <p>Fixed, predictable intervals between events.</p>
+    <ul>
+      <li><strong>Parameter</strong>: Fixed value</li>
+      <li><strong>Example</strong>: value=4 means exactly 4 seconds between arrivals</li>
+    </ul>
+    
+    <h3>Routing Policies</h3>
+    
+    <h4>Single Shared Queue</h4>
+    <p>All customers join one queue, and go to the next available server. This typically minimizes average waiting time.</p>
+    
+    <h4>Separate Queues</h4>
+    <p>Customers are assigned to specific servers (often round-robin) and must wait in that queue even if other servers are free.</p>
+    
+    <h4>Shortest Queue</h4>
+    <p>Customers join the queue with the fewest waiting customers. This attempts to balance load across servers dynamically.</p>
+    
+    <h3>Interpreting the Metrics</h3>
+    
+    <h4>Key Performance Indicators</h4>
+    <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
+      <thead>
+        <tr style="background: rgba(255,255,255,0.05);">
+          <th style="padding: 8px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1);">Metric</th>
+          <th style="padding: 8px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1);">Interpretation</th>
+          <th style="padding: 8px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1);">Ideal Range</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.05);">Avg Waiting Time (Wq)</td>
+          <td style="padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.05);">Time customers spend waiting in queue</td>
+          <td style="padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.05);">As low as possible</td>
+        </tr>
+        <tr>
+          <td style="padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.05);">Avg System Time (W)</td>
+          <td style="padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.05);">Total time from arrival to departure</td>
+          <td style="padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.05);">Close to service time</td>
+        </tr>
+        <tr>
+          <td style="padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.05);">Throughput</td>
+          <td style="padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.05);">Customers served per second</td>
+          <td style="padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.05);">Higher is better</td>
+        </tr>
+        <tr>
+          <td style="padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.05);">System Utilization</td>
+          <td style="padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.05);">Percentage of server capacity being used</td>
+          <td style="padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.05);">70-90% (balance efficiency vs. wait times)</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <h3>Practical Scenarios to Explore</h3>
+    
+    <h4>1. Light Load Scenario</h4>
+    <p>Use the "Light load" preset to see a system with ample capacity. Notice how customers are served immediately with minimal waiting.</p>
+    
+    <h4>2. Heavy Load Scenario</h4>
+    <p>The "Heavy load" preset demonstrates a system near capacity. Observe how queues build up and waiting times increase significantly.</p>
+    
+    <h4>3. Burst Arrivals</h4>
+    <p>This scenario uses a normal distribution with high variability. Watch how the system handles sudden rushes of customers.</p>
+    
+    <h4>4. Comparing Routing Policies</h4>
+    <p>Try the same parameters with different routing policies. Notice how single queue typically outperforms separate queues.</p>
+    
+    <h3>Queueing Theory Concepts</h3>
+    
+    <h4>Little's Law</h4>
+    <p>This fundamental principle states: L = λW, where:</p>
+    <ul>
+      <li>L = average number of customers in the system</li>
+      <li>λ = average arrival rate</li>
+      <li>W = average time a customer spends in the system</li>
+    </ul>
+    <p>You can verify this relationship in the simulator by comparing the metrics.</p>
+    
+    <h4>Traffic Intensity (ρ)</h4>
+    <p>This measures how busy the system is: ρ = λ/(cμ), where:</p>
+    <ul>
+      <li>λ = arrival rate</li>
+      <li>c = number of servers</li>
+      <li>μ = service rate per server</li>
+    </ul>
+    <p>When ρ approaches 1, the system becomes unstable with growing queues.</p>
+    
+    <h3>Tips for Effective Simulation</h3>
+    <ol>
+      <li><strong>Run Long Enough</strong>: Allow the simulation to run for sufficient time to reach steady state</li>
+      <li><strong>Use Seeds</strong>: Specify a seed value to reproduce exact scenarios for comparison</li>
+      <li><strong>Export Data</strong>: Use the CSV export to analyze performance metrics in detail</li>
+      <li><strong>Adjust Time Scale</strong>: Speed up or slow down the simulation to observe patterns</li>
+    </ol>
+    
+    <h3>Troubleshooting Common Issues</h3>
+    
+    <h4>Simulation Runs Too Fast/Slow</h4>
+    <p>Adjust the "Time scale" parameter. Lower values slow down the simulation for better observation.</p>
+    
+    <h4>Unrealistic Results</h4>
+    <p>Check that your arrival rate isn't significantly higher than your service capacity. The system needs λ < cμ to remain stable.</p>
+    
+    <h4>No Customers Appearing</h4>
+    <p>Verify that arrival parameters are reasonable (not extremely large values). Try resetting with a preset.</p>
+    
+    <h3>Advanced Features</h3>
+    
+    <h4>Event Logging</h4>
+    <p>Toggle the event log to see a detailed timeline of customer arrivals, service starts, and departures.</p>
+    
+    <h4>Step-by-Step Execution</h4>
+    <p>Use the "Step" button to advance the simulation one event at a time for detailed analysis.</p>
+    
+    <h4>Performance Charts</h4>
+    <p>Monitor the queue length and average waiting time charts to identify trends and patterns over time.</p>
+    
+    <div style="background: rgba(6, 182, 212, 0.1); border-left: 4px solid var(--accent); padding: 12px; margin: 20px 0; border-radius: 0 8px 8px 0;">
+      <strong>Educational Value:</strong> This simulator demonstrates key queueing theory concepts that apply to many real-world systems beyond grocery stores, including call centers, computer networks, and manufacturing processes.
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

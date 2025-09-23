@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Fraction Calculator - Perform operations with fractions, mixed numbers, and simplify fractions">
+    <title>Fraction Calculator | Industrial Engineering Calculators</title>
+    <style>
+        /* Consistent with existing style */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block;
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
+        
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .fraction-calculator {
+            margin-bottom: 2rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1.5rem;
+            background-color: #f9f9f9;
+        }
+        
+        .fraction-calculator h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .calculator-form {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+        
+        .fraction-input {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .fraction-input input {
+            width: 60px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .fraction-line {
+            border-top: 1px solid #333;
+            width: 60px;
+            margin: 5px 0;
+        }
+        
+        .operation-select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .clear-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+            margin-left: 10px;
+        }
+        
+        .clear-btn:hover {
+            background-color: #c0392b;
+        }
+        
+        .result-box {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #e8f4fc;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .result-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .mixed-number-input {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .mixed-number-input input {
+            width: 60px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .decimal-input {
+            width: 120px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .big-number-input {
+            width: 120px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .calculator-notes {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-top: 0.5rem;
+        }
+        
+        .divider {
+            height: 1px;
+            background-color: #ddd;
+            margin: 2rem 0;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            nav ul li {
+                margin: 0 0.5rem;
+            }
+            
+            .calculator-form {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .fraction-input, .mixed-number-input {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Industrial Engineering <span>Calculators</span></div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="terms.html">Terms</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Fraction Calculator</h1>
+            <p>Perform operations with fractions, mixed numbers, and simplify fractions</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Fraction Calculators</h2>
+                <p>Below are multiple fraction calculators capable of addition, subtraction, multiplication, division, simplification, and conversion between fractions and decimals.</p>
+            </div>
+            
+            <!-- Basic Fraction Calculator -->
+            <div class="fraction-calculator">
+                <h3>Fraction Calculator</h3>
+                <p class="calculator-notes">Fields above the solid black line represent the numerator, while fields below represent the denominator.</p>
+                
+                <form class="calculator-form" id="fraction-form">
+                    <div class="fraction-input">
+                        <input type="number" id="num1" placeholder="N" min="-999999" max="999999">
+                        <span> / </span>
+                        <input type="number" id="den1" placeholder="D" min="-999999" max="999999">
+                    </div>
+                    
+                    <select class="operation-select" id="operation">
+                        <option value="add">+</option>
+                        <option value="subtract">-</option>
+                        <option value="multiply">×</option>
+                        <option value="divide">÷</option>
+                    </select>
+                    
+                    <div class="fraction-input">
+                        <input type="number" id="num2" placeholder="N" min="-999999" max="999999">
+                        <span> / </span>
+                        <input type="number" id="den2" placeholder="D" min="-999999" max="999999">
+                    </div>
+                    
+                    <button type="submit" class="calculate-btn">Calculate</button>
+                    <button type="button" class="clear-btn" onclick="clearFractionForm()">Clear</button>
+                </form>
+                
+                <div class="result-box" id="fraction-result" style="display: none;">
+                    <p>Result: <span class="result-value" id="fraction-result-value"></span></p>
+                    <p>Decimal: <span id="fraction-decimal-value"></span></p>
+                </div>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <!-- Mixed Numbers Calculator -->
+            <div class="fraction-calculator">
+                <h3>Mixed Numbers Calculator</h3>
+                
+                <form class="calculator-form" id="mixed-form">
+                    <div class="mixed-number-input">
+                        <input type="number" id="whole1" placeholder="WN" min="-999999" max="999999">
+                        <span> & </span>
+                        <input type="number" id="mixed-num1" placeholder="N" min="-999999" max="999999">
+                        <span> / </span>
+                        <input type="number" id="mixed-den1" placeholder="D" min="-999999" max="999999">
+                    </div>
+                    
+                    <select class="operation-select" id="mixed-operation">
+                        <option value="add">+</option>
+                        <option value="subtract">-</option>
+                        <option value="multiply">×</option>
+                        <option value="divide">÷</option>
+                    </select>
+                    
+                    <div class="mixed-number-input">
+                        <input type="number" id="whole2" placeholder="WN" min="-999999" max="999999">
+                        <span> & </span>
+                        <input type="number" id="mixed-num2" placeholder="N" min="-999999" max="999999">
+                        <span> / </span>
+                        <input type="number" id="mixed-den2" placeholder="D" min="-999999" max="999999">
+                    </div>
+                    
+                    <button type="submit" class="calculate-btn">Calculate</button>
+                    <button type="button" class="clear-btn" onclick="clearMixedForm()">Clear</button>
+                </form>
+                
+                <div class="result-box" id="mixed-result" style="display: none;">
+                    <p>Result: <span class="result-value" id="mixed-result-value"></span></p>
+                    <p>Decimal: <span id="mixed-decimal-value"></span></p>
+                </div>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <!-- Simplify Fractions Calculator -->
+            <div class="fraction-calculator">
+                <h3>Simplify Fractions Calculator</h3>
+                
+                <form class="calculator-form" id="simplify-form">
+                    <div class="fraction-input">
+                        <input type="number" id="simplify-num" placeholder="N" min="-999999" max="999999">
+                        <span> / </span>
+                        <input type="number" id="simplify-den" placeholder="D" min="-999999" max="999999">
+                    </div>
+                    
+                    <button type="submit" class="calculate-btn">Simplify</button>
+                    <button type="button" class="clear-btn" onclick="clearSimplifyForm()">Clear</button>
+                </form>
+                
+                <div class="result-box" id="simplify-result" style="display: none;">
+                    <p>Simplified Fraction: <span class="result-value" id="simplify-result-value"></span></p>
+                </div>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <!-- Decimal to Fraction Calculator -->
+            <div class="fraction-calculator">
+                <h3>Decimal to Fraction Calculator</h3>
+                
+                <form class="calculator-form" id="decimal-to-fraction-form">
+                    <input type="number" step="any" id="decimal-input" placeholder="1.375" class="decimal-input">
+                    
+                    <button type="submit" class="calculate-btn">Convert</button>
+                    <button type="button" class="clear-btn" onclick="clearDecimalToFractionForm()">Clear</button>
+                </form>
+                
+                <div class="result-box" id="decimal-to-fraction-result" style="display: none;">
+                    <p>Fraction: <span class="result-value" id="decimal-to-fraction-result-value"></span></p>
+                </div>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <!-- Fraction to Decimal Calculator -->
+            <div class="fraction-calculator">
+                <h3>Fraction to Decimal Calculator</h3>
+                
+                <form class="calculator-form" id="fraction-to-decimal-form">
+                    <div class="fraction-input">
+                        <input type="number" id="f2d-num" placeholder="N" min="-999999" max="999999">
+                        <span> / </span>
+                        <input type="number" id="f2d-den" placeholder="D" min="-999999" max="999999">
+                    </div>
+                    
+                    <button type="submit" class="calculate-btn">Convert</button>
+                    <button type="button" class="clear-btn" onclick="clearFractionToDecimalForm()">Clear</button>
+                </form>
+                
+                <div class="result-box" id="fraction-to-decimal-result" style="display: none;">
+                    <p>Decimal: <span class="result-value" id="fraction-to-decimal-result-value"></span></p>
+                </div>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <!-- Big Number Fraction Calculator -->
+            <div class="fraction-calculator">
+                <h3>Big Number Fraction Calculator</h3>
+                <p class="calculator-notes">Use this calculator if the numerators or denominators are very big integers.</p>
+                
+                <form class="calculator-form" id="big-number-form">
+                    <div class="fraction-input">
+                        <input type="number" id="big-num1" placeholder="1234" class="big-number-input">
+                        <span> / </span>
+                        <input type="number" id="big-den1" placeholder="748892928" class="big-number-input">
+                    </div>
+                    
+                    <select class="operation-select" id="big-operation">
+                        <option value="add">+</option>
+                        <option value="subtract">-</option>
+                        <option value="multiply">×</option>
+                        <option value="divide">÷</option>
+                    </select>
+                    
+                    <div class="fraction-input">
+                        <input type="number" id="big-num2" placeholder="334344211" class="big-number-input">
+                        <span> / </span>
+                        <input type="number" id="big-den2" placeholder="887727738" class="big-number-input">
+                    </div>
+                    
+                    <button type="submit" class="calculate-btn">Calculate</button>
+                    <button type="button" class="clear-btn" onclick="clearBigNumberForm()">Clear</button>
+                </form>
+                
+                <div class="result-box" id="big-number-result" style="display: none;">
+                    <p>Result: <span class="result-value" id="big-number-result-value"></span></p>
+                    <p>Decimal Approximation: <span id="big-number-decimal-value"></span></p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-links">
+                <a href="/index.html">Home</a>
+                <a href="/about.html">About</a>
+                <a href="/terms.html">Terms</a>
+                <a href="/privacy.html">Privacy Policy</a>
+                <a href="/contact.html">Contact Us</a>
+                
+            </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            <p class="copyright">&copy; 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- xxxx navigation start xxxxx -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebarClose = document.querySelector('.sidebar-close');
+            const overlay = document.querySelector('.overlay');
+            const body = document.body;
+            
+            // Toggle sidebar
+            function toggleSidebar() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+                body.classList.toggle('sidebar-open');
+            }
+            
+            // Toggle category expansion
+            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
+            categoryHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const category = this.parentElement;
+                    category.classList.toggle('open');
+                    
+                    // Update the expand/collapse icon
+                    const icon = this.querySelector('span:last-child');
+                    icon.textContent = category.classList.contains('open') ? '−' : '+';
+                });
+            });
+            
+            // Event listeners
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            sidebarClose.addEventListener('click', toggleSidebar);
+            overlay.addEventListener('click', toggleSidebar);
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 768 && 
+                    body.classList.contains('sidebar-open') && 
+                    !sidebar.contains(event.target) && 
+                    event.target !== sidebarToggle) {
+                    toggleSidebar();
+                }
+            });
+            
+            // Close sidebar when pressing Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && body.classList.contains('sidebar-open')) {
+                    toggleSidebar();
+                }
+            });
+        });
+    </script>
+    <!-- xxxx navigation end xxxxx -->
+
+
+    <script>
+        // Greatest Common Divisor function
+        function gcd(a, b) {
+            a = Math.abs(a);
+            b = Math.abs(b);
+            if (b === 0) return a;
+            return gcd(b, a % b);
+        }
+        
+        // Simplify fraction
+        function simplifyFraction(numerator, denominator) {
+            if (denominator === 0) return { numerator: NaN, denominator: NaN };
+            
+            const commonDivisor = gcd(numerator, denominator);
+            let simplifiedNum = numerator / commonDivisor;
+            let simplifiedDen = denominator / commonDivisor;
+            
+            // Handle negative signs
+            if (simplifiedDen < 0) {
+                simplifiedNum = -simplifiedNum;
+                simplifiedDen = -simplifiedDen;
+            }
+            
+            return { numerator: simplifiedNum, denominator: simplifiedDen };
+        }
+        
+        // Format fraction as string
+        function formatFraction(numerator, denominator) {
+            if (denominator === 1) return numerator.toString();
+            if (numerator === 0) return "0";
+            return `${numerator}/${denominator}`;
+        }
+        
+        // Format mixed number
+        function formatMixedNumber(whole, numerator, denominator) {
+            if (numerator === 0) return whole.toString();
+            if (whole === 0) return formatFraction(numerator, denominator);
+            
+            // Ensure numerator and denominator have the same sign as the whole number
+            const sign = whole < 0 ? -1 : 1;
+            numerator = Math.abs(numerator) * sign;
+            denominator = Math.abs(denominator);
+            
+            return `${whole} ${Math.abs(numerator)}/${denominator}`;
+        }
+        
+        // Convert decimal to fraction
+        function decimalToFraction(decimal) {
+            if (decimal === 0) return { whole: 0, numerator: 0, denominator: 1 };
+            
+            const tolerance = 1.0E-6;
+            let numerator = 1;
+            let denominator = 1;
+            let fraction = numerator / denominator;
+            
+            while (Math.abs(fraction - decimal) > tolerance) {
+                if (fraction < decimal) {
+                    numerator++;
+                } else {
+                    denominator++;
+                    numerator = Math.floor(decimal * denominator);
+                }
+                fraction = numerator / denominator;
+            }
+            
+            return simplifyFraction(numerator, denominator);
+        }
+        
+        // Basic Fraction Calculator
+        document.getElementById('fraction-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const num1 = parseInt(document.getElementById('num1').value) || 0;
+            const den1 = parseInt(document.getElementById('den1').value) || 1;
+            const num2 = parseInt(document.getElementById('num2').value) || 0;
+            const den2 = parseInt(document.getElementById('den2').value) || 1;
+            const operation = document.getElementById('operation').value;
+            
+            if (den1 === 0 || den2 === 0) {
+                alert("Denominator cannot be zero");
+                return;
+            }
+            
+            let resultNum, resultDen;
+            
+            switch(operation) {
+                case 'add':
+                    resultNum = num1 * den2 + num2 * den1;
+                    resultDen = den1 * den2;
+                    break;
+                case 'subtract':
+                    resultNum = num1 * den2 - num2 * den1;
+                    resultDen = den1 * den2;
+                    break;
+                case 'multiply':
+                    resultNum = num1 * num2;
+                    resultDen = den1 * den2;
+                    break;
+                case 'divide':
+                    resultNum = num1 * den2;
+                    resultDen = den1 * num2;
+                    break;
+            }
+            
+            const simplified = simplifyFraction(resultNum, resultDen);
+            const decimalValue = simplified.numerator / simplified.denominator;
+            
+            document.getElementById('fraction-result-value').textContent = 
+                formatFraction(simplified.numerator, simplified.denominator);
+            document.getElementById('fraction-decimal-value').textContent = decimalValue.toFixed(6);
+            document.getElementById('fraction-result').style.display = 'block';
+        });
+        
+        // Mixed Numbers Calculator
+        document.getElementById('mixed-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const whole1 = parseInt(document.getElementById('whole1').value) || 0;
+            const num1 = parseInt(document.getElementById('mixed-num1').value) || 0;
+            const den1 = parseInt(document.getElementById('mixed-den1').value) || 1;
+            const whole2 = parseInt(document.getElementById('whole2').value) || 0;
+            const num2 = parseInt(document.getElementById('mixed-num2').value) || 0;
+            const den2 = parseInt(document.getElementById('mixed-den2').value) || 1;
+            const operation = document.getElementById('mixed-operation').value;
+            
+            if (den1 === 0 || den2 === 0) {
+                alert("Denominator cannot be zero");
+                return;
+            }
+            
+            // Convert mixed numbers to improper fractions
+            const improperNum1 = whole1 * den1 + (whole1 < 0 ? -num1 : num1);
+            const improperNum2 = whole2 * den2 + (whole2 < 0 ? -num2 : num2);
+            
+            let resultNum, resultDen;
+            
+            switch(operation) {
+                case 'add':
+                    resultNum = improperNum1 * den2 + improperNum2 * den1;
+                    resultDen = den1 * den2;
+                    break;
+                case 'subtract':
+                    resultNum = improperNum1 * den2 - improperNum2 * den1;
+                    resultDen = den1 * den2;
+                    break;
+                case 'multiply':
+                    resultNum = improperNum1 * improperNum2;
+                    resultDen = den1 * den2;
+                    break;
+                case 'divide':
+                    resultNum = improperNum1 * den2;
+                    resultDen = den1 * improperNum2;
+                    break;
+            }
+            
+            const simplified = simplifyFraction(resultNum, resultDen);
+            const decimalValue = simplified.numerator / simplified.denominator;
+            
+            // Convert to mixed number if needed
+            let wholePart = Math.trunc(simplified.numerator / simplified.denominator);
+            let numeratorPart = Math.abs(simplified.numerator % simplified.denominator);
+            let denominatorPart = simplified.denominator;
+            
+            document.getElementById('mixed-result-value').textContent = 
+                formatMixedNumber(wholePart, numeratorPart, denominatorPart);
+            document.getElementById('mixed-decimal-value').textContent = decimalValue.toFixed(6);
+            document.getElementById('mixed-result').style.display = 'block';
+        });
+        
+        // Simplify Fractions Calculator
+        document.getElementById('simplify-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const numerator = parseInt(document.getElementById('simplify-num').value) || 0;
+            const denominator = parseInt(document.getElementById('simplify-den').value) || 1;
+            
+            if (denominator === 0) {
+                alert("Denominator cannot be zero");
+                return;
+            }
+            
+            const simplified = simplifyFraction(numerator, denominator);
+            
+            document.getElementById('simplify-result-value').textContent = 
+                formatFraction(simplified.numerator, simplified.denominator);
+            document.getElementById('simplify-result').style.display = 'block';
+        });
+        
+        // Decimal to Fraction Calculator
+        document.getElementById('decimal-to-fraction-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const decimal = parseFloat(document.getElementById('decimal-input').value) || 0;
+            
+            const fraction = decimalToFraction(decimal);
+            
+            document.getElementById('decimal-to-fraction-result-value').textContent = 
+                formatFraction(fraction.numerator, fraction.denominator);
+            document.getElementById('decimal-to-fraction-result').style.display = 'block';
+        });
+        
+        // Fraction to Decimal Calculator
+        document.getElementById('fraction-to-decimal-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const numerator = parseInt(document.getElementById('f2d-num').value) || 0;
+            const denominator = parseInt(document.getElementById('f2d-den').value) || 1;
+            
+            if (denominator === 0) {
+                alert("Denominator cannot be zero");
+                return;
+            }
+            
+            const decimalValue = numerator / denominator;
+            
+            document.getElementById('fraction-to-decimal-result-value').textContent = decimalValue.toFixed(6);
+            document.getElementById('fraction-to-decimal-result').style.display = 'block';
+        });
+        
+        // Big Number Fraction Calculator
+        document.getElementById('big-number-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const num1 = parseInt(document.getElementById('big-num1').value) || 0;
+            const den1 = parseInt(document.getElementById('big-den1').value) || 1;
+            const num2 = parseInt(document.getElementById('big-num2').value) || 0;
+            const den2 = parseInt(document.getElementById('big-den2').value) || 1;
+            const operation = document.getElementById('big-operation').value;
+            
+            if (den1 === 0 || den2 === 0) {
+                alert("Denominator cannot be zero");
+                return;
+            }
+            
+            let resultNum, resultDen;
+            
+            switch(operation) {
+                case 'add':
+                    resultNum = BigInt(num1) * BigInt(den2) + BigInt(num2) * BigInt(den1);
+                    resultDen = BigInt(den1) * BigInt(den2);
+                    break;
+                case 'subtract':
+                    resultNum = BigInt(num1) * BigInt(den2) - BigInt(num2) * BigInt(den1);
+                    resultDen = BigInt(den1) * BigInt(den2);
+                    break;
+                case 'multiply':
+                    resultNum = BigInt(num1) * BigInt(num2);
+                    resultDen = BigInt(den1) * BigInt(den2);
+                    break;
+                case 'divide':
+                    resultNum = BigInt(num1) * BigInt(den2);
+                    resultDen = BigInt(den1) * BigInt(num2);
+                    break;
+            }
+            
+            // For big numbers, we'll just display the fraction as is without simplifying
+            // to avoid performance issues with very large numbers
+            document.getElementById('big-number-result-value').textContent = 
+                `${resultNum.toString()}/${resultDen.toString()}`;
+            
+            // Calculate decimal approximation
+            const decimalApprox = Number(resultNum) / Number(resultDen);
+            document.getElementById('big-number-decimal-value').textContent = decimalApprox.toFixed(10);
+            
+            document.getElementById('big-number-result').style.display = 'block';
+        });
+        
+        // Clear functions
+        function clearFractionForm() {
+            document.getElementById('fraction-form').reset();
+            document.getElementById('fraction-result').style.display = 'none';
+        }
+        
+        function clearMixedForm() {
+            document.getElementById('mixed-form').reset();
+            document.getElementById('mixed-result').style.display = 'none';
+        }
+        
+        function clearSimplifyForm() {
+            document.getElementById('simplify-form').reset();
+            document.getElementById('simplify-result').style.display = 'none';
+        }
+        
+        function clearDecimalToFractionForm() {
+            document.getElementById('decimal-to-fraction-form').reset();
+            document.getElementById('decimal-to-fraction-result').style.display = 'none';
+        }
+        
+        function clearFractionToDecimalForm() {
+            document.getElementById('fraction-to-decimal-form').reset();
+            document.getElementById('fraction-to-decimal-result').style.display = 'none';
+        }
+        
+        function clearBigNumberForm() {
+            document.getElementById('big-number-form').reset();
+            document.getElementById('big-number-result').style.display = 'none';
+        }
+    </script>
+
+        <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+
+    <div class="sidebar-category">
+        <div class="sidebar-category-header">
+            <span>Site Navigation</span>
+            <span>+</span>
+        </div>
+        
+        <div class="sidebar-category-content">
+            <a href="/index.html" class="sidebar-link">Home</a>
+            <a href="/about.html" class="sidebar-link">About</a>
+            <a href="/terms.html" class="sidebar-link">Terms</a>
+            <a href="/privacy.html" class="sidebar-link">Privacy Policy</a>
+            <a href="/contact.html" class="sidebar-link">Contact Us</a>
+        </div>
+    </div>
+        
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>IE Assessments</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="assessments/ie-career-quiz.html" class="sidebar-link">IE Career Quiz</a>
+                <a href="assessments/ie-general-info-quiz.html" class="sidebar-link">IE General Info Quiz</a>
+                <a href="assessments/should-i-study-industrial-engineering-quiz.html" class="sidebar-link">Should I Study Industrial Engineering Quiz</a>
+            </div>
+        </div>  
+    
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="/jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="/linebalancing.html" class="sidebar-link">Line Balancing</a>
+                <a href="/takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="/synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+                <a href="/machine-utilization-calculator.html" class="sidebar-link">Machine Utilization</a>
+                <a href="/manpower-calculator.html" class="sidebar-link active">Manpower Calculator</a>
+                <a href="/production-capacity-calculator.html" class="sidebar-link">Production Capacity</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="/controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="/processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="/sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="/oee-calculation.html" class="sidebar-link">OEE Calculator</a>
+                <a href="/quality-function-deployment" class="sidebar-link">Quality Function Deployment</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/anova.html" class="sidebar-link">ANOVA</a>
+                <a href="/chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="/confidence-interval-calculator.html" class="sidebar-link">Confidence Interval</a>
+                <a href="/correlation.html" class="sidebar-link">Correlation Analysis</a>
+                <a href="/coefficient-of-variation-calculator.html" class="sidebar-link">Coefficient of Variation</a>
+                <a href="/goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="/regression.html" class="sidebar-link">Regression</a>
+                <a href="/samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="/taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="/ttest.html" class="sidebar-link">T-Test</a>
+                <a href="/ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/abc-analysis-calculator.html" class="sidebar-link">ABC Analysis</a>
+                <a href="/inventory-turnover-calculator.html" class="sidebar-link">Inventory Turnover</a>
+                <a href="/eoq-formula.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="/reorder-point-calculator.html" class="sidebar-link">Reorder Point</a>
+                <a href="/kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="/newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+                <a href="/safety-stock-calculator.html" class="sidebar-link">Safety Stock Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Measurement</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="/predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="/learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="/littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="/worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="/noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="/posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="/workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="/workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="/queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="/decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="/gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="/markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="/costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="/depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="/timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+                <a href="/failure-mode-and-effects-analysis-fmea.html" class="sidebar-link">FMEA</a>
+            </div>
+        </div>
+
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Other Calculators</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/into-everything.html" class="sidebar-link">Into Everything Calculators</a>
+            </div>
+        </div>
+    </aside>
+    <!-- xxxx navigation end xxxxx -->
+
+</body>
+</html>

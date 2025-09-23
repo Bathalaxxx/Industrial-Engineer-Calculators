@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Percentage Calculator - Calculate percentages, percentage differences, and percentage changes">
+    <title>Percentage Calculator | Industrial Engineering Calculators</title>
+    
+    <!-- Schema Markup for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Percentage Calculator",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Any",
+      "description": "Free online percentage calculator to calculate percentages, percentage differences, and percentage changes",
+      "url": "https://www.industrialengineeringcalculators.com/percentage-calculator.html",
+      "author": {
+        "@type": "Organization",
+        "name": "Industrial Engineering Calculators"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "ratingCount": "125"
+      },
+      "featureList": [
+        "Basic percentage calculations",
+        "Percentage difference calculator",
+        "Percentage change calculator",
+        "Step-by-step explanations"
+      ]
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do you calculate a percentage?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "To calculate a percentage, divide the part by the whole and multiply by 100. For example, to find what percentage 25 is of 200: (25 ÷ 200) × 100 = 12.5%."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between percentage difference and percentage change?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Percentage difference compares two values without considering direction (always positive), while percentage change measures increase or decrease from an initial value to a final value (can be positive or negative)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do you calculate percentage increase?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "To calculate percentage increase: (New Value - Original Value) ÷ Original Value × 100. For example, if a price increases from $50 to $60: (60-50)÷50×100 = 20% increase."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the formula for percentage of a number?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The formula is: (Percentage ÷ 100) × Number. For example, to find 15% of 200: (15÷100)×200 = 30."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do you add a percentage to a number?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "To add a percentage to a number: Number + (Number × (Percentage ÷ 100)). For example, to add 10% to 50: 50 + (50 × 0.10) = 55."
+          }
+        }
+      ]
+    }
+    </script>
+    
+    <style>
+        /* Consistent with existing style */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+        }
+
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block;
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
+        
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .calculator-box {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .calculator-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .input-group {
+            margin-bottom: 1rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-right: 0.5rem;
+        }
+        
+        .clear-btn {
+            background-color: var(--text-light);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .clear-btn:hover {
+            background-color: #636e72;
+        }
+        
+        .result-box {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: monospace;
+            font-size: 1rem;
+        }
+        
+        .examples-section {
+            margin-top: 2rem;
+        }
+        
+        .example {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .example h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .guide-section, .faq-section {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #eee;
+        }
+        
+        .guide-step {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .guide-step h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            background-color: var(--secondary-color);
+            color: white;
+            border-radius: 50%;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            background-color: #f8f9fa;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .faq-answer {
+            padding: 1rem 1.5rem;
+            display: none;
+        }
+        
+        .faq-question::after {
+            content: '+';
+            font-size: 1.5rem;
+            font-weight: normal;
+        }
+        
+        .faq-item.active .faq-question::after {
+            content: '-';
+        }
+        
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Industrial Engineering <span>Calculators</span></div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="terms.html">Terms</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Percentage Calculator</h1>
+            <p>Calculate percentages, percentage differences, and percentage changes</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Percentage Calculations</h2>
+                <p>Use these calculators to solve various percentage-related problems. Enter any two values to calculate the third value.</p>
+            </div>
+
+            <!-- Basic Percentage Calculator -->
+            <div class="calculator-box" id="basic-percentage">
+                <h3>Percentage Calculator</h3>
+                <p>Calculate the percentage of a number or find what percent one number is of another.</p>
+                
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="percent-value">What is</label>
+                        <input type="number" id="percent-value" placeholder="Percentage" min="0" step="0.01">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="percent-of">% of</label>
+                        <input type="number" id="percent-of" placeholder="Number" min="0" step="0.01">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="percent-result">=</label>
+                        <input type="number" id="percent-result" placeholder="Result" readonly>
+                    </div>
+                </div>
+                
+                <button class="calculate-btn" onclick="calculatePercentage()">Calculate</button>
+                <button class="clear-btn" onclick="clearPercentage()">Clear</button>
+                
+                <div class="result-box" id="percentage-result">
+                    <h4>Calculation Details</h4>
+                    <p><span id="percentage-formula"></span></p>
+                </div>
+            </div>
+
+            <!-- Percentage Difference Calculator -->
+            <div class="calculator-box" id="difference-calculator">
+                <h3>Percentage Difference Calculator</h3>
+                <p>Calculate the percentage difference between two values.</p>
+                
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="value1">Value 1</label>
+                        <input type="number" id="value1" placeholder="First value" step="0.01">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="value2">Value 2</label>
+                        <input type="number" id="value2" placeholder="Second value" step="0.01">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="difference-result">Percentage Difference</label>
+                        <input type="number" id="difference-result" placeholder="Result" readonly>
+                    </div>
+                </div>
+                
+                <button class="calculate-btn" onclick="calculateDifference()">Calculate</button>
+                <button class="clear-btn" onclick="clearDifference()">Clear</button>
+                
+                <div class="result-box" id="difference-details">
+                    <h4>Calculation Details</h4>
+                    <p><span id="difference-formula"></span></p>
+                </div>
+            </div>
+
+            <!-- Percentage Change Calculator -->
+            <div class="calculator-box" id="change-calculator">
+                <h3>Percentage Change Calculator</h3>
+                <p>Calculate the percentage increase or decrease between two values.</p>
+                
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="initial-value">Initial Value</label>
+                        <input type="number" id="initial-value" placeholder="Original value" step="0.01">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="final-value">Final Value</label>
+                        <input type="number" id="final-value" placeholder="New value" step="0.01">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="change-result">Percentage Change</label>
+                        <input type="number" id="change-result" placeholder="Result" readonly>
+                    </div>
+                </div>
+                
+                <button class="calculate-btn" onclick="calculateChange()">Calculate</button>
+                <button class="clear-btn" onclick="clearChange()">Clear</button>
+                
+                <div class="result-box" id="change-details">
+                    <h4>Calculation Details</h4>
+                    <p><span id="change-formula"></span></p>
+                </div>
+            </div>
+
+
+
+            <!-- How to Calculate Percentages Section -->
+            <div class="guide-section" id="how-to">
+                <h2>How to Calculate Percentages</h2>
+                <p>Learn the step-by-step process for different percentage calculations.</p>
+                
+                <div class="guide-step">
+                    <h4><span class="step-number">1</span> Basic Percentage Calculation</h4>
+                    <p>To find a percentage of a number:</p>
+                    <ol style="padding-left: 1.0em;">
+                        <li>Convert the percentage to a decimal by dividing by 100</li>
+                        <li>Multiply the decimal by the number</li>
+                    </ol>
+                    <div class="formula-box">Percentage of a number = (Percentage ÷ 100) × Number</div>
+                    <p><strong>Example:</strong> What is 20% of 150?<br>
+                    (20 ÷ 100) × 150 = 0.2 × 150 = 30</p>
+                </div>
+                
+                <div class="guide-step">
+                    <h4><span class="step-number">2</span> Finding What Percentage One Number Is of Another</h4>
+                    <p>To find what percentage one number is of another:</p>
+                    <ol style="padding-left: 1.0em;">
+                        <li>Divide the first number by the second number</li>
+                        <li>Multiply the result by 100</li>
+                    </ol>
+                    <div class="formula-box">Percentage = (Part ÷ Whole) × 100</div>
+                    <p><strong>Example:</strong> What percentage is 25 of 200?<br>
+                    (25 ÷ 200) × 100 = 0.125 × 100 = 12.5%</p>
+                </div>
+                
+                <div class="guide-step">
+                    <h4><span class="step-number">3</span> Percentage Change Calculation</h4>
+                    <p>To calculate percentage increase or decrease:</p>
+                    <ol style="padding-left: 1.0em;">
+                        <li>Subtract the original value from the new value</li>
+                        <li>Divide the result by the original value</li>
+                        <li>Multiply by 100 to get the percentage</li>
+                    </ol>
+                    <div class="formula-box">Percentage Change = ((New Value - Original Value) ÷ Original Value) × 100</div>
+                    <p><strong>Example:</strong> A product price increased from $50 to $60. What is the percentage increase?<br>
+                    ((60 - 50) ÷ 50) × 100 = (10 ÷ 50) × 100 = 0.2 × 100 = 20% increase</p>
+                </div>
+                
+                <div class="guide-step">
+                    <h4><span class="step-number">4</span> Percentage Difference Calculation</h4>
+                    <p>To calculate the percentage difference between two values:</p>
+                    <ol style="padding-left: 1.0em;">
+                        <li>Find the absolute difference between the two values</li>
+                        <li>Calculate the average of the two values</li>
+                        <li>Divide the difference by the average</li>
+                        <li>Multiply by 100 to get the percentage</li>
+                    </ol>
+                    <div class="formula-box">Percentage Difference = (|Value1 - Value2| ÷ ((Value1 + Value2) ÷ 2)) × 100</div>
+                    <p><strong>Example:</strong> What is the percentage difference between 80 and 100?<br>
+                    (|80 - 100| ÷ ((80 + 100) ÷ 2)) × 100 = (20 ÷ 90) × 100 ≈ 22.22%</p>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="faq-section" id="faq">
+                <h2>Frequently Asked Questions</h2>
+                <p>Common questions about percentage calculations.</p>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How do you calculate a percentage?</div>
+                    <div class="faq-answer">
+                        <p>To calculate a percentage, divide the part by the whole and multiply by 100. For example, to find what percentage 25 is of 200: (25 ÷ 200) × 100 = 12.5%.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">What is the difference between percentage difference and percentage change?</div>
+                    <div class="faq-answer">
+                        <p>Percentage difference compares two values without considering direction (always positive), while percentage change measures increase or decrease from an initial value to a final value (can be positive or negative).</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How do you calculate percentage increase?</div>
+                    <div class="faq-answer">
+                        <p>To calculate percentage increase: (New Value - Original Value) ÷ Original Value × 100. For example, if a price increases from $50 to $60: (60-50)÷50×100 = 20% increase.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">What is the formula for percentage of a number?</div>
+                    <div class="faq-answer">
+                        <p>The formula is: (Percentage ÷ 100) × Number. For example, to find 15% of 200: (15÷100)×200 = 30.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How do you add a percentage to a number?</div>
+                    <div class="faq-answer">
+                        <p>To add a percentage to a number: Number + (Number × (Percentage ÷ 100)). For example, to add 10% to 50: 50 + (50 × 0.10) = 55.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How do you subtract a percentage from a number?</div>
+                    <div class="faq-answer">
+                        <p>To subtract a percentage from a number: Number - (Number × (Percentage ÷ 100)). For example, to subtract 15% from 80: 80 - (80 × 0.15) = 80 - 12 = 68.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">What is percentage point?</div>
+                    <div class="faq-answer">
+                        <p>A percentage point is the unit for the difference between two percentages. For example, if an interest rate increases from 5% to 7%, it has increased by 2 percentage points, which is a 40% increase (2÷5×100).</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Examples Section -->
+            <div class="examples-section" id="examples">
+                <h3>Practical Examples</h3>
+                
+                <div class="example">
+                    <h4>Example 1: Basic Percentage</h4>
+                    <p>What is 15% of 200?<br>
+                    <strong>Answer:</strong> 15% × 200 = 30</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 2: Percentage Difference</h4>
+                    <p>The price of a product was $50 and increased to $60. What is the percentage increase?<br>
+                    <strong>Answer:</strong> (60 - 50) ÷ 50 × 100 = 20% increase</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 3: Finding Percentage</h4>
+                    <p>25 is what percent of 200?<br>
+                    <strong>Answer:</strong> (25 ÷ 200) × 100 = 12.5%</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 4: Percentage Decrease</h4>
+                    <p>A company's revenue decreased from $1,000,000 to $850,000. What is the percentage decrease?<br>
+                    <strong>Answer:</strong> (1,000,000 - 850,000) ÷ 1,000,000 × 100 = 15% decrease</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 5: Reverse Percentage Calculation</h4>
+                    <p>After a 20% discount, a product costs $80. What was the original price?<br>
+                    <strong>Answer:</strong> $80 represents 80% of the original price (100% - 20% discount). Original price = $80 ÷ 0.8 = $100</p>
+                </div>
+            </div>
+
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-links">
+                <a href="/index.html">Home</a>
+                <a href="/about.html">About</a>
+                <a href="/terms.html">Terms</a>
+                <a href="/privacy.html">Privacy Policy</a>
+                <a href="/contact.html">Contact Us</a>
+                
+            </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            <p class="copyright">&copy; 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- xxxx navigation start xxxxx -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebarClose = document.querySelector('.sidebar-close');
+            const overlay = document.querySelector('.overlay');
+            const body = document.body;
+            
+            // Toggle sidebar
+            function toggleSidebar() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+                body.classList.toggle('sidebar-open');
+            }
+            
+            // Toggle category expansion
+            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
+            categoryHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const category = this.parentElement;
+                    category.classList.toggle('open');
+                    
+                    // Update the expand/collapse icon
+                    const icon = this.querySelector('span:last-child');
+                    icon.textContent = category.classList.contains('open') ? '−' : '+';
+                });
+            });
+            
+            // Event listeners
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            sidebarClose.addEventListener('click', toggleSidebar);
+            overlay.addEventListener('click', toggleSidebar);
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 768 && 
+                    body.classList.contains('sidebar-open') && 
+                    !sidebar.contains(event.target) && 
+                    event.target !== sidebarToggle) {
+                    toggleSidebar();
+                }
+            });
+            
+            // Close sidebar when pressing Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && body.classList.contains('sidebar-open')) {
+                    toggleSidebar();
+                }
+            });
+        });
+    </script>
+    <!-- xxxx navigation end xxxxx -->
+
+    <script>
+        // Basic Percentage Calculation
+        function calculatePercentage() {
+            const percent = parseFloat(document.getElementById('percent-value').value);
+            const number = parseFloat(document.getElementById('percent-of').value);
+            
+            if (isNaN(percent) || isNaN(number)) {
+                alert('Please enter valid numbers for both fields');
+                return;
+            }
+            
+            const result = (percent / 100) * number;
+            document.getElementById('percent-result').value = result.toFixed(2);
+            
+            // Show calculation details
+            document.getElementById('percentage-formula').textContent = 
+                `${percent}% × ${number} = ${result.toFixed(2)}`;
+            document.getElementById('percentage-result').style.display = 'block';
+        }
+        
+        function clearPercentage() {
+            document.getElementById('percent-value').value = '';
+            document.getElementById('percent-of').value = '';
+            document.getElementById('percent-result').value = '';
+            document.getElementById('percentage-result').style.display = 'none';
+        }
+        
+        // Percentage Difference Calculation
+        function calculateDifference() {
+            const value1 = parseFloat(document.getElementById('value1').value);
+            const value2 = parseFloat(document.getElementById('value2').value);
+            
+            if (isNaN(value1) || isNaN(value2)) {
+                alert('Please enter valid numbers for both values');
+                return;
+            }
+            
+            const difference = (Math.abs(value1 - value2) / ((value1 + value2) / 2)) * 100;
+            document.getElementById('difference-result').value = difference.toFixed(2);
+            
+            // Show calculation details
+            document.getElementById('difference-formula').textContent = 
+                `(|${value1} - ${value2}| / ((${value1} + ${value2}) / 2)) × 100 = ${difference.toFixed(2)}%`;
+            document.getElementById('difference-details').style.display = 'block';
+        }
+        
+        function clearDifference() {
+            document.getElementById('value1').value = '';
+            document.getElementById('value2').value = '';
+            document.getElementById('difference-result').value = '';
+            document.getElementById('difference-details').style.display = 'none';
+        }
+        
+        // Percentage Change Calculation
+        function calculateChange() {
+            const initial = parseFloat(document.getElementById('initial-value').value);
+            const final = parseFloat(document.getElementById('final-value').value);
+            
+            if (isNaN(initial) || isNaN(final)) {
+                alert('Please enter valid numbers for both values');
+                return;
+            }
+            
+            const change = ((final - initial) / Math.abs(initial)) * 100;
+            document.getElementById('change-result').value = change.toFixed(2);
+            
+            // Show calculation details
+            const changeType = change >= 0 ? 'increase' : 'decrease';
+            document.getElementById('change-formula').textContent = 
+                `((${final} - ${initial}) / |${initial}|) × 100 = ${Math.abs(change).toFixed(2)}% ${changeType}`;
+            document.getElementById('change-details').style.display = 'block';
+        }
+        
+        function clearChange() {
+            document.getElementById('initial-value').value = '';
+            document.getElementById('final-value').value = '';
+            document.getElementById('change-result').value = '';
+            document.getElementById('change-details').style.display = 'none';
+        }
+        
+
+        
+        // Allow Enter key to calculate
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        // Find the closest calculator box and trigger its calculate button
+                        const calculatorBox = this.closest('.calculator-box');
+                        if (calculatorBox) {
+                            const calculateBtn = calculatorBox.querySelector('.calculate-btn');
+                            if (calculateBtn) {
+                                calculateBtn.click();
+                            }
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+<script>
+    // FAQ Toggle Functionality - Separate script
+    document.addEventListener('DOMContentLoaded', function() {
+        const faqItems = document.querySelectorAll('.faq-item');
+        
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            
+            question.addEventListener('click', () => {
+                // Close all other FAQ items
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+                
+                // Toggle current item
+                item.classList.toggle('active');
+            });
+        });
+    });
+</script>
+
+        <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+
+    <div class="sidebar-category">
+        <div class="sidebar-category-header">
+            <span>Site Navigation</span>
+            <span>+</span>
+        </div>
+        
+        <div class="sidebar-category-content">
+            <a href="/index.html" class="sidebar-link">Home</a>
+            <a href="/about.html" class="sidebar-link">About</a>
+            <a href="/terms.html" class="sidebar-link">Terms</a>
+            <a href="/privacy.html" class="sidebar-link">Privacy Policy</a>
+            <a href="/contact.html" class="sidebar-link">Contact Us</a>
+        </div>
+    </div>
+        
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>IE Assessments</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="assessments/ie-career-quiz.html" class="sidebar-link">IE Career Quiz</a>
+                <a href="assessments/ie-general-info-quiz.html" class="sidebar-link">IE General Info Quiz</a>
+                <a href="assessments/should-i-study-industrial-engineering-quiz.html" class="sidebar-link">Should I Study Industrial Engineering Quiz</a>
+            </div>
+        </div>  
+    
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="/jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="/linebalancing.html" class="sidebar-link">Line Balancing</a>
+                <a href="/takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="/synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+                <a href="/machine-utilization-calculator.html" class="sidebar-link">Machine Utilization</a>
+                <a href="/manpower-calculator.html" class="sidebar-link active">Manpower Calculator</a>
+                <a href="/production-capacity-calculator.html" class="sidebar-link">Production Capacity</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="/controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="/processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="/sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="/oee-calculation.html" class="sidebar-link">OEE Calculator</a>
+                <a href="/quality-function-deployment" class="sidebar-link">Quality Function Deployment</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/anova.html" class="sidebar-link">ANOVA</a>
+                <a href="/chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="/confidence-interval-calculator.html" class="sidebar-link">Confidence Interval</a>
+                <a href="/correlation.html" class="sidebar-link">Correlation Analysis</a>
+                <a href="/coefficient-of-variation-calculator.html" class="sidebar-link">Coefficient of Variation</a>
+                <a href="/goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="/regression.html" class="sidebar-link">Regression</a>
+                <a href="/samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="/taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="/ttest.html" class="sidebar-link">T-Test</a>
+                <a href="/ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/abc-analysis-calculator.html" class="sidebar-link">ABC Analysis</a>
+                <a href="/inventory-turnover-calculator.html" class="sidebar-link">Inventory Turnover</a>
+                <a href="/eoq-formula.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="/reorder-point-calculator.html" class="sidebar-link">Reorder Point</a>
+                <a href="/kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="/newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+                <a href="/safety-stock-calculator.html" class="sidebar-link">Safety Stock Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Measurement</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="/predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="/learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="/littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="/worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="/noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="/posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="/workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="/workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="/queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="/decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="/gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="/markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="/costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="/depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="/timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+                <a href="/failure-mode-and-effects-analysis-fmea.html" class="sidebar-link">FMEA</a>
+            </div>
+        </div>
+
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Other Calculators</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/into-everything.html" class="sidebar-link">Into Everything Calculators</a>
+            </div>
+        </div>
+    </aside>
+    <!-- xxxx navigation end xxxxx -->
+
+</body>
+</html>

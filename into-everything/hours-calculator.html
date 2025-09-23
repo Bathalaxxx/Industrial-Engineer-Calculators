@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--FAVICON-->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+  
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BSHG1DE6V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-3BSHG1DE6V');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5607576434988374"
+     crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="google-adsense-account" content="ca-pub-5607576434988374">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hours Calculator - Calculate hours and minutes between two times or dates">
+    <title>Hours Calculator | Industrial Engineering Calculators</title>
+
+    <!-- Clarity tracking code for https://iecalculators.online/ -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "t31aicr9ep");
+    </script>
+
+    <style>
+        /* Consistent with existing style */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+            transition: margin-left 0.3s;
+        }
+        
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block; /* Changed from none to block */
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--light-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            transition: left 0.3s;
+            z-index: 999;
+            padding: 20px 0;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-category {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-category-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-category-header:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-category.open .sidebar-category-content {
+            max-height: 1000px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 20px 8px 35px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Add color coding to sidebar categories */
+        .sidebar-category-header.production {
+            color: var(--production-color);
+        }
+        .sidebar-category-header.quality {
+            color: var(--quality-color);
+        }
+        .sidebar-category-header.statistics {
+            color: var(--statistics-color);
+        }
+        .sidebar-category-header.inventory {
+            color: var(--inventory-color);
+        }
+        .sidebar-category-header.workstudy {
+            color: var(--workstudy-color);
+        }
+        .sidebar-category-header.ergonomics {
+            color: var(--ergonomics-color);
+        }
+        .sidebar-category-header.operations {
+            color: var(--operations-color);
+        }
+        .sidebar-category-header.economy {
+            color: var(--economy-color);
+        }
+        .sidebar-category-header.facilities {
+            color: var(--facilities-color);
+        }
+        .sidebar-category-header.reliability {
+            color: var(--reliability-color);
+        }
+        /* xxxx navigation end xxxxx */
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .calculator-intro {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .calculate-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .clear-btn {
+            background-color: var(--text-light);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-left: 1rem;
+        }
+        
+        .clear-btn:hover {
+            background-color: #636e72;
+        }
+        
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+            display: none;
+        }
+        
+        .result-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .metric-results {
+            display: flex;
+            justify-content: space-between;
+            margin: 1.5rem 0;
+        }
+        
+        .metric-card {
+            flex: 1;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 0 0.5rem;
+            text-align: center;
+        }
+        
+        .metric-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-card .metric-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .metric-card.demand .metric-value {
+            color: #3498db;
+        }
+        
+        .metric-card.leadtime .metric-value {
+            color: #f39c12;
+        }
+        
+        .metric-card.safety .metric-value {
+            color: #2ecc71;
+        }
+        
+        .time-input-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .time-input-group input {
+            flex: 1;
+        }
+        
+        .time-input-group select {
+            width: 80px;
+        }
+        
+        .now-btn {
+            background-color: #f1f2f6;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 0.8rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .now-btn:hover {
+            background-color: #dfe4ea;
+        }
+        
+        .now-btn.active {
+            background-color: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+        
+        .date-selector {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .date-selector select {
+            flex: 1;
+        }
+        
+        .calculator-tabs {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .calculator-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .calculator-tab.active {
+            border-bottom-color: var(--secondary-color);
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+        
+        .calculator-tab-content {
+            display: none;
+        }
+        
+        .calculator-tab-content.active {
+            display: block;
+        }
+        
+        .related-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .tool-chip {
+            background-color: #e3f2fd;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .tool-chip:hover {
+            background-color: #bbdefb;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        /* xxxx navigation start xxxxx */
+        .sidebar-toggle {
+            display: block;
+        }
+            
+        body.sidebar-open {
+            margin-left: 0;
+            overflow: hidden;
+        }
+        /* xxxx navigation end xxxxx */
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .metric-results {
+                flex-direction: column;
+            }
+            
+            .metric-card {
+                margin: 0.5rem 0;
+            }
+            
+            .date-selector {
+                flex-direction: column;
+            }
+            
+            .time-input-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .time-input-group select {
+                width: 100%;
+            }
+            
+            .calculator-tabs {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Industrial Engineering <span>Calculators</span></div>
+            <nav>
+                <ul>
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/about.html">About</a></li>
+                    <li><a href="/terms.html">Terms</a></li>
+                    <li><a href="/privacy.html">Privacy Policy</a></li>
+                    <li><a href="/contact.html">Contact</a></li>
+                    <li></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-hero">
+        <div class="container">
+            <h1>Hours Calculator</h1>
+            <p>Calculate hours and minutes between two times or dates</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section class="content-section">
+            <div class="calculator-intro">
+                <h2>Time Duration Calculator</h2>
+                <p>Use the calculators below to find the number of hours and minutes between two times</a>.</p>
+            </div>
+
+            <div class="calculator-tabs">
+                <div class="calculator-tab active" data-tab="time-only">Time Duration</div>
+                <div class="calculator-tab" data-tab="date-time">Hours Between Dates</div>
+            </div>
+
+            <!-- Time Only Calculator -->
+            <div class="calculator-tab-content active" id="time-only-calculator">
+                <form id="time-form">
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="start-time">Start Time:</label>
+                            <div class="time-input-group">
+                                <input type="time" id="start-time" required>
+                                <select id="start-am-pm">
+                                    <option value="AM">AM</option>
+                                    <option value="PM">PM</option>
+                                </select>
+                                <button type="button" class="now-btn" data-target="start">Now</button>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="end-time">End Time:</label>
+                            <div class="time-input-group">
+                                <input type="time" id="end-time" required>
+                                <select id="end-am-pm">
+                                    <option value="AM">AM</option>
+                                    <option value="PM">PM</option>
+                                </select>
+                                <button type="button" class="now-btn" data-target="end">Now</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <button type="submit" class="calculate-btn">Calculate</button>
+                        <button type="reset" class="clear-btn">Clear</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Date and Time Calculator -->
+            <div class="calculator-tab-content" id="date-time-calculator">
+                <form id="datetime-form">
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="start-date-time">Start Date & Time:</label>
+                            <div class="date-selector">
+                                <select id="start-month" required>
+                                    <option value="1">January</option>
+                                    <option value="2">February</option>
+                                    <option value="3">March</option>
+                                    <option value="4">April</option>
+                                    <option value="5">May</option>
+                                    <option value="6">June</option>
+                                    <option value="7">July</option>
+                                    <option value="8">August</option>
+                                    <option value="9">September</option>
+                                    <option value="10">October</option>
+                                    <option value="11">November</option>
+                                    <option value="12">December</option>
+                                </select>
+                                <select id="start-day" required>
+                                    <!-- Days will be populated by JavaScript -->
+                                </select>
+                                <select id="start-year" required>
+                                    <!-- Years will be populated by JavaScript -->
+                                </select>
+                            </div>
+                            <div class="time-input-group" style="margin-top: 0.5rem;">
+                                <input type="time" id="start-datetime-time" required>
+                                <select id="start-datetime-am-pm">
+                                    <option value="AM">AM</option>
+                                    <option value="PM">PM</option>
+                                </select>
+                                <button type="button" class="now-btn" data-target="start-datetime">Now</button>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="end-date-time">End Date & Time:</label>
+                            <div class="date-selector">
+                                <select id="end-month" required>
+                                    <option value="1">January</option>
+                                    <option value="2">February</option>
+                                    <option value="3">March</option>
+                                    <option value="4">April</option>
+                                    <option value="5">May</option>
+                                    <option value="6">June</option>
+                                    <option value="7">July</option>
+                                    <option value="8">August</option>
+                                    <option value="9">September</option>
+                                    <option value="10">October</option>
+                                    <option value="11">November</option>
+                                    <option value="12">December</option>
+                                </select>
+                                <select id="end-day" required>
+                                    <!-- Days will be populated by JavaScript -->
+                                </select>
+                                <select id="end-year" required>
+                                    <!-- Years will be populated by JavaScript -->
+                                </select>
+                            </div>
+                            <div class="time-input-group" style="margin-top: 0.5rem;">
+                                <input type="time" id="end-datetime-time" required>
+                                <select id="end-datetime-am-pm">
+                                    <option value="AM">AM</option>
+                                    <option value="PM">PM</option>
+                                </select>
+                                <button type="button" class="now-btn" data-target="end-datetime">Now</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <button type="submit" class="calculate-btn">Calculate</button>
+                        <button type="reset" class="clear-btn">Clear</button>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="result-box" id="hours-result">
+                <h3>Time Duration Result</h3>
+                <p>Total Time: <span class="result-value" id="total-time"></span></p>
+                <p>In Decimal Hours: <span class="result-value" id="decimal-hours"></span></p>
+                
+                <div class="metric-results">
+                    <div class="metric-card demand">
+                        <h4>Hours</h4>
+                        <div class="metric-value" id="hours-value"></div>
+                        <p>Whole hours</p>
+                    </div>
+                    
+                    <div class="metric-card leadtime">
+                        <h4>Minutes</h4>
+                        <div class="metric-value" id="minutes-value"></div>
+                        <p>Remaining minutes</p>
+                    </div>
+                    
+                    <div class="metric-card safety">
+                        <h4>Total Minutes</h4>
+                        <div class="metric-value" id="total-minutes"></div>
+                        <p>Complete duration</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="examples-section">
+                <h3>How to Use the Hours Calculator</h3>
+                
+                <div class="example">
+                    <h4>Time Duration Calculation</h4>
+                    <p>1. Select the start time using the time input or the "Now" button</p>
+                    <p>2. Select the end time using the time input or the "Now" button</p>
+                    <p>3. Choose AM or PM for both times</p>
+                    <p>4. Click "Calculate" to see the duration between the two times</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Date & Time Calculation</h4>
+                    <p>1. Switch to the "Hours Between Dates" tab</p>
+                    <p>2. Select the start date and time</p>
+                    <p>3. Select the end date and time</p>
+                    <p>4. Click "Calculate" to see the duration between the two dates and times</p>
+                </div>
+
+            </div>
+        </section>
+        
+        <section class="content-section">
+            <h2>Related Tools</h2>
+            <div>               
+                <div class="related-tools">
+                    <a href="age-calculator.html" class="tool-chip">Age Calculator</a>
+                    <a href="date-calculator.html" class="tool-chip">Date Calculator</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer>
+        <div class="footer-links">
+                <a href="/index.html">Home</a>
+                <a href="/about.html">About</a>
+                <a href="/terms.html">Terms</a>
+                <a href="/privacy.html">Privacy Policy</a>
+                <a href="/contact.html">Contact Us</a>
+                
+            </div>
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="IndEnggcalculators" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Support our work!" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+            <p class="copyright">&copy; 2025 Industrial Engineering Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- xxxx navigation start xxxxx -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebarClose = document.querySelector('.sidebar-close');
+            const overlay = document.querySelector('.overlay');
+            const body = document.body;
+            
+            // Toggle sidebar
+            function toggleSidebar() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+                body.classList.toggle('sidebar-open');
+            }
+            
+            // Toggle category expansion
+            const categoryHeaders = document.querySelectorAll('.sidebar-category-header');
+            categoryHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const category = this.parentElement;
+                    category.classList.toggle('open');
+                    
+                    // Update the expand/collapse icon
+                    const icon = this.querySelector('span:last-child');
+                    icon.textContent = category.classList.contains('open') ? '−' : '+';
+                });
+            });
+            
+            // Event listeners
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            sidebarClose.addEventListener('click', toggleSidebar);
+            overlay.addEventListener('click', toggleSidebar);
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 768 && 
+                    body.classList.contains('sidebar-open') && 
+                    !sidebar.contains(event.target) && 
+                    event.target !== sidebarToggle) {
+                    toggleSidebar();
+                }
+            });
+            
+            // Close sidebar when pressing Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && body.classList.contains('sidebar-open')) {
+                    toggleSidebar();
+                }
+            });
+        });
+    </script>
+    <!-- xxxx navigation end xxxxx -->
+
+    <script>
+        // Initialize date dropdowns
+        document.addEventListener('DOMContentLoaded', function() {
+            // Populate day dropdowns
+            const daySelects = document.querySelectorAll('select[id$="day"]');
+            daySelects.forEach(select => {
+                for (let i = 1; i <= 31; i++) {
+                    const option = document.createElement('option');
+                    option.value = i;
+                    option.textContent = i;
+                    select.appendChild(option);
+                }
+            });
+            
+            // Populate year dropdowns (current year -10 to +10)
+            const yearSelects = document.querySelectorAll('select[id$="year"]');
+            const currentYear = new Date().getFullYear();
+            yearSelects.forEach(select => {
+                for (let i = currentYear - 10; i <= currentYear + 10; i++) {
+                    const option = document.createElement('option');
+                    option.value = i;
+                    option.textContent = i;
+                    if (i === currentYear) option.selected = true;
+                    select.appendChild(option);
+                }
+            });
+            
+            // Set current month
+            const currentMonth = new Date().getMonth() + 1;
+            document.getElementById('start-month').value = currentMonth;
+            document.getElementById('end-month').value = currentMonth;
+            
+            // Set current day
+            const currentDay = new Date().getDate();
+            document.getElementById('start-day').value = currentDay;
+            document.getElementById('end-day').value = currentDay;
+            
+            // Tab functionality
+            const tabs = document.querySelectorAll('.calculator-tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs and contents
+                    document.querySelectorAll('.calculator-tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.calculator-tab-content').forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked tab and corresponding content
+                    this.classList.add('active');
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(`${tabId}-calculator`).classList.add('active');
+                });
+            });
+            
+            // Now button functionality
+            const nowButtons = document.querySelectorAll('.now-btn');
+            nowButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const target = this.getAttribute('data-target');
+                    const now = new Date();
+                    let hours = now.getHours();
+                    const minutes = now.getMinutes();
+                    const ampm = hours >= 12 ? 'PM' : 'AM';
+                    
+                    // Convert to 12-hour format
+                    hours = hours % 12;
+                    hours = hours ? hours : 12; // the hour '0' should be '12'
+                    
+                    const timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+                    
+                    if (target === 'start' || target === 'start-datetime') {
+                        if (target === 'start') {
+                            document.getElementById('start-time').value = timeString;
+                            document.getElementById('start-am-pm').value = ampm;
+                        } else {
+                            document.getElementById('start-datetime-time').value = timeString;
+                            document.getElementById('start-datetime-am-pm').value = ampm;
+                            document.getElementById('start-month').value = now.getMonth() + 1;
+                            document.getElementById('start-day').value = now.getDate();
+                            document.getElementById('start-year').value = now.getFullYear();
+                        }
+                    } else {
+                        if (target === 'end') {
+                            document.getElementById('end-time').value = timeString;
+                            document.getElementById('end-am-pm').value = ampm;
+                        } else {
+                            document.getElementById('end-datetime-time').value = timeString;
+                            document.getElementById('end-datetime-am-pm').value = ampm;
+                            document.getElementById('end-month').value = now.getMonth() + 1;
+                            document.getElementById('end-day').value = now.getDate();
+                            document.getElementById('end-year').value = now.getFullYear();
+                        }
+                    }
+                    
+                    // Visual feedback
+                    this.classList.add('active');
+                    setTimeout(() => this.classList.remove('active'), 500);
+                });
+            });
+            
+            // Time form submission
+            document.getElementById('time-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                calculateTimeDifference();
+            });
+            
+            // DateTime form submission
+            document.getElementById('datetime-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                calculateDateTimeDifference();
+            });
+            
+            // Clear buttons
+            document.querySelectorAll('button[type="reset"]').forEach(button => {
+                button.addEventListener('click', function() {
+                    document.getElementById('hours-result').style.display = 'none';
+                });
+            });
+            
+            function calculateTimeDifference() {
+                // Get input values
+                const startTime = document.getElementById('start-time').value;
+                const startAmPm = document.getElementById('start-am-pm').value;
+                const endTime = document.getElementById('end-time').value;
+                const endAmPm = document.getElementById('end-am-pm').value;
+                
+                if (!startTime || !endTime) {
+                    alert('Please enter both start and end times');
+                    return;
+                }
+                
+                // Convert to 24-hour format for calculation
+                const start = convertTo24Hour(startTime, startAmPm);
+                const end = convertTo24Hour(endTime, endAmPm);
+                
+                // Calculate difference
+                let diffMs = (end - start);
+                
+                // Handle overnight case (end time is earlier than start time)
+                if (diffMs < 0) {
+                    diffMs += 24 * 60 * 60 * 1000; // add 24 hours
+                }
+                
+                displayResult(diffMs);
+            }
+            
+            function calculateDateTimeDifference() {
+                // Get input values
+                const startMonth = parseInt(document.getElementById('start-month').value);
+                const startDay = parseInt(document.getElementById('start-day').value);
+                const startYear = parseInt(document.getElementById('start-year').value);
+                const startTime = document.getElementById('start-datetime-time').value;
+                const startAmPm = document.getElementById('start-datetime-am-pm').value;
+                
+                const endMonth = parseInt(document.getElementById('end-month').value);
+                const endDay = parseInt(document.getElementById('end-day').value);
+                const endYear = parseInt(document.getElementById('end-year').value);
+                const endTime = document.getElementById('end-datetime-time').value;
+                const endAmPm = document.getElementById('end-datetime-am-pm').value;
+                
+                // Create Date objects
+                const startDate = createDateObject(startYear, startMonth, startDay, startTime, startAmPm);
+                const endDate = createDateObject(endYear, endMonth, endDay, endTime, endAmPm);
+                
+                if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+                    alert('Please enter valid dates and times');
+                    return;
+                }
+                
+                // Calculate difference
+                const diffMs = endDate - startDate;
+                
+                if (diffMs < 0) {
+                    alert('End date/time must be after start date/time');
+                    return;
+                }
+                
+                displayResult(diffMs);
+            }
+            
+            function convertTo24Hour(time, ampm) {
+                const [hours, minutes] = time.split(':').map(Number);
+                let hours24 = hours;
+                
+                if (ampm === 'PM' && hours !== 12) {
+                    hours24 += 12;
+                } else if (ampm === 'AM' && hours === 12) {
+                    hours24 = 0;
+                }
+                
+                // Create a date object for today with this time
+                const date = new Date();
+                date.setHours(hours24, minutes, 0, 0);
+                return date;
+            }
+            
+            function createDateObject(year, month, day, time, ampm) {
+                const [hours, minutes] = time.split(':').map(Number);
+                let hours24 = hours;
+                
+                if (ampm === 'PM' && hours !== 12) {
+                    hours24 += 12;
+                } else if (ampm === 'AM' && hours === 12) {
+                    hours24 = 0;
+                }
+                
+                return new Date(year, month - 1, day, hours24, minutes);
+            }
+            
+            function displayResult(diffMs) {
+                // Calculate different time units
+                const totalMinutes = Math.floor(diffMs / (1000 * 60));
+                const hours = Math.floor(totalMinutes / 60);
+                const minutes = totalMinutes % 60;
+                const decimalHours = (totalMinutes / 60).toFixed(2);
+                
+                // Display results
+                document.getElementById('total-time').textContent = `${hours} hours ${minutes} minutes`;
+                document.getElementById('decimal-hours').textContent = `${decimalHours} hours`;
+                document.getElementById('hours-value').textContent = hours;
+                document.getElementById('minutes-value').textContent = minutes;
+                document.getElementById('total-minutes').textContent = totalMinutes;
+                
+                // Show result box
+                document.getElementById('hours-result').style.display = 'block';
+            }
+        });
+    </script>
+
+
+        <!-- xxxx navigation start xxxxx -->
+    <button class="sidebar-toggle">☰</button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+            <button class="sidebar-close">×</button>
+        </div>
+
+    <div class="sidebar-category">
+        <div class="sidebar-category-header">
+            <span>Site Navigation</span>
+            <span>+</span>
+        </div>
+        
+        <div class="sidebar-category-content">
+            <a href="/index.html" class="sidebar-link">Home</a>
+            <a href="/about.html" class="sidebar-link">About</a>
+            <a href="/terms.html" class="sidebar-link">Terms</a>
+            <a href="/privacy.html" class="sidebar-link">Privacy Policy</a>
+            <a href="/contact.html" class="sidebar-link">Contact Us</a>
+        </div>
+    </div>
+        
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>IE Assessments</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="assessments/ie-career-quiz.html" class="sidebar-link">IE Career Quiz</a>
+                <a href="assessments/ie-general-info-quiz.html" class="sidebar-link">IE General Info Quiz</a>
+                <a href="assessments/should-i-study-industrial-engineering-quiz.html" class="sidebar-link">Should I Study Industrial Engineering Quiz</a>
+            </div>
+        </div>  
+    
+        <div class="sidebar-category">
+            <div class="sidebar-category-header production">
+                <span>Production Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/flowshopsequencing.html" class="sidebar-link">Flow Shop Sequencing</a>
+                <a href="/jobshopsequencing.html" class="sidebar-link">Job Shop Sequencing</a>
+                <a href="/linebalancing.html" class="sidebar-link">Line Balancing</a>
+                <a href="/takttime.html" class="sidebar-link">Takt Time</a>
+                <a href="/synchronousservicing.html" class="sidebar-link">Synchronous Servicing</a>
+                <a href="/machine-utilization-calculator.html" class="sidebar-link">Machine Utilization</a>
+                <a href="/manpower-calculator.html" class="sidebar-link active">Manpower Calculator</a>
+                <a href="/production-capacity-calculator.html" class="sidebar-link">Production Capacity</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header quality">
+                <span>Quality Control</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/acceptancesamplingplan.html" class="sidebar-link">Acceptance Sampling Plan</a>
+                <a href="/controlcharts.html" class="sidebar-link">Control Charts</a>
+                <a href="/processcapability.html" class="sidebar-link">Process Capability</a>
+                <a href="/sixsigmadpmo.html" class="sidebar-link">Six Sigma DPMO</a>
+                <a href="/oee-calculation.html" class="sidebar-link">OEE Calculator</a>
+                <a href="/quality-function-deployment" class="sidebar-link">Quality Function Deployment</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header statistics">
+                <span>Statistics & DOE</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/anova.html" class="sidebar-link">ANOVA</a>
+                <a href="/chisquaretest.html" class="sidebar-link">Chi-Square Test</a>
+                <a href="/confidence-interval-calculator.html" class="sidebar-link">Confidence Interval</a>
+                <a href="/correlation.html" class="sidebar-link">Correlation Analysis</a>
+                <a href="/coefficient-of-variation-calculator.html" class="sidebar-link">Coefficient of Variation</a>
+                <a href="/goodnessoffit.html" class="sidebar-link">Goodness of Fit</a>
+                <a href="/regression.html" class="sidebar-link">Regression</a>
+                <a href="/samplesize.html" class="sidebar-link">Sample Size</a>
+                <a href="/taguchi.html" class="sidebar-link">Taguchi</a>
+                <a href="/ttest.html" class="sidebar-link">T-Test</a>
+                <a href="/ztest.html" class="sidebar-link">Z-Test</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header inventory">
+                <span>Inventory Management</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/abc-analysis-calculator.html" class="sidebar-link">ABC Analysis</a>
+                <a href="/inventory-turnover-calculator.html" class="sidebar-link">Inventory Turnover</a>
+                <a href="/eoq-formula.html" class="sidebar-link">Economic Order Quantity</a>
+                <a href="/reorder-point-calculator.html" class="sidebar-link">Reorder Point</a>
+                <a href="/kanban.html" class="sidebar-link">Kanban Calculator</a>
+                <a href="/newsvendor.html" class="sidebar-link">Newsvendor Model</a>
+                <a href="/safety-stock-calculator.html" class="sidebar-link">Safety Stock Calculator</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header workstudy">
+                <span>Work Measurement</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/timestudy.html" class="sidebar-link">Time Study</a>
+                <a href="/predeterminedmotiontimesystems.html" class="sidebar-link">Predetermined Motion Time Systems</a>
+                <a href="/learningcurve.html" class="sidebar-link">Learning Curve</a>
+                <a href="/littleslaw.html" class="sidebar-link">Little's Law</a>
+                <a href="/worksampling.html" class="sidebar-link">Work Sampling</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header ergonomics">
+                <span>Ergonomics</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/biomechanics.html" class="sidebar-link">Biomechanics</a>
+                <a href="/noisedose.html" class="sidebar-link">Noise Dose</a>
+                <a href="/posture.html" class="sidebar-link">Posture Analysis</a>
+                <a href="/workphysiology.html" class="sidebar-link">Work Physiology</a>
+                <a href="/workrest.html" class="sidebar-link">Work-Rest Cycles</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header operations">
+                <span>Operations Research</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/linearprogramming.html" class="sidebar-link">Linear Programming</a>
+                <a href="/queueing.html" class="sidebar-link">Queueing Analysis</a>
+                <a href="/decisionanalysis.html" class="sidebar-link">Decision Analysis</a>
+                <a href="/gametheory.html" class="sidebar-link">Game Theory</a>
+                <a href="/markov.html" class="sidebar-link">Markov Analysis</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header economy">
+                <span>Engineering Economy</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/breakeven.html" class="sidebar-link">Break-even Analysis</a>
+                <a href="/costanalysis.html" class="sidebar-link">Cost Analysis</a>
+                <a href="/depreciation.html" class="sidebar-link">Depreciation</a>
+                <a href="/timevalueofmoney.html" class="sidebar-link">Time Value of Money</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header facilities">
+                <span>Facilities Planning</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/facilitieslocation.html" class="sidebar-link">Facilities Location</a>
+            </div>
+        </div>
+        
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Reliability & Maintenance</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/reliabilityanalysis.html" class="sidebar-link">Reliability Analysis</a>
+                <a href="/failure-mode-and-effects-analysis-fmea.html" class="sidebar-link">FMEA</a>
+            </div>
+        </div>
+
+        <div class="sidebar-category">
+            <div class="sidebar-category-header reliability">
+                <span>Other Calculators</span>
+                <span>+</span>
+            </div>
+            <div class="sidebar-category-content">
+                <a href="/into-everything.html" class="sidebar-link">Into Everything Calculators</a>
+            </div>
+        </div>
+    </aside>
+    <!-- xxxx navigation end xxxxx -->
+
+</body>
+</html>
