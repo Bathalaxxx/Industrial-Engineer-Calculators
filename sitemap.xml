@@ -468,6 +468,41 @@
     <changefreq>yearly</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://iecalculators.online/into-everything/hours-calculator.html</loc>
+    <lastmod>2024-09-25</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>1.0</priority>
+  </url>  
+  <url>
+    <loc>https://iecalculators.online/into-everything/percentage-calculator.html</loc>
+    <lastmod>2024-09-25</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>1.0</priority>
+  </url>   
+  <url>
+    <loc>https://iecalculators.online/into-everything/fraction-calculator.html</loc>
+    <lastmod>2024-09-25</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>1.0</priority>
+  </url>   
+  <url>
+    <loc>https://iecalculators.online/into-everything/date-calculator.html</loc>
+    <lastmod>2024-09-25</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>1.0</priority>
+  </url>   
+  <url>
+    <loc>https://iecalculators.online/into-everything/mortgage-calculator.html</loc>
+    <lastmod>2024-09-25</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://iecalculators.online/des-queue-simulator.html</loc>
+    <lastmod>2024-09-25</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>1.0</priority>
+  </url>
   
-
 </urlset>
